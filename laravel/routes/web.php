@@ -78,7 +78,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/system/dashboard', function () {
             return view('admin.home');
         });
-        Route::resource('system/member','MemberController');
+        Route::resource('system/members','MembersController');
         Route::resource('system/cat','KategoriController');
         Route::resource('system/page', 'PageController');
         Route::resource('system/lessons','LessonController');

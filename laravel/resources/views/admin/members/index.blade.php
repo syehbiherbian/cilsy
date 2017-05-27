@@ -4,7 +4,7 @@
         <div class="container-fluid">
             <div class="block-header">
                 <h2>
-                    Daftar Member
+                    Members
                 </h2>
             </div>
             <!-- Basic Examples -->
@@ -13,68 +13,67 @@
                     <div class="card">
                         <div class="header">
                             <h2>
-                                Tambah Member
+                                List
                             </h2>
                             <div class="header-dropdown m-r--5">
-                                <a href="{{action('MemberController@create')}}" class="btn btn-primary waves-effect">Tambah Member</a>
+                                <a href="{{ url('system/members/create')}}" class="btn btn-primary waves-effect">Create Member</a>
                             </div>
                         </div>
                         <div class="body">
-                            @if(Session::has('success-create'))
-                                <div class="alert alert-success alert-dismissable">
-                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                    <h4>  <i class="icon fa fa-check"></i> Alert!</h4>
-                                    {{ Session::get('success-create') }}
-                                </div>
-                            @endif
 
-
-                            @if(Session::has('success-delete'))
-                                <div class="alert alert-info alert-dismissable">
-                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                    <h4>  <i class="icon fa fa-check"></i> Alert!</h4>
-                                    {{ Session::get('success-delete') }}
-                                </div>
-                            @endif
+                            @include('admin.include.alert')
+                            
                             <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
                                 <thead>
                                 <tr>
                                     <th>Id</th>
-                                    <th>Kategori</th>
-                                    <th>Icon</th>
-                                    <th>Description</th>
+                                    <th>Status</th>
+                                    <th>Username</th>
+                                    <th>Email</th>
+                                    <th>Created at</th>
+                                    <th>Updated at</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
-                                <tfoot>
-                                <tr>
-                                    <th>Id</th>
-                                    <th>Kategori</th>
-                                    <th>Icon</th>
-                                    <th>Description</th>
-                                    <th>Action</th>
-                                </tr>
-                                </tfoot>
                                 <tbody>
-                                @foreach($kategori as $key => $kategoris)
+                                @foreach($members as $key => $member)
                                 <tr>
-                                    <td>{{$kategoris->id}}</td>
-                                    <td>{{$kategoris->title}}</td>
-                                    <td><i class="material-icons">{{$kategoris->image}}</i></td>
-                                    <td><?= nl2br($kategoris->description);?></td>
+                                    <td>{{$member->id}}</td>
                                     <td>
-                                        <form id="{{$kategoris->id}}" action="{{ url('system/cat/'.$kategoris->id)}}" method="post">
-                                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                      <?php if ($member->status == 1): ?>
+                                          <div class="label label-success">Active</div>
+                                      <?php else: ?>
+                                          <div class="label label-danger">non active</div>
+                                      <?php endif; ?>
+                                    </td>
+                                    <td>{{$member->username}}</td>
+                                    <td>{{$member->email}}</td>
+                                    <td>{{$member->created_at}}</td>
+                                    <td>{{$member->updated_at}}</td>
+                                    <td>
+                                        <form id="{{ $member->id }}" action="{{ url('system/members/'.$member->id) }}" method="post">
+                                            {{ csrf_field() }}
                                             <input type="hidden" name="_method" value="DELETE">
-                                            <a href="{{ url('system/cat/'.$kategoris->id.'/edit')}}" class="btn btn-info btn-xs"><i class="material-icons">remove_red_eye
-                                                </i></a>
-                                            <button type="button" class="btn btn-danger btn-xs" onclick="checkdelete({{$kategoris->id}})"><i class="material-icons">close</i></button>
+                                            <div class="btn-group" role="group" aria-label="Default button group">
+                                                <a href="{{ url('system/members/'.$member->id) }}/edit" class="btn bg-pink waves-effect"><i class="material-icons">mode_edit</i></a>
+                                                <button type="button" class="btn bg-pink waves-effect" onclick="if (confirm('Are you sure?')) { $('#{{$member->id}}').submit() }"><i class="material-icons">delete</i></button>
+                                            </div>
                                         </form>
                                     </td>
                                 </tr>
                                 @endforeach
-
                                 </tbody>
+                                <tfoot>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Status</th>
+                                    <th>Username</th>
+                                    <th>Email</th>
+                                    <th>Created at</th>
+                                    <th>Updated at</th>
+                                    <th>Action</th>
+                                </tr>
+                                </tfoot>
                             </table>
                         </div>
                     </div>

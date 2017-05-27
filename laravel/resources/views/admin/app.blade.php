@@ -332,7 +332,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{ url('system/files') }}">
+                        <a href="{{ url('system/members') }}">
                             <i class="material-icons">account_box</i>
                             <span>Members</span>
                         </a>

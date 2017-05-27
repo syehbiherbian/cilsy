@@ -2,11 +2,6 @@
 @section('content')
     <section class="content">
     <div class="container-fluid">
-        <div class="block-header">
-            <h2>
-                Members
-            </h2>
-        </div>
         <!-- #END# Vertical Layout -->
         <!-- Vertical Layout | With Floating Label -->
         <div class="row clearfix">
@@ -14,7 +9,7 @@
                 <div class="card">
                     <div class="header">
                         <h2>
-                            Create New Member
+                            Edit Member
                         </h2>
                     <div class="body">
                         @if($errors->all())
@@ -24,36 +19,40 @@
                                 @endforeach
                             </div>
                         @endif
-                        <form action="{{ url('system/members')}}" method="post" enctype="multipart/form-data">
+                        <form action="{{ url('system/members/'.$members->id)}}" method="post" enctype="multipart/form-data">
                             <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+                            <input type="hidden" name="_method" value="PUT">
+
 
                             <legend>Account</legend>
+
                             <div class="form-group form-float">
                                 <div class="form-line">
-                                    <select class="form-control show-tick" name="status">
+                                    <select class="form-control show-tick" name="category_id">
                                         <option value="">-- Please select --</option>
-                                        <option value="1" <?php if(old('status') == 1){ echo "selected";} ?>>Active</option>
-                                        <option value="0" <?php if(old('status') == 0){ echo "selected";} ?>>Non Active</option>
+                                        <option value="1" <?php if($members->status == '1'){echo "selected";} ?>>Active</option>
+                                        <option value="0" <?php if($members->status == '0'){echo "selected";} ?>>Non Active</option>
                                     </select>
                                     <label class="form-label">Icon</label>
                                 </div>
                             </div>
 
-
                             <div class="form-group form-float">
                                 <div class="form-line">
-                                   <input type="text" name="username" class="form-control" value="{{ old('username') }}">
-                                    <label class="form-label">User name</label>
+                                   <input type="text" name="username" class="form-control" value="{{ $members->username }}">
+                                    <label class="form-label">Username</label>
                                 </div>
                             </div>
 
+
                             <div class="form-group form-float">
                                 <div class="form-line">
-                                   <input type="email" name="email" class="form-control"  value="{{ old('email') }}">
+                                   <input type="email" name="email" class="form-control" value="{{ $members->email }}">
                                     <label class="form-label">Email</label>
                                 </div>
                             </div>
 
+                            <legend>Change Password</legend>
 
                             <div class="form-group form-float">
                                 <div class="form-line">
@@ -71,31 +70,27 @@
                             </div>
 
                             <legend>Services</legend>
-
-                            <div class="form-group form-float">
-                                <div class="form-line">
-                                    <select class="form-control show-tick" name="services_status">
-                                        <option value="">-- Please select --</option>
-                                        <option value="0" <?php if(old('services_status') == 0){ echo "selected";} ?>>Un Paid</option>
-                                        <option value="1" <?php if(old('services_status') == 1){ echo "selected";} ?>>Paid</option>
-                                        <option value="2" <?php if(old('services_status') == 2){ echo "selected";} ?>>Pending</option>
-                                    </select>
-                                    <label class="form-label">Icon</label>
-                                </div>
-                            </div>
-
-
-                            <div class="form-group form-float">
-                                <div class="form-line">
-                                    <select class="form-control show-tick" name="services_packages">
-                                        <option value="">-- Please select --</option>
-                                        @foreach($packages as $package)
-                                            <option value="{{ $package->id }}" <?php if(old('services_packages') == $package->id){ echo "selected";} ?> >{{ $package->title }} - Rp {{ $package->price }} ( {{ $package->expired }} days )</option>
-                                        @endforeach
-                                    </select>
-                                    <label class="form-label">Icon</label>
-                                </div>
-                            </div>
+                            <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Status</th>
+                                    <th>Username</th>
+                                    <th>Invoice</th>
+                                    <th>Package</th>
+                                    <th>Price</th>
+                                    <th>Period</th>
+                                    <th>Created at</th>
+                                    <th>Updated at</th>
+                                    <th>Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                  <tr>
+                                      <td></td>
+                                  </tr>
+                                </tbody>
+                            </table>
 
 
                             <button type="submit" class="btn btn-primary m-t-15 waves-effect">SUBMIT</button>
