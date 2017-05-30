@@ -33,7 +33,7 @@
                                     <select class="form-control show-tick" name="status">
                                         <option value="">-- Please select --</option>
                                         <option value="1" <?php if(old('status') == 1){ echo "selected";} ?>>Active</option>
-                                        <option value="0" <?php if(old('status') == 0){ echo "selected";} ?>>Non Active</option>
+                                        <option value="0" <?php if(old('status') == 0){ echo "selected";} ?>>Not Active</option>
                                     </select>
                                     <label class="form-label">Icon</label>
                                 </div>
@@ -70,15 +70,15 @@
                                 </div>
                             </div>
 
-                            <legend>Services</legend>
+                            <legend>Add Services</legend>
 
                             <div class="form-group form-float">
                                 <div class="form-line">
                                     <select class="form-control show-tick" name="services_status">
                                         <option value="">-- Please select --</option>
-                                        <option value="0" <?php if(old('services_status') == 0){ echo "selected";} ?>>Un Paid</option>
-                                        <option value="1" <?php if(old('services_status') == 1){ echo "selected";} ?>>Paid</option>
-                                        <option value="2" <?php if(old('services_status') == 2){ echo "selected";} ?>>Pending</option>
+                                        <option value="0" <?php if(old('services_status') == 0){ echo "selected";} ?>>Not Active</option>
+                                        <option value="1" <?php if(old('services_status') == 1){ echo "selected";} ?>>Active</option>
+                                        <option value="2" <?php if(old('services_status') == 2){ echo "selected";} ?>>Expired</option>
                                     </select>
                                     <label class="form-label">Icon</label>
                                 </div>

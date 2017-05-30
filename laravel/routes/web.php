@@ -79,6 +79,14 @@ Route::group(['middleware' => ['auth']], function () {
             return view('admin.home');
         });
         Route::resource('system/members','MembersController');
+        // Edit Member
+
+        Route::post('system/members/getServices', 'MembersController@getServices');
+        Route::post('system/members/addServices', 'MembersController@addServices');
+        Route::post('system/members/getEditServices', 'MembersController@getEditServices');
+        Route::post('system/members/editServices', 'MembersController@editServices');
+
+
         Route::resource('system/cat','KategoriController');
         Route::resource('system/page', 'PageController');
         Route::resource('system/lessons','LessonController');
