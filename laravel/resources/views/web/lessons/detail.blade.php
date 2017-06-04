@@ -228,7 +228,8 @@
   </div>
   <div class="tabpanel" id="panel2" role="tabpanel">
     <h1>Daftar Materi</h1>
-    <p>Eu choro adolescens est. Cu pro case sanctus convenire, natum mazim duo ne. Ius numquam euismod luptatum eu, eu veri iudico molestie nec. Causae facilis duo id, te vix maiorum omittam appareat, nostrud platonem in quo. At nobis vitae vel.</p>
+    <p>Comming Soon</p>
+
   </div>
   <div class="tabpanel" id="panel3" role="tabpanel">
     <h1>File Praktek</h1>
