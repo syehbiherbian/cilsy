@@ -3,8 +3,8 @@
 <title>Cilsy</title>
 <div id="top-section">
         <p>
-            Belajar dari 200++ tutorial, networking & Server Ekslusif ini.<br>
-            Bisa bertanya dengan trainer 24 jam.<br>
+            Belajar dari 200++ tutorial networking & Server Ekslusif
+Online<br>
             Online. Kapanpun, Dimanapun.
         </p>
         <?php if (Session::get('memberID')): ?>
