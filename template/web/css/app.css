@@ -117,9 +117,9 @@ html, body {
     overflow: hidden;
 }
 .cat-img-container img {
-    display: block;
-    margin: auto;
-    width: 60%;
+    display: block !important;
+    margin: auto !important;
+    width: 60% !important;
 }
 .cat-img-container p {
     text-align: center;

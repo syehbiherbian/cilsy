@@ -21,20 +21,49 @@
         <div id="cat-images">
             <div class="container">
                 <div class="row">
-                  <?php foreach ($categories as $key => $category): ?>
-                    <a href="{{ url('lessons/category/'.$category->title) }}">
-                      <div class="col-md-3 cat-img-container">
-                          <img src="{{ $category->image }}" alt=""></img>
-                          <p>{{ $category->title }}</p>
-                      </div>
-                    </a>
-                    <?php endforeach; ?>
-                    <a href="{{ url('lessons/browse/all') }}">
-                      <div class="col-md-3 cat-img-container">
+                  <div class="col-md-12">
+                    <div id="category_carousel" class="owl-carousel owl-theme">
+                      <?php foreach ($categories as $key => $category): ?>
+                        <div class="item cat-img-container">
+                          <a href="{{ url('lessons/category/'.$category->title)}}">
+                            <img src="{{ $category->image }}" />
+                            <p>{{ $category->title }}</p>
+                          </a>
+                        </div>
+                      <?php endforeach; ?>
+                      <div class="item cat-img-container">
+                        <a href="{{ url('lessons/browse/all') }}">
                           <img src="http://dev.cilsy.id/assets/source/category/tutorial.png" alt=""></img>
                           <p>Semua Tutorial</p>
+                        </a>
                       </div>
-                    </a>
+                    </div>
+
+                    <script type="text/javascript">
+                      $('#category_carousel').owlCarousel({
+                          loop:false,
+                          margin:0,
+                          nav:false,
+                          // items:1,
+                          responsive:{
+                              0:{
+                                  items:1
+                              },
+                              600:{
+                                  items:3
+                              },
+                              1000:{
+                                  items:4
+                              }
+                          }
+                      });
+                    </script>
+
+
+
+
+                  </div>
+                
                 </div>
             </div>
         </div>
