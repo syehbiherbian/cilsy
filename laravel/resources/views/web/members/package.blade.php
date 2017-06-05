@@ -83,7 +83,7 @@
                       <?php if ($packages['1']->chat == 0){ ?>
                         Maksimal Dijawab Dalam 1x24 Jam
                       <?php }else if ($packages['1']->chat == 1) { ?>
-                        Real Time 24 Jam
+                        1 x 24 jam
                       <?php } ?>
                     </td>
                 </tr>
