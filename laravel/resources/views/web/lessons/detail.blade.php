@@ -228,13 +228,24 @@
   </div>
   <div class="tabpanel" id="panel2" role="tabpanel">
     <h1>Daftar Materi</h1>
-    <p>Eu choro adolescens est. Cu pro case sanctus convenire, natum mazim duo ne. Ius numquam euismod luptatum eu, eu veri iudico molestie nec. Causae facilis duo id, te vix maiorum omittam appareat, nostrud platonem in quo. At nobis vitae vel.</p>
+    <p>Comming Soon</p>
+
   </div>
   <div class="tabpanel" id="panel3" role="tabpanel">
     <h1>File Praktek</h1>
-      @foreach($file as $key => $files)
-          <a href="{{ $files->source }}" class="btn btn-info btn-md"> Download {{ $files->title}}</a><br><br>
-      @endforeach
+    <?php if (count($services) > 0) { ?>
+      <?php if ($services->download == 1) {?>
+        @foreach($file as $key => $files)
+            <a href="{{ $files->source }}" class="btn btn-info btn-md"> Download {{ $files->title}}</a><br><br>
+        @endforeach
+      <?php }else {?>
+        <button type="button" name="button"  class="btn btn-info btn-md disabled">Download </button>
+      <?php } ?>
+
+    <?php }else { ?>
+        <button type="button" name="button"  class="btn btn-info btn-md disabled">Download </button>
+    <?php } ?>
+
   </div>
     </div>
   </div>

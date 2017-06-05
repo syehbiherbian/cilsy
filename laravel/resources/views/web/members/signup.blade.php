@@ -21,26 +21,30 @@
 
             <form action="{{ url('member/signup') }}" method="post">
               {{ csrf_field() }}
-                <div class="form-group">
+                <div class="form-group @if ($errors->has('username')) has-error @endif">
                     <label>Nama Pengguna :</label>
                     <input type="text" class="form-control" name="username" value="{{ old('username') }}">
+                    @if ($errors->has('username')) <p class="help-block">{{ $errors->first('username') }}</p> @endif
                 </div>
-                <div class="form-group">
+                <div class="form-group @if ($errors->has('username')) has-error @endif">
                     <label >Email :</label>
                     <input type="email" class="form-control" name="email" value="{{ old('email') }}">
+                    @if ($errors->has('email')) <p class="help-block">{{ $errors->first('email') }}</p> @endif
                 </div>
-                <div class="form-group">
+                <div class="form-group @if ($errors->has('password')) has-error @endif">
                     <label >Password :</label>
                     <input type="password" class="form-control" name="password">
+                    @if ($errors->has('password')) <p class="help-block">{{ $errors->first('password') }}</p> @endif
                 </div>
-                <div class="form-group">
+                <div class="form-group @if ($errors->has('retype_password')) has-error @endif">
                     <label>Konfirmasi Password :</label>
                     <input type="password" class="form-control" name="retype_password">
+                    @if ($errors->has('retype_password')) <p class="help-block">{{ $errors->first('retype_password') }}</p> @endif
                 </div>
                 <button type="submit" class="btn btn-primary">DAFTAR</button>
             </form>
         </div>
-        <div id="tab-2-content" style="display: none;">
+        <div id="tab-2-content" style="display: none;">          
             <!-- <form>
                 <div class="form-group">
                     <label for="exampleInputPassword1">Email :</label>

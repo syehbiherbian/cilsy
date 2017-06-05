@@ -29,15 +29,47 @@
 </style>
 <div class="container section-content">
   <div class="row">
-    <div class="col-sm-3">
+    <div class="col-sm-12">
       <h4>Category</h4>
-      <ul class="nav nav-pills nav-stacked">
+      <div id="category_carousel" class="owl-carousel owl-theme">
         <?php foreach ($categories as $key => $category): ?>
-          <li><a href="{{ url('lessons/category/'.$category->title)}}">{{ $category->title }}</a></li>
+          <div class="item cat-img-container">
+            <a href="{{ url('lessons/category/'.$category->title)}}">
+              <img src="{{ $category->image }}" />
+              <p>{{ $category->title }}</p>
+            </a>
+          </div>
         <?php endforeach; ?>
-      </ul>
+        <div class="item cat-img-container">
+          <a href="{{ url('lessons/browse/all') }}">
+            <img src="http://dev.cilsy.id/assets/source/category/tutorial.png" alt=""></img>
+            <p>Semua Tutorial</p>
+          </a>
+        </div>
+      </div>
+
+      <script type="text/javascript">
+        $('#category_carousel').owlCarousel({
+            loop:false,
+            margin:0,
+            nav:false,
+            // items:1,
+            responsive:{
+                0:{
+                    items:1
+                },
+                600:{
+                    items:3
+                },
+                1000:{
+                    items:4
+                }
+            }
+        });
+      </script>
+
     </div>
-    <div class="col-sm-9">
+    <div class="col-sm-12">
       <h4>Result</h4>
       <?php if(count($results) == 0){ echo "No Data Available";}?>
       <?php foreach ($results as $key => $result): ?>
@@ -59,7 +91,7 @@
         </div>
       <?php endforeach; ?>
       <div class="row">
-          <div class="col-md-12">
+          <div class="col-md-12 text-center">
               {{ $results->links() }}
           </div>
       </div>
