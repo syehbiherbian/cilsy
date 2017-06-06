@@ -8,7 +8,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no" />
     <link href="{{asset('template/web/css/bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{asset('template/web/css/app.css')}}" rel="stylesheet">
+    <link href="{{asset('template/web/css/navbar.css')}}" rel="stylesheet">
     <link href="{{asset('template/web/css/pace.css')}}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('template/web/plugins/ionicons-2.0.1/css/ionicons.min.css') }}">
     <link rel="stylesheet" href="{{ asset('template/web/plugins/OwlCarousel2-2.2.1/dist/assets/owl.carousel.css')}}">
     <script type="text/javascript" src="{{asset('template/web/js/jquery.min.js')}}"></script>
     <script type="text/javascript" src="{{ asset('template/web/plugins/OwlCarousel2-2.2.1/dist/owl.carousel.js') }}"></script>
@@ -25,7 +27,7 @@ mixpanel.init("b208ef84bd5045e39433ef24aa0b823c");</script><!-- end Mixpanel -->
         top: 0px;
         bottom: 0px;
         right: 0px;
-        z-index: 999;
+        z-index: 9999999;
     }
     .middle{
         display: table;
@@ -76,12 +78,102 @@ mixpanel.init("b208ef84bd5045e39433ef24aa0b823c");</script><!-- end Mixpanel -->
             </div>
         </div>
     </div>
-    <div id="header">
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="{{ url('/') }}"><img class="logo" src="{{asset('template/web/img/logo.png')}}"></a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <!-- <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
+            <li><a href="#">Link</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Action</a></li>
+                <li><a href="#">Another action</a></li>
+                <li><a href="#">Something else here</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="#">Separated link</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="#">One more separated link</a></li>
+              </ul>
+            </li>
+          </ul> -->
+          <!-- <form class="navbar-form navbar-left">
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="Search">
+            </div>
+            <button type="submit" class="btn btn-default">Submit</button>
+          </form> -->
+          <form class="navbar-form navbar-left form-search" action="{{ url('search') }}" method="post">
+            {{ csrf_field() }}
+            <div class="input-group">
+
+              <div class="input-group-btn btn-category">
+                <button type="button" class="btn btn-secondary dropdown-toggle " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Kategori <i class="ion-android-arrow-dropdown"></i>
+                </button>
+                <div class="dropdown-menu dropdown-menu-right">
+                  <a class="dropdown-item" href="#">Linux</a>
+                  <a class="dropdown-item" href="#">Mikrotik</a>
+                  <a class="dropdown-item" href="#">Cisco</a>
+                  <!-- <div role="separator" class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="#">Separated link</a> -->
+                </div>
+              </div>
+              <input type="text" class="form-control keyword" aria-label="Text input with dropdown button " placeholder="Search" name="q">
+              <span class="input-group-btn btn-search">
+                 <button class="btn btn-secondary" type="submit"><i class="ion-android-search"></i></button>
+               </span>
+            </div>
+          </form>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#">Masuk</a></li>
+            <li><a href="#">Daftar</a></li>
+            <!-- <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Action</a></li>
+                <li><a href="#">Another action</a></li>
+                <li><a href="#">Something else here</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="#">Separated link</a></li>
+              </ul>
+            </li> -->
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+    <script type="text/javascript">
+    $(document).ready(function() {
+      var btncategory = $('.btn-category').width();
+      $('.dropdown-item').css('width',btncategory);
+    });
+
+    </script>
+    <!--/. End Navbar -->
+
+
+
+    <div id="header" class="hidden">
         <div class="container">
             <a href="{{ url('/') }}">
                 <img class="logo" src="{{asset('template/web/img/logo.png')}}"></img>
             </a>
-            <a href="{{ url('lessons/browse/all') }}" class="browse-btn">Browse Tutorial</a>
+            <!-- <a href="{{ url('lessons/browse/all') }}" class="browse-btn">Browse Tutorial</a> -->
+            <?php //Helper::searchForm(); ?>
             <div class="header-left pull-right">
               <?php if (!empty(Session::get('memberID'))){ ?>
                 <a href="#" class="masuk-btn">Halo, <?= Helper::member('username'); ?></a>
@@ -113,7 +205,9 @@ mixpanel.init("b208ef84bd5045e39433ef24aa0b823c");</script><!-- end Mixpanel -->
             </div>
         </div>
     </div>
-    @yield('content')
+    <div class="main-wrapper">
+      @yield('content')
+    </div>
         <div id="footer">
         <div class="container">
             <div class="row">

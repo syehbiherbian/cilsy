@@ -53,4 +53,31 @@ class Helper
       }
 
   }
+
+  static function searchForm()
+  {
+      $html  = '';
+      $html .= '<form class="navbar-form navbar-left form-search" action="" method="post">
+        <div class="input-group">
+          <input type="text" class="form-control" aria-label="Text input with dropdown button">
+          <div class="input-group-btn">
+            <button type="button" class="btn btn-secondary dropdown-toggle btn-category" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Kategori <i class="ion-android-arrow-dropdown"></i>
+            </button>
+            <div class="dropdown-menu dropdown-menu-right">
+              <a class="dropdown-item" href="#">Lorem</a>
+              <a class="dropdown-item" href="#">Lorem</a>
+              <a class="dropdown-item" href="#">Lorem</a>
+              <!-- <div role="separator" class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#">Separated link</a> -->
+            </div>
+          </div>
+          <span class="input-group-btn">
+             <button class="btn btn-secondary btn-search" type="button"><i class="ion-android-search"></i></button>
+           </span>
+        </div>
+      </form>';
+      return $html;
+
+  }
 }

@@ -21,6 +21,9 @@ html, body {
     min-height: 80px;
     background-color: #2ba8e2;
 }
+.main-wrapper{
+  margin-top: 50px;
+}
 .logo-container {
     padding-top: 15px;
     float: left;
