@@ -12,12 +12,19 @@
     <link href="{{asset('template/web/css/pace.css')}}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('template/web/plugins/ionicons-2.0.1/css/ionicons.min.css') }}">
     <link rel="stylesheet" href="{{ asset('template/web/plugins/OwlCarousel2-2.2.1/dist/assets/owl.carousel.css')}}">
+    <!-- Jquery UI   -->
+    <link rel="stylesheet" href="{{ asset('template/web/plugins/jquery-ui-1.12.1.custom/jquery-ui.css') }}">
     <script type="text/javascript" src="{{asset('template/web/js/jquery.min.js')}}"></script>
     <script type="text/javascript" src="{{ asset('template/web/plugins/OwlCarousel2-2.2.1/dist/owl.carousel.js') }}"></script>
-<!-- start Mixpanel --><script type="text/javascript">(function(e,a){if(!a.__SV){var b=window;try{var c,l,i,j=b.location,g=j.hash;c=function(a,b){return(l=a.match(RegExp(b+"=([^&]*)")))?l[1]:null};g&&c(g,"state")&&(i=JSON.parse(decodeURIComponent(c(g,"state"))),"mpeditor"===i.action&&(b.sessionStorage.setItem("_mpcehash",g),history.replaceState(i.desiredHash||"",e.title,j.pathname+j.search)))}catch(m){}var k,h;window.mixpanel=a;a._i=[];a.init=function(b,c,f){function e(b,a){var c=a.split(".");2==c.length&&(b=b[c[0]],a=c[1]);b[a]=function(){b.push([a].concat(Array.prototype.slice.call(arguments,
-0)))}}var d=a;"undefined"!==typeof f?d=a[f]=[]:f="mixpanel";d.people=d.people||[];d.toString=function(b){var a="mixpanel";"mixpanel"!==f&&(a+="."+f);b||(a+=" (stub)");return a};d.people.toString=function(){return d.toString(1)+".people (stub)"};k="disable time_event track track_pageview track_links track_forms register register_once alias unregister identify name_tag set_config reset people.set people.set_once people.increment people.append people.union people.track_charge people.clear_charges people.delete_user".split(" ");
-for(h=0;h<k.length;h++)e(d,k[h]);a._i.push([b,c,f])};a.__SV=1.2;b=e.createElement("script");b.type="text/javascript";b.async=!0;b.src="undefined"!==typeof MIXPANEL_CUSTOM_LIB_URL?MIXPANEL_CUSTOM_LIB_URL:"file:"===e.location.protocol&&"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js".match(/^\/\//)?"https://cdn.mxpnl.com/libs/mixpanel-2-latest.min.js":"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js";c=e.getElementsByTagName("script")[0];c.parentNode.insertBefore(b,c)}})(document,window.mixpanel||[]);
-mixpanel.init("b208ef84bd5045e39433ef24aa0b823c");</script><!-- end Mixpanel -->
+
+    <!-- start Mixpanel -->
+    <script type="text/javascript">
+    // (function(e,a){if(!a.__SV){var b=window;try{var c,l,i,j=b.location,g=j.hash;c=function(a,b){return(l=a.match(RegExp(b+"=([^&]*)")))?l[1]:null};g&&c(g,"state")&&(i=JSON.parse(decodeURIComponent(c(g,"state"))),"mpeditor"===i.action&&(b.sessionStorage.setItem("_mpcehash",g),history.replaceState(i.desiredHash||"",e.title,j.pathname+j.search)))}catch(m){}var k,h;window.mixpanel=a;a._i=[];a.init=function(b,c,f){function e(b,a){var c=a.split(".");2==c.length&&(b=b[c[0]],a=c[1]);b[a]=function(){b.push([a].concat(Array.prototype.slice.call(arguments,
+    // 0)))}}var d=a;"undefined"!==typeof f?d=a[f]=[]:f="mixpanel";d.people=d.people||[];d.toString=function(b){var a="mixpanel";"mixpanel"!==f&&(a+="."+f);b||(a+=" (stub)");return a};d.people.toString=function(){return d.toString(1)+".people (stub)"};k="disable time_event track track_pageview track_links track_forms register register_once alias unregister identify name_tag set_config reset people.set people.set_once people.increment people.append people.union people.track_charge people.clear_charges people.delete_user".split(" ");
+    // for(h=0;h<k.length;h++)e(d,k[h]);a._i.push([b,c,f])};a.__SV=1.2;b=e.createElement("script");b.type="text/javascript";b.async=!0;b.src="undefined"!==typeof MIXPANEL_CUSTOM_LIB_URL?MIXPANEL_CUSTOM_LIB_URL:"file:"===e.location.protocol&&"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js".match(/^\/\//)?"https://cdn.mxpnl.com/libs/mixpanel-2-latest.min.js":"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js";c=e.getElementsByTagName("script")[0];c.parentNode.insertBefore(b,c)}})(document,window.mixpanel||[]);
+    // mixpanel.init("b208ef84bd5045e39433ef24aa0b823c");
+    </script>
+    <!-- end Mixpanel -->
     <style media="screen">
 
     .loading{
@@ -117,20 +124,25 @@ mixpanel.init("b208ef84bd5045e39433ef24aa0b823c");</script><!-- end Mixpanel -->
             </div>
             <button type="submit" class="btn btn-default">Submit</button>
           </form> -->
-          <form class="navbar-form navbar-left form-search" action="{{ url('search') }}" method="post">
-            {{ csrf_field() }}
+          <form class="navbar-form navbar-left form-search" action="{{ url('search') }}" method="get">
+            <input type="hidden" name="category" value="" id="searchcategory">
+
             <div class="input-group">
 
               <div class="input-group-btn btn-category">
                 <button type="button" class="btn btn-secondary dropdown-toggle " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Kategori <i class="ion-android-arrow-dropdown"></i>
+                  <span id="cate_title">
+
+                    Semua Kategori
+
+                  </span> <i class="ion-android-arrow-dropdown"></i>
                 </button>
                 <div class="dropdown-menu dropdown-menu-right">
-                  <a class="dropdown-item" href="#">Linux</a>
-                  <a class="dropdown-item" href="#">Mikrotik</a>
-                  <a class="dropdown-item" href="#">Cisco</a>
-                  <!-- <div role="separator" class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="#">Separated link</a> -->
+                  <a class="dropdown-item" href="javascript:void(0)" onclick="changeCategory('Linux')">Linux</a>
+                  <a class="dropdown-item" href="javascript:void(0)" onclick="changeCategory('Mikrotik')">Mikrotik</a>
+                  <a class="dropdown-item" href="javascript:void(0)" onclick="changeCategory('Cisco')">Cisco</a>
+                  <div role="separator" class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="javascript:void(0)" onclick="changeCategory('Semua Kategori')">Semua Kategori</a>
                 </div>
               </div>
               <input type="text" class="form-control keyword" aria-label="Text input with dropdown button " placeholder="Search" name="q">
@@ -139,20 +151,53 @@ mixpanel.init("b208ef84bd5045e39433ef24aa0b823c");</script><!-- end Mixpanel -->
                </span>
             </div>
           </form>
+          <?php if (!empty(Session::get('memberID'))){ ?>
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="#">Masuk</a></li>
-            <li><a href="#">Daftar</a></li>
-            <!-- <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+            <!-- <li><a href="{{ url('member/signin') }}">Masuk</a></li>
+            <li><a href="{{ url('member/signup') }}">Daftar</a></li> -->
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Halo, <?= Helper::member('username'); ?> <span class="caret"></span></a>
               <ul class="dropdown-menu">
-                <li><a href="#">Action</a></li>
-                <li><a href="#">Another action</a></li>
+                <li style="padding: 15px; background: #fff;">
+                  <table cellpadding="15">
+                    <tr>
+                      <td>Status Paket</td>
+                      <td>: <?= Helper::package('title'); ?></td>
+                    </tr>
+                    <tr>
+                      <td>Masa Aktif</td>
+                      <td>: <?= Helper::package('expired'); ?> hari</td>
+                    </tr>
+                    <tr>
+                      <td><a href="{{ url('member/package') }}" class="btn btn-danger btn-package">Perpanjang</a></td>
+                      <td><a href="{{ url('member/change') }}" class="btn btn-success">Ganti Password</a></td>
+                      <td><a href="{{ url('member/signout') }}" class="btn btn-primary btn-signout">Logout</a></td>
+                    </tr>
+                  </table>
+                </li>
+                <!-- <li><a href="#">Another action</a></li>
                 <li><a href="#">Something else here</a></li>
                 <li role="separator" class="divider"></li>
-                <li><a href="#">Separated link</a></li>
+                <li><a href="#">Separated link</a></li> -->
               </ul>
-            </li> -->
+            </li>
           </ul>
+          <?php }else{ ?>
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="{{ url('member/signin') }}">Masuk</a></li>
+              <li><a href="{{ url('member/signup') }}">Daftar</a></li>
+              <!-- <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#">Action</a></li>
+                  <li><a href="#">Another action</a></li>
+                  <li><a href="#">Something else here</a></li>
+                  <li role="separator" class="divider"></li>
+                  <li><a href="#">Separated link</a></li>
+                </ul>
+              </li> -->
+            </ul>
+          <?php } ?>
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->
     </nav>
@@ -161,13 +206,52 @@ mixpanel.init("b208ef84bd5045e39433ef24aa0b823c");</script><!-- end Mixpanel -->
       var btncategory = $('.btn-category').width();
       $('.dropdown-item').css('width',btncategory);
     });
+    </script>
+    <script type="text/javascript">
+      function changeCategory(category) {
+        $('#cate_title').text(category);
+        if (category == 'Semua Kategori') {
+            $('#searchcategory').val('');
+        }else {
+            $('#searchcategory').val(category);
+        }
 
+      }
+    </script>
+
+
+    <!-- Search Form Auto complete -->
+    <script type="text/javascript">
+    $(function() {
+      $(".keyword").autocomplete({
+        source:'{{ url("search/autocomplete")}}',
+        select:function(event,ui) {
+
+
+          $(".keyword").val(ui.item.label);
+          return false;
+        },
+        minLength: 0,
+
+      }).bind('focus', function () {
+        $('.ui-autocomplete').css('z-index','9999').css('overflow-y','scroll').css('max-height','300px');
+
+        // $('.ui-autocomplete').css('background','#09121a').css('color','#fff');
+        // $('.ui-menu .ui-menu-item-wrapper').css('padding','11px 1em 3px 1.4em !important');
+        $(this).autocomplete("search");
+        // var btncategory = $('.btn-category').width();
+        // var left = '-'+btncategory+'px';
+
+
+      });
+
+    });
     </script>
     <!--/. End Navbar -->
 
 
 
-    <div id="header" class="hidden">
+    <div id="header" class="hidden" style="margin-top:100px;">
         <div class="container">
             <a href="{{ url('/') }}">
                 <img class="logo" src="{{asset('template/web/img/logo.png')}}"></img>
@@ -258,6 +342,9 @@ mixpanel.init("b208ef84bd5045e39433ef24aa0b823c");</script><!-- end Mixpanel -->
 
     <script type="text/javascript" src="{{asset('template/web/js/bootstrap.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('template/web/js/pace.js') }}"></script>
+    <!-- Jquery UI   -->
+    <script type="text/javascript" src="{{ asset('template/web/plugins/jquery-ui-1.12.1.custom/jquery-ui.js') }}"></script>
+    <!-- Custom Js -->
     <script type="text/javascript" src="{{asset('template/web/js/custom.js') }}"></script>
 </body>
 

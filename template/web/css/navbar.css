@@ -68,12 +68,22 @@
     width: 50%;
   }
 }
+.navbar-form .dropdown-divider{
+
+  border: 1px solid #eee;
+  max-height: 1px;
+
+}
+
 .navbar-form .form-control{
   height: 43px;
+  padding-left: 45%;
 }
 /*@media (min-width: 768px){*/
   .navbar-form .btn-category{
       width: 40% !important;
+      position: absolute;
+      z-index: 9;
   }
 /*}*/
 /*@media (min-width: 768px){*/
