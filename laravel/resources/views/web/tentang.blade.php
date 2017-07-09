@@ -27,7 +27,7 @@
       <div class="col-sm-12">
         <h3>Tentang</h3>
         <p class="content">
-        Cilsy adalah layanan online video tutorial eksklusif IT dengan realtime chat support yang dapat
+        Cilsy adalah layanan online video tutorial eksklusif IT dengan dengan chat & email support yang dapat
 
 membantu orang-orang lebih cepat jago di bidang IT. Seluruh video dan modul yang ada benar-
 benar original, berbahasa indonesia, dan buatan sendiri oleh para pakar dan kontributor di Cilsy.

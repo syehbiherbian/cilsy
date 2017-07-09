@@ -98,4 +98,9 @@
     </div>
   </div>
 </div>
+<script>
+fbq('track', 'Search', {
+search_string: 'leather sandals'
+});
+</script>
 @endsection
