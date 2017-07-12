@@ -350,7 +350,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{action('PageController@index')}}">
+                        <a href="{{ url('system/pages') }}">
                             <i class="material-icons">assignment</i>
                             <span>Pages</span>
                         </a>

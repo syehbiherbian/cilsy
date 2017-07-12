@@ -92,7 +92,7 @@ Route::group(['middleware' => ['auth']], function () {
 
 
         Route::resource('system/cat','KategoriController');
-        Route::resource('system/page', 'PageController');
+        Route::resource('system/pages', 'PagesController');
         Route::resource('system/lessons','LessonController');
         Route::resource('system/files','FilesController');
         Route::resource('system/videos','VideosController');
