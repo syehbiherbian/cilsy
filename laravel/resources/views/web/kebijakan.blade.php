@@ -36,7 +36,7 @@ MOHON ANDA MEMERIKSA KETENTUAN LAYANAN CILSY DENGAN SEKSAMA SEBELUM MENGGUNAKAN 
 <h4>1. Hal-hal Umum</h4>
 
 1.1. Cilsy adalah brand dari perusahaan yang sudah berbadan hukum bernama PT. Cilsy Fiolution Indonesia yang berdomisili di Bandung <br>
-1.2. Cilsy merupakan platform online penyedia tutorial-tutorial IT eksklusif baik itu berbentuk video maupun modul dengan realtime chat support.<br>
+1.2. Cilsy merupakan platform online penyedia tutorial-tutorial IT eksklusif baik itu berbentuk video maupun modul dengan chat & email support.<br>
 1.3. Konten-konten yang terdapat pada layanan Cilsy adalah konten berupa video, modul, file-file praktek, dan juga layanan konsultasi online melalui chat.<br>
 
 <h4>2. Penggunaan Layanan</h4>
@@ -56,7 +56,7 @@ MOHON ANDA MEMERIKSA KETENTUAN LAYANAN CILSY DENGAN SEKSAMA SEBELUM MENGGUNAKAN 
 
 <h4>4. Konsultasi</h4>
 
-4.1. Pengguna dapat melakukan konsultasi secara online dengan trainer-trainer yang disediakan oleh Cilsy melalui fitur chat realtime dari pukul 07.00 – 22.00 setiap hari baik itu pengguna PRO maupun PREMIUM. Jika anda berkonsultasi diluar jam tersebut, segala bentuk pertanyaan anda akan masuk ke email Cilsy untuk segera dibalas di jam kerja berikutnya.<br>
+4.1. Pengguna dapat melakukan konsultasi secara online dengan trainer-trainer yang disediakan oleh Cilsy melalui fitur chat dan email support dari pukul 07.00 – 22.00 setiap hari baik itu pengguna PRO maupun PREMIUM. Jika anda berkonsultasi diluar jam tersebut, segala bentuk pertanyaan anda akan masuk ke email Cilsy untuk segera dibalas di jam kerja berikutnya.<br>
 4.2. Pengguna dapat bertanya apapun seputar konten yang ada didalam Cilsy maupun permasalahan real yang dialami oleh pengguna. Cilsy tidak membatasi sama sekali konteks pertanyaan yang anda tanyakan.<br>
 4.3. Pengguna yang dapat melakukan konsultasi online hanyalah pengguna berbayar saja.<br>
 4.4. Pengguna dilarang melakukan konsultasi dengan kata-kata yang tidak layak seperti SARA, pornografi, kasar, dan sebagainya.<br>

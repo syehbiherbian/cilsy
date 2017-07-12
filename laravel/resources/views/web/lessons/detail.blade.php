@@ -3,6 +3,12 @@
 <title>Cilsy</title>
 <link href="{{ asset('node_modules/video.js/dist/video-js.css') }}" rel="stylesheet">
 <link href="{{ asset('node_modules/videojs-playlist-ui/dist/videojs-playlist-ui.vertical.css') }}" rel="stylesheet">
+<script>
+fbq('track', 'ViewContent', {
+value: 3.50,
+currency: 'USD'
+});
+</script>
 <style>
   body {
     /*font-family: Arial, sans-serif;*/
@@ -318,16 +324,6 @@ function activateTab() {
 })();
   </script>
     <!--Start of Tawk.to Script-->
-<script type="text/javascript">
-var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-(function(){
-var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-s1.async=true;
-s1.src='https://embed.tawk.to/58c547d85b89e2149e155e47/default';
-s1.charset='UTF-8';
-s1.setAttribute('crossorigin','*');
-s0.parentNode.insertBefore(s1,s0);
-})();
-</script>
+
 <!--End of Tawk.to Script-->
 @endsection

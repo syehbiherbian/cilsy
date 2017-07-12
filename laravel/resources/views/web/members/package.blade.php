@@ -74,16 +74,17 @@
                     <td>Chat Dengan Trainer</td>
                     <td>
                       <?php if ($packages['0']->chat == 0){ ?>
-                        Maksimal Dijawab Dalam 1x24 Jam
+                        Maksimal Dijawab Dalam 3x24 Jam
                       <?php }else if ($packages['0']->chat == 1) { ?>
-                        Real Time 24 Jam
+                        Maksimal Dijawab Dalam 1x24 Jam
                       <?php } ?>
                     </td>
                     <td>
                       <?php if ($packages['1']->chat == 0){ ?>
-                        Maksimal Dijawab Dalam 1x24 Jam
+                         3 x 24 jam
                       <?php }else if ($packages['1']->chat == 1) { ?>
-                        Real Time 1x24 Jam
+                       
+                        Maksimal Dijawab Dalam 1x24 Jam
                       <?php } ?>
                     </td>
                 </tr>
@@ -117,7 +118,7 @@
                       <?php if ($packages['1']->download == 0){ ?>
                         Tidak
                       <?php }else if ($packages['1']->download == 1) { ?>
-                        Segera
+                        Ya
                       <?php } ?>
                     </td>
                 </tr>
@@ -132,7 +133,7 @@
       </form>
     </div>
     <div class="intstruction-text">
-        <p>Butuh Bantuan Untuk Bertanya? Telepon Kami di 022-2017098</p>
+        <p>Butuh Bantuan Untuk Bertanya? Telepon Kami di 089630713487</p>
     </div>
 </div>
 
@@ -142,6 +143,11 @@
   }
 </script>
 
-
+<script>
+fbq('track', 'CompleteRegistration', {
+value: 25.00,
+currency: 'USD'
+});
+</script>
 
 @endsection

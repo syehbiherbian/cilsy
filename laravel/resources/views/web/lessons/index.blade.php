@@ -76,7 +76,10 @@
         <div class="item">
           <a href="{{ url('lessons/'.$result->title) }}">
             <div class="row">
-              <div class="col-sm-12">
+              <div class="col-md-4">
+                <img src="{{ $result->image }}" alt="" class="img-responsive">
+              </div>
+              <div class="col-sm-8">
                 <p><strong>{{ $result->title }}</strong></p>
                 <p><small><?php echo nl2br($result->description);?></small></p>
                 <p><div class="badge badge-default">{{ $result->category_title }}</div>
@@ -95,4 +98,9 @@
     </div>
   </div>
 </div>
+<script>
+fbq('track', 'Search', {
+search_string: 'leather sandals'
+});
+</script>
 @endsection

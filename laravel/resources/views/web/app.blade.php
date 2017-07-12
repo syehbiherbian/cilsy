@@ -16,7 +16,21 @@
     <link rel="stylesheet" href="{{ asset('template/web/plugins/jquery-ui-1.12.1.custom/jquery-ui.css') }}">
     <script type="text/javascript" src="{{asset('template/web/js/jquery.min.js')}}"></script>
     <script type="text/javascript" src="{{ asset('template/web/plugins/OwlCarousel2-2.2.1/dist/owl.carousel.js') }}"></script>
-
+    <!-- Facebook Pixel Code -->
+    <script>
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+    n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+    document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '121629818418908'); // Insert your pixel ID here.
+    fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=121629818418908&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- DO NOT MODIFY -->
+    <!-- End Facebook Pixel Code -->
     <!-- start Mixpanel -->
     <script type="text/javascript">
     // (function(e,a){if(!a.__SV){var b=window;try{var c,l,i,j=b.location,g=j.hash;c=function(a,b){return(l=a.match(RegExp(b+"=([^&]*)")))?l[1]:null};g&&c(g,"state")&&(i=JSON.parse(decodeURIComponent(c(g,"state"))),"mpeditor"===i.action&&(b.sessionStorage.setItem("_mpcehash",g),history.replaceState(i.desiredHash||"",e.title,j.pathname+j.search)))}catch(m){}var k,h;window.mixpanel=a;a._i=[];a.init=function(b,c,f){function e(b,a){var c=a.split(".");2==c.length&&(b=b[c[0]],a=c[1]);b[a]=function(){b.push([a].concat(Array.prototype.slice.call(arguments,
@@ -73,6 +87,28 @@
       /*.btn-signout{
         margin-right: 5px
       }*/
+      @media (min-width: 768px){
+        .navbar-form {
+          width: 42%;
+      }
+      }
+
+      @media (min-width: 768px){
+        .navbar-nav>li {
+            padding-top: 9px;
+            padding-bottom: 9px;
+            margin-top: 7px;
+        }
+      }
+
+      
+
+      .navbar-form {
+          margin-top: 13px;
+          background: #eee;
+          padding: 5px;
+          margin-left: 16px;
+      }
     </style>
 </head>
 
@@ -98,6 +134,7 @@
             <span class="icon-bar"></span>
           </button>
           <a class="navbar-brand" href="{{ url('/') }}"><img class="logo" src="{{asset('template/web/img/logo.png')}}"></a>
+          <a href="{{ url('lessons/browse/all') }}" class="browse-btn">Browse Tutorial</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -339,7 +376,27 @@
             </div>
         </div>
     </div>
+    <script type="text/javascript">
+    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+    (function(){
+    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+    s1.async=true;
+    s1.src='https://embed.tawk.to/58c547d85b89e2149e155e47/default';
+    s1.charset='UTF-8';
+    s1.setAttribute('crossorigin','*');
+    s0.parentNode.insertBefore(s1,s0);
+    })();
+    </script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
+      ga('create', 'UA-101007788-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
     <script type="text/javascript" src="{{asset('template/web/js/bootstrap.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('template/web/js/pace.js') }}"></script>
 
