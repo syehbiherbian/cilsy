@@ -108,7 +108,36 @@
           margin-top: 13px;
           background: #eee;
           padding: 5px;
-          margin-left: 16px;
+          margin-left: 0px;
+          margin-right: 0px;
+      }
+      @media (max-width:768px) {
+        #bs-example-navbar-collapse-search{
+          min-height: 100vh;
+
+        }
+      }
+
+      @media (min-width:768px) {
+        #bs-example-navbar-collapse-search{
+          display: none !important;
+        }
+      }
+
+
+      #bs-example-navbar-collapse-search p{
+        border-bottom: 1px solid #fff;
+        padding-bottom: 5px;
+        color: #fff;
+      }
+      #bs-example-navbar-collapse-search .dropdown-menu{
+        position: relative;
+      }
+      .search-toogle{
+        font-size: 20px;
+        color: #fff;
+        padding-top: 4px;
+        padding-bottom: 0px;
       }
     </style>
 </head>
@@ -134,9 +163,14 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
+          <button type="button" class="navbar-toggle collapsed search-toogle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-search" aria-expanded="false">
+            <!-- <span class="sr-only">Toggle navigation</span> -->
+            <i class="ion ion-ios-search-strong"></i>
+          </button>
           <a class="navbar-brand" href="{{ url('/') }}"><img class="logo" src="{{asset('template/web/img/logo.png')}}"></a>
-          <a href="{{ url('lessons/browse/all') }}" class="browse-btn">Browse Tutorial</a>
+          <!-- <a href="{{ url('lessons/browse/all') }}" class="browse-btn">Browse Tutorial</a> -->
         </div>
+
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -162,7 +196,7 @@
             </div>
             <button type="submit" class="btn btn-default">Submit</button>
           </form> -->
-          <form class="navbar-form navbar-left form-search" action="{{ url('search') }}" method="get">
+          <form class="navbar-form navbar-left form-search hidden-xs" action="{{ url('search') }}" method="get">
             <input type="hidden" name="category" value="" id="searchcategory">
 
             <div class="input-group">
@@ -237,6 +271,37 @@
             </ul>
           <?php } ?>
         </div><!-- /.navbar-collapse -->
+
+        <div class="collapse navbar-collapse hidden-sm hidden-md hidden-lg" id="bs-example-navbar-collapse-search">
+          <form class="navbar-form navbar-left form-search " action="{{ url('search') }}" method="get">
+            <input type="hidden" name="category" value="" id="searchcategory">
+
+            <div class="input-group">
+
+              <div class="input-group-btn btn-category">
+                <button type="button" class="btn btn-secondary dropdown-toggle " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <span id="cate_title">
+
+                    Semua Kategori
+
+                  </span> <i class="ion-android-arrow-dropdown"></i>
+                </button>
+                <div class="dropdown-menu dropdown-menu-right">
+                  <a class="dropdown-item" href="javascript:void(0)" onclick="changeCategory('Linux')">Linux</a>
+                  <a class="dropdown-item" href="javascript:void(0)" onclick="changeCategory('Mikrotik')">Mikrotik</a>
+                  <a class="dropdown-item" href="javascript:void(0)" onclick="changeCategory('Cisco')">Cisco</a>
+                  <div role="separator" class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="javascript:void(0)" onclick="changeCategory('Semua Kategori')">Semua Kategori</a>
+                </div>
+              </div>
+              <input type="text" class="form-control keyword" aria-label="Text input with dropdown button " placeholder="Search" name="q">
+              <span class="input-group-btn btn-search">
+                 <button class="btn btn-secondary" type="submit"><i class="ion-android-search"></i></button>
+               </span>
+            </div>
+          </form>
+          <p>Riwayat Pencarian : </p>
+        </div>
       </div><!-- /.container-fluid -->
     </nav>
     <script type="text/javascript">
