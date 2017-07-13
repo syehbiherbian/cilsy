@@ -1,6 +1,6 @@
 @extends('web.app')
+@section('title','Masuk | ')
 @section('content')
-<title>Cilsy</title>
 <div id="sign-container">
     <div class="tab-btn-container">
       <a href="{{ url('member/signup')}}" id="tab-1" style="background-color: #ededed">Daftar</a>

@@ -1,6 +1,6 @@
 @extends('web.app')
+@section('title','')
 @section('content')
-<title>Cilsy</title>
 <div id="top-section">
         <p>
             Belajar dari 200++ tutorial networking & Server Ekslusif<br>
@@ -62,7 +62,7 @@
 
 
                   </div>
-                
+
                 </div>
             </div>
         </div>

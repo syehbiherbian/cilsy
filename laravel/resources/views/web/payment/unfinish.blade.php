@@ -1,6 +1,6 @@
 @extends('web.app')
+@section('title','Pembayaran belum selesai | ')
 @section('content')
-<title>Cilsy - Payment UnFinish</title>
 <h1>Payment un Finish</h1>
 
 @endsection

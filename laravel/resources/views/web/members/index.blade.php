@@ -1,6 +1,6 @@
 @extends('web.app')
+@section('title','Dashboard | ')
 @section('content')
-<title>Cilsy</title>
 
 
 @endsection

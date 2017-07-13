@@ -1,6 +1,6 @@
 @extends('web.app')
+@section('title','Semua Tutorial | ')
 @section('content')
-<title>Cilsy</title>
 <style>
 @media (max-width:768px) {
     .section-content{

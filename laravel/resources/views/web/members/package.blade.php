@@ -1,6 +1,6 @@
 @extends('web.app')
+@section('title','Pilih Paket | ')
 @section('content')
-<title>Cilsy | Pilih Paket</title>
 
 <div id="table-bg">
 
@@ -83,7 +83,7 @@
                       <?php if ($packages['1']->chat == 0){ ?>
                          3 x 24 jam
                       <?php }else if ($packages['1']->chat == 1) { ?>
-                       
+
                         Maksimal Dijawab Dalam 1x24 Jam
                       <?php } ?>
                     </td>

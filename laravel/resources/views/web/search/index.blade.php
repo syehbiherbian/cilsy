@@ -1,6 +1,6 @@
 @extends('web.app')
+@section('title','Pencarian | ')
 @section('content')
-<title>Cilsy</title>
 <style>
 @media (max-width:768px) {
     .section-content{

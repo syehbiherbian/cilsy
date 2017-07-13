@@ -1,6 +1,6 @@
 @extends('web.app')
+@section('title','Contact | ')
 @section('content')
-<title>Cilsy Fiolution - Contact</title>
 <style media="screen">
   .section-content{
     min-height: 350px;

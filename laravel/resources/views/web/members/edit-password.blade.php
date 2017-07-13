@@ -1,6 +1,6 @@
 @extends('web.app')
+@section('title','Ubah Kata Sandi | ')
 @section('content')
-<title>Cilsy Fiolution | Ganti Password</title>
 <div id="sign-container">
 
     <div class="tab-content">

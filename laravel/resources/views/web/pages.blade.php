@@ -1,6 +1,6 @@
 @extends('web.app')
+@section('title',$pages->title.' | ')
 @section('content')
-<title>{{ $pages->title }} - Cilsy</title>
 <style media="screen">
   .section-content{
     min-height: 350px;

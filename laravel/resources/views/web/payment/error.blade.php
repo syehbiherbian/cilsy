@@ -1,6 +1,6 @@
 @extends('web.app')
+@section('title','Payment Error | ')
 @section('content')
-<title>Cilsy - Payment Error</title>
 <h1>Payment Error</h1>
 
 @endsection

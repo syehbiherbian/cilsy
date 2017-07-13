@@ -1,6 +1,6 @@
 @extends('web.app')
+@section('title',$lessons->title.' | ')
 @section('content')
-<title>Cilsy</title>
 <link href="{{ asset('node_modules/video.js/dist/video-js.css') }}" rel="stylesheet">
 <link href="{{ asset('node_modules/videojs-playlist-ui/dist/videojs-playlist-ui.vertical.css') }}" rel="stylesheet">
 <script>

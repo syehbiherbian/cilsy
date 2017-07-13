@@ -1,6 +1,6 @@
 @extends('web.app')
+@section('title','Kebijakan Layanan | ')
 @section('content')
-<title>Cilsy Fiolution - Kebijakan Layanan</title>
 <style media="screen">
   .section-content{
     min-height: 350px;

@@ -1,6 +1,6 @@
 @extends('web.app')
+@section('title','Daftar | ')
 @section('content')
-<title>Cilsy</title>
 <div id="sign-container">
     <div class="tab-btn-container">
         <a href="{{ url('member/signup')}}" id="tab-1">Daftar</a>
@@ -44,7 +44,7 @@
                 <button type="submit" class="btn btn-primary">DAFTAR</button>
             </form>
         </div>
-        <div id="tab-2-content" style="display: none;">          
+        <div id="tab-2-content" style="display: none;">
             <!-- <form>
                 <div class="form-group">
                     <label for="exampleInputPassword1">Email :</label>

@@ -1,6 +1,6 @@
 @extends('web.app')
+@section('title','Pembayaran telah selesai | ')
 @section('content')
-<title>Cilsy - Payment Finish</title>
 <style media="screen">
 @media (max-width:768px) {
     .section-content{
