@@ -32,7 +32,7 @@
                       <?php endforeach; ?>
                       <div class="item cat-img-container">
                         <a href="{{ url('lessons/browse/all') }}">
-                          <img src="http://dev.cilsy.id/assets/source/category/tutorial.png" alt=""></img>
+                          <img src="https://www.cilsy.id/assets/source/category/tutorial.png" alt=""></img>
                           <p>Semua Tutorial</p>
                         </a>
                       </div>

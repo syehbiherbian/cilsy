@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="4yTZI7aHiFWK-AD03jB5ffbkI5Q8svP423zsKLmtp4I" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8; IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no" />
     <title>@yield('title') {{ config('app.name') }}</title>
@@ -197,13 +198,13 @@
             <button type="submit" class="btn btn-default">Submit</button>
           </form> -->
           <form class="navbar-form navbar-left form-search hidden-xs" action="{{ url('search') }}" method="get">
-            <input type="hidden" name="category" value="" id="searchcategory">
+            <input type="hidden" name="category" value="" class="searchcategory">
 
             <div class="input-group">
 
               <div class="input-group-btn btn-category">
                 <button type="button" class="btn btn-secondary dropdown-toggle " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <span id="cate_title">
+                  <span class="cate_title">
 
                     Semua Kategori
 
@@ -274,13 +275,13 @@
 
         <div class="collapse navbar-collapse hidden-sm hidden-md hidden-lg" id="bs-example-navbar-collapse-search">
           <form class="navbar-form navbar-left form-search " action="{{ url('search') }}" method="get">
-            <input type="hidden" name="category" value="" id="searchcategory">
+            <input type="hidden" name="category" value="" class="searchcategory">
 
             <div class="input-group">
 
               <div class="input-group-btn btn-category">
                 <button type="button" class="btn btn-secondary dropdown-toggle " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <span id="cate_title">
+                  <span class="cate_title">
 
                     Semua Kategori
 
@@ -312,11 +313,11 @@
     </script>
     <script type="text/javascript">
       function changeCategory(category) {
-        $('#cate_title').text(category);
+        $('.cate_title').text(category);
         if (category == 'Semua Kategori') {
-            $('#searchcategory').val('');
+            $('.searchcategory').val('');
         }else {
-            $('#searchcategory').val(category);
+            $('.searchcategory').val(category);
         }
 
       }

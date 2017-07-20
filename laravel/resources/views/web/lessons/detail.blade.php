@@ -38,8 +38,26 @@ currency: 'USD'
 
   .vjs-playlist {
     float: left;
-    width: 342px;
+    width: 100%;
     height: 500px;
+  }
+  @media (min-width:768px) {
+    .vjs-playlist {
+        width: 35%;
+    }
+  }
+
+  .vjs-mouse.vjs-playlist cite{
+    font-size: 13px;
+  }
+  .vjs-mouse.vjs-playlist .vjs-playlist-description{
+    font-size: 13px;
+  }
+  .vjs-playlist .vjs-playlist-thumbnail{
+    background: transparent;
+  }
+  .vjs-mouse.vjs-playlist .vjs-playlist-item{
+    height: 69px;
   }
   .tablist {
   position: relative;
@@ -187,19 +205,38 @@ currency: 'USD'
   box-sizing: border-box;
 }
 
+.materi_list{
+  padding:0px;
+  list-style: none;
+}
+
+.materi_list li{
+  border-bottom: 1px solid #eee;
+  padding: 15px 0px 0px 0px;
+}
+.materi_list li:last-of-type{
+
+  border-bottom: none;
+
+}   
 </style>
 
 <div id="content-section">
 
   <div id="cat-images">
     <div class="container">
-      <div class="playlist-total-video">Total {{ count($main_videos) }} Video</div>
-      <p class="playlist-title">
-        {{ $lessons->title }}
+      <div class="row">
+        <div class="col-xs-12 col-md-10">
+          <p class="playlist-title">
+            {{ $lessons->title }}
+            <!-- <a href="#" class="playlist-total-video"></a> -->
+          </p>
+        </div>
+        <div class="col-xs-12 col-md-2">
+          <div class="playlist-total-video">Total {{ count($main_videos) }} Video</div>
+        </div>
+      </div>
 
-
-        <!-- <a href="#" class="playlist-total-video"></a> -->
-      </p>
 
       <div class="player-container">
         <!-- Main Video -->
@@ -234,7 +271,14 @@ currency: 'USD'
   </div>
   <div class="tabpanel" id="panel2" role="tabpanel">
     <h1>Daftar Materi</h1>
-    <p>Comming Soon</p>
+    <ul class="materi_list">
+      <?php foreach($main_videos as $row){?>
+      <li>
+        <strong><?= nl2br($row->title);?></strong>
+        <p><?= nl2br($row->description);?></p>
+      </li>
+      <?php } ?>
+    </ul>
 
   </div>
   <div class="tabpanel" id="panel3" role="tabpanel">

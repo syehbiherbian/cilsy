@@ -14,6 +14,7 @@
         {{ csrf_field() }}
 
         <input type="hidden" name="packages_id" value="1">
+        <div class="table-responsive">
         <table id="pricing-table" class="table table-striped">
             <col width="50%">
             <col width="25%">
@@ -130,6 +131,7 @@
                 </tr>
             </tbody>
         </table>
+        </div>
       </form>
     </div>
     <div class="intstruction-text">
