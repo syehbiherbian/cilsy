@@ -109,7 +109,7 @@
           margin-top: 13px;
           background: #eee;
           padding: 5px;
-          margin-left: 0px;
+          margin-left: 25px;
           margin-right: 0px;
       }
       @media (max-width:768px) {
@@ -169,7 +169,7 @@
             <i class="ion ion-ios-search-strong"></i>
           </button>
           <a class="navbar-brand" href="{{ url('/') }}"><img class="logo" src="{{asset('template/web/img/logo.png')}}"></a>
-          <!-- <a href="{{ url('lessons/browse/all') }}" class="browse-btn">Browse Tutorial</a> -->
+          <a href="{{ url('lessons/browse/all') }}" class="browse-btn">Browse Tutorial</a>
         </div>
 
 
@@ -224,22 +224,22 @@
                </span>
             </div>
           </form>
-          <?php if (!empty(Session::get('memberID'))){ ?>
+          <?php if (!empty(Session::get('memberID'))) {?>
           <ul class="nav navbar-nav navbar-right">
             <!-- <li><a href="{{ url('member/signin') }}">Masuk</a></li>
             <li><a href="{{ url('member/signup') }}">Daftar</a></li> -->
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Halo, <?= Helper::member('username'); ?> <span class="caret"></span></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Halo, <?=Helper::member('username');?> <span class="caret"></span></a>
               <ul class="dropdown-menu">
                 <li style="padding: 15px; background: #fff;">
                   <table cellpadding="15">
                     <tr>
                       <td>Status Paket</td>
-                      <td>: <?= Helper::package('title'); ?></td>
+                      <td>: <?=Helper::package('title');?></td>
                     </tr>
                     <tr>
                       <td>Masa Aktif</td>
-                      <td>: <?= Helper::package('expired'); ?> hari</td>
+                      <td>: <?=Helper::package('expired');?> hari</td>
                     </tr>
                     <tr>
                       <td><a href="{{ url('member/package') }}" class="btn btn-danger btn-package">Perpanjang</a></td>
@@ -255,7 +255,7 @@
               </ul>
             </li>
           </ul>
-          <?php }else{ ?>
+          <?php } else {?>
             <ul class="nav navbar-nav navbar-right">
               <li><a href="{{ url('member/signin') }}">Masuk</a></li>
               <li><a href="{{ url('member/signup') }}">Daftar</a></li>
@@ -270,7 +270,7 @@
                 </ul>
               </li> -->
             </ul>
-          <?php } ?>
+          <?php }?>
         </div><!-- /.navbar-collapse -->
 
         <div class="collapse navbar-collapse hidden-sm hidden-md hidden-lg" id="bs-example-navbar-collapse-search">
@@ -363,19 +363,19 @@
             <!-- <a href="{{ url('lessons/browse/all') }}" class="browse-btn">Browse Tutorial</a> -->
             <?php //Helper::searchForm(); ?>
             <div class="header-left pull-right">
-              <?php if (!empty(Session::get('memberID'))){ ?>
-                <a href="#" class="masuk-btn">Halo, <?= Helper::member('username'); ?></a>
+              <?php if (!empty(Session::get('memberID'))) {?>
+                <a href="#" class="masuk-btn">Halo, <?=Helper::member('username');?></a>
                 <div class="drop-down">
                   <a href="#" style="color:#FFF" class="user-arrow">&#x25BE;</a>
                   <div class="drop-down-content">
                     <table cellpadding="15">
                       <tr>
                         <td>Status Paket</td>
-                        <td>: <?= Helper::package('title'); ?></td>
+                        <td>: <?=Helper::package('title');?></td>
                       </tr>
                       <tr>
                         <td>Masa Aktif</td>
-                        <td>: <?= Helper::package('expired'); ?> hari</td>
+                        <td>: <?=Helper::package('expired');?> hari</td>
                       </tr>
                       <tr>
                         <td><a href="{{ url('member/package') }}" class="btn btn-danger btn-package">Perpanjang</a></td>
@@ -386,10 +386,10 @@
                   </div>
                 </div>
 
-              <?php }else{ ?>
+              <?php } else {?>
                 <a href="{{ url('member/signin') }}" class="masuk-btn">Masuk</a>
                 <a href="{{ url('member/signup')}}" class="daftar-header-btn">Daftar</a>
-              <?php } ?>
+              <?php }?>
             </div>
         </div>
     </div>
