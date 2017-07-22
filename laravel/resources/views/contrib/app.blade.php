@@ -6,8 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8; IE=edge"" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no" />
-    <title></title>
-
+    <title>Cilsy Fiolution | Contributor</title>
+    <link rel="shortcut icon" type="image/png" href="{{asset('template/kontributor/img/logo-only.png')}}"/>
     <link href="{{asset('template/kontributor/css/bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{asset('template/kontributor/css/custom.css')}}" rel="stylesheet">
 </head>
