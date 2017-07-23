@@ -6,7 +6,7 @@
 				<li><a href="{{ url('contributor') }}">Dashboard</a></li>
         <li><a href="{{ url('contributor/lessons') }}">Kelola Tutorial</a></li>
 			  <li><a href="{{ url('contributor/lessons/create') }}">Buat tutorial</a></li>
-        <li>Video</li>
+        <li>Lampiran</li>
 		</ul>
 </div>
 @endsection
@@ -23,7 +23,7 @@
 					<div class="option">
 						<div class="row">
 							<div class="col-md-6">
-								<h4>1.Video 1</h4>
+								<h4>Lampian 1</h4>
 							</div>
 							<div class="col-md-6 text-right">
 								<div class="btn-group">
@@ -38,7 +38,7 @@
 					<div class="form-group">
 						<label class="col-sm-2 control-label">Judul</label>
 						<div class="col-sm-10">
-							<input type="text" class="form-control" placeholder="Contoh:Pengenalan dasar terminal Ubuntu">
+							<input type="text" class="form-control" placeholder="Contoh: File lampiran pertama ">
 						</div>
 					</div>
 					<div class="form-group">
@@ -50,7 +50,7 @@
 	 	      <div class="form-group">
 	 	        <label class="col-sm-2 control-label">Description</label>
 	 	        <div class="col-sm-10">
-	 	        <textarea class="form-control" rows="8" cols="80" placeholder="Contoh: Active Directory Domain Controller merupakan salah satu keunggulan server windows."></textarea>
+	 	        <textarea class="form-control" rows="8" cols="80" placeholder="Contoh: Modul praktek pertama"></textarea>
 	 	        </div>
 	 	      </div>
 
@@ -58,7 +58,7 @@
 
 	      <div class="form-group">
 					<div class="col-sm-2">
-						<button type="button" name="button" class="btn btn-default btn-outline"><i class=""></i>tambah video</button>
+						<button type="button" name="button" class="btn btn-default btn-outline"><i class=""></i>tambah lampiran</button>
 					</div>
 	        <div class="col-sm-10 text-right">
 	          <a class="btn btn-danger">Batal</a>

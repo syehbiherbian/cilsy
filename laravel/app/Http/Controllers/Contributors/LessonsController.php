@@ -39,5 +39,21 @@ class LessonsController extends Controller
     # code...
     return view('contrib.lessons.create.video');
   }
+  public function attachment()
+  {
+    # code...
+    return view('contrib.lessons.create.attachment');
+  }
+
+  public function submit()
+  {
+    # code...
+    return view('contrib.lessons.create.submit');
+  }
+
+
+
+
+
 
 }

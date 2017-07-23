@@ -260,6 +260,25 @@ html, body {
   background: #fff;
   padding: 10px 15px;
 }
+.form-contributor .item .option{
+  color: #2BA8E2;
+}
+.form-contributor .btn-outline{
+  border-color: #2BA8E2;
+  color: #2BA8E2;
+}
+
+.form-contributor .btn-outline:hover{
+  background-color: #2BA8E2;
+  color: #fff;
+}
+.form-contributor .submit{
+  padding-top: 25px;
+}
+.form-contributor .submit .text{
+  padding:25px 15px;
+}
+
 
 .card {
     position: relative;
