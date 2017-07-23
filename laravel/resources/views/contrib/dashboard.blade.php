@@ -1,5 +1,12 @@
 @extends('contrib.app')
 @section('title','')
+@section('breadcumbs')
+<div id="navigation">
+		<ul class="breadcrumb">
+				<li>Dashboard</li>
+		</ul>
+</div>
+@endsection
 @section('content')
 			<div class="row">
                 <div class="col-md-4">
