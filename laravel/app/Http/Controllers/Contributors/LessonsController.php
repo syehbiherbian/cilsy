@@ -31,7 +31,13 @@ class LessonsController extends Controller
   public function create()
   {
     # code...
-    return view('contrib.lessons.create');
+    return view('contrib.lessons.create.index');
+  }
+
+  public function video()
+  {
+    # code...
+    return view('contrib.lessons.create.video');
   }
 
 }

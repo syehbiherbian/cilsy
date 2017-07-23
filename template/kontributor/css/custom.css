@@ -254,6 +254,11 @@ html, body {
 #content {
     padding: 160px 25px 25px 90px;
     min-height: calc(100vh - 235px);
+    background: #eee;
+}
+.box-white{
+  background: #fff;
+  padding: 10px 15px;
 }
 
 .card {

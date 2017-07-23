@@ -106,3 +106,4 @@ Route::get('contributor','Contributors\DashboardController@index');
 // Lessons
 Route::get('contributor/lessons/{filter}/list', 'Contributors\LessonsController@index');
 Route::get('contributor/lessons/create', 'Contributors\LessonsController@create');
+Route::get('contributor/lessons/create/videos', 'Contributors\LessonsController@video');
