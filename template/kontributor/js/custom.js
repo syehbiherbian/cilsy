@@ -24,7 +24,7 @@ $(document).ready(function() {
 		} else {
 			_this.hide()
 		}
-	
+
 		event.preventDefault();
 	});
 

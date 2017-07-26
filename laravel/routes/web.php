@@ -91,10 +91,24 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::resource('system/videos', 'VideosController');
 });
 
-// CONTRIBUTOR ROUTES
+/*
+|--------------------------------------------------------------------------
+| Contributor Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+ */
+// Home
+Route::get('contributor','Contributors\DashboardController@index');
+// Lessons
+Route::get('contributor/lessons/{filter}/list', 'Contributors\LessonsController@index');
+Route::get('contributor/lessons/create', 'Contributors\LessonsController@create');
+Route::get('contributor/lessons/create/videos', 'Contributors\LessonsController@video');
+Route::get('contributor/lessons/create/attachment', 'Contributors\LessonsController@attachment');
+Route::get('contributor/lessons/create/submit', 'Contributors\LessonsController@submit');
 
-Route::get('contrib/home', function () {
-	return view('contrib.home');
-});
-
-Route::get('contrib/questions','Web\Contrib\QuestionsController@getQuestions');
+//question
+Route::get('contributor/questions','Web\Contrib\QuestionsController@getQuestions');

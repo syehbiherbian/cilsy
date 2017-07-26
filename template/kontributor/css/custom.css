@@ -167,6 +167,7 @@ html, body {
     min-height: 55px;
     padding-top: 10px;
     padding-left: 90px;
+    padding-right: 90px;
     background-color: #F1F5F7;
     -webkit-box-shadow: 0px 0px 8px 0px rgba(0,0,0,0.75);
     -moz-box-shadow: 0px 0px 8px 0px rgba(0,0,0,0.75);
@@ -253,7 +254,31 @@ html, body {
 #content {
     padding: 160px 25px 25px 90px;
     min-height: calc(100vh - 235px);
+    background: #eee;
 }
+.box-white{
+  background: #fff;
+  padding: 10px 15px;
+}
+.form-contributor .item .option{
+  color: #2BA8E2;
+}
+.form-contributor .btn-outline{
+  border-color: #2BA8E2;
+  color: #2BA8E2;
+}
+
+.form-contributor .btn-outline:hover{
+  background-color: #2BA8E2;
+  color: #fff;
+}
+.form-contributor .submit{
+  padding-top: 25px;
+}
+.form-contributor .submit .text{
+  padding:25px 15px;
+}
+
 
 .card {
     position: relative;
@@ -307,6 +332,15 @@ html, body {
     -webkit-box-shadow: 0px 2px 8px 0px rgb(27, 179, 243);
     -moz-box-shadow: 0px 2px 8px 0px rgb(27, 179, 243);
     box-shadow: 0px 2px 8px 0px rgb(27, 179, 243);
+}
+
+.form-title{
+  margin-bottom: 25px;
+  color: #2BA8E2;
+}
+@media (min-width: 768px){
+.form-horizontal .control-label {
+     text-align: left;
 }
 
 #footer {

@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8; IE=edge"" "/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8; IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no" />
     <title>Cilsy Fiolution | Contributor</title>
     <link rel="shortcut icon" type="image/png" href="{{asset('template/kontributor/img/logo-only.png')}}"/>
@@ -85,14 +85,9 @@
             @yield('content')
         </div>
     </div>
-    <div id="navigation">
-        <ul class="breadcrumb">
-            <li>Dashboard</li>
-            <li>Sub Menu</li>
-            <li>Sub Sub Menu</li>
-            <li>Sub Sub Sub Menu</li>
-        </ul>
-    </div>
+
+    @yield('breadcumbs')
+
 
     <div id="sidebar">
         <div class="menu-wrapper">
@@ -103,7 +98,7 @@
 
         <ul>
             <li>
-                <a href="#">
+                <a href="{{ url('contributors') }}">
                     <img src="{{asset('template/kontributor/img/icon/Home.png')}}" alt="" />
                     <span>Dashboard</span>
                 </a>
@@ -115,7 +110,7 @@
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a href="{{ url('contributors/lessons') }}">
                     <img src="{{asset('template/kontributor/img/icon/Kelola_Tutorial.png')}}" alt="" />
                     <span>Kelola Tutorial</span>
                 </a>
