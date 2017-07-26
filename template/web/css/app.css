@@ -43,7 +43,7 @@ html, body {
 }
 @media (min-width:768px) {
   .video-dimensions{
-    width: 70% !important;
+    width: 65% !important;
     height: 500px;
   }
 }
@@ -352,13 +352,40 @@ html, body {
     border: none !important;
 }
 
+
+
+@media(max-width:768px){
 .playlist-title{
-    color: #2ba8e2;
-    font-size: 26px;
+    
+
+color: #2ba8e2;
+    
+
+font-size: 19px;
+
+
+}
+
+
+}
+
+@media(min-width:768px){
+.playlist-title{
+    
+
+color: #2ba8e2;
+    
+
+font-size: 26px;
+
+
+}
+
+
 }
 
 .playlist-total-video {
-    float: right;
+   margin-bottom:15px; float: right;
     margin-top: 5px;
     padding: 5px 25px;
     font-size: 16px;

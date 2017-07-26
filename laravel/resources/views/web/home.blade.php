@@ -6,14 +6,14 @@
             Belajar dari 200++ tutorial networking & Server Ekslusif<br>
             Online. Kapanpun, Dimanapun.
         </p>
-        <?php if (Session::get('memberID')): ?>
 
-          <a href="{{ url('lessons/browse/all')}}" class="daftar-btn">Mulai</a>
+        <?php if (Session::get('memberID')): ?>
+            <a href="{{ url('lessons/browse/all')}}" class="daftar-btn">Browse</a>
 
         <?php else: ?>
 
           <a href="{{ url('member/signup')}}" class="daftar-btn">Daftar</a>
-        <?php endif; ?>
+        <?php endif;?>
     </div>
 
     <div id="content-section">
@@ -29,10 +29,10 @@
                             <p>{{ $category->title }}</p>
                           </a>
                         </div>
-                      <?php endforeach; ?>
+                      <?php endforeach;?>
                       <div class="item cat-img-container">
                         <a href="{{ url('lessons/browse/all') }}">
-                          <img src="http://dev.cilsy.id/assets/source/category/tutorial.png" alt=""></img>
+                          <img src="https://www.cilsy.id/assets/source/category/tutorial.png" alt=""></img>
                           <p>Semua Tutorial</p>
                         </a>
                       </div>
@@ -73,18 +73,18 @@
                 <p class="title-cat">{{ $categori->title }} </p>
                 <div class="row">
                     <?php
-                    $i =1;
-                    foreach ($lessons as $key => $lesson):?>
-                        <?php if($categori->id == $lesson->category_id){?>
-                            <?php if($i <= 8 ){ ?>
+$i = 1;
+foreach ($lessons as $key => $lesson): ?>
+                        <?php if ($categori->id == $lesson->category_id) {?>
+                            <?php if ($i <= 8) {?>
                                 <div class="col-md-3">
                                     <div class="card">
                                         <a href="{{ url('lessons/'.$lesson->title)}}">
-                                            <?php if(!empty($lesson->image)){  ?>
+                                            <?php if (!empty($lesson->image)) {?>
                                               <div class="card-img" style="background-image: url('{{ asset($lesson->image)}}');"></div>
-                                            <?php }else{ ?>
+                                            <?php } else {?>
                                               <div class="card-img" style="background-image: url('{{ asset('template/web/img/no-image-available.png')}}');"></div>
-                                            <?php } ?>
+                                            <?php }?>
 
                                             <div class="card-body">
                                                 <p class="card-title">{{ $lesson->title }}</p>
@@ -93,11 +93,11 @@
                                         </a>
                                     </div>
                                 </div>
-                                <?php } ?>
-                            <?php $i++; ?>
-                        <?php } ?>
+                                <?php }?>
+                            <?php $i++;?>
+                        <?php }?>
 
-                    <?php endforeach; ?>
+                    <?php endforeach;?>
 
                     <!-- <div class="col-md-3">
                         <div class="card">
@@ -137,7 +137,7 @@
             </div>
         </div>
 
-        <?php endforeach; ?>
+        <?php endforeach;?>
         <!-- <div id="cat-section">
             <div class="container">
                 <p class="title-cat">MIKROTIK <a href="#" class="selengkapnya-btn">selengkapnya</a></p>

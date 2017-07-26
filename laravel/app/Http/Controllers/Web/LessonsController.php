@@ -90,14 +90,14 @@ class LessonsController extends Controller
                 'description'  => strip_tags($video->description),
                 'duration'     => $video->durasi,
                 'sources'      => 'Invalid',
-                'poster'       => 'http://dev.cilsy.id/template/web/img/video-lock.png',
+                'poster'       => 'https://www.cilsy.id/template/web/img/video-lock.png',
                 'thumbnail'    => array([
-                  'srcset'=>'http://dev.cilsy.id/template/web/img/video-lock.png',
+                  'srcset'=>'https://www.cilsy.id/template/web/img/video-lock.png',
                   'type'  =>'image/png',
                   'media' =>'(min-width: 400px;)'
                 ],
                 [
-                  'src' => 'http://dev.cilsy.id/template/web/img/video-lock.png'
+                  'src' => 'https://www.cilsy.id/template/web/img/video-lock.png'
                 ])
               );
 

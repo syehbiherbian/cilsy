@@ -1,0 +1,25 @@
+<?php
+namespace App\Http\Controllers\Web\Contrib;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Input;
+use App\Http\Requests;
+use Validator;
+use Redirect;
+use Session;
+use Hash;
+use DateTime;
+use DB;
+class QuestionsController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getQuestions()
+    {
+      return view('contrib.questions.index', [
+      ]);
+    }
+}
