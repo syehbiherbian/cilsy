@@ -110,5 +110,5 @@ Route::get('contributor/lessons/create/videos', 'Contributors\LessonsController@
 Route::get('contributor/lessons/create/attachment', 'Contributors\LessonsController@attachment');
 Route::get('contributor/lessons/create/submit', 'Contributors\LessonsController@submit');
 
-//question
-Route::get('contributor/questions','Web\Contrib\QuestionsController@getQuestions');
+//questions
+Route::get('contributor/questions','Contributors\QuestionsController@getQuestions');

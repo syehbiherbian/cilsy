@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Controllers\Web\Contrib;
+namespace App\Http\Controllers\Contributors;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Input;
