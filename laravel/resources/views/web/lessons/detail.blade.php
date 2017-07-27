@@ -218,7 +218,7 @@ currency: 'USD'
 
   border-bottom: none;
 
-}   
+}
 </style>
 
 <div id="content-section">
@@ -242,13 +242,13 @@ currency: 'USD'
         <!-- Main Video -->
         <video
           id="video"
-          class="video-js"
+          class="video-js vjs-default-skin vjs-big-play-centered"
           height="500"
           width="70%"
           controls>
-          <?php if(count($main_videos) > 0){?>
-              <source src="<?php if(!empty($main_videos[0]->video)){echo $main_videos[0]->video;}?>" type="<?php if(!empty($main_videos[0]->type_video)){echo $main_videos[0]->type_video;}?>">
-          <?php } ?>
+          <?php if (count($main_videos) > 0) {?>
+              <source src="<?php if (!empty($main_videos[0]->video)) {echo $main_videos[0]->video;}?>" type="<?php if (!empty($main_videos[0]->type_video)) {echo $main_videos[0]->type_video;}?>">
+          <?php }?>
           <!-- <source src="http://vjs.zencdn.net/v/oceans.webm" type="video/webm"> -->
         </video>
         <!-- Playlist Video -->
@@ -267,34 +267,30 @@ currency: 'USD'
   <div class="tabpanel" id="panel1" role="tabpanel">
     <h1>Deskripsi Tutorial</h1>
     <p>
-    <?php echo nl2br($lessons->description);?></p>
+    <?php echo nl2br($lessons->description); ?></p>
   </div>
   <div class="tabpanel" id="panel2" role="tabpanel">
     <h1>Daftar Materi</h1>
     <ul class="materi_list">
-      <?php foreach($main_videos as $row){?>
+      <?php foreach ($main_videos as $row) {?>
       <li>
-        <strong><?= nl2br($row->title);?></strong>
-        <p><?= nl2br($row->description);?></p>
+        <strong><?=nl2br($row->title);?></strong>
+        <p><?=nl2br($row->description);?></p>
       </li>
-      <?php } ?>
+      <?php }?>
     </ul>
 
   </div>
   <div class="tabpanel" id="panel3" role="tabpanel">
     <h1>File Praktek</h1>
-    <?php if (count($services) > 0) { ?>
-      <?php if ($services->download == 1) {?>
+    <?php if (count($services) > 0) {?>
         @foreach($file as $key => $files)
             <a href="{{ $files->source }}" class="btn btn-info btn-md"> Download {{ $files->title}}</a><br><br>
         @endforeach
-      <?php }else {?>
-        <button type="button" name="button"  class="btn btn-info btn-md disabled">Download </button>
-      <?php } ?>
 
-    <?php }else { ?>
+    <?php } else {?>
         <button type="button" name="button"  class="btn btn-info btn-md disabled">Download </button>
-    <?php } ?>
+    <?php }?>
 
   </div>
     </div>
@@ -326,6 +322,7 @@ currency: 'USD'
         var player = videojs('video');
         player.playlist(data);
         player.playlistUi();
+        player.DurationDisplay( player,[options] )
 
       }
     });

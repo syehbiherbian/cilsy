@@ -40,7 +40,32 @@ Route::get('/tentang', function () {
 	return view('web.tentang');
 });
 
-// MEMBER PAGE
+/*
+|--------------------------------------------------------------------------
+| Cronjob Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+ */
+
+ Route::get('cron/mail/user/reminder/payment', 'Cron\ReminderController@index');
+
+
+
+
+/*
+|--------------------------------------------------------------------------
+| Member Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+ */
 Route::get('member', 'Web\Members\AuthController@index');
 Route::get('member/signup', 'Web\Members\AuthController@signup');
 Route::post('member/signup', 'Web\Members\AuthController@dosignup');
