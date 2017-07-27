@@ -98,7 +98,7 @@
 
         <ul>
             <li>
-                <a href="{{ url('contributors') }}">
+                <a href="{{ url('contributor') }}">
                     <img src="{{asset('template/kontributor/img/icon/Home.png')}}" alt="" />
                     <span>Dashboard</span>
                 </a>
@@ -110,13 +110,13 @@
                 </a>
             </li>
             <li>
-                <a href="{{ url('contributors/lessons') }}">
+                <a href="{{ url('contributor/lessons') }}">
                     <img src="{{asset('template/kontributor/img/icon/Kelola_Tutorial.png')}}" alt="" />
                     <span>Kelola Tutorial</span>
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a href="{{ url('contributor/questions') }}">
                     <img src="{{asset('template/kontributor/img/icon/Kelola_Tutorial.png')}}" alt="" />
                     <span>Kelola Pertanyaan</span>
                 </a>
