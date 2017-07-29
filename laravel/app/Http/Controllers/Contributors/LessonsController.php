@@ -18,6 +18,11 @@ use DateTime;
 use Session;
 class LessonsController extends Controller
 {
+  // 
+  // public function default()
+  // {
+  //   return redirect('lessons/pending/list');
+  // }
 
   public function index($filter)
   {
