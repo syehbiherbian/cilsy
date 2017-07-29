@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Input;
 use Validator;
-
+use App\Quiz;
 use DateTime;
 
 use Session;
@@ -19,5 +19,11 @@ class QuizController extends Controller
     }
     # code...
     return view('contrib.quiz.create');
+  }
+  public function store_quiz(){
+    if (empty(Session::get('contribID'))) {
+      return redirect('contributor/login');
+    }
+
   }
 }
