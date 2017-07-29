@@ -18,6 +18,7 @@
 	    <form class="form-horizontal form-contributor">
 				<div class="submit">
 					<div class="text-center">
+						<img src="{{ asset('template/kontributor/img/icon/question.png') }}" alt="" width="150">
 						<h4><strong>Apakah anda yakin untuk mensubmit tutorial ini ?</strong></h4>
 					</div>
 					<div class="text">

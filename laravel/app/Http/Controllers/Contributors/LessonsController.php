@@ -18,7 +18,7 @@ use DateTime;
 use Session;
 class LessonsController extends Controller
 {
-  // 
+  //
   // public function default()
   // {
   //   return redirect('lessons/pending/list');
@@ -48,6 +48,16 @@ class LessonsController extends Controller
   {
     # code...
     return view('contrib.lessons.create.attachment');
+  }
+  public function quiz()
+  {
+    # code...
+    return view('contrib.lessons.create.quiz');
+  }
+  public function questions()
+  {
+    # code...
+    return view('contrib.lessons.create.questions');
   }
 
   public function submit()
