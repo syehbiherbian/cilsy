@@ -412,13 +412,9 @@
                     </p>
                 </div>
                 <div class="col-md-2">
-                    <ul class="nav-footer">
-                        <li>Cilsy</li>
-                        <li><a href="{{ url('/tentang') }}">Tentang</a></li>
-                        <li><a href="{{ url('pages/blog')}}">Blog</a></li>
-                        <li><a href="{{ url('pages/karir')}}">Karir</a></li>
-                        <li><a href="{{ url('pages/faq')}}">FAQ</a></li>
-                    </ul>
+
+                  <?= Helper::pageMenu(); ?>
+
                 </div>
                 <div class="col-md-2">
                     <ul class="nav-footer">

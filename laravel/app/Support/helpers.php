@@ -1,6 +1,6 @@
 <?php
 use App\members;
-
+use App\Pages;
 use App\services;
 /**
  *
@@ -52,6 +52,20 @@ class Helper
         }
       }
 
+  }
+
+  static function pageMenu()
+  {
+    $pages  = Pages::where('enable',1)->get();
+    $html   = '';
+    $html .='<ul class="nav-footer">';
+    $html .='<li>Cilsy</li>';
+    foreach ($pages as $key => $row) {
+      $html .='<li><a href="'.url('pages/'.$row->url).'">'.$row->title.'</a></li>';
+    }
+    $html .='</ul>';
+
+    return $html;
   }
 
   static function searchForm()
