@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "5f2ab1da0d35ee04b3ffbb03b30de71d",
+    "content-hash": "3b4c3def930b7e9514ebe0b71acb274c",
     "packages": [
         {
             "name": "classpreloader/classpreloader",
@@ -592,7 +592,11 @@
                 "logging",
                 "psr-3"
             ],
+<<<<<<< HEAD
+            "time": "2017-06-19 01:22:40"
+=======
             "time": "2017-06-19T01:22:40+00:00"
+>>>>>>> f61a711693cdb8f1a644ddd9de91876ad2e1ca19
         },
         {
             "name": "mtdowling/cron-expression",
@@ -740,7 +744,11 @@
                 "parser",
                 "php"
             ],
+<<<<<<< HEAD
+            "time": "2017-06-28 20:53:48"
+=======
             "time": "2017-06-28T20:53:48+00:00"
+>>>>>>> f61a711693cdb8f1a644ddd9de91876ad2e1ca19
         },
         {
             "name": "paragonie/random_compat",
@@ -789,6 +797,83 @@
                 "random"
             ],
             "time": "2017-03-13T16:27:32+00:00"
+        },
+        {
+            "name": "phpmailer/phpmailer",
+            "version": "v5.2.24",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/PHPMailer/PHPMailer.git",
+                "reference": "22d04c6a58145a244696f3f254c1875aa653b26a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/PHPMailer/PHPMailer/zipball/22d04c6a58145a244696f3f254c1875aa653b26a",
+                "reference": "22d04c6a58145a244696f3f254c1875aa653b26a",
+                "shasum": ""
+            },
+            "require": {
+                "ext-ctype": "*",
+                "php": ">=5.0.0"
+            },
+            "require-dev": {
+                "doctrine/annotations": "1.2.*",
+                "jms/serializer": "0.16.*",
+                "phpdocumentor/phpdocumentor": "2.*",
+                "phpunit/phpunit": "4.8.*",
+                "symfony/debug": "2.8.*",
+                "symfony/filesystem": "2.8.*",
+                "symfony/translation": "2.8.*",
+                "symfony/yaml": "2.8.*",
+                "zendframework/zend-cache": "2.5.1",
+                "zendframework/zend-config": "2.5.1",
+                "zendframework/zend-eventmanager": "2.5.1",
+                "zendframework/zend-filter": "2.5.1",
+                "zendframework/zend-i18n": "2.5.1",
+                "zendframework/zend-json": "2.5.1",
+                "zendframework/zend-math": "2.5.1",
+                "zendframework/zend-serializer": "2.5.*",
+                "zendframework/zend-servicemanager": "2.5.*",
+                "zendframework/zend-stdlib": "2.5.1"
+            },
+            "suggest": {
+                "league/oauth2-google": "Needed for Google XOAUTH2 authentication"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "class.phpmailer.php",
+                    "class.phpmaileroauth.php",
+                    "class.phpmaileroauthgoogle.php",
+                    "class.smtp.php",
+                    "class.pop3.php",
+                    "extras/EasyPeasyICS.php",
+                    "extras/ntlm_sasl_client.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-2.1"
+            ],
+            "authors": [
+                {
+                    "name": "Jim Jagielski",
+                    "email": "jimjag@gmail.com"
+                },
+                {
+                    "name": "Marcus Bointon",
+                    "email": "phpmailer@synchromedia.co.uk"
+                },
+                {
+                    "name": "Andy Prevost",
+                    "email": "codeworxtech@users.sourceforge.net"
+                },
+                {
+                    "name": "Brent R. Matzelle"
+                }
+            ],
+            "description": "PHPMailer is a full-featured email creation and transfer class for PHP",
+            "time": "2017-07-26T21:00:20+00:00"
         },
         {
             "name": "psr/log",
@@ -908,7 +993,11 @@
                 "interactive",
                 "shell"
             ],
+<<<<<<< HEAD
+            "time": "2017-07-06 14:53:52"
+=======
             "time": "2017-07-06T14:53:52+00:00"
+>>>>>>> f61a711693cdb8f1a644ddd9de91876ad2e1ca19
         },
         {
             "name": "ramsey/uuid",
@@ -1166,7 +1255,11 @@
         },
         {
             "name": "symfony/event-dispatcher",
+<<<<<<< HEAD
+            "version": "v3.3.4",
+=======
             "version": "v3.3.5",
+>>>>>>> f61a711693cdb8f1a644ddd9de91876ad2e1ca19
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/event-dispatcher.git",
@@ -1225,7 +1318,11 @@
             ],
             "description": "Symfony EventDispatcher Component",
             "homepage": "https://symfony.com",
+<<<<<<< HEAD
+            "time": "2017-06-09 14:53:08"
+=======
             "time": "2017-06-09T14:53:08+00:00"
+>>>>>>> f61a711693cdb8f1a644ddd9de91876ad2e1ca19
         },
         {
             "name": "symfony/finder",
@@ -1468,7 +1565,11 @@
                 "portable",
                 "shim"
             ],
+<<<<<<< HEAD
+            "time": "2017-06-09 14:24:12"
+=======
             "time": "2017-06-09T14:24:12+00:00"
+>>>>>>> f61a711693cdb8f1a644ddd9de91876ad2e1ca19
         },
         {
             "name": "symfony/polyfill-php56",
@@ -1524,7 +1625,11 @@
                 "portable",
                 "shim"
             ],
+<<<<<<< HEAD
+            "time": "2017-06-09 08:25:21"
+=======
             "time": "2017-06-09T08:25:21+00:00"
+>>>>>>> f61a711693cdb8f1a644ddd9de91876ad2e1ca19
         },
         {
             "name": "symfony/polyfill-util",
@@ -1576,7 +1681,11 @@
                 "polyfill",
                 "shim"
             ],
+<<<<<<< HEAD
+            "time": "2017-06-09 08:25:21"
+=======
             "time": "2017-06-09T08:25:21+00:00"
+>>>>>>> f61a711693cdb8f1a644ddd9de91876ad2e1ca19
         },
         {
             "name": "symfony/process",
@@ -2082,12 +2191,12 @@
             "version": "0.9.9",
             "source": {
                 "type": "git",
-                "url": "https://github.com/mockery/mockery.git",
+                "url": "https://github.com/padraic/mockery.git",
                 "reference": "6fdb61243844dc924071d3404bb23994ea0b6856"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mockery/mockery/zipball/6fdb61243844dc924071d3404bb23994ea0b6856",
+                "url": "https://api.github.com/repos/padraic/mockery/zipball/6fdb61243844dc924071d3404bb23994ea0b6856",
                 "reference": "6fdb61243844dc924071d3404bb23994ea0b6856",
                 "shasum": ""
             },
@@ -2281,7 +2390,11 @@
                 }
             ],
             "description": "With this component, a library can provide support for annotations via DocBlocks or otherwise retrieve information that is embedded in a DocBlock.",
+<<<<<<< HEAD
+            "time": "2017-07-15 11:38:20"
+=======
             "time": "2017-07-15T11:38:20+00:00"
+>>>>>>> f61a711693cdb8f1a644ddd9de91876ad2e1ca19
         },
         {
             "name": "phpdocumentor/type-resolver",
@@ -2328,7 +2441,11 @@
                     "email": "me@mikevanriel.com"
                 }
             ],
+<<<<<<< HEAD
+            "time": "2017-07-14 14:27:02"
+=======
             "time": "2017-07-14T14:27:02+00:00"
+>>>>>>> f61a711693cdb8f1a644ddd9de91876ad2e1ca19
         },
         {
             "name": "phpspec/prophecy",
@@ -2722,7 +2839,11 @@
                 "testing",
                 "xunit"
             ],
+<<<<<<< HEAD
+            "time": "2017-06-21 08:11:54"
+=======
             "time": "2017-06-21T08:11:54+00:00"
+>>>>>>> f61a711693cdb8f1a644ddd9de91876ad2e1ca19
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -2781,7 +2902,11 @@
                 "mock",
                 "xunit"
             ],
+<<<<<<< HEAD
+            "time": "2017-06-30 09:13:00"
+=======
             "time": "2017-06-30T09:13:00+00:00"
+>>>>>>> f61a711693cdb8f1a644ddd9de91876ad2e1ca19
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
@@ -3407,7 +3532,11 @@
         },
         {
             "name": "symfony/yaml",
+<<<<<<< HEAD
+            "version": "v3.3.4",
+=======
             "version": "v3.3.5",
+>>>>>>> f61a711693cdb8f1a644ddd9de91876ad2e1ca19
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
@@ -3458,7 +3587,11 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
+<<<<<<< HEAD
+            "time": "2017-06-15 12:58:50"
+=======
             "time": "2017-06-15T12:58:50+00:00"
+>>>>>>> f61a711693cdb8f1a644ddd9de91876ad2e1ca19
         },
         {
             "name": "webmozart/assert",
