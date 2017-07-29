@@ -67,6 +67,16 @@ class LessonsController extends Controller
   }
 
 
+  // EDIT
+  public function edit($id)
+  {
+    # code...
+    return view('contrib.lessons.edit.index');
+  }
+
+
+
+
 
 
 

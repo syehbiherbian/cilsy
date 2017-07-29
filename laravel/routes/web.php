@@ -136,8 +136,9 @@ Route::get('contributor/lessons/create/videos', 'Contributors\LessonsController@
 Route::get('contributor/lessons/create/attachment', 'Contributors\LessonsController@attachment');
 Route::get('contributor/lessons/create/quiz', 'Contributors\LessonsController@quiz');
 Route::get('contributor/lessons/create/questions', 'Contributors\LessonsController@questions');
-
 Route::get('contributor/lessons/create/submit', 'Contributors\LessonsController@submit');
+
+Route::get('contributor/lessons/{id}/edit', 'Contributors\LessonsController@edit');
 
 //questions
 Route::get('contributor/questions','Contributors\QuestionsController@getQuestions');
