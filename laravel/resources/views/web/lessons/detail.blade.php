@@ -205,6 +205,14 @@ currency: 'USD'
   box-sizing: border-box;
 }
 
+.description-mobile .panel-default>.panel-heading{
+  background-color: #fff;
+}
+.description-mobile .panel-title>.small, .description-mobile .panel-title>.small>a, .description-mobile .panel-title>a, .description-mobile .panel-title>small, .description-mobile .panel-title>small>a{
+  display: block;
+  text-decoration: none;
+}
+
 .materi_list{
   padding:0px;
   list-style: none;
@@ -254,45 +262,108 @@ currency: 'USD'
         <!-- Playlist Video -->
         <div class="vjs-playlist"></div>
       </div>
-    <ul class="tablist" role="tablist">
-  <li class="tab" role="tab"><a data-toggle="tab" href="#panel1">Deskripsi Tutorial</a></li>
-  <li class="tab" role="tab"><a data-toggle="tab" href="#panel2">Daftar Materi</a></li>
-  <li class="tab" role="tab"><a data-toggle="tab" href="#panel3">File Praktek</a></li>
-  <li class="tab-menu">
-    <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
-  </li>
-</ul>
-  <div class="tabpanel" id="panel1" role="tabpanel">
-    <h1>Deskripsi Tutorial</h1>
-    <p>
-    <?php echo nl2br($lessons->description); ?></p>
-  </div>
-  <div class="tabpanel" id="panel2" role="tabpanel">
-    <h1>Daftar Materi</h1>
-    <ul class="materi_list">
-      <?php foreach ($main_videos as $row) {?>
-      <li>
-        <strong><?=nl2br($row->title);?></strong>
-        <p><?=nl2br($row->description);?></p>
-      </li>
-      <?php }?>
-    </ul>
+      <div class="description-dekstop hidden-xs">
+        <ul class="tablist" role="tablist">
+          <li class="tab" role="tab"><a data-toggle="tab" href="#panel1">Deskripsi Tutorial</a></li>
+          <li class="tab" role="tab"><a data-toggle="tab" href="#panel2">Daftar Materi</a></li>
+          <li class="tab" role="tab"><a data-toggle="tab" href="#panel3">File Praktek</a></li>
+          <li class="tab-menu">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+          </li>
+        </ul>
 
-  </div>
-  <div class="tabpanel" id="panel3" role="tabpanel">
-    <h1>File Praktek</h1>
-    <?php if (count($services) > 0) {?>
-        @foreach($file as $key => $files)
-            <a href="{{ $files->source }}" class="btn btn-info btn-md"> Download {{ $files->title}}</a><br><br>
-        @endforeach
+        <div class="tabpanel" id="panel1" role="tabpanel">
+          <h1>Deskripsi Tutorial</h1>
+          <p>
+          <?php echo nl2br($lessons->description); ?></p>
+        </div>
+        <div class="tabpanel" id="panel2" role="tabpanel">
+          <h1>Daftar Materi</h1>
+          <ul class="materi_list">
+            <?php foreach ($main_videos as $row) {?>
+            <li>
+              <strong><?=nl2br($row->title);?></strong>
+              <p><?=nl2br($row->description);?></p>
+            </li>
+            <?php }?>
+          </ul>
 
-    <?php } else {?>
-        <button type="button" name="button"  class="btn btn-info btn-md disabled">Download </button>
-    <?php }?>
+        </div>
+        <div class="tabpanel" id="panel3" role="tabpanel">
+          <h1>File Praktek</h1>
+          <?php if (count($services) > 0) {?>
+              @foreach($file as $key => $files)
+                  <a href="{{ $files->source }}" class="btn btn-info btn-md"> Download {{ $files->title}}</a><br><br>
+              @endforeach
 
-  </div>
+          <?php } else {?>
+              <button type="button" name="button"  class="btn btn-info btn-md disabled">Download </button>
+          <?php }?>
+
+        </div>
+
+
+      </div>
+      <div class="description-mobile hidden-sm hidden-md hidden-lg">
+        <div class="panel-group" id="accordion">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
+                  Deskripsi Tutorial</a>
+                </h4>
+              </div>
+              <div id="collapse1" class="panel-collapse collapse in">
+                <div class="panel-body">
+                  <p><?php echo nl2br($lessons->description); ?></p>
+                </div>
+                </div>
+              </div>
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">
+                      Daftar Materi</a>
+                    </h4>
+                  </div>
+                  <div id="collapse2" class="panel-collapse collapse">
+                    <div class="panel-body">
+                      <ul class="materi_list">
+                        <?php foreach ($main_videos as $row) {?>
+                        <li>
+                          <strong><?=nl2br($row->title);?></strong>
+                          <p><?=nl2br($row->description);?></p>
+                        </li>
+                        <?php }?>
+                      </ul>
+                    </div>
+                    </div>
+                  </div>
+                  <div class="panel panel-default">
+                    <div class="panel-heading">
+                      <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">
+                          File Praktek</a>
+                        </h4>
+                      </div>
+                      <div id="collapse3" class="panel-collapse collapse">
+                        <div class="panel-body">
+                          <?php if (count($services) > 0) {?>
+                              @foreach($file as $key => $files)
+                                  <a href="{{ $files->source }}" class="btn btn-info btn-md"> Download {{ $files->title}}</a><br><br>
+                              @endforeach
+
+                          <?php } else {?>
+                              <button type="button" name="button"  class="btn btn-info btn-md disabled">Download </button>
+                          <?php }?>
+                        </div>
+                        </div>
+                      </div>
+                    </div>
+      </div>
+
     </div>
   </div>
 </div>
