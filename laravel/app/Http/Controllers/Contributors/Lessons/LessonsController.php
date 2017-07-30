@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Contributors;
+namespace App\Http\Controllers\Contributors\Lessons;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -95,7 +95,7 @@ class LessonsController extends Controller
       return redirect('contributor/login');
     }
     # code...
-    return view('contrib.lessons.submit');
+    return view('contrib.lessons.create.submit');
   }
 
 

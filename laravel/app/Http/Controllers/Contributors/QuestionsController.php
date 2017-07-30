@@ -22,4 +22,14 @@ class QuestionsController extends Controller
       return view('contrib.questions.index', [
       ]);
     }
+
+
+    public function create()
+    {
+      if (empty(Session::get('contribID'))) {
+        return redirect('contributor/login');
+      }
+      # code...
+      return view('contrib.questions.create');
+    }
 }

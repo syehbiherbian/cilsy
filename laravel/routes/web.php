@@ -144,13 +144,26 @@ Route::get('contributor','Contributors\DashboardController@index');
 Route::get('contributor/lessons', 'Contributors\LessonsController@redirect');
 Route::get('contributor/lessons/{filter}/list', 'Contributors\LessonsController@index');
 Route::get('contributor/lessons/create', 'Contributors\LessonsController@create');
-Route::get('contributor/lessons/create/videos', 'Contributors\LessonsController@video');
-Route::get('contributor/lessons/create/attachment', 'Contributors\LessonsController@attachment');
-Route::get('contributor/lessons/create/quiz', 'Contributors\LessonsController@quiz');
-Route::get('contributor/lessons/create/questions', 'Contributors\LessonsController@questions');
-Route::get('contributor/lessons/create/submit', 'Contributors\LessonsController@submit');
+Route::post('contributor/lessons/create', 'Contributors\LessonsController@doCreate');
+
 
 Route::get('contributor/lessons/{id}/edit', 'Contributors\LessonsController@edit');
+Route::get('contributor/lessons/create/submit', 'Contributors\LessonsController@submit');
+
+// Videos
+Route::get('contributor/lessons/create/videos', 'Contributors\VideosController@create');
+
+// Attachment
+Route::get('contributor/lessons/create/attachments', 'Contributors\AttachmentsController@create');
+
+// Quiz
+Route::get('contributor/lessons/create/quiz', 'Contributors\QuizController@create');
+
+// Question
+Route::get('contributor/lessons/create/questions', 'Contributors\QuestionsController@create');
+
+
+
 
 //questions
 Route::get('contributor/questions','Contributors\QuestionsController@getQuestions');

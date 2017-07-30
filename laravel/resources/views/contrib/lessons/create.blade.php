@@ -16,30 +16,33 @@
 	    <div class="form-title">
 	      <h3>Buat Tutorial</h3>
 	    </div>
-	    <form class="form-horizontal">
+	    <form class="form-horizontal" action="" method="post">
+				{{ csrf_field() }}
 	      <div class="form-group">
 	        <label class="col-sm-2 control-label">Judul</label>
 	        <div class="col-sm-10">
-	          <input type="text" class="form-control" placeholder="Contoh:Tutorial Administrasi Server dengan ubuntu 12.04">
+	          <input type="text" class="form-control" placeholder="Contoh:Tutorial Administrasi Server dengan ubuntu 12.04" name="title" value="{{ old('title') }}">
 	        </div>
 	      </div>
 	      <div class="form-group">
 	        <label class="col-sm-2 control-label">Pilih Kategori</label>
 	        <div class="col-sm-10">
-	          <select class="form-control" name="">
+	          <select class="form-control" name="category_id">
 	            <option value="">-</option>
-	            <option value="">Linux</option>
+							<?php foreach ($categories as $key => $row): ?>
+		            <option value="{{ $row->id }}">{{ $row->title }}</option>
+							<?php endforeach; ?>
 	          </select>
 	        </div>
 	      </div>
 	      <div class="form-group">
 	        <label class="col-sm-2 control-label">Upload gambar</label>
 	        <div class="col-sm-10">
-	          <input type="file" name="" value="">
+	          <input type="file" name="image">
 	        </div>
 	      </div>
 	      <div class="form-group">
-	        <label class="col-sm-2 control-label">Description</label>
+	        <label class="col-sm-2 control-label" name="description">Description</label>
 	        <div class="col-sm-10">
 	        <textarea class="form-control" rows="8" cols="80" placeholder="Contoh: Active Directory Domain Controller merupakan salah satu keunggulan server windows."></textarea>
 	        </div>
