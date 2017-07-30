@@ -15,7 +15,8 @@
   <div class="col-md-12">
 		<div class="box-white">
 
-	    <form class="form-horizontal form-contributor">
+	    <form class="form-horizontal form-contributor" action="" method="post">
+				{{ csrf_field() }}
 				<div class="submit">
 					<div class="text-center">
 						<img src="{{ asset('template/kontributor/img/icon/question.png') }}" alt="" width="150">
@@ -30,8 +31,8 @@
 	      <div class="form-group">
 
 	        <div class="col-sm-12 text-center">
-	          <a class="btn btn-danger">Batal</a>
-	          <a class="btn btn-info">Submit</a>
+	          <a href="{{ url('contributor/lessons') }}" class="btn btn-danger">Batal</a>
+						<button type="submit" class="btn btn-info">Submit</button>
 	        </div>
 	      </div>
 	    </form>

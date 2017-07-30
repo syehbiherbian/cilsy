@@ -149,6 +149,7 @@ Route::post('contributor/lessons/create', 'Contributors\LessonsController@doCrea
 
 Route::get('contributor/lessons/{id}/edit', 'Contributors\LessonsController@edit');
 Route::get('contributor/lessons/create/submit', 'Contributors\LessonsController@submit');
+Route::post('contributor/lessons/create/submit', 'Contributors\LessonsController@doSubmit');
 
 // Videos
 Route::get('contributor/lessons/create/videos', 'Contributors\VideosController@create');

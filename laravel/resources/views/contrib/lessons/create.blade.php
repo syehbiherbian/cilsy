@@ -16,7 +16,7 @@
 	    <div class="form-title">
 	      <h3>Buat Tutorial</h3>
 	    </div>
-	    <form class="form-horizontal" action="" method="post">
+	    <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
 				{{ csrf_field() }}
 	      <div class="form-group">
 	        <label class="col-sm-2 control-label">Judul</label>
@@ -38,19 +38,19 @@
 	      <div class="form-group">
 	        <label class="col-sm-2 control-label">Upload gambar</label>
 	        <div class="col-sm-10">
-	          <input type="file" name="image">
+	          <input type="file" name="image" class="form-control">
 	        </div>
 	      </div>
 	      <div class="form-group">
-	        <label class="col-sm-2 control-label" name="description">Description</label>
+	        <label class="col-sm-2 control-label">Description</label>
 	        <div class="col-sm-10">
-	        <textarea class="form-control" rows="8" cols="80" placeholder="Contoh: Active Directory Domain Controller merupakan salah satu keunggulan server windows."></textarea>
+	        <textarea class="form-control" rows="8" cols="80"  name="description" placeholder="Contoh: Active Directory Domain Controller merupakan salah satu keunggulan server windows.">{{ old('description') }}</textarea>
 	        </div>
 	      </div>
 	      <div class="form-group">
 	        <div class="col-sm-offset-2 col-sm-10 text-right">
-	          <a class="btn btn-danger">Batal</a>
-	          <a class="btn btn-info">Submit</a>
+	          <a href="{{ url('contributor/lessons') }}" class="btn btn-danger">Batal</a>
+						<button type="submit" class="btn btn-info">Submit</button>
 	        </div>
 	      </div>
 	    </form>
