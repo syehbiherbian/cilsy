@@ -13,9 +13,9 @@
 <div class="row">
   <div class="col-md-12">
     <div class="box-white">
-    
+
         <ul class="nav nav-tabs">
-          <li class="<?php if($filter == "pending"){ echo "active";} ?>"><a href="{{ url('contributor/lessons/pending/list') }}">Perlu Revisi</a></li>
+          <li class="<?php if($filter == "pending"){ echo "active";} ?>"><a href="{{ url('contributor/lessons/revision/list') }}">Perlu Revisi</a></li>
           <li class="<?php if($filter == "processing"){ echo "active";} ?>"><a href="{{ url('contributor/lessons/processing/list') }}">Sedang Diverifikasi</a></li>
           <li class="<?php if($filter == "publish"){ echo "active";} ?>"><a href="{{ url('contributor/lessons/publish/list') }}">Sudah dipublish</a></li>
           <li class="<?php if($filter == "all"){ echo "active";} ?>"><a href="{{ url('contributor/lessons/all/list') }}">Semua</a></li>
@@ -37,18 +37,34 @@
                 </tr>
               </thead>
               <tbody>
-                <?php for ($i=1; $i < 6 ; $i++) { ?>
+                <?php if (count($data) == 0): ?>
+                  <tr>
+                    <td colspan="8">Tidak Ada data</td>
+                  </tr>
+                <?php else: ?>
+                <?php $i = 1; ?>
+                <?php foreach ($data as $key => $row): ?>
                 <tr>
                   <td>{{ $i }}</td>
-                  <td>Lorem Ipsum</td>
-                  <td>Linux</td>
-                  <td>Publish</td>
+                  <td>{{ $row->title }}</td>
+                  <td>{{ $row->category_title }}</td>
+                  <td>
+                    <?php if ($row->status == 0): ?>
+                      <div class="label label-warning">Revisi</div>
+                    <?php elseif($row->status == 1): ?>
+                        <div class="label label-success">Publish</div>
+                    <?php elseif($row->status == 2): ?>
+                        <div class="label label-info">Proses</div>
+                    <?php endif; ?>
+                  </td>
                   <td>0</td>
                   <td>100</td>
                   <td>17000</td>
-                  <td><a href="#" class="btn btn-warning">Edit</a></td>
+                  <td><a href="{{ url('contributor/lessons/'.$row->id.'/edit')}}" class="btn btn-warning">Edit</a></td>
                 </tr>
-                <?php } ?>
+                <?php $i++; ?>
+                <?php endforeach; ?>
+                <?php endif; ?>
               </tbody>
             </table>
           </div>
