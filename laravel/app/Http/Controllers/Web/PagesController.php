@@ -14,7 +14,7 @@ class PagesController extends Controller
 {
   public function index($page)
   {
-    $pages = Pages::where('enable','=',1)->where('title','like','%'.$page.'%')->first();
+    $pages = Pages::where('enable','=',1)->where('url','=',$page)->first();
     if (count($pages) > 0) {
       return view('web.pages',[
         'pages' => $pages
