@@ -15,6 +15,7 @@
     <link rel="shortcut icon" type="image/png" href="{{asset('template/kontributor/img/logo-only.png')}}"/>
     <link rel="stylesheet" href="{{ asset('template/web/plugins/ionicons-2.0.1/css/ionicons.min.css') }}">
     <link rel="stylesheet" href="{{ asset('template/web/plugins/OwlCarousel2-2.2.1/dist/assets/owl.carousel.css')}}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- Jquery UI   -->
     <link rel="stylesheet" href="{{ asset('template/web/plugins/jquery-ui-1.12.1.custom/jquery-ui.css') }}">
     <script type="text/javascript" src="{{asset('template/web/js/jquery.min.js')}}"></script>
@@ -43,7 +44,26 @@
     </script>
     <!-- end Mixpanel -->
     <style media="screen">
+    .owl-prev {
+    width: 15px;
+    height: 100px;
+    position: absolute;
+    top: 40%;
+    margin-left: -20px;
+    display: block!IMPORTANT;
+    border:0px solid black;
+    }
 
+    .owl-next {
+        width: 15px;
+        height: 100px;
+        position: absolute;
+        top: 40%;
+        right: -25px;
+        display: block!IMPORTANT;
+        border:0px solid black;
+    }
+    .owl-prev i, .owl-next i {transform : scale(1,6); color: #333;}
     .loading{
         position: fixed;
         background: #2BA8E2;
@@ -413,7 +433,7 @@
                 </div>
                 <div class="col-md-2">
 
-                  <?= Helper::pageMenu(); ?>
+                  <?=Helper::pageMenu();?>
 
                 </div>
                 <div class="col-md-2">

@@ -105,8 +105,10 @@ class KategoriController extends Controller {
 	 * @return \Illuminate\Http\Response
 	 */
 	public function edit($id) {
-		//
-	}
+		$categories = categories::find($id);
+		return view('admin.kategori.edit', [
+			'categories' => $categories,
+		]);}
 
 	/**
 	 * Update the specified resource in storage.
