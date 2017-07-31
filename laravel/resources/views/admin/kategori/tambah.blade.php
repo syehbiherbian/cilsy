@@ -15,7 +15,7 @@
                         @if($errors->all())
                             <div class="alert alert-danger">
                                 @foreach($errors->all() as $error)
-                                    <?php echo $error."</br>";?>
+                                    <?php echo $error . "</br>"; ?>
                                 @endforeach
                             </div>
                         @endif
@@ -28,11 +28,13 @@
                                 </div>
                             </div>
 
-                            <div class="form-group form-float">
-                                <div class="form-line">
-                                    <input type="text" name="icon" class="form-control">
-                                    <label class="form-label">Icon</label>
-                                </div>
+                            <div class="form-group">
+                              <label class="form-label">Image</label>
+                              <div class="form-line">
+                                <a href="{{ asset('assets/filemanager/dialog.php?type=0&field_id=img') }}" class="btn btn-success iframe-btn" type="button" style="margin-bottom:10px;"><i class="material-icons">camera_enhance</i></a>
+                                <img src="" id="previmg" class="img-responsive" style="max-width:500px;max-height:500px;"/>
+                                <input type="hidden" name="icon" class="form-control" id="img">
+                              </div>
                             </div>
                             <div class="form-group form-float">
                                 <h2 class="card-inside-title">Deskripsi</h2>
