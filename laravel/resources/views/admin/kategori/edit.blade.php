@@ -19,11 +19,13 @@
                                 @endforeach
                             </div>
                         @endif
-                        <form action="{{action('KategoriController@store')}}" method="post" enctype="multipart/form-data">
+                        <form action="{{ url('system/cat/'.$categories->id)}}" method="post" enctype="multipart/form-data">
                             <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+                            <input type="hidden" name="_method" value="PUT">
+                            <input type="hidden" name="enable" value="1">
                             <div class="form-group form-float">
                                 <div class="form-line">
-                                    <input type="text" name="nama_kat" class="form-control">
+                                    <input type="text" name="nama_kat" class="form-control" value="{{$categories->title}}">
                                     <label class="form-label">Kategori</label>
                                 </div>
                             </div>
@@ -33,7 +35,7 @@
                               <div class="form-line">
                                 <a href="{{ asset('assets/filemanager/dialog.php?type=0&field_id=img') }}" class="btn btn-success iframe-btn" type="button" style="margin-bottom:10px;"><i class="material-icons">camera_enhance</i></a>
                                 <img src="" id="previmg" class="img-responsive" style="max-width:500px;max-height:500px;"/>
-                                <input type="hidden" name="icon" class="form-control" id="img">
+                                <input type="hidden" name="icon" class="form-control" id="img" value="{{ $categories->image }}">
                               </div>
                             </div>
                             <div class="form-group form-float">
@@ -42,7 +44,7 @@
                                     <div class="col-sm-12">
                                         <div class="form-group">
                                             <div class="form-line">
-                                                <textarea rows="4" name="desc" class="form-control no-resize" placeholder="Please type what you want..."></textarea>
+                                                <textarea rows="4" name="desc" class="form-control no-resize" placeholder="Please type what you want..." value="{{ $categories->description }}"></textarea>
                                             </div>
                                         </div>
                                     </div>
