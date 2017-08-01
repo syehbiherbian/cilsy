@@ -4,9 +4,10 @@
 <div id="navigation">
 		<ul class="breadcrumb">
 				<li><a href="{{ url('contributor') }}">Dashboard</a></li>
-        <li><a href="{{ url('contributor/lessons') }}">Kelola Tutorial</a></li>
-			  <li><a href="{{ url('contributor/lessons/create') }}">Buat tutorial</a></li>
-        <li>Video</li>
+        <li><a href="{{ url('contributor/lessons') }}">Kelola Totorial</a></li>
+			  <li><a href="{{ url('contributor/lessons/'.$quiz->lessons_id.'/edit') }}">Kelola Quiz</a></li>
+				<li><a href="{{ url('ontributor/lessons/quiz/'.$quiz->id.'/edit') }}">Kelola Soal</a></li>
+        <li>Buat Soal</li>
 		</ul>
 </div>
 @endsection
@@ -38,7 +39,7 @@
 					<div class="form-group">
 						<label class="col-sm-2 control-label">Judul</label>
 						<div class="col-sm-10">
-							<input type="text" class="form-control" placeholder="Contoh:Apa kepanjangan dari LTS pada versi Ubuntu?">
+							<input type="text" class="form-control" name="question" placeholder="Contoh:Apa kepanjangan dari LTS pada versi Ubuntu?">
 						</div>
 					</div>
 					<hr>
@@ -48,12 +49,12 @@
 						<div class="col-sm-1">
 							<div class="checkbox">
 				        <label>
-				          <input type="checkbox">
+				          <input type="checkbox" name="question_key_a[]" id="question_key_a0">
 				        </label>
 				      </div>
 						</div>
 						<div class="col-sm-7">
-							<input type="text" class="form-control" placeholder="Tulis Jawaban disini">
+							<input type="text" class="form-control" name="answer_a[]" id="answer_a0" placeholder="Tulis Jawaban disini">
 						</div>
 						<div class="col-sm-2 text-right">
 							<div class="btn-group">
@@ -69,12 +70,12 @@
 						<div class="col-sm-1">
 							<div class="checkbox">
 				        <label>
-				          <input type="checkbox">
+				          <input type="checkbox" name="question_key_b[]" id="question_key_b0">
 				        </label>
 				      </div>
 						</div>
 						<div class="col-sm-7">
-							<input type="text" class="form-control" placeholder="Tulis Jawaban disini">
+							<input type="text" class="form-control" name="answer_b[]" id="answer_b0" placeholder="Tulis Jawaban disini">
 						</div>
 						<div class="col-sm-2 text-right">
 							<div class="btn-group">
@@ -90,12 +91,12 @@
 						<div class="col-sm-1">
 							<div class="checkbox">
 				        <label>
-				          <input type="checkbox">
+				          <input type="checkbox" name="question_key_c" id=question_key_c0>
 				        </label>
 				      </div>
 						</div>
 						<div class="col-sm-7">
-							<input type="text" class="form-control" placeholder="Tulis Jawaban disini">
+							<input type="text" class="form-control" name="answer_c[]" id="answer_c0" placeholder="Tulis Jawaban disini">
 						</div>
 						<div class="col-sm-2 text-right">
 							<div class="btn-group">
@@ -111,12 +112,12 @@
 						<div class="col-sm-1">
 							<div class="checkbox">
 				        <label>
-				          <input type="checkbox">
+				          <input type="checkbox" name="question_key_d[]" id="question_key_d0">
 				        </label>
 				      </div>
 						</div>
 						<div class="col-sm-7">
-							<input type="text" class="form-control" placeholder="Tulis Jawaban disini">
+							<input type="text" class="form-control" name="answer_d[]" id="answer_d0" placeholder="Tulis Jawaban disini">
 						</div>
 						<div class="col-sm-2 text-right">
 							<div class="btn-group">

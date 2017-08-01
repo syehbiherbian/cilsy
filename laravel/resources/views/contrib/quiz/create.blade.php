@@ -5,13 +5,23 @@
 		<ul class="breadcrumb">
 				<li><a href="{{ url('contributor') }}">Dashboard</a></li>
         <li><a href="{{ url('contributor/lessons') }}">Kelola Tutorial</a></li>
-        <li>Buat tutorial</li>
+				 <li><a href="{{ url('contributor/lessons/'.$lessons_id.'/edit') }}">Kelola Quiz</a></li>
+        <li>Buat Quiz</li>
 		</ul>
 </div>
 @endsection
 @section('content')
 <div class="row">
   <div class="col-md-12">
+		@if($errors->all())
+		 <div class="alert alert-danger">
+				 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+				 <h4><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></h4>
+				 @foreach($errors->all() as $error)
+				 <?php echo $error."</br>";?>
+				 @endforeach
+		 </div>
+		 @endif
 		<div class="box-white">
 	    <div class="form-title">
 	      <h3>Tutorial Linux Fundamental dengan ubuntu 14.04 LTS</h3>
@@ -29,7 +39,10 @@
 	        <label class="col-sm-2 control-label">Muncul Setelah Video</label>
 	        <div class="col-sm-10">
 	          <select class="form-control" name="video">
-	            <option value="">-</option>
+	            <option value="">Select Video</option>
+								@foreach($video as $value)
+								<option value="{{$value->id}}">{{$value->title}}</option>
+								@endforeach
 	          </select>
 	        </div>
 	      </div>
