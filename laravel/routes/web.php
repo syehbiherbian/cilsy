@@ -158,10 +158,10 @@ Route::get('contributor/lessons/create/videos', 'Contributors\VideosController@c
 Route::get('contributor/lessons/create/attachments', 'Contributors\AttachmentsController@create');
 
 // Quiz
-Route::get('contributor/lessons/create/quiz', 'Contributors\QuizController@create');
-
+Route::get('contributor/lessons/{id}/create/quiz', 'Contributors\QuizController@create');
+Route::post('contributor/lessons/{id}/store_quiz', 'Contributors\QuizController@store_quiz');
 // Question
-Route::get('contributor/lessons/create/questions', 'Contributors\QuestionsController@create');
+Route::get('contributor/lessons/quiz/{quiz_id}/create/questions', 'Contributors\QuestionQuizController@create');
 
 
 

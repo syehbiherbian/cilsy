@@ -24,12 +24,12 @@ class QuestionsController extends Controller
     }
 
 
-    public function create()
-    {
-      if (empty(Session::get('contribID'))) {
-        return redirect('contributor/login');
-      }
-      # code...
-      return view('contrib.questions.create');
-    }
+    // public function create()
+    // {
+    //   if (empty(Session::get('contribID'))) {
+    //     return redirect('contributor/login');
+    //   }
+    //   # code...
+    //   return view('contrib.questions.create');
+    // }
 }
