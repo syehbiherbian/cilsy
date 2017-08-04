@@ -166,7 +166,7 @@ class VideosController extends Controller
         }
 
 
-        return redirect('contributor/lessons/'.$id.'/edit')->with('success','Video berhasil di submit');
+        return redirect('contributor/lessons/'.$id.'/edit')->with('success','Video berhasil di update');
 
     }
   }
