@@ -90,8 +90,9 @@
             </div>
           </div>
           <div class="col-md-6">
+
             <div class="box-option text-right">
-              <a href="#" class="btn btn-info">Tambah Video</a>
+              <a href="{{ url('contributor/lessons/'.$lessons->id.'/videos/create') }}" class="btn btn-info">Tambah Video</a>
             </div>
           </div>
         </div>
@@ -109,15 +110,17 @@
             <tbody>
               <?php if (count($videos) == 0): ?>
                 <tr>
-                  <td colspan="2">Tidak ada data</td>
+                  <td colspan="3">Tidak ada data</td>
                 </tr>
               <?php else: ?>
+                <?php $i = 1; ?>
                 <?php foreach ($videos as $key => $row): ?>
                 <tr>
                   <td width="25">{{ $i }}</td>
                   <td>{{ $row->title }}</td>
-                  <td><a href="#" class="btn btn-danger">Edit</a></td>
+                  <td width="25"><a href="#" class="btn btn-danger">Edit</a></td>
                 </tr>
+                <?php $i++; ?>
                 <?php endforeach; ?>
               <?php endif; ?>
             </tbody>
