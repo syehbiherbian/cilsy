@@ -155,6 +155,9 @@ Route::get('contributor/lessons/{id}/edit', 'Contributors\LessonsController@edit
 Route::get('contributor/lessons/{id}/videos/create', 'Contributors\VideosController@create');
 Route::post('contributor/lessons/{id}/videos/create', 'Contributors\VideosController@store');
 
+Route::get('contributor/lessons/{id}/videos/edit', 'Contributors\VideosController@edit');
+Route::post('contributor/lessons/{id}/videos/edit', 'Contributors\VideosController@update');
+
 // Attachment
 Route::get('contributor/lessons/create/attachments', 'Contributors\AttachmentsController@create');
 

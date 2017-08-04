@@ -92,6 +92,7 @@
           <div class="col-md-6">
 
             <div class="box-option text-right">
+              <a href="{{ url('contributor/lessons/'.$lessons->id.'/videos/edit') }}" class="btn btn-danger">Edit</a>
               <a href="{{ url('contributor/lessons/'.$lessons->id.'/videos/create') }}" class="btn btn-info">Tambah Video</a>
             </div>
           </div>
@@ -104,7 +105,6 @@
               <tr>
                 <th>No</th>
                 <th>Judul</th>
-                <th>Tindakan</th>
               </tr>
             </thead>
             <tbody>
@@ -118,7 +118,6 @@
                 <tr>
                   <td width="25">{{ $i }}</td>
                   <td>{{ $row->title }}</td>
-                  <td width="25"><a href="#" class="btn btn-danger">Edit</a></td>
                 </tr>
                 <?php $i++; ?>
                 <?php endforeach; ?>
@@ -144,7 +143,8 @@
           </div>
           <div class="col-md-6">
             <div class="box-option text-right">
-              <a href="#" class="btn btn-info">Tambah Kuis</a>
+              <a href="{{ url('contributor/lessons/'.$lessons->id.'/quiz/edit') }}" class="btn btn-danger">Edit</a>
+              <a href="{{ url('contributor/lessons/'.$lessons->id.'/quiz/create') }}" class="btn btn-info">Tambah Kuis</a>
             </div>
           </div>
         </div>
@@ -156,7 +156,6 @@
               <tr>
                 <th>No</th>
                 <th>Judul</th>
-                <th>Tindakan</th>
               </tr>
             </thead>
             <tbody>
@@ -170,7 +169,6 @@
                 <tr>
                   <td width="25">{{ $i }}</td>
                   <td>{{ $row->title }}</td>
-                  <td><a href="#" class="btn btn-danger">Edit</a></td>
                 </tr>
                 <?php endforeach; ?>
 
@@ -196,8 +194,8 @@
           </div>
           <div class="col-md-6">
             <div class="box-option text-right">
-
-              <a href="#" class="btn btn-info">Tambah Lampiran</a>
+              <a href="{{ url('contributor/lessons/'.$lessons->id.'/files/edit') }}" class="btn btn-danger">Edit</a>
+              <a href="{{ url('contributor/lessons/'.$lessons->id.'/files/create') }}" class="btn btn-info">Tambah Lampiran</a>
             </div>
           </div>
         </div>
@@ -209,7 +207,6 @@
               <tr>
                 <th>No</th>
                 <th>Judul</th>
-                <th>Tindakan</th>
               </tr>
             </thead>
             <tbody>
@@ -222,7 +219,6 @@
                 <tr>
                   <td width="25">{{ $i }}</td>
                   <td>{{ $row->title }}</td>
-                  <td><a href="#" class="btn btn-danger">Edit</a></td>
                 </tr>
                 <?php endforeach; ?>
               <?php endif; ?>
