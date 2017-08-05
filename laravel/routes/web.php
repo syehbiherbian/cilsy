@@ -163,6 +163,7 @@ Route::post('contributor/lessons/{id}/store_quiz', 'Contributors\QuizController@
 Route::get('contributor/lessons/quiz/{quiz_id}/edit', 'Contributors\QuestionQuizController@edit');
 // Question
 Route::get('contributor/lessons/quiz/{quiz_id}/create/questions', 'Contributors\QuestionQuizController@create');
+Route::post('contributor/lessons/{quiz_id}/store_questions', 'Contributors\QuestionQuizController@store');
 
 
 
