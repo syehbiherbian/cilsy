@@ -62,5 +62,13 @@ class QuizController extends Controller
 
            return Redirect('contributor/lessons/quiz/'.$store->id.'/create/questions');
   }
+  public function edit($id){
+    if (empty(Session::get('contribID'))) {
+      return redirect('contributor/login');
+    }
+
+    # code...
+    return view('contrib.quiz.edit');
+  }
 
 }
