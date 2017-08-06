@@ -29,7 +29,8 @@
 				<div class="form-title">
 					<h3>{{ $lessons->title }}</h3>
 			 	</div>
-				<div class="item">
+				<?php foreach ($videos as $key => $row): ?>
+					<div class="item">
 					<div class="option">
 						<div class="row">
 							<div class="col-md-6">
@@ -48,23 +49,26 @@
 					<div class="form-group">
 						<label class="col-sm-2 control-label">Judul</label>
 						<div class="col-sm-10">
-							<input type="text" class="form-control" placeholder="Contoh:Pengenalan dasar terminal Ubuntu" name="title[]">
+							<input type="text" class="form-control" placeholder="Contoh:Pengenalan dasar terminal Ubuntu" name="title[]" value="{{ $row->title }}">
 						</div>
 					</div>
 					<div class="form-group">
 					 <label class="col-sm-2 control-label">Pilih Video</label>
 					 <div class="col-sm-10">
+						 <video src="{{ $row->title }}" autoplay poster="posterimage.jpg"></video>
 						 <input type="file" class="form-control" name="video[]">
 					 </div>
 				 </div>
 	 	      <div class="form-group">
 	 	        <label class="col-sm-2 control-label">Description</label>
 	 	        <div class="col-sm-10">
-	 	        <textarea class="form-control" rows="8" cols="80" placeholder="Contoh: Active Directory Domain Controller merupakan salah satu keunggulan server windows." name="description[]"></textarea>
+	 	        <textarea class="form-control" rows="8" cols="80" placeholder="Contoh: Active Directory Domain Controller merupakan salah satu keunggulan server windows." name="description[]">{{ $row->description }}</textarea>
 	 	        </div>
 	 	      </div>
 
 				</div>
+
+				<?php endforeach; ?>
 
 	      <div class="form-group">
 					<div class="col-sm-2">
