@@ -127,21 +127,4 @@
          * Remove a shape from the queue
          */
         removeShapeId: function (shapeid) {
-            alert('removeShapeId not implemented');
-        },
-
-        /**
-         * Find a shape at the specified x/y co-ordinates
-         */
-        getShapeAt: function (el, x, y) {
-            alert('getShapeAt not implemented');
-        },
-
-        /**
-         * Render all queued shapes onto the canvas
-         */
-        render: function () {
-            alert('render not implemented');
-        }
-    });
-
+            alert('removeShapeId not implemente

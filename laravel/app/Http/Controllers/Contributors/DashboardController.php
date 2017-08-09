@@ -21,9 +21,6 @@ class DashboardController extends Controller
 
   public function index()
   {
-    if (empty(Session::get('contribID'))) {
-      return redirect('contributor/login');
-    }
 
     return view('contrib.dashboard');
 

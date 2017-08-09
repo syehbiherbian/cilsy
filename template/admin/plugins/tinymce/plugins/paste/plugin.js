@@ -1815,21 +1815,4 @@ define("tinymce/pasteplugin/Plugin", [
 			});
 		}
 
-		editor.addButton('pastetext', {
-			icon: 'pastetext',
-			tooltip: 'Paste as text',
-			onclick: togglePlainTextPaste,
-			active: self.clipboard.pasteFormat == "text"
-		});
-
-		editor.addMenuItem('pastetext', {
-			text: 'Paste as text',
-			selectable: true,
-			active: clipboard.pasteFormat,
-			onclick: togglePlainTextPaste
-		});
-	});
-});
-
-expose(["tinymce/pasteplugin/Utils"]);
-})(this);
+		edito

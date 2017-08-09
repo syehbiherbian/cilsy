@@ -13,7 +13,6 @@ use App\categories;
 use App\videos;
 use App\services;
 use App\files;
-use App\Quiz;
 use DateTime;
 
 use Session;
@@ -41,7 +40,7 @@ class LessonsController extends Controller
       $data = lessons::where('contributor_id',$contribID)
       ->leftJoin('categories', 'lessons.category_id', '=', 'categories.id')
       ->select('lessons.*','categories.title as category_title')
-      ->where('lessons.status',3)
+      ->where('lessons.status',0)
       ->get();
     }elseif ($filter == 'processing') {
       $data = lessons::where('contributor_id',$contribID)
@@ -59,6 +58,7 @@ class LessonsController extends Controller
       $data = lessons::where('contributor_id',$contribID)
       ->leftJoin('categories', 'lessons.category_id', '=', 'categories.id')
       ->select('lessons.*','categories.title as category_title')
+      ->where('lessons.status',1)
       ->get();
     }
 
@@ -106,37 +106,17 @@ class LessonsController extends Controller
         $cid          = Session::get('contribID');
         $title        = Input::get('title');
         $category_id  = Input::get('category_id');
+        $image        = Input::file('image');
         $description  = Input::get('description');
 
 
 
-        $DestinationPath= 'assets/source/lessons';
-        $image        = Input::file('image');
+        Session::set('lessons_title',$title);
+        Session::set('lessons_category_id',$category_id);
+        Session::set('lessons_image',$image);
+        Session::set('lessons_description',$description);
 
-        if(!empty($image)){
-            $file    = $image->getClientOriginalName();
-            $image->move($DestinationPath, $file);
-            $filename   = 'https://cilsy.id/'.$DestinationPath.'/'.$file;
-        }else{
-            $filename    = '';
-        }
-
-
-
-        $store                  = new lessons;
-        $store->contributor_id  = $cid;
-        $store->status          = 0;
-        $store->title           = $title;
-        $store->slug            = $title;
-        $store->category_id     = $category_id;
-        $store->image           = $filename;
-        $store->description     = $description;
-        $store->created_at      = $now;
-        $store->updated_at      = $now;
-        $store->save();
-
-
-        return redirect('contributor/lessons/'.$store->id.'/edit')->with('success','Pembuatan tutorial berhasil');
+        return redirect('contributor/lessons/create/videos')->with('success','');
 
     }
   }
@@ -152,6 +132,68 @@ class LessonsController extends Controller
     return view('contrib.lessons.submit');
   }
 
+  public function doSubmit()
+  {
+      $now                    = new DateTime();;
+      $cid                    = Session::get('contribID');
+      // Lessons
+      $lessons_title          = Session::get('lessons_title');
+      $lessons_category_id    = Session::get('lessons_category_id');
+      $lessons_description    = Session::get('lessons_description');
+
+
+      $lessonsDestinationPath= 'assets/source/lessons';
+      $lessons_image          = Session::get('lessons_image');
+
+      if(!empty($lessons_image)){
+          $lessonsfilename    = $lessons_image->getClientOriginalName();
+          $lessons_image->move($lessonsDestinationPath, $lessonsfilename);
+      }else{
+          $lessonsfilename    = '';
+      }
+
+
+      $store                  = new lessons;
+      $store->contributor_id  = $cid;
+      $store->status          = 0;
+      $store->title           = $lessons_title;
+      $store->slug            = $lessons_title;
+      $store->category_id     = $lessons_category_id;
+      $store->image           = $lessonsfilename;
+      $store->description     = $lessons_description;
+      $store->created_at      = $now;
+      $store->updated_at      = $now;
+      $store->save();
+
+      // Videos
+
+      // Attachments
+
+      // Quiz
+
+      // Questions
+
+
+      $forget = $this->forgetSession();
+      if ($forget == true) {
+          return redirect('contributor/lessons')->with('success','');
+      }
+
+
+  }
+
+  private static function forgetSession()
+  {
+
+    Session::forget('lessons_title');
+    Session::forget('lessons_category_id');
+    Session::forget('lessons_image');
+    Session::forget('lessons_description');
+
+    return true;
+
+  }
+
   // EDIT
   public function edit($id)
   {
@@ -159,22 +201,8 @@ class LessonsController extends Controller
       return redirect('contributor/login');
     }
 
-    $lessons  = lessons::leftJoin('categories', 'lessons.category_id', '=', 'categories.id')
-              ->select('lessons.*','categories.title as category_title')
-              ->where('lessons.id',$id)
-              ->first();
-    $videos   = videos::where('lessons_id',$id)->get();
-    $quiz     = Quiz::where('lesson_id',$id)->get();
-    $files    = files::where('lesson_id',$id)->get();
-
-
     # code...
-    return view('contrib.lessons.edit',[
-      'lessons'   => $lessons,
-      'videos'    => $videos,
-      'quiz'      => $quiz,
-      'files'     => $files
-    ]);
+    return view('contrib.lessons.edit');
   }
 
 

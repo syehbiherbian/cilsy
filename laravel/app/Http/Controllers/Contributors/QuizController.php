@@ -25,17 +25,18 @@ class QuizController extends Controller
     if(empty($data)){
       return redirect()->back();
     }
+
+    $video= videos::where('lessons_id',$lessons_id)->get();
+
     return view('contrib.quiz.create', [
       'lessons_id'=>$lessons_id,
+      'video' =>$video,
     ]);
   }
-  public function store_quiz($lessons_id){
+  public function store_quiz(Request $request, $lessons_id){
     if (empty(Session::get('contribID'))) {
       return redirect('contributor/login');
     }
-
-    var_dump($lessons_id);
-    exit();
     //Store new Data
            $validator = Validator::make($request->all(), [
                'title'            => 'required',
@@ -52,7 +53,22 @@ class QuizController extends Controller
            $desc             = Input::get('desc');
 
            $store = new Quiz();
-          //  $store->
+           $store->lesson_id =$lessons_id;
+           $store->title =$title;
+           $store->appear =$video;
+           $store->description =$desc;
+           $store->created_at =$now;
+           $store->save();
 
+           return Redirect('contributor/lessons/quiz/'.$store->id.'/create/questions');
   }
+  public function edit($id){
+    if (empty(Session::get('contribID'))) {
+      return redirect('contributor/login');
+    }
+
+    # code...
+    return view('contrib.quiz.edit');
+  }
+
 }

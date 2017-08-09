@@ -94,38 +94,3 @@
         renderTarget: function (highlight) {
             var targetval = this.values[0],
                 x = Math.round(this.canvasWidth * ((targetval - this.min) / this.range) - (this.options.get('targetWidth') / 2)),
-                targettop = Math.round(this.canvasHeight * 0.10),
-                targetheight = this.canvasHeight - (targettop * 2),
-                color = this.options.get('targetColor');
-            if (highlight) {
-                color = this.calcHighlightColor(color, this.options);
-            }
-            return this.target.drawRect(x, targettop, this.options.get('targetWidth') - 1, targetheight - 1, color, color);
-        },
-
-        render: function () {
-            var vlen = this.values.length,
-                target = this.target,
-                i, shape;
-            if (!bullet._super.render.call(this)) {
-                return;
-            }
-            for (i = 2; i < vlen; i++) {
-                shape = this.renderRange(i).append();
-                this.shapes[shape.id] = 'r' + i;
-                this.valueShapes['r' + i] = shape.id;
-            }
-            if (this.values[1] !== null) {
-                shape = this.renderPerformance().append();
-                this.shapes[shape.id] = 'p1';
-                this.valueShapes.p1 = shape.id;
-            }
-            if (this.values[0] !== null) {
-                shape = this.renderTarget().append();
-                this.shapes[shape.id] = 't0';
-                this.valueShapes.t0 = shape.id;
-            }
-            target.render();
-        }
-    });
-

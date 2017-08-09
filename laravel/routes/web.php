@@ -56,7 +56,6 @@ Route::get('/tentang', function () {
 
 
 
-
 /*
 |--------------------------------------------------------------------------
 | Member Routes
@@ -149,15 +148,11 @@ Route::post('contributor/lessons/create', 'Contributors\LessonsController@doCrea
 
 
 Route::get('contributor/lessons/{id}/edit', 'Contributors\LessonsController@edit');
-// Route::get('contributor/lessons/create/submit', 'Contributors\LessonsController@submit');
-// Route::post('contributor/lessons/create/submit', 'Contributors\LessonsController@doSubmit');
+Route::get('contributor/lessons/create/submit', 'Contributors\LessonsController@submit');
+Route::post('contributor/lessons/create/submit', 'Contributors\LessonsController@doSubmit');
 
 // Videos
-Route::get('contributor/lessons/{id}/videos/create', 'Contributors\VideosController@create');
-Route::post('contributor/lessons/{id}/videos/create', 'Contributors\VideosController@store');
-
-Route::get('contributor/lessons/{id}/videos/edit', 'Contributors\VideosController@edit');
-Route::post('contributor/lessons/{id}/videos/edit', 'Contributors\VideosController@update');
+Route::get('contributor/lessons/create/videos', 'Contributors\VideosController@create');
 
 // Attachment
 Route::get('contributor/lessons/create/attachments', 'Contributors\AttachmentsController@create');
@@ -165,8 +160,11 @@ Route::get('contributor/lessons/create/attachments', 'Contributors\AttachmentsCo
 // Quiz
 Route::get('contributor/lessons/{id}/create/quiz', 'Contributors\QuizController@create');
 Route::post('contributor/lessons/{id}/store_quiz', 'Contributors\QuizController@store_quiz');
+Route::get('contributor/lessons/quiz/{quiz_id}/edit', 'Contributors\QuizController@edit');
+
 // Question
 Route::get('contributor/lessons/quiz/{quiz_id}/create/questions', 'Contributors\QuestionQuizController@create');
+Route::post('contributor/lessons/{quiz_id}/store_questions', 'Contributors\QuestionQuizController@store');
 
 
 

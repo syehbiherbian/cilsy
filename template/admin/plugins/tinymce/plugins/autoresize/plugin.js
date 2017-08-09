@@ -123,40 +123,4 @@ tinymce.PluginManager.add('autoresize', function(editor) {
 	// Define maximum height
 	settings.autoresize_max_height = parseInt(editor.getParam('autoresize_max_height', 0), 10);
 
-	// Add padding at the bottom for better UX
-	editor.on("init", function() {
-		var overflowPadding, bottomMargin;
-
-		overflowPadding = editor.getParam('autoresize_overflow_padding', 1);
-		bottomMargin = editor.getParam('autoresize_bottom_margin', 50);
-
-		if (overflowPadding !== false) {
-			editor.dom.setStyles(editor.getBody(), {
-				paddingLeft: overflowPadding,
-				paddingRight: overflowPadding
-			});
-		}
-
-		if (bottomMargin !== false) {
-			editor.dom.setStyles(editor.getBody(), {
-				paddingBottom: bottomMargin
-			});
-		}
-	});
-
-	// Add appropriate listeners for resizing content area
-	editor.on("nodechange setcontent keyup FullscreenStateChanged", resize);
-
-	if (editor.getParam('autoresize_on_init', true)) {
-		editor.on('init', function() {
-			// Hit it 20 times in 100 ms intervals
-			wait(20, 100, function() {
-				// Hit it 5 times in 1 sec intervals
-				wait(5, 1000);
-			});
-		});
-	}
-
-	// Register the command so that it can be invoked by using tinyMCE.activeEditor.execCommand('mceExample');
-	editor.addCommand('mceAutoResize', resize);
-});
+	// Add padding at the bottom for bette

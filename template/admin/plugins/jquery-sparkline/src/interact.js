@@ -228,20 +228,4 @@
             if (x < this.scrollLeft) {
                 x = this.scrollLeft;
             } else if (x + this.width > this.scrollRight) {
-                x = this.scrollRight - this.width;
-            }
-
-            this.tooltip.css({
-                'left': x,
-                'top': y
-            });
-        },
-
-        remove: function () {
-            this.tooltip.remove();
-            this.sizetip.remove();
-            this.sizetip = this.tooltip = undefined;
-            $(window).unbind('resize.jqs scroll.jqs');
-        }
-    });
-
+             
