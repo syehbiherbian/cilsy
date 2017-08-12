@@ -4089,4 +4089,64 @@ define("tinymce/tableplugin/Plugin", [
 		function addToolbars() {
 			var toolbarItems = editor.settings.table_toolbar;
 
-			if (toolbarItems === '' || toolbar
+			if (toolbarItems === '' || toolbarItems === false) {
+				return;
+			}
+
+			if (!toolbarItems) {
+				toolbarItems = 'tableprops tabledelete | ' +
+					'tableinsertrowbefore tableinsertrowafter tabledeleterow | ' +
+					'tableinsertcolbefore tableinsertcolafter tabledeletecol';
+			}
+
+			editor.addContextToolbar(
+				isTable,
+				toolbarItems
+			);
+		}
+
+		function getClipboardRows() {
+			return clipboardRows;
+		}
+
+		function setClipboardRows(rows) {
+			clipboardRows = rows;
+		}
+
+		addButtons();
+		addToolbars();
+
+		// Enable tab key cell navigation
+		if (editor.settings.table_tab_navigation !== false) {
+			editor.on('keydown', function(e) {
+				var cellElm, grid, delta;
+
+				if (e.keyCode == 9) {
+					cellElm = editor.dom.getParent(editor.selection.getStart(), 'th,td');
+
+					if (cellElm) {
+						e.preventDefault();
+
+						grid = new TableGrid(editor);
+						delta = e.shiftKey ? -1 : 1;
+
+						editor.undoManager.transact(function() {
+							if (!grid.moveRelIdx(cellElm, delta) && delta > 0) {
+								grid.insertRow();
+								grid.refresh();
+								grid.moveRelIdx(cellElm, delta);
+							}
+						});
+					}
+				}
+			});
+		}
+
+		self.insertTable = insertTable;
+		self.setClipboardRows = setClipboardRows;
+		self.getClipboardRows = getClipboardRows;
+	}
+
+	PluginManager.add('table', Plugin);
+});
+})(this);

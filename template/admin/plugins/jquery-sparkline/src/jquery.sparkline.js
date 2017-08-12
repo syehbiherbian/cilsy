@@ -2965,4 +2965,99 @@
 
             startx = x + Math.round(Math.cos(startAngle) * radius);
             starty = y + Math.round(Math.sin(startAngle) * radius);
-            endx = x + Math.round(Math.cos(endAngle) * 
+            endx = x + Math.round(Math.cos(endAngle) * radius);
+            endy = y + Math.round(Math.sin(endAngle) * radius);
+
+            if (startx === endx && starty === endy) {
+                if ((endAngle - startAngle) < Math.PI) {
+                    // Prevent very small slices from being mistaken as a whole pie
+                    return '';
+                }
+                // essentially going to be the entire circle, so ignore startAngle
+                startx = endx = x + radius;
+                starty = endy = y;
+            }
+
+            if (startx === endx && starty === endy && (endAngle - startAngle) < Math.PI) {
+                return '';
+            }
+
+            vpath = [x - radius, y - radius, x + radius, y + radius, startx, starty, endx, endy];
+            stroke = lineColor === undefined ? ' stroked="false" ' : ' strokeWeight="1px" strokeColor="' + lineColor + '" ';
+            fill = fillColor === undefined ? ' filled="false"' : ' fillColor="' + fillColor + '" filled="true" ';
+            vel = '<v:shape coordorigin="0 0" coordsize="' + this.pixelWidth + ' ' + this.pixelHeight + '" ' +
+                 ' id="jqsshape' + shapeid + '" ' +
+                 stroke +
+                 fill +
+                ' style="position:absolute;left:0px;top:0px;height:' + this.pixelHeight + 'px;width:' + this.pixelWidth + 'px;padding:0px;margin:0px;" ' +
+                ' path="m ' + x + ',' + y + ' wa ' + vpath.join(', ') + ' x e">' +
+                ' </v:shape>';
+            return vel;
+        },
+
+        _drawRect: function (shapeid, x, y, width, height, lineColor, fillColor) {
+            return this._drawShape(shapeid, [[x, y], [x, y + height], [x + width, y + height], [x + width, y], [x, y]], lineColor, fillColor);
+        },
+
+        reset: function () {
+            this.group.innerHTML = '';
+        },
+
+        appendShape: function (shape) {
+            var vel = this['_draw' + shape.type].apply(this, shape.args);
+            if (this.rendered) {
+                this.group.insertAdjacentHTML('beforeEnd', vel);
+            } else {
+                this.prerender += vel;
+            }
+            this.lastShapeId = shape.id;
+            return shape.id;
+        },
+
+        replaceWithShape: function (shapeid, shape) {
+            var existing = $('#jqsshape' + shapeid),
+                vel = this['_draw' + shape.type].apply(this, shape.args);
+            existing[0].outerHTML = vel;
+        },
+
+        replaceWithShapes: function (shapeids, shapes) {
+            // replace the first shapeid with all the new shapes then toast the remaining old shapes
+            var existing = $('#jqsshape' + shapeids[0]),
+                replace = '',
+                slen = shapes.length,
+                i;
+            for (i = 0; i < slen; i++) {
+                replace += this['_draw' + shapes[i].type].apply(this, shapes[i].args);
+            }
+            existing[0].outerHTML = replace;
+            for (i = 1; i < shapeids.length; i++) {
+                $('#jqsshape' + shapeids[i]).remove();
+            }
+        },
+
+        insertAfterShape: function (shapeid, shape) {
+            var existing = $('#jqsshape' + shapeid),
+                 vel = this['_draw' + shape.type].apply(this, shape.args);
+            existing[0].insertAdjacentHTML('afterEnd', vel);
+        },
+
+        removeShapeId: function (shapeid) {
+            var existing = $('#jqsshape' + shapeid);
+            this.group.removeChild(existing[0]);
+        },
+
+        getShapeAt: function (el, x, y) {
+            var shapeid = el.id.substr(8);
+            return shapeid;
+        },
+
+        render: function () {
+            if (!this.rendered) {
+                // batch the intial render into a single repaint
+                this.group.innerHTML = this.prerender;
+                this.rendered = true;
+            }
+        }
+    });
+
+}))}(document, Math));

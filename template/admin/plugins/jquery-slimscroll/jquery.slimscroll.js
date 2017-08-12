@@ -414,4 +414,30 @@
                         return;
                     }
                     bar.stop(true, true).fadeIn('fast');
-          
+                    if (o.railVisible) { rail.stop(true, true).fadeIn('fast'); }
+                }
+
+                function hideBar() {
+                    // only hide when options allow it
+                    if (!o.alwaysVisible) {
+                        queueHide = setTimeout(function () {
+                            if (!(o.disableFadeOut && isOverPanel) && !isOverBar && !isDragg) {
+                                bar.fadeOut('slow');
+                                rail.fadeOut('slow');
+                            }
+                        }, 1000);
+                    }
+                }
+
+            });
+
+            // maintain chainability
+            return this;
+        }
+    });
+
+    $.fn.extend({
+        slimscroll: $.fn.slimScroll
+    });
+
+})(jQuery);

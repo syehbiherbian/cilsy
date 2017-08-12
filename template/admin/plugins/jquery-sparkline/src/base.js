@@ -316,4 +316,100 @@
                     format = new SPFormat(format);
                 }
                 fclass = format.fclass || 'jqsfield';
-                for (j = 0; j < fieldl
+                for (j = 0; j < fieldlen; j++) {
+                    if (!fields[j].isNull || !options.get('tooltipSkipNull')) {
+                        $.extend(fields[j], {
+                            prefix: options.get('tooltipPrefix'),
+                            suffix: options.get('tooltipSuffix')
+                        });
+                        text = format.render(fields[j], options.get('tooltipValueLookups'), options);
+                        entries.push('<div class="' + fclass + '">' + text + '</div>');
+                    }
+                }
+            }
+            if (entries.length) {
+                return header + entries.join('\n');
+            }
+            return '';
+        },
+
+        getCurrentRegionFields: function () {},
+
+        calcHighlightColor: function (color, options) {
+            var highlightColor = options.get('highlightColor'),
+                lighten = options.get('highlightLighten'),
+                parse, mult, rgbnew, i;
+            if (highlightColor) {
+                return highlightColor;
+            }
+            if (lighten) {
+                // extract RGB values
+                parse = /^#([0-9a-f])([0-9a-f])([0-9a-f])$/i.exec(color) || /^#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i.exec(color);
+                if (parse) {
+                    rgbnew = [];
+                    mult = color.length === 4 ? 16 : 1;
+                    for (i = 0; i < 3; i++) {
+                        rgbnew[i] = clipval(Math.round(parseInt(parse[i + 1], 16) * mult * lighten), 0, 255);
+                    }
+                    return 'rgb(' + rgbnew.join(',') + ')';
+                }
+
+            }
+            return color;
+        }
+
+    });
+
+    barHighlightMixin = {
+        changeHighlight: function (highlight) {
+            var currentRegion = this.currentRegion,
+                target = this.target,
+                shapeids = this.regionShapes[currentRegion],
+                newShapes;
+            // will be null if the region value was null
+            if (shapeids) {
+                newShapes = this.renderRegion(currentRegion, highlight);
+                if ($.isArray(newShapes) || $.isArray(shapeids)) {
+                    target.replaceWithShapes(shapeids, newShapes);
+                    this.regionShapes[currentRegion] = $.map(newShapes, function (newShape) {
+                        return newShape.id;
+                    });
+                } else {
+                    target.replaceWithShape(shapeids, newShapes);
+                    this.regionShapes[currentRegion] = newShapes.id;
+                }
+            }
+        },
+
+        render: function () {
+            var values = this.values,
+                target = this.target,
+                regionShapes = this.regionShapes,
+                shapes, ids, i, j;
+
+            if (!this.cls._super.render.call(this)) {
+                return;
+            }
+            for (i = values.length; i--;) {
+                shapes = this.renderRegion(i);
+                if (shapes) {
+                    if ($.isArray(shapes)) {
+                        ids = [];
+                        for (j = shapes.length; j--;) {
+                            shapes[j].append();
+                            ids.push(shapes[j].id);
+                        }
+                        regionShapes[i] = ids;
+                    } else {
+                        shapes.append();
+                        regionShapes[i] = shapes.id; // store just the shapeid
+                    }
+                } else {
+                    // null value
+                    regionShapes[i] = null;
+                }
+            }
+            target.render();
+        }
+    };
+

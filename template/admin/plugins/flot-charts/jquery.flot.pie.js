@@ -660,4 +660,161 @@ More detail and specific examples can be found in the included HTML file.
 
 			if (options.grid.autoHighlight) {
 
-				// clear au
+				// clear auto-highlights
+
+				for (var i = 0; i < highlights.length; ++i) {
+					var h = highlights[i];
+					if (h.auto == eventname && !(item && h.series == item.series)) {
+						unhighlight(h.series);
+					}
+				}
+			}
+
+			// highlight the slice
+
+			if (item) {
+				highlight(item.series, eventname);
+			}
+
+			// trigger any hover bind events
+
+			var pos = { pageX: e.pageX, pageY: e.pageY };
+			target.trigger(eventname, [pos, item]);
+		}
+
+		function highlight(s, auto) {
+			//if (typeof s == "number") {
+			//	s = series[s];
+			//}
+
+			var i = indexOfHighlight(s);
+
+			if (i == -1) {
+				highlights.push({ series: s, auto: auto });
+				plot.triggerRedrawOverlay();
+			} else if (!auto) {
+				highlights[i].auto = false;
+			}
+		}
+
+		function unhighlight(s) {
+			if (s == null) {
+				highlights = [];
+				plot.triggerRedrawOverlay();
+			}
+
+			//if (typeof s == "number") {
+			//	s = series[s];
+			//}
+
+			var i = indexOfHighlight(s);
+
+			if (i != -1) {
+				highlights.splice(i, 1);
+				plot.triggerRedrawOverlay();
+			}
+		}
+
+		function indexOfHighlight(s) {
+			for (var i = 0; i < highlights.length; ++i) {
+				var h = highlights[i];
+				if (h.series == s)
+					return i;
+			}
+			return -1;
+		}
+
+		function drawOverlay(plot, octx) {
+
+			var options = plot.getOptions();
+
+			var radius = options.series.pie.radius > 1 ? options.series.pie.radius : maxRadius * options.series.pie.radius;
+
+			octx.save();
+			octx.translate(centerLeft, centerTop);
+			octx.scale(1, options.series.pie.tilt);
+
+			for (var i = 0; i < highlights.length; ++i) {
+				drawHighlight(highlights[i].series);
+			}
+
+			drawDonutHole(octx);
+
+			octx.restore();
+
+			function drawHighlight(series) {
+
+				if (series.angle <= 0 || isNaN(series.angle)) {
+					return;
+				}
+
+				//octx.fillStyle = parseColor(options.series.pie.highlight.color).scale(null, null, null, options.series.pie.highlight.opacity).toString();
+				octx.fillStyle = "rgba(255, 255, 255, " + options.series.pie.highlight.opacity + ")"; // this is temporary until we have access to parseColor
+				octx.beginPath();
+				if (Math.abs(series.angle - Math.PI * 2) > 0.000000001) {
+					octx.moveTo(0, 0); // Center of the pie
+				}
+				octx.arc(0, 0, radius, series.startAngle, series.startAngle + series.angle / 2, false);
+				octx.arc(0, 0, radius, series.startAngle + series.angle / 2, series.startAngle + series.angle, false);
+				octx.closePath();
+				octx.fill();
+			}
+		}
+	} // end init (plugin body)
+
+	// define pie specific options and their default values
+
+	var options = {
+		series: {
+			pie: {
+				show: false,
+				radius: "auto",	// actual radius of the visible pie (based on full calculated radius if <=1, or hard pixel value)
+				innerRadius: 0, /* for donut */
+				startAngle: 3/2,
+				tilt: 1,
+				shadow: {
+					left: 5,	// shadow left offset
+					top: 15,	// shadow top offset
+					alpha: 0.02	// shadow alpha
+				},
+				offset: {
+					top: 0,
+					left: "auto"
+				},
+				stroke: {
+					color: "#fff",
+					width: 1
+				},
+				label: {
+					show: "auto",
+					formatter: function(label, slice) {
+						return "<div style='font-size:x-small;text-align:center;padding:2px;color:" + slice.color + ";'>" + label + "<br/>" + Math.round(slice.percent) + "%</div>";
+					},	// formatter function
+					radius: 1,	// radius at which to place the labels (based on full calculated radius if <=1, or hard pixel value)
+					background: {
+						color: null,
+						opacity: 0
+					},
+					threshold: 0	// percentage at which to hide the label (i.e. the slice is too narrow)
+				},
+				combine: {
+					threshold: -1,	// percentage at which to combine little slices into one larger slice
+					color: null,	// color to give the new slice (auto-generated if null)
+					label: "Other"	// label to give the new slice
+				},
+				highlight: {
+					//color: "#fff",		// will add this functionality once parseColor is available
+					opacity: 0.5
+				}
+			}
+		}
+	};
+
+	$.plot.plugins.push({
+		init: init,
+		options: options,
+		name: "pie",
+		version: "1.1"
+	});
+
+})(jQuery);

@@ -168,4 +168,126 @@
             }
 
             a {
-             
+                color: #747474;
+                position: relative;
+                display: inline-flex;
+                vertical-align: middle;
+                width: 100%;
+                padding: 10px 13px;
+
+                &:hover,
+                &:active,
+                &:focus {
+                    text-decoration: none !important;
+                }
+
+                small {
+                    position: absolute;
+                    top: calc(50% - 7.5px);
+                    right: 15px;
+                }
+
+                span {
+                    margin: 7px 0 7px 12px;
+                    color: #333;
+                    font-weight: bold;
+                    font-size: 14px;
+                    overflow: hidden;
+                }
+            }
+
+            .ml-menu {
+                list-style: none;
+                display: none;
+                padding-left: 0;
+
+                span {
+                    font-weight: normal;
+                    font-size: 14px;
+                    margin: 3px 0 1px 6px;
+                }
+
+                li {
+                    a {
+                        padding-left: 55px;
+                        padding-top: 7px;
+                        padding-bottom: 7px;
+                    }
+
+                    &.active {
+                        a.toggled:not(.menu-toggle) {
+                            font-weight: 600;
+                            margin-left: 5px;
+
+                            &:before {
+                                content: '\E315';
+                                font-family: 'Material Icons';
+                                position: relative;
+                                font-size: 21px;
+                                height: 20px;
+                                top: -5px;
+                                right: 0px;
+                            }
+                        }
+                    }
+
+                    .ml-menu {
+                        li {
+                            a {
+                                padding-left: 80px;
+                            }
+                        }
+
+                        .ml-menu {
+                            li {
+                                a {
+                                    padding-left: 95px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.right-sidebar {
+    width: 280px;
+    height: calc(100vh - 70px);
+    position: fixed;
+    right: -300px;
+    top: 70px;
+    background: #fdfdfd;
+    z-index: 11 !important;
+    @include box-shadow(-2px 2px 5px rgba(0, 0, 0, 0.1));
+    overflow: hidden;
+    @include transition(.5s);
+
+    &.open {
+        right: 0;
+    }
+
+    .nav-tabs {
+        font-weight: 600;
+        font-size: 13px;
+        width: 100%;
+        margin-left: 2px;
+
+        li {
+            text-align: center;
+
+            > a {
+                margin-right: 0;
+            }
+
+            &:first-child {
+                width: 45%;
+            }
+
+            &:last-child {
+                width: 55%;
+            }
+        }
+    }
+}

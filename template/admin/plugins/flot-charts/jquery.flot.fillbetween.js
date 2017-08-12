@@ -164,3 +164,63 @@ jquery.flot.stack.js plugin, possibly some code could be shared.
 						}
 
 						j += otherps;
+
+					} else { // px < qx
+
+						// if we come from a gap, we just skip this point
+
+						if ( fromgap && withlines ) {
+							i += ps;
+							continue;
+						}
+
+						for ( m = 0; m < ps; ++m ) {
+							newpoints.push( points[ i + m ] );
+						}
+
+						// we might be able to interpolate a point below,
+						// this can give us a better y
+
+						if ( withlines && j > 0 && otherpoints[ j - otherps ] != null ) {
+							bottom = qy + ( otherpoints[ j - otherps + 1 ] - qy ) * ( px - qx ) / ( otherpoints[ j - otherps ] - qx );
+						}
+
+						//newpoints[l + 1] += bottom;
+
+						i += ps;
+					}
+
+					fromgap = false;
+
+					if ( l !== newpoints.length && withbottom ) {
+						newpoints[ l + 2 ] = bottom;
+					}
+				}
+
+				// maintain the line steps invariant
+
+				if ( withsteps && l !== newpoints.length && l > 0 &&
+					newpoints[ l ] !== null &&
+					newpoints[ l ] !== newpoints[ l - ps ] &&
+					newpoints[ l + 1 ] !== newpoints[ l - ps + 1 ] ) {
+					for (m = 0; m < ps; ++m) {
+						newpoints[ l + ps + m ] = newpoints[ l + m ];
+					}
+					newpoints[ l + 1 ] = newpoints[ l - ps + 1 ];
+				}
+			}
+
+			datapoints.points = newpoints;
+		}
+
+		plot.hooks.processDatapoints.push( computeFillBottoms );
+	}
+
+	$.plot.plugins.push({
+		init: init,
+		options: options,
+		name: "fillbetween",
+		version: "1.0"
+	});
+
+})(jQuery);

@@ -820,4 +820,96 @@ tinymce.PluginManager.add('lists', function(editor) {
 						if (!isForward && removeList(ul.nodeName)) {
 							return true;
 						}
-					
+					}
+				}
+			}
+		};
+
+		editor.on('BeforeExecCommand', function(e) {
+			var cmd = e.command.toLowerCase(), isHandled;
+
+			if (cmd == "indent") {
+				if (indentSelection()) {
+					isHandled = true;
+				}
+			} else if (cmd == "outdent") {
+				if (outdentSelection()) {
+					isHandled = true;
+				}
+			}
+
+			if (isHandled) {
+				editor.fire('ExecCommand', {command: e.command});
+				e.preventDefault();
+				return true;
+			}
+		});
+
+		editor.addCommand('InsertUnorderedList', function(ui, detail) {
+			toggleList('UL', detail);
+		});
+
+		editor.addCommand('InsertOrderedList', function(ui, detail) {
+			toggleList('OL', detail);
+		});
+
+		editor.addCommand('InsertDefinitionList', function(ui, detail) {
+			toggleList('DL', detail);
+		});
+
+		editor.addQueryStateHandler('InsertUnorderedList', queryListCommandState('UL'));
+		editor.addQueryStateHandler('InsertOrderedList', queryListCommandState('OL'));
+		editor.addQueryStateHandler('InsertDefinitionList', queryListCommandState('DL'));
+
+		editor.on('keydown', function(e) {
+			// Check for tab but not ctrl/cmd+tab since it switches browser tabs
+			if (e.keyCode != 9 || tinymce.util.VK.metaKeyPressed(e)) {
+				return;
+			}
+
+			if (editor.dom.getParent(editor.selection.getStart(), 'LI,DT,DD')) {
+				e.preventDefault();
+
+				if (e.shiftKey) {
+					outdentSelection();
+				} else {
+					indentSelection();
+				}
+			}
+		});
+	});
+
+	editor.addButton('indent', {
+		icon: 'indent',
+		title: 'Increase indent',
+		cmd: 'Indent',
+		onPostRender: function() {
+			var ctrl = this;
+
+			editor.on('nodechange', function() {
+				var blocks = editor.selection.getSelectedBlocks();
+				var disable = false;
+
+				for (var i = 0, l = blocks.length; !disable && i < l; i++) {
+					var tag = blocks[i].nodeName;
+
+					disable = (tag == 'LI' && isFirstChild(blocks[i]) || tag == 'UL' || tag == 'OL' || tag == 'DD');
+				}
+
+				ctrl.disabled(disable);
+			});
+		}
+	});
+
+	editor.on('keydown', function(e) {
+		if (e.keyCode == tinymce.util.VK.BACKSPACE) {
+			if (self.backspaceDelete()) {
+				e.preventDefault();
+			}
+		} else if (e.keyCode == tinymce.util.VK.DELETE) {
+			if (self.backspaceDelete(true)) {
+				e.preventDefault();
+			}
+		}
+	});
+});

@@ -160,3 +160,68 @@ tinymce.PluginManager.add('importcss', function(editor) {
 
 	editor.on('renderFormatsMenu', function(e) {
 		var settings = editor.settings, selectors = {};
+		var selectorConverter = settings.importcss_selector_converter || convertSelectorToFormat;
+		var selectorFilter = compileFilter(settings.importcss_selector_filter), ctrl = e.control;
+
+		if (!editor.settings.importcss_append) {
+			ctrl.items().remove();
+		}
+
+		// Setup new groups collection by cloning the configured one
+		var groups = [];
+		tinymce.each(settings.importcss_groups, function(group) {
+			group = tinymce.extend({}, group);
+			group.filter = compileFilter(group.filter);
+			groups.push(group);
+		});
+
+		each(getSelectors(e.doc || editor.getDoc(), compileFilter(settings.importcss_file_filter)), function(selector) {
+			if (selector.indexOf('.mce-') === -1) {
+				if (!selectors[selector] && (!selectorFilter || selectorFilter(selector))) {
+					var format = selectorConverter.call(self, selector), menu;
+
+					if (format) {
+						var formatName = format.name || tinymce.DOM.uniqueId();
+
+						if (groups) {
+							for (var i = 0; i < groups.length; i++) {
+								if (!groups[i].filter || groups[i].filter(selector)) {
+									if (!groups[i].item) {
+										groups[i].item = {text: groups[i].title, menu: []};
+									}
+
+									menu = groups[i].item.menu;
+									break;
+								}
+							}
+						}
+
+						editor.formatter.register(formatName, format);
+
+						var menuItem = tinymce.extend({}, ctrl.settings.itemDefaults, {
+							text: format.title,
+							format: formatName
+						});
+
+						if (menu) {
+							menu.push(menuItem);
+						} else {
+							ctrl.add(menuItem);
+						}
+					}
+
+					selectors[selector] = true;
+				}
+			}
+		});
+
+		each(groups, function(group) {
+			ctrl.add(group.item);
+		});
+
+		e.control.renderNew();
+	});
+
+	// Expose default convertSelectorToFormat implementation
+	self.convertSelectorToFormat = convertSelectorToFormat;
+});

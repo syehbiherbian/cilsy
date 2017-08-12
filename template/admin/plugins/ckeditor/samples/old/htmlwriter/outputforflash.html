@@ -215,4 +215,69 @@ For licensing, see LICENSE.md or http://ckeditor.com/license
 											align = match && match[1];
 
 											if ( align ) {
-												element.attribute
+												element.attributes.style = element.attributes.style.replace( /(?:^|\s)text-align\s*:\s*(\w*);?/i , '' );
+												element.attributes.align = align;
+											}
+										}
+									}
+
+									if ( element.attributes.style === '' )
+										delete element.attributes.style;
+
+									return element;
+								}
+							}
+						});
+					}
+
+					function sendToFlash() {
+						var html = CKEDITOR.instances.editor1.getData() ;
+
+						// Quick fix for link color.
+						html = html.replace( /<a /g, '<font color="#0000FF"><u><a ' )
+						html = html.replace( /<\/a>/g, '</a></u></font>' )
+
+						var flash = document.getElementById( 'ckFlashContainer' ) ;
+						flash.setData( html ) ;
+					}
+
+					CKEDITOR.domReady( function() {
+						if ( !swfobject.hasFlashPlayerVersion( '8' ) ) {
+							CKEDITOR.dom.element.createFromHtml( '<span class="alert">' +
+									'At least Adobe Flash Player 8 is required to run this sample. ' +
+									'You can download it from <a href="http://get.adobe.com/flashplayer">Adobe\'s website</a>.' +
+								'</span>' ).insertBefore( editor.element );
+						}
+
+						swfobject.embedSWF(
+							'assets/outputforflash/outputforflash.swf',
+							'ckFlashContainer',
+							'550',
+							'400',
+							'8',
+							{ wmode: 'transparent' }
+						);
+					});
+
+				</script>
+				<p>
+					<input type="button" value="Send to Flash" onclick="sendToFlash();">
+				</p>
+			</td>
+			<td style="vertical-align: top; padding-left: 20px">
+				<div id="ckFlashContainer"></div>
+			</td>
+		</tr>
+	</table>
+	<div id="footer">
+		<hr>
+		<p>
+			CKEditor - The text editor for the Internet - <a class="samples" href="http://ckeditor.com/">http://ckeditor.com</a>
+		</p>
+		<p id="copy">
+			Copyright &copy; 2003-2016, <a class="samples" href="http://cksource.com/">CKSource</a> - Frederico
+			Knabben. All rights reserved.
+		</p>
+	</div>
+</body>
+</html>

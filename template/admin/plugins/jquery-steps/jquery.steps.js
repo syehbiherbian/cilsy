@@ -1946,4 +1946,97 @@ var defaults = $.fn.steps.defaults = {
      * @default function (event, index) { }
      * @for defaults
      **/
-    onContentLoaded: function (event, currentIndex) 
+    onContentLoaded: function (event, currentIndex) { },
+
+    /**
+     * Fires when the wizard is initialized. 
+     *
+     * @property onInit
+     * @type Event
+     * @default function (event) { }
+     * @for defaults
+     **/
+    onInit: function (event, currentIndex) { },
+
+    /**
+     * Contains all labels. 
+     *
+     * @property labels
+     * @type Object
+     * @for defaults
+     **/
+    labels: {
+        /**
+         * Label for the cancel button.
+         *
+         * @property cancel
+         * @type String
+         * @default "Cancel"
+         * @for defaults
+         **/
+        cancel: "Cancel",
+
+        /**
+         * This label is important for accessability reasons.
+         * Indicates which step is activated.
+         *
+         * @property current
+         * @type String
+         * @default "current step:"
+         * @for defaults
+         **/
+        current: "current step:",
+
+        /**
+         * This label is important for accessability reasons and describes the kind of navigation.
+         *
+         * @property pagination
+         * @type String
+         * @default "Pagination"
+         * @for defaults
+         * @since 0.9.7
+         **/
+        pagination: "Pagination",
+
+        /**
+         * Label for the finish button.
+         *
+         * @property finish
+         * @type String
+         * @default "Finish"
+         * @for defaults
+         **/
+        finish: "Finish",
+
+        /**
+         * Label for the next button.
+         *
+         * @property next
+         * @type String
+         * @default "Next"
+         * @for defaults
+         **/
+        next: "Next",
+
+        /**
+         * Label for the previous button.
+         *
+         * @property previous
+         * @type String
+         * @default "Previous"
+         * @for defaults
+         **/
+        previous: "Previous",
+
+        /**
+         * Label for the loading animation.
+         *
+         * @property loading
+         * @type String
+         * @default "Loading ..."
+         * @for defaults
+         **/
+        loading: "Loading ..."
+    }
+};
+})(jQuery);

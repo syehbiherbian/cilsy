@@ -7692,4 +7692,231 @@ return /******/ (function(modules) { // webpackBootstrap
 	        res.Y = y - ry;
 	        res.W = rx * 2;
 	        res.H = ry * 2;
-	        res.type = "el
+	        res.type = "ellipse";
+	        setFillAndStroke(res, {
+	            cx: x,
+	            cy: y,
+	            rx: rx,
+	            ry: ry
+	        });
+	        return res;
+	    };
+	    R._engine.circle = function (vml, x, y, r) {
+	        var res = vml.path(),
+	            a = res.attrs;
+	        res.X = x - r;
+	        res.Y = y - r;
+	        res.W = res.H = r * 2;
+	        res.type = "circle";
+	        setFillAndStroke(res, {
+	            cx: x,
+	            cy: y,
+	            r: r
+	        });
+	        return res;
+	    };
+	    R._engine.image = function (vml, src, x, y, w, h) {
+	        var path = R._rectPath(x, y, w, h),
+	            res = vml.path(path).attr({stroke: "none"}),
+	            a = res.attrs,
+	            node = res.node,
+	            fill = node.getElementsByTagName(fillString)[0];
+	        a.src = src;
+	        res.X = a.x = x;
+	        res.Y = a.y = y;
+	        res.W = a.width = w;
+	        res.H = a.height = h;
+	        a.path = path;
+	        res.type = "image";
+	        fill.parentNode == node && node.removeChild(fill);
+	        fill.rotate = true;
+	        fill.src = src;
+	        fill.type = "tile";
+	        res._.fillpos = [x, y];
+	        res._.fillsize = [w, h];
+	        node.appendChild(fill);
+	        setCoords(res, 1, 1, 0, 0, 0);
+	        return res;
+	    };
+	    R._engine.text = function (vml, x, y, text) {
+	        var el = createNode("shape"),
+	            path = createNode("path"),
+	            o = createNode("textpath");
+	        x = x || 0;
+	        y = y || 0;
+	        text = text || "";
+	        path.v = R.format("m{0},{1}l{2},{1}", round(x * zoom), round(y * zoom), round(x * zoom) + 1);
+	        path.textpathok = true;
+	        o.string = Str(text);
+	        o.on = true;
+	        el.style.cssText = cssDot;
+	        el.coordsize = zoom + S + zoom;
+	        el.coordorigin = "0 0";
+	        var p = new Element(el, vml),
+	            attr = {
+	                fill: "#000",
+	                stroke: "none",
+	                font: R._availableAttrs.font,
+	                text: text
+	            };
+	        p.shape = el;
+	        p.path = path;
+	        p.textpath = o;
+	        p.type = "text";
+	        p.attrs.text = Str(text);
+	        p.attrs.x = x;
+	        p.attrs.y = y;
+	        p.attrs.w = 1;
+	        p.attrs.h = 1;
+	        setFillAndStroke(p, attr);
+	        el.appendChild(o);
+	        el.appendChild(path);
+	        vml.canvas.appendChild(el);
+	        var skew = createNode("skew");
+	        skew.on = true;
+	        el.appendChild(skew);
+	        p.skew = skew;
+	        p.transform(E);
+	        return p;
+	    };
+	    R._engine.setSize = function (width, height) {
+	        var cs = this.canvas.style;
+	        this.width = width;
+	        this.height = height;
+	        width == +width && (width += "px");
+	        height == +height && (height += "px");
+	        cs.width = width;
+	        cs.height = height;
+	        cs.clip = "rect(0 " + width + " " + height + " 0)";
+	        if (this._viewBox) {
+	            R._engine.setViewBox.apply(this, this._viewBox);
+	        }
+	        return this;
+	    };
+	    R._engine.setViewBox = function (x, y, w, h, fit) {
+	        R.eve("raphael.setViewBox", this, this._viewBox, [x, y, w, h, fit]);
+	        var paperSize = this.getSize(),
+	            width = paperSize.width,
+	            height = paperSize.height,
+	            H, W;
+	        if (fit) {
+	            H = height / h;
+	            W = width / w;
+	            if (w * H < width) {
+	                x -= (width - w * H) / 2 / H;
+	            }
+	            if (h * W < height) {
+	                y -= (height - h * W) / 2 / W;
+	            }
+	        }
+	        this._viewBox = [x, y, w, h, !!fit];
+	        this._viewBoxShift = {
+	            dx: -x,
+	            dy: -y,
+	            scale: paperSize
+	        };
+	        this.forEach(function (el) {
+	            el.transform("...");
+	        });
+	        return this;
+	    };
+	    var createNode;
+	    R._engine.initWin = function (win) {
+	            var doc = win.document;
+	            if (doc.styleSheets.length < 31) {
+	                doc.createStyleSheet().addRule(".rvml", "behavior:url(#default#VML)");
+	            } else {
+	                // no more room, add to the existing one
+	                // http://msdn.microsoft.com/en-us/library/ms531194%28VS.85%29.aspx
+	                doc.styleSheets[0].addRule(".rvml", "behavior:url(#default#VML)");
+	            }
+	            try {
+	                !doc.namespaces.rvml && doc.namespaces.add("rvml", "urn:schemas-microsoft-com:vml");
+	                createNode = function (tagName) {
+	                    return doc.createElement('<rvml:' + tagName + ' class="rvml">');
+	                };
+	            } catch (e) {
+	                createNode = function (tagName) {
+	                    return doc.createElement('<' + tagName + ' xmlns="urn:schemas-microsoft.com:vml" class="rvml">');
+	                };
+	            }
+	        };
+	    R._engine.initWin(R._g.win);
+	    R._engine.create = function () {
+	        var con = R._getContainer.apply(0, arguments),
+	            container = con.container,
+	            height = con.height,
+	            s,
+	            width = con.width,
+	            x = con.x,
+	            y = con.y;
+	        if (!container) {
+	            throw new Error("VML container not found.");
+	        }
+	        var res = new R._Paper,
+	            c = res.canvas = R._g.doc.createElement("div"),
+	            cs = c.style;
+	        x = x || 0;
+	        y = y || 0;
+	        width = width || 512;
+	        height = height || 342;
+	        res.width = width;
+	        res.height = height;
+	        width == +width && (width += "px");
+	        height == +height && (height += "px");
+	        res.coordsize = zoom * 1e3 + S + zoom * 1e3;
+	        res.coordorigin = "0 0";
+	        res.span = R._g.doc.createElement("span");
+	        res.span.style.cssText = "position:absolute;left:-9999em;top:-9999em;padding:0;margin:0;line-height:1;";
+	        c.appendChild(res.span);
+	        cs.cssText = R.format("top:0;left:0;width:{0};height:{1};display:inline-block;position:relative;clip:rect(0 {0} {1} 0);overflow:hidden", width, height);
+	        if (container == 1) {
+	            R._g.doc.body.appendChild(c);
+	            cs.left = x + "px";
+	            cs.top = y + "px";
+	            cs.position = "absolute";
+	        } else {
+	            if (container.firstChild) {
+	                container.insertBefore(c, container.firstChild);
+	            } else {
+	                container.appendChild(c);
+	            }
+	        }
+	        res.renderfix = function () {};
+	        return res;
+	    };
+	    R.prototype.clear = function () {
+	        R.eve("raphael.clear", this);
+	        this.canvas.innerHTML = E;
+	        this.span = R._g.doc.createElement("span");
+	        this.span.style.cssText = "position:absolute;left:-9999em;top:-9999em;padding:0;margin:0;line-height:1;display:inline;";
+	        this.canvas.appendChild(this.span);
+	        this.bottom = this.top = null;
+	    };
+	    R.prototype.remove = function () {
+	        R.eve("raphael.remove", this);
+	        this.canvas.parentNode.removeChild(this.canvas);
+	        for (var i in this) {
+	            this[i] = typeof this[i] == "function" ? R._removedFactory(i) : null;
+	        }
+	        return true;
+	    };
+
+	    var setproto = R.st;
+	    for (var method in elproto) if (elproto[has](method) && !setproto[has](method)) {
+	        setproto[method] = (function (methodname) {
+	            return function () {
+	                var arg = arguments;
+	                return this.forEach(function (el) {
+	                    el[methodname].apply(el, arg);
+	                });
+	            };
+	        })(method);
+	    }
+	}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+
+
+/***/ }
+/******/ ])
+});
+;

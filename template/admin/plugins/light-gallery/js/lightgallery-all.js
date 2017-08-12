@@ -2848,4 +2848,123 @@
             if (allowY) {
                 if (distanceY <= -maxY) {
                     distanceY = -maxY;
-                } e
+                } else if (distanceY >= -minY) {
+                    distanceY = -minY;
+                }
+            }
+
+            if (allowX) {
+                if (distanceX <= -maxX) {
+                    distanceX = -maxX;
+                } else if (distanceX >= -minX) {
+                    distanceX = -minX;
+                }
+            }
+
+            if (allowY) {
+                _$el.attr('data-y', Math.abs(distanceY));
+            } else {
+                distanceY = -Math.abs(_$el.attr('data-y'));
+            }
+
+            if (allowX) {
+                _$el.attr('data-x', Math.abs(distanceX));
+            } else {
+                distanceX = -Math.abs(_$el.attr('data-x'));
+            }
+
+            _$el.css({
+                left: distanceX + 'px',
+                top: distanceY + 'px'
+            });
+
+        }
+    };
+
+    Zoom.prototype.destroy = function() {
+
+        var _this = this;
+
+        // Unbind all events added by lightGallery zoom plugin
+        _this.core.$el.off('.lg.zoom');
+        $(window).off('.lg.zoom');
+        _this.core.$slide.off('.lg.zoom');
+        _this.core.$el.off('.lg.tm.zoom');
+        _this.resetZoom();
+        clearTimeout(_this.zoomabletimeout);
+        _this.zoomabletimeout = false;
+    };
+
+    $.fn.lightGallery.modules.zoom = Zoom;
+
+})(jQuery, window, document);
+(function($, window, document, undefined) {
+
+    'use strict';
+
+    var defaults = {
+        hash: true
+    };
+
+    var Hash = function(element) {
+
+        this.core = $(element).data('lightGallery');
+
+        this.core.s = $.extend({}, defaults, this.core.s);
+
+        if (this.core.s.hash) {
+            this.oldHash = window.location.hash;
+            this.init();
+        }
+
+        return this;
+    };
+
+    Hash.prototype.init = function() {
+        var _this = this;
+        var _hash;
+
+        // Change hash value on after each slide transition
+        _this.core.$el.on('onAfterSlide.lg.tm', function(event, prevIndex, index) {
+            window.location.hash = 'lg=' + _this.core.s.galleryId + '&slide=' + index;
+        });
+
+        // Listen hash change and change the slide according to slide value
+        $(window).on('hashchange.lg.hash', function() {
+            _hash = window.location.hash;
+            var _idx = parseInt(_hash.split('&slide=')[1], 10);
+
+            // it galleryId doesn't exist in the url close the gallery
+            if ((_hash.indexOf('lg=' + _this.core.s.galleryId) > -1)) {
+                _this.core.slide(_idx, false, false);
+            } else if (_this.core.lGalleryOn) {
+                _this.core.destroy();
+            }
+
+        });
+    };
+
+    Hash.prototype.destroy = function() {
+
+        if (!this.core.s.hash) {
+            return;
+        }
+
+        // Reset to old hash value
+        if (this.oldHash && this.oldHash.indexOf('lg=' + this.core.s.galleryId) < 0) {
+            window.location.hash = this.oldHash;
+        } else {
+            if (history.pushState) {
+                history.pushState('', document.title, window.location.pathname + window.location.search);
+            } else {
+                window.location.hash = '';
+            }
+        }
+
+        this.core.$el.off('.lg.hash');
+
+    };
+
+    $.fn.lightGallery.modules.hash = Hash;
+
+})(jQuery, window, document);

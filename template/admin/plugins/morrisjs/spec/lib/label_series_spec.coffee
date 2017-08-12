@@ -111,4 +111,76 @@ describe '#labelSeries', ->
     Morris.labelSeries(
       new Date(2012, 0, 1, 0, 0).getTime(),
       new Date(2012, 0, 1, 2, 30).getTime(),
-      
+      1000
+    ).should.deep.equal([
+      ["00:00", new Date(2012, 0, 1, 0, 0).getTime()],
+      ["00:30", new Date(2012, 0, 1, 0, 30).getTime()],
+      ["01:00", new Date(2012, 0, 1, 1, 0).getTime()],
+      ["01:30", new Date(2012, 0, 1, 1, 30).getTime()],
+      ["02:00", new Date(2012, 0, 1, 2, 0).getTime()],
+      ["02:30", new Date(2012, 0, 1, 2, 30).getTime()]
+    ])
+    Morris.labelSeries(
+      new Date(2012, 4, 12, 0, 0).getTime(),
+      new Date(2012, 4, 12, 2, 30).getTime(),
+      1000
+    ).should.deep.equal([
+      ["00:00", new Date(2012, 4, 12, 0, 0).getTime()],
+      ["00:30", new Date(2012, 4, 12, 0, 30).getTime()],
+      ["01:00", new Date(2012, 4, 12, 1, 0).getTime()],
+      ["01:30", new Date(2012, 4, 12, 1, 30).getTime()],
+      ["02:00", new Date(2012, 4, 12, 2, 0).getTime()],
+      ["02:30", new Date(2012, 4, 12, 2, 30).getTime()]
+    ])
+
+  it 'should generate fifteen-minute intervals', ->
+    Morris.labelSeries(
+      new Date(2012, 0, 1, 0, 0).getTime(),
+      new Date(2012, 0, 1, 1, 15).getTime(),
+      1000
+    ).should.deep.equal([
+      ["00:00", new Date(2012, 0, 1, 0, 0).getTime()],
+      ["00:15", new Date(2012, 0, 1, 0, 15).getTime()],
+      ["00:30", new Date(2012, 0, 1, 0, 30).getTime()],
+      ["00:45", new Date(2012, 0, 1, 0, 45).getTime()],
+      ["01:00", new Date(2012, 0, 1, 1, 0).getTime()],
+      ["01:15", new Date(2012, 0, 1, 1, 15).getTime()]
+    ])
+    Morris.labelSeries(
+      new Date(2012, 4, 12, 0, 0).getTime(),
+      new Date(2012, 4, 12, 1, 15).getTime(),
+      1000
+    ).should.deep.equal([
+      ["00:00", new Date(2012, 4, 12, 0, 0).getTime()],
+      ["00:15", new Date(2012, 4, 12, 0, 15).getTime()],
+      ["00:30", new Date(2012, 4, 12, 0, 30).getTime()],
+      ["00:45", new Date(2012, 4, 12, 0, 45).getTime()],
+      ["01:00", new Date(2012, 4, 12, 1, 0).getTime()],
+      ["01:15", new Date(2012, 4, 12, 1, 15).getTime()]
+    ])
+
+  it 'should override automatic intervals', ->
+    Morris.labelSeries(
+      new Date(2011, 11, 12).getTime(),
+      new Date(2012, 0, 12).getTime(),
+      1000,
+      "year"
+    ).should.deep.equal([
+      ["2012", new Date(2012, 0, 1).getTime()]
+    ])
+
+  it 'should apply custom formatters', ->
+    Morris.labelSeries(
+      new Date(2012, 0, 1).getTime(),
+      new Date(2012, 0, 6).getTime(),
+      1000,
+      "day",
+      (d) -> "#{d.getMonth()+1}/#{d.getDate()}/#{d.getFullYear()}"
+    ).should.deep.equal([
+      ["1/1/2012", new Date(2012, 0, 1).getTime()],
+      ["1/2/2012", new Date(2012, 0, 2).getTime()],
+      ["1/3/2012", new Date(2012, 0, 3).getTime()],
+      ["1/4/2012", new Date(2012, 0, 4).getTime()],
+      ["1/5/2012", new Date(2012, 0, 5).getTime()],
+      ["1/6/2012", new Date(2012, 0, 6).getTime()]
+    ])

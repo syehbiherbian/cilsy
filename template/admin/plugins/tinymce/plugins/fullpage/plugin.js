@@ -329,3 +329,162 @@ tinymce.PluginManager.add('fullpage', function(editor) {
 
 		function low(s) {
 			return s.replace(/<\/?[A-Z]+/g, function(a) {
+				return a.toLowerCase();
+			});
+		}
+
+		// Ignore raw updated if we already have a head, this will fix issues with undo/redo keeping the head/foot separate
+		if (evt.format == 'raw' && head) {
+			return;
+		}
+
+		if (evt.source_view && editor.getParam('fullpage_hide_in_source_view')) {
+			return;
+		}
+
+		// Fixed so new document/setContent('') doesn't remove existing header/footer except when it's in source code view
+		if (content.length === 0 && !evt.source_view) {
+			content = tinymce.trim(head) + '\n' + tinymce.trim(content) + '\n' + tinymce.trim(foot);
+		}
+
+		// Parse out head, body and footer
+		content = content.replace(/<(\/?)BODY/gi, '<$1body');
+		startPos = content.indexOf('<body');
+
+		if (startPos != -1) {
+			startPos = content.indexOf('>', startPos);
+			head = low(content.substring(0, startPos + 1));
+
+			endPos = content.indexOf('</body', startPos);
+			if (endPos == -1) {
+				endPos = content.length;
+			}
+
+			evt.content = content.substring(startPos + 1, endPos);
+			foot = low(content.substring(endPos));
+		} else {
+			head = getDefaultHeader();
+			foot = '\n</body>\n</html>';
+		}
+
+		// Parse header and update iframe
+		headerFragment = parseHeader();
+		each(headerFragment.getAll('style'), function(node) {
+			if (node.firstChild) {
+				styles += node.firstChild.value;
+			}
+		});
+
+		elm = headerFragment.getAll('body')[0];
+		if (elm) {
+			dom.setAttribs(editor.getBody(), {
+				style: elm.attr('style') || '',
+				dir: elm.attr('dir') || '',
+				vLink: elm.attr('vlink') || '',
+				link: elm.attr('link') || '',
+				aLink: elm.attr('alink') || ''
+			});
+		}
+
+		dom.remove('fullpage_styles');
+
+		var headElm = editor.getDoc().getElementsByTagName('head')[0];
+
+		if (styles) {
+			dom.add(headElm, 'style', {
+				id: 'fullpage_styles'
+			}, styles);
+
+			// Needed for IE 6/7
+			elm = dom.get('fullpage_styles');
+			if (elm.styleSheet) {
+				elm.styleSheet.cssText = styles;
+			}
+		}
+
+		var currentStyleSheetsMap = {};
+		tinymce.each(headElm.getElementsByTagName('link'), function(stylesheet) {
+			if (stylesheet.rel == 'stylesheet' && stylesheet.getAttribute('data-mce-fullpage')) {
+				currentStyleSheetsMap[stylesheet.href] = stylesheet;
+			}
+		});
+
+		// Add new
+		tinymce.each(headerFragment.getAll('link'), function(stylesheet) {
+			var href = stylesheet.attr('href');
+
+			if (!currentStyleSheetsMap[href] && stylesheet.attr('rel') == 'stylesheet') {
+				dom.add(headElm, 'link', {
+					rel: 'stylesheet',
+					text: 'text/css',
+					href: href,
+					'data-mce-fullpage': '1'
+				});
+			}
+
+			delete currentStyleSheetsMap[href];
+		});
+
+		// Delete old
+		tinymce.each(currentStyleSheetsMap, function(stylesheet) {
+			stylesheet.parentNode.removeChild(stylesheet);
+		});
+	}
+
+	function getDefaultHeader() {
+		var header = '', value, styles = '';
+
+		if (editor.getParam('fullpage_default_xml_pi')) {
+			header += '<?xml version="1.0" encoding="' + editor.getParam('fullpage_default_encoding', 'ISO-8859-1') + '" ?>\n';
+		}
+
+		header += editor.getParam('fullpage_default_doctype', '<!DOCTYPE html>');
+		header += '\n<html>\n<head>\n';
+
+		if ((value = editor.getParam('fullpage_default_title'))) {
+			header += '<title>' + value + '</title>\n';
+		}
+
+		if ((value = editor.getParam('fullpage_default_encoding'))) {
+			header += '<meta http-equiv="Content-Type" content="text/html; charset=' + value + '" />\n';
+		}
+
+		if ((value = editor.getParam('fullpage_default_font_family'))) {
+			styles += 'font-family: ' + value + ';';
+		}
+
+		if ((value = editor.getParam('fullpage_default_font_size'))) {
+			styles += 'font-size: ' + value + ';';
+		}
+
+		if ((value = editor.getParam('fullpage_default_text_color'))) {
+			styles += 'color: ' + value + ';';
+		}
+
+		header += '</head>\n<body' + (styles ? ' style="' + styles + '"' : '') + '>\n';
+
+		return header;
+	}
+
+	function getContent(evt) {
+		if (!evt.selection && (!evt.source_view || !editor.getParam('fullpage_hide_in_source_view'))) {
+			evt.content = tinymce.trim(head) + '\n' + tinymce.trim(evt.content) + '\n' + tinymce.trim(foot);
+		}
+	}
+
+	editor.addCommand('mceFullPageProperties', showDialog);
+
+	editor.addButton('fullpage', {
+		title: 'Document properties',
+		cmd: 'mceFullPageProperties'
+	});
+
+	editor.addMenuItem('fullpage', {
+		text: 'Document properties',
+		cmd: 'mceFullPageProperties',
+		context: 'file'
+	});
+
+	editor.on('BeforeSetContent', setContent);
+	editor.on('GetContent', getContent);
+});

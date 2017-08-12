@@ -148,4 +148,121 @@ tinymce.PluginManager.add('textpattern', function(editor) {
 
 	// Handles block formats like ##abc or 1. abc
 	function applyBlockFormat() {
-		var selection, dom, container, firstTextNode, node, format, textBlockElm, patte
+		var selection, dom, container, firstTextNode, node, format, textBlockElm, pattern, walker, rng, offset;
+
+		selection = editor.selection;
+		dom = editor.dom;
+
+		if (!selection.isCollapsed()) {
+			return;
+		}
+
+		textBlockElm = dom.getParent(selection.getStart(), 'p');
+		if (textBlockElm) {
+			walker = new tinymce.dom.TreeWalker(textBlockElm, textBlockElm);
+			while ((node = walker.next())) {
+				if (node.nodeType == 3) {
+					firstTextNode = node;
+					break;
+				}
+			}
+
+			if (firstTextNode) {
+				pattern = findPattern(firstTextNode.data);
+				if (!pattern) {
+					return;
+				}
+
+				rng = selection.getRng(true);
+				container = rng.startContainer;
+				offset = rng.startOffset;
+
+				if (firstTextNode == container) {
+					offset = Math.max(0, offset - pattern.start.length);
+				}
+
+				if (tinymce.trim(firstTextNode.data).length == pattern.start.length) {
+					return;
+				}
+
+				if (pattern.format) {
+					format = editor.formatter.get(pattern.format);
+					if (format && format[0].block) {
+						firstTextNode.deleteData(0, pattern.start.length);
+						editor.formatter.apply(pattern.format, {}, firstTextNode);
+
+						rng.setStart(container, offset);
+						rng.collapse(true);
+						selection.setRng(rng);
+					}
+				}
+
+				if (pattern.cmd) {
+					editor.undoManager.transact(function() {
+						firstTextNode.deleteData(0, pattern.start.length);
+						editor.execCommand(pattern.cmd);
+					});
+				}
+			}
+		}
+	}
+
+	function handleEnter() {
+		var rng, wrappedTextNode;
+
+		wrappedTextNode = applyInlineFormat();
+		if (wrappedTextNode) {
+			rng = editor.dom.createRng();
+			rng.setStart(wrappedTextNode, wrappedTextNode.data.length);
+			rng.setEnd(wrappedTextNode, wrappedTextNode.data.length);
+			editor.selection.setRng(rng);
+		}
+
+		applyBlockFormat();
+	}
+
+	function handleSpace() {
+		var wrappedTextNode, lastChar, lastCharNode, rng, dom;
+
+		wrappedTextNode = applyInlineFormat(true);
+		if (wrappedTextNode) {
+			dom = editor.dom;
+			lastChar = wrappedTextNode.data.slice(-1);
+
+			// Move space after the newly formatted node
+			if (/[\u00a0 ]/.test(lastChar)) {
+				wrappedTextNode.deleteData(wrappedTextNode.data.length - 1, 1);
+				lastCharNode = dom.doc.createTextNode(lastChar);
+
+				if (wrappedTextNode.nextSibling) {
+					dom.insertAfter(lastCharNode, wrappedTextNode.nextSibling);
+				} else {
+					wrappedTextNode.parentNode.appendChild(lastCharNode);
+				}
+
+				rng = dom.createRng();
+				rng.setStart(lastCharNode, 1);
+				rng.setEnd(lastCharNode, 1);
+				editor.selection.setRng(rng);
+			}
+		}
+	}
+
+	editor.on('keydown', function(e) {
+		if (e.keyCode == 13 && !tinymce.util.VK.modifierPressed(e)) {
+			handleEnter();
+		}
+	}, true);
+
+	editor.on('keyup', function(e) {
+		if (e.keyCode == 32 && !tinymce.util.VK.modifierPressed(e)) {
+			handleSpace();
+		}
+	});
+
+	this.getPatterns = getPatterns;
+	this.setPatterns = function(newPatterns) {
+		patterns = newPatterns;
+		isPatternsDirty = true;
+	};
+});

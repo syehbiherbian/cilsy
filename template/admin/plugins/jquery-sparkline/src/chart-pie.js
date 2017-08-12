@@ -101,4 +101,12 @@
             }
             for (i = values.length; i--;) {
                 if (values[i]) { // don't render zero values
-   
+                    shape = this.renderSlice(i).append();
+                    this.valueShapes[i] = shape.id; // store just the shapeid
+                    this.shapes[shape.id] = i;
+                }
+            }
+            target.render();
+        }
+    });
+

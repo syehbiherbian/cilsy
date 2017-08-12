@@ -179,4 +179,78 @@
             if (value === 0 && options.get('zeroColor') !== undefined) {
                 color = options.get('zeroColor');
             }
-            if (colorMapByValue && (newC
+            if (colorMapByValue && (newColor = colorMapByValue.get(value))) {
+                color = newColor;
+            } else if (colorMapByIndex && colorMapByIndex.length > valuenum) {
+                color = colorMapByIndex[valuenum];
+            }
+            return $.isArray(color) ? color[stacknum % color.length] : color;
+        },
+
+        /**
+         * Render bar(s) for a region
+         */
+        renderRegion: function (valuenum, highlight) {
+            var vals = this.values[valuenum],
+                options = this.options,
+                xaxisOffset = this.xaxisOffset,
+                result = [],
+                range = this.range,
+                stacked = this.stacked,
+                target = this.target,
+                x = valuenum * this.totalBarWidth,
+                canvasHeightEf = this.canvasHeightEf,
+                yoffset = this.yoffset,
+                y, height, color, isNull, yoffsetNeg, i, valcount, val, minPlotted, allMin;
+
+            vals = $.isArray(vals) ? vals : [vals];
+            valcount = vals.length;
+            val = vals[0];
+            isNull = all(null, vals);
+            allMin = all(xaxisOffset, vals, true);
+
+            if (isNull) {
+                if (options.get('nullColor')) {
+                    color = highlight ? options.get('nullColor') : this.calcHighlightColor(options.get('nullColor'), options);
+                    y = (yoffset > 0) ? yoffset - 1 : yoffset;
+                    return target.drawRect(x, y, this.barWidth - 1, 0, color, color);
+                } else {
+                    return undefined;
+                }
+            }
+            yoffsetNeg = yoffset;
+            for (i = 0; i < valcount; i++) {
+                val = vals[i];
+
+                if (stacked && val === xaxisOffset) {
+                    if (!allMin || minPlotted) {
+                        continue;
+                    }
+                    minPlotted = true;
+                }
+
+                if (range > 0) {
+                    height = Math.floor(canvasHeightEf * ((Math.abs(val - xaxisOffset) / range))) + 1;
+                } else {
+                    height = 1;
+                }
+                if (val < xaxisOffset || (val === xaxisOffset && yoffset === 0)) {
+                    y = yoffsetNeg;
+                    yoffsetNeg += height;
+                } else {
+                    y = yoffset - height;
+                    yoffset -= height;
+                }
+                color = this.calcColor(i, val, valuenum);
+                if (highlight) {
+                    color = this.calcHighlightColor(color, options);
+                }
+                result.push(target.drawRect(x, y, this.barWidth - 1, height - 1, color, color));
+            }
+            if (result.length === 1) {
+                return result[0];
+            }
+            return result;
+        }
+    });
+

@@ -327,4 +327,27 @@ shadowSize and lineWidth are derived as well from the points series.
         ctx.stroke();
     }
 
-    function draw(plot, ctx
+    function draw(plot, ctx){
+        var plotOffset = plot.getPlotOffset();
+
+        ctx.save();
+        ctx.translate(plotOffset.left, plotOffset.top);
+        $.each(plot.getData(), function (i, s) {
+            if (s.points.errorbars && (s.points.xerr.show || s.points.yerr.show))
+                drawSeriesErrors(plot, ctx, s);
+        });
+        ctx.restore();
+    }
+
+    function init(plot) {
+        plot.hooks.processRawData.push(processRawData);
+        plot.hooks.draw.push(draw);
+    }
+
+    $.plot.plugins.push({
+                init: init,
+                options: options,
+                name: 'errorbars',
+                version: '1.0'
+            });
+})(jQuery);

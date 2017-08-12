@@ -44874,4 +44874,2050 @@ define("tinymce/ui/MenuButton", [
 		},
 
 		/**
+		 * Hides the menu for the button.
 		 *
+		 * @method hideMenu
+		 */
+		hideMenu: function() {
+			var self = this;
+
+			if (self.menu) {
+				self.menu.items().each(function(item) {
+					if (item.hideMenu) {
+						item.hideMenu();
+					}
+				});
+
+				self.menu.hide();
+			}
+		},
+
+		/**
+		 * Sets the active menu state.
+		 *
+		 * @private
+		 */
+		activeMenu: function(state) {
+			this.classes.toggle('active', state);
+		},
+
+		/**
+		 * Renders the control as a HTML string.
+		 *
+		 * @method renderHtml
+		 * @return {String} HTML representing the control.
+		 */
+		renderHtml: function() {
+			var self = this, id = self._id, prefix = self.classPrefix;
+			var icon = self.settings.icon, image, text = self.state.get('text'),
+				textHtml = '';
+
+			image = self.settings.image;
+			if (image) {
+				icon = 'none';
+
+				// Support for [high dpi, low dpi] image sources
+				if (typeof image != "string") {
+					image = window.getSelection ? image[0] : image[1];
+				}
+
+				image = ' style="background-image: url(\'' + image + '\')"';
+			} else {
+				image = '';
+			}
+
+			if (text) {
+				self.classes.add('btn-has-text');
+				textHtml = '<span class="' + prefix + 'txt">' + self.encode(text) + '</span>';
+			}
+
+			icon = self.settings.icon ? prefix + 'ico ' + prefix + 'i-' + icon : '';
+
+			self.aria('role', self.parent() instanceof MenuBar ? 'menuitem' : 'button');
+
+			return (
+				'<div id="' + id + '" class="' + self.classes + '" tabindex="-1" aria-labelledby="' + id + '">' +
+					'<button id="' + id + '-open" role="presentation" type="button" tabindex="-1">' +
+						(icon ? '<i class="' + icon + '"' + image + '></i>' : '') +
+						textHtml +
+						' <i class="' + prefix + 'caret"></i>' +
+					'</button>' +
+				'</div>'
+			);
+		},
+
+		/**
+		 * Gets invoked after the control has been rendered.
+		 *
+		 * @method postRender
+		 */
+		postRender: function() {
+			var self = this;
+
+			self.on('click', function(e) {
+				if (e.control === self && isChildOf(e.target, self.getEl())) {
+					self.showMenu();
+
+					if (e.aria) {
+						self.menu.items()[0].focus();
+					}
+				}
+			});
+
+			self.on('mouseenter', function(e) {
+				var overCtrl = e.control, parent = self.parent(), hasVisibleSiblingMenu;
+
+				if (overCtrl && parent && overCtrl instanceof MenuButton && overCtrl.parent() == parent) {
+					parent.items().filter('MenuButton').each(function(ctrl) {
+						if (ctrl.hideMenu && ctrl != overCtrl) {
+							if (ctrl.menu && ctrl.menu.visible()) {
+								hasVisibleSiblingMenu = true;
+							}
+
+							ctrl.hideMenu();
+						}
+					});
+
+					if (hasVisibleSiblingMenu) {
+						overCtrl.focus(); // Fix for: #5887
+						overCtrl.showMenu();
+					}
+				}
+			});
+
+			return self._super();
+		},
+
+		bindStates: function() {
+			var self = this;
+
+			self.state.on('change:menu', function() {
+				if (self.menu) {
+					self.menu.remove();
+				}
+
+				self.menu = null;
+			});
+
+			return self._super();
+		},
+
+		/**
+		 * Removes the control and it's menus.
+		 *
+		 * @method remove
+		 */
+		remove: function() {
+			this._super();
+
+			if (this.menu) {
+				this.menu.remove();
+			}
+		}
+	});
+
+	return MenuButton;
+});
+
+// Included from: js/tinymce/classes/ui/MenuItem.js
+
+/**
+ * MenuItem.js
+ *
+ * Released under LGPL License.
+ * Copyright (c) 1999-2015 Ephox Corp. All rights reserved
+ *
+ * License: http://www.tinymce.com/license
+ * Contributing: http://www.tinymce.com/contributing
+ */
+
+/**
+ * Creates a new menu item.
+ *
+ * @-x-less MenuItem.less
+ * @class tinymce.ui.MenuItem
+ * @extends tinymce.ui.Control
+ */
+define("tinymce/ui/MenuItem", [
+	"tinymce/ui/Widget",
+	"tinymce/ui/Factory",
+	"tinymce/Env",
+	"tinymce/util/Delay"
+], function(Widget, Factory, Env, Delay) {
+	"use strict";
+
+	return Widget.extend({
+		Defaults: {
+			border: 0,
+			role: 'menuitem'
+		},
+
+		/**
+		 * Constructs a instance with the specified settings.
+		 *
+		 * @constructor
+		 * @param {Object} settings Name/value object with settings.
+		 * @setting {Boolean} selectable Selectable menu.
+		 * @setting {Array} menu Submenu array with items.
+		 * @setting {String} shortcut Shortcut to display for menu item. Example: Ctrl+X
+		 */
+		init: function(settings) {
+			var self = this, text;
+
+			self._super(settings);
+
+			settings = self.settings;
+
+			self.classes.add('menu-item');
+
+			if (settings.menu) {
+				self.classes.add('menu-item-expand');
+			}
+
+			if (settings.preview) {
+				self.classes.add('menu-item-preview');
+			}
+
+			text = self.state.get('text');
+			if (text === '-' || text === '|') {
+				self.classes.add('menu-item-sep');
+				self.aria('role', 'separator');
+				self.state.set('text', '-');
+			}
+
+			if (settings.selectable) {
+				self.aria('role', 'menuitemcheckbox');
+				self.classes.add('menu-item-checkbox');
+				settings.icon = 'selected';
+			}
+
+			if (!settings.preview && !settings.selectable) {
+				self.classes.add('menu-item-normal');
+			}
+
+			self.on('mousedown', function(e) {
+				e.preventDefault();
+			});
+
+			if (settings.menu && !settings.ariaHideMenu) {
+				self.aria('haspopup', true);
+			}
+		},
+
+		/**
+		 * Returns true/false if the menuitem has sub menu.
+		 *
+		 * @method hasMenus
+		 * @return {Boolean} True/false state if it has submenu.
+		 */
+		hasMenus: function() {
+			return !!this.settings.menu;
+		},
+
+		/**
+		 * Shows the menu for the menu item.
+		 *
+		 * @method showMenu
+		 */
+		showMenu: function() {
+			var self = this, settings = self.settings, menu, parent = self.parent();
+
+			parent.items().each(function(ctrl) {
+				if (ctrl !== self) {
+					ctrl.hideMenu();
+				}
+			});
+
+			if (settings.menu) {
+				menu = self.menu;
+
+				if (!menu) {
+					menu = settings.menu;
+
+					// Is menu array then auto constuct menu control
+					if (menu.length) {
+						menu = {
+							type: 'menu',
+							items: menu
+						};
+					} else {
+						menu.type = menu.type || 'menu';
+					}
+
+					if (parent.settings.itemDefaults) {
+						menu.itemDefaults = parent.settings.itemDefaults;
+					}
+
+					menu = self.menu = Factory.create(menu).parent(self).renderTo();
+					menu.reflow();
+					menu.on('cancel', function(e) {
+						e.stopPropagation();
+						self.focus();
+						menu.hide();
+					});
+					menu.on('show hide', function(e) {
+						e.control.items().each(function(ctrl) {
+							ctrl.active(ctrl.settings.selected);
+						});
+					}).fire('show');
+
+					menu.on('hide', function(e) {
+						if (e.control === menu) {
+							self.classes.remove('selected');
+						}
+					});
+
+					menu.submenu = true;
+				} else {
+					menu.show();
+				}
+
+				menu._parentMenu = parent;
+
+				menu.classes.add('menu-sub');
+
+				var rel = menu.testMoveRel(
+					self.getEl(),
+					self.isRtl() ? ['tl-tr', 'bl-br', 'tr-tl', 'br-bl'] : ['tr-tl', 'br-bl', 'tl-tr', 'bl-br']
+				);
+
+				menu.moveRel(self.getEl(), rel);
+				menu.rel = rel;
+
+				rel = 'menu-sub-' + rel;
+				menu.classes.remove(menu._lastRel).add(rel);
+				menu._lastRel = rel;
+
+				self.classes.add('selected');
+				self.aria('expanded', true);
+			}
+		},
+
+		/**
+		 * Hides the menu for the menu item.
+		 *
+		 * @method hideMenu
+		 */
+		hideMenu: function() {
+			var self = this;
+
+			if (self.menu) {
+				self.menu.items().each(function(item) {
+					if (item.hideMenu) {
+						item.hideMenu();
+					}
+				});
+
+				self.menu.hide();
+				self.aria('expanded', false);
+			}
+
+			return self;
+		},
+
+		/**
+		 * Renders the control as a HTML string.
+		 *
+		 * @method renderHtml
+		 * @return {String} HTML representing the control.
+		 */
+		renderHtml: function() {
+			var self = this, id = self._id, settings = self.settings, prefix = self.classPrefix, text = self.encode(self.state.get('text'));
+			var icon = self.settings.icon, image = '', shortcut = settings.shortcut;
+
+			// Converts shortcut format to Mac/PC variants
+			function convertShortcut(shortcut) {
+				var i, value, replace = {};
+
+				if (Env.mac) {
+					replace = {
+						alt: '&#x2325;',
+						ctrl: '&#x2318;',
+						shift: '&#x21E7;',
+						meta: '&#x2318;'
+					};
+				} else {
+					replace = {
+						meta: 'Ctrl'
+					};
+				}
+
+				shortcut = shortcut.split('+');
+
+				for (i = 0; i < shortcut.length; i++) {
+					value = replace[shortcut[i].toLowerCase()];
+
+					if (value) {
+						shortcut[i] = value;
+					}
+				}
+
+				return shortcut.join('+');
+			}
+
+			if (icon) {
+				self.parent().classes.add('menu-has-icons');
+			}
+
+			if (settings.image) {
+				image = ' style="background-image: url(\'' + settings.image + '\')"';
+			}
+
+			if (shortcut) {
+				shortcut = convertShortcut(shortcut);
+			}
+
+			icon = prefix + 'ico ' + prefix + 'i-' + (self.settings.icon || 'none');
+
+			return (
+				'<div id="' + id + '" class="' + self.classes + '" tabindex="-1">' +
+					(text !== '-' ? '<i class="' + icon + '"' + image + '></i>\u00a0' : '') +
+					(text !== '-' ? '<span id="' + id + '-text" class="' + prefix + 'text">' + text + '</span>' : '') +
+					(shortcut ? '<div id="' + id + '-shortcut" class="' + prefix + 'menu-shortcut">' + shortcut + '</div>' : '') +
+					(settings.menu ? '<div class="' + prefix + 'caret"></div>' : '') +
+				'</div>'
+			);
+		},
+
+		/**
+		 * Gets invoked after the control has been rendered.
+		 *
+		 * @method postRender
+		 */
+		postRender: function() {
+			var self = this, settings = self.settings;
+
+			var textStyle = settings.textStyle;
+			if (typeof textStyle == "function") {
+				textStyle = textStyle.call(this);
+			}
+
+			if (textStyle) {
+				var textElm = self.getEl('text');
+				if (textElm) {
+					textElm.setAttribute('style', textStyle);
+				}
+			}
+
+			self.on('mouseenter click', function(e) {
+				if (e.control === self) {
+					if (!settings.menu && e.type === 'click') {
+						self.fire('select');
+
+						// Edge will crash if you stress it see #2660
+						Delay.requestAnimationFrame(function() {
+							self.parent().hideAll();
+						});
+					} else {
+						self.showMenu();
+
+						if (e.aria) {
+							self.menu.focus(true);
+						}
+					}
+				}
+			});
+
+			self._super();
+
+			return self;
+		},
+
+		hover: function() {
+			var self = this;
+
+			self.parent().items().each(function(ctrl) {
+				ctrl.classes.remove('selected');
+			});
+
+			self.classes.toggle('selected', true);
+
+			return self;
+		},
+
+		active: function(state) {
+			if (typeof state != "undefined") {
+				this.aria('checked', state);
+			}
+
+			return this._super(state);
+		},
+
+		/**
+		 * Removes the control and it's menus.
+		 *
+		 * @method remove
+		 */
+		remove: function() {
+			this._super();
+
+			if (this.menu) {
+				this.menu.remove();
+			}
+		}
+	});
+});
+
+// Included from: js/tinymce/classes/ui/Throbber.js
+
+/**
+ * Throbber.js
+ *
+ * Released under LGPL License.
+ * Copyright (c) 1999-2015 Ephox Corp. All rights reserved
+ *
+ * License: http://www.tinymce.com/license
+ * Contributing: http://www.tinymce.com/contributing
+ */
+
+/**
+ * This class enables you to display a Throbber for any element.
+ *
+ * @-x-less Throbber.less
+ * @class tinymce.ui.Throbber
+ */
+define("tinymce/ui/Throbber", [
+	"tinymce/dom/DomQuery",
+	"tinymce/ui/Control",
+	"tinymce/util/Delay"
+], function($, Control, Delay) {
+	"use strict";
+
+	/**
+	 * Constructs a new throbber.
+	 *
+	 * @constructor
+	 * @param {Element} elm DOM Html element to display throbber in.
+	 * @param {Boolean} inline Optional true/false state if the throbber should be appended to end of element for infinite scroll.
+	 */
+	return function(elm, inline) {
+		var self = this, state, classPrefix = Control.classPrefix, timer;
+
+		/**
+		 * Shows the throbber.
+		 *
+		 * @method show
+		 * @param {Number} [time] Time to wait before showing.
+		 * @param {function} [callback] Optional callback to execute when the throbber is shown.
+		 * @return {tinymce.ui.Throbber} Current throbber instance.
+		 */
+		self.show = function(time, callback) {
+			function render() {
+					if (state) {
+						$(elm).append(
+							'<div class="' + classPrefix + 'throbber' + (inline ? ' ' + classPrefix + 'throbber-inline' : '') + '"></div>'
+						);
+
+						if (callback) {
+							callback();
+						}
+					}
+			}
+
+			self.hide();
+
+			state = true;
+
+			if (time) {
+				timer = Delay.setTimeout(render, time);
+			} else {
+				render();
+			}
+
+			return self;
+		};
+
+		/**
+		 * Hides the throbber.
+		 *
+		 * @method hide
+		 * @return {tinymce.ui.Throbber} Current throbber instance.
+		 */
+		self.hide = function() {
+			var child = elm.lastChild;
+
+			Delay.clearTimeout(timer);
+
+			if (child && child.className.indexOf('throbber') != -1) {
+				child.parentNode.removeChild(child);
+			}
+
+			state = false;
+
+			return self;
+		};
+	};
+});
+
+// Included from: js/tinymce/classes/ui/Menu.js
+
+/**
+ * Menu.js
+ *
+ * Released under LGPL License.
+ * Copyright (c) 1999-2015 Ephox Corp. All rights reserved
+ *
+ * License: http://www.tinymce.com/license
+ * Contributing: http://www.tinymce.com/contributing
+ */
+
+/**
+ * Creates a new menu.
+ *
+ * @-x-less Menu.less
+ * @class tinymce.ui.Menu
+ * @extends tinymce.ui.FloatPanel
+ */
+define("tinymce/ui/Menu", [
+	"tinymce/ui/FloatPanel",
+	"tinymce/ui/MenuItem",
+	"tinymce/ui/Throbber",
+	"tinymce/util/Tools"
+], function(FloatPanel, MenuItem, Throbber, Tools) {
+	"use strict";
+
+	return FloatPanel.extend({
+		Defaults: {
+			defaultType: 'menuitem',
+			border: 1,
+			layout: 'stack',
+			role: 'application',
+			bodyRole: 'menu',
+			ariaRoot: true
+		},
+
+		/**
+		 * Constructs a instance with the specified settings.
+		 *
+		 * @constructor
+		 * @param {Object} settings Name/value object with settings.
+		 */
+		init: function(settings) {
+			var self = this;
+
+			settings.autohide = true;
+			settings.constrainToViewport = true;
+
+			if (typeof settings.items === 'function') {
+				settings.itemsFactory = settings.items;
+				settings.items = [];
+			}
+
+			if (settings.itemDefaults) {
+				var items = settings.items, i = items.length;
+
+				while (i--) {
+					items[i] = Tools.extend({}, settings.itemDefaults, items[i]);
+				}
+			}
+
+			self._super(settings);
+			self.classes.add('menu');
+		},
+
+		/**
+		 * Repaints the control after a layout operation.
+		 *
+		 * @method repaint
+		 */
+		repaint: function() {
+			this.classes.toggle('menu-align', true);
+
+			this._super();
+
+			this.getEl().style.height = '';
+			this.getEl('body').style.height = '';
+
+			return this;
+		},
+
+		/**
+		 * Hides/closes the menu.
+		 *
+		 * @method cancel
+		 */
+		cancel: function() {
+			var self = this;
+
+			self.hideAll();
+			self.fire('select');
+		},
+
+		/**
+		 * Loads new items from the factory items function.
+		 *
+		 * @method load
+		 */
+		load: function() {
+			var self = this, time, factory;
+
+			function hideThrobber() {
+				if (self.throbber) {
+					self.throbber.hide();
+					self.throbber = null;
+				}
+			}
+
+			factory = self.settings.itemsFactory;
+			if (!factory) {
+				return;
+			}
+
+			if (!self.throbber) {
+				self.throbber = new Throbber(self.getEl('body'), true);
+
+				if (self.items().length === 0) {
+					self.throbber.show();
+					self.fire('loading');
+				} else {
+					self.throbber.show(100, function() {
+						self.items().remove();
+						self.fire('loading');
+					});
+				}
+
+				self.on('hide close', hideThrobber);
+			}
+
+			self.requestTime = time = new Date().getTime();
+
+			self.settings.itemsFactory(function(items) {
+				if (items.length === 0) {
+					self.hide();
+					return;
+				}
+
+				if (self.requestTime !== time) {
+					return;
+				}
+
+				self.getEl().style.width = '';
+				self.getEl('body').style.width = '';
+
+				hideThrobber();
+				self.items().remove();
+				self.getEl('body').innerHTML = '';
+
+				self.add(items);
+				self.renderNew();
+				self.fire('loaded');
+			});
+		},
+
+		/**
+		 * Hide menu and all sub menus.
+		 *
+		 * @method hideAll
+		 */
+		hideAll: function() {
+			var self = this;
+
+			this.find('menuitem').exec('hideMenu');
+
+			return self._super();
+		},
+
+		/**
+		 * Invoked before the menu is rendered.
+		 *
+		 * @method preRender
+		 */
+		preRender: function() {
+			var self = this;
+
+			self.items().each(function(ctrl) {
+				var settings = ctrl.settings;
+
+				if (settings.icon || settings.image || settings.selectable) {
+					self._hasIcons = true;
+					return false;
+				}
+			});
+
+			if (self.settings.itemsFactory) {
+				self.on('postrender', function() {
+					if (self.settings.itemsFactory) {
+						self.load();
+					}
+				});
+			}
+
+			return self._super();
+		}
+	});
+});
+
+// Included from: js/tinymce/classes/ui/ListBox.js
+
+/**
+ * ListBox.js
+ *
+ * Released under LGPL License.
+ * Copyright (c) 1999-2015 Ephox Corp. All rights reserved
+ *
+ * License: http://www.tinymce.com/license
+ * Contributing: http://www.tinymce.com/contributing
+ */
+
+/**
+ * Creates a new list box control.
+ *
+ * @-x-less ListBox.less
+ * @class tinymce.ui.ListBox
+ * @extends tinymce.ui.MenuButton
+ */
+define("tinymce/ui/ListBox", [
+	"tinymce/ui/MenuButton",
+	"tinymce/ui/Menu"
+], function(MenuButton, Menu) {
+	"use strict";
+
+	return MenuButton.extend({
+		/**
+		 * Constructs a instance with the specified settings.
+		 *
+		 * @constructor
+		 * @param {Object} settings Name/value object with settings.
+		 * @setting {Array} values Array with values to add to list box.
+		 */
+		init: function(settings) {
+			var self = this, values, selected, selectedText, lastItemCtrl;
+
+			function setSelected(menuValues) {
+				// Try to find a selected value
+				for (var i = 0; i < menuValues.length; i++) {
+					selected = menuValues[i].selected || settings.value === menuValues[i].value;
+
+					if (selected) {
+						selectedText = selectedText || menuValues[i].text;
+						self.state.set('value', menuValues[i].value);
+						return true;
+					}
+
+					// If the value has a submenu, try to find the selected values in that menu
+					if (menuValues[i].menu) {
+						if (setSelected(menuValues[i].menu)) {
+							return true;
+						}
+					}
+				}
+			}
+
+			self._super(settings);
+			settings = self.settings;
+
+			self._values = values = settings.values;
+			if (values) {
+				if (typeof settings.value != "undefined") {
+					setSelected(values);
+				}
+
+				// Default with first item
+				if (!selected && values.length > 0) {
+					selectedText = values[0].text;
+					self.state.set('value', values[0].value);
+				}
+
+				self.state.set('menu', values);
+			}
+
+			self.state.set('text', settings.text || selectedText);
+
+			self.classes.add('listbox');
+
+			self.on('select', function(e) {
+				var ctrl = e.control;
+
+				if (lastItemCtrl) {
+					e.lastControl = lastItemCtrl;
+				}
+
+				if (settings.multiple) {
+					ctrl.active(!ctrl.active());
+				} else {
+					self.value(e.control.value());
+				}
+
+				lastItemCtrl = ctrl;
+			});
+		},
+
+		/**
+		 * Getter/setter function for the control value.
+		 *
+		 * @method value
+		 * @param {String} [value] Value to be set.
+		 * @return {Boolean/tinymce.ui.ListBox} Value or self if it's a set operation.
+		 */
+		bindStates: function() {
+			var self = this;
+
+			function activateMenuItemsByValue(menu, value) {
+				if (menu instanceof Menu) {
+					menu.items().each(function(ctrl) {
+						if (!ctrl.hasMenus()) {
+							ctrl.active(ctrl.value() === value);
+						}
+					});
+				}
+			}
+
+			function getSelectedItem(menuValues, value) {
+				var selectedItem;
+
+				if (!menuValues) {
+					return;
+				}
+
+				for (var i = 0; i < menuValues.length; i++) {
+					if (menuValues[i].value === value) {
+						return menuValues[i];
+					}
+
+					if (menuValues[i].menu) {
+						selectedItem = getSelectedItem(menuValues[i].menu, value);
+						if (selectedItem) {
+							return selectedItem;
+						}
+					}
+				}
+			}
+
+			self.on('show', function(e) {
+				activateMenuItemsByValue(e.control, self.value());
+			});
+
+			self.state.on('change:value', function(e) {
+				var selectedItem = getSelectedItem(self.state.get('menu'), e.value);
+
+				if (selectedItem) {
+					self.text(selectedItem.text);
+				} else {
+					self.text(self.settings.text);
+				}
+			});
+
+			return self._super();
+		}
+	});
+});
+
+// Included from: js/tinymce/classes/ui/Radio.js
+
+/**
+ * Radio.js
+ *
+ * Released under LGPL License.
+ * Copyright (c) 1999-2015 Ephox Corp. All rights reserved
+ *
+ * License: http://www.tinymce.com/license
+ * Contributing: http://www.tinymce.com/contributing
+ */
+
+/**
+ * Creates a new radio button.
+ *
+ * @-x-less Radio.less
+ * @class tinymce.ui.Radio
+ * @extends tinymce.ui.Checkbox
+ */
+define("tinymce/ui/Radio", [
+	"tinymce/ui/Checkbox"
+], function(Checkbox) {
+	"use strict";
+
+	return Checkbox.extend({
+		Defaults: {
+			classes: "radio",
+			role: "radio"
+		}
+	});
+});
+
+// Included from: js/tinymce/classes/ui/ResizeHandle.js
+
+/**
+ * ResizeHandle.js
+ *
+ * Released under LGPL License.
+ * Copyright (c) 1999-2015 Ephox Corp. All rights reserved
+ *
+ * License: http://www.tinymce.com/license
+ * Contributing: http://www.tinymce.com/contributing
+ */
+
+/**
+ * Renders a resize handle that fires ResizeStart, Resize and ResizeEnd events.
+ *
+ * @-x-less ResizeHandle.less
+ * @class tinymce.ui.ResizeHandle
+ * @extends tinymce.ui.Widget
+ */
+define("tinymce/ui/ResizeHandle", [
+	"tinymce/ui/Widget",
+	"tinymce/ui/DragHelper"
+], function(Widget, DragHelper) {
+	"use strict";
+
+	return Widget.extend({
+		/**
+		 * Renders the control as a HTML string.
+		 *
+		 * @method renderHtml
+		 * @return {String} HTML representing the control.
+		 */
+		renderHtml: function() {
+			var self = this, prefix = self.classPrefix;
+
+			self.classes.add('resizehandle');
+
+			if (self.settings.direction == "both") {
+				self.classes.add('resizehandle-both');
+			}
+
+			self.canFocus = false;
+
+			return (
+				'<div id="' + self._id + '" class="' + self.classes + '">' +
+					'<i class="' + prefix + 'ico ' + prefix + 'i-resize"></i>' +
+				'</div>'
+			);
+		},
+
+		/**
+		 * Called after the control has been rendered.
+		 *
+		 * @method postRender
+		 */
+		postRender: function() {
+			var self = this;
+
+			self._super();
+
+			self.resizeDragHelper = new DragHelper(this._id, {
+				start: function() {
+					self.fire('ResizeStart');
+				},
+
+				drag: function(e) {
+					if (self.settings.direction != "both") {
+						e.deltaX = 0;
+					}
+
+					self.fire('Resize', e);
+				},
+
+				stop: function() {
+					self.fire('ResizeEnd');
+				}
+			});
+		},
+
+		remove: function() {
+			if (this.resizeDragHelper) {
+				this.resizeDragHelper.destroy();
+			}
+
+			return this._super();
+		}
+	});
+});
+
+// Included from: js/tinymce/classes/ui/SelectBox.js
+
+/**
+ * SelectBox.js
+ *
+ * Released under LGPL License.
+ * Copyright (c) 1999-2015 Ephox Corp. All rights reserved
+ *
+ * License: http://www.tinymce.com/license
+ * Contributing: http://www.tinymce.com/contributing
+ */
+
+/**
+ * Creates a new select box control.
+ *
+ * @-x-less SelectBox.less
+ * @class tinymce.ui.SelectBox
+ * @extends tinymce.ui.Widget
+ */
+define("tinymce/ui/SelectBox", [
+	"tinymce/ui/Widget"
+], function(Widget) {
+	"use strict";
+
+	function createOptions(options) {
+		var strOptions = '';
+		if (options) {
+			for (var i = 0; i < options.length; i++) {
+				strOptions += '<option value="' + options[i] + '">' + options[i] + '</option>';
+			}
+		}
+		return strOptions;
+	}
+
+	return Widget.extend({
+		Defaults: {
+			classes: "selectbox",
+			role: "selectbox",
+			options: []
+		},
+		/**
+		 * Constructs a instance with the specified settings.
+		 *
+		 * @constructor
+		 * @param {Object} settings Name/value object with settings.
+		 * @setting {Array} values Array with values to add to list box.
+		 */
+		init: function(settings) {
+			var self = this;
+
+			self._super(settings);
+
+			if (self.settings.size) {
+				self.size = self.settings.size;
+			}
+
+			if (self.settings.options) {
+				self._options = self.settings.options;
+			}
+
+			self.on('keydown', function(e) {
+				var rootControl;
+
+				if (e.keyCode == 13) {
+					e.preventDefault();
+
+					// Find root control that we can do toJSON on
+					self.parents().reverse().each(function(ctrl) {
+						if (ctrl.toJSON) {
+							rootControl = ctrl;
+							return false;
+						}
+					});
+
+					// Fire event on current text box with the serialized data of the whole form
+					self.fire('submit', {data: rootControl.toJSON()});
+				}
+			});
+		},
+
+		/**
+		 * Getter/setter function for the options state.
+		 *
+		 * @method options
+		 * @param {Array} [state] State to be set.
+		 * @return {Array|tinymce.ui.SelectBox} Array of string options.
+		 */
+		options: function(state) {
+			if (!arguments.length) {
+				return this.state.get('options');
+			}
+
+			this.state.set('options', state);
+
+			return this;
+		},
+
+		renderHtml: function() {
+			var self = this, options, size = '';
+
+			options = createOptions(self._options);
+
+			if (self.size) {
+				size = ' size = "' + self.size + '"';
+			}
+
+			return (
+				'<select id="' + self._id + '" class="' + self.classes + '"' + size + '>' +
+					options +
+				'</select>'
+			);
+		},
+
+		bindStates: function() {
+			var self = this;
+
+			self.state.on('change:options', function(e) {
+				self.getEl().innerHTML = createOptions(e.value);
+			});
+
+			return self._super();
+		}
+	});
+});
+
+// Included from: js/tinymce/classes/ui/Slider.js
+
+/**
+ * Slider.js
+ *
+ * Released under LGPL License.
+ * Copyright (c) 1999-2015 Ephox Corp. All rights reserved
+ *
+ * License: http://www.tinymce.com/license
+ * Contributing: http://www.tinymce.com/contributing
+ */
+
+/**
+ * Slider control.
+ *
+ * @-x-less Slider.less
+ * @class tinymce.ui.Slider
+ * @extends tinymce.ui.Widget
+ */
+define("tinymce/ui/Slider", [
+	"tinymce/ui/Widget",
+	"tinymce/ui/DragHelper",
+	"tinymce/ui/DomUtils"
+], function(Widget, DragHelper, DomUtils) {
+	"use strict";
+
+	function constrain(value, minVal, maxVal) {
+		if (value < minVal) {
+			value = minVal;
+		}
+
+		if (value > maxVal) {
+			value = maxVal;
+		}
+
+		return value;
+	}
+
+	function setAriaProp(el, name, value) {
+		el.setAttribute('aria-' + name, value);
+	}
+
+	function updateSliderHandle(ctrl, value) {
+		var maxHandlePos, shortSizeName, sizeName, stylePosName, styleValue, handleEl;
+
+		if (ctrl.settings.orientation == "v") {
+			stylePosName = "top";
+			sizeName = "height";
+			shortSizeName = "h";
+		} else {
+			stylePosName = "left";
+			sizeName = "width";
+			shortSizeName = "w";
+		}
+
+		handleEl = ctrl.getEl('handle');
+		maxHandlePos = (ctrl.layoutRect()[shortSizeName] || 100) - DomUtils.getSize(handleEl)[sizeName];
+
+		styleValue = (maxHandlePos * ((value - ctrl._minValue) / (ctrl._maxValue - ctrl._minValue))) + 'px';
+		handleEl.style[stylePosName] = styleValue;
+		handleEl.style.height = ctrl.layoutRect().h + 'px';
+
+		setAriaProp(handleEl, 'valuenow', value);
+		setAriaProp(handleEl, 'valuetext', '' + ctrl.settings.previewFilter(value));
+		setAriaProp(handleEl, 'valuemin', ctrl._minValue);
+		setAriaProp(handleEl, 'valuemax', ctrl._maxValue);
+	}
+
+	return Widget.extend({
+		init: function(settings) {
+			var self = this;
+
+			if (!settings.previewFilter) {
+				settings.previewFilter = function(value) {
+					return Math.round(value * 100) / 100.0;
+				};
+			}
+
+			self._super(settings);
+			self.classes.add('slider');
+
+			if (settings.orientation == "v") {
+				self.classes.add('vertical');
+			}
+
+			self._minValue = settings.minValue || 0;
+			self._maxValue = settings.maxValue || 100;
+			self._initValue = self.state.get('value');
+		},
+
+		renderHtml: function() {
+			var self = this, id = self._id, prefix = self.classPrefix;
+
+			return (
+				'<div id="' + id + '" class="' + self.classes + '">' +
+					'<div id="' + id + '-handle" class="' + prefix + 'slider-handle" role="slider" tabindex="-1"></div>' +
+				'</div>'
+			);
+		},
+
+		reset: function() {
+			this.value(this._initValue).repaint();
+		},
+
+		postRender: function() {
+			var self = this, minValue, maxValue, screenCordName,
+					stylePosName, sizeName, shortSizeName;
+
+			function toFraction(min, max, val) {
+				return (val + min) / (max - min);
+			}
+
+			function fromFraction(min, max, val) {
+				return (val * (max - min)) - min;
+			}
+
+			function handleKeyboard(minValue, maxValue) {
+				function alter(delta) {
+					var value;
+
+					value = self.value();
+					value = fromFraction(minValue, maxValue, toFraction(minValue, maxValue, value) + (delta * 0.05));
+					value = constrain(value, minValue, maxValue);
+
+					self.value(value);
+
+					self.fire('dragstart', {value: value});
+					self.fire('drag', {value: value});
+					self.fire('dragend', {value: value});
+				}
+
+				self.on('keydown', function(e) {
+					switch (e.keyCode) {
+						case 37:
+						case 38:
+							alter(-1);
+							break;
+
+						case 39:
+						case 40:
+							alter(1);
+							break;
+					}
+				});
+			}
+
+			function handleDrag(minValue, maxValue, handleEl) {
+				var startPos, startHandlePos, maxHandlePos, handlePos, value;
+
+				self._dragHelper = new DragHelper(self._id, {
+					handle: self._id + "-handle",
+
+					start: function(e) {
+						startPos = e[screenCordName];
+						startHandlePos = parseInt(self.getEl('handle').style[stylePosName], 10);
+						maxHandlePos = (self.layoutRect()[shortSizeName] || 100) - DomUtils.getSize(handleEl)[sizeName];
+						self.fire('dragstart', {value: value});
+					},
+
+					drag: function(e) {
+						var delta = e[screenCordName] - startPos;
+
+						handlePos = constrain(startHandlePos + delta, 0, maxHandlePos);
+						handleEl.style[stylePosName] = handlePos + 'px';
+
+						value = minValue + (handlePos / maxHandlePos) * (maxValue - minValue);
+						self.value(value);
+
+						self.tooltip().text('' + self.settings.previewFilter(value)).show().moveRel(handleEl, 'bc tc');
+
+						self.fire('drag', {value: value});
+					},
+
+					stop: function() {
+						self.tooltip().hide();
+						self.fire('dragend', {value: value});
+					}
+				});
+			}
+
+			minValue = self._minValue;
+			maxValue = self._maxValue;
+
+			if (self.settings.orientation == "v") {
+				screenCordName = "screenY";
+				stylePosName = "top";
+				sizeName = "height";
+				shortSizeName = "h";
+			} else {
+				screenCordName = "screenX";
+				stylePosName = "left";
+				sizeName = "width";
+				shortSizeName = "w";
+			}
+
+			self._super();
+
+			handleKeyboard(minValue, maxValue, self.getEl('handle'));
+			handleDrag(minValue, maxValue, self.getEl('handle'));
+		},
+
+		repaint: function() {
+			this._super();
+			updateSliderHandle(this, this.value());
+		},
+
+		bindStates: function() {
+			var self = this;
+
+			self.state.on('change:value', function(e) {
+				updateSliderHandle(self, e.value);
+			});
+
+			return self._super();
+		}
+	});
+});
+
+// Included from: js/tinymce/classes/ui/Spacer.js
+
+/**
+ * Spacer.js
+ *
+ * Released under LGPL License.
+ * Copyright (c) 1999-2015 Ephox Corp. All rights reserved
+ *
+ * License: http://www.tinymce.com/license
+ * Contributing: http://www.tinymce.com/contributing
+ */
+
+/**
+ * Creates a spacer. This control is used in flex layouts for example.
+ *
+ * @-x-less Spacer.less
+ * @class tinymce.ui.Spacer
+ * @extends tinymce.ui.Widget
+ */
+define("tinymce/ui/Spacer", [
+	"tinymce/ui/Widget"
+], function(Widget) {
+	"use strict";
+
+	return Widget.extend({
+		/**
+		 * Renders the control as a HTML string.
+		 *
+		 * @method renderHtml
+		 * @return {String} HTML representing the control.
+		 */
+		renderHtml: function() {
+			var self = this;
+
+			self.classes.add('spacer');
+			self.canFocus = false;
+
+			return '<div id="' + self._id + '" class="' + self.classes + '"></div>';
+		}
+	});
+});
+
+// Included from: js/tinymce/classes/ui/SplitButton.js
+
+/**
+ * SplitButton.js
+ *
+ * Released under LGPL License.
+ * Copyright (c) 1999-2015 Ephox Corp. All rights reserved
+ *
+ * License: http://www.tinymce.com/license
+ * Contributing: http://www.tinymce.com/contributing
+ */
+
+/**
+ * Creates a split button.
+ *
+ * @-x-less SplitButton.less
+ * @class tinymce.ui.SplitButton
+ * @extends tinymce.ui.Button
+ */
+define("tinymce/ui/SplitButton", [
+	"tinymce/ui/MenuButton",
+	"tinymce/ui/DomUtils",
+	"tinymce/dom/DomQuery"
+], function(MenuButton, DomUtils, $) {
+	return MenuButton.extend({
+		Defaults: {
+			classes: "widget btn splitbtn",
+			role: "button"
+		},
+
+		/**
+		 * Repaints the control after a layout operation.
+		 *
+		 * @method repaint
+		 */
+		repaint: function() {
+			var self = this, elm = self.getEl(), rect = self.layoutRect(), mainButtonElm, menuButtonElm;
+
+			self._super();
+
+			mainButtonElm = elm.firstChild;
+			menuButtonElm = elm.lastChild;
+
+			$(mainButtonElm).css({
+				width: rect.w - DomUtils.getSize(menuButtonElm).width,
+				height: rect.h - 2
+			});
+
+			$(menuButtonElm).css({
+				height: rect.h - 2
+			});
+
+			return self;
+		},
+
+		/**
+		 * Sets the active menu state.
+		 *
+		 * @private
+		 */
+		activeMenu: function(state) {
+			var self = this;
+
+			$(self.getEl().lastChild).toggleClass(self.classPrefix + 'active', state);
+		},
+
+		/**
+		 * Renders the control as a HTML string.
+		 *
+		 * @method renderHtml
+		 * @return {String} HTML representing the control.
+		 */
+		renderHtml: function() {
+			var self = this, id = self._id, prefix = self.classPrefix, image;
+			var icon = self.state.get('icon'), text = self.state.get('text'),
+				textHtml = '';
+
+			image = self.settings.image;
+			if (image) {
+				icon = 'none';
+
+				// Support for [high dpi, low dpi] image sources
+				if (typeof image != "string") {
+					image = window.getSelection ? image[0] : image[1];
+				}
+
+				image = ' style="background-image: url(\'' + image + '\')"';
+			} else {
+				image = '';
+			}
+
+			icon = self.settings.icon ? prefix + 'ico ' + prefix + 'i-' + icon : '';
+
+			if (text) {
+				self.classes.add('btn-has-text');
+				textHtml = '<span class="' + prefix + 'txt">' + self.encode(text) + '</span>';
+			}
+
+			return (
+				'<div id="' + id + '" class="' + self.classes + '" role="button" tabindex="-1">' +
+					'<button type="button" hidefocus="1" tabindex="-1">' +
+						(icon ? '<i class="' + icon + '"' + image + '></i>' : '') +
+						textHtml +
+					'</button>' +
+					'<button type="button" class="' + prefix + 'open" hidefocus="1" tabindex="-1">' +
+						//(icon ? '<i class="' + icon + '"></i>' : '') +
+						(self._menuBtnText ? (icon ? '\u00a0' : '') + self._menuBtnText : '') +
+						' <i class="' + prefix + 'caret"></i>' +
+					'</button>' +
+				'</div>'
+			);
+		},
+
+		/**
+		 * Called after the control has been rendered.
+		 *
+		 * @method postRender
+		 */
+		postRender: function() {
+			var self = this, onClickHandler = self.settings.onclick;
+
+			self.on('click', function(e) {
+				var node = e.target;
+
+				if (e.control == this) {
+					// Find clicks that is on the main button
+					while (node) {
+						if ((e.aria && e.aria.key != 'down') || (node.nodeName == 'BUTTON' && node.className.indexOf('open') == -1)) {
+							e.stopImmediatePropagation();
+
+							if (onClickHandler) {
+								onClickHandler.call(this, e);
+							}
+
+							return;
+						}
+
+						node = node.parentNode;
+					}
+				}
+			});
+
+			delete self.settings.onclick;
+
+			return self._super();
+		}
+	});
+});
+
+// Included from: js/tinymce/classes/ui/StackLayout.js
+
+/**
+ * StackLayout.js
+ *
+ * Released under LGPL License.
+ * Copyright (c) 1999-2015 Ephox Corp. All rights reserved
+ *
+ * License: http://www.tinymce.com/license
+ * Contributing: http://www.tinymce.com/contributing
+ */
+
+/**
+ * This layout uses the browsers layout when the items are blocks.
+ *
+ * @-x-less StackLayout.less
+ * @class tinymce.ui.StackLayout
+ * @extends tinymce.ui.FlowLayout
+ */
+define("tinymce/ui/StackLayout", [
+	"tinymce/ui/FlowLayout"
+], function(FlowLayout) {
+	"use strict";
+
+	return FlowLayout.extend({
+		Defaults: {
+			containerClass: 'stack-layout',
+			controlClass: 'stack-layout-item',
+			endClass: 'break'
+		},
+
+		isNative: function() {
+			return true;
+		}
+	});
+});
+
+// Included from: js/tinymce/classes/ui/TabPanel.js
+
+/**
+ * TabPanel.js
+ *
+ * Released under LGPL License.
+ * Copyright (c) 1999-2015 Ephox Corp. All rights reserved
+ *
+ * License: http://www.tinymce.com/license
+ * Contributing: http://www.tinymce.com/contributing
+ */
+
+/**
+ * Creates a tab panel control.
+ *
+ * @-x-less TabPanel.less
+ * @class tinymce.ui.TabPanel
+ * @extends tinymce.ui.Panel
+ *
+ * @setting {Number} activeTab Active tab index.
+ */
+define("tinymce/ui/TabPanel", [
+	"tinymce/ui/Panel",
+	"tinymce/dom/DomQuery",
+	"tinymce/ui/DomUtils"
+], function(Panel, $, DomUtils) {
+	"use strict";
+
+	return Panel.extend({
+		Defaults: {
+			layout: 'absolute',
+			defaults: {
+				type: 'panel'
+			}
+		},
+
+		/**
+		 * Activates the specified tab by index.
+		 *
+		 * @method activateTab
+		 * @param {Number} idx Index of the tab to activate.
+		 */
+		activateTab: function(idx) {
+			var activeTabElm;
+
+			if (this.activeTabId) {
+				activeTabElm = this.getEl(this.activeTabId);
+				$(activeTabElm).removeClass(this.classPrefix + 'active');
+				activeTabElm.setAttribute('aria-selected', "false");
+			}
+
+			this.activeTabId = 't' + idx;
+
+			activeTabElm = this.getEl('t' + idx);
+			activeTabElm.setAttribute('aria-selected', "true");
+			$(activeTabElm).addClass(this.classPrefix + 'active');
+
+			this.items()[idx].show().fire('showtab');
+			this.reflow();
+
+			this.items().each(function(item, i) {
+				if (idx != i) {
+					item.hide();
+				}
+			});
+		},
+
+		/**
+		 * Renders the control as a HTML string.
+		 *
+		 * @method renderHtml
+		 * @return {String} HTML representing the control.
+		 */
+		renderHtml: function() {
+			var self = this, layout = self._layout, tabsHtml = '', prefix = self.classPrefix;
+
+			self.preRender();
+			layout.preRender(self);
+
+			self.items().each(function(ctrl, i) {
+				var id = self._id + '-t' + i;
+
+				ctrl.aria('role', 'tabpanel');
+				ctrl.aria('labelledby', id);
+
+				tabsHtml += (
+					'<div id="' + id + '" class="' + prefix + 'tab" ' +
+						'unselectable="on" role="tab" aria-controls="' + ctrl._id + '" aria-selected="false" tabIndex="-1">' +
+						self.encode(ctrl.settings.title) +
+					'</div>'
+				);
+			});
+
+			return (
+				'<div id="' + self._id + '" class="' + self.classes + '" hidefocus="1" tabindex="-1">' +
+					'<div id="' + self._id + '-head" class="' + prefix + 'tabs" role="tablist">' +
+						tabsHtml +
+					'</div>' +
+					'<div id="' + self._id + '-body" class="' + self.bodyClasses + '">' +
+						layout.renderHtml(self) +
+					'</div>' +
+				'</div>'
+			);
+		},
+
+		/**
+		 * Called after the control has been rendered.
+		 *
+		 * @method postRender
+		 */
+		postRender: function() {
+			var self = this;
+
+			self._super();
+
+			self.settings.activeTab = self.settings.activeTab || 0;
+			self.activateTab(self.settings.activeTab);
+
+			this.on('click', function(e) {
+				var targetParent = e.target.parentNode;
+
+				if (e.target.parentNode.id == self._id + '-head') {
+					var i = targetParent.childNodes.length;
+
+					while (i--) {
+						if (targetParent.childNodes[i] == e.target) {
+							self.activateTab(i);
+						}
+					}
+				}
+			});
+		},
+
+		/**
+		 * Initializes the current controls layout rect.
+		 * This will be executed by the layout managers to determine the
+		 * default minWidth/minHeight etc.
+		 *
+		 * @method initLayoutRect
+		 * @return {Object} Layout rect instance.
+		 */
+		initLayoutRect: function() {
+			var self = this, rect, minW, minH;
+
+			minW = DomUtils.getSize(self.getEl('head')).width;
+			minW = minW < 0 ? 0 : minW;
+			minH = 0;
+
+			self.items().each(function(item) {
+				minW = Math.max(minW, item.layoutRect().minW);
+				minH = Math.max(minH, item.layoutRect().minH);
+			});
+
+			self.items().each(function(ctrl) {
+				ctrl.settings.x = 0;
+				ctrl.settings.y = 0;
+				ctrl.settings.w = minW;
+				ctrl.settings.h = minH;
+
+				ctrl.layoutRect({
+					x: 0,
+					y: 0,
+					w: minW,
+					h: minH
+				});
+			});
+
+			var headH = DomUtils.getSize(self.getEl('head')).height;
+
+			self.settings.minWidth = minW;
+			self.settings.minHeight = minH + headH;
+
+			rect = self._super();
+			rect.deltaH += headH;
+			rect.innerH = rect.h - rect.deltaH;
+
+			return rect;
+		}
+	});
+});
+
+// Included from: js/tinymce/classes/ui/TextBox.js
+
+/**
+ * TextBox.js
+ *
+ * Released under LGPL License.
+ * Copyright (c) 1999-2015 Ephox Corp. All rights reserved
+ *
+ * License: http://www.tinymce.com/license
+ * Contributing: http://www.tinymce.com/contributing
+ */
+
+/**
+ * Creates a new textbox.
+ *
+ * @-x-less TextBox.less
+ * @class tinymce.ui.TextBox
+ * @extends tinymce.ui.Widget
+ */
+define("tinymce/ui/TextBox", [
+	"tinymce/ui/Widget",
+	"tinymce/util/Tools",
+	"tinymce/ui/DomUtils"
+], function(Widget, Tools, DomUtils) {
+	return Widget.extend({
+		/**
+		 * Constructs a instance with the specified settings.
+		 *
+		 * @constructor
+		 * @param {Object} settings Name/value object with settings.
+		 * @setting {Boolean} multiline True if the textbox is a multiline control.
+		 * @setting {Number} maxLength Max length for the textbox.
+		 * @setting {Number} size Size of the textbox in characters.
+		 */
+		init: function(settings) {
+			var self = this;
+
+			self._super(settings);
+
+			self.classes.add('textbox');
+
+			if (settings.multiline) {
+				self.classes.add('multiline');
+			} else {
+				self.on('keydown', function(e) {
+					var rootControl;
+
+					if (e.keyCode == 13) {
+						e.preventDefault();
+
+						// Find root control that we can do toJSON on
+						self.parents().reverse().each(function(ctrl) {
+							if (ctrl.toJSON) {
+								rootControl = ctrl;
+								return false;
+							}
+						});
+
+						// Fire event on current text box with the serialized data of the whole form
+						self.fire('submit', {data: rootControl.toJSON()});
+					}
+				});
+
+				self.on('keyup', function(e) {
+					self.state.set('value', e.target.value);
+				});
+			}
+		},
+
+		/**
+		 * Repaints the control after a layout operation.
+		 *
+		 * @method repaint
+		 */
+		repaint: function() {
+			var self = this, style, rect, borderBox, borderW, borderH = 0, lastRepaintRect;
+
+			style = self.getEl().style;
+			rect = self._layoutRect;
+			lastRepaintRect = self._lastRepaintRect || {};
+
+			// Detect old IE 7+8 add lineHeight to align caret vertically in the middle
+			var doc = document;
+			if (!self.settings.multiline && doc.all && (!doc.documentMode || doc.documentMode <= 8)) {
+				style.lineHeight = (rect.h - borderH) + 'px';
+			}
+
+			borderBox = self.borderBox;
+			borderW = borderBox.left + borderBox.right + 8;
+			borderH = borderBox.top + borderBox.bottom + (self.settings.multiline ? 8 : 0);
+
+			if (rect.x !== lastRepaintRect.x) {
+				style.left = rect.x + 'px';
+				lastRepaintRect.x = rect.x;
+			}
+
+			if (rect.y !== lastRepaintRect.y) {
+				style.top = rect.y + 'px';
+				lastRepaintRect.y = rect.y;
+			}
+
+			if (rect.w !== lastRepaintRect.w) {
+				style.width = (rect.w - borderW) + 'px';
+				lastRepaintRect.w = rect.w;
+			}
+
+			if (rect.h !== lastRepaintRect.h) {
+				style.height = (rect.h - borderH) + 'px';
+				lastRepaintRect.h = rect.h;
+			}
+
+			self._lastRepaintRect = lastRepaintRect;
+			self.fire('repaint', {}, false);
+
+			return self;
+		},
+
+		/**
+		 * Renders the control as a HTML string.
+		 *
+		 * @method renderHtml
+		 * @return {String} HTML representing the control.
+		 */
+		renderHtml: function() {
+			var self = this, settings = self.settings, attrs, elm;
+
+			attrs = {
+				id: self._id,
+				hidefocus: '1'
+			};
+
+			Tools.each([
+				'rows',	'spellcheck',	'maxLength', 'size', 'readonly', 'min',
+				'max', 'step', 'list', 'pattern', 'placeholder', 'required', 'multiple'
+			], function(name) {
+				attrs[name] = settings[name];
+			});
+
+			if (self.disabled()) {
+				attrs.disabled = 'disabled';
+			}
+
+			if (settings.subtype) {
+				attrs.type = settings.subtype;
+			}
+
+			elm = DomUtils.create(settings.multiline ? 'textarea' : 'input', attrs);
+			elm.value = self.state.get('value');
+			elm.className = self.classes;
+
+			return elm.outerHTML;
+		},
+
+		value: function(value) {
+			if (arguments.length) {
+				this.state.set('value', value);
+				return this;
+			}
+
+			// Make sure the real state is in sync
+			if (this.state.get('rendered')) {
+				this.state.set('value', this.getEl().value);
+			}
+
+			return this.state.get('value');
+		},
+
+		/**
+		 * Called after the control has been rendered.
+		 *
+		 * @method postRender
+		 */
+		postRender: function() {
+			var self = this;
+
+			self.getEl().value = self.state.get('value');
+			self._super();
+
+			self.$el.on('change', function(e) {
+				self.state.set('value', e.target.value);
+				self.fire('change', e);
+			});
+		},
+
+		bindStates: function() {
+			var self = this;
+
+			self.state.on('change:value', function(e) {
+				if (self.getEl().value != e.value) {
+					self.getEl().value = e.value;
+				}
+			});
+
+			self.state.on('change:disabled', function(e) {
+				self.getEl().disabled = e.value;
+			});
+
+			return self._super();
+		},
+
+		remove: function() {
+			this.$el.off();
+			this._super();
+		}
+	});
+});
+
+// Included from: js/tinymce/classes/Register.js
+
+/**
+ * Register.js
+ *
+ * Released under LGPL License.
+ * Copyright (c) 1999-2015 Ephox Corp. All rights reserved
+ *
+ * License: http://www.tinymce.com/license
+ * Contributing: http://www.tinymce.com/contributing
+ */
+
+/**
+ * This registers tinymce in common module loaders.
+ *
+ * @private
+ * @class tinymce.Register
+ */
+define("tinymce/Register", [
+], function() {
+	/*eslint consistent-this: 0 */
+	var context = this || window;
+
+	var tinymce = function() {
+		return context.tinymce;
+	};
+
+	if (typeof context.define === "function") {
+		// Bolt
+		if (!context.define.amd) {
+			context.define("ephox/tinymce", [], tinymce);
+		}
+	}
+
+	return {};
+});
+
+expose(["tinymce/geom/Rect","tinymce/util/Promise","tinymce/util/Delay","tinymce/Env","tinymce/dom/EventUtils","tinymce/dom/Sizzle","tinymce/util/Tools","tinymce/dom/DomQuery","tinymce/html/Styles","tinymce/dom/TreeWalker","tinymce/html/Entities","tinymce/dom/DOMUtils","tinymce/dom/ScriptLoader","tinymce/AddOnManager","tinymce/dom/RangeUtils","tinymce/html/Node","tinymce/html/Schema","tinymce/html/SaxParser","tinymce/html/DomParser","tinymce/html/Writer","tinymce/html/Serializer","tinymce/dom/Serializer","tinymce/util/VK","tinymce/dom/ControlSelection","tinymce/dom/BookmarkManager","tinymce/dom/Selection","tinymce/Formatter","tinymce/UndoManager","tinymce/EditorCommands","tinymce/util/URI","tinymce/util/Class","tinymce/util/EventDispatcher","tinymce/util/Observable","tinymce/ui/Selector","tinymce/ui/Collection","tinymce/ui/ReflowQueue","tinymce/ui/Control","tinymce/ui/Factory","tinymce/ui/KeyboardNavigation","tinymce/ui/Container","tinymce/ui/DragHelper","tinymce/ui/Scrollable","tinymce/ui/Panel","tinymce/ui/Movable","tinymce/ui/Resizable","tinymce/ui/FloatPanel","tinymce/ui/Window","tinymce/ui/MessageBox","tinymce/WindowManager","tinymce/ui/Tooltip","tinymce/ui/Widget","tinymce/ui/Progress","tinymce/ui/Notification","tinymce/NotificationManager","tinymce/EditorObservable","tinymce/Shortcuts","tinymce/Editor","tinymce/util/I18n","tinymce/FocusManager","tinymce/EditorManager","tinymce/util/XHR","tinymce/util/JSON","tinymce/util/JSONRequest","tinymce/util/JSONP","tinymce/util/LocalStorage","tinymce/Compat","tinymce/ui/Layout","tinymce/ui/AbsoluteLayout","tinymce/ui/Button","tinymce/ui/ButtonGroup","tinymce/ui/Checkbox","tinymce/ui/ComboBox","tinymce/ui/ColorBox","tinymce/ui/PanelButton","tinymce/ui/ColorButton","tinymce/util/Color","tinymce/ui/ColorPicker","tinymce/ui/Path","tinymce/ui/ElementPath","tinymce/ui/FormItem","tinymce/ui/Form","tinymce/ui/FieldSet","tinymce/ui/FilePicker","tinymce/ui/FitLayout","tinymce/ui/FlexLayout","tinymce/ui/FlowLayout","tinymce/ui/FormatControls","tinymce/ui/GridLayout","tinymce/ui/Iframe","tinymce/ui/InfoBox","tinymce/ui/Label","tinymce/ui/Toolbar","tinymce/ui/MenuBar","tinymce/ui/MenuButton","tinymce/ui/MenuItem","tinymce/ui/Throbber","tinymce/ui/Menu","tinymce/ui/ListBox","tinymce/ui/Radio","tinymce/ui/ResizeHandle","tinymce/ui/SelectBox","tinymce/ui/Slider","tinymce/ui/Spacer","tinymce/ui/SplitButton","tinymce/ui/StackLayout","tinymce/ui/TabPanel","tinymce/ui/TextBox"]);
+})(this);

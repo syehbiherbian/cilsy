@@ -272,4 +272,75 @@ Licensed under the MIT License ~ http://threedubmedia.googlecode.com/files/MIT-L
             plot.draw();
             
             if (!args.preventEvent)
-                plot.getPlaceh
+                plot.getPlaceholder().trigger("plotzoom", [ plot, args ]);
+        };
+
+        plot.pan = function (args) {
+            var delta = {
+                x: +args.left,
+                y: +args.top
+            };
+
+            if (isNaN(delta.x))
+                delta.x = 0;
+            if (isNaN(delta.y))
+                delta.y = 0;
+
+            $.each(plot.getAxes(), function (_, axis) {
+                var opts = axis.options,
+                    min, max, d = delta[axis.direction];
+
+                min = axis.c2p(axis.p2c(axis.min) + d),
+                max = axis.c2p(axis.p2c(axis.max) + d);
+
+                var pr = opts.panRange;
+                if (pr === false) // no panning on this axis
+                    return;
+                
+                if (pr) {
+                    // check whether we hit the wall
+                    if (pr[0] != null && pr[0] > min) {
+                        d = pr[0] - min;
+                        min += d;
+                        max += d;
+                    }
+                    
+                    if (pr[1] != null && pr[1] < max) {
+                        d = pr[1] - max;
+                        min += d;
+                        max += d;
+                    }
+                }
+                
+                opts.min = min;
+                opts.max = max;
+            });
+            
+            plot.setupGrid();
+            plot.draw();
+            
+            if (!args.preventEvent)
+                plot.getPlaceholder().trigger("plotpan", [ plot, args ]);
+        };
+
+        function shutdown(plot, eventHolder) {
+            eventHolder.unbind(plot.getOptions().zoom.trigger, onZoomClick);
+            eventHolder.unbind("mousewheel", onMouseWheel);
+            eventHolder.unbind("dragstart", onDragStart);
+            eventHolder.unbind("drag", onDrag);
+            eventHolder.unbind("dragend", onDragEnd);
+            if (panTimeout)
+                clearTimeout(panTimeout);
+        }
+        
+        plot.hooks.bindEvents.push(bindEvents);
+        plot.hooks.shutdown.push(shutdown);
+    }
+    
+    $.plot.plugins.push({
+        init: init,
+        options: options,
+        name: 'navigate',
+        version: '1.3'
+    });
+})(jQuery);

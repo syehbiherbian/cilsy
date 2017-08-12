@@ -776,3 +776,52 @@ A maintenance release with more tuned heuristics. Fully backwards compatible.
 - A couple of bugs with escaping in strings were fixed thanks to Mickle
 - Ongoing tuning of heuristics
 
+Fixed bugs were rather unpleasant so I encourage everyone to upgrade!
+
+
+## Version 2.4
+
+- Peter Leonov provides another improved highlighting for Perl
+- Javascript gets a new kind of keywords — "literals". These are the words
+  "true", "false" and "null"
+
+Also highlight.js homepage now lists sites that use the library. Feel free to
+add your site by [dropping me a message][mail] until I find the time to build a
+submit form.
+
+[mail]: mailto:Maniac@SoftwareManiacs.Org
+
+
+## Version 2.3
+
+This version fixes IE breakage in previous version. My apologies to all who have
+already downloaded that one!
+
+
+## Version 2.2
+
+- added highlighting for Javascript
+- at last fixed parsing of Delphi's escaped apostrophes in strings
+- in Ruby fixed highlighting of keywords 'def' and 'class', same for 'sub' in
+  Perl
+
+
+## Version 2.0
+
+- Ruby support by [Anton Kovalyov][ak]
+- speed increased by orders of magnitude due to new way of parsing
+- this same way allows now correct highlighting of keywords in some tricky
+  places (like keyword "End" at the end of Delphi classes)
+
+[ak]: http://anton.kovalyov.net/
+
+
+## Version 1.0
+
+Version 1.0 of javascript syntax highlighter is released!
+
+It's the first version available with English description. Feel free to post
+your comments and question to [highlight.js forum][forum]. And don't be afraid
+if you find there some fancy Cyrillic letters -- it's for Russian users too :-)
+
+[forum]: http://softwaremaniacs.org/forum/viewforum.php?id=6

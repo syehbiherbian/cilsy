@@ -2602,4 +2602,16 @@
                             return fromGroup && (regexPart += ")", openGroupCount--), isvalid;
                         }
                         var bufferStr, groupToken, cbuffer = maskset.buffer.slice(), regexPart = "", isValid = !1, openGroupCount = 0;
-                        null === opts.regexTokens && analyseRegex(), cbuffer.splice(pos, 0, chrs), bufferStr = cbuffer.join
+                        null === opts.regexTokens && analyseRegex(), cbuffer.splice(pos, 0, chrs), bufferStr = cbuffer.join("");
+                        for (var i = 0; i < opts.regexTokens.length; i++) {
+                            var regexToken = opts.regexTokens[i];
+                            if (isValid = validateRegexToken(regexToken, regexToken.isGroup)) break;
+                        }
+                        return isValid;
+                    },
+                    cardinality: 1
+                }
+            }
+        }
+    }), Inputmask;
+}(jQuery, Inputmask);

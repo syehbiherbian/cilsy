@@ -336,4 +336,68 @@ tinymce.PluginManager.add('link', function(editor) {
 				// Is email and not //user@domain.com
 				if (href.indexOf('@') > 0 && href.indexOf('//') == -1 && href.indexOf('mailto:') == -1) {
 					delayedConfirm(
-						'The URL you entered seems to be an email address. Do you want to add the required mai
+						'The URL you entered seems to be an email address. Do you want to add the required mailto: prefix?',
+						function(state) {
+							if (state) {
+								href = 'mailto:' + href;
+							}
+
+							insertLink();
+						}
+					);
+
+					return;
+				}
+
+				// Is not protocol prefixed
+				if ((editor.settings.link_assume_external_targets && !/^\w+:/i.test(href)) ||
+					(!editor.settings.link_assume_external_targets && /^\s*www[\.|\d\.]/i.test(href))) {
+					delayedConfirm(
+						'The URL you entered seems to be an external link. Do you want to add the required http:// prefix?',
+						function(state) {
+							if (state) {
+								href = 'http://' + href;
+							}
+
+							insertLink();
+						}
+					);
+
+					return;
+				}
+
+				insertLink();
+			}
+		});
+	}
+
+	editor.addButton('link', {
+		icon: 'link',
+		tooltip: 'Insert/edit link',
+		shortcut: 'Meta+K',
+		onclick: createLinkList(showDialog),
+		stateSelector: 'a[href]'
+	});
+
+	editor.addButton('unlink', {
+		icon: 'unlink',
+		tooltip: 'Remove link',
+		cmd: 'unlink',
+		stateSelector: 'a[href]'
+	});
+
+	editor.addShortcut('Meta+K', '', createLinkList(showDialog));
+	editor.addCommand('mceLink', createLinkList(showDialog));
+
+	this.showDialog = showDialog;
+
+	editor.addMenuItem('link', {
+		icon: 'link',
+		text: 'Insert/edit link',
+		shortcut: 'Meta+K',
+		onclick: createLinkList(showDialog),
+		stateSelector: 'a[href]',
+		context: 'insert',
+		prependToContext: true
+	});
+});

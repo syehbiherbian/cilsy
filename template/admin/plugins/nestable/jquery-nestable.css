@@ -191,4 +191,57 @@
     display: block;
     margin: 7px;
     padding: 5px 10px 5px 40px;
-    co
+    color: #333;
+    text-decoration: none;
+    font-weight: bold;
+    border: 1px solid #ccc;
+    background: #f0f0f0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    cursor: default;
+}
+
+    .dd3-content:hover {
+        color: #2ea8e5;
+    }
+
+.dd-dragel > .dd3-item > .dd3-content {
+    margin: 0;
+}
+
+.dd3-item > button {
+    margin-left: 36px;
+}
+
+.dd3-handle {
+    position: absolute;
+    margin: 0;
+    left: 0;
+    top: 0;
+    cursor: move;
+    width: 36px;
+    text-indent: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    border: 1px solid #aaa;
+    background: #aaa;
+}
+
+    .dd3-handle:before {
+        content: '≡';
+        display: block;
+        position: absolute;
+        left: 0;
+        top: 3px;
+        width: 100%;
+        text-align: center;
+        text-indent: 0;
+        color: #fff;
+        font-size: 20px;
+        font-weight: normal;
+    }
+
+    .dd3-handle:hover {
+        background: #aaa;
+    }

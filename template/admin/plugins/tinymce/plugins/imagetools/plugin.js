@@ -2770,4 +2770,175 @@ define("tinymce/imagetoolsplugin/Plugin", [
 						editor.nodeChanged();
 
 						if (uploadImmediately) {
-							editor.editorUpload.uploadImagesAuto
+							editor.editorUpload.uploadImagesAuto();
+						} else {
+							cancelTimedUpload();
+							startTimedUpload();
+						}
+					}
+
+					editor.$(selectedImage).on('load', imageLoadedHandler);
+
+					editor.$(selectedImage).attr({
+						src: blobInfo.blobUri()
+					}).removeAttr('data-mce-src');
+				});
+
+				return blobInfo;
+			});
+		}
+
+		function selectedImageOperation(fn) {
+			return function() {
+				return editor._scanForImages().then(findSelectedBlob).then(fn).then(updateSelectedImage, displayError);
+			};
+		}
+
+		function rotate(angle) {
+			return function() {
+				return selectedImageOperation(function(blob) {
+					var size = ImageSize.getImageSize(getSelectedImage());
+
+					if (size) {
+						ImageSize.setImageSize(getSelectedImage(), {
+							w: size.h,
+							h: size.w
+						});
+					}
+
+					return ImageTransformations.rotate(blob, angle);
+				})();
+			};
+		}
+
+		function flip(axis) {
+			return function() {
+				return selectedImageOperation(function(blob) {
+					return ImageTransformations.flip(blob, axis);
+				})();
+			};
+		}
+
+		function editImageDialog() {
+			var img = getSelectedImage(), originalSize = ImageSize.getNaturalImageSize(img);
+			var handleDialogBlob = function(blob) {
+				return new Promise(function(resolve) {
+					BlobConversions.blobToImage(blob).then(function(newImage) {
+						var newSize = ImageSize.getNaturalImageSize(newImage);
+
+						if (originalSize.w != newSize.w || originalSize.h != newSize.h) {
+							if (ImageSize.getImageSize(img)) {
+								ImageSize.setImageSize(img, newSize);
+							}
+						}
+
+						URL.revokeObjectURL(newImage.src);
+						resolve(blob);
+					});
+				});
+			};
+
+			var openDialog = function (blob) {
+				return Dialog.edit(blob).then(handleDialogBlob).then(function(blob) {
+					updateSelectedImage(blob, true);
+				}, function () {
+					// Close dialog
+				});
+			};
+
+			if (img) {
+				imageToBlob(img).then(openDialog, displayError);
+			}
+		}
+
+		function addButtons() {
+			editor.addButton('rotateleft', {
+				title: 'Rotate counterclockwise',
+				onclick: rotate(-90)
+			});
+
+			editor.addButton('rotateright', {
+				title: 'Rotate clockwise',
+				onclick: rotate(90)
+			});
+
+			editor.addButton('flipv', {
+				title: 'Flip vertically',
+				onclick: flip('v')
+			});
+
+			editor.addButton('fliph', {
+				title: 'Flip horizontally',
+				onclick: flip('h')
+			});
+
+			editor.addButton('editimage', {
+				title: 'Edit image',
+				onclick: editImageDialog
+			});
+
+			editor.addButton('imageoptions', {
+				title: 'Image options',
+				icon: 'options',
+				cmd: 'mceImage'
+			});
+
+			/*
+			editor.addButton('crop', {
+				title: 'Crop',
+				onclick: startCrop
+			});
+			*/
+		}
+
+		function addEvents() {
+			editor.on('NodeChange', function(e) {
+				//If the last node we selected was an image
+				//And had a source that doesn't match the current blob url
+				//We need to attempt to upload it
+				if (lastSelectedImage && lastSelectedImage.src != e.element.src) {
+					cancelTimedUpload();
+					editor.editorUpload.uploadImagesAuto();
+					lastSelectedImage = undefined;
+				}
+
+				//Set up the lastSelectedImage
+				if (isEditableImage(e.element)) {
+					lastSelectedImage = e.element;
+				}
+			});
+		}
+
+		function isEditableImage(img) {
+			var selectorMatched = editor.dom.is(img, 'img:not([data-mce-object],[data-mce-placeholder])');
+
+			return selectorMatched && (isLocalImage(img) || isCorsImage(img) || editor.settings.imagetools_proxy);
+		}
+
+		function addToolbars() {
+			var toolbarItems = editor.settings.imagetools_toolbar;
+
+			if (!toolbarItems) {
+				toolbarItems = 'rotateleft rotateright | flipv fliph | crop editimage imageoptions';
+			}
+
+			editor.addContextToolbar(
+				isEditableImage,
+				toolbarItems
+			);
+		}
+
+		addButtons();
+		addToolbars();
+		addEvents();
+
+		editor.addCommand('mceEditImage', editImageDialog);
+	};
+
+	PluginManager.add('imagetools', plugin);
+
+	return function() {};
+});
+
+dem('tinymce/imagetoolsplugin/Plugin')();
+})();

@@ -118,4 +118,73 @@ as "categories" on the axis object, e.g. plot.getAxes().xaxis.categories.
     }
     
     function setupCategoriesForAxis(series, axis, datapoints) {
-        if (series[axis
+        if (series[axis].options.mode != "categories")
+            return;
+        
+        if (!series[axis].categories) {
+            // parse options
+            var c = {}, o = series[axis].options.categories || {};
+            if ($.isArray(o)) {
+                for (var i = 0; i < o.length; ++i)
+                    c[o[i]] = i;
+            }
+            else {
+                for (var v in o)
+                    c[v] = o[v];
+            }
+            
+            series[axis].categories = c;
+        }
+
+        // fix ticks
+        if (!series[axis].options.ticks)
+            series[axis].options.ticks = categoriesTickGenerator;
+
+        transformPointsOnAxis(datapoints, axis, series[axis].categories);
+    }
+    
+    function transformPointsOnAxis(datapoints, axis, categories) {
+        // go through the points, transforming them
+        var points = datapoints.points,
+            ps = datapoints.pointsize,
+            format = datapoints.format,
+            formatColumn = axis.charAt(0),
+            index = getNextIndex(categories);
+
+        for (var i = 0; i < points.length; i += ps) {
+            if (points[i] == null)
+                continue;
+            
+            for (var m = 0; m < ps; ++m) {
+                var val = points[i + m];
+
+                if (val == null || !format[m][formatColumn])
+                    continue;
+
+                if (!(val in categories)) {
+                    categories[val] = index;
+                    ++index;
+                }
+                
+                points[i + m] = categories[val];
+            }
+        }
+    }
+
+    function processDatapoints(plot, series, datapoints) {
+        setupCategoriesForAxis(series, "xaxis", datapoints);
+        setupCategoriesForAxis(series, "yaxis", datapoints);
+    }
+
+    function init(plot) {
+        plot.hooks.processRawData.push(processRawData);
+        plot.hooks.processDatapoints.push(processDatapoints);
+    }
+    
+    $.plot.plugins.push({
+        init: init,
+        options: options,
+        name: 'categories',
+        version: '1.0'
+    });
+})(jQuery);

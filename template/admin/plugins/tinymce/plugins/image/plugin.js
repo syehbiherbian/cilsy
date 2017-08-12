@@ -470,4 +470,161 @@ tinymce.PluginManager.add('image', function(editor) {
 				css['border-width'] = addPixelSuffix(data.border);
 			}
 
-			win.find('#style').value(dom.serializeStyle(dom.parseSt
+			win.find('#style').value(dom.serializeStyle(dom.parseStyle(dom.serializeStyle(css))));
+		}
+
+		function updateVSpaceHSpaceBorder() {
+			if (!editor.settings.image_advtab) {
+				return;
+			}
+
+			var data = win.toJSON(),
+				css = dom.parseStyle(data.style);
+
+			win.find('#vspace').value("");
+			win.find('#hspace').value("");
+
+			css = mergeMargins(css);
+
+			//Move opposite equal margins to vspace/hspace field
+			if ((css['margin-top'] && css['margin-bottom']) || (css['margin-right'] && css['margin-left'])) {
+				if (css['margin-top'] === css['margin-bottom']) {
+					win.find('#vspace').value(removePixelSuffix(css['margin-top']));
+				} else {
+					win.find('#vspace').value('');
+				}
+				if (css['margin-right'] === css['margin-left']) {
+					win.find('#hspace').value(removePixelSuffix(css['margin-right']));
+				} else {
+					win.find('#hspace').value('');
+				}
+			}
+
+			//Move border-width
+			if (css['border-width']) {
+				win.find('#border').value(removePixelSuffix(css['border-width']));
+			}
+
+			win.find('#style').value(dom.serializeStyle(dom.parseStyle(dom.serializeStyle(css))));
+
+		}
+
+		if (editor.settings.image_advtab) {
+			// Parse styles from img
+			if (imgElm) {
+				if (imgElm.style.marginLeft && imgElm.style.marginRight && imgElm.style.marginLeft === imgElm.style.marginRight) {
+					data.hspace = removePixelSuffix(imgElm.style.marginLeft);
+				}
+				if (imgElm.style.marginTop && imgElm.style.marginBottom && imgElm.style.marginTop === imgElm.style.marginBottom) {
+					data.vspace = removePixelSuffix(imgElm.style.marginTop);
+				}
+				if (imgElm.style.borderWidth) {
+					data.border = removePixelSuffix(imgElm.style.borderWidth);
+				}
+
+				data.style = editor.dom.serializeStyle(editor.dom.parseStyle(editor.dom.getAttrib(imgElm, 'style')));
+			}
+
+			// Advanced dialog shows general+advanced tabs
+			win = editor.windowManager.open({
+				title: 'Insert/edit image',
+				data: data,
+				bodyType: 'tabpanel',
+				body: [
+					{
+						title: 'General',
+						type: 'form',
+						items: generalFormItems
+					},
+
+					{
+						title: 'Advanced',
+						type: 'form',
+						pack: 'start',
+						items: [
+							{
+								label: 'Style',
+								name: 'style',
+								type: 'textbox',
+								onchange: updateVSpaceHSpaceBorder
+							},
+							{
+								type: 'form',
+								layout: 'grid',
+								packV: 'start',
+								columns: 2,
+								padding: 0,
+								alignH: ['left', 'right'],
+								defaults: {
+									type: 'textbox',
+									maxWidth: 50,
+									onchange: updateStyle
+								},
+								items: [
+									{label: 'Vertical space', name: 'vspace'},
+									{label: 'Horizontal space', name: 'hspace'},
+									{label: 'Border', name: 'border'}
+								]
+							}
+						]
+					}
+				],
+				onSubmit: onSubmitForm
+			});
+		} else {
+			// Simple default dialog
+			win = editor.windowManager.open({
+				title: 'Insert/edit image',
+				data: data,
+				body: generalFormItems,
+				onSubmit: onSubmitForm
+			});
+		}
+	}
+
+	editor.on('preInit', function() {
+		function hasImageClass(node) {
+			var className = node.attr('class');
+			return className && /\bimage\b/.test(className);
+		}
+
+		function toggleContentEditableState(state) {
+			return function(nodes) {
+				var i = nodes.length, node;
+
+				function toggleContentEditable(node) {
+					node.attr('contenteditable', state ? 'true' : null);
+				}
+
+				while (i--) {
+					node = nodes[i];
+
+					if (hasImageClass(node)) {
+						node.attr('contenteditable', state ? 'false' : null);
+						tinymce.each(node.getAll('figcaption'), toggleContentEditable);
+					}
+				}
+			};
+		}
+
+		editor.parser.addNodeFilter('figure', toggleContentEditableState(true));
+		editor.serializer.addNodeFilter('figure', toggleContentEditableState(false));
+	});
+
+	editor.addButton('image', {
+		icon: 'image',
+		tooltip: 'Insert/edit image',
+		onclick: createImageList(showDialog),
+		stateSelector: 'img:not([data-mce-object],[data-mce-placeholder]),figure.image'
+	});
+
+	editor.addMenuItem('image', {
+		icon: 'image',
+		text: 'Insert/edit image',
+		onclick: createImageList(showDialog),
+		context: 'insert',
+		prependToContext: true
+	});
+
+	editor.addCommand('mceImage', createImageList(showDialog));
+});

@@ -363,4 +363,115 @@
                     y: e.pageY
                 };
 
-          
+                // reset opacity and transition duration
+                _this.core.$outer.addClass('lg-zoom-dragging');
+
+                if (allowY) {
+                    distanceY = (-Math.abs(_$el.attr('data-y'))) + (endCoords.y - startCoords.y);
+                } else {
+                    distanceY = -Math.abs(_$el.attr('data-y'));
+                }
+
+                if (allowX) {
+                    distanceX = (-Math.abs(_$el.attr('data-x'))) + (endCoords.x - startCoords.x);
+                } else {
+                    distanceX = -Math.abs(_$el.attr('data-x'));
+                }
+
+                _$el.css({
+                    left: distanceX + 'px',
+                    top: distanceY + 'px'
+                });
+            }
+        });
+
+        $(window).on('mouseup.lg.zoom', function(e) {
+
+            if (isDraging) {
+                isDraging = false;
+                _this.core.$outer.removeClass('lg-zoom-dragging');
+
+                // Fix for chrome mouse move on click
+                if (isMoved && ((startCoords.x !== endCoords.x) || (startCoords.y !== endCoords.y))) {
+                    endCoords = {
+                        x: e.pageX,
+                        y: e.pageY
+                    };
+                    _this.touchendZoom(startCoords, endCoords, allowX, allowY);
+
+                }
+
+                isMoved = false;
+            }
+
+            _this.core.$outer.removeClass('lg-grabbing').addClass('lg-grab');
+
+        });
+    };
+
+    Zoom.prototype.touchendZoom = function(startCoords, endCoords, allowX, allowY) {
+
+        var _this = this;
+        var _$el = _this.core.$slide.eq(_this.core.index).find('.lg-img-wrap');
+        var $image = _this.core.$slide.eq(_this.core.index).find('.lg-object');
+        var distanceX = (-Math.abs(_$el.attr('data-x'))) + (endCoords.x - startCoords.x);
+        var distanceY = (-Math.abs(_$el.attr('data-y'))) + (endCoords.y - startCoords.y);
+        var minY = (_this.core.$outer.find('.lg').height() - $image.outerHeight()) / 2;
+        var maxY = Math.abs(($image.outerHeight() * Math.abs($image.attr('data-scale'))) - _this.core.$outer.find('.lg').height() + minY);
+        var minX = (_this.core.$outer.find('.lg').width() - $image.outerWidth()) / 2;
+        var maxX = Math.abs(($image.outerWidth() * Math.abs($image.attr('data-scale'))) - _this.core.$outer.find('.lg').width() + minX);
+
+        if ((Math.abs(endCoords.x - startCoords.x) > 15) || (Math.abs(endCoords.y - startCoords.y) > 15)) {
+            if (allowY) {
+                if (distanceY <= -maxY) {
+                    distanceY = -maxY;
+                } else if (distanceY >= -minY) {
+                    distanceY = -minY;
+                }
+            }
+
+            if (allowX) {
+                if (distanceX <= -maxX) {
+                    distanceX = -maxX;
+                } else if (distanceX >= -minX) {
+                    distanceX = -minX;
+                }
+            }
+
+            if (allowY) {
+                _$el.attr('data-y', Math.abs(distanceY));
+            } else {
+                distanceY = -Math.abs(_$el.attr('data-y'));
+            }
+
+            if (allowX) {
+                _$el.attr('data-x', Math.abs(distanceX));
+            } else {
+                distanceX = -Math.abs(_$el.attr('data-x'));
+            }
+
+            _$el.css({
+                left: distanceX + 'px',
+                top: distanceY + 'px'
+            });
+
+        }
+    };
+
+    Zoom.prototype.destroy = function() {
+
+        var _this = this;
+
+        // Unbind all events added by lightGallery zoom plugin
+        _this.core.$el.off('.lg.zoom');
+        $(window).off('.lg.zoom');
+        _this.core.$slide.off('.lg.zoom');
+        _this.core.$el.off('.lg.tm.zoom');
+        _this.resetZoom();
+        clearTimeout(_this.zoomabletimeout);
+        _this.zoomabletimeout = false;
+    };
+
+    $.fn.lightGallery.modules.zoom = Zoom;
+
+})(jQuery, window, document);

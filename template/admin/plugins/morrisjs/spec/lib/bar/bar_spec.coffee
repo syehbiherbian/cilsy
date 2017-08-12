@@ -113,4 +113,15 @@ describe 'Morris.Bar', ->
         ykeys: ['y', 'z', 'a']
         labels: ['Y', 'Z', 'A']
 
-      it 'should calc 
+      it 'should calc the width if too narrow for barSize', ->
+        $('#graph').width('200px')
+        chart = Morris.Bar $.extend {}, defaults
+        $('#graph').find("rect").filter((i) ->
+          parseFloat($(@).attr('width'), 10) < 10
+        ).size().should.equal 11
+
+      it 'should set width to @options.barSize if possible', ->
+        chart = Morris.Bar $.extend {}, defaults
+        $('#graph').find("rect[width='#{defaults.barSize}']").size().should.equal 11
+
+

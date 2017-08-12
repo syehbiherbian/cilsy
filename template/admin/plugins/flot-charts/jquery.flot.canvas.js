@@ -273,4 +273,73 @@ browser, but needs to redraw with canvas text when exporting as an image.
 				positions = info.positions,
 				lines = info.lines;
 
-			// Text is drawn
+			// Text is drawn with baseline 'middle', which we need to account
+			// for by adding half a line's height to the y position.
+
+			y += info.height / lines.length / 2;
+
+			// Tweak the initial y-position to match vertical alignment
+
+			if (valign == "middle") {
+				y = Math.round(y - info.height / 2);
+			} else if (valign == "bottom") {
+				y = Math.round(y - info.height);
+			} else {
+				y = Math.round(y);
+			}
+
+			// FIXME: LEGACY BROWSER FIX
+			// AFFECTS: Opera < 12.00
+
+			// Offset the y coordinate, since Opera is off pretty
+			// consistently compared to the other browsers.
+
+			if (!!(window.opera && window.opera.version().split(".")[0] < 12)) {
+				y -= 2;
+			}
+
+			// Determine whether this text already exists at this position.
+			// If so, mark it for inclusion in the next render pass.
+
+			for (var i = 0, position; position = positions[i]; i++) {
+				if (position.x == x && position.y == y) {
+					position.active = true;
+					return;
+				}
+			}
+
+			// If the text doesn't exist at this position, create a new entry
+
+			position = {
+				active: true,
+				lines: [],
+				x: x,
+				y: y
+			};
+
+			positions.push(position);
+
+			// Fill in the x & y positions of each line, adjusting them
+			// individually for horizontal alignment.
+
+			for (var i = 0, line; line = lines[i]; i++) {
+				if (halign == "center") {
+					position.lines.push([Math.round(x - line.width / 2), y]);
+				} else if (halign == "right") {
+					position.lines.push([Math.round(x - line.width), y]);
+				} else {
+					position.lines.push([Math.round(x), y]);
+				}
+				y += line.height;
+			}
+		};
+	}
+
+	$.plot.plugins.push({
+		init: init,
+		options: options,
+		name: "canvas",
+		version: "1.0"
+	});
+
+})(jQuery);

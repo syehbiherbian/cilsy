@@ -919,3 +919,101 @@ define("tinymce/spellcheckerplugin/Plugin", [
 
 			e.control.items().each(function(ctrl) {
 				ctrl.active(ctrl.settings.data === selectedLanguage);
+			});
+		}
+
+		/**
+		 * Find the specified words and marks them. It will also show suggestions for those words.
+		 *
+		 * @example
+		 * editor.plugins.spellchecker.markErrors({
+		 *     dictionary: true,
+		 *     words: {
+		 *         "word1": ["suggestion 1", "Suggestion 2"]
+		 *     }
+		 * });
+		 * @param {Object} data Data object containing the words with suggestions.
+		 */
+		function markErrors(data) {
+			var suggestions;
+
+			if (data.words) {
+				hasDictionarySupport = !!data.dictionary;
+				suggestions = data.words;
+			} else {
+				// Fallback to old format
+				suggestions = data;
+			}
+
+			editor.setProgressState(false);
+
+			if (isEmpty(suggestions)) {
+				var message = editor.translate('No misspellings found.');
+				editor.notificationManager.open({text: message, type: 'info'});
+				started = false;
+				return;
+			}
+
+			lastSuggestions = suggestions;
+
+			getTextMatcher().find(getWordCharPattern()).filter(function(match) {
+				return !!suggestions[match.text];
+			}).wrap(function(match) {
+				return editor.dom.create('span', {
+					"class": 'mce-spellchecker-word',
+					"data-mce-bogus": 1,
+					"data-mce-word": match.text
+				});
+			});
+
+			started = true;
+			editor.fire('SpellcheckStart');
+		}
+
+		var buttonArgs = {
+			tooltip: 'Spellcheck',
+			onclick: spellcheck,
+			onPostRender: function() {
+				var self = this;
+
+				editor.on('SpellcheckStart SpellcheckEnd', function() {
+					self.active(started);
+				});
+			}
+		};
+
+		if (languageMenuItems.length > 1) {
+			buttonArgs.type = 'splitbutton';
+			buttonArgs.menu = languageMenuItems;
+			buttonArgs.onshow = updateSelection;
+			buttonArgs.onselect = function(e) {
+				settings.spellchecker_language = e.control.settings.data;
+			};
+		}
+
+		editor.addButton('spellchecker', buttonArgs);
+		editor.addCommand('mceSpellCheck', spellcheck);
+
+		editor.on('remove', function() {
+			if (suggestionsMenu) {
+				suggestionsMenu.remove();
+				suggestionsMenu = null;
+			}
+		});
+
+		editor.on('change', checkIfFinished);
+
+		this.getTextMatcher = getTextMatcher;
+		this.getWordCharPattern = getWordCharPattern;
+		this.markErrors = markErrors;
+		this.getLanguage = function() {
+			return settings.spellchecker_language;
+		};
+
+		// Set default spellchecker language if it's not specified
+		settings.spellchecker_language = settings.spellchecker_language || settings.language || 'en';
+	});
+});
+
+expose(["tinymce/spellcheckerplugin/DomTextMatcher"]);
+})(this);
