@@ -131,6 +131,7 @@ class AuthController extends Controller {
 			$email = Input::get('email');
 			$token = str_random(30) . $email;
 			$now = new DateTime();
+			$url = env('APP_URL');
 
 			$forget = DB::table('password_resets')->insert([
 				'email' => $email,
@@ -162,7 +163,7 @@ class AuthController extends Controller {
 				$mail->isHTML(true); // Set email format to HTML
 
 				$mail->Subject = 'Tes Lupa Password';
-				$mail->Body = 'Silahkan klik link berikut <a href="https://cilsy.id/member/reset/update/' . $token . '">disini</a>';
+				$mail->Body = 'Silahkan klik linkS berikut <a href="' . $url . '/member/reset/update/' . $token . '">disini</a>';
 				$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
 				if (!$mail->send()) {
@@ -179,6 +180,7 @@ class AuthController extends Controller {
 	public function updatereset($token) {
 		return view('members.edit-password');
 	}
+
 	public function doreset() {
 		{
 			if (Session::get('memberID')) {
