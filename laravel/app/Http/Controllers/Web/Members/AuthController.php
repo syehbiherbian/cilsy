@@ -150,6 +150,7 @@ class AuthController extends Controller {
 				$mail->Password = '5cb09re'; // SMTP password
 				$mail->SMTPSecure = 'tls'; // Enable TLS encryption, `ssl` also accepted
 				$mail->Port = 587; // TCP port to connect to
+				$mail->SMTPOptions = ['ssl' => ['allow_self_signed' => true]];
 
 				$mail->setFrom('noreply@cilsy.id', 'No reply');
 				$mail->addAddress($email); // Add a recipient
