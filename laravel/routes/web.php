@@ -51,10 +51,7 @@ Route::get('/tentang', function () {
 |
  */
 
- Route::get('cron/mail/user/reminder/payment', 'Cron\ReminderController@index');
-
-
-
+Route::get('cron/mail/user/reminder/payment', 'Cron\ReminderController@index');
 
 /*
 |--------------------------------------------------------------------------
@@ -74,6 +71,9 @@ Route::post('member/signin', 'Web\Members\AuthController@dosignin');
 Route::get('member/signout', 'Web\Members\AuthController@signout');
 Route::post('member/change', 'Web\Members\AuthController@doreset');
 Route::get('member/change', 'Web\Members\AuthController@resetpassword');
+Route::get('member/reset', 'Web\Members\AuthController@forgetpassword');
+Route::post('member/reset', 'Web\Members\AuthController@doforgetpassword');
+Route::get('member/reset/update/{token}', 'AuthController@updatereset');
 Route::get('member/dashboard', function () {
 	echo "Halaman Member !";
 });
@@ -127,25 +127,23 @@ Route::group(['middleware' => ['auth']], function () {
 |
  */
 
- // Authentication
+// Authentication
 
- Route::get('contributor/login','Contributors\AuthController@login');
- Route::post('contributor/login','Contributors\AuthController@doLogin');
+Route::get('contributor/login', 'Contributors\AuthController@login');
+Route::post('contributor/login', 'Contributors\AuthController@doLogin');
 
- Route::get('contributor/register','Contributors\AuthController@register');
- Route::post('contributor/register','Contributors\AuthController@doRegister');
+Route::get('contributor/register', 'Contributors\AuthController@register');
+Route::post('contributor/register', 'Contributors\AuthController@doRegister');
 
-
-Route::get('contributor/logout','Contributors\AuthController@logout');
+Route::get('contributor/logout', 'Contributors\AuthController@logout');
 
 // Home
-Route::get('contributor','Contributors\DashboardController@index');
+Route::get('contributor', 'Contributors\DashboardController@index');
 // Lessons
 Route::get('contributor/lessons', 'Contributors\LessonsController@redirect');
 Route::get('contributor/lessons/{filter}/list', 'Contributors\LessonsController@index');
 Route::get('contributor/lessons/create', 'Contributors\LessonsController@create');
 Route::post('contributor/lessons/create', 'Contributors\LessonsController@doCreate');
-
 
 Route::get('contributor/lessons/{id}/edit', 'Contributors\LessonsController@edit');
 Route::get('contributor/lessons/create/submit', 'Contributors\LessonsController@submit');
@@ -166,8 +164,5 @@ Route::get('contributor/lessons/quiz/{quiz_id}/edit', 'Contributors\QuizControll
 Route::get('contributor/lessons/quiz/{quiz_id}/create/questions', 'Contributors\QuestionQuizController@create');
 Route::post('contributor/lessons/{quiz_id}/store_questions', 'Contributors\QuestionQuizController@store');
 
-
-
-
 //questions
-Route::get('contributor/questions','Contributors\QuestionsController@getQuestions');
+Route::get('contributor/questions', 'Contributors\QuestionsController@getQuestions');
