@@ -61,7 +61,7 @@
                 </div>
                 <button type="submit" class="btn btn-primary">MASUK</button>
                 <div>
-                    <a href="#"><p style="text-align: center;margin-top: 15px;">Lupa Password ?</p></a>
+                    <a href="{{ url('member/reset') }}"><p style="text-align: center;margin-top: 15px;">Lupa Password ?</p></a>
                 </div>
             </form>
         </div>
