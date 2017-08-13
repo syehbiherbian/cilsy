@@ -73,6 +73,7 @@ Route::post('member/change', 'Web\Members\AuthController@doreset');
 Route::get('member/change', 'Web\Members\AuthController@resetpassword');
 Route::get('member/reset', 'Web\Members\AuthController@forgetpassword');
 Route::post('member/reset', 'Web\Members\AuthController@doforgetpassword');
+Route::post('member/reset/update', 'Web\Members\AuthController@doupdate');
 Route::get('member/reset/update/{token}', 'Web\Members\AuthController@updatereset');
 Route::get('member/dashboard', function () {
 	echo "Halaman Member !";
