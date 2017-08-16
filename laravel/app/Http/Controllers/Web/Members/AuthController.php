@@ -144,14 +144,20 @@ class AuthController extends Controller {
 				$mail->SMTPDebug = 3; // Enable verbose debug output
 
 				$mail->isSMTP(); // Set mailer to use SMTP
-				$mail->Host = 'email.cilsy.id'; // Specify main and backup SMTP servers
+				$mail->Host = 'localhost'; // Specify main and backup SMTP servers
 				$mail->SMTPAuth = true; // Enable SMTP authentication
 				$mail->Username = 'noreply@cilsy.id'; // SMTP username
 				$mail->Password = '5cb09re'; // SMTP password
-				$mail->SMTPSecure = 'tls'; // Enable TLS encryption, `ssl` also accepted
-				$mail->Port = 587; // TCP port to connect to
-				$mail->SMTPOptions = ['ssl' => ['allow_self_signed' => true]];
-
+				$mail->SMTPSecure = 'ssl'; // Enable TLS encryption, `ssl` also accepted
+				$mail->Port = 465; // TCP port to connect to
+				#$mail->SMTPOptions = ['ssl' => ['allow_self_signed' => true]];
+				$mail->SMTPOptions = array(
+					'ssl' => array(
+        				'verify_peer' => false,
+        				'verify_peer_name' => false,
+        				'allow_self_signed' => true
+        				)
+				);
 				$mail->setFrom('noreply@cilsy.id', 'No reply');
 				$mail->addAddress($email); // Add a recipient
 				// $mail->addAddress('ellen@example.com');               // Name is optional
