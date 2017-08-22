@@ -254,6 +254,7 @@ def generate_composer_json(data):
         "homepage": "https://twitter.com/adamdbradley"
       },
       {
+<<<<<<< HEAD
         "name": "Max Lynch",
         "email": "max@drifty.com",
         "role": "Developer",
@@ -316,3 +317,6 @@ def get_build_data():
 
 if __name__ == "__main__":
   main()
+=======
+    
+>>>>>>> master

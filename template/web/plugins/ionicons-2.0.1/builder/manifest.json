@@ -2747,6 +2747,7 @@
     {
       "code": "0xf4ef",
       "name": "social-whatsapp-outline"
+<<<<<<< HEAD
     },
     {
       "code": "0xf247",
@@ -2938,3 +2939,6 @@
     }
   ]
 }
+=======
+    },
+>>>>>>> master

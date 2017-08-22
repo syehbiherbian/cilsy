@@ -58,6 +58,7 @@ class QuizController extends Controller
            $store->description =$desc;
            $store->created_at =$now;
            $store->save();
+<<<<<<< HEAD
 
            return Redirect('contributor/lessons/quiz/'.$store->id.'/create/questions');
   }
@@ -77,5 +78,18 @@ class QuizController extends Controller
         'lessons'=>$lessons
     ]);
   }
+=======
+
+           return Redirect('contributor/lessons/quiz/'.$store->id.'/create/questions');
+  }
+  public function edit($id){
+    if (empty(Session::get('contribID'))) {
+      return redirect('contributor/login');
+    }
+
+    # code...
+    return view('contrib.quiz.edit');
+  }
+>>>>>>> master
 
 }

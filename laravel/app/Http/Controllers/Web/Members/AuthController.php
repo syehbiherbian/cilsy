@@ -3,10 +3,18 @@
 namespace App\Http\Controllers\Web\Members;
 
 use App\Http\Controllers\Controller;
+<<<<<<< HEAD
+=======
+use App\Mail\ForgetPassword;
+>>>>>>> master
 use App\members;
 use DateTime;
 use DB;
 use Illuminate\Support\Facades\Input;
+<<<<<<< HEAD
+=======
+use PHPMailer;
+>>>>>>> master
 use Redirect;
 use Session;
 use Validator;
@@ -112,6 +120,7 @@ class AuthController extends Controller {
 		return view('web.members.edit-password');
 	}
 
+<<<<<<< HEAD
 	public function forgotpassword() {
 		return view('web.members.forgot');
 	}
@@ -132,10 +141,33 @@ class AuthController extends Controller {
 			$token = str_random(30) . $email;
 			$now = new DateTime();
 			$insert = DB::table('password_resets')->insert([
+=======
+	public function forgetpassword() {
+		return view('web.members.forget-password');
+	}
+
+	public function doforgetpassword() {
+		$rules = array(
+			'email' => 'required|email',
+		);
+		$validator = Validator::make(Input::all(), $rules);
+
+		// process the login
+		if ($validator->fails()) {
+			return redirect()->back()->withErrors($validator)->withInput();
+		} else {
+			$email = Input::get('email');
+			$token = str_random(30) . $email;
+			$now = new DateTime();
+			$url = env('APP_URL');
+
+			$forget = DB::table('password_resets')->insert([
+>>>>>>> master
 				'email' => $email,
 				'token' => $token,
 				'created_at' => $now,
 			]);
+<<<<<<< HEAD
 			if ($insert) {
 				echo "sukses";
 			} else {
@@ -191,6 +223,149 @@ class AuthController extends Controller {
 				Session::flash('error_must_login', 'You must sign');
 				return Redirect('member/login');
 			}
+=======
+			if ($forget) {
+				$mail = new PHPMailer;
+
+				$mail->SMTPDebug = 3; // Enable verbose debug output
+
+				$mail->isSMTP(); // Set mailer to use SMTP
+				$mail->Host = 'localhost'; // Specify main and backup SMTP servers
+				$mail->SMTPAuth = true; // Enable SMTP authentication
+				$mail->Username = 'noreply@cilsy.id'; // SMTP username
+				$mail->Password = '5cb09re'; // SMTP password
+				$mail->SMTPSecure = 'ssl'; // Enable TLS encryption, `ssl` also accepted
+				$mail->Port = 465; // TCP port to connect to
+				#$mail->SMTPOptions = ['ssl' => ['allow_self_signed' => true]];
+				$mail->SMTPOptions = array(
+					'ssl' => array(
+        				'verify_peer' => false,
+        				'verify_peer_name' => false,
+        				'allow_self_signed' => true
+        				)
+				);
+				$mail->setFrom('noreply@cilsy.id', 'No reply');
+				$mail->addAddress($email); // Add a recipient
+				// $mail->addAddress('ellen@example.com');               // Name is optional
+				// $mail->addReplyTo('info@example.com', 'Information');
+				// $mail->addCC('cc@example.com');
+				// $mail->addBCC('bcc@example.com');
+
+				// $mail->addAttachment('/var/tmp/file.tar.gz');         // Add attachments
+				// $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    // Optional name
+				$mail->isHTML(true); // Set email format to HTML
+
+				$mail->Subject = 'Cilsy Fiolution';
+				$mail->Body = 'Silahkan klik link berikut <a href="' . $url . '/member/reset/update/' . $token . '">reset password</a> ';
+				$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+
+				if (!$mail->send()) {
+					echo 'Message could not be sent.';
+					echo 'Mailer Error: ' . $mail->ErrorInfo;
+				} else {
+					return Redirect()->to('/member/reset')->with('success', 'Berhasil Kirim Email! Silahkan Cek Email Anda');
+				}
+			} else {
+				echo "error";
+			}
+		}
+	}
+	public function updatereset($token) {
+		return view('web.members.form-forget');
+	}
+
+	public function doupdate() {
+		$rules = array(
+			'password' => 'required|min:6', // password can only be alphanumeric and has to be greater than 3 characters
+
+		);
+		// run the validation rules on the inputs from the form
+		$validator = Validator::make(Input::all(), $rules);
+		// if the validator fails, redirect back to the form
+		if ($validator->fails()) {
+			return redirect()->back()
+				->withErrors($validator) // send back all errors to the login form
+				->withInput(Input::except('password')); // sen d back the input (not the password) so that we can repopulate the form
+		} else {
+			$email = Input::get('email');
+			$passwordbaru = (Input::get('password'));
+			$retypepassword = (Input::get('retypepassword'));
+			$checkid = DB::table('members')->where('email', '=', $email)->first();
+			echo $email;
+			$check = DB::table('members')->where('email', '=', $email)->count();
+
+			if ($check > 0) {
+				// $checkid =DB::table('members')->where('email','=',$email)->first();
+				if ($retypepassword !== $passwordbaru) {
+					return Redirect()->back()->with('geterror', 'These passwords don t match. Try again?!');
+				} else {
+
+					$update = DB::table('members')
+						->where('email', $checkid->email)
+						->update([
+							'password' => md5($passwordbaru),
+						]);
+					if ($update) {
+						return Redirect()->to('/member/signin')->with('success', 'Successfully change Password,please your login again   !');
+
+					} else {
+						return Redirect()->back()->with('error', 'Sorry something is error !');
+					}
+
+				}
+			} else {
+				return Redirect()->back()->with('geterror', 'Sorry email is not valid !');
+			}
+
+		}
+	}
+
+	public function doreset() {
+		if (Session::get('memberID')) {
+			$memberid = Session::get('memberID');
+			# code...
+			// validate the info, create rules for the inputs
+			$rules = array(
+
+				'password' => 'required|min:6', // password can only be alphanumeric and has to be greater than 3 characters
+
+			);
+			// run the validation rules on the inputs from the form
+			$validator = Validator::make(Input::all(), $rules);
+			// if the validator fails, redirect back to the form
+			if ($validator->fails()) {
+				return redirect()->back()
+					->withErrors($validator) // send back all errors to the login form
+					->withInput(Input::except('password')); // send back the input (not the password) so that we can repopulate the form
+			} else {
+
+				$passwordbaru = md5(Input::get('password'));
+				$retypepassword = md5(Input::get('retypepassword'));
+
+				if ($retypepassword !== $passwordbaru) {
+					return Redirect()->back()->with('error_get', 'These passwords don t match. Try again?!');
+				} else {
+
+					$update = DB::table('members')
+						->where('id', $memberid)
+						->update([
+							'password' => $passwordbaru,
+						]);
+					if ($update) {
+
+						return Redirect()->to('/member/signin')->with('success', 'Successfully change Password,please your login again   !');
+
+					} else {
+						return Redirect()->back()->with('error', 'Sorry something is error !');
+					}
+
+				}
+
+			}
+		} else {
+			Session::flash('error_must_login', 'You must sign');
+			return Redirect('member/login');
+>>>>>>> master
 		}
 	}
 

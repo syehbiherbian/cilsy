@@ -135,11 +135,13 @@ Route::post('contributor/login', 'Contributors\AuthController@doLogin');
 
 Route::get('contributor/register', 'Contributors\AuthController@register');
 Route::post('contributor/register', 'Contributors\AuthController@doRegister');
+Route::get('contributor/aktivasi/{token}', 'Contributors\AuthController@aktivasi');
 
 Route::get('contributor/logout', 'Contributors\AuthController@logout');
 
-// Home
-Route::get('contributor', 'Contributors\DashboardController@index');
+Route::get('contributor/', 'Contributors\DashboardController@home');
+Route::get('contributor/dashboard', 'Contributors\DashboardController@index');
+
 // Lessons
 Route::get('contributor/lessons', 'Contributors\LessonsController@redirect');
 Route::get('contributor/lessons/{filter}/list', 'Contributors\LessonsController@index');
