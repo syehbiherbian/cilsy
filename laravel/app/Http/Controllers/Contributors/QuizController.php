@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Validator;
 use App\Quiz;
-use App\lessons;
+use App\Questions;
 use App\videos;
 use DateTime;
 use Session;
@@ -51,7 +51,6 @@ class QuizController extends Controller
            $title             = Input::get('title');
            $video              = Input::get('video');
            $desc             = Input::get('desc');
-
            $store = new Quiz();
            $store->lesson_id =$lessons_id;
            $store->title =$title;
@@ -62,13 +61,21 @@ class QuizController extends Controller
 
            return Redirect('contributor/lessons/quiz/'.$store->id.'/create/questions');
   }
-  public function edit($id){
+  public function edit($quiz_id){
     if (empty(Session::get('contribID'))) {
       return redirect('contributor/login');
     }
-
+    $row=Quiz::where('quiz_id','=',$quiz_id)->first();
+    $lessons=lessons::where('lessons.id',$row->lessons_id)->first();
+    $question=Questions::where('quiz_id',$row->quiz);
+    $video= videos::where('lessons_id',$row->lessons_id)->get();
     # code...
-    return view('contrib.quiz.edit');
+    return view('contrib.quiz.edit', [
+        'row'=>$row,
+        'question'=>$question,
+        'video'=>$video,
+        'lessons'=>$lessons
+    ]);
   }
 
 }
