@@ -55,6 +55,9 @@ html, body {
     height: 400px;
   }
 }
+#pricing-table>tbody>tr>td,#pricing-table>tbody>tr>th,#pricing-table>tfoot>tr>td,#pricing-table>tfoot>tr>th,#pricing-table>thead>tr>td,#pricing-table>thead>tr>th {
+    white-space: inherit !important
+}
 
 .masuk-btn {
     margin: 0 20px 0;
