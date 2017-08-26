@@ -4,16 +4,13 @@ namespace App\Http\Controllers\Contributors;
 
 use App\Contributors;
 use App\Http\Controllers\Controller;
+use App\Mail\EmailVerification;
 use DateTime;
 use Illuminate\Support\Facades\Input;
+use Mail;
 use Redirect;
 use Session;
 use Validator;
-use DB;
-use Mail;
-use App\Mail\EmailVerification;
-use Illuminate\Http\Request;
-use PHPMailer;
 
 class AuthController extends Controller {
 	/**
@@ -88,36 +85,36 @@ class AuthController extends Controller {
 			$password = md5(Input::get('password'));
 			$token = str_random(30) . $email;
 			$now = new DateTime();
-            $url = env('APP_URL');
+			$url = env('APP_URL');
+			// var_dump(env('MAIL_HOST'));
 			// store
 			$store = new Contributors;
 			$store->status = 0;
 			$store->username = $username;
 			$store->email = $email;
 			$store->password = $password;
-            $store->token = $token;
+			$store->token = $token;
 			$store->created_at = $now;
 			$store->save();
 
 			$send = Contributors::findOrFail($store->id);
 
-            Mail::to($store->email)->send(new EmailVerification($send));
+			Mail::to($store->email)->send(new EmailVerification($send));
 			return Redirect()->to('/contributor/register')->with('success', 'Berhasil Kirim Email! Silahkan Cek Email Anda');
-
 
 			// set session
 
 //			Session::set('contribID', $store->id);
-//			// redirect
-//			return redirect('contributor')->with('success', 'Selamat Datang !');
+			//			// redirect
+			//			return redirect('contributor')->with('success', 'Selamat Datang !');
 		}
 	}
 
-	public function aktivasi($token){
-        Contributors::where('token', $token)
-            ->update(['status' => 1]);
-        return redirect('contributor/login')->with('success', 'Sukses Aktivasi!, silahkan login ke akun anda');
-    }
+	public function aktivasi($token) {
+		Contributors::where('token', $token)
+			->update(['status' => 1]);
+		return redirect('contributor/login')->with('success', 'Sukses Aktivasi!, silahkan login ke akun anda');
+	}
 
 	public function logout() {
 		$this->forgetContributor();
