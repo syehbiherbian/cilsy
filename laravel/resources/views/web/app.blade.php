@@ -190,7 +190,7 @@
             <i class="ion ion-ios-search-strong"></i>
           </button>
           <a class="navbar-brand" href="{{ url('/') }}"><img class="logo" src="{{asset('template/web/img/logo.png')}}"></a>
-          <a href="{{ url('lessons/browse/all') }}" class="browse-btn">Browse Tutorial</a>
+          <!-- <a href="{{ url('lessons/browse/all') }}" class="browse-btn">Browse Tutorial</a> -->
         </div>
 
 
@@ -278,6 +278,7 @@
           </ul>
           <?php } else {?>
             <ul class="nav navbar-nav navbar-right">
+              <li><a href="{{ url('contributor') }}">Kontributor</a></li>
               <li><a href="{{ url('member/signin') }}">Masuk</a></li>
               <li><a href="{{ url('member/signup') }}">Daftar</a></li>
               <!-- <li class="dropdown">

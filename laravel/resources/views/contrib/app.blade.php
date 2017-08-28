@@ -181,6 +181,7 @@
     <script type="text/javascript" src="{{asset('template/kontributor/js/jquery.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('template/kontributor/js/bootstrap.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('template/kontributor/js/custom.js')}}"></script>
+    @stack('js')
 </body>
 
 </html>
