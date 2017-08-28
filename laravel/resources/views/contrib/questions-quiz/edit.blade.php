@@ -7,7 +7,7 @@
         <li><a href="{{ url('contributor/lessons') }}">Kelola Totorial</a></li>
 			  <li><a href="{{ url('contributor/lessons/'.$quiz->lessons_id.'/edit') }}">Kelola Quiz</a></li>
 				<li><a href="{{ url('contributor/lessons/quiz/'.$quiz->id.'/edit') }}">Kelola Soal</a></li>
-        <li>Buat Soal</li>
+        <li>Edit Soal</li>
 		</ul>
 </div>
 @endsection
@@ -24,23 +24,28 @@
 		 </div>
 		 @endif
 		<div class="box-white">
-				<form class="form-horizontal form-contributor" action="{{url('contributor/lessons/'.$quiz->id.'/store_questions')}}"  method="POST">
+				<form class="form-horizontal form-contributor" action="{{url('contributor/lessons/'.$quiz->id.'/update_questions')}}"  method="POST">
 					<input type="hidden" name="_token" value="{{csrf_token()}}">
 					<input type="hidden" name="method" value="PUT">
 				<div class="form-title">
 					<h3>{{$quiz->title}}</h3>
 			 	</div>
-				<div class="item">
+
+        <?php $i =0; ?>
+        @foreach($question as $value)
+        <?php $n= $i + 1; ?>
+        <?php $a= $i++;?>
+				<div class="item" id="row{{$i}}">
 					<div class="option">
 						<div class="row">
 							<div class="col-md-6">
-								<h4>1.Soal 1</h4>
+								<h4><?php echo $i; ?>.Soal <?php echo $i; ?></h4>
 							</div>
 							<div class="col-md-6 text-right">
 								<div class="btn-group">
 									<button type="button" class="btn btn-default btn-outline"><img src="{{ asset('template/kontributor/img/icon/sort-up.png') }}" alt="" width="15"></button>
 									<button type="button" class="btn btn-default btn-outline"><img src="{{ asset('template/kontributor/img/icon/sort-down.png') }}" alt="" width="15"></button>
-								  <button type="button" class="btn btn-default btn-outline"><img src="{{ asset('template/kontributor/img/icon/delete.png') }}" alt="" width="15"></button>
+								  <button type="button" class="btn btn-default btn-outline  btn_remove" id="{{$i}}" ><img src="{{ asset('template/kontributor/img/icon/delete.png') }}" alt="" width="15"></button>
 								</div>
 							</div>
 						</div>
@@ -49,22 +54,23 @@
 					<div class="form-group">
 						<label class="col-sm-2 control-label">Judul</label>
 						<div class="col-sm-10">
-							<input type="text" class="form-control" name="question[]" id="question0" placeholder="Contoh:Apa kepanjangan dari LTS pada versi Ubuntu?">
+							<input type="text" class="form-control" name="question[]" id="question<?php echo $a;?>" placeholder="Contoh:Apa kepanjangan dari LTS pada versi Ubuntu?" value="{{$value->question}}">
 						</div>
 					</div>
 					<hr>
-
+          @foreach($answer as $answers)
+            @if($value->id==$answers->question_id and $answers->type==0)
 					<div class="form-group">
 						<label class="col-sm-2 control-label">Jawaban A</label>
 						<div class="col-sm-1">
 							<div class="checkbox">
 				        <label>
-				          <input type="checkbox" name="question_key0_0">
+				          <input type="checkbox" name="question_key<?php echo $a;?>_0" <?php if($answers->answer_key==1){echo "checked";} ?>>
 				        </label>
 				      </div>
 						</div>
 						<div class="col-sm-7">
-							<input type="text" class="form-control" name="answer0[]" id="answer_a0" placeholder="Tulis Jawaban disini">
+							<input type="text" class="form-control" name="answer<?php echo $a;?>[]" id="answer_a<?php echo $a;?>" placeholder="Tulis Jawaban disini" value="{{$answers->answer}}">
 						</div>
 						<div class="col-sm-2 text-right">
 							<div class="btn-group">
@@ -73,18 +79,22 @@
 							</div>
 						</div>
 					</div>
+          @endif
+          @endforeach
 
+          @foreach($answer as $answers)
+            @if($value->id==$answers->question_id and $answers->type==1)
 					<div class="form-group">
 						<label class="col-sm-2 control-label">Jawaban B</label>
 						<div class="col-sm-1">
 							<div class="checkbox">
 				        <label>
-				          <input type="checkbox" name="question_key0_1">
+				          <input type="checkbox" name="question_key<?php echo $a;?>_1" <?php if($answers->answer_key==1){echo "checked";} ?>>
 				        </label>
 				      </div>
 						</div>
 						<div class="col-sm-7">
-							<input type="text" class="form-control" name="answer0[]" id="answer_b0" placeholder="Tulis Jawaban disini">
+							<input type="text" class="form-control" name="answer<?php echo $a;?>[]" id="answer_b<?php echo $a;?>" placeholder="Tulis Jawaban disini" value="{{$answers->answer}}">
 						</div>
 						<div class="col-sm-2 text-right">
 							<div class="btn-group">
@@ -93,19 +103,22 @@
 							</div>
 						</div>
 					</div>
+          @endif
+          @endforeach
 
-
+          @foreach($answer as $answers)
+            @if($value->id==$answers->question_id and $answers->type==2)
 					<div class="form-group">
 						<label class="col-sm-2 control-label">Jawaban C</label>
 						<div class="col-sm-1">
 							<div class="checkbox">
 				        <label>
-				          <input type="checkbox" name="question_key0_2">
+				          <input type="checkbox" name="question_key<?php echo $a;?>_2" <?php if($answers->answer_key==1){echo "checked";} ?>>
 				        </label>
 				      </div>
 						</div>
 						<div class="col-sm-7">
-							<input type="text" class="form-control" name="answer0[]" id="answer_c0" placeholder="Tulis Jawaban disini">
+							<input type="text" class="form-control" name="answer<?php echo $a;?>[]" id="answer_c<?php echo $a;?>" placeholder="Tulis Jawaban disini"value="{{$answers->answer}}">
 						</div>
 						<div class="col-sm-2 text-right">
 							<div class="btn-group">
@@ -114,19 +127,22 @@
 							</div>
 						</div>
 					</div>
+          @endif
+          @endforeach
 
-
+          @foreach($answer as $answers)
+            @if($value->id==$answers->question_id and $answers->type==3)
 					<div class="form-group">
 						<label class="col-sm-2 control-label">Jawaban D</label>
 						<div class="col-sm-1">
 							<div class="checkbox">
 				        <label>
-				          <input type="checkbox" name="question_key0_3">
+				          <input type="checkbox" name="question_key<?php echo $a;?>_3" <?php if($answers->answer_key==1){echo "checked";} ?>>
 				        </label>
 				      </div>
 						</div>
 						<div class="col-sm-7">
-							<input type="text" class="form-control" name="answer0[]" id="answer_d0" placeholder="Tulis Jawaban disini">
+							<input type="text" class="form-control" name="answer<?php echo $a;?>[]" id="answer_d<?php echo $a;?>" placeholder="Tulis Jawaban disini" value="{{$answers->answer}}">
 						</div>
 						<div class="col-sm-2 text-right">
 							<div class="btn-group">
@@ -136,15 +152,18 @@
 						</div>
 					</div>
 				</div>
+        @endif
+        @endforeach
 
-				<div class="row" id="dynamic_field">
+        @endforeach
 
-				</div>
+				<!-- <div class="row" id="dynamic_field">
+				</div> -->
 	      <div class="form-group">
-					<div class="col-sm-2">
+					<!-- <div class="col-sm-2">
 						<button type="button" name="button" id="addanswer"  class="btn btn-default btn-outline"><img src="{{ asset('template/kontributor/img/icon/tambah.png') }}" alt="" width="15"> tambah soal</button>
-					</div>
-	        <div class="col-sm-10 text-right">
+					</div> -->
+	        <div class="col-sm-12 text-right">
 	          <a class="btn btn-danger">Batal</a>
 	          <button type="submit" class="btn btn-info">Submit</button>
 	        </div>
@@ -271,7 +290,9 @@
 							 '</div>');
 
           });
+
           $(document).on('click', '.btn_remove', function(){
+
                var button_id = $(this).attr("id");
                $('#row'+button_id+'').remove();
           });
