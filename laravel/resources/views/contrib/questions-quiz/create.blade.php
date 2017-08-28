@@ -6,7 +6,7 @@
 				<li><a href="{{ url('contributor') }}">Dashboard</a></li>
         <li><a href="{{ url('contributor/lessons') }}">Kelola Totorial</a></li>
 			  <li><a href="{{ url('contributor/lessons/'.$quiz->lessons_id.'/edit') }}">Kelola Quiz</a></li>
-				<li><a href="{{ url('ontributor/lessons/quiz/'.$quiz->id.'/edit') }}">Kelola Soal</a></li>
+				<li><a href="{{ url('contributor/lessons/quiz/'.$quiz->id.'/edit') }}">Kelola Soal</a></li>
         <li>Buat Soal</li>
 		</ul>
 </div>
@@ -24,11 +24,11 @@
 		 </div>
 		 @endif
 		<div class="box-white">
-				<form class="form-horizontal form-contributor" action="{{url('contributor/lessons/'.$quiz->quiz_id.'/store_questions')}}"  method="POST">
+				<form class="form-horizontal form-contributor" action="{{url('contributor/lessons/'.$quiz->id.'/store_questions')}}"  method="POST">
 					<input type="hidden" name="_token" value="{{csrf_token()}}">
 					<input type="hidden" name="method" value="PUT">
 				<div class="form-title">
-					<h3>Tutorial Linux Fundamental dengan ubuntu 14.04 LTS</h3>
+					<h3>{{$quiz->title}}</h3>
 			 	</div>
 				<div class="item">
 					<div class="option">
