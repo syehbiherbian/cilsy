@@ -161,27 +161,16 @@ Route::get('contributor/lessons/create/attachments', 'Contributors\AttachmentsCo
 // Quiz
 Route::get('contributor/lessons/{id}/create/quiz', 'Contributors\QuizController@create');
 Route::post('contributor/lessons/{id}/store_quiz', 'Contributors\QuizController@store_quiz');
-<<<<<<< HEAD
 Route::post('contributor/lessons/{id}/update_quiz', 'Contributors\QuizController@update_quiz');
 Route::get('contributor/lessons/quiz/{quiz_id}/edit', 'Contributors\QuizController@edit');
 Route::get('contributor/lessons/quiz/{quiz_id}/delete', 'Contributors\QuizController@delete_quiz');
 
-=======
-Route::get('contributor/lessons/quiz/{quiz_id}/edit', 'Contributors\QuizController@edit');
->>>>>>> b90e1163dd00a4c271974147e8830b63634025b9
+
 
 // Question
 Route::get('contributor/lessons/quiz/{quiz_id}/create/questions', 'Contributors\QuestionQuizController@create');
 Route::post('contributor/lessons/{quiz_id}/store_questions', 'Contributors\QuestionQuizController@store');
-<<<<<<< HEAD
 
 Route::get('contributor/lessons/quiz/{quiz_id}/edit/questions', 'Contributors\QuestionQuizController@edit');
 Route::post('contributor/lessons/{quiz_id}/update_questions', 'Contributors\QuestionQuizController@update');
 
-
-
-=======
->>>>>>> b90e1163dd00a4c271974147e8830b63634025b9
-
-//questions
-Route::get('contributor/questions', 'Contributors\QuestionsController@getQuestions');
