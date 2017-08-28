@@ -55,6 +55,12 @@ html, body {
     height: 400px;
   }
 }
+<<<<<<< HEAD
+=======
+#pricing-table>tbody>tr>td,#pricing-table>tbody>tr>th,#pricing-table>tfoot>tr>td,#pricing-table>tfoot>tr>th,#pricing-table>thead>tr>td,#pricing-table>thead>tr>th {
+    white-space: inherit !important
+}
+>>>>>>> b90e1163dd00a4c271974147e8830b63634025b9
 
 .masuk-btn {
     margin: 0 20px 0;
@@ -413,6 +419,7 @@ font-size: 26px;
     .browse-btn {
     margin-left: 0;
     padding: 10px 10px;
+<<<<<<< HEAD
     line-height: 55px;
     color: #2ba8e2;
     background-color: #FFF;
@@ -420,3 +427,6 @@ font-size: 26px;
     }
 }
 
+=======
+    line-height: 50px;
+>>>>>>> b90e1163dd00a4c271974147e8830b63634025b9

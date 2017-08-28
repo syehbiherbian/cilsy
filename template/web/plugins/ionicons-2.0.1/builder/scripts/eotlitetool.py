@@ -415,6 +415,7 @@ def make_eot_header(fontdata):
     italic = fsSelection & OpenType.OS2_FSSELECTION_ITALIC
     
     # read in values from head table
+<<<<<<< HEAD
     headDir = tableDir[OpenType.TABLE_HEAD]
     headoffset = headDir['offset']
     headsize = struct.calcsize(OpenType.HEAD_UNPACK)
@@ -464,3 +465,6 @@ if __name__ == '__main__':
     main()
     
     
+=======
+    headDir = tableDir[OpenT
+>>>>>>> b90e1163dd00a4c271974147e8830b63634025b9

@@ -11,14 +11,6 @@
 @endsection
 @section('content')
 
-<!-- BEGIN ALERT -->
-<div class="row">
-  <div class="col-md-12">
-    @include('contrib.include.alert')
-  </div>
-</div>
-<!-- END ALERT -->
-
 <!-- BEGIN lESSON -->
 <div class="row">
   <div class="col-md-12">
@@ -33,18 +25,10 @@
             <!-- Title -->
             <div class="row">
               <div class="col-md-8">
-                <h4>{{ $lessons->title }}</h4>
+                <h4>Tutorial Linux Fundamental dengan ubuntu 14.04 LTS</h4>
               </div>
               <div class="col-md-4 text-right">
-                <?php if ($lessons->status == 0){ ?>
-                  <div class="label label-warning">Belum di verifikasi</div>
-                <?php }else if ($lessons->status == 1){ ?>
-                  <div class="label label-success">Sudah di Publish</div>
-                <?php }else if ($lessons->status == 2){ ?>
-                  <div class="label label-info">Sedang di Proses</div>
-                <?php }else if ($lessons->status == 3){ ?>
-                  <div class="label label-primary">Revisi</div>
-                <?php } ?>
+                  <div class="label label-warning">Belum Di verifikasi</div>
                   <a href="#" class="btn btn-danger">Edit</a>
               </div>
             </div>
@@ -55,7 +39,7 @@
                 <p>Kategori</p>
               </div>
               <div class="col-md-9">
-                <p>: {{ $lessons->category_title }}</p>
+                <p>: Linux</p>
               </div>
             </div>
             <!-- End Title -->
@@ -65,7 +49,7 @@
                 <p>Deskripsi Tutorial</p>
               </div>
               <div class="col-md-9">
-                <p>: {{ $lessons->description }}</p>
+                <p>: Active Directory Domain Controller merupakan salah satu keunggulan server windows.</p>
               </div>
             </div>
             <!-- End Title -->
@@ -90,10 +74,9 @@
             </div>
           </div>
           <div class="col-md-6">
-
             <div class="box-option text-right">
-              <a href="{{ url('contributor/lessons/'.$lessons->id.'/videos/edit') }}" class="btn btn-danger">Edit</a>
-              <a href="{{ url('contributor/lessons/'.$lessons->id.'/videos/create') }}" class="btn btn-info">Tambah Video</a>
+              <a href="#" class="btn btn-danger">Edit</a>
+              <a href="#" class="btn btn-info">Tambah Video</a>
             </div>
           </div>
         </div>
@@ -108,20 +91,12 @@
               </tr>
             </thead>
             <tbody>
-              <?php if (count($videos) == 0): ?>
-                <tr>
-                  <td colspan="3">Tidak ada data</td>
-                </tr>
-              <?php else: ?>
-                <?php $i = 1; ?>
-                <?php foreach ($videos as $key => $row): ?>
-                <tr>
-                  <td width="25">{{ $i }}</td>
-                  <td>{{ $row->title }}</td>
-                </tr>
-                <?php $i++; ?>
-                <?php endforeach; ?>
-              <?php endif; ?>
+              <?php for ($i=1; $i < 6 ; $i++) { ?>
+              <tr>
+                <td width="25">{{ $i }}</td>
+                <td>Pengenalan dan Instalasi ubuntu server</td>
+              </tr>
+              <?php } ?>
             </tbody>
           </table>
         </div>
@@ -143,8 +118,8 @@
           </div>
           <div class="col-md-6">
             <div class="box-option text-right">
-              <a href="{{ url('contributor/lessons/'.$lessons->id.'/quiz/edit') }}" class="btn btn-danger">Edit</a>
-              <a href="{{ url('contributor/lessons/'.$lessons->id.'/quiz/create') }}" class="btn btn-info">Tambah Kuis</a>
+              <a href="#" class="btn btn-danger">Edit</a>
+              <a href="#" class="btn btn-info">Tambah Kuis</a>
             </div>
           </div>
         </div>
@@ -159,20 +134,12 @@
               </tr>
             </thead>
             <tbody>
-              <?php if (count($videos) == 0): ?>
-                <tr>
-                  <td colspan="3">Tidak ada data</td>
-                </tr>
-              <?php else: ?>
-
-                <?php foreach ($quiz as $key => $row): ?>
-                <tr>
-                  <td width="25">{{ $i }}</td>
-                  <td>{{ $row->title }}</td>
-                </tr>
-                <?php endforeach; ?>
-
-              <?php endif; ?>
+              <?php for ($i=1; $i < 6 ; $i++) { ?>
+              <tr>
+                <td width="25">{{ $i }}</td>
+                <td>Kuis Tahap 1</td>
+              </tr>
+              <?php } ?>
             </tbody>
           </table>
         </div>
@@ -194,8 +161,8 @@
           </div>
           <div class="col-md-6">
             <div class="box-option text-right">
-              <a href="{{ url('contributor/lessons/'.$lessons->id.'/files/edit') }}" class="btn btn-danger">Edit</a>
-              <a href="{{ url('contributor/lessons/'.$lessons->id.'/files/create') }}" class="btn btn-info">Tambah Lampiran</a>
+              <a href="#" class="btn btn-danger">Edit</a>
+              <a href="#" class="btn btn-info">Tambah Lampiran</a>
             </div>
           </div>
         </div>
@@ -210,18 +177,12 @@
               </tr>
             </thead>
             <tbody>
-              <?php if (count($files) == 0): ?>
-                <tr>
-                  <td colspan="3">Tidak ada data</td>
-                </tr>
-              <?php else: ?>
-                <?php foreach ($files as $key => $row): ?>
-                <tr>
-                  <td width="25">{{ $i }}</td>
-                  <td>{{ $row->title }}</td>
-                </tr>
-                <?php endforeach; ?>
-              <?php endif; ?>
+              <?php for ($i=1; $i < 6 ; $i++) { ?>
+              <tr>
+                <td width="25">{{ $i }}</td>
+                <td>Installer Ubuntu 14.04 LTS</td>
+              </tr>
+              <?php } ?>
             </tbody>
           </table>
         </div>

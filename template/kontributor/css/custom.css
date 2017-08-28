@@ -167,13 +167,17 @@ html, body {
     min-height: 55px;
     padding-top: 10px;
     padding-left: 90px;
+<<<<<<< HEAD
     padding-right: 90px;
+=======
+>>>>>>> b90e1163dd00a4c271974147e8830b63634025b9
     background-color: #F1F5F7;
     -webkit-box-shadow: 0px 0px 8px 0px rgba(0,0,0,0.75);
     -moz-box-shadow: 0px 0px 8px 0px rgba(0,0,0,0.75);
     box-shadow: 0px 0px 8px 0px rgba(0,0,0,0.75);
     z-index: 98;
 }
+<<<<<<< HEAD
 @media (max-width:768px) {
 
   #navigation {
@@ -181,6 +185,8 @@ html, body {
   }
 
 }
+=======
+>>>>>>> b90e1163dd00a4c271974147e8830b63634025b9
 
 #navigation .breadcrumb {
     margin-bottom: 10px;
@@ -261,6 +267,7 @@ html, body {
 #content {
     padding: 160px 25px 25px 90px;
     min-height: calc(100vh - 235px);
+<<<<<<< HEAD
     background: #eee;
 }
 @media (max-width:768px) {
@@ -293,6 +300,9 @@ html, body {
   padding:25px 15px;
 }
 
+=======
+}
+>>>>>>> b90e1163dd00a4c271974147e8830b63634025b9
 
 .card {
     position: relative;
@@ -348,6 +358,7 @@ html, body {
     box-shadow: 0px 2px 8px 0px rgb(27, 179, 243);
 }
 
+<<<<<<< HEAD
 .form-title{
   margin-bottom: 25px;
   color: #2BA8E2;
@@ -357,6 +368,8 @@ html, body {
      text-align: left;
 }
 
+=======
+>>>>>>> b90e1163dd00a4c271974147e8830b63634025b9
 #footer {
     padding: 25px;
     padding-left: 60px;
@@ -410,4 +423,8 @@ html, body {
         -o-transform: scale(.8);
         transform: scale(.8);
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> b90e1163dd00a4c271974147e8830b63634025b9

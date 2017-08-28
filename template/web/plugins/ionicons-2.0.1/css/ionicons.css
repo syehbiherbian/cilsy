@@ -1271,6 +1271,7 @@
 
 .ion-social-css3-outline:before { content: "\f4de"; }
 
+<<<<<<< HEAD
 .ion-social-designernews:before { content: "\f22b"; }
 
 .ion-social-designernews-outline:before { content: "\f22a"; }
@@ -1478,3 +1479,6 @@
 .ion-wrench:before { content: "\f2ba"; }
 
 .ion-xbox:before { content: "\f30c"; }
+=======
+.ion-so
+>>>>>>> b90e1163dd00a4c271974147e8830b63634025b9

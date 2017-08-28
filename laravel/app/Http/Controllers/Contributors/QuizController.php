@@ -39,6 +39,7 @@ class QuizController extends Controller
     if (empty(Session::get('contribID'))) {
       return redirect('contributor/login');
     }
+<<<<<<< HEAD
     //Store new Data
            $validator = Validator::make($request->all(), [
                'title'            => 'required',
@@ -88,6 +89,8 @@ class QuizController extends Controller
     if (empty(Session::get('contribID'))) {
       return redirect('contributor/login');
     }
+=======
+>>>>>>> b90e1163dd00a4c271974147e8830b63634025b9
     //Store new Data
            $validator = Validator::make($request->all(), [
                'title'            => 'required',
@@ -110,6 +113,7 @@ class QuizController extends Controller
            $store->updated_at =$now;
            $store->save();
 
+<<<<<<< HEAD
            return Redirect()->back()->with('success','Quiz Berhasil di update');
   }
 
@@ -127,7 +131,25 @@ class QuizController extends Controller
         }else{
         return redirect()->back()->with('no-delete','Can not be removed!');
         }
+=======
+           $store = new Quiz();
+           $store->lesson_id =$lessons_id;
+           $store->title =$title;
+           $store->appear =$video;
+           $store->description =$desc;
+           $store->created_at =$now;
+           $store->save();
 
+           return Redirect('contributor/lessons/quiz/'.$store->id.'/create/questions');
+  }
+  public function edit($id){
+    if (empty(Session::get('contribID'))) {
+      return redirect('contributor/login');
+    }
+>>>>>>> b90e1163dd00a4c271974147e8830b63634025b9
+
+    # code...
+    return view('contrib.quiz.edit');
   }
 
 }

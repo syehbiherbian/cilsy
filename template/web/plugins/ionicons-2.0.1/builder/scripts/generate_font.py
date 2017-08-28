@@ -141,6 +141,7 @@ else:
   svgfile.seek(0)
   svgfile.write(svgtext.replace('''<svg>''', '''<svg xmlns="http://www.w3.org/2000/svg">'''))
   svgfile.close()
+<<<<<<< HEAD
 
   scriptPath = os.path.dirname(os.path.realpath(__file__))
   try:
@@ -171,3 +172,5 @@ else:
   f.write( json.dumps(build_data, indent=2, separators=(',', ': ')) )
   f.close()
 
+=======
+>>>>>>> b90e1163dd00a4c271974147e8830b63634025b9

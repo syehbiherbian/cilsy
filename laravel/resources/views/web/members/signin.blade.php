@@ -3,8 +3,8 @@
 @section('content')
 <div id="sign-container">
     <div class="tab-btn-container">
-      <a href="{{ url('member/signup')}}" id="tab-1" style="background-color: #ededed">Daftar</a>
-      <a href="{{ url('member/signin')}}" id="tab-2" >Masuk</a>
+      <a href="{{ url('contributor/register')}}" id="tab-1" style="background-color: #ededed">Daftar</a>
+      <a href="{{ url('contributor/login')}}" id="tab-2" >Masuk</a>
     </div>
 
     <div class="tab-content">
@@ -61,7 +61,7 @@
                 </div>
                 <button type="submit" class="btn btn-primary">MASUK</button>
                 <div>
-                    <a href="#"><p style="text-align: center;margin-top: 15px;">Lupa Password ?</p></a>
+                    <a href="{{ url('member/reset') }}"><p style="text-align: center;margin-top: 15px;">Lupa Password ?</p></a>
                 </div>
             </form>
         </div>

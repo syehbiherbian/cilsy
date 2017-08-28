@@ -1193,6 +1193,7 @@ video::-webkit-media-text-track-display {
 .video-js.vjs-layout-small:not(.vjs-fullscreen) .vjs-playback-rate,
 .video-js.vjs-layout-small:not(.vjs-fullscreen) .vjs-mute-control, .video-js.vjs-layout-small:not(.vjs-fullscreen) .vjs-volume-control,
 .video-js.vjs-layout-small:not(.vjs-fullscreen) .vjs-chapters-button, .video-js.vjs-layout-small:not(.vjs-fullscreen) .vjs-descriptions-button, .video-js.vjs-layout-small:not(.vjs-fullscreen) .vjs-captions-button,
+<<<<<<< HEAD
 .video-js.vjs-layout-small:not(.vjs-fullscreen) .vjs-subtitles-button .vjs-audio-button {
   display: none; }
 
@@ -1305,3 +1306,6 @@ video::-webkit-media-text-track-display {
     visibility: hidden;
   }
 }
+=======
+.video-js.vjs-layo
+>>>>>>> b90e1163dd00a4c271974147e8830b63634025b9
