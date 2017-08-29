@@ -148,7 +148,9 @@ Route::get('contributor/lessons/{filter}/list', 'Contributors\LessonsController@
 Route::get('contributor/lessons/create', 'Contributors\LessonsController@create');
 Route::post('contributor/lessons/create', 'Contributors\LessonsController@doCreate');
 
+Route::get('contributor/lessons/{id}/view', 'Contributors\LessonsController@view');
 Route::get('contributor/lessons/{id}/edit', 'Contributors\LessonsController@edit');
+Route::post('contributor/lessons/{id}/edit', 'Contributors\LessonsController@doEdit');
 Route::get('contributor/lessons/create/submit', 'Contributors\LessonsController@submit');
 Route::post('contributor/lessons/create/submit', 'Contributors\LessonsController@doSubmit');
 
@@ -173,4 +175,3 @@ Route::post('contributor/lessons/{quiz_id}/store_questions', 'Contributors\Quest
 
 Route::get('contributor/lessons/quiz/{quiz_id}/edit/questions', 'Contributors\QuestionQuizController@edit');
 Route::post('contributor/lessons/{quiz_id}/update_questions', 'Contributors\QuestionQuizController@update');
-
