@@ -15,9 +15,10 @@
     <div class="box-white">
 
         <ul class="nav nav-tabs">
-          <li class="<?php if($filter == "pending"){ echo "active";} ?>"><a href="{{ url('contributor/lessons/revision/list') }}">Perlu Revisi</a></li>
+          <li class="<?php if($filter == "pending"){ echo "active";} ?>"><a href="{{ url('contributor/lessons/pending/list') }}">Draft</a></li>
           <li class="<?php if($filter == "processing"){ echo "active";} ?>"><a href="{{ url('contributor/lessons/processing/list') }}">Sedang Diverifikasi</a></li>
           <li class="<?php if($filter == "publish"){ echo "active";} ?>"><a href="{{ url('contributor/lessons/publish/list') }}">Sudah dipublish</a></li>
+          <li class="<?php if($filter == "revision"){ echo "active";} ?>"><a href="{{ url('contributor/lessons/revision/list') }}">Perlu Revisi</a></li>
           <li class="<?php if($filter == "all"){ echo "active";} ?>"><a href="{{ url('contributor/lessons/all/list') }}">Semua</a></li>
         </ul>
 
@@ -50,17 +51,19 @@
                   <td>{{ $row->category_title }}</td>
                   <td>
                     <?php if ($row->status == 0): ?>
-                      <div class="label label-warning">Revisi</div>
+                      <div class="label label-warning">Draft</div>
                     <?php elseif($row->status == 1): ?>
                         <div class="label label-success">Publish</div>
                     <?php elseif($row->status == 2): ?>
                         <div class="label label-info">Proses</div>
+                    <?php elseif($row->status == 3): ?>
+                        <div class="label label-warning">Revisi</div>
                     <?php endif; ?>
                   </td>
-                  <td>0</td>
-                  <td>100</td>
-                  <td>17000</td>
-                  <td><a href="{{ url('contributor/lessons/'.$row->id.'/edit')}}" class="btn btn-warning">Edit</a></td>
+                  <td>{{$row->revisi_ke}}</td>
+                  <td>@if($row->student=='') 0 @else {{$row->student}}  @endif</td>
+                  <td>@if($row->view=='') 0 @else {{$row->view}}  @endif</td>
+                  <td><a href="{{ url('contributor/lessons/'.$row->id.'/view')}}" class="btn btn-warning">View</a></td>
                 </tr>
                 <?php $i++; ?>
                 <?php endforeach; ?>
