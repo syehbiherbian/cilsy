@@ -2,10 +2,16 @@
 @section('title','')
 @section('breadcumbs')
 <div id="navigation">
-    <a href="{{ url('contributor/lessons/create')}}" class="btn btn-danger pull-right">Hapus Tutorial</a>
+    <!-- <a href="{{ url('contributor/lessons/create')}}" class="btn btn-danger pull-right">Hapus Tutorial</a> -->
+    <form id="{{ $row->id }}" action="{{ url('contributor/lessons/'.$row->id.'/delete')}}" method="get">
+          <input type="hidden" name="_token" value="{{ csrf_token() }}">
+          <input type="hidden" name="_method" value="DELETE">
+          <button type="button"  title="Hapus Totorial" data-toggle="tooltip" class="btn btn-danger pull-right" data-toggle="tooltip" onclick="checkdelete({{$row->id}})">Hapus Tutorial</button>
+    </form>
 		<ul class="breadcrumb">
 				<li><a href="{{ url('contributor') }}">Dashboard</a></li>
-        <li>Kelola Tutorial</li>
+                <li><a href="{{ url('contributor/lessons') }}">Kelola Tutorial</a></li>
+        <li>Tutorial</li>
 		</ul>
 </div>
 @endsection
@@ -202,8 +208,6 @@
                    @endif
                    @endforeach
 
-
-
             </tbody>
           </table>
         </div>
@@ -264,4 +268,38 @@
   </div>
 </div>
 <!-- END ATTCHMENT -->
+<div class="row">
+  <div class="col-md-12" style="text-align:center;">
+    <div class="box-white">
+        <a href="{{ url('contributor/lessons/'.$row->id.'/submit')}}" class="btn btn-lg btn-success">Submit Totorial <br> untuk di Verifikasi</a>
+    </div>
+</div>
+</div>
+
+<script>
+ function checkdelete(id){
+
+   swal({
+     title: "Apakah kamu yakin?",
+     text: "Anda tidak akan dapat memulihkan data ini!",
+     type: "warning",
+     showCancelButton: true,
+     confirmButtonColor: "#DD6B55",
+     confirmButtonText: "Ya, Hapus Totorial!",
+     cancelButtonText: "Tidak, Batalkan!",
+     closeOnConfirm: false,
+     closeOnCancel: false
+     },
+     function(isConfirm){
+     if (isConfirm) {
+
+       $('#'+id).submit();
+
+       swal("Deleted!", "Data Anda telah dihapus.", "success");
+     } else {
+       swal("Cancelled", "Data Anda aman :)", "error");
+     }
+     });
+ }
+ </script>
 @endsection()

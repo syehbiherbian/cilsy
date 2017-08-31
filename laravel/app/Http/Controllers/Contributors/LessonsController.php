@@ -14,6 +14,8 @@ use App\videos;
 use App\Quiz;
 use App\services;
 use App\files;
+use App\Questions;
+use App\Answars;
 use DateTime;
 
 use Session;
@@ -152,63 +154,43 @@ class LessonsController extends Controller
     }
   }
 
-  public function submit()
+  public function submit($id)
   {
 
     if (empty(Session::get('contribID'))) {
       return redirect('contributor/login');
     }
     # code...
+    $contribID = Session::get('contribID');
+    $check = lessons::where('contributor_id',$contribID)
+        ->where('id',$id)->first();
+    if($check ==null){
+        return redirect('not-found');
+    }
+    $row = lessons::where('contributor_id',$contribID)
+        ->where('id',$id)->where('status',0)->first();
+        if($row ==null){
+            return redirect()->back()->with('no-delete','Totorial sedang / dalam verifikasi!');
+        }
+    return view('contrib.lessons.submit',[
+        'row'=>$row,
+    ]);
 
-    return view('contrib.lessons.submit');
   }
 
-  public function doSubmit()
+  public function doSubmit($id)
   {
+      if (empty(Session::get('contribID'))) {
+        return redirect('contributor/login');
+      }
       $now                    = new DateTime();;
       $cid                    = Session::get('contribID');
-      // Lessons
-      $lessons_title          = Session::get('lessons_title');
-      $lessons_category_id    = Session::get('lessons_category_id');
-      $lessons_description    = Session::get('lessons_description');
 
-
-      $lessonsDestinationPath= 'assets/source/lessons';
-      $lessons_image          = Session::get('lessons_image');
-
-      if(!empty($lessons_image)){
-          $lessonsfilename    = $lessons_image->getClientOriginalName();
-          $lessons_image->move($lessonsDestinationPath, $lessonsfilename);
-      }else{
-          $lessonsfilename    = '';
-      }
-
-
-      $store                  = new lessons;
-      $store->contributor_id  = $cid;
-      $store->status          = 0;
-      $store->title           = $lessons_title;
-      $store->slug            = $lessons_title;
-      $store->category_id     = $lessons_category_id;
-      $store->image           = $lessonsfilename;
-      $store->description     = $lessons_description;
-      $store->created_at      = $now;
+      $store                  = lessons::find($id);
+      $store->status          = 2;
       $store->updated_at      = $now;
       $store->save();
-
-      // Videos
-
-      // Attachments
-
-      // Quiz
-
-      // Questions
-
-
-      $forget = $this->forgetSession();
-      if ($forget == true) {
-          return redirect('contributor/lessons')->with('success','');
-      }
+      return redirect('contributor/lessons/'.$id.'/view')->with('success','Totorial berhasil di submit!');
 
 
   }
@@ -326,5 +308,26 @@ class LessonsController extends Controller
           return redirect('contributor/lessons/'.$id.'/view')->with('success','Update totorial berhasil!');
 
       }
+  }
+  public function doDelete($id){
+     $lessons =lessons::where('id',$id)->delete();
+     if($lessons){
+         $video =videos::where('lessons_id',$id)->delete();
+         $files= files::where('lesson_id',$id)->delete();
+         $quiz = Quiz::where('lesson_id',$id)->get();
+         foreach ($quiz as $key => $value) {
+             $question = Questions::where('quiz_id',$value->id)->get();
+             foreach ($question as $key => $qu) {
+                  $answer = Answars::where('question_id',$qu->id)->delete();
+             }
+             Questions::where('quiz_id',$value->id)->delete();
+
+         }
+         Quiz::where('lesson_id',$id)->delete();
+
+        return redirect('contributor/lessons')->with('success','Delete totorial berhasil!');
+     }else{
+        return redirect()->back()->with('no-delete','Delete totorial gagal!');
+     }
   }
 }

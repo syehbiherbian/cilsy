@@ -151,8 +151,9 @@ Route::post('contributor/lessons/create', 'Contributors\LessonsController@doCrea
 Route::get('contributor/lessons/{id}/view', 'Contributors\LessonsController@view');
 Route::get('contributor/lessons/{id}/edit', 'Contributors\LessonsController@edit');
 Route::post('contributor/lessons/{id}/edit', 'Contributors\LessonsController@doEdit');
-Route::get('contributor/lessons/create/submit', 'Contributors\LessonsController@submit');
-Route::post('contributor/lessons/create/submit', 'Contributors\LessonsController@doSubmit');
+Route::get('contributor/lessons/{id}/submit', 'Contributors\LessonsController@submit');
+Route::post('contributor/lessons/{id}/submit', 'Contributors\LessonsController@doSubmit');
+Route::get('contributor/lessons/{id}/delete', 'Contributors\LessonsController@doDelete');
 
 // Videos
 Route::get('contributor/lessons/{lesson_id}/create/videos', 'Contributors\VideosController@create');

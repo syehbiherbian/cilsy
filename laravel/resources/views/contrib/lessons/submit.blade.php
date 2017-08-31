@@ -31,7 +31,7 @@
 	      <div class="form-group">
 
 	        <div class="col-sm-12 text-center">
-	          <a href="{{ url('contributor/lessons') }}" class="btn btn-danger">Batal</a>
+	          <a href="{{ url('contributor/lessons/'.$row->id.'/submit')}}" class="btn btn-danger">Batal</a>
 						<button type="submit" class="btn btn-info">Submit</button>
 	        </div>
 	      </div>

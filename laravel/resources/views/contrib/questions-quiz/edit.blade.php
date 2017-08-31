@@ -5,8 +5,8 @@
 		<ul class="breadcrumb">
 				<li><a href="{{ url('contributor') }}">Dashboard</a></li>
         <li><a href="{{ url('contributor/lessons') }}">Kelola Totorial</a></li>
-			  <li><a href="{{ url('contributor/lessons/'.$quiz->lessons_id.'/edit') }}">Kelola Quiz</a></li>
-				<li><a href="{{ url('contributor/lessons/quiz/'.$quiz->id.'/edit') }}">Kelola Soal</a></li>
+			  <li><a href="{{ url('contributor/lessons/'.$quiz->lessons_id.'/view') }}">Kelola Quiz</a></li>
+				<li><a href="{{ url('contributor/lessons/quiz/'.$quiz->id.'/view') }}">Kelola Soal</a></li>
         <li>Edit Soal</li>
 		</ul>
 </div>

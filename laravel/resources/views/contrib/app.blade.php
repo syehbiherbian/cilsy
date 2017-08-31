@@ -10,6 +10,7 @@
     <link rel="shortcut icon" type="image/png" href="{{asset('template/kontributor/img/logo-only.png')}}"/>
     <link href="{{asset('template/kontributor/css/bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{asset('template/kontributor/css/custom.css')}}" rel="stylesheet">
+    <link href="{{asset('template/kontributor/css/sweetalert.css')}}" rel="stylesheet">
 </head>
 
 <body>
@@ -181,6 +182,7 @@
     <script type="text/javascript" src="{{asset('template/kontributor/js/jquery.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('template/kontributor/js/bootstrap.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('template/kontributor/js/custom.js')}}"></script>
+    <script type="text/javascript" src="{{asset('template/kontributor/js/sweetalert.min.js')}}"></script>
 </body>
 
 </html>
