@@ -82,7 +82,7 @@ class QuestionQuizController extends Controller
               }
               $checks=Quiz::where('id','=',$quiz_id)->first();
 
-              return Redirect('contributor/lessons/'.$checks->lesson_id.'/edit')->with('success','Terimakasih, Quiz berhasil di simpan');
+              return Redirect('contributor/lessons/'.$checks->lesson_id.'/view')->with('success','Terimakasih, Quiz berhasil di simpan');
       }
 
       public function edit($quiz_id){
@@ -160,6 +160,6 @@ class QuestionQuizController extends Controller
                 }
                 $checks=Quiz::where('id','=',$quiz_id)->first();
 
-                return Redirect('contributor/lessons/quiz/'.$quiz_id.'/edit')->with('success','Terimakasih, Quiz berhasil di update');
+                return Redirect('contributor/lessons/quiz/'.$quiz_id.'/view')->with('success','Terimakasih, Quiz berhasil di update');
         }
 }

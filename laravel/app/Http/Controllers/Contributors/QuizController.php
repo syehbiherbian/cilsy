@@ -63,6 +63,27 @@ class QuizController extends Controller
 
            return Redirect('contributor/lessons/quiz/'.$store->id.'/create/questions');
   }
+  public function view($quiz_id){
+    if (empty(Session::get('contribID'))) {
+      return redirect('contributor/login');
+    }
+    $row=Quiz::where('quiz.id','=',$quiz_id)
+    ->Join('videos','quiz.video_id','videos.id')
+    ->select('quiz.*','videos.title as videos_title')
+    ->first();
+    if($row==null){
+      return redirect()->back();
+    }
+    $lessons=lessons::where('lessons.id',$row->lesson_id)->first();
+    $question=Questions::where('quiz_id',$row->id)->get();
+
+    # code...
+    return view('contrib.quiz.view', [
+        'row'=>$row,
+        'question'=>$question,
+        'lessons'=>$lessons
+    ]);
+  }
 
   public function edit($quiz_id){
     if (empty(Session::get('contribID'))) {
@@ -110,7 +131,7 @@ class QuizController extends Controller
            $store->updated_at =$now;
            $store->save();
 
-           return Redirect()->back()->with('success','Quiz Berhasil di update');
+           return Redirect('contributor/lessons/quiz/'.$quiz_id.'/view')->with('success','Quiz Berhasil di update');
   }
 
   public function delete_quiz($id){
@@ -123,7 +144,7 @@ class QuizController extends Controller
         $i = DB::table('quiz')->where('id',$id)->delete();
         if($i > 0)
         {
-          return redirect('contributor/lessons/'.$data->lesson_id.'/edit')->with('success-delete','Quiz berhasil di hapus');
+          return redirect('contributor/lessons/'.$data->lesson_id.'/view')->with('success-delete','Quiz berhasil di hapus');
         }else{
         return redirect()->back()->with('no-delete','Can not be removed!');
         }

@@ -99,50 +99,5 @@
 </div>
 <!-- END lESSON -->
 
-<!-- BEGIN QUIZ -->
-<div class="row">
-  <div class="col-md-12">
-    <div class="box-white">
-      <div class="box-header">
-        <div class="row">
-          <div class="col-md-6">
-            <div class="box-title">
-              <h4>Daftar Soal</h4>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="box-option text-right">
-              <a href="{{url('contributor/lessons/quiz/'.$row->id.'/edit/questions')}}" class="btn btn-danger">Edit</a>
-              <a href="{{url('contributor/lessons/quiz/'.$row->id.'/create/questions')}}" class="btn btn-info">Tambah Soal</a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="box-content">
-        <div class="table-responsive">
-          <table class="table table-striped table-hover">
-            <thead>
-              <tr>
-                <th>No</th>
-                <th>Judul</th>
-              </tr>
-            </thead>
-            <tbody>
-              <?php $i=1;?>
-              @foreach($question as $value)
-              <tr>
-                <td width="25">{{ $i }}</td>
-                <td>{{$value->question}}</td>
-              </tr>
-              <?php $i++;?>
-              @endforeach
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- END QUIZ -->
 
 @endsection()

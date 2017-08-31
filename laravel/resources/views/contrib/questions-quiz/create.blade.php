@@ -5,8 +5,8 @@
 		<ul class="breadcrumb">
 				<li><a href="{{ url('contributor') }}">Dashboard</a></li>
         <li><a href="{{ url('contributor/lessons') }}">Kelola Totorial</a></li>
-			  <li><a href="{{ url('contributor/lessons/'.$quiz->lessons_id.'/edit') }}">Kelola Quiz</a></li>
-				<li><a href="{{ url('contributor/lessons/quiz/'.$quiz->id.'/edit') }}">Kelola Soal</a></li>
+			  <li><a href="{{ url('contributor/lessons/'.$quiz->lesson_id.'/view') }}">Kelola Quiz</a></li>
+				<li><a href="{{ url('contributor/lessons/quiz/'.$quiz->id.'/view') }}">Kelola Soal</a></li>
         <li>Buat Soal</li>
 		</ul>
 </div>
@@ -49,7 +49,7 @@
 					<div class="form-group">
 						<label class="col-sm-2 control-label">Judul</label>
 						<div class="col-sm-10">
-							<input type="text" class="form-control" name="question[]" id="question0" placeholder="Contoh:Apa kepanjangan dari LTS pada versi Ubuntu?">
+							<input type="text" class="form-control" name="question[]" id="question0" placeholder="Contoh:Apa kepanjangan dari LTS pada versi Ubuntu?" required>
 						</div>
 					</div>
 					<hr>
@@ -64,7 +64,7 @@
 				      </div>
 						</div>
 						<div class="col-sm-7">
-							<input type="text" class="form-control" name="answer0[]" id="answer_a0" placeholder="Tulis Jawaban disini">
+							<input type="text" class="form-control" name="answer0[]" id="answer_a0" placeholder="Tulis Jawaban disini" required>
 						</div>
 						<div class="col-sm-2 text-right">
 							<div class="btn-group">
@@ -84,7 +84,7 @@
 				      </div>
 						</div>
 						<div class="col-sm-7">
-							<input type="text" class="form-control" name="answer0[]" id="answer_b0" placeholder="Tulis Jawaban disini">
+							<input type="text" class="form-control" name="answer0[]" id="answer_b0" placeholder="Tulis Jawaban disini" required>
 						</div>
 						<div class="col-sm-2 text-right">
 							<div class="btn-group">
@@ -105,7 +105,7 @@
 				      </div>
 						</div>
 						<div class="col-sm-7">
-							<input type="text" class="form-control" name="answer0[]" id="answer_c0" placeholder="Tulis Jawaban disini">
+							<input type="text" class="form-control" name="answer0[]" id="answer_c0" placeholder="Tulis Jawaban disini" required>
 						</div>
 						<div class="col-sm-2 text-right">
 							<div class="btn-group">
@@ -126,7 +126,7 @@
 				      </div>
 						</div>
 						<div class="col-sm-7">
-							<input type="text" class="form-control" name="answer0[]" id="answer_d0" placeholder="Tulis Jawaban disini">
+							<input type="text" class="form-control" name="answer0[]" id="answer_d0" placeholder="Tulis Jawaban disini" required>
 						</div>
 						<div class="col-sm-2 text-right">
 							<div class="btn-group">
@@ -183,7 +183,7 @@
 							 '<div class="form-group">'+
 							 '<label class="col-sm-2 control-label">Judul</label>'+
 							 '<div class="col-sm-10">'+
-							 '<input type="text" class="form-control" name="question[]" id="question'+ j +'" placeholder="Contoh:Apa kepanjangan dari LTS pada versi Ubuntu?">'+
+							 '<input type="text" class="form-control" name="question[]" id="question'+ j +'" placeholder="Contoh:Apa kepanjangan dari LTS pada versi Ubuntu?" required>'+
 							 '</div>'+
 							 '</div>'+
 							 '<hr>'+
@@ -199,7 +199,7 @@
 							 '</div>'+
 
 							 '<div class="col-sm-7">'+
-							  '<input type="text" class="form-control" name="answer'+ j +'[]" id="answer_a'+ j +'" placeholder="Tulis Jawaban disini">'+
+							  '<input type="text" class="form-control" name="answer'+ j +'[]" id="answer_a'+ j +'" placeholder="Tulis Jawaban disini" required>'+
 							 '</div>'+
 							 '<div class="col-sm-2 text-right">'+
 							 '<div class="btn-group">'+
@@ -219,7 +219,7 @@
 							 '</div>'+
 							 '</div>'+
 							 '<div class="col-sm-7">'+
-							 '<input type="text" class="form-control" name="answer'+ j +'[]" id="answer_b'+ j +'" placeholder="Tulis Jawaban disini">'+
+							 '<input type="text" class="form-control" name="answer'+ j +'[]" id="answer_b'+ j +'" placeholder="Tulis Jawaban disini" required>'+
 							 '</div>'+
 							 '<div class="col-sm-2 text-right">'+
 							 '<div class="btn-group">'+
@@ -239,7 +239,7 @@
 							 '</div>'+
 							 '</div>'+
 							 '<div class="col-sm-7">'+
-							 '<input type="text" class="form-control" name="answer'+ j +'[]" id="answer_c'+ j +'" placeholder="Tulis Jawaban disini">'+
+							 '<input type="text" class="form-control" name="answer'+ j +'[]" id="answer_c'+ j +'" placeholder="Tulis Jawaban disini" required>'+
 							 '</div>'+
 							 '<div class="col-sm-2 text-right">'+
 							 '<div class="btn-group">'+
@@ -259,7 +259,7 @@
 							 '</div>'+
 							 '</div>'+
 							 '<div class="col-sm-7">'+
-							 '<input type="text" class="form-control" name="answer'+ j +'[]" id="answer_d'+ j +'" placeholder="Tulis Jawaban disini">'+
+							 '<input type="text" class="form-control" name="answer'+ j +'[]" id="answer_d'+ j +'" placeholder="Tulis Jawaban disini" required>'+
 							 '</div>'+
 							 '<div class="col-sm-2 text-right">'+
 							 '<div class="btn-group">'+

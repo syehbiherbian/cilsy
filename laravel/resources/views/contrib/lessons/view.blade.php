@@ -114,8 +114,8 @@
           </div>
           <div class="col-md-6">
             <div class="box-option text-right">
-              <a href="#" class="btn btn-danger">Edit</a>
-              <a href="#" class="btn btn-info">Tambah Video</a>
+              <a href="{{url('contributor/lessons/'.$row->id.'/edit/videos')}}" class="btn btn-danger">Edit</a>
+              <a href="{{url('contributor/lessons/'.$row->id.'/create/videos')}}" class="btn btn-info">Tambah Video</a>
             </div>
           </div>
         </div>
@@ -127,15 +127,27 @@
               <tr>
                 <th>No</th>
                 <th>Judul</th>
+
               </tr>
             </thead>
             <tbody>
-              <?php for ($i=1; $i < 6 ; $i++) { ?>
+            @if(count($video) == 0 )
+                <tr>
+                    <td colspan="3">Tidak Ada data</td>
+                </tr>
+            @endif
+               <?php $i=1;?>
+             @foreach($video as $value)
+                @if($value->lessons_id==$row->id)
               <tr>
                 <td width="25">{{ $i }}</td>
-                <td>Pengenalan dan Instalasi ubuntu server</td>
+                <td>{{$value->title}}</td>
+
               </tr>
-              <?php } ?>
+              <?php $i++;?>
+              @endif
+              @endforeach
+
             </tbody>
           </table>
         </div>
@@ -157,8 +169,7 @@
           </div>
           <div class="col-md-6">
             <div class="box-option text-right">
-              <a href="#" class="btn btn-danger">Edit</a>
-              <a href="#" class="btn btn-info">Tambah Kuis</a>
+              <a href="{{url('contributor/lessons/'.$row->id.'/create/quiz')}}" class="btn btn-info">Tambah Kuis</a>
             </div>
           </div>
         </div>
@@ -173,12 +184,26 @@
               </tr>
             </thead>
             <tbody>
-              <?php for ($i=1; $i < 6 ; $i++) { ?>
-              <tr>
-                <td width="25">{{ $i }}</td>
-                <td>Kuis Tahap 1</td>
-              </tr>
-              <?php } ?>
+
+                @if(count($quiz) == 0 )
+                <tr>
+                    <td colspan="2">Tidak Ada data</td>
+                </tr>
+                @endif
+                 <?php $i=1;?>
+                  @foreach($quiz as $value)
+                     @if($value->lesson_id==$row->id)
+                   <tr>
+                     <td width="25">{{ $i }}</td>
+                     <td>{{$value->title}}</td>
+                     <td width=100><a href="{{url('contributor/lessons/quiz/'.$value->id.'/view')}}" class="btn btn-danger">View</a></td>
+                   </tr>
+                   <?php $i++;?>
+                   @endif
+                   @endforeach
+
+
+
             </tbody>
           </table>
         </div>
@@ -200,8 +225,8 @@
           </div>
           <div class="col-md-6">
             <div class="box-option text-right">
-              <a href="#" class="btn btn-danger">Edit</a>
-              <a href="#" class="btn btn-info">Tambah Lampiran</a>
+              <a href="{{url('contributor/lessons/'.$row->id.'/edit/attachments')}}" class="btn btn-danger">Edit</a>
+              <a href="{{url('contributor/lessons/'.$row->id.'/create/attachments')}}" class="btn btn-info">Tambah Lampiran</a>
             </div>
           </div>
         </div>
@@ -216,12 +241,21 @@
               </tr>
             </thead>
             <tbody>
-              <?php for ($i=1; $i < 6 ; $i++) { ?>
-              <tr>
-                <td width="25">{{ $i }}</td>
-                <td>Installer Ubuntu 14.04 LTS</td>
-              </tr>
-              <?php } ?>
+                @if(count($files) == 0 )
+                    <tr>
+                        <td colspan="3">Tidak Ada data</td>
+                    </tr>
+                @endif
+                <?php $i=1;?>
+              @foreach($files as $value)
+                 @if($value->lesson_id==$row->id)
+               <tr>
+                 <td width="25">{{ $i }}</td>
+                 <td>{{$value->title}}</td>
+               </tr>
+               <?php $i++;?>
+               @endif
+               @endforeach
             </tbody>
           </table>
         </div>

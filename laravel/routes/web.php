@@ -155,15 +155,23 @@ Route::get('contributor/lessons/create/submit', 'Contributors\LessonsController@
 Route::post('contributor/lessons/create/submit', 'Contributors\LessonsController@doSubmit');
 
 // Videos
-Route::get('contributor/lessons/create/videos', 'Contributors\VideosController@create');
+Route::get('contributor/lessons/{lesson_id}/create/videos', 'Contributors\VideosController@create');
+Route::post('contributor/lessons/{lesson_id}/create/videos', 'Contributors\VideosController@doCreate');
+Route::get('contributor/lessons/{lesson_id}/edit/videos', 'Contributors\VideosController@edit');
+Route::post('contributor/lessons/{lesson_id}/edit/videos', 'Contributors\VideosController@doEdit');
+
 
 // Attachment
-Route::get('contributor/lessons/create/attachments', 'Contributors\AttachmentsController@create');
+Route::get('contributor/lessons/{lesson_id}/create/attachments', 'Contributors\AttachmentsController@create');
+Route::post('contributor/lessons/{lesson_id}/create/attachments', 'Contributors\AttachmentsController@doCreate');
+Route::get('contributor/lessons/{lesson_id}/edit/attachments', 'Contributors\AttachmentsController@edit');
+Route::post('contributor/lessons/{lesson_id}/edit/attachments', 'Contributors\AttachmentsController@doEdit');
 
 // Quiz
 Route::get('contributor/lessons/{id}/create/quiz', 'Contributors\QuizController@create');
 Route::post('contributor/lessons/{id}/store_quiz', 'Contributors\QuizController@store_quiz');
 Route::post('contributor/lessons/{id}/update_quiz', 'Contributors\QuizController@update_quiz');
+Route::get('contributor/lessons/quiz/{quiz_id}/view', 'Contributors\QuizController@view');
 Route::get('contributor/lessons/quiz/{quiz_id}/edit', 'Contributors\QuizController@edit');
 Route::get('contributor/lessons/quiz/{quiz_id}/delete', 'Contributors\QuizController@delete_quiz');
 

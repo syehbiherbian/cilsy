@@ -11,6 +11,7 @@ use App\members;
 use App\lessons;
 use App\categories;
 use App\videos;
+use App\Quiz;
 use App\services;
 use App\files;
 use DateTime;
@@ -238,9 +239,15 @@ class LessonsController extends Controller
     ->leftJoin('lessons_detail','lessons.id','lessons_detail.lesson_id')
     ->select('lessons.*','categories.title as category_title')
     ->first();
+    $video =videos::where('lessons_id',$id)->get();
+    $quiz = Quiz::where('lesson_id',$id)->get();
+    $files= files::where('lesson_id',$id)->get();
     # code...
     return view('contrib.lessons.view',[
         'row'=>$row,
+        'quiz'=>$quiz,
+        'video'=>$video,
+        'files'=>$files,
     ]);
   }
 
@@ -300,8 +307,6 @@ class LessonsController extends Controller
           }else{
               $url_image= 'http://localhost:8080/cilsy/assets/source/lessons/'.$lessonsfilename;
           }
-
-
 
           $store                  = lessons::find($id);
           $store->contributor_id  = $cid;
