@@ -22,6 +22,9 @@ class AttachmentsController extends Controller
     if($lesson==null){
         return redirect('contributor/not-found');
     }
+    if($lesson->status==2){
+        return redirect('contributor/lessons/'.$lessonsid.'/view')->with('no-delete','Totorial sedang / dalam verifikasi!');
+    }
     $files=files::where('lesson_id',$lessonsid)->get();
     $count_files=count($files);
 
@@ -115,6 +118,9 @@ class AttachmentsController extends Controller
 
       if($lesson==null){
           return redirect('contributor/not-found');
+      }
+      if($lesson->status==2){
+          return redirect('contributor/lessons/'.$lessonsid.'/view')->with('no-delete','Totorial sedang / dalam verifikasi!');
       }
       $files=files::where('lesson_id',$lessonsid)->get();
       $count_files=count($files);

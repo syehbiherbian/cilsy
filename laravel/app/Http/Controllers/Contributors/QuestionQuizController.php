@@ -13,6 +13,7 @@ use DB;
 use App\Quiz;
 use App\Questions;
 use App\Answars;
+use App\lessons;
 class QuestionQuizController extends Controller
 {
 
@@ -23,11 +24,19 @@ class QuestionQuizController extends Controller
       }
       $quiz = Quiz::where('id',$quiz_id)->first();
       if(count($quiz) < 1){
-        return redirect()->back()->with('get_errol','sorry, data not found');
+        return redirect('not-found');
       }
-      # code...
+      $lesson= lessons::where('id',$quiz->lesson_id)->first();
+      if($lesson->status==2){
+          return redirect('contributor/lessons/'.$quiz->lesson_id.'/view')->with('no-delete','Totorial sedang / dalam verifikasi!');
+      }
+
+      $question=Questions::where('quiz_id',$quiz_id)->get();
+      $count_question=count($question);
+
       return view('contrib.questions-quiz.create',[
           'quiz'=>$quiz,
+          'count_question'=>$count_question,
       ]);
     }
 
@@ -45,6 +54,7 @@ class QuestionQuizController extends Controller
              }
              $now                = new DateTime();
              $question           = Input::get('question');
+             $questionid           = Input::get('questionid');
 
               $count=Questions::where('id',$quiz_id)->count();
               $i=0;
@@ -56,12 +66,12 @@ class QuestionQuizController extends Controller
                 $store_question->question_no=$no;
                 $store_question->created_at =$now;
                 $store_question->save();
-                $answer           = Input::get('answer'.$i);
+                $answer           = Input::get('answer'.$questionid[$key]);
+                $i=$questionid[$key];
 
                 $check=Questions::where('quiz_id','=',$quiz_id)->orderBy('id','=','desc')->first();
                 $j=0;
                 foreach ($answer as $key => $a) {
-                  $check_a= Answars::where('question_id','=',$check->question_id)->where('type','=','a')->get();
                   $store_answer_a = new Answars();
                   $store_answer_a->question_id= $check->id;
                   $store_answer_a->type = $j;
@@ -91,15 +101,21 @@ class QuestionQuizController extends Controller
           }
           $quiz = Quiz::where('id',$quiz_id)->first();
           if(count($quiz) < 1){
-            return redirect()->back()->with('get_errol','sorry, data not found');
+            return redirect('not-found');
+          }
+          $lesson= lessons::where('id',$quiz->lesson_id)->first();
+          if($lesson->status==2){
+              return redirect('contributor/lessons/'.$quiz->lesson_id.'/view')->with('no-delete','Totorial sedang / dalam verifikasi!');
           }
           $question = Questions::where('quiz_id',$quiz_id)->get();
           $answer = Answars::all();
+          $count_question=count($question);
           # code...
           return view('contrib.questions-quiz.edit',[
               'quiz'=>$quiz,
               'question'=>$question,
               'answer'=>$answer,
+              'count_question'=>$count_question,
           ]);
       }
 
@@ -118,6 +134,8 @@ class QuestionQuizController extends Controller
                }
                $now                = new DateTime();
                $question           = Input::get('question');
+               $questionid           = Input::get('questionid');
+
                //delete questin old
                $checkdata=Questions::where('quiz_id',$quiz_id)->get();
                 foreach ($checkdata as $key => $questions) {
@@ -134,12 +152,12 @@ class QuestionQuizController extends Controller
                   $store_question->question_no=$no;
                   $store_question->created_at =$now;
                   $store_question->save();
-                  $answer           = Input::get('answer'.$i);
-
+                  $answer           = Input::get('answer'.$questionid[$key]);
+                  $i=$questionid[$key];
                   $check=Questions::where('quiz_id','=',$quiz_id)->orderBy('id','=','desc')->first();
                   $j=0;
+
                   foreach ($answer as $key => $a) {
-                    $check_a= Answars::where('question_id','=',$check->question_id)->where('type','=','a')->get();
                     $store_answer_a = new Answars();
                     $store_answer_a->question_id= $check->id;
                     $store_answer_a->type = $j;

@@ -22,18 +22,18 @@
 					<h3>{{$lesson->title}}</h3>
 			 	</div>
 				<?php $i=0;?>
-				@if(count($video)==0)
-				<input type="hidden" name="count<?php echo $i; ?>" value="<?php echo $i; ?>" class="count-all">
-				@endif
+
+				<input type="hidden" name="count0" value="0" class="count-all">
+
 				@foreach($video as $value)
 				<?php $n= $i + 1; ?>
 		        <?php $a= $i++;?>
 				<div class="item" id="row{{$i}}">
-					<input type="hidden" name="count<?php echo $i; ?>" value="<?php echo $i; ?>" class="count-all">
+				<input type="hidden" name="count<?php echo $i; ?>" value="<?php echo $i; ?>" class="count-all get<?php echo $i; ?>" rowname="<?php echo $i; ?>">
 					<div class="option">
 						<div class="row">
 							<div class="col-md-6">
-								<h4><?php echo $i; ?>.Video <?php echo $i; ?></h4>
+								<h4 class="no<?php echo $i; ?>"><?php echo $i; ?>.Video <?php echo $i; ?></h4>
 							</div>
 							<div class="col-md-6 text-right">
 								<div class="btn-group">
@@ -110,7 +110,7 @@
               // <td><input type="hidden" class="form-control" name="qty[]" id="varqty'+ j +'"></td>
                $('#dynamic_field').append('<div class="col-sm-12"style="margin-top:20px;margin-bottom:20px;" id="row'+n+'">'+
 			   '<div class="item">'+
-			   	 '<input type="hidden" name="count'+n+'" value="'+n+'" class="count-all">'+
+			   	'<input type="hidden" name="count'+n+'" value="'+n+'" class="count-all get'+n+'" rowname="'+n+'">'+
 				   '<div class="option">'+
 					   '<div class="row">'+
 						   '<div class="col-md-6">'+
@@ -158,11 +158,15 @@
           });
           $(document).on('click', '.btn_remove', function(){
                var button_id = $(this).attr("id");
+			   var get=$('.get'+button_id).val();
+
+				  // 	  alert(button_id);
 			   $(".count-all").each(function(){
 				  var idrow=$(this).val();
-				  if(idrow > button_id){
+				  if(idrow > get){
 					  var hitung = parseInt(idrow)-1;
-					  $('.no'+idrow).html(hitung+'.Video '+hitung);
+					  var rowname= $(this).attr('rowname');
+					  $('.no'+rowname).html(hitung+'.Video '+hitung);
 					  $(this).val(hitung);
 				  }
 			  });

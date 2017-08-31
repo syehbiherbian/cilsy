@@ -69,7 +69,7 @@
 
 	      <div class="form-group">
 					<div class="col-sm-2">
-						<button type="button"  id="addanswer" name="button" class="btn btn-default btn-outline"><i class=""></i>tambah video</button>
+						<button type="button"  id="addanswer" name="button" class="btn btn-default btn-outline"><i class=""></i>Tambah Video</button>
 					</div>
 
 	      </div>

@@ -20,7 +20,10 @@ class VideosController extends Controller
     $lesson= lessons::where('id',$lessonsid)->first();
 
     if($lesson==null){
-        return redirect('contributor/not-found');
+        return redirect('not-found');
+    }
+    if($lesson->status==2){
+        return redirect('contributor/lessons/'.$lessonsid.'/view')->with('no-delete','Totorial sedang / dalam verifikasi!');
     }
     $video=videos::where('lessons_id',$lessonsid)->get();
     $count_video=count($video);
@@ -128,7 +131,10 @@ class VideosController extends Controller
       $lesson= lessons::where('id',$lessonsid)->first();
 
       if($lesson==null){
-          return redirect('contributor/not-found');
+          return redirect('not-found');
+      }
+      if($lesson->status==2){
+          return redirect('contributor/lessons/'.$lessonsid.'/view')->with('no-delete','Totorial sedang / dalam verifikasi!');
       }
       $video=videos::where('lessons_id',$lessonsid)->get();
       $count_video=count($video);

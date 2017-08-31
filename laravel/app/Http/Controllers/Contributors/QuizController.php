@@ -25,7 +25,10 @@ class QuizController extends Controller
     ->where('id',$lessons_id)
     ->first();
     if(empty($data)){
-      return redirect()->back();
+        return redirect('not-found');
+    }
+    if($data->status==2){
+        return redirect('contributor/lessons/'.$lessons_id.'/view')->with('no-delete','Totorial sedang / dalam verifikasi!');
     }
 
     $video= videos::where('lessons_id',$lessons_id)->get();
@@ -91,7 +94,7 @@ class QuizController extends Controller
     }
     $row=Quiz::where('id','=',$quiz_id)->first();
     if($row==null){
-      return redirect()->back();
+     return redirect('not-found');
     }
     $lessons=lessons::where('lessons.id',$row->lesson_id)->first();
     $question=Questions::where('quiz_id',$row->id)->get();
@@ -146,7 +149,7 @@ class QuizController extends Controller
         {
           return redirect('contributor/lessons/'.$data->lesson_id.'/view')->with('success-delete','Quiz berhasil di hapus');
         }else{
-        return redirect()->back()->with('no-delete','Can not be removed!');
+          return redirect()->back()->with('no-delete','Delete totorial gagal!');
         }
 
   }

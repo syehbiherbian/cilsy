@@ -5,7 +5,7 @@
 		<ul class="breadcrumb">
 				<li><a href="{{ url('contributor') }}">Dashboard</a></li>
         <li><a href="{{ url('contributor/lessons') }}">Kelola Totorial</a></li>
-			  <li><a href="{{ url('contributor/lessons/'.$quiz->lessons_id.'/view') }}">Kelola Quiz</a></li>
+			  <li><a href="{{ url('contributor/lessons/'.$quiz->lesson_id.'/view') }}">Kelola Quiz</a></li>
 				<li><a href="{{ url('contributor/lessons/quiz/'.$quiz->id.'/view') }}">Kelola Soal</a></li>
         <li>Edit Soal</li>
 		</ul>
@@ -32,20 +32,24 @@
 			 	</div>
 
         <?php $i =0; ?>
+
+		<input type="hidden" name="count0" value="0" class="count-all" rowname="0">
+
         @foreach($question as $value)
         <?php $n= $i + 1; ?>
         <?php $a= $i++;?>
 				<div class="item" id="row{{$i}}">
+					<input type="hidden" name="count<?php echo $i; ?>" value="<?php echo $i; ?>" class="count-all get<?php echo $i; ?>" rowname="<?php echo $i; ?>">
 					<div class="option">
 						<div class="row">
 							<div class="col-md-6">
-								<h4><?php echo $i; ?>.Soal <?php echo $i; ?></h4>
+								<h4 class="no<?php echo $i; ?>"><?php echo $i; ?>.Soal <?php echo $i; ?></h4>
 							</div>
 							<div class="col-md-6 text-right">
 								<div class="btn-group">
 									<button type="button" class="btn btn-default btn-outline"><img src="{{ asset('template/kontributor/img/icon/sort-up.png') }}" alt="" width="15"></button>
 									<button type="button" class="btn btn-default btn-outline"><img src="{{ asset('template/kontributor/img/icon/sort-down.png') }}" alt="" width="15"></button>
-								  <button type="button" class="btn btn-default btn-outline  btn_remove" id="{{$i}}" ><img src="{{ asset('template/kontributor/img/icon/delete.png') }}" alt="" width="15"></button>
+								  <button type="button" class="btn btn-default btn-outline  btn_remove  hapus<?php echo $i; ?>" id="{{$i}}" ><img src="{{ asset('template/kontributor/img/icon/delete.png') }}" alt="" width="15"></button>
 								</div>
 							</div>
 						</div>
@@ -54,7 +58,8 @@
 					<div class="form-group">
 						<label class="col-sm-2 control-label">Judul</label>
 						<div class="col-sm-10">
-							<input type="text" class="form-control" name="question[]" id="question<?php echo $a;?>" placeholder="Contoh:Apa kepanjangan dari LTS pada versi Ubuntu?" value="{{$value->question}}">
+							<input type="text" class="form-control" name="question[]" id="question<?php echo $a;?>" placeholder="Contoh:Apa kepanjangan dari LTS pada versi Ubuntu?" value="{{$value->question}}" required>
+							<input type="hidden" name="questionid[]" value="{{$a}}" id="questionid<?php echo $a;?>">
 						</div>
 					</div>
 					<hr>
@@ -70,7 +75,7 @@
 				      </div>
 						</div>
 						<div class="col-sm-7">
-							<input type="text" class="form-control" name="answer<?php echo $a;?>[]" id="answer_a<?php echo $a;?>" placeholder="Tulis Jawaban disini" value="{{$answers->answer}}">
+							<input type="text" class="form-control" required name="answer<?php echo $a;?>[]" id="answer_a<?php echo $a;?>" placeholder="Tulis Jawaban disini" value="{{$answers->answer}}">
 						</div>
 						<div class="col-sm-2 text-right">
 							<div class="btn-group">
@@ -94,7 +99,7 @@
 				      </div>
 						</div>
 						<div class="col-sm-7">
-							<input type="text" class="form-control" name="answer<?php echo $a;?>[]" id="answer_b<?php echo $a;?>" placeholder="Tulis Jawaban disini" value="{{$answers->answer}}">
+							<input type="text" class="form-control" required name="answer<?php echo $a;?>[]" id="answer_b<?php echo $a;?>" placeholder="Tulis Jawaban disini" value="{{$answers->answer}}">
 						</div>
 						<div class="col-sm-2 text-right">
 							<div class="btn-group">
@@ -118,7 +123,7 @@
 				      </div>
 						</div>
 						<div class="col-sm-7">
-							<input type="text" class="form-control" name="answer<?php echo $a;?>[]" id="answer_c<?php echo $a;?>" placeholder="Tulis Jawaban disini"value="{{$answers->answer}}">
+							<input type="text" class="form-control" required name="answer<?php echo $a;?>[]" id="answer_c<?php echo $a;?>" placeholder="Tulis Jawaban disini"value="{{$answers->answer}}">
 						</div>
 						<div class="col-sm-2 text-right">
 							<div class="btn-group">
@@ -142,7 +147,7 @@
 				      </div>
 						</div>
 						<div class="col-sm-7">
-							<input type="text" class="form-control" name="answer<?php echo $a;?>[]" id="answer_d<?php echo $a;?>" placeholder="Tulis Jawaban disini" value="{{$answers->answer}}">
+							<input type="text" class="form-control" required name="answer<?php echo $a;?>[]" id="answer_d<?php echo $a;?>" placeholder="Tulis Jawaban disini" value="{{$answers->answer}}">
 						</div>
 						<div class="col-sm-2 text-right">
 							<div class="btn-group">
@@ -157,12 +162,12 @@
 
         @endforeach
 
-				<!-- <div class="row" id="dynamic_field">
-				</div> -->
+				<div class="row" id="dynamic_field">
+				</div>
 	      <div class="form-group">
-					<!-- <div class="col-sm-2">
-						<button type="button" name="button" id="addanswer"  class="btn btn-default btn-outline"><img src="{{ asset('template/kontributor/img/icon/tambah.png') }}" alt="" width="15"> tambah soal</button>
-					</div> -->
+					<div class="col-sm-2">
+						<button type="button" name="button" id="addanswer"  class="btn btn-default btn-outline"><img src="{{ asset('template/kontributor/img/icon/tambah.png') }}" alt="" width="15"> Tambah Soal</button>
+					</div>
 	        <div class="col-sm-12 text-right">
 	          <a class="btn btn-danger">Batal</a>
 	          <button type="submit" class="btn btn-info">Submit</button>
@@ -175,25 +180,29 @@
 <script type="text/javascript" src="{{asset('template/kontributor/js/jquery.min.js')}}"></script>
 <script>
      $(document).ready(function(){
-          var i=0;
+		 var count="{{$count_question}}";
+ 	    	var i= parseInt(count);
           $('#addanswer').click(function(){
-							n=i + 2;
+							//d=i + 2;
+				  var no= $('.count-all').last().val();
+	 			   n=parseInt(no) + 1;
 
               j=++i;
               //<td width="40%"><input type="text" class="form-control" name="varianname[]" id="varname'+ j +'"></td>
               // <td><input type="hidden" class="form-control" name="qty[]" id="varqty'+ j +'"></td>
-               $('#dynamic_field').append('<div class="col-sm-12"style="margin-top:20px;margin-bottom:20px;" id="row'+i+'">'+
+               $('#dynamic_field').append('<div class="col-sm-12"style="margin-top:20px;margin-bottom:20px;" id="row'+n+'">'+
 							 '<div class="item">'+
+							  '<input type="hidden" name="count'+n+'" value="'+n+'" class="count-all get'+n+'" rowname="'+n+'">'+
 							 '<div class="option">'+
 							 '<div class="row">'+
 							 '<div class="col-md-6">'+
-							 '<h4>'+n+'.Soal '+n+'</h4>'+
+							  '<h4 class="no'+n+'">'+n+'.Soal '+n+'</h4>'+
 							 '</div>'+
 							 '<div class="col-md-6 text-right">'+
 							 '<div class="btn-group">'+
 							 '<button type="button" class="btn btn-default btn-outline"><img src="{{ asset('template/kontributor/img/icon/sort-up.png') }}" alt="" width="15"></button>'+
 							 '<button type="button" class="btn btn-default btn-outline"><img src="{{ asset('template/kontributor/img/icon/sort-down.png') }}" alt="" width="15"></button>'+
-							 '<button type="button" class="btn btn-default btn-outline btn_remove" id="'+i+'"><img src="{{ asset('template/kontributor/img/icon/delete.png') }}" alt="" width="15"></button>'+
+							 '<button type="button" class="btn btn-default btn-outline btn_remove" id="'+n+'"><img src="{{ asset('template/kontributor/img/icon/delete.png') }}" alt="" width="15"></button>'+
 							 '</div>'+
 							 '</div>'+
 							 '</div>'+
@@ -202,7 +211,8 @@
 							 '<div class="form-group">'+
 							 '<label class="col-sm-2 control-label">Judul</label>'+
 							 '<div class="col-sm-10">'+
-							 '<input type="text" class="form-control" name="question[]" id="question'+ j +'" placeholder="Contoh:Apa kepanjangan dari LTS pada versi Ubuntu?">'+
+							 '<input type="text" required class="form-control" name="question[]" id="question'+ j +'" placeholder="Contoh:Apa kepanjangan dari LTS pada versi Ubuntu?">'+
+							 '<input type="hidden" name="questionid[]" value="'+ j +'" id="questionid'+ j +'">'+
 							 '</div>'+
 							 '</div>'+
 							 '<hr>'+
@@ -218,7 +228,7 @@
 							 '</div>'+
 
 							 '<div class="col-sm-7">'+
-							  '<input type="text" class="form-control" name="answer'+ j +'[]" id="answer_a'+ j +'" placeholder="Tulis Jawaban disini">'+
+							  '<input type="text" required  class="form-control" name="answer'+ j +'[]" id="answer_a'+ j +'" placeholder="Tulis Jawaban disini">'+
 							 '</div>'+
 							 '<div class="col-sm-2 text-right">'+
 							 '<div class="btn-group">'+
@@ -238,7 +248,7 @@
 							 '</div>'+
 							 '</div>'+
 							 '<div class="col-sm-7">'+
-							 '<input type="text" class="form-control" name="answer'+ j +'[]" id="answer_b'+ j +'" placeholder="Tulis Jawaban disini">'+
+							 '<input type="text" required class="form-control" name="answer'+ j +'[]" id="answer_b'+ j +'" placeholder="Tulis Jawaban disini">'+
 							 '</div>'+
 							 '<div class="col-sm-2 text-right">'+
 							 '<div class="btn-group">'+
@@ -258,7 +268,7 @@
 							 '</div>'+
 							 '</div>'+
 							 '<div class="col-sm-7">'+
-							 '<input type="text" class="form-control" name="answer'+ j +'[]" id="answer_c'+ j +'" placeholder="Tulis Jawaban disini">'+
+							 '<input type="text" required class="form-control" name="answer'+ j +'[]" id="answer_c'+ j +'" placeholder="Tulis Jawaban disini">'+
 							 '</div>'+
 							 '<div class="col-sm-2 text-right">'+
 							 '<div class="btn-group">'+
@@ -278,7 +288,7 @@
 							 '</div>'+
 							 '</div>'+
 							 '<div class="col-sm-7">'+
-							 '<input type="text" class="form-control" name="answer'+ j +'[]" id="answer_d'+ j +'" placeholder="Tulis Jawaban disini">'+
+							 '<input type="text" required class="form-control" name="answer'+ j +'[]" id="answer_d'+ j +'" placeholder="Tulis Jawaban disini">'+
 							 '</div>'+
 							 '<div class="col-sm-2 text-right">'+
 							 '<div class="btn-group">'+
@@ -294,6 +304,18 @@
           $(document).on('click', '.btn_remove', function(){
 
                var button_id = $(this).attr("id");
+			   var get=$('.get'+button_id).val();
+
+				  // 	  alert(button_id);
+			   $(".count-all").each(function(){
+				  var idrow=$(this).val();
+				  if(idrow > get){
+					  var hitung = parseInt(idrow)-1;
+					  var rowname= $(this).attr('rowname');
+					  $('.no'+rowname).html(hitung+'.Soal '+hitung);
+					  $(this).val(hitung);
+				  }
+			  });
                $('#row'+button_id+'').remove();
           });
 

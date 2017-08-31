@@ -2,7 +2,12 @@
 @section('title','')
 @section('breadcumbs')
 <div id="navigation">
-    <a href="{{ url('contributor/lessons/quiz/'.$row->id.'/delete')}}" class="btn btn-danger pull-right">Hapus Quiz</a>
+    <form id="{{ $row->id }}" action="{{ url('contributor/lessons/quiz/'.$row->id.'/delete')}}" method="get">
+          <input type="hidden" name="_token" value="{{ csrf_token() }}">
+          <input type="hidden" name="_method" value="DELETE">
+          <button type="button"  title="Hapus Quiz" data-toggle="tooltip" class="btn btn-danger pull-right" data-toggle="tooltip" onclick="checkdelete({{$row->id}})">Hapus Quiz</button>
+    </form>
+    <!-- <a href="{{ url('')}}" class="btn btn-danger pull-right">Hapus Quiz</a> -->
 		<ul class="breadcrumb">
 				<li><a href="{{ url('contributor') }}">Dashboard</a></li>
         <li><a href="{{ url('contributor/lessons') }}">Kelola Totorial</a></li>
@@ -138,5 +143,30 @@
   </div>
 </div>
 <!-- END QUIZ -->
+<script>
+ function checkdelete(id){
 
+   swal({
+     title: "Apakah kamu yakin?",
+     text: "Anda tidak akan dapat memulihkan data ini!",
+     type: "warning",
+     showCancelButton: true,
+     confirmButtonColor: "#DD6B55",
+     confirmButtonText: "Ya, Hapus Quiz!",
+     cancelButtonText: "Tidak, Batalkan!",
+     closeOnConfirm: false,
+     closeOnCancel: false
+     },
+     function(isConfirm){
+     if (isConfirm) {
+
+       $('#'+id).submit();
+
+       swal("Deleted!", "Data Anda telah dihapus.", "success");
+     } else {
+       swal("Cancelled", "Data Anda aman :)", "error");
+     }
+     });
+ }
+ </script>
 @endsection()
