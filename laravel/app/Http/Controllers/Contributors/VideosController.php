@@ -85,7 +85,7 @@ class VideosController extends Controller
                 if($imagefilename ==''){
                     $url_image= $imagefilename;
                 }else{
-                    $url_image= 'http://localhost:8080/cilsy/assets/source/lessons/video-'.$i.'/'.$imagefilename;
+                    $url_image= 'http://localhost/cilsy/assets/source/lessons/video-'.$i.'/'.$imagefilename;
                 }
 
                 //insert video
@@ -98,7 +98,7 @@ class VideosController extends Controller
                 if($lessonsfilename ==''){
                     $url_video= $lessonsfilename;
                 }else{
-                    $url_video= 'http://localhost:8080/cilsy/assets/source/lessons/video-'.$i.'/'.$lessonsfilename;
+                    $url_video= 'http://localhost/cilsy/assets/source/lessons/video-'.$i.'/'.$lessonsfilename;
                 }
 
 
@@ -200,7 +200,7 @@ class VideosController extends Controller
                 if($imagefilename ==''){
                     $url_image= $image_text[$key];
                 }else{
-                    $url_image= 'http://localhost:8080/cilsy/assets/source/lessons/video-'.$i.'/'.$imagefilename;
+                    $url_image= 'http://localhost/cilsy/assets/source/lessons/video-'.$i.'/'.$imagefilename;
                 }
 
                 //insert video
@@ -213,7 +213,7 @@ class VideosController extends Controller
                 if($lessonsfilename ==''){
                     $url_video= $video_text[$key];
                 }else{
-                    $url_video= 'http://localhost:8080/cilsy/assets/source/lessons/video-'.$i.'/'.$lessonsfilename;
+                    $url_video= 'http://localhost/cilsy/assets/source/lessons/video-'.$i.'/'.$lessonsfilename;
                 }
 
                 $store                  = new videos;

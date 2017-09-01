@@ -85,7 +85,7 @@ class AttachmentsController extends Controller
                 if($lessonsfilename ==''){
                     $url_files= $lessonsfilename;
                 }else{
-                    $url_files= 'http://localhost:8080/cilsy/assets/source/lessons/files-'.$i.'/'.$lessonsfilename;
+                    $url_files= 'http://localhost/cilsy/assets/source/lessons/files-'.$i.'/'.$lessonsfilename;
                 }
 
 
@@ -186,7 +186,7 @@ class AttachmentsController extends Controller
                 if($lessonsfilename ==''){
                     $url_files= $files_text[$key];
                 }else{
-                    $url_files= 'http://localhost:8080/cilsy/assets/source/lessons/files-'.$i.'/'.$lessonsfilename;
+                    $url_files= 'http://localhost/cilsy/assets/source/lessons/files-'.$i.'/'.$lessonsfilename;
                 }
 
                 $store                  = new files;

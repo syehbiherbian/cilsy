@@ -49,6 +49,7 @@
                                 <input type="hidden" name="image" class="form-control" id="img" value="{{ $lessons->image }}">
                               </div>
                             </div>
+                          @if($lessons->contributor_id == '0' ||$lessons->contributor_id == null)
                             <div class="form-group">
                             <label class="form-label">File Praktek</label>
                                 <div class="form-line">
@@ -62,6 +63,7 @@
                             <button type="button" name="add" id="add" class="btn btn-success">Tambah</button>
 
                             </div>
+                            @endif
 
                             <div class="form-group form-float">
                                 <h2 class="card-inside-title">Deskripsi</h2>
@@ -84,6 +86,70 @@
 
                                 </div>
                             </div>
+                            <div class="form-group form-float">
+                              <label class="form-label">Status</label>
+                                <div class="form-line">
+                                    <select class="form-control show-tick" id="status" name="status" onchange="chageRevisi()">
+                                        <option value="">-- Please select --</option>
+                                        <option value="0" <?php if($lessons->status==0){echo "selected";} ?>>Pending</option>
+                                        <option value="2"<?php if($lessons->status==2){echo "selected";} ?>>Verification</option>
+                                        <option value="1"<?php if($lessons->status==1){echo "selected";} ?>>Publish</option>
+                                        <option value="3"<?php if($lessons->status==3){echo "selected";} ?>>Revision</option>
+                                    </select>
+                                    <label class="form-label">Icon</label>
+                                </div>
+                            </div>
+
+                            <div class="form-group form-float" id ="note_revisi" style="display:none;">
+                                <h2 class="card-inside-title">Notes</h2>
+                                <div class="row clearfix">
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <textarea rows="2" name="notes" class="form-control no-resize" placeholder="Please type what you want...">
+                                                </textarea>
+                                            </divr>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                          </div>
+                          @if(count($revisi) > 0)
+                          <h2>Revision Lists</h2>
+                            <div class="table-responsive">
+                              <table class="table table-striped table-hover">
+                                <thead>
+                                  <tr>
+                                    <th>No</th>
+                                    <th>Note</th>
+                                    <th>Status</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+
+                                  <?php $i = 1; ?>
+                                  @foreach($revisi as $value)
+                                  <tr>
+                                    <td>{{ $i }} <input type="hidden" name="revisi_id[]" id="revisi<?php echo $i; ?>" value="{{$value->id}}"></td>
+                                    <td><?php echo nl2br($value->notes);?></td>
+                                    <td width="20%">
+                                      <select class="form-control show-tick" id="revisi_status<?php echo $i; ?>" name="revisi_status[]" onchange="chageRevisiSatus()">
+                                          <option value="">-- Please select --</option>
+                                          <option value="0"<?php if($value->status==0){echo "selected";} ?>>Pending</option>
+                                          <!-- <option value="2"<?php if($value->status==3){echo "selected";} ?>>Process</option> -->
+                                          <option value="1"<?php if($value->status==1){echo "selected";} ?>>Oke</option>
+                                          <option value="3"<?php if($value->status==2){echo "selected";} ?>>No</option>
+
+                                      </select>
+                                    </td>
+                                  </tr>
+                                  <?php $i++;?>
+                                  @endforeach
+                                </tbody>
+                              </table>
+                              </div>
+                              @endif
+
                             <button type="submit" class="btn btn-primary m-t-15 waves-effect">SUBMIT</button>
                         </form>
                     </div>
@@ -93,6 +159,16 @@
         <!-- Vertical Layout | With Floating Label -->
     </div>
     </section>
+    <script type="text/javascript">
+      function chageRevisi(){
+        var status= $('#status').val();
+        if(status==3){
+          $('#note_revisi').css('display','block');
+        }else{
+            $('#note_revisi').css('display','none');
+        }
+      }
+    </script>
     <script>
           function changeURL(){
             var str =$('#title').val();

@@ -3,10 +3,8 @@
 namespace App\Http\Controllers\Contributors;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
 use Illuminate\Support\Facades\Input;
 use Validator;
-
 use App\members;
 use App\lessons;
 use App\categories;
@@ -16,6 +14,7 @@ use App\services;
 use App\files;
 use App\Questions;
 use App\Answars;
+use App\revision;
 use DateTime;
 
 use Session;
@@ -129,16 +128,17 @@ class LessonsController extends Controller
         if($lessonsfilename ==''){
             $url_image= $lessonsfilename;
         }else{
-            $url_image= 'http://localhost:8080/cilsy/assets/source/lessons/'.$lessonsfilename;
+            $url_image= 'http://localhost/cilsy/assets/source/lessons/'.$lessonsfilename;
         }
 
 
-
+        $str = strtolower($title);
         $store                  = new lessons;
         $store->contributor_id  = $cid;
         $store->status          = 0;
+        $store->enable          = 1;
         $store->title           = $title;
-        $store->slug            = $category_id;
+        $store->slug            = preg_replace('/\s+/', '-', $str);
         $store->category_id     = $category_id;
         $store->image           = $url_image;
         $store->description     = $description;
@@ -185,7 +185,6 @@ class LessonsController extends Controller
       }
       $now                    = new DateTime();;
       $cid                    = Session::get('contribID');
-
       $store                  = lessons::find($id);
       $store->status          = 2;
       $store->updated_at      = $now;
@@ -224,12 +223,14 @@ class LessonsController extends Controller
     $video =videos::where('lessons_id',$id)->get();
     $quiz = Quiz::where('lesson_id',$id)->get();
     $files= files::where('lesson_id',$id)->get();
+    $revisi = revision::where('lession_id',$id)->get();
     # code...
     return view('contrib.lessons.view',[
         'row'=>$row,
         'quiz'=>$quiz,
         'video'=>$video,
         'files'=>$files,
+        'revisi'=>$revisi,
     ]);
   }
 
@@ -290,14 +291,15 @@ class LessonsController extends Controller
           if($lessonsfilename ==''){
               $url_image= $image_text;
           }else{
-              $url_image= 'http://localhost:8080/cilsy/assets/source/lessons/'.$lessonsfilename;
+              $url_image= 'http://localhost/cilsy/assets/source/lessons/'.$lessonsfilename;
           }
-
+          $str = strtolower($title);
           $store                  = lessons::find($id);
           $store->contributor_id  = $cid;
-          $store->status          = 0;
+          // $store->status          = 0;
+          $store->enable          = 1;
           $store->title           = $title;
-          $store->slug            = $category_id;
+          $store->slug            = preg_replace('/\s+/', '-', $str);
           $store->category_id     = $category_id;
           $store->image           = $url_image;
           $store->description     = $description;

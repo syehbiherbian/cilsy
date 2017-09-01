@@ -267,7 +267,72 @@
     </div>
   </div>
 </div>
-<!-- END ATTCHMENT -->
+
+@if(count($revisi) > 0)
+<!-- BEGIN REVISION -->
+<div class="row">
+  <div class="col-md-12">
+    <div class="box-white">
+      <div class="box-header">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="box-title">
+              <h4>Daftar Revisi</h4>
+            </div>
+          </div>
+          <div class="col-md-6">
+
+          </div>
+        </div>
+      </div>
+      <div class="box-content">
+          <div class="table-responsive">
+            <table class="table table-striped table-hover">
+              <thead>
+                <tr>
+                  <th>No</th>
+                  <th>Note</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+
+                <?php $i = 1; ?>
+                @foreach($revisi as $value)
+                <tr>
+                  <td>{{ $i }} <input type="hidden" name="revisi_id[]" id="revisi<?php echo $i; ?>" value="{{$value->id}}"></td>
+                  <td><?php echo nl2br($value->notes);?></td>
+                  <td width="20%">
+                    <?php
+                    if($value->status==2){
+                      echo "Revisi Gagal";
+                    // }elseif($value->status==2){
+                    //   echo "Revisi Proses";
+                  }elseif ($value->status==1) {
+                      echo "Revisi Berhasil";
+                  }else{
+                    echo "Perlu Revisi";
+                  }
+
+                     ?>
+                    <!-- <select class="form-control show-tick" id="revisi_status<?php echo $i; ?>" name="revisi_status[]" onchange="chageRevisiSatus()">
+                        <option value="">-- Please select --</option>
+                        <option value="0"<?php if($value->status==0){echo "selected";} ?>>Pending</option>
+                        <option value="2"<?php if($value->status==2){echo "selected";} ?>>Process</option>
+                    </select> -->
+                  </td>
+                </tr>
+                <?php $i++;?>
+                @endforeach
+              </tbody>
+            </table>
+            </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- END revisi -->
+@endif
 <div class="row">
   <div class="col-md-12" style="text-align:center;">
     <div class="box-white">

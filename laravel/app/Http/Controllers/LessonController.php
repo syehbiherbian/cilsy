@@ -6,15 +6,14 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use App\Http\Requests;
 use DB;
-
 use Validator;
 use Redirect;
 use DateTime;
 use Helper;
 use Auth;
-
 use App\lessons;
 use App\categories;
+use App\revision;
 
 class LessonController extends Controller
 {
@@ -166,9 +165,11 @@ class LessonController extends Controller
     {
         $lessons    = lessons::find($id);
         $categories = categories::where('enable','=','1')->get();
+        $revisi = revision::where('lession_id',$id)->get();
         return view('admin.lesson.edit',[
             'categories'    => $categories,
-            'lessons'       => $lessons
+            'lessons'       => $lessons,
+            'revisi'        => $revisi,
         ]);
     }
 
@@ -203,9 +204,35 @@ class LessonController extends Controller
             $store->image       = Input::get('image');
             $store->description = Input::get('description');
             $store->slug        = Input::get('slug');
+            $store->status      = Input::get('status');
             $store->updated_at  = new DateTime();
             $store->save();
 
+            if(Input::get('status')==3 and input::get('notes') !== ''){
+              $store_revision= new revision;
+              $store_revision->lession_id =$id;
+              $store_revision->notes=input::get('notes');
+              $store_revision->status=0;
+              $store->created_at  = new DateTime();
+              $store_revision->save();
+            }
+            $revisi = revision::where('lession_id',$id)->get();
+
+            if(count($revisi) > 0 ){
+              $revisi_id= Input::get('revisi_id');
+              $revisi_status= Input::get('revisi_status');
+
+              if($revisi_id !==null){
+                foreach ($revisi_id as $key => $revisiid) {
+                  $update_revision= revision::find($revisiid);
+                  $update_revision->status=$revisi_status[$key];
+                  $update_revision->updated_at  = new DateTime();
+                  $update_revision->save();
+                }
+              }
+
+
+            }
             // redirect
             return redirect('system/lessons')->with('success','Data successfully updated');
         }
