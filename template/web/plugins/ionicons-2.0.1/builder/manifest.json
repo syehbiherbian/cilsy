@@ -2747,4 +2747,198 @@
     {
       "code": "0xf4ef",
       "name": "social-whatsapp-outline"
-    },
+<<<<<<< HEAD
+    },
+    {
+      "code": "0xf247",
+      "name": "social-windows"
+    },
+    {
+      "code": "0xf246",
+      "name": "social-windows-outline"
+    },
+    {
+      "code": "0xf249",
+      "name": "social-wordpress"
+    },
+    {
+      "code": "0xf248",
+      "name": "social-wordpress-outline"
+    },
+    {
+      "code": "0xf24b",
+      "name": "social-yahoo"
+    },
+    {
+      "code": "0xf24a",
+      "name": "social-yahoo-outline"
+    },
+    {
+      "code": "0xf4f2",
+      "name": "social-yen"
+    },
+    {
+      "code": "0xf4f1",
+      "name": "social-yen-outline"
+    },
+    {
+      "code": "0xf24d",
+      "name": "social-youtube"
+    },
+    {
+      "code": "0xf24c",
+      "name": "social-youtube-outline"
+    },
+    {
+      "code": "0xf4f4",
+      "name": "soup-can"
+    },
+    {
+      "code": "0xf4f3",
+      "name": "soup-can-outline"
+    },
+    {
+      "code": "0xf2b2",
+      "name": "speakerphone"
+    },
+    {
+      "code": "0xf2b3",
+      "name": "speedometer"
+    },
+    {
+      "code": "0xf2b4",
+      "name": "spoon"
+    },
+    {
+      "code": "0xf24e",
+      "name": "star"
+    },
+    {
+      "code": "0xf2b5",
+      "name": "stats-bars"
+    },
+    {
+      "code": "0xf30b",
+      "name": "steam"
+    },
+    {
+      "code": "0xf24f",
+      "name": "stop"
+    },
+    {
+      "code": "0xf2b6",
+      "name": "thermometer"
+    },
+    {
+      "code": "0xf250",
+      "name": "thumbsdown"
+    },
+    {
+      "code": "0xf251",
+      "name": "thumbsup"
+    },
+    {
+      "code": "0xf355",
+      "name": "toggle"
+    },
+    {
+      "code": "0xf354",
+      "name": "toggle-filled"
+    },
+    {
+      "code": "0xf4f5",
+      "name": "transgender"
+    },
+    {
+      "code": "0xf252",
+      "name": "trash-a"
+    },
+    {
+      "code": "0xf253",
+      "name": "trash-b"
+    },
+    {
+      "code": "0xf356",
+      "name": "trophy"
+    },
+    {
+      "code": "0xf4f7",
+      "name": "tshirt"
+    },
+    {
+      "code": "0xf4f6",
+      "name": "tshirt-outline"
+    },
+    {
+      "code": "0xf2b7",
+      "name": "umbrella"
+    },
+    {
+      "code": "0xf357",
+      "name": "university"
+    },
+    {
+      "code": "0xf254",
+      "name": "unlocked"
+    },
+    {
+      "code": "0xf255",
+      "name": "upload"
+    },
+    {
+      "code": "0xf2b8",
+      "name": "usb"
+    },
+    {
+      "code": "0xf256",
+      "name": "videocamera"
+    },
+    {
+      "code": "0xf257",
+      "name": "volume-high"
+    },
+    {
+      "code": "0xf258",
+      "name": "volume-low"
+    },
+    {
+      "code": "0xf259",
+      "name": "volume-medium"
+    },
+    {
+      "code": "0xf25a",
+      "name": "volume-mute"
+    },
+    {
+      "code": "0xf358",
+      "name": "wand"
+    },
+    {
+      "code": "0xf25b",
+      "name": "waterdrop"
+    },
+    {
+      "code": "0xf25c",
+      "name": "wifi"
+    },
+    {
+      "code": "0xf2b9",
+      "name": "wineglass"
+    },
+    {
+      "code": "0xf25d",
+      "name": "woman"
+    },
+    {
+      "code": "0xf2ba",
+      "name": "wrench"
+    },
+    {
+      "code": "0xf30c",
+      "name": "xbox"
+    }
+  ]
+}
+=======
+    },
+>>>>>>> b90e1163dd00a4c271974147e8830b63634025b9

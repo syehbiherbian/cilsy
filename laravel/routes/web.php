@@ -148,24 +148,39 @@ Route::get('contributor/lessons/{filter}/list', 'Contributors\LessonsController@
 Route::get('contributor/lessons/create', 'Contributors\LessonsController@create');
 Route::post('contributor/lessons/create', 'Contributors\LessonsController@doCreate');
 
+Route::get('contributor/lessons/{id}/view', 'Contributors\LessonsController@view');
 Route::get('contributor/lessons/{id}/edit', 'Contributors\LessonsController@edit');
-Route::get('contributor/lessons/create/submit', 'Contributors\LessonsController@submit');
-Route::post('contributor/lessons/create/submit', 'Contributors\LessonsController@doSubmit');
+Route::post('contributor/lessons/{id}/edit', 'Contributors\LessonsController@doEdit');
+Route::get('contributor/lessons/{id}/submit', 'Contributors\LessonsController@submit');
+Route::post('contributor/lessons/{id}/submit', 'Contributors\LessonsController@doSubmit');
+Route::get('contributor/lessons/{id}/delete', 'Contributors\LessonsController@doDelete');
 
 // Videos
-Route::get('contributor/lessons/create/videos', 'Contributors\VideosController@create');
+Route::get('contributor/lessons/{lesson_id}/create/videos', 'Contributors\VideosController@create');
+Route::post('contributor/lessons/{lesson_id}/create/videos', 'Contributors\VideosController@doCreate');
+Route::get('contributor/lessons/{lesson_id}/edit/videos', 'Contributors\VideosController@edit');
+Route::post('contributor/lessons/{lesson_id}/edit/videos', 'Contributors\VideosController@doEdit');
+
 
 // Attachment
-Route::get('contributor/lessons/create/attachments', 'Contributors\AttachmentsController@create');
+Route::get('contributor/lessons/{lesson_id}/create/attachments', 'Contributors\AttachmentsController@create');
+Route::post('contributor/lessons/{lesson_id}/create/attachments', 'Contributors\AttachmentsController@doCreate');
+Route::get('contributor/lessons/{lesson_id}/edit/attachments', 'Contributors\AttachmentsController@edit');
+Route::post('contributor/lessons/{lesson_id}/edit/attachments', 'Contributors\AttachmentsController@doEdit');
 
 // Quiz
 Route::get('contributor/lessons/{id}/create/quiz', 'Contributors\QuizController@create');
 Route::post('contributor/lessons/{id}/store_quiz', 'Contributors\QuizController@store_quiz');
+Route::post('contributor/lessons/{id}/update_quiz', 'Contributors\QuizController@update_quiz');
+Route::get('contributor/lessons/quiz/{quiz_id}/view', 'Contributors\QuizController@view');
 Route::get('contributor/lessons/quiz/{quiz_id}/edit', 'Contributors\QuizController@edit');
+Route::get('contributor/lessons/quiz/{quiz_id}/delete', 'Contributors\QuizController@delete_quiz');
+
+
 
 // Question
 Route::get('contributor/lessons/quiz/{quiz_id}/create/questions', 'Contributors\QuestionQuizController@create');
 Route::post('contributor/lessons/{quiz_id}/store_questions', 'Contributors\QuestionQuizController@store');
 
-//questions
-Route::get('contributor/questions', 'Contributors\QuestionsController@getQuestions');
+Route::get('contributor/lessons/quiz/{quiz_id}/edit/questions', 'Contributors\QuestionQuizController@edit');
+Route::post('contributor/lessons/{quiz_id}/update_questions', 'Contributors\QuestionQuizController@update');

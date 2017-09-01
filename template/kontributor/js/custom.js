@@ -83,3 +83,4 @@ $(document).ready(function() {
 		$('#pricing-table tbody tr td:nth-child(3)').css('background-color', 'rgba(46, 204, 113,.1)');
 	});
 });
+

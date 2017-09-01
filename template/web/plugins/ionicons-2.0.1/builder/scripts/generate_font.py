@@ -141,3 +141,36 @@ else:
   svgfile.seek(0)
   svgfile.write(svgtext.replace('''<svg>''', '''<svg xmlns="http://www.w3.org/2000/svg">'''))
   svgfile.close()
+<<<<<<< HEAD
+
+  scriptPath = os.path.dirname(os.path.realpath(__file__))
+  try:
+    subprocess.Popen([scriptPath + '/sfnt2woff', fontfile + '.ttf'], stdout=subprocess.PIPE)
+  except OSError:
+    # If the local version of sfnt2woff fails (i.e., on Linux), try to use the
+    # global version. This allows us to avoid forcing OS X users to compile
+    # sfnt2woff from source, simplifying install.
+    subprocess.call(['sfnt2woff', fontfile + '.ttf'])
+
+  # eotlitetool.py script to generate IE7-compatible .eot fonts
+  subprocess.call('python ' + scriptPath + '/eotlitetool.py ' + fontfile + '.ttf -o ' + fontfile + '.eot', shell=True)
+  subprocess.call('mv ' + fontfile + '.eotlite ' + fontfile + '.eot', shell=True)
+
+  # Hint the TTF file
+  subprocess.call('ttfautohint -s -f -n ' + fontfile + '.ttf ' + fontfile + '-hinted.ttf > /dev/null 2>&1 && mv ' + fontfile + '-hinted.ttf ' + fontfile + '.ttf', shell=True)
+
+  manifest_data['icons'] = sorted(manifest_data['icons'], key=lambda k: k['name'])
+  build_data['icons'] = sorted(build_data['icons'], key=lambda k: k['name'])
+
+  print "Save Manifest, Icons: %s" % ( len(manifest_data['icons']) )
+  f = open(MANIFEST_PATH, 'w')
+  f.write( json.dumps(manifest_data, indent=2, separators=(',', ': ')) )
+  f.close()
+
+  print "Save Build, Icons: %s" % ( len(build_data['icons']) )
+  f = open(BUILD_DATA_PATH, 'w')
+  f.write( json.dumps(build_data, indent=2, separators=(',', ': ')) )
+  f.close()
+
+=======
+>>>>>>> b90e1163dd00a4c271974147e8830b63634025b9

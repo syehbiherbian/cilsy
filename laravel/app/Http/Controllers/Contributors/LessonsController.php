@@ -11,8 +11,11 @@ use App\members;
 use App\lessons;
 use App\categories;
 use App\videos;
+use App\Quiz;
 use App\services;
 use App\files;
+use App\Questions;
+use App\Answars;
 use DateTime;
 
 use Session;
@@ -24,7 +27,7 @@ class LessonsController extends Controller
     if (empty(Session::get('contribID'))) {
       return redirect('contributor/login');
     }
-    return redirect('contributor/lessons/revision/list');
+    return redirect('contributor/lessons/pending/list');
   }
 
 
@@ -35,10 +38,10 @@ class LessonsController extends Controller
     }
 
     $contribID = Session::get('contribID');
-
-    if ($filter == 'revision') {
+    if ($filter == 'pending') {
       $data = lessons::where('contributor_id',$contribID)
       ->leftJoin('categories', 'lessons.category_id', '=', 'categories.id')
+      ->leftJoin('lessons_detail','lessons.id','lessons_detail.lesson_id')
       ->select('lessons.*','categories.title as category_title')
       ->where('lessons.status',0)
       ->get();
@@ -54,11 +57,17 @@ class LessonsController extends Controller
       ->select('lessons.*','categories.title as category_title')
       ->where('lessons.status',1)
       ->get();
+    }elseif($filter == 'revision'){
+        $data = lessons::where('contributor_id',$contribID)
+        ->leftJoin('categories', 'lessons.category_id', '=', 'categories.id')
+        ->leftJoin('lessons_detail','lessons.id','lessons_detail.lesson_id')
+        ->select('lessons.*','categories.title as category_title')
+        ->where('lessons.status',3)
+        ->get();
     }else {
       $data = lessons::where('contributor_id',$contribID)
       ->leftJoin('categories', 'lessons.category_id', '=', 'categories.id')
       ->select('lessons.*','categories.title as category_title')
-      ->where('lessons.status',1)
       ->get();
     }
 
@@ -106,78 +115,82 @@ class LessonsController extends Controller
         $cid          = Session::get('contribID');
         $title        = Input::get('title');
         $category_id  = Input::get('category_id');
-        $image        = Input::file('image');
+        $lessons_image = Input::file('image');
         $description  = Input::get('description');
 
+        $lessonsDestinationPath= 'assets/source/lessons';
+
+        if(!empty($lessons_image)){
+            $lessonsfilename    = $lessons_image->getClientOriginalName();
+            $lessons_image->move($lessonsDestinationPath, $lessonsfilename);
+        }else{
+            $lessonsfilename    = '';
+        }
+        if($lessonsfilename ==''){
+            $url_image= $lessonsfilename;
+        }else{
+            $url_image= 'http://localhost:8080/cilsy/assets/source/lessons/'.$lessonsfilename;
+        }
 
 
-        Session::set('lessons_title',$title);
-        Session::set('lessons_category_id',$category_id);
-        Session::set('lessons_image',$image);
-        Session::set('lessons_description',$description);
 
-        return redirect('contributor/lessons/create/videos')->with('success','');
+        $store                  = new lessons;
+        $store->contributor_id  = $cid;
+        $store->status          = 0;
+        $store->title           = $title;
+        $store->slug            = $category_id;
+        $store->category_id     = $category_id;
+        $store->image           = $url_image;
+        $store->description     = $description;
+        $store->created_at      = $now;
+        $store->save();
+        // Session::set('lessons_title',$title);
+        // Session::set('lessons_category_id',$category_id);
+        // Session::set('lessons_image',$image);
+        // Session::set('lessons_description',$description);
+
+        return redirect('contributor/lessons/'.$store->id.'/view')->with('success','Pembuatan totorial berhasil');
 
     }
   }
 
-  public function submit()
+  public function submit($id)
   {
 
     if (empty(Session::get('contribID'))) {
       return redirect('contributor/login');
     }
     # code...
+    $contribID = Session::get('contribID');
+    $check = lessons::where('contributor_id',$contribID)
+        ->where('id',$id)->first();
+    if($check ==null){
+        return redirect('not-found');
+    }
+    $row = lessons::where('contributor_id',$contribID)
+        ->where('id',$id)->where('status',0)->first();
+        if($row ==null){
+            return redirect()->back()->with('no-delete','Totorial sedang / dalam verifikasi!');
+        }
+    return view('contrib.lessons.submit',[
+        'row'=>$row,
+    ]);
 
-    return view('contrib.lessons.submit');
   }
 
-  public function doSubmit()
+  public function doSubmit($id)
   {
+      if (empty(Session::get('contribID'))) {
+        return redirect('contributor/login');
+      }
       $now                    = new DateTime();;
       $cid                    = Session::get('contribID');
-      // Lessons
-      $lessons_title          = Session::get('lessons_title');
-      $lessons_category_id    = Session::get('lessons_category_id');
-      $lessons_description    = Session::get('lessons_description');
 
-
-      $lessonsDestinationPath= 'assets/source/lessons';
-      $lessons_image          = Session::get('lessons_image');
-
-      if(!empty($lessons_image)){
-          $lessonsfilename    = $lessons_image->getClientOriginalName();
-          $lessons_image->move($lessonsDestinationPath, $lessonsfilename);
-      }else{
-          $lessonsfilename    = '';
-      }
-
-
-      $store                  = new lessons;
-      $store->contributor_id  = $cid;
-      $store->status          = 0;
-      $store->title           = $lessons_title;
-      $store->slug            = $lessons_title;
-      $store->category_id     = $lessons_category_id;
-      $store->image           = $lessonsfilename;
-      $store->description     = $lessons_description;
-      $store->created_at      = $now;
+      $store                  = lessons::find($id);
+      $store->status          = 2;
       $store->updated_at      = $now;
       $store->save();
-
-      // Videos
-
-      // Attachments
-
-      // Quiz
-
-      // Questions
-
-
-      $forget = $this->forgetSession();
-      if ($forget == true) {
-          return redirect('contributor/lessons')->with('success','');
-      }
+      return redirect('contributor/lessons/'.$id.'/view')->with('success','Totorial berhasil di submit!');
 
 
   }
@@ -194,22 +207,130 @@ class LessonsController extends Controller
 
   }
 
-  // EDIT
-  public function edit($id)
+  // view
+  public function view($id)
   {
     if (empty(Session::get('contribID'))) {
       return redirect('contributor/login');
     }
 
+    $contribID = Session::get('contribID');
+    $row = lessons::where('contributor_id',$contribID)
+    ->where('lessons.id',$id)
+    ->leftJoin('categories', 'lessons.category_id', '=', 'categories.id')
+    ->leftJoin('lessons_detail','lessons.id','lessons_detail.lesson_id')
+    ->select('lessons.*','categories.title as category_title')
+    ->first();
+    $video =videos::where('lessons_id',$id)->get();
+    $quiz = Quiz::where('lesson_id',$id)->get();
+    $files= files::where('lesson_id',$id)->get();
     # code...
-    return view('contrib.lessons.edit');
+    return view('contrib.lessons.view',[
+        'row'=>$row,
+        'quiz'=>$quiz,
+        'video'=>$video,
+        'files'=>$files,
+    ]);
   }
 
+  public function edit($id)
+  {
+    if (empty(Session::get('contribID'))) {
+      return redirect('contributor/login');
+    }
+    $categories = categories::where('enable',1)->get();
+    $contribID = Session::get('contribID');
+    $row = lessons::where('contributor_id',$contribID)
+    ->where('lessons.id',$id)
+    ->leftJoin('categories', 'lessons.category_id', '=', 'categories.id')
+    ->leftJoin('lessons_detail','lessons.id','lessons_detail.lesson_id')
+    ->select('lessons.*','categories.title as category_title')
+    ->first();
+    if($row->status==2){
+        return redirect('contributor/lessons/'.$id.'/view')->with('no-delete','Totorial sedang / dalam verifikasi!');
+    }
+    # code...
+    return view('contrib.lessons.edit',[
+        'row'=>$row,
+        'categories'=>$categories,
+    ]);
+  }
+  public function doEdit($id){
+      # code...
+      // validate
+      // read more on validation at http://laravel.com/docs/validation
+      $rules = array(
+        'title'          => 'required|min:3',
+        'category_id'    => 'required',
+        'description'    => 'required|min:3',
+      );
+      $validator = Validator::make(Input::all(), $rules);
 
+      // process the login
+      if ($validator->fails()) {
+          return redirect()->back()->withErrors($validator)->withInput();
+      } else {
 
+          $now          = new DateTime();
+          $cid          = Session::get('contribID');
+          $title        = Input::get('title');
+          $category_id  = Input::get('category_id');
+          $lessons_image = Input::file('image');
+          $image_text =  Input::get('image_text');
+          $description  = Input::get('description');
 
+          $lessonsDestinationPath= 'assets/source/lessons';
 
+          if(!empty($lessons_image)){
+              $lessonsfilename    = $lessons_image->getClientOriginalName();
+              $lessons_image->move($lessonsDestinationPath, $lessonsfilename);
+          }else{
+              $lessonsfilename = '';
+          }
+          if($lessonsfilename ==''){
+              $url_image= $image_text;
+          }else{
+              $url_image= 'http://localhost:8080/cilsy/assets/source/lessons/'.$lessonsfilename;
+          }
 
+          $store                  = lessons::find($id);
+          $store->contributor_id  = $cid;
+          $store->status          = 0;
+          $store->title           = $title;
+          $store->slug            = $category_id;
+          $store->category_id     = $category_id;
+          $store->image           = $url_image;
+          $store->description     = $description;
+          $store->created_at      = $now;
+          $store->save();
+          // Session::set('lessons_title',$title);
+          // Session::set('lessons_category_id',$category_id);
+          // Session::set('lessons_image',$image);
+          // Session::set('lessons_description',$description);
 
+          return redirect('contributor/lessons/'.$id.'/view')->with('success','Update totorial berhasil!');
 
+      }
+  }
+  public function doDelete($id){
+     $lessons =lessons::where('id',$id)->delete();
+     if($lessons){
+         $video =videos::where('lessons_id',$id)->delete();
+         $files= files::where('lesson_id',$id)->delete();
+         $quiz = Quiz::where('lesson_id',$id)->get();
+         foreach ($quiz as $key => $value) {
+             $question = Questions::where('quiz_id',$value->id)->get();
+             foreach ($question as $key => $qu) {
+                  $answer = Answars::where('question_id',$qu->id)->delete();
+             }
+             Questions::where('quiz_id',$value->id)->delete();
+
+         }
+         Quiz::where('lesson_id',$id)->delete();
+
+        return redirect('contributor/lessons')->with('success','Delete totorial berhasil!');
+     }else{
+        return redirect()->back()->with('no-delete','Delete totorial gagal!');
+     }
+  }
 }
