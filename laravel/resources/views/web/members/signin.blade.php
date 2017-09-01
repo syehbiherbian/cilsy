@@ -3,8 +3,8 @@
 @section('content')
 <div id="sign-container">
     <div class="tab-btn-container">
-      <a href="{{ url('contributor/register')}}" id="tab-1" style="background-color: #ededed">Daftar</a>
-      <a href="{{ url('contributor/login')}}" id="tab-2" >Masuk</a>
+      <a href="{{ url('member/signup')}}" id="tab-1" style="background-color: #ededed">Daftar</a>
+      <a href="{{ url('member/signin')}}" id="tab-2" >Masuk</a>
     </div>
 
     <div class="tab-content">
