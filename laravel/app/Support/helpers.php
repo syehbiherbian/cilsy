@@ -1,5 +1,6 @@
 <?php
 use App\members;
+use App\Contributors;
 use App\Pages;
 use App\services;
 /**
@@ -9,9 +10,18 @@ class Helper
 {
   static function member($field)
   {
-      $mem_id   = Session::get('memberID');
+      $mem_id   = Session::get('contribID');
       if ($mem_id) {
         $members  = members::where('id','=',$mem_id)->first();
+        $result   = $members->$field;
+        return $result;
+      }
+  }
+  static function contributor($field)
+  {
+      $con_id   = Session::get('memberID');
+      if ($con_id) {
+        $contrib  = contributors::where('id','=',$con_id)->first();
         $result   = $members->$field;
         return $result;
       }
@@ -56,7 +66,7 @@ class Helper
 
   static function pageMenu()
   {
-    $pages  = Pages::where('enable',1)->get();
+    $pages  = Pages::where('enable',1)->paginate(3);
     $html   = '';
     $html .='<ul class="nav-footer">';
     $html .='<li>Cilsy</li>';

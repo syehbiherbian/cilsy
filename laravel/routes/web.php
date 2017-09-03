@@ -184,3 +184,11 @@ Route::post('contributor/lessons/{quiz_id}/store_questions', 'Contributors\Quest
 
 Route::get('contributor/lessons/quiz/{quiz_id}/edit/questions', 'Contributors\QuestionQuizController@edit');
 Route::post('contributor/lessons/{quiz_id}/update_questions', 'Contributors\QuestionQuizController@update');
+
+
+//Account
+Route::get('contributor/account/informasi', 'Contributors\AccountController@informasi');
+Route::get('contributor/account/halaman', 'Contributors\AccountController@halaman');
+
+//Point
+Route::get('contributor/point', 'Contributors\PointController@index');

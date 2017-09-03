@@ -2,11 +2,13 @@
 @section('title','')
 @section('breadcumbs')
 <div id="navigation">
-    <a href="{{ url('contributor/lessons/create')}}" class="btn btn-info pull-right">Buat Tutorial</a>
-		<ul class="breadcrumb">
-				<li><a href="{{ url('contributor') }}">Dashboard</a></li>
-        <li>Kelola Tutorial</li>
-		</ul>
+    <div class="container">
+        <a href="{{ url('contributor/lessons/create')}}" class="btn btn-info pull-right">Buat Tutorial</a>
+            <ul class="breadcrumb">
+                    <li><a href="{{ url('contributor') }}">Dashboard</a></li>
+            <li>Kelola Tutorial</li>
+            </ul>
+    </div>
 </div>
 @endsection
 @section('content')

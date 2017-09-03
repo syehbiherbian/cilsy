@@ -11,7 +11,6 @@ $(document).ready(function() {
 		$('#sidebar ul li').removeClass('icon-active')
 		$(this).addClass('icon-active')
 
-		event.preventDefault();
 	});
 
 
