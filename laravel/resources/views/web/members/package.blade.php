@@ -6,7 +6,8 @@
 
 
     <div class="intstruction-text">
-        <p>Hampir Selesai, Pilih Paket Langganan Yang Kamu Mau</p>
+        <br>
+	<p>Hampir Selesai, Pilih Paket Langganan Yang Kamu Mau</p>
     </div>
 
     <div id="table-section">
@@ -34,11 +35,11 @@
                 </tr>
                 <tr>
                     <td>Masa Aktif</td>
-                    <td><?= $packages['0']->expired;?> Hari <font color="red">PROMO JADI 60 HARI</font></td>
-                    <td><?= $packages['1']->expired;?> Hari <font color="red">PROMO JADI 180 HARI</font></td>
+                    <td><?= $packages['0']->expired;?> Hari <!-- <font color="red">PROMO JADI 60 HARI</font></td> -->
+                    <td><?= $packages['1']->expired;?> Hari <!-- <font color="red">PROMO JADI 180 HARI</font></td> -->
                 </tr>
                 <tr>
-                    <td>Bebas Akses Ke 500 Lebih Video Tutorial</td>
+                    <td>Bebas Akses Ke Semua Tutorial</td>
                     <td>
                       <?php if ($packages['0']->access == 0){ ?>
                         Tidak
@@ -107,7 +108,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>Download Berkas Praktek</td>
+                    <td>Download Berkas Praktek (script,modul)</td>
                     <td>
                       <?php if ($packages['0']->download == 0){ ?>
                         Tidak
@@ -135,7 +136,7 @@
       </form>
     </div>
     <div class="intstruction-text">
-        <p>Butuh Bantuan Untuk Bertanya? Telepon Kami di 089630713487</p>
+       <p>Butuh Bantuan Untuk Bertanya? Whatsapp Kami di 089630713487</p>
     </div>
 </div>
 
