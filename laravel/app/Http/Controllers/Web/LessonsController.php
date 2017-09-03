@@ -9,12 +9,13 @@ use Validator;
 
 use App\members;
 use App\lessons;
+use App\lessons_detail;
+use App\lessons_detail_users;
 use App\categories;
 use App\videos;
 use App\services;
 use App\files;
 use DateTime;
-
 use Session;
 class LessonsController extends Controller
 {
@@ -46,11 +47,19 @@ class LessonsController extends Controller
 
     $now          = new DateTime();
     $mem_id       = Session::get('memberID');
-
     $services     = services::where('status','=',1)->where('members_id','=',$mem_id)->where('expired','>=',$now)->first();
     $lessons      = lessons::where('enable','=',1)->where('title','like','%'.$lesson.'%')->first();
     $main_videos  = videos::where('enable','=',1)->where('lessons_id','=',$lessons->id)->orderBy('id','asc')->get();
     $files        = files::where('enable', '=', 1)->where('lesson_id', '=', $lessons->id)->orderBy('id', 'asc')->get();
+
+    //hitung view;
+    // $store                  = new lessons_detail;
+    // $store->lesson_id      = $lessons;
+    // $store->month          =
+    // $store->year
+    // $store->created_at      = $now;
+    // $store->enable=1;
+    // $store->save();
     return view('web.lessons.detail',[
       'lessons'     => $lessons,
       'main_videos' => $main_videos,

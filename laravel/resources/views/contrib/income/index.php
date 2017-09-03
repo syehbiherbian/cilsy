@@ -1,6 +1,6 @@
 @extends('contrib.app')
 @section('title','')
-@section('breadcumbs')
+@section('content')
 <style>
   #content{
     background: #f4f4f4;
