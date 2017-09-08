@@ -43,12 +43,11 @@ class LessonsController extends Controller
 
   public function detail($lesson)
   {
-
     $now          = new DateTime();
     $mem_id       = Session::get('memberID');
 
     $services     = services::where('status','=',1)->where('members_id','=',$mem_id)->where('expired','>=',$now)->first();
-    $lessons      = lessons::where('enable','=',1)->where('title','like','%'.$lesson.'%')->first();
+    $lessons      = lessons::where('enable','=',1)->where('slug','=', $lesson)->first();
     $main_videos  = videos::where('enable','=',1)->where('lessons_id','=',$lessons->id)->orderBy('id','asc')->get();
     $files        = files::where('enable', '=', 1)->where('lesson_id', '=', $lessons->id)->orderBy('id', 'asc')->get();
     return view('web.lessons.detail',[

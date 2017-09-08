@@ -81,7 +81,7 @@ foreach ($lessons as $key => $lesson): ?>
                             <?php if ($i <= 8) {?>
                                 <div class="col-md-3">
                                     <div class="card">
-                                        <a href="{{ url('lessons/'.$lesson->title)}}">
+                                        <a href="{{ url('lessons/'.$lesson->slug)}}">
                                             <?php if (!empty($lesson->image)) {?>
                                               <div class="card-img" style="background-image: url('{{ asset($lesson->image)}}');"></div>
                                             <?php } else {?>

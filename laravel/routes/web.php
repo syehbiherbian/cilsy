@@ -15,7 +15,7 @@
 Route::get('/', 'Web\HomeController@index');
 // LESSONS PAGE
 Route::get('lessons/{by}/{keyword}', 'Web\LessonsController@index');
-Route::get('lessons/{lessons}', 'Web\LessonsController@detail');
+Route::get('lessons/{slug}', 'Web\LessonsController@detail');
 Route::post('lessons/getplaylist', 'Web\LessonsController@getplaylist');
 // Search
 Route::get('search', 'Web\SearchController@index');

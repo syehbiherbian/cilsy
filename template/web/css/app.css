@@ -36,7 +36,9 @@ html, body {
 .browse-btn {
     margin-left: 25px;
     padding: 15px 25px;
-    line-height: 80px;
+    margin-top: 12px;
+    float: left;
+    /*line-height: 80px;*/
     color: #2ba8e2;
     background-color: #FFF;
     border-radius: 6px;
@@ -419,14 +421,10 @@ font-size: 26px;
     .browse-btn {
     margin-left: 0;
     padding: 10px 10px;
-<<<<<<< HEAD
-    line-height: 55px;
+    line-height: 50px;
     color: #2ba8e2;
     background-color: #FFF;
     border-radius: 6px;
     }
 }
 
-=======
-    line-height: 50px;
->>>>>>> b90e1163dd00a4c271974147e8830b63634025b9
