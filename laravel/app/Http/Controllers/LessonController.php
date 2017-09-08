@@ -14,6 +14,7 @@ use Auth;
 use App\lessons;
 use App\categories;
 use App\revision;
+use App\Contributors;
 
 class LessonController extends Controller
 {
@@ -197,6 +198,7 @@ class LessonController extends Controller
         } else {
 
             // store
+            $check= lessons::where('id',$id)->first();
             $store = lessons::find($id);
             $store->enable      = Input::get('enable');
             $store->title       = Input::get('title');
@@ -208,6 +210,19 @@ class LessonController extends Controller
             $store->updated_at  = new DateTime();
             $store->save();
 
+            if($check->status !== 1){
+              if($store->status==1){
+                $check_contri=Contributors::where('id',$store->contributor_id)->first();
+
+                if(count($check_contri)>0){
+                  $contri = Contributors::find($store->contributor_id);
+                  $contri->points      = $check_contri->points + 10;
+                  $contri->updated_at  = new DateTime();
+                  $contri->save();
+                }
+
+              }
+            }
             if(Input::get('status')==3 and input::get('notes') !== ''){
               $store_revision= new revision;
               $store_revision->lession_id =$id;

@@ -177,7 +177,8 @@ Route::get('contributor/lessons/quiz/{quiz_id}/edit', 'Contributors\QuizControll
 Route::get('contributor/lessons/quiz/{quiz_id}/delete', 'Contributors\QuizController@delete_quiz');
 
 
-
+// pendapatan
+Route::get('contributor/income', 'Contributors\IncomeController@index');
 // Question
 Route::get('contributor/lessons/quiz/{quiz_id}/create/questions', 'Contributors\QuestionQuizController@create');
 Route::post('contributor/lessons/{quiz_id}/store_questions', 'Contributors\QuestionQuizController@store');
