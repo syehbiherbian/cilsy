@@ -421,7 +421,8 @@ font-size: 26px;
     .browse-btn {
     margin-left: 0;
     padding: 10px 10px;
-    line-height: 50px;
+    margin-top: 5px;
+    line-height: 22px;
     color: #2ba8e2;
     background-color: #FFF;
     border-radius: 6px;
