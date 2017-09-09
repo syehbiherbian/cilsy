@@ -39,7 +39,7 @@
               <p>{{ $category->title }}</p>
             </a>
           </div>
-        <?php endforeach; ?>
+        <?php endforeach;?>
         <div class="item cat-img-container">
           <a href="{{ url('lessons/browse/all') }}">
             <img src="https://www.cilsy.id/assets/source/category/tutorial.png" alt=""></img>
@@ -71,7 +71,7 @@
     </div>
     <div class="col-sm-12">
       <h4>Result</h4>
-      <?php if(count($results) == 0){ echo "No Data Available";}?>
+      <?php if (count($results) == 0) {echo "No Data Available";}?>
       <?php foreach ($results as $key => $result): ?>
         <div class="item">
           <a href="{{ url('lessons/'.$result->title) }}">
@@ -81,15 +81,15 @@
               </div>
               <div class="col-sm-8">
                 <p><strong>{{ $result->title }}</strong></p>
-                <p><small><?php echo nl2br($result->description);?></small></p>
+                <p><small><?php echo nl2br($result->description); ?></small></p>
                 <p><div class="badge badge-default">{{ $result->category_title }}</div>
-                  <?= date('d M Y H:i',strtotime($result->created_at));?>
+                  <?=date('d M Y H:i', strtotime($result->created_at));?>
                 </p>
               </div>
             </div>
           </a>
         </div>
-      <?php endforeach; ?>
+      <?php endforeach;?>
       <div class="row">
           <div class="col-md-12 text-center">
               {{ $results->links() }}
