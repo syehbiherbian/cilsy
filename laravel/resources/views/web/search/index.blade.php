@@ -74,7 +74,7 @@
       <?php if(count($results) == 0){ echo "No Data Available";}?>
       <?php foreach ($results as $key => $result): ?>
         <div class="item">
-          <a href="{{ url('lessons/'.$result->title) }}">
+          <a href="{{ url('lessons/'.$result->slug) }}">
             <div class="row">
             <div class="col-md-4">
                 <img src="{{ $result->image }}" alt="" class="img-responsive">
