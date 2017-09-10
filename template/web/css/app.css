@@ -16,6 +16,7 @@ html, body {
     -moz-transition: ease-out .3s;
     -o-transition: ease-out .3s;
     transition: ease-out .3s;
+    border-radius: 5px;
 }
 #header {
     min-height: 80px;

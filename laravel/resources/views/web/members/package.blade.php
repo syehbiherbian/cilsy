@@ -2,10 +2,7 @@
 @section('title','Pilih Paket | ')
 @section('content')
  <style>
-* {
-    box-sizing: border-box;
-    border-radius: 5px;
-}
+
 
 .columns {
     float: left;
@@ -26,6 +23,7 @@ hr {
     padding: 0;
     -webkit-transition: 0.3s;
     transition: 0.3s;
+    min-height: 660px;
 }
 
 .price:hover {
@@ -58,6 +56,7 @@ hr {
     text-align: center;
     text-decoration: none;
     font-size: 18px;
+    margin-bottom: 20px;
 }
 
 .button:hover{
@@ -68,9 +67,9 @@ hr {
 @media only screen and (max-width: 600px) {
     .columns {
         width: 100%;
-    }
+}
 .kotak {
-	min-height: 500px;
+	margin-bottom: 20px;
 }
 }
 </style>
@@ -83,7 +82,7 @@ hr {
     </div>
 
 <div id="table-section">    
-<div class="col-md-6 kotak" >
+<div class="col-md-6 kotak" style="border-radius: 5px;">
 <form action="{{ url('member/package')}}" method="post">
 {{ csrf_field() }}
 <input type="hidden" name="packages_id" value="1">
@@ -94,13 +93,16 @@ hr {
     <li>Bebas Akses ke Semua Video Tutorial</li>
     <li>Update Hingga 50 Video lebih perbulan</li>
     <li>Chat Dengan Trainer dijawab dalam 3x24 Jam</li>
+    <li></li>
+    <li></li>
+    <li></li>
     <hr>
-    <li class="grey"><button type="submit" class="button">Selanjutnya</button></li>
+    <li class=""><button type="submit" class="button">Selanjutnya</button></li>
   </ul>
 </form>
 </div>
 
-<div class="col-md-6">
+<div class="col-md-6" style="border-radius: 5px;">
 <form action="{{ url('member/package')}}" method="post">
 {{ csrf_field() }}
 
@@ -115,7 +117,7 @@ hr {
     <li>Download Semua Materi Video</li>
     <li>Download Berkas Praktek</li>
     <hr>
-    <li class="grey"><button type="submit" class="button">Selanjutnya</button></li>
+    <li class=""><button type="submit" class="button">Selanjutnya</button></li>
   </ul>
   </form>
 </div>
