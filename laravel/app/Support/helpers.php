@@ -10,18 +10,9 @@ class Helper
 {
   static function member($field)
   {
-      $mem_id   = Session::get('contribID');
+      $mem_id   = Session::get('memberID');
       if ($mem_id) {
         $members  = members::where('id','=',$mem_id)->first();
-        $result   = $members->$field;
-        return $result;
-      }
-  }
-  static function contributor($field)
-  {
-      $con_id   = Session::get('memberID');
-      if ($con_id) {
-        $contrib  = contributors::where('id','=',$con_id)->first();
         $result   = $members->$field;
         return $result;
       }
