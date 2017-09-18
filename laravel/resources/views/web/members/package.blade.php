@@ -1,7 +1,78 @@
 @extends('web.app')
 @section('title','Pilih Paket | ')
 @section('content')
+ <style>
 
+
+.columns {
+    float: left;
+    width: 40%;
+    padding: 8px;
+}
+hr {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: 0;
+    width: 77%;
+    border-top: 5px solid rgba(238, 238, 238, 1);
+}
+.price {
+    list-style-type: none;
+    border: 1px solid #eee;
+    margin: 0;
+    padding: 0;
+    -webkit-transition: 0.3s;
+    transition: 0.3s;
+    min-height: 660px;
+}
+
+.price:hover {
+    box-shadow: 0 8px 12px 0 rgba(0,0,0,0.2)
+}
+
+.price .header {
+    background-color: #fff;
+    color: black;
+    font-size: 25px;
+}
+
+.price li {
+    padding: 20px;
+    text-align: center;
+}
+
+.price .grey {
+    background-color: #fff;
+    font-size: 20px;
+    color: #2BA8E2;
+}
+
+.button {
+    background-color: #2BA8E2;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    padding: 10px 25px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.button:hover{
+  text-decoration: none;
+  background-color: #fff;
+  color :#2BA8E2;
+}
+@media only screen and (max-width: 600px) {
+    .columns {
+        width: 100%;
+}
+.kotak {
+	margin-bottom: 20px;
+}
+}
+</style>
 <div id="table-bg">
 
 
@@ -10,134 +81,51 @@
 	<p>Hampir Selesai, Pilih Paket Langganan Yang Kamu Mau</p>
     </div>
 
-    <div id="table-section">
-      <form action="{{ url('member/package')}}" method="post">
-        {{ csrf_field() }}
+<div id="table-section">    
+<div class="col-md-6 kotak" style="border-radius: 5px;">
+<form action="{{ url('member/package')}}" method="post">
+{{ csrf_field() }}
+<input type="hidden" name="packages_id" value="1">
+  <ul class="price">
+    <li class="header">Pro</li>
+    <hr>
+    <li class="grey">Rp. <?= $packages['0']->price;?> / <strike>30 Hari</strike> | <font color="red">Promo <?= $packages['0']->expired;?> Hari</font></li>
+    <li>Bebas Akses ke Semua Video Tutorial</li>
+    <li>Update Hingga 50 Video lebih perbulan</li>
+    <li>Chat Dengan Trainer dijawab dalam 3x24 Jam</li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <hr>
+    <li class=""><button type="submit" class="button">Pilih Paket</button></li>
+  </ul>
+</form>
+</div>
 
-        <input type="hidden" name="packages_id" value="1">
-        <div class="table-responsive">
-        <table id="pricing-table" class="table table-striped">
-            <col width="50%">
-            <col width="25%">
-            <col width="25%">
-            <tbody>
-                <tr>
-                </tr>
-                <tr class="no-bg-color">
-                    <td class="no-bg-color"></td>
-                    <td class="no-bg-color pro" onclick="select_package(1)"><p><?= $packages['0']->title;?></p></td>
-                    <td class="no-bg-color premium" onclick="select_package(2)"><p><?= $packages['1']->title;?></p></td>
-                </tr>
-                <tr>
-                    <td>Harga</td>
-                    <td>Rp. <?= $packages['0']->price;?></td>
-                    <td>Rp. <?= $packages['1']->price;?></td>
-                </tr>
-                <tr>
-                    <td>Masa Aktif</td>
-                    <td><?= $packages['0']->expired;?> Hari <!-- <font color="red">PROMO JADI 60 HARI</font></td> -->
-                    <td><?= $packages['1']->expired;?> Hari <!-- <font color="red">PROMO JADI 180 HARI</font></td> -->
-                </tr>
-                <tr>
-                    <td>Bebas Akses Ke Semua Tutorial</td>
-                    <td>
-                      <?php if ($packages['0']->access == 0){ ?>
-                        Tidak
-                      <?php } else if ($packages['0']->access == 1) { ?>
-                        Ya
-                      <?php } ?>
-                    </td>
-                    <td>
-                      <?php if ($packages['1']->access == 0){ ?>
-                        Tidak
-                      <?php } else if ($packages['1']->access == 1) { ?>
-                        Ya
-                      <?php } ?>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Update Hingga 50 Video Terbaru Setiap Bulan</td>
-                    <td>
-                      <?php if ($packages['0']->update == 0){ ?>
-                        Tidak
-                      <?php } else if ($packages['0']->update == 1) { ?>
-                        Ya
-                      <?php } ?>
-                    </td>
-                    <td>
-                      <?php if ($packages['1']->update == 0){ ?>
-                        Tidak
-                      <?php } else if ($packages['1']->update == 1) { ?>
-                        Ya
-                      <?php } ?>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Chat Dengan Trainer</td>
-                    <td>
-                      <?php if ($packages['0']->chat == 0){ ?>
-                        Maksimal Dijawab Dalam 3x24 Jam
-                      <?php }else if ($packages['0']->chat == 1) { ?>
-                        Maksimal Dijawab Dalam 1x24 Jam
-                      <?php } ?>
-                    </td>
-                    <td>
-                      <?php if ($packages['1']->chat == 0){ ?>
-                         3 x 24 jam
-                      <?php }else if ($packages['1']->chat == 1) { ?>
+<div class="col-md-6" style="border-radius: 5px;">
+<form action="{{ url('member/package')}}" method="post">
+{{ csrf_field() }}
 
-                        Maksimal Dijawab Dalam 1x24 Jam
-                      <?php } ?>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Download Seluruh Materi Video</td>
-                    <td>
-                      <?php if ($packages['0']->download == 0){ ?>
-                        Tidak
-                      <?php }else if ($packages['0']->download == 1) { ?>
-                        Ya
-                      <?php } ?>
-                    </td>
-                    <td>
-                      <?php if ($packages['1']->download == 0){ ?>
-                        Tidak
-                      <?php }else if ($packages['1']->download == 1) { ?>
-                        Ya
-                      <?php } ?>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Download Berkas Praktek (script,modul)</td>
-                    <td>
-                      <?php if ($packages['0']->download == 0){ ?>
-                        Tidak
-                      <?php }else if ($packages['0']->download == 1) { ?>
-                        Segera
-                      <?php } ?>
-                    </td>
-                    <td>
-                      <?php if ($packages['1']->download == 0){ ?>
-                        Tidak
-                      <?php }else if ($packages['1']->download == 1) { ?>
-                        Ya
-                      <?php } ?>
-                    </td>
-                </tr>
-                <tr class="no-bg-color">
-                    <td></td>
-                    <td colspan=2 class="no-bg-color">
-                        <button type="submit" class="next-btn">Selanjutnya</button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        </div>
-      </form>
-    </div>
+<input type="hidden" name="packages_id" value="2">
+  <ul class="price">
+    <li class="header">Premium</li>
+    <hr>
+    <li class="grey">Rp. <?= $packages['1']->price;?> / <strike>90 Hari</strike> | <font color="red">Promo <?= $packages['1']->expired;?> Hari</font></li>
+    <li>Bebas Akses ke Semua Video Tutorial</li>
+    <li>Update Hingga 50 Video lebih perbulan</li>
+    <li>Chat Dengan Trainer dijawab dalam 1x24 Jam</li>
+    <li>Download Semua Materi Video</li>
+    <li>Download Berkas Praktek</li>
+    <hr>
+    <li class=""><button type="submit" class="button">Pilih Paket</button></li>
+  </ul>
+  </form>
+</div>
+</div>
     <div class="intstruction-text">
        <p>Butuh Bantuan Untuk Bertanya? Whatsapp Kami di 089630713487</p>
     </div>
+
 </div>
 
 <script type="text/javascript">

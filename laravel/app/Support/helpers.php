@@ -1,5 +1,6 @@
 <?php
 use App\members;
+use App\Contributors;
 use App\Pages;
 use App\services;
 use App\Contributors;
@@ -60,7 +61,7 @@ class Helper
 
   static function pageMenu()
   {
-    $pages  = Pages::where('enable',1)->get();
+    $pages  = Pages::where('enable',1)->paginate(3);
     $html   = '';
     $html .='<ul class="nav-footer">';
     $html .='<li>Cilsy</li>';

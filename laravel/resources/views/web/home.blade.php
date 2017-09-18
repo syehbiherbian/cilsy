@@ -5,7 +5,7 @@
         <p>
             Belajar dari 500++ tutorial Networking, Server, dan IoT Ekslusif<br>
             Online. Kapanpun, Dimanapun.<br> 
-	   <!--  <font color="yellow">PROMO LANGGANAN 1X DAPATNYA 2X LIPAT HANYA SAMPAI 31 AGUSTUS 2017</font> -->
+	     <font color="yellow">PROMO 2x LIPAT SAMPAI 30 SEPTEMBER 2017. KLIK DAFTAR SEGERA.</font>
         </p>
 
         <?php if (Session::get('memberID')): ?>
@@ -81,7 +81,7 @@ foreach ($lessons as $key => $lesson): ?>
                             <?php if ($i <= 8) {?>
                                 <div class="col-md-3">
                                     <div class="card">
-                                        <a href="{{ url('lessons/'.$lesson->title)}}">
+                                        <a href="{{ url('lessons/'.$lesson->slug)}}">
                                             <?php if (!empty($lesson->image)) {?>
                                               <div class="card-img" style="background-image: url('{{ asset($lesson->image)}}');"></div>
                                             <?php } else {?>

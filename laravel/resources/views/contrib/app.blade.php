@@ -9,7 +9,6 @@
     <title>Cilsy Fiolution | Contributor</title>
     <link rel="shortcut icon" type="image/png" href="{{asset('template/kontributor/img/logo-only.png')}}"/>
     <link href="{{asset('template/kontributor/css/bootstrap.min.css')}}" rel="stylesheet">
-    <link href="{{asset('template/kontributor/css/custom.css')}}" rel="stylesheet">
     <link href="{{asset('template/kontributor/css/sweetalert.css')}}" rel="stylesheet">
     <script type="text/javascript" src="{{asset('template/kontributor/js/jquery.min.js')}}"></script>
 </head>
@@ -22,7 +21,7 @@
             <div class="header-menu">
                 <ul>
                     <li>
-                        <span class="hello-user">Halo Rizal</span>
+                        <span class="hello-user">Halo Syehbi</span>
                     </li>
                     <li class="has-dropdown">
                         <img src="{{asset('template/kontributor/img/icon/Notifikasi.png')}}" alt="">
@@ -99,6 +98,7 @@
         </div>
 
         <ul>
+
             <li>
                 <a href="{{ url('contributor/dashboard') }}">
                     <img src="{{asset('template/kontributor/img/icon/Home.png')}}" alt="" />
@@ -124,7 +124,7 @@
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a href="{{ url('contributor/account/informasi') }}">
                     <img src="{{asset('template/kontributor/img/icon/Kelola_Akun_dan_Halaman.png')}}" alt="" />
                     <span>Kelola Akun dan Halaman</span>
                 </a>
