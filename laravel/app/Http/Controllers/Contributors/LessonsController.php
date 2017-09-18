@@ -315,7 +315,11 @@ class LessonsController extends Controller
       }
   }
   public function doDelete($id){
-     $lessons =lessons::where('id',$id)->delete();
+      if (empty(Session::get('contribID'))) {
+        return redirect('contributor/login');
+      }
+     $contribID = Session::get('contribID');
+     $lessons =lessons::where('id',$id)->where('contributor_id',$contribID)->delete();
      if($lessons){
          $video =videos::where('lessons_id',$id)->delete();
          $files= files::where('lesson_id',$id)->delete();

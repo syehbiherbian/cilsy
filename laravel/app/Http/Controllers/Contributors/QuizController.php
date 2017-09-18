@@ -9,6 +9,7 @@ use App\Quiz;
 use App\Questions;
 use App\videos;
 use App\lessons;
+use App\Contributors;
 use DateTime;
 use Session;
 use DB;
@@ -64,14 +65,15 @@ class QuizController extends Controller
            $store->created_at =$now;
            $store->save();
 
-          //  $check_contri=lessons::join('contributors','lessons.contributor_id','=','contributors.id')
-          //     ->where('id',$lesson_id)->first();
-          //  if(count($check_contri)>0){
-          //    $contri = Contributors::find($check_contri->contributor_id);
-          //    $contri->points      = $check_contri->points + 1;
-          //    $contri->updated_at  = new DateTime();
-          //    $contri->save();
-          //  }
+           //point contributor
+           $check_contri=lessons::join('contributors','lessons.contributor_id','=','contributors.id')
+                        ->where('lessons.id',$lessons_id)->first();
+           if(count($check_contri)>0){
+             $contri = Contributors::find($check_contri->contributor_id);
+             $contri->points      = $check_contri->points + 1;
+             $contri->updated_at  = new DateTime();
+             $contri->save();
+           }
 
 
            return Redirect('contributor/lessons/quiz/'.$store->id.'/create/questions');
@@ -148,6 +150,9 @@ class QuizController extends Controller
   }
 
   public function delete_quiz($id){
+      if (empty(Session::get('contribID'))) {
+        return redirect('contributor/login');
+      }
        $data= DB::table('quiz')->where('id',$id)->first();
        $checkdata=Questions::where('id',$id)->get();
         foreach ($checkdata as $key => $questions) {

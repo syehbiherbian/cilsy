@@ -115,8 +115,10 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::resource('system/lessons', 'LessonController');
 	Route::resource('system/files', 'FilesController');
 	Route::resource('system/videos', 'VideosController');
+	Route::resource('system/income','IncomeController');
 });
 
+// Route::get('system/generate-income', 'GenerateIncomeController@generate');
 /*
 |--------------------------------------------------------------------------
 | Contributor Routes
@@ -176,12 +178,24 @@ Route::get('contributor/lessons/quiz/{quiz_id}/view', 'Contributors\QuizControll
 Route::get('contributor/lessons/quiz/{quiz_id}/edit', 'Contributors\QuizController@edit');
 Route::get('contributor/lessons/quiz/{quiz_id}/delete', 'Contributors\QuizController@delete_quiz');
 
-
-// pendapatan
-Route::get('contributor/income', 'Contributors\IncomeController@index');
-// Question
+// Question/
 Route::get('contributor/lessons/quiz/{quiz_id}/create/questions', 'Contributors\QuestionQuizController@create');
 Route::post('contributor/lessons/{quiz_id}/store_questions', 'Contributors\QuestionQuizController@store');
 
 Route::get('contributor/lessons/quiz/{quiz_id}/edit/questions', 'Contributors\QuestionQuizController@edit');
 Route::post('contributor/lessons/{quiz_id}/update_questions', 'Contributors\QuestionQuizController@update');
+
+// pendapatan
+Route::get('contributor/income', 'Contributors\IncomeController@index');
+Route::get('contributor/income/account/create', 'Contributors\IncomeController@create');
+Route::post('contributor/income/account/create', 'Contributors\IncomeController@doCreate');
+Route::get('contributor/income/account/{id}/edit', 'Contributors\IncomeController@edit');
+Route::get('contributor/income/account/{id}/delete', 'Contributors\IncomeController@dodelete');
+Route::post('contributor/income/account/{id}/edit', 'Contributors\IncomeController@doEdit');
+Route::get('contributor/income/view-all', 'Contributors\IncomeController@view');
+
+
+
+
+// Coments
+Route::get('contributor/coments','Contributors\ComentsController@index');
