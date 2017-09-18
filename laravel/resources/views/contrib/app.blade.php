@@ -99,8 +99,9 @@
 
         <ul>
 
-            <li>
-                <a href="{{ url('contributor/dashboard') }}">
+            <li class="icon-active">
+                <a href="{{ url('contributor') }}">
+
                     <img src="{{asset('template/kontributor/img/icon/Home.png')}}" alt="" />
                     <span>Dashboard</span>
                 </a>

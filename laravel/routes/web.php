@@ -199,7 +199,7 @@ Route::post('contributor/lessons/{quiz_id}/update_questions', 'Contributors\Ques
 
 // Coments
 Route::get('contributor/coments','Contributors\ComentsController@index');
-=======
+
 
 //Account
 Route::get('contributor/account/informasi', 'Contributors\AccountController@informasi');
