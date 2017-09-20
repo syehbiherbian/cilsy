@@ -15,7 +15,7 @@
 Route::get('/', 'Web\HomeController@index');
 // LESSONS PAGE
 Route::get('lessons/{by}/{keyword}', 'Web\LessonsController@index');
-Route::get('lessons/{slug}', 'Web\LessonsController@detail');
+Route::get('lessons/{lessons}', 'Web\LessonsController@detail');
 Route::post('lessons/getplaylist', 'Web\LessonsController@getplaylist');
 // Search
 Route::get('search', 'Web\SearchController@index');
@@ -185,25 +185,20 @@ Route::post('contributor/lessons/{quiz_id}/store_questions', 'Contributors\Quest
 Route::get('contributor/lessons/quiz/{quiz_id}/edit/questions', 'Contributors\QuestionQuizController@edit');
 Route::post('contributor/lessons/{quiz_id}/update_questions', 'Contributors\QuestionQuizController@update');
 
-
 // pendapatan
-// Route::get('contributor/income', 'Contributors\IncomeController@index');
-// Route::get('contributor/income/account/create', 'Contributors\IncomeController@create');
-// Route::post('contributor/income/account/create', 'Contributors\IncomeController@doCreate');
-// Route::get('contributor/income/account/{id}/edit', 'Contributors\IncomeController@edit');
-// Route::get('contributor/income/account/{id}/delete', 'Contributors\IncomeController@dodelete');
-// Route::post('contributor/income/account/{id}/edit', 'Contributors\IncomeController@doEdit');
-// Route::get('contributor/income/view-all', 'Contributors\IncomeController@view');
+Route::get('contributor/income', 'Contributors\IncomeController@index');
+Route::get('contributor/income/account/create', 'Contributors\IncomeController@create');
+Route::post('contributor/income/account/create', 'Contributors\IncomeController@doCreate');
+Route::get('contributor/income/account/{id}/edit', 'Contributors\IncomeController@edit');
+Route::get('contributor/income/account/{id}/delete', 'Contributors\IncomeController@dodelete');
+Route::post('contributor/income/account/{id}/edit', 'Contributors\IncomeController@doEdit');
+Route::get('contributor/income/view-all', 'Contributors\IncomeController@view');
+
 
 
 
 // Coments
 Route::get('contributor/coments','Contributors\ComentsController@index');
-
-
-//Account
-Route::get('contributor/account/informasi', 'Contributors\AccountController@informasi');
-Route::get('contributor/account/halaman', 'Contributors\AccountController@halaman');
-
-//Point
-Route::get('contributor/point', 'Contributors\PointController@index');
+Route::get('contributor/coments/detail/{coment_id}','Contributors\ComentsController@detail');
+Route::post('contributor/coments/postcomment','Contributors\ComentsController@postcomment');
+Route::post('contributor/coments/deletecomment/{coment_id}','Contributors\ComentsController@deletecomment');

@@ -97,30 +97,83 @@
               </tr>
             </thead>
             <tbody>
+			@foreach($data as $dat)
+			<?php
+				$cekanswer = DB::table('coments')->where('parent',$dat->id)->count();
+				if($cekanswer == 0){
+			?>
               <tr>
-                <td>20/06/2017</td>
-                <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</td>
+                <td><?= date('d/m/Y',strtotime($dat->created_at)) ?></td>
+                <td>{{ $dat->description }}</td>
                 <td>
-                   <a href="#" class="btn blue">Lihat</a>
-                   <a href="#" class="btn red">Abaikan</a>
+                   <a href="{{ url('contributor/coments/detail/'.$dat->id) }}" class="btn blue">Lihat</a>
+                 	<a href="javascript:void(0)" class="btn red" onclick="$('#un{{ $dat->id }}').submit();">Abaikan</a>
+					<form id="un{{ $dat->id }}" class="" action="{{ url('contributor/coments/deletecomment/'.$dat->id) }}" method="post">
+						{{ csrf_field() }}
+					</form>
                 </td>
               </tr>
-              <tr>
-                <td>20/06/2017</td>
-                <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</td>
-                <td>
-                   <a href="#" class="btn blue">Lihat</a>
-                   <a href="#" class="btn red">Abaikan</a>
-                </td>
-              </tr>
+			<?php } ?>
+			@endforeach
             </tbody>
           </table>
         </div>
         <div class="tab-pane" id="2a">
-
+			<table class="table">
+              <thead>
+                <tr>
+                  <th>Tanggal</th>
+                  <th width="60%">Pertanyaan</th>
+                  <th>Lebih Lanjut</th>
+                </tr>
+              </thead>
+              <tbody>
+  			@foreach($data as $dat)
+  			<?php
+  				$cekanswer = DB::table('coments')->where('parent',$dat->id)->count();
+  				if($cekanswer > 0){
+  			?>
+                <tr>
+                  <td><?= date('d/m/Y',strtotime($dat->created_at)) ?></td>
+                  <td>{{ $dat->description }}</td>
+                  <td>
+                     <a href="{{ url('contributor/coments/detail/'.$dat->id) }}" class="btn blue">Lihat</a>
+                     <a href="javascript:void(0)" class="btn red" onclick="$an('#{{ $dat->id }}').submit();">Abaikan</a>
+					 <form id="an{{ $dat->id }}" class="" action="{{ url('contributor/coments/deletecomment/'.$dat->id) }}" method="post">
+						 {{ csrf_field() }}
+					 </form>
+                  </td>
+                </tr>
+			<?php } ?>
+  			@endforeach
+              </tbody>
+            </table>
         </div>
         <div class="tab-pane" id="3a">
-
+			<table class="table">
+              <thead>
+                <tr>
+                  <th>Tanggal</th>
+                  <th width="60%">Pertanyaan</th>
+                  <th>Lebih Lanjut</th>
+                </tr>
+              </thead>
+              <tbody>
+  			@foreach($data as $dat)
+            <tr>
+              <td><?= date('d/m/Y',strtotime($dat->created_at)) ?></td>
+              <td>{{ $dat->description }}</td>
+              <td>
+                 <a href="{{ url('contributor/coments/detail/'.$dat->id) }}" class="btn blue">Lihat</a>
+                 <a href="javascript:void(0)" class="btn red" onclick="$('#all{{ $dat->id }}').submit();">Abaikan</a>
+				 <form id="all{{ $dat->id }}" class="" action="{{ url('contributor/coments/deletecomment/'.$dat->id) }}" method="post">
+					 {{ csrf_field() }}
+				 </form>
+              </td>
+            </tr>
+  			@endforeach
+              </tbody>
+            </table>
         </div>
       </div>
     </div>

@@ -43,6 +43,7 @@ class QuizController extends Controller
     if (empty(Session::get('contribID'))) {
       return redirect('contributor/login');
     }
+    $uid = Session::get('contribID');
     //Store new Data
            $validator = Validator::make($request->all(), [
                'title'            => 'required',
@@ -73,6 +74,15 @@ class QuizController extends Controller
              $contri->points      = $check_contri->points + 1;
              $contri->updated_at  = new DateTime();
              $contri->save();
+
+             DB::table('contributor_notif')->insert([
+                 'contributor_id'=> $uid,
+                 'category'=>'point',
+                 'title'   => 'Anda mendapatkan pemambahan 1 point',
+                 'notif'        => 'Anda mendapatkan pemambahan sebanyak 1 point karena  mereplay membuat 1 buah kuis ',
+                 'status'        => 0,
+                 'created_at'    => new DateTime()
+             ]);
            }
 
 
