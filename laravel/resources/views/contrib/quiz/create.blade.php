@@ -13,15 +13,37 @@
 @section('content')
 <div class="row">
   <div class="col-md-12">
-		@if($errors->all())
-		 <div class="alert alert-danger">
-				 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-				 <h4><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></h4>
-				 @foreach($errors->all() as $error)
-				 <?php echo $error."</br>";?>
-				 @endforeach
-		 </div>
-		 @endif
+	  @if($errors->all())
+	   <div class="alert\ alert-danger">
+			   <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+			   <h4><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></h4>
+			   @foreach($errors->all() as $error)
+			   <?php echo $error."</br>";?>
+			   @endforeach
+	   </div>
+	   @endif
+	   @if(Session::has('success'))
+			   <div class="alert alert-success alert-dismissable">
+					   <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+					   <h4>	<i class="icon fa fa-check"></i> Alert!</h4>
+					   {{ Session::get('success') }}
+			   </div>
+	   @endif
+
+	  @if(Session::has('success-delete'))
+		  <div class="alert alert-info alert-dismissable">
+				  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+				  <h4>	<i class="icon fa fa-check"></i> Alert!</h4>
+				  {{ Session::get('success-delete') }}
+		  </div>
+	  @endif
+	  @if(Session::has('no-delete'))
+		  <div class="alert alert-danger alert-dismissable">
+				  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+				  <h4><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></h4>
+				  {{ Session::get('no-delete') }}
+		  </div>
+	  @endif
 		<div class="box-white">
 	    <div class="form-title">
 	      <h3>Tutorial Linux Fundamental dengan ubuntu 14.04 LTS</h3>

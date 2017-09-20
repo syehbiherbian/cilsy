@@ -10,6 +10,7 @@
     <title>@yield('title') {{ config('app.name') }}</title>
     <link href="{{asset('template/web/css/bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{asset('template/web/css/app.css')}}" rel="stylesheet">
+    <link href="{{asset('template/kontributor/css/custom.css')}}" rel="stylesheet">
     <link href="{{asset('template/web/css/navbar.css')}}" rel="stylesheet">
     <link href="{{asset('template/web/css/pace.css')}}" rel="stylesheet">
     <link rel="shortcut icon" type="image/png" href="{{asset('template/kontributor/img/logo-only.png')}}"/>

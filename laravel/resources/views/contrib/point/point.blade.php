@@ -8,8 +8,12 @@
     right: 110px;
     width: 150px;
 }
+.badge{
+  height: 150px;
+  margin-top: 20px;
+}
 </style>
-<div id="top-section">
+<div id="top-section-contrib">
 
 </div>
 
@@ -22,14 +26,14 @@
           <div class="row">
                 <div class="col-md-4 col-md-offset-2">
                     <div class="card bg-2">
-                        <img src="{{asset('template/kontributor/img/icon/5.png')}}" alt="" style="text-align: center;" />
+                        <img src="{{asset('template/kontributor/Asset/tanya.png')}}" alt="" style="text-align: center;" />
                     </div>
                     <h5 align="center" style="font-weight: bold">3 Point</h5>
                     <p align="center" style="font-weight: bold">Menjawab Komentar</p>
                 </div>
                 <div class="col-md-4">
                     <div class="card bg-2">
-                        <img src="{{asset('template/kontributor/img/icon/3.png')}}" alt="" />
+                        <img src="{{asset('template/kontributor/Asset/tutor.png')}}" alt="" />
                     </div>
                     <h5 align="center" style="font-weight: bold">3 Point</h5>
                     <p align="center" style="font-weight: bold">Menjawab Komentar</p>
@@ -42,28 +46,16 @@
             </p>
             <div class="row">
               <div class="col-md-3">
-                <div class="card bg-2">
-                        <img src="{{asset('template/kontributor/img/icon/5.png')}}" alt="" style="text-align: center;" />
-                    </div>
-                    <h5 align="center" style="font-weight: bold">Contributor = 20</h5>
+                <img class="img-responsive" src="{{asset('template/kontributor/Badge/contributor.png')}}" alt="" style="text-align: center;" />
               </div>
               <div class="col-md-3">
-                <div class="card bg-2">
-                        <img src="{{asset('template/kontributor/img/icon/5.png')}}" alt="" style="text-align: center;" />
-                    </div>
-                    <h5 align="center" style="font-weight: bold">Tutor = 60</h5>
+                <img class="img-responsive" src="{{asset('template/kontributor/Badge/tutor.png')}}" alt="" style="text-align: center;" />
               </div>
               <div class="col-md-3">
-                <div class="card bg-2">
-                        <img src="{{asset('template/kontributor/img/icon/5.png')}}" alt="" style="text-align: center;" />
-                    </div>
-                    <h5 align="center" style="font-weight: bold">Expert = 80</h5>
+                <img class="img-responsive" src="{{asset('template/kontributor/Badge/expert.png')}}" alt="" style="text-align: center;" />
               </div>
               <div class="col-md-3">
-                <div class="card bg-2">
-                        <img src="{{asset('template/kontributor/img/icon/5.png')}}" alt="" style="text-align: center;" />
-                    </div>
-                    <h5 align="center" style="font-weight: bold">Master = 100</h5>
+                <img class="img-responsive" src="{{asset('template/kontributor/Badge/master.png')}}" alt="" style="text-align: center;" />
               </div>
             </div>
           </div>

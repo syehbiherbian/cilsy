@@ -9,6 +9,7 @@ use App\Quiz;
 use App\Questions;
 use App\videos;
 use App\lessons;
+use App\Contributors;
 use DateTime;
 use Session;
 use DB;
@@ -42,6 +43,7 @@ class QuizController extends Controller
     if (empty(Session::get('contribID'))) {
       return redirect('contributor/login');
     }
+    $uid = Session::get('contribID');
     //Store new Data
            $validator = Validator::make($request->all(), [
                'title'            => 'required',
@@ -64,14 +66,24 @@ class QuizController extends Controller
            $store->created_at =$now;
            $store->save();
 
-          //  $check_contri=lessons::join('contributors','lessons.contributor_id','=','contributors.id')
-          //     ->where('id',$lesson_id)->first();
-          //  if(count($check_contri)>0){
-          //    $contri = Contributors::find($check_contri->contributor_id);
-          //    $contri->points      = $check_contri->points + 1;
-          //    $contri->updated_at  = new DateTime();
-          //    $contri->save();
-          //  }
+           //point contributor
+           $check_contri=lessons::join('contributors','lessons.contributor_id','=','contributors.id')
+                        ->where('lessons.id',$lessons_id)->first();
+           if(count($check_contri)>0){
+             $contri = Contributors::find($check_contri->contributor_id);
+             $contri->points      = $check_contri->points + 1;
+             $contri->updated_at  = new DateTime();
+             $contri->save();
+
+             DB::table('contributor_notif')->insert([
+                 'contributor_id'=> $uid,
+                 'category'=>'point',
+                 'title'   => 'Anda mendapatkan pemambahan 1 point',
+                 'notif'        => 'Anda mendapatkan pemambahan sebanyak 1 point karena  mereplay membuat 1 buah kuis ',
+                 'status'        => 0,
+                 'created_at'    => new DateTime()
+             ]);
+           }
 
 
            return Redirect('contributor/lessons/quiz/'.$store->id.'/create/questions');
@@ -148,6 +160,9 @@ class QuizController extends Controller
   }
 
   public function delete_quiz($id){
+      if (empty(Session::get('contribID'))) {
+        return redirect('contributor/login');
+      }
        $data= DB::table('quiz')->where('id',$id)->first();
        $checkdata=Questions::where('id',$id)->get();
         foreach ($checkdata as $key => $questions) {

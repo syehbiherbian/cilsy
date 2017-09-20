@@ -196,7 +196,7 @@ class LessonController extends Controller
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         } else {
-
+            $title=Input::get('title');
             // store
             $check= lessons::where('id',$id)->first();
             $store = lessons::find($id);
@@ -219,6 +219,23 @@ class LessonController extends Controller
                   $contri->points      = $check_contri->points + 10;
                   $contri->updated_at  = new DateTime();
                   $contri->save();
+
+                  DB::table('contributor_notif')->insert([
+                      'contributor_id'=> $check_contri->id,
+                      'category'=>'point',
+                      'title'   => 'Anda mendapatkan pemambahan 10 point',
+                      'notif'        => 'Anda mendapatkan pemambahan sebanyak 10 point karena '.$title.' berhasil dipublish',
+                      'status'        => 0,
+                      'created_at'    => new DateTime()
+                  ]);
+                  DB::table('contributor_notif')->insert([
+                      'contributor_id'=> $check_contri->id,
+                      'category'=>'publish',
+                      'title'   => 'Totorial berhasil dipublish',
+                      'notif'        => $title.' berhasil dipublish/acc oleh admin',
+                      'status'        => 0,
+                      'created_at'    => new DateTime()
+                  ]);
                 }
 
               }
@@ -230,6 +247,15 @@ class LessonController extends Controller
               $store_revision->status=0;
               $store->created_at  = new DateTime();
               $store_revision->save();
+
+              DB::table('contributor_notif')->insert([
+                  'contributor_id'=> $store->contributor_id,
+                  'category'=>'rivisi',
+                  'title'   => 'Totorial perlu rivisi',
+                  'notif'        => $title.' perlu direvisi agar dapat dipublish oleh admin.',
+                  'status'        => 0,
+                  'created_at'    => new DateTime()
+              ]);
             }
             $revisi = revision::where('lession_id',$id)->get();
 

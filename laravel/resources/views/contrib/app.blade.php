@@ -8,8 +8,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no" />
     <title>Cilsy Fiolution | Contributor</title>
     <link rel="shortcut icon" type="image/png" href="{{asset('template/kontributor/img/logo-only.png')}}"/>
+    <link href="{{asset('template/kontributor/css/custom.css')}}" rel="stylesheet">
     <link href="{{asset('template/kontributor/css/bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{asset('template/kontributor/css/sweetalert.css')}}" rel="stylesheet">
+    <script type="text/javascript" src="{{asset('template/kontributor/js/jquery.min.js')}}"></script>
 </head>
 
 <body>
@@ -55,12 +57,12 @@
                             <ul>
                                 <li>
                                     <a href="#">
-                                        Profesional Kontributor
+                                        <?php echo badge();?>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="#">
-                                        7000 Pts
+                                        {{points()}} Pts
                                     </a>
                                 </li>
                                 <li>
@@ -97,8 +99,9 @@
         </div>
 
         <ul>
+
             <li class="icon-active">
-                <a href="{{ url('contributor') }}">
+                    <a href="{{ url('contributor/dashboard') }}">
                     <img src="{{asset('template/kontributor/img/icon/Home.png')}}" alt="" />
                     <span>Dashboard</span>
                 </a>
@@ -177,8 +180,6 @@
             </div>
         </div>
     </div>
-
-    <script type="text/javascript" src="{{asset('template/kontributor/js/jquery.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('template/kontributor/js/bootstrap.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('template/kontributor/js/custom.js')}}"></script>
     <script type="text/javascript" src="{{asset('template/kontributor/js/sweetalert.min.js')}}"></script>

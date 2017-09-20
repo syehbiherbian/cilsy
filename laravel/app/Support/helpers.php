@@ -1,13 +1,16 @@
 <?php
 use App\members;
-use App\Contributors;
 use App\Pages;
 use App\services;
+use App\Contributors;
+use App\income_details;
+use App\lessons;
 /**
  *
  */
 class Helper
 {
+
   static function member($field)
   {
       $mem_id   = Session::get('memberID');
@@ -95,4 +98,82 @@ class Helper
       return $html;
 
   }
+}
+function badge(){
+      $contribID = Session::get('contribID');
+      $cotrib= Contributors::where('id',$contribID)->first();
+
+      $html='';
+      if($cotrib !==null){
+          if($cotrib->points >=0 and $cotrib->points <=99){
+              $html.='Kontributor';
+
+          }elseif($cotrib->points >=100 and $cotrib->points <=499){
+              $html.='Profesional';
+          }
+          elseif($cotrib->points >=500 and $cotrib->points <=1499){
+              $html.='Expert';
+          }
+          elseif($cotrib->points >=1500 and $cotrib->points <=4999){
+              $html.='Master';
+          }
+          elseif($cotrib->points >=5000 ){
+              $html.='Guru';
+          }
+      }
+      return $html;
+}
+function points(){
+      $contribID = Session::get('contribID');
+     $html='';
+      if($contribID !==null){
+          $cotrib= Contributors::where('id',$contribID)->first();
+          $html.=''.$cotrib->points.'';
+
+      }
+     return $html;
+}
+function income(){
+    if (empty(Session::get('contribID'))) {
+      return redirect('contributor/login');
+    }
+    $date= new DateTime();
+    $moth= $date->format('m');
+    $year= $date->format('Y');
+
+    $contribID = Session::get('contribID');
+    $html='';
+    if($contribID !==null){
+        $row = income_details::where('contributor_id',$contribID)->where('moth',$moth)->where('year',$year)->first();
+        if(count($row) ==0){
+        $row = income_details::where('contributor_id',$contribID)->orderBy('created_at','desc')->first();
+        }
+
+        if(count($row)>0){
+            $html.=''.number_format($row->total_income,0,",",".").'';
+        }else{
+            $html.='0';
+        }
+    }
+    return $html;
+}
+function lessons_pending(){
+      $contribID = Session::get('contribID');
+      $html='';
+      if($contribID !==null){
+          $data = lessons::where('contributor_id',$contribID)->where('lessons.status',0)->count();
+          $html.=''.$data.'';
+
+      }
+    return $html;
+}
+function lessons_publish(){
+      $contribID = Session::get('contribID');
+      $html='';
+      if($contribID !==null){
+          $data = lessons::where('contributor_id',$contribID)->where('lessons.status',1)->count();
+          $html.=''.$data.'';
+
+      }
+    return $html;
 }
