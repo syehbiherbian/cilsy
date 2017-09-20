@@ -1,11 +1,11 @@
 @extends('web.app')
 @section('title','')
 @section('content')
-<div id="top-section">
+<div id="top-section" style="margin-top: 115px;">
         <p>
             Belajar dari 500++ tutorial Networking, Server, dan IoT Ekslusif<br>
             Online. Kapanpun, Dimanapun.<br> 
-	     <font color="yellow">PROMO 2x LIPAT SAMPAI 30 SEPTEMBER 2017. KLIK DAFTAR SEGERA.</font>
+	    
         </p>
 
         <?php if (Session::get('memberID')): ?>
