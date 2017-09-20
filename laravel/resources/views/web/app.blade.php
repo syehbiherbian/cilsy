@@ -10,7 +10,6 @@
     <title>@yield('title') {{ config('app.name') }}</title>
     <link href="{{asset('template/web/css/bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{asset('template/web/css/app.css')}}" rel="stylesheet">
-    <link href="{{asset('template/kontributor/css/custom.css')}}" rel="stylesheet">
     <link href="{{asset('template/web/css/navbar.css')}}" rel="stylesheet">
     <link href="{{asset('template/web/css/pace.css')}}" rel="stylesheet">
     <link rel="shortcut icon" type="image/png" href="{{asset('template/kontributor/img/logo-only.png')}}"/>
@@ -166,6 +165,12 @@
         padding-top: 4px;
         padding-bottom: 0px;
       }
+      .global-notification {
+    background: #00b1b3;
+    color: #e6ffff;
+    text-align: center;
+    padding: 1em 0;
+}
     </style>
 </head>
 
@@ -178,7 +183,6 @@
             </div>
         </div>
     </div>
-
     <!-- Navbar -->
     <nav class="navbar navbar-default navbar-fixed-top">
       <div class="container">

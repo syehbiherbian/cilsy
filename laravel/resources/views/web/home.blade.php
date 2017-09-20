@@ -4,7 +4,7 @@
 <div id="top-section">
         <p>
             Belajar dari 500++ tutorial Networking, Server, dan IoT Ekslusif<br>
-            Online. Kapanpun, Dimanapun.<br> 
+            Online. Kapanpun, Dimanapun.<br>
 	     <font color="yellow">PROMO 2x LIPAT SAMPAI 30 SEPTEMBER 2017. KLIK DAFTAR SEGERA.</font>
         </p>
 
