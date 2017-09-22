@@ -173,8 +173,13 @@
               <div class="col-md-9">
                   <div class="form-line">
                       <select class="form-control show-tick" name="status_paid{{$row->id}}">
-                          <option value="0">Unpaid</option>
-                          <option value="1">Paid</option>
+                          <option value="0" <?php if($row->status==0){
+                            echo "selected";
+                          }?>>Unpaid</option>
+                          <option value="1"
+                          <?php if($row->status==1){
+                            echo "selected";
+                          }?>>Paid</option>
                       </select>
                   </div>
               </div>

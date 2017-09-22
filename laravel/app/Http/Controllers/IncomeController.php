@@ -62,6 +62,7 @@ class IncomeController extends Controller
             $updates->status      = $status;
             $updates->updated_at= $now;
             $updates->save();
+
             if(!empty($bankid)){
                 $bank= contributor_account::where('id',$bankid)->first();
                 $store = new income_transfer;
@@ -69,7 +70,48 @@ class IncomeController extends Controller
                 $store->bank_transfer=$bank->id;
                 $store->created_at= $now;
                 $store->save();
+
+                if($updates->status==1){
+                  if($updates->moth=='01'){
+                    $bulan='Januari';
+                  }
+                  elseif($updates->moth=='02'){
+                    $bulan='Februari';
+                  }elseif($updates->moth=='03'){
+                    $bulan='Maret';
+                  }elseif($updates->moth=='04'){
+                    $bulan="April";
+                  }elseif($updates->moth=='05'){
+                      $bulan="Mei";
+                  }elseif($updates->moth=='06'){
+                      $bulan="Juni";
+                  }elseif($updates->moth=='07'){
+                      $bulan="Juli";
+                  }elseif($updates->moth=='08'){
+                      $bulan="Agustus";
+                  }elseif($updates->moth=='09'){
+                    $bulan="September";
+                  }elseif($updates->moth=='10'){
+                    $bulan="Oktober";
+                  }elseif($updates->moth=='11'){
+                    $bulan="November";
+                  }elseif($updates->moth=='12'){
+                    $bulan="Desember";
+                  }else{
+                    $bulan="-";
+                  }
+
+                  DB::table('contributor_notif')->insert([
+                      'contributor_id'=> $updates->contributor_id,
+                      'category'=>'transfer',
+                      'title'   => 'fee sudah ditransfer oleh admin',
+                      'notif'        => 'fee '.$bulan.' '.$updates->year.' telah ditransfer oleh admin ke rekening '.$bank->bank.' anda',
+                      'status'        => 0,
+                      'created_at'    => new DateTime()
+                  ]);
+                }
             }
+
 
             // redirect
             return redirect()->back()->with('success','Data successfully updated');
