@@ -104,14 +104,36 @@ class Helper
 function notif(){
 
     $contribID = Session::get('contribID');
-    $notif =contributor_notif::where('contributor_id',$contribID)->get();
-
+    $notif =contributor_notif::where('contributor_id',$contribID)->where('status',0)->get();
+    $url = 'http://localhost/cilsy';
     $html='';
     foreach ($notif as  $value) {
-        $html .='<li><a href="#">'.$value->title.'</a></li>';
+        $html .='<li><a href="'.$url.'/contributor/notif" onclick="notifview('.$value->id.')">'.$value->title.'</a></li>';
 
     }
     return $html;
+}
+function coments(){
+  $contribID = Session::get('contribID');
+  $html='';
+  if($contribID !==null){
+      $cotrib= DB::table('coments')
+              ->join('lessons','lessons.id','=','coments.lesson_id')
+              ->where('lessons.contributor_id',$contribID)->where('coments.parent','0')
+              ->select('coments.*')->get();
+          $total=0;
+          foreach ($cotrib as $value) {
+            	$cekanswer = DB::table('coments')->where('parent',$value->id)->get();
+              if(count($cekanswer)==0){
+                $total=$total+1;
+              }
+          }
+
+
+      $html.=''.$total.'';
+
+  }
+ return $html;
 }
 function badge(){
       $contribID = Session::get('contribID');
@@ -139,7 +161,7 @@ function badge(){
 }
 function points(){
       $contribID = Session::get('contribID');
-     $html='';
+      $html='';
       if($contribID !==null){
           $cotrib= Contributors::where('id',$contribID)->first();
           $html.=''.$cotrib->points.'';

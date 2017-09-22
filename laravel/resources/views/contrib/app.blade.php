@@ -164,6 +164,19 @@
     <script type="text/javascript" src="{{asset('template/kontributor/js/bootstrap.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('template/kontributor/js/custom.js')}}"></script>
     <script type="text/javascript" src="{{asset('template/kontributor/js/sweetalert.min.js')}}"></script>
+    <script type="text/javascript">
+      function notifview(id){
+        var token   = "{{csrf_token()}}";
+        var dataString= '_token='+ token + '&id=' + id ;
+         $.ajax({
+          type:"GET",
+          url:"{{url('ajax/notif/view')}}",
+          data:dataString,
+          success:function(data){
+          }
+        });
+      }
+    </script>
 </body>
 
 </html>

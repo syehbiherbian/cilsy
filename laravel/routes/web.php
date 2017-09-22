@@ -194,9 +194,13 @@ Route::get('contributor/income/account/{id}/delete', 'Contributors\IncomeControl
 Route::post('contributor/income/account/{id}/edit', 'Contributors\IncomeController@doEdit');
 Route::get('contributor/income/view-all', 'Contributors\IncomeController@view');
 
-
-
-
+//point
+Route::get('contributor/point','Contributors\PointController@index');
+//notif
+Route::get('contributor/notif','Contributors\NotifController@index');
+Route::get('ajax/notif/view','Contributors\NotifController@view');
+Route::get('ajax/notif/read','Contributors\NotifController@read');
+Route::post('contributor/notif/delete/{id}','Contributors\NotifController@delete');
 // Coments
 Route::get('contributor/coments','Contributors\ComentsController@index');
 Route::get('contributor/coments/detail/{coment_id}','Contributors\ComentsController@detail');

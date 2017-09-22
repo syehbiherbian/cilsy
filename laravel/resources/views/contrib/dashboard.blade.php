@@ -47,8 +47,8 @@
     <div class="col-md-4">
         <div class="card bg-4">
             <img src="{{asset('template/kontributor/img/icon/1.png')}}" alt="" />
-            <p class="card-title">50</p>
-            <p class="card-desc">Pertanyaan belum terjawab  (ket:belum dibuat sistemnya)</p>
+            <p class="card-title"><?php echo coments();?></p>
+            <p class="card-desc">Pertanyaan belum terjawab</p>
         </div>
     </div>
 </div>
