@@ -166,10 +166,18 @@
         padding-top: 4px;
         padding-bottom: 0px;
       }
+      .global-notification {
+        background: #FFEB3B;
+        color: #000000;
+        text-align: center;
+        padding: 0em 0;
+        
+      }
     </style>
 </head>
 
 <body>
+    
     <div class="loading">
         &nbsp;
         <div class="middle">
@@ -180,7 +188,15 @@
     </div>
 
     <!-- Navbar -->
+    
     <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="global-notification">
+    <div class="container">
+    <h4>
+    Promo 2x lipat sampai 30 September 2017. Segera Daftar!.
+    </h4>
+    </div>
+    </div>
       <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
