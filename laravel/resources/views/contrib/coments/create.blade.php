@@ -3,7 +3,7 @@
 @section('breadcumbs')
 <div id="navigation">
 		<ul class="breadcrumb">
-				<li><a href="{{ url('contributor') }}">Dashboard</a></li>
+				<li><a href="{{ url('contributor/dashboard') }}">Dashboard</a></li>
         <li><a href="{{ url('contributor/lessons') }}">Kelola Tutorial</a></li>
 			  <li><a href="{{ url('contributor/lessons/create') }}">Buat tutorial</a></li>
         <li>Video</li>

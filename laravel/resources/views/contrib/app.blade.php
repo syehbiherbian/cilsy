@@ -28,7 +28,7 @@
                         <img src="{{asset('template/kontributor/img/icon/Notifikasi.png')}}" alt="">
                         <div class="dropdown-container">
                             <ul>
-                            <?php echo notif();?>
+                              <?php echo notif();?>
                             </ul>
                         </div>
                     </li>
@@ -88,7 +88,7 @@
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a href="{{url('contributor/income')}}">
                     <img src="{{asset('template/kontributor/img/icon/Kelola_Pendapatan.png')}}" alt="" />
                     <span>Kelola Pendapatan</span>
                 </a>
@@ -100,7 +100,7 @@
                 </a>
             </li>
             <li>
-                <a href="{{ url('contributor/questions') }}">
+                <a href="{{ url('contributor/coments') }}">
                     <img src="{{asset('template/kontributor/img/icon/Kelola_Tutorial.png')}}" alt="" />
                     <span>Kelola Pertanyaan</span>
                 </a>
@@ -164,7 +164,7 @@
     <script type="text/javascript" src="{{asset('template/kontributor/js/bootstrap.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('template/kontributor/js/custom.js')}}"></script>
     <script type="text/javascript" src="{{asset('template/kontributor/js/sweetalert.min.js')}}"></script>
-    <script type="text/javascript">
+    <!-- <script type="text/javascript">
       function notifview(id){
         var token   = "{{csrf_token()}}";
         var dataString= '_token='+ token + '&id=' + id ;
@@ -176,7 +176,7 @@
           }
         });
       }
-    </script>
+    </script> -->
 </body>
 
 </html>
