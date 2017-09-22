@@ -28,26 +28,7 @@
                         <img src="{{asset('template/kontributor/img/icon/Notifikasi.png')}}" alt="">
                         <div class="dropdown-container">
                             <ul>
-                                <li>
-                                    <a href="#">
-                                        Notifikasi 1
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        Notifikasi 2
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        Notifikasi 3
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        Notifikasi 4
-                                    </a>
-                                </li>
+                            <?php echo notif();?>
                             </ul>
                         </div>
                     </li>
