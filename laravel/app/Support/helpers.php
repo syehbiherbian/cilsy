@@ -5,6 +5,7 @@ use App\services;
 use App\Contributors;
 use App\income_details;
 use App\lessons;
+use App\contributor_notif;
 /**
  *
  */
@@ -98,6 +99,19 @@ class Helper
       return $html;
 
   }
+}
+
+function notif(){
+
+    $contribID = Session::get('contribID');
+    $notif =contributor_notif::where('contributor_id',$contribID)->get();
+
+    $html='';
+    foreach ($notif as  $value) {
+        $html .='<li><a href="#">'.$value->title.'</a></li>';
+
+    }
+    return $html;
 }
 function badge(){
       $contribID = Session::get('contribID');
