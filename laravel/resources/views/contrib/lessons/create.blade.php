@@ -52,13 +52,13 @@
 	      <div class="form-group">
 	        <label class="col-sm-2 control-label">Judul</label>
 	        <div class="col-sm-10">
-	          <input type="text" class="form-control" placeholder="Contoh:Tutorial Administrasi Server dengan ubuntu 12.04" name="title" value="{{ old('title') }}">
+	          <input type="text"  required class="form-control" placeholder="Contoh:Tutorial Administrasi Server dengan ubuntu 12.04" name="title" value="{{ old('title') }}">
 	        </div>
 	      </div>
 	      <div class="form-group">
 	        <label class="col-sm-2 control-label">Pilih Kategori</label>
 	        <div class="col-sm-10">
-	          <select class="form-control" name="category_id">
+	          <select class="form-control" required name="category_id">
 	            <option value="">-</option>
 							<?php foreach ($categories as $key => $row): ?>
 		            <option value="{{ $row->id }}">{{ $row->title }}</option>
@@ -69,7 +69,7 @@
 	      <div class="form-group">
 	        <label class="col-sm-2 control-label">Upload gambar</label>
 	        <div class="col-sm-10">
-	          <input type="file" name="image" class="form-control">
+	          <input type="file" name="image" required class="form-control">
 	        </div>
 	      </div>
 	      <div class="form-group">
