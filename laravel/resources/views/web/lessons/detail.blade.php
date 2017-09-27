@@ -310,7 +310,7 @@ video-js.vjs-ended .vjs-big-play-button,.video-js.vjs-paused .vjs-big-play-butto
 }
 </style>
 
-<div id="content-section">
+<div id="content-section" style="margin-top: 90px;">
 
   <div id="cat-images">
     <div class="container">
