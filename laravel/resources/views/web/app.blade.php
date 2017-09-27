@@ -166,17 +166,16 @@
         padding-bottom: 0px;
       }
       .global-notification {
-        background: #FFEB3B;
-        color: #000000;
-        text-align: center;
-        padding: 0em 0;
-        
-      }
+    background: #FFEB3B;
+    color: #fffff;
+    text-align: center;
+}
+
     </style>
 </head>
 
 <body>
-    
+
     <div class="loading">
         &nbsp;
         <div class="middle">
@@ -185,15 +184,18 @@
             </div>
         </div>
     </div>
-
     <!-- Navbar -->
-    
+
     <nav class="navbar navbar-default navbar-fixed-top">
     <div class="global-notification">
     <div class="container">
     <h4>
     Promo 2x lipat sampai 30 September 2017. Segera Daftar!.
     </h4>
+    <span id='close' onclick='this.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode); return false;' style="    position: absolute;
+    right: 20px;
+    top: 10px;">x</span>
+
     </div>
     </div>
       <div class="container">
@@ -347,6 +349,10 @@
       </div><!-- /.container-fluid -->
     </nav>
     <script type="text/javascript">
+    $("#close").ready(function(){
+
+      $("#top-section").css("margin-top", "76px")
+    })
     $(document).ready(function() {
       var btncategory = $('.btn-category').width();
       $('.dropdown-item').css('width',btncategory);

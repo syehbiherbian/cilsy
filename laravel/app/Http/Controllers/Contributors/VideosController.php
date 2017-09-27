@@ -44,7 +44,8 @@ class VideosController extends Controller
     // read more on validation at http://laravel.com/docs/validation
     $rules = array(
       'judul'          => 'required',
-      'video'    => 'required',
+      'video.*'  => 'mimes:mp4,mov,ogg,webm |required|max:100000',
+      'image.*' => 'mimes:jpeg,jpg,png,gif|required|max:30000' // max 10000kb
     );
     $validator = Validator::make(Input::all(), $rules);
 
@@ -58,6 +59,8 @@ class VideosController extends Controller
         $title        = Input::get('judul');
         $image_video = Input::file('image');
         $lessons_video = Input::file('video');
+
+
         $description  = Input::get('desc');
 
         $video=videos::where('lessons_id',$lessonsid)->get();
@@ -70,11 +73,12 @@ class VideosController extends Controller
 
         $i=$count_video + 1;
         foreach ($title as $key => $titles) {
+                $type_video =$lessons_video[$key]->getMimeType();
+
                 if (!is_dir("assets/source/lessons/lessons-".$lessonsid."/video-".$i)) {
                         $newforder=mkdir("assets/source/lessons/lessons-".$lessonsid."/video-".$i);
                 }
                 $DestinationPath= 'assets/source/lessons/lessons-'.$lessonsid.'/video-'.$i;
-
                 //insert image
                 if(!empty($image_video[$key])){
                     $imagefilename    = $image_video[$key]->getClientOriginalName();
@@ -85,7 +89,7 @@ class VideosController extends Controller
                 if($imagefilename ==''){
                     $url_image= $imagefilename;
                 }else{
-                    $url_image= 'http://localhost/cilsy/assets/source/lessons/video-'.$i.'/'.$imagefilename;
+                    $url_image= 'http://localhost:8080/cilsy/assets/source/lessons/video-'.$i.'/'.$imagefilename;
                 }
 
                 //insert video
@@ -98,7 +102,7 @@ class VideosController extends Controller
                 if($lessonsfilename ==''){
                     $url_video= $lessonsfilename;
                 }else{
-                    $url_video= 'http://localhost/cilsy/assets/source/lessons/video-'.$i.'/'.$lessonsfilename;
+                    $url_video= 'http://localhost:8080/cilsy/assets/source/lessons/video-'.$i.'/'.$lessonsfilename;
                 }
 
 
@@ -108,6 +112,8 @@ class VideosController extends Controller
                 $store->image           = $url_image;
                 $store->video           = $url_video;
                 $store->description     = $description[$key];
+                $store->type_video      = $type_video;
+                $store->durasi          =0;
                 $store->created_at      = $now;
                 $store->enable=1;
                 $store->save();
@@ -157,6 +163,8 @@ class VideosController extends Controller
     // read more on validation at http://laravel.com/docs/validation
     $rules = array(
       'judul'          => 'required',
+      'video.*'  => 'mimes:mp4,mov,ogg,webm|max:100000',
+      'image.*' => 'mimes:jpeg,jpg,png,gif|max:30000' // max 10000kb
     );
     $validator = Validator::make(Input::all(), $rules);
 
@@ -165,14 +173,16 @@ class VideosController extends Controller
         return redirect()->back()->withErrors($validator)->withInput();
     } else {
 
-        $now          = new DateTime();
-        $cid          = Session::get('contribID');
-        $title        = Input::get('judul');
-        $image_video = Input::file('image');
-        $image_text        = Input::get('image_text');
-        $lessons_video = Input::file('video');
-        $video_text        = Input::get('video_text');
-        $description  = Input::get('desc');
+        $now                = new DateTime();
+        $cid                = Session::get('contribID');
+        $title              = Input::get('judul');
+        $image_video        = Input::file('image');
+        $image_text         = Input::get('image_text');
+        $lessons_video      = Input::file('video');
+        $video_text         = Input::get('video_text');
+        $type_videos         = Input::get('type_video');
+        $description        = Input::get('desc');
+
         $delete= videos::where('lessons_id',$lessonsid)->delete();
         $video=videos::where('lessons_id',$lessonsid)->get();
         $count_video=count($video);
@@ -185,6 +195,12 @@ class VideosController extends Controller
         $i=$count_video + 1;
 
         foreach ($title as $key => $titles) {
+                if(!empty($image_video[$key])){
+                    $type_video =$lessons_video[$key]->getMimeType();
+                }else{
+                    $type_video=$type_videos[$key];
+                }
+
                 if (!is_dir("assets/source/lessons/lessons-".$lessonsid."/video-".$i)) {
                         $newforder=mkdir("assets/source/lessons/lessons-".$lessonsid."/video-".$i);
                 }
@@ -222,6 +238,8 @@ class VideosController extends Controller
                 $store->image           = $url_image;
                 $store->video           = $url_video;
                 $store->description     = $description[$key];
+                $store->type_video      = $type_video;
+                $store->durasi          =0;
                 $store->created_at      = $now;
                 $store->enable=1;
                 $store->save();
