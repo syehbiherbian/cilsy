@@ -9,7 +9,7 @@
           <button type="button"  title="Hapus Totorial" data-toggle="tooltip" class="btn btn-danger pull-right" data-toggle="tooltip" onclick="checkdelete({{$row->id}})">Hapus Tutorial</button>
     </form>
 		<ul class="breadcrumb">
-				<li><a href="{{ url('contributor') }}">Dashboard</a></li>
+				<li><a href="{{ url('contributor/dashboard') }}">Dashboard</a></li>
                 <li><a href="{{ url('contributor/lessons') }}">Kelola Tutorial</a></li>
         <li>Tutorial</li>
 		</ul>
