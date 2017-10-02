@@ -81,7 +81,7 @@ hr {
 	<p>Hampir Selesai, Pilih Paket Langganan Yang Kamu Mau</p>
     </div>
 
-<div id="table-section">    
+<div id="table-section">
 <div class="col-md-6 kotak" style="border-radius: 5px;">
 <form action="{{ url('member/package')}}" method="post">
 {{ csrf_field() }}
@@ -89,7 +89,7 @@ hr {
   <ul class="price">
     <li class="header">Pro</li>
     <hr>
-    <li class="grey">Rp. <?= $packages['0']->price;?> / <strike>30 Hari</strike> | <font color="red">Promo <?= $packages['0']->expired;?> Hari</font></li>
+    <li class="grey">Rp. <?=$packages['0']->price;?> /30 Hari</li>
     <li>Bebas Akses ke Semua Video Tutorial</li>
     <li>Update Hingga 50 Video lebih perbulan</li>
     <li>Chat Dengan Trainer dijawab dalam 3x24 Jam</li>
@@ -110,7 +110,7 @@ hr {
   <ul class="price">
     <li class="header">Premium</li>
     <hr>
-    <li class="grey">Rp. <?= $packages['1']->price;?> / <strike>90 Hari</strike> | <font color="red">Promo <?= $packages['1']->expired;?> Hari</font></li>
+    <li class="grey">Rp. <?=$packages['1']->price;?> / <?=$packages['1']->expired;?> Hari</li>
     <li>Bebas Akses ke Semua Video Tutorial</li>
     <li>Update Hingga 50 Video lebih perbulan</li>
     <li>Chat Dengan Trainer dijawab dalam 1x24 Jam</li>

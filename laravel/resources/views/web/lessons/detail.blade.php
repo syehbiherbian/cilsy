@@ -374,7 +374,7 @@ video-js.vjs-ended .vjs-big-play-button,.video-js.vjs-paused .vjs-big-play-butto
         </div>
         <div class="tabpanel" id="panel3" role="tabpanel">
           <h1>File Praktek</h1>
-          <?php if (count($services) > 0) {?>
+          <?php if ($services) {?>
               @foreach($file as $key => $files)
                   <a href="{{ $files->source }}" class="btn btn-info btn-md"> Download {{ $files->title}}</a><br><br>
               @endforeach
@@ -431,14 +431,14 @@ video-js.vjs-ended .vjs-big-play-button,.video-js.vjs-paused .vjs-big-play-butto
                       </div>
                       <div id="collapse3" class="panel-collapse collapse">
                         <div class="panel-body">
-                          <?php if (count($services) > 0) {?>
-                              @foreach($file as $key => $files)
-                                  <a href="{{ $files->source }}" class="btn btn-info btn-md"> Download {{ $files->title}}</a><br><br>
-                              @endforeach
+                        <?php if ($services) {?>
+                        @foreach($file as $key => $files)
+                            <a href="{{ $files->source }}" class="btn btn-info btn-md"> Download {{ $files->title}}</a><br><br>
+                        @endforeach
 
-                          <?php } else {?>
-                              <button type="button" name="button"  class="btn btn-info btn-md disabled">Download </button>
-                          <?php }?>
+                        <?php } else {?>
+                            <button type="button" name="button"  class="btn btn-info btn-md disabled">Download </button>
+                        <?php }?>
                         </div>
                         </div>
                       </div>

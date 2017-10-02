@@ -187,7 +187,7 @@
     <!-- Navbar -->
 
     <nav class="navbar navbar-default navbar-fixed-top">
-    <div class="global-notification">
+{{--     <div class="global-notification">
     <div class="container">
     <h4>
     Promo 2x lipat sampai 30 September 2017. Segera Daftar!.
@@ -197,7 +197,7 @@
     top: 10px;">x</span>
 
     </div>
-    </div>
+    </div> --}}
       <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">

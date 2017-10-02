@@ -40,10 +40,8 @@
   </div>
 
 </div>
+
 <script>
-fbq('track', 'Purchase', {
-value: 247.35,
-currency: 'USD'
-});
+fbq('track', 'InitiateCheckout');
 </script>
 @endsection
