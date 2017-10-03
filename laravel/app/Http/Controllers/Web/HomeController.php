@@ -21,6 +21,7 @@ class HomeController extends Controller {
 			'categories' => $categories,
 			'lessons' => $lessons,
 			'invoice' => $invoice,
+			'mem_id' => $mem_id,
 		]);
 	}
 }

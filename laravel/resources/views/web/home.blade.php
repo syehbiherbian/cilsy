@@ -194,19 +194,5 @@ foreach ($lessons as $key => $lesson): ?>
     <a href="{{ url('lessons/browse/all')}}" class="lihat-semua-btn">
        Lihat Semua
     </a>
-<?php if ($invoice->packages_id == 1) {?>
-<script>
-fbq('track', 'Purchase', {
-value: 85000,
-currency: 'IDR'
-});
-</script>
-<?php } elseif ($invoice->packages_id == 1) {?>
-<script>
-fbq('track', 'Purchase', {
-value: 300000,
-currency: 'IDR'
-});
-</script>
-<?php }?>
+
 @endsection()
