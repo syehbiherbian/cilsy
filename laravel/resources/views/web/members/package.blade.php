@@ -133,12 +133,7 @@ hr {
     $('[name=packages_id]').val(id);
   }
 </script>
-
 <script>
-fbq('track', 'CompleteRegistration', {
-value: 25.00,
-currency: 'USD'
-});
+fbq('track', 'InitiateCheckout');
 </script>
-
 @endsection

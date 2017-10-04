@@ -42,6 +42,15 @@
 </div>
 
 <script>
-fbq('track', 'InitiateCheckout');
+fbq('track', 'Purchase', {
+value: 85000,
+currency: 'IDR'
+});
+</script>
+<script>
+fbq('track', 'Purchase', {
+value: 300000,
+currency: 'IDR'
+});
 </script>
 @endsection
