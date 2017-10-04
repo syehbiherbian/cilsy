@@ -145,21 +145,6 @@ class VtwebController extends Controller {
 				]);
 				// Create New Services
 				$this->create_services($order_id);
-				if ($invoice->packages_id == 1) {
-					echo "<script>
-                fbq('track', 'Purchase', {
-                value: 85000,
-                currency: 'IDR'
-                });
-                </script>";
-				} else if ($invoice->packages_id == 2) {
-					echo "<script>
-                fbq('track', 'Purchase', {
-                value: 300000,
-                currency: 'IDR'
-                });
-                </script>";
-				}
 			} else if ($transaction == 'pending') {
 				// TODO set payment status in merchant's database to 'Pending'
 				DB::table('invoice')->where('code', '=', $order_id)->update([
