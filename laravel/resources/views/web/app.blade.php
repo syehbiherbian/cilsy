@@ -47,6 +47,7 @@
     // mixpanel.init("b208ef84bd5045e39433ef24aa0b823c");
     </script>
     <!-- end Mixpanel -->
+    <?php if (Session::get('memberID'));{?>
     <script>
     document.onkeydown = function(e) {
     if(event.keyCode == 123) {
@@ -63,6 +64,7 @@
     }
     }
     </script>
+    <?php }?>
     <style media="screen">
     .owl-prev {
     width: 15px;
