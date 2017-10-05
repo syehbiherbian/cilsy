@@ -97,7 +97,7 @@ hr {
     <li></li>
     <li></li>
     <hr>
-    <li class=""><button type="submit" class="button">Pilih Paket</button></li>
+    <li class=""><button type="submit" class="button" id="pilih">Pilih Paket</button></li>
   </ul>
 </form>
 </div>
@@ -117,7 +117,7 @@ hr {
     <li>Download Semua Materi Video</li>
     <li>Download Berkas Praktek</li>
     <hr>
-    <li class=""><button type="submit" class="button">Pilih Paket</button></li>
+    <li class=""><button type="submit" class="button" id="pilih">Pilih Paket</button></li>
   </ul>
   </form>
 </div>
@@ -134,6 +134,16 @@ hr {
   }
 </script>
 <script>
-fbq('track', 'InitiateCheckout');
+fbq('track', 'CompleteRegistration');
+</script>
+<script type="text/javascript">
+  var button = document.getElementById('pilih');
+  button.addEventListener(
+    'click',
+    function() {
+      fbq('track', 'InitiateCheckout');
+    },
+    false
+  );
 </script>
 @endsection
