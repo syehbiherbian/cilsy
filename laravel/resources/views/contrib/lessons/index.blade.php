@@ -94,8 +94,29 @@
                     <?php endif; ?>
                   </td>
                   <td>{{$row->revisi_ke}}</td>
-                  <td>@if($row->student=='') 0 @else {{$row->student}}  @endif</td>
-                  <td>@if($row->view=='') 0 @else {{$row->view}}  @endif</td>
+                  <td>
+                      <?php $student=0; ?>
+                      @foreach ($students as $details)
+                        @if($details->lesson_id==$row->id)
+                         <?php $student=$student +1 ; ?>
+                        @elseif($details->lesson_id !==$row->id)
+                        @endif
+                      @endforeach
+
+                     {{$student}}
+                  </td>
+                  <td>
+                      <?php $view=0; ?>
+                      @foreach ($views as $details)
+                        @if($details->lesson_id==$row->id)
+                         <?php $view=$details->view; ?>
+                        @elseif($details->lesson_id !==$row->id)
+                        @endif
+                      @endforeach
+
+                     {{$view}}
+
+                  </td>
                   <td><a href="{{ url('contributor/lessons/'.$row->id.'/view')}}" class="btn btn-warning">View</a></td>
                 </tr>
                 <?php $i++; ?>

@@ -53,7 +53,7 @@
                             <div class="form-group">
                             <label class="form-label">File Praktek</label>
                                 <div class="form-line">
-                                   <input type="file" name="file[]" id="filetiket1" class="form-control" required>
+                                   <input type="file" name="file[]" id="filetiket1" class="form-control">
                                 </div>
                             </div>
                             <div id="dynamic_field">

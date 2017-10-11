@@ -308,6 +308,16 @@ video-js.vjs-ended .vjs-big-play-button,.video-js.vjs-paused .vjs-big-play-butto
 .video-js .vjs-play-progress,.video-js  .vjs-volume-level {
     background-color: #2483d5
 }
+.btn {
+    border-radius: 10px;
+    padding: 5px 20px;
+    font-size: 10px;
+    text-decoration: none;
+    color: #fff;
+    position: relative;
+    display: inline-block;
+}
+
 </style>
 
 <div id="content-section">
@@ -446,6 +456,75 @@ video-js.vjs-ended .vjs-big-play-button,.video-js.vjs-paused .vjs-big-play-butto
       </div>
 
     </div>
+    <div class="container" style="margin-top:50px;">
+            <div class="col-md-12" style="background-color:#fff;">
+                <h3>Pertanyaan</h3>
+                <hr>
+
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <textarea class="form-control" id="input_kirim" name="input_kirim" rows="8" cols="80"></textarea>
+                    </div>
+                    <div class="col-md-12" id="kirim" style="padding-top:10px;padding-left:5%;padding-bottom:20px;">
+                        <a href="javascript:void(0)" class="btn btn-info pull-right" onclick="dokirim()" style="float:right;margin-top:10px;">Kirim</a>'
+                    </div>
+                </div>
+                <div class="content-reload">
+
+                    @foreach($datacomment as $comment)
+                    <div class="col-md-12" style="margin-bottom:30px;" id="row{{ $comment->id }}">
+                        <img class="user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png"height="40px" width="40px" style="object-fit:scale-down;border-radius: 100%;margin-bottom:10px;">
+                        <strong>{{ $comment->username }} </strong> pada <strong><?= date('d/m/Y',strtotime($comment->created_at)) ?></strong>
+                        <strong style="color:#ff5e10;">@if($comment->member_id !==null)  User @endif @if($comment->contributor_id  !==null)  Contributor @endif</strong>
+
+                        <div class="col-md-12" style="margin-top:10px;padding-left:5%;">
+                                {{ $comment->description }}
+                        </div>
+                            <br><br>
+                            <?php
+                            $getchild = DB::table('coments')
+                                ->leftJoin('members','members.id','=','coments.member_id')
+                                ->leftJoin('contributors','contributors.id','=','coments.contributor_id')
+                                ->where('coments.lesson_id',$lessons->id)
+                                ->where('parent',$comment->id)
+                                ->orderBy('coments.created_at','ASC')
+                                ->select('coments.*','members.username as username','contributors.username as contriname')
+                                ->get();
+
+                            if (count($getchild) > 0) {
+                                foreach ($getchild as $child) {
+                            ?>
+                            <div class="col-md-12" style="margin-top:10px;padding-left:7%;">
+                                <img class="user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png"height="40px" width="40px" style="object-fit:scale-down;border-radius: 100%;margin-bottom:10px;">
+                                    <strong>
+                                        <?php if(!empty($child->username)){ ?>
+                                            {{ $child->username }}
+                                        <?php }else{ ?>
+                                            {{ $child->contriname }}
+                                        <?php } ?>
+                                    </strong> pada <strong><?= date('d/m/Y',strtotime($child->created_at)) ?></strong>
+                                    <strong style="color:#ff5e10;">@if($child->member_id !==null)  User @endif @if($child->contributor_id  !==null)  Contributor @endif</strong>
+                                    <div class="col-md-12" style="margin-top:10px;margin-bottom:10px;padding-left:5%;">
+                                        {{ $child->description }}
+                                    </div>
+                                    <div class="clearfix"></div>
+                            </div>
+                            <?php
+                                }
+                            }
+                            ?>
+
+
+
+                        <div class="col-md-12" id="balas{{ $comment->id }}" style="padding-top:10px; padding-left:0px; padding-right:0px;">
+                            <a href="javascript:void(0)" class="btn btn-info pull-right" onclick="formbalas({{ $comment->id }})">Balas</a>
+                        </div>
+                    </div>
+                    @endforeach
+
+                </div>
+            </div>
+        </div>
   </div>
 </div>
 
@@ -453,6 +532,85 @@ video-js.vjs-ended .vjs-big-play-button,.video-js.vjs-paused .vjs-big-play-butto
   <script src="{{ asset('node_modules/video.js/dist/video.js') }}"></script>
   <script src="{{ asset('node_modules/videojs-playlist/dist/videojs-playlist.js') }}"></script>
   <script src="{{ asset('node_modules/videojs-playlist-ui/dist/videojs-playlist-ui.js') }}"></script>
+
+<script type="text/javascript">
+
+    function dokirim(){
+        var isi_kirim = $('#input_kirim').val();
+        var lesson_id = '{{ $lessons->id }}';
+        // alert(comment_id+' = '+isi_balas);
+        var datapost = {
+            '_token'    : '{{ csrf_token() }}',
+            'isi_kirim' : isi_kirim,
+            'lesson_id' : lesson_id
+        }
+
+        $.ajax({
+            type    :'POST',
+            url     :'{{ url("lessons/coments/kirimcomment") }}',
+            data    :datapost,
+            success:function(data){
+            if(data==0){
+                    window.location.href = '{{url("member/signin")}}';
+            } else if (data !== 'null') {
+                    // $("#row"+comment_id).load(window.location.href + " #row"+comment_id);
+                    $('.content-reload').prepend(data);
+                }else {
+                    alert('Koneksi Bermasalah, Silahkan Ulangi');
+                    location.reload();
+                }
+            }
+        })
+    }
+</script>
+  <script type="text/javascript">
+      function formbalas(comment_id){
+
+          $('#balas'+comment_id).html('<label class="col-md-1" style="padding-left:0px;">Anda</label>'+
+                                  '<div class="col-md-11" style="padding-right:0px;">'+
+                                  '   <input type="text" class="form-control" id="input_balas'+comment_id+'" name="balasan" placeholder="tambahkan komentar/balasan" value="">'+
+                                  '</div>'+
+                                  '<a href="javascript:void(0)" class="btn btn-info pull-right" onclick="dobalas('+comment_id+')" style="float:right;margin-top:10px;">Kirim</a>');
+      }
+
+      function dobalas(comment_id){
+          var isi_balas = $('#input_balas'+comment_id).val();
+          var lesson_id = '{{ $lessons->id }}';
+          // alert(comment_id+' = '+isi_balas);
+          var datapost = {
+              '_token'    : '{{ csrf_token() }}',
+              'isi_balas' : isi_balas,
+              'comment_id': comment_id,
+              'lesson_id' : lesson_id
+          }
+
+          $.ajax({
+              type    :'POST',
+              url     :'{{ url("lessons/coments/postcomment") }}',
+              data    :datapost,
+              success:function(data){
+                  if (data == 1) {
+                      $("#row"+comment_id).load(window.location.href + " #row"+comment_id);
+                  }
+                  else if(data==0){
+                          window.location.href = '{{url("member/signin")}}';
+                  }else {
+                      alert('Koneksi Bermasalah, Silahkan Ulangi');
+                      location.reload();
+                  }
+              }
+          })
+      }
+
+      function loadcontent(){
+          $(".content-reload").load(window.location.href + " .content-reload");
+          console.log('reload');
+      }
+
+      // setInterval(function(){
+      //     loadcontent()
+      // }, 5000);
+  </script>
   <script>
     var lessons_id = "{{ $lessons->id }}";
 

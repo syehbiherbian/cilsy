@@ -14,7 +14,7 @@ class HomeController extends Controller
     {
       # code...
       $categories = categories::where('enable','=',1)->get();
-      $lessons    = lessons::where('enable','=',1)->get();
+      $lessons    = lessons::where('enable','=',1)->where('lessons.status', '=', 1)->get();
 
       return view('web.home',[
         'categories'  =>$categories,

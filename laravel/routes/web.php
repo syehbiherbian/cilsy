@@ -17,6 +17,9 @@ Route::get('/', 'Web\HomeController@index');
 Route::get('lessons/{by}/{keyword}', 'Web\LessonsController@index');
 Route::get('lessons/{lessons}', 'Web\LessonsController@detail');
 Route::post('lessons/getplaylist', 'Web\LessonsController@getplaylist');
+Route::post('lessons/coments/kirimcomment','Web\LessonsController@kirimcomment');
+Route::post('lessons/coments/postcomment','Web\LessonsController@postcomment');
+
 // Search
 Route::get('search', 'Web\SearchController@index');
 Route::get('search/autocomplete', 'Web\SearchController@autocomplete');

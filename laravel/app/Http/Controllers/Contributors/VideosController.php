@@ -44,8 +44,8 @@ class VideosController extends Controller
     // read more on validation at http://laravel.com/docs/validation
     $rules = array(
       'judul'          => 'required',
-      'video.*'  => 'mimes:mp4,mov,ogg,webm |required|max:100000',
-      'image.*' => 'mimes:jpeg,jpg,png,gif|required|max:30000' // max 10000kb
+    //   'video.*'  => 'mimes:mp4,mov,ogg,webm |required|max:100000',
+    //   'image.*' => 'mimes:jpeg,jpg,png,gif|required|max:30000'
     );
     $validator = Validator::make(Input::all(), $rules);
 
@@ -89,7 +89,8 @@ class VideosController extends Controller
                 if($imagefilename ==''){
                     $url_image= $imagefilename;
                 }else{
-                    $url_image= 'http://localhost:8080/cilsy/assets/source/lessons/video-'.$i.'/'.$imagefilename;
+                    $urls=url('');
+                    $url_image= $urls.'/assets/source/lessons/video-'.$i.'/'.$imagefilename;
                 }
 
                 //insert video
@@ -102,7 +103,8 @@ class VideosController extends Controller
                 if($lessonsfilename ==''){
                     $url_video= $lessonsfilename;
                 }else{
-                    $url_video= 'http://localhost:8080/cilsy/assets/source/lessons/video-'.$i.'/'.$lessonsfilename;
+                    $urls=url('');
+                    $url_video= $urls.'/assets/source/lessons/video-'.$i.'/'.$lessonsfilename;
                 }
 
 
@@ -163,8 +165,8 @@ class VideosController extends Controller
     // read more on validation at http://laravel.com/docs/validation
     $rules = array(
       'judul'          => 'required',
-      'video.*'  => 'mimes:mp4,mov,ogg,webm|max:100000',
-      'image.*' => 'mimes:jpeg,jpg,png,gif|max:30000' // max 10000kb
+    //   'video.*'  => 'mimes:mp4,mov,ogg,webm|max:100000',
+    //   'image.*' => 'mimes:jpeg,jpg,png,gif|max:30000' // max 10000kb
     );
     $validator = Validator::make(Input::all(), $rules);
 
@@ -216,7 +218,8 @@ class VideosController extends Controller
                 if($imagefilename ==''){
                     $url_image= $image_text[$key];
                 }else{
-                    $url_image= 'http://localhost/cilsy/assets/source/lessons/video-'.$i.'/'.$imagefilename;
+                    $urls=url('');
+                    $url_image= $urls.'/assets/source/lessons/video-'.$i.'/'.$imagefilename;
                 }
 
                 //insert video
@@ -229,7 +232,8 @@ class VideosController extends Controller
                 if($lessonsfilename ==''){
                     $url_video= $video_text[$key];
                 }else{
-                    $url_video= 'http://localhost/cilsy/assets/source/lessons/video-'.$i.'/'.$lessonsfilename;
+                    $urls=url('');
+                    $url_video= $urls.'/assets/source/lessons/video-'.$i.'/'.$lessonsfilename;
                 }
 
                 $store                  = new videos;
