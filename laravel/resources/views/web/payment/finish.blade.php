@@ -40,10 +40,17 @@
   </div>
 
 </div>
-<script>
+
+<!--<script>
 fbq('track', 'Purchase', {
-value: 247.35,
-currency: 'USD'
+value: 85000,
+currency: 'IDR'
 });
 </script>
+<script>
+fbq('track', 'Purchase', {
+value: 300000,
+currency: 'IDR'
+});
+</script>-->
 @endsection

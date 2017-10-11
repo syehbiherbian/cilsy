@@ -81,7 +81,7 @@ hr {
 	<p>Hampir Selesai, Pilih Paket Langganan Yang Kamu Mau</p>
     </div>
 
-<div id="table-section">    
+<div id="table-section">
 <div class="col-md-6 kotak" style="border-radius: 5px;">
 <form action="{{ url('member/package')}}" method="post">
 {{ csrf_field() }}
@@ -89,7 +89,7 @@ hr {
   <ul class="price">
     <li class="header">Pro</li>
     <hr>
-    <li class="grey">Rp. <?= $packages['0']->price;?> / <strike>30 Hari</strike> | <font color="red">Promo <?= $packages['0']->expired;?> Hari</font></li>
+    <li class="grey">Rp. <?=$packages['0']->price;?> /30 Hari</li>
     <li>Bebas Akses ke Semua Video Tutorial</li>
     <li>Update Hingga 50 Video lebih perbulan</li>
     <li>Chat Dengan Trainer dijawab dalam 3x24 Jam</li>
@@ -97,7 +97,7 @@ hr {
     <li></li>
     <li></li>
     <hr>
-    <li class=""><button type="submit" class="button">Pilih Paket</button></li>
+    <li class=""><button type="submit" class="button" id="pilih">Pilih Paket</button></li>
   </ul>
 </form>
 </div>
@@ -110,14 +110,14 @@ hr {
   <ul class="price">
     <li class="header">Premium</li>
     <hr>
-    <li class="grey">Rp. <?= $packages['1']->price;?> / <strike>90 Hari</strike> | <font color="red">Promo <?= $packages['1']->expired;?> Hari</font></li>
+    <li class="grey">Rp. <?=$packages['1']->price;?> / <?=$packages['1']->expired;?> Hari</li>
     <li>Bebas Akses ke Semua Video Tutorial</li>
     <li>Update Hingga 50 Video lebih perbulan</li>
     <li>Chat Dengan Trainer dijawab dalam 1x24 Jam</li>
     <li>Download Semua Materi Video</li>
     <li>Download Berkas Praktek</li>
     <hr>
-    <li class=""><button type="submit" class="button">Pilih Paket</button></li>
+    <li class=""><button type="submit" class="button" id="pilih">Pilih Paket</button></li>
   </ul>
   </form>
 </div>
@@ -133,12 +133,17 @@ hr {
     $('[name=packages_id]').val(id);
   }
 </script>
-
 <script>
-fbq('track', 'CompleteRegistration', {
-value: 25.00,
-currency: 'USD'
-});
+fbq('track', 'CompleteRegistration');
 </script>
-
+<script type="text/javascript">
+  var button = document.getElementById('pilih');
+  button.addEventListener(
+    'click',
+    function() {
+      fbq('track', 'InitiateCheckout');
+    },
+    false
+  );
+</script>
 @endsection

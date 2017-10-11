@@ -3,12 +3,6 @@
 @section('content')
 <link href="{{ asset('node_modules/video.js/dist/video-js.css') }}" rel="stylesheet">
 <link href="{{ asset('node_modules/videojs-playlist-ui/dist/videojs-playlist-ui.vertical.css') }}" rel="stylesheet">
-<script>
-fbq('track', 'ViewContent', {
-value: 3.50,
-currency: 'USD'
-});
-</script>
 <style>
   body {
     /*font-family: Arial, sans-serif;*/
@@ -320,7 +314,7 @@ video-js.vjs-ended .vjs-big-play-button,.video-js.vjs-paused .vjs-big-play-butto
 
 </style>
 
-<div id="content-section">
+<div id="content-section" style="margin-top: 90px;">
 
   <div id="cat-images">
     <div class="container">
@@ -384,7 +378,7 @@ video-js.vjs-ended .vjs-big-play-button,.video-js.vjs-paused .vjs-big-play-butto
         </div>
         <div class="tabpanel" id="panel3" role="tabpanel">
           <h1>File Praktek</h1>
-          <?php if (count($services) > 0) {?>
+          <?php if ($services) {?>
               @foreach($file as $key => $files)
                   <a href="{{ $files->source }}" class="btn btn-info btn-md"> Download {{ $files->title}}</a><br><br>
               @endforeach
@@ -441,14 +435,14 @@ video-js.vjs-ended .vjs-big-play-button,.video-js.vjs-paused .vjs-big-play-butto
                       </div>
                       <div id="collapse3" class="panel-collapse collapse">
                         <div class="panel-body">
-                          <?php if (count($services) > 0) {?>
-                              @foreach($file as $key => $files)
-                                  <a href="{{ $files->source }}" class="btn btn-info btn-md"> Download {{ $files->title}}</a><br><br>
-                              @endforeach
+                        <?php if ($services) {?>
+                        @foreach($file as $key => $files)
+                            <a href="{{ $files->source }}" class="btn btn-info btn-md"> Download {{ $files->title}}</a><br><br>
+                        @endforeach
 
-                          <?php } else {?>
-                              <button type="button" name="button"  class="btn btn-info btn-md disabled">Download </button>
-                          <?php }?>
+                        <?php } else {?>
+                            <button type="button" name="button"  class="btn btn-info btn-md disabled">Download </button>
+                        <?php }?>
                         </div>
                         </div>
                       </div>
@@ -610,6 +604,9 @@ video-js.vjs-ended .vjs-big-play-button,.video-js.vjs-paused .vjs-big-play-butto
       // setInterval(function(){
       //     loadcontent()
       // }, 5000);
+  </script>
+  <script>
+    fbq('track', 'ViewContent');
   </script>
   <script>
     var lessons_id = "{{ $lessons->id }}";

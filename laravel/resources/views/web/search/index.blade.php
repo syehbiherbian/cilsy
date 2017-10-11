@@ -99,8 +99,6 @@
   </div>
 </div>
 <script>
-fbq('track', 'Search', {
-search_string: 'leather sandals'
-});
+fbq('track', 'Search');
 </script>
 @endsection

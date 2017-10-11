@@ -10,7 +10,6 @@
     <title>@yield('title') {{ config('app.name') }}</title>
     <link href="{{asset('template/web/css/bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{asset('template/web/css/app.css')}}" rel="stylesheet">
-    <link href="{{asset('template/kontributor/css/custom.css')}}" rel="stylesheet">
     <link href="{{asset('template/web/css/navbar.css')}}" rel="stylesheet">
     <link href="{{asset('template/web/css/pace.css')}}" rel="stylesheet">
     <link rel="shortcut icon" type="image/png" href="{{asset('template/kontributor/img/logo-only.png')}}"/>
@@ -48,6 +47,24 @@
     // mixpanel.init("b208ef84bd5045e39433ef24aa0b823c");
     </script>
     <!-- end Mixpanel -->
+    <?php if (Session::get('memberID'));{?>
+    <script>
+    document.onkeydown = function(e) {
+    if(event.keyCode == 123) {
+    return false;
+    }
+    if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)){
+    return false;
+    }
+    if(e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)){
+    return false;
+    }
+    if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)){
+    return false;
+    }
+    }
+    </script>
+    <?php }?>
     <style media="screen">
     .owl-prev {
     width: 15px;
@@ -167,17 +184,16 @@
         padding-bottom: 0px;
       }
       .global-notification {
-        background: #FFEB3B;
-        color: #000000;
-        text-align: center;
-        padding: 0em 0;
-        
-      }
+    background: #FFEB3B;
+    color: #fffff;
+    text-align: center;
+}
+
     </style>
 </head>
 
-<body>
-    
+<body oncontextmenu="return false;">
+
     <div class="loading">
         &nbsp;
         <div class="middle">
@@ -186,17 +202,20 @@
             </div>
         </div>
     </div>
-
     <!-- Navbar -->
-    
+
     <nav class="navbar navbar-default navbar-fixed-top">
-    <div class="global-notification">
+{{--     <div class="global-notification">
     <div class="container">
     <h4>
     Promo 2x lipat sampai 30 September 2017. Segera Daftar!.
     </h4>
+    <span id='close' onclick='this.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode); return false;' style="    position: absolute;
+    right: 20px;
+    top: 10px;">x</span>
+
     </div>
-    </div>
+    </div> --}}
       <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
@@ -348,6 +367,10 @@
       </div><!-- /.container-fluid -->
     </nav>
     <script type="text/javascript">
+    $("#close").ready(function(){
+
+      $("#top-section").css("margin-top", "76px")
+    })
     $(document).ready(function() {
       var btncategory = $('.btn-category').width();
       $('.dropdown-item').css('width',btncategory);

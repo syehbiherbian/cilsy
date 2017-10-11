@@ -4,8 +4,7 @@
 <div id="top-section" style="margin-top: 115px;">
         <p>
             Belajar dari 500++ tutorial Networking, Server, dan IoT Ekslusif<br>
-            Online. Kapanpun, Dimanapun.<br> 
-	    
+            Online. Kapanpun, Dimanapun.<br>
         </p>
 
         <?php if (Session::get('memberID')): ?>
@@ -195,4 +194,5 @@ foreach ($lessons as $key => $lesson): ?>
     <a href="{{ url('lessons/browse/all')}}" class="lihat-semua-btn">
        Lihat Semua
     </a>
+
 @endsection()
