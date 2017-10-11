@@ -18,6 +18,7 @@ use App\revision;
 use App\lessons_detail;
 use DateTime;
 
+
 use Session;
 class LessonsController extends Controller
 {
@@ -371,5 +372,24 @@ class LessonsController extends Controller
      }else{
         return redirect()->back()->with('no-delete','Delete totorial gagal!');
      }
+  }
+
+
+  public function doProcess($id){
+
+      if (empty(Session::get('contribID'))) {
+        return redirect('contributor/login');
+      }
+        $now          = new DateTime();
+        $cid          = Session::get('contribID');
+        $update = revision::find($id);
+        $update->status = 2;
+        $update->updated_at=$now;
+        $update->save();
+
+        return redirect()->back()->with('success','Revisi akan diproses oleh admin!');
+
+
+
   }
 }

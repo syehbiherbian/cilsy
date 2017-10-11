@@ -152,6 +152,8 @@ Route::get('contributor/lessons', 'Contributors\LessonsController@redirect');
 Route::get('contributor/lessons/{filter}/list', 'Contributors\LessonsController@index');
 Route::get('contributor/lessons/create', 'Contributors\LessonsController@create');
 Route::post('contributor/lessons/create', 'Contributors\LessonsController@doCreate');
+Route::get('contributor/lessons/revision/{id}/proccess', 'Contributors\LessonsController@doProcess');
+
 
 Route::get('contributor/lessons/{id}/view', 'Contributors\LessonsController@view');
 Route::get('contributor/lessons/{id}/edit', 'Contributors\LessonsController@edit');

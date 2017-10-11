@@ -293,6 +293,7 @@
                   <th>No</th>
                   <th>Note</th>
                   <th>Status</th>
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -304,10 +305,10 @@
                   <td><?php echo nl2br($value->notes);?></td>
                   <td width="20%">
                     <?php
-                    if($value->status==2){
+                  if($value->status==2){
+                      echo "Revisi Proses";
+                   }elseif($value->status==3){
                       echo "Revisi Gagal";
-                    // }elseif($value->status==2){
-                    //   echo "Revisi Proses";
                   }elseif ($value->status==1) {
                       echo "Revisi Berhasil";
                   }else{
@@ -321,6 +322,7 @@
                         <option value="2"<?php if($value->status==2){echo "selected";} ?>>Process</option>
                     </select> -->
                   </td>
+                  <td>@if($value->status == 1)   <div class="label label-success">Acc</div> @else<a href="{{url('contributor/lessons/revision/'.$value->id.'/proccess')}}" class="btn btn-danger">Revisi</a> @endif</td>
                 </tr>
                 <?php $i++;?>
                 @endforeach

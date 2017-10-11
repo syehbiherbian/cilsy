@@ -169,7 +169,20 @@
 				  </td>
 				</tr>
 				@endif
+				@elseif($dat->status==1)
+				<tr>
+				  <td><?= date('d/m/Y',strtotime($dat->created_at)) ?></td>
+				  <td>{{ $dat->description }}</td>
+				  <td>
+					 <a href="{{ url('contributor/coments/detail/'.$dat->id) }}" class="btn blue">Lihat</a>
+					 <a href="javascript:void(0)" class="btn red" onclick="$('#var{{ $dat->id }}').submit();">Abaikan</a>
+					 <form id="var{{ $dat->id }}" class="" action="{{ url('contributor/coments/deletecomment/'.$dat->id) }}" method="post">
+						 {{ csrf_field() }}
+					 </form>
+				  </td>
+				</tr>
 			@endif
+
   			<?php
 
   				$cekanswers = DB::table('coments')->where('parent',$dat->id)->where('status',0)->orderBy('created_at','ASC')->get();
@@ -213,6 +226,8 @@
 					}
 				?>
   			@endforeach
+
+
               </tbody>
             </table>
 

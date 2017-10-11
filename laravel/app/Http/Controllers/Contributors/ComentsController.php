@@ -32,8 +32,19 @@ class ComentsController extends Controller
             ->orderBy('coments.created_at','DESC')
             ->select('coments.*')
             ->get();
+
+        $getabaikan = DB::table('coments')
+            ->leftJoin('lessons','lessons.id','=','coments.lesson_id')
+            ->where('coments.parent',0)
+            // ->where('coments.status',0)
+            // ->where('member_id','!=',null)
+            ->where('lessons.contributor_id',$uid)
+            ->orderBy('coments.created_at','DESC')
+            ->select('coments.*')
+            ->get();
         return view('contrib.coments.index', [
-            'data' => $getcomment
+            'data' => $getcomment,
+            'abaikan'=>$getabaikan
         ]);
     }
 
