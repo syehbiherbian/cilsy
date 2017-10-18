@@ -114,6 +114,7 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::post('system/members/editServices', 'MembersController@editServices');
 
 	Route::resource('system/cat', 'KategoriController');
+	Route::resource('system/reward', 'RewardController');
 	Route::resource('system/pages', 'PagesController');
 	Route::resource('system/lessons', 'LessonController');
 	Route::resource('system/files', 'FilesController');
@@ -121,7 +122,7 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::resource('system/income','IncomeController');
 });
 
-// Route::get('system/generate-income', 'GenerateIncomeController@generate');
+ Route::get('cron/system/generate-income', 'GenerateIncomeController@generate');
 /*
 |--------------------------------------------------------------------------
 | Contributor Routes

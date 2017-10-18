@@ -123,7 +123,8 @@
                 </td>
                 <td>Rp. <?php echo number_format($value->total_income,0,",",".") ;?></td>
                 <td>@if($value->status=='1')Paid @else Unpaid @endif</td>
-                <td><?php if($value->date_pay !==null || $value->date_pay=='0000-00-00'){ echo date('d F Y',strtotime($value->date_pay));}else{echo "-";}?></td>
+                <td>
+																	 <?php if($value->transfer_date ==null || $value->transfer_date=='0000-00-00'){echo "-"; }else{echo date('d F Y',strtotime($value->transfer_date));}?></td>
               </tr>
               @endforeach
             </tbody>

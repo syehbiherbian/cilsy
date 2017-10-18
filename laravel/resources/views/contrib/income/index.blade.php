@@ -160,7 +160,11 @@
               </div>
               <div class="col-sm-3">
                  <div class="title"><h4>Tanggal Dibayar<h4></div>
-                 <div class="value" style="margin-top:18px;"><?php if($row->date_pay !==null || $row->date_pay=='0000-00-00'){ echo date('d F Y',strtotime($row->date_pay));}else{echo "-";}?></div>
+                 <div class="value" style="margin-top:18px;">
+
+									 <?php if($row->transfer_date ==null || $row->transfer_date=='0000-00-00'){echo "-"; }else{echo date('d F Y',strtotime($row->transfer_date));}?>
+
+								 </div>
               </div>
 
           </div>
