@@ -12,9 +12,8 @@ use Redirect;
 use DateTime;
 use Helper;
 use Auth;
-
+use App\reward_category;
 use App\reward;
-
 class rewardController extends Controller
 {
     /**
@@ -39,7 +38,10 @@ class rewardController extends Controller
      */
     public function create()
     {
-        return view('admin.reward.create');
+        $cat = reward_category::where('enable',1)->get();
+        return view('admin.reward.create',[
+          'cat'=>$cat,
+        ]);
     }
 
     /**
@@ -52,13 +54,19 @@ class rewardController extends Controller
     {
 
         $rules = array(
-          'code'       => 'required|unique:reward',
-          'name' => 'required',
+          'code'      => 'required|unique:reward',
+          'slug'      => 'required|unique:reward',
+          'name'      => 'required',
           'value'     => 'required',
-          'poin'   => 'required',
-          'start'      => 'required',
-          'end'      => 'required',
-          'limit'      => 'required',
+          'poin'      => 'required',
+          'start'     => 'required',
+          'end'       => 'required',
+          'limit'     => 'required',
+          'cat'       =>'required',
+          'type'      =>'required',
+          'image'  => 'required',
+          'desc'   =>'required',
+          'url'     =>'required'
         );
         $validator = Validator::make(Input::all(), $rules);
 
@@ -67,17 +75,22 @@ class rewardController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         } else {
 
-            $now          = new DateTime();
-            $enab         = Input::get('enable');
-            $code         = Input::get('code');
-            $name          = Input::get('name');
-            $value        = Input::get('value');
-            $poin        = Input::get('poin');
+            $now        = new DateTime();
+            $enab       = Input::get('enable');
+            $code       = Input::get('code');
+            $name       = Input::get('name');
+            $value      = Input::get('value');
+            $poin       = Input::get('poin');
             $start      = Input::get('start');
-            $end         = Input::get('end');
-            $limit         = Input::get('limit');
-
-
+            $end        = Input::get('end');
+            $limit      = Input::get('limit');
+            $cat        = Input::get('cat');
+            $desc       = Input::get('desc');
+            $type       = Input::get('type');
+            $slug       = Input::get('slug');
+            $image       = Input::get('image');
+            $url        = Input::get('url');
+            $content       = Input::get('content');
             if (!empty($enab)) {
               $enable = 1;
             }else {
@@ -87,13 +100,20 @@ class rewardController extends Controller
             $store = new reward;
             $store->enable      = $enable;
             $store->code        = $code;
-            $store->name        =$name;
+            $store->name        = $name;
             $store->value       = $value;
-            $store->poin       = $poin;
+            $store->poin        = $poin;
             $store->start       = $start;
             $store->end         = $end;
             $store->limit       = $limit;
+            $store->category_id = $cat;
+            $store->description  = $desc;
             $store->created_at  = $now;
+            $store->type        = $type;
+            $store->slug        = $slug;
+            $store->image       = $image;
+            $store->content      = $content;
+            $store->url         =$url;
             $store->save();
 
             return redirect('system/reward')->with('success','Successfully create data');
@@ -120,9 +140,11 @@ class rewardController extends Controller
      */
     public function edit($id)
     {
+        $cat = reward_category::where('enable',1)->get();
         $data    = reward::find($id);
         return view('admin.reward.edit',[
-            'data'    => $data
+            'data'    => $data,
+            'cat'     => $cat
         ]);
     }
 
@@ -138,11 +160,17 @@ class rewardController extends Controller
         $rules = array(
             'code'       => 'required|unique:reward,code,'.$id,
             'name' => 'required',
+            'slug'       => 'required|unique:reward,slug,'.$id,
             'value'     => 'required',
             'poin'   => 'required',
             'start'      => 'required',
             'end'      => 'required',
             'limit'      => 'required',
+            'cat' =>'required',
+            'type'        =>'required',
+            'image'  => 'required',
+            'desc'=>'required',
+            'url' =>'required'
         );
         $validator = Validator::make(Input::all(), $rules);
 
@@ -151,16 +179,22 @@ class rewardController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         } else {
 
-            $now          = new DateTime();
-            $enab         = Input::get('enable');
-            $code          = Input::get('code');
-            $name          = Input::get('name');
-            $value    = Input::get('value');
-            $poin        = Input::get('poin');
+            $now        = new DateTime();
+            $enab       = Input::get('enable');
+            $code       = Input::get('code');
+            $name       = Input::get('name');
+            $value      = Input::get('value');
+            $poin       = Input::get('poin');
             $start      = Input::get('start');
-            $end         = Input::get('end');
-            $limit         = Input::get('limit');
-
+            $end        = Input::get('end');
+            $limit      = Input::get('limit');
+            $cat        = Input::get('cat');
+            $desc       = Input::get('desc');
+            $type       = Input::get('type');
+            $slug       = Input::get('slug');
+            $image      =Input::get('image');
+            $content    = Input::get('content');
+            $url        =Input::get('url');
             if (!empty($enab)) {
               $enable = 1;
             }else {
@@ -177,6 +211,13 @@ class rewardController extends Controller
             $store->start       = $start;
             $store->end         = $end;
             $store->limit       = $limit;
+            $store->category_id =$cat;
+            $store->description =$desc;
+            $store->type       = $type;
+            $store->slug       = $slug;
+            $store->image =$image;
+            $store->content =$content;
+            $store->url        = $url;
             $store->updated_at= $now;
             $store->save();
 

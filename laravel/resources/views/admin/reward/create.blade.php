@@ -30,21 +30,63 @@
                               </div>
                             </div>
 
+
                             <div class="form-group">
                                 <label class="form-label">Code</label>
                                 <div class="form-line">
                                    <input type="text" name="code" class="form-control" value="{{ old('code') }}">
                                 </div>
                             </div>
-
-
-                            <div class="form-group">
-                                <label class="form-label">Name</label>
+                            <div class="form-group form-float">
+                                <label class="form-label">Category</label>
                                 <div class="form-line">
-                                   <input type="text" name="name" class="form-control" value="{{ old('name') }}">
+                                    <select class="form-control show-tick" name="cat">
+                                        <option value="">-- Please select --</option>
+                                        @foreach($cat as $cats)
+                                            <option value="{{$cats->id}}">{{$cats->name}}</option>
+                                        @endforeach
+                                    </select>
+                                    <label class="form-label">Icon</label>
                                 </div>
                             </div>
 
+                            <div class="form-group">
+                                <label class="form-label">Title</label>
+                                <div class="form-line">
+                                   <input type="text" name="name" class="form-control"  id="title" onchange="changeURL()" value="{{ old('name') }}">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                            <label class="form-label">Slug</label>
+                                <div class="form-line">
+                                   <input type="text" name="slug" class="form-control" id="change">
+
+                                </div>
+                            </div>
+                            <div class="form-group">
+                            <label class="form-label">Url Reward</label>
+                                <div class="form-line">
+                                   <input type="text" name="url" class="form-control">
+
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Description</label>
+                                <div class="form-line">
+                                     <textarea rows="4" name="desc" class="form-control" placeholder="Please type what you want..."></textarea>
+                                </div>
+                            </div>
+
+                              <div class="form-group form-float">
+                                  <label class="form-label">Type</label>
+                                  <div class="form-line">
+                                      <select class="form-control show-tick" name="type">
+                                            <option value="persent">Percent(%)</option>
+                                            <option value="ammount">Ammount(Rp)</option>
+                                      </select>
+                                      <label class="form-label">Icon</label>
+                                  </div>
+                              </div>
 
                             <div class="form-group">
                                 <label class="form-label">Value</label>
@@ -78,6 +120,20 @@
                                    <input type="text" name="limit" class="form-control" value="{{ old('limit') }}">
                                 </div>
                             </div>
+                            <div class="form-group">
+                              <label class="form-label">Image</label>
+                              <div class="form-line">
+                                <a href="{{ asset('assets/filemanager/dialog.php?type=0&field_id=img') }}" class="btn btn-success iframe-btn" type="button" style="margin-bottom:10px;"><i class="ion ion-android-camera"> Image</i></a>
+                                <img src="" id="previmg" class="img-responsive" style="max-width:500px;max-height:500px;"/>
+                                <input type="hidden" name="image" class="form-control" id="img">
+                              </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Content</label>
+                                <div class="form-line">
+                                     <textarea rows="4" name="content" class="form-control no-resize" placeholder="Please type what you want..."></textarea>
+                                </div>
+                            </div>
 
 
                             <button type="submit" class="btn btn-primary m-t-15 waves-effect">SUBMIT</button>
@@ -89,5 +145,11 @@
         <!-- Vertical Layout | With Floating Label -->
     </div>
     </section>
-
+    <script>
+          function changeURL(){
+            var str =$('#title').val();
+            str =str.replace(/\s+/g,'-').toLowerCase();
+            $('#change').val(str);
+          }
+      </script>
 @endsection

@@ -355,7 +355,13 @@
                             <span>Income</span>
                         </a>
                     </li>
-					       <li>
+                    <li>
+                         <a href="{{ url('system/reward-category') }}">
+                             <i class="material-icons">assignment</i>
+                             <span>Reward Category</span>
+                         </a>
+                     </li>
+					         <li>
                         <a href="{{ url('system/reward') }}">
                             <i class="material-icons">assignment</i>
                             <span>Reward</span>

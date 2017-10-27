@@ -115,6 +115,7 @@ Route::group(['middleware' => ['auth']], function () {
 
 	Route::resource('system/cat', 'KategoriController');
 	Route::resource('system/reward', 'RewardController');
+	Route::resource('system/reward-category', 'RewardCategoryController');
 	Route::resource('system/pages', 'PagesController');
 	Route::resource('system/lessons', 'LessonController');
 	Route::resource('system/files', 'FilesController');
@@ -200,8 +201,13 @@ Route::get('contributor/income/account/{id}/delete', 'Contributors\IncomeControl
 Route::post('contributor/income/account/{id}/edit', 'Contributors\IncomeController@doEdit');
 Route::get('contributor/income/view-all', 'Contributors\IncomeController@view');
 
-//point
-Route::get('contributor/point','Contributors\PointController@index');
+//reward
+Route::get('contributor/reward','Contributors\PointController@index');
+Route::get('contributor/reward/{id}/change', 'Contributors\PointController@change');
+Route::post('contributor/reward/{id}/change', 'Contributors\PointController@doChange');
+Route::get('contributor/reward/{id}/detail','Contributors\PointController@detail');
+
+// Route::get('contributor/info-point','Contributors\PointController@point');
 //notif
 Route::get('contributor/notif','Contributors\NotifController@index');
 Route::get('ajax/notif/view','Contributors\NotifController@view');

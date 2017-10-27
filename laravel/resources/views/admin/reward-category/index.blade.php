@@ -11,7 +11,7 @@
     <div class="container-fluid">
         <div class="block-header">
             <h2>
-                Reward
+                Reward Category
                 <?php
                 // $access = PERMISSION_CHECK('create');
                 // if($access == true){?>
@@ -19,7 +19,7 @@
                 <?php //} ?>
                 <ol class="breadcrumb breadcrumb-col-pink pull-right">
                     <li><a href="{{ url('system/dashboard') }}">Dashboard</a></li>
-                    <li class="active">Reward</li>
+                    <li class="active">Reward Category</li>
                 </ol>
                 <!-- <small>Taken from <a href="https://datatables.net/" target="_blank">datatables.net</a></small> -->
             </h2>
@@ -44,7 +44,7 @@
                             <input type="hidden" name="keyword" value="">
                             <button type="submit" class="btn bg-brown waves-effect">Print</button>
                         </form> -->
-                        <a href="{{ url('system/reward/create') }}" class="btn bg-red waves-effect pull-right">Create</a>
+                        <a href="{{ url('system/reward-category/create') }}" class="btn bg-red waves-effect pull-right">Create</a>
                     </ul>
                 </div>
                 <div class="body">
@@ -59,13 +59,7 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Enable</th>
-                                    <th>Status</th>
-                                    <th>Code</th>
-                                    <th>Reward</th>
-                                    <th>Points</th>
-                                    <th>Start</th>
-                                    <th>End</th>
-                                    <th>Limit</th>
+                                    <th>Category</th>
                                     <th>Created At</th>
                                     <th>Updated At</th>
                                     <th>Action</th>
@@ -82,27 +76,15 @@
                                             <div class="label label-success">Yes</div>
                                         <?php } ?>
                                     </td>
-                                    <td>
-                                      @if($row->end >= $date)
-                                        <div class="label label-success">Active</div>
-                                      @else
-                                        <div class="label label-danger">Expired</div>
-                                      @endif
-                                    </td>
-                                    <td>{{ $row->code }}</td>
-                                    <td>Rp <?php echo number_format($row->value,0,",",".") ?></td>
-                                    <td>{{ $row->poin }}</td>
-                                    <td>{{ $row->start }}</td>
-                                    <td>{{ $row->end }}</td>
-                                    <td>{{ $row->limit }}</td>
+                                    <td>{{ $row->name }}</td>
                                     <td>{{ $row->created_at }}</td>
                                     <td>{{ $row->updated_at }}</td>
                                     <td>
-                                        <form id="{{ $row->id }}" action="{{ url('system/reward/'.$row->id) }}" method="post">
+                                        <form id="{{ $row->id }}" action="{{ url('system/reward-category/'.$row->id) }}" method="post">
                                             {{ csrf_field() }}
                                             <input type="hidden" name="_method" value="DELETE">
                                             <div class="btn-group" role="group" aria-label="Default button group">
-                                                <a href="{{ url('system/reward/'.$row->id) }}/edit" class="btn bg-pink waves-effect"><i class="material-icons">mode_edit</i></a>
+                                                <a href="{{ url('system/reward-category/'.$row->id) }}/edit" class="btn bg-pink waves-effect"><i class="material-icons">mode_edit</i></a>
                                                 <button type="button" class="btn bg-pink waves-effect" onclick="if (confirm('Are you sure?')) { $('#{{$row->id}}').submit() }"><i class="material-icons">delete</i></button>
                                             </div>
                                         </form>
@@ -114,13 +96,7 @@
                                 <tr>
                                   <th>ID</th>
                                   <th>Enable</th>
-                                  <th>Status</th>
-                                  <th>Code</th>
-                                  <th>Reward</th>
-                                  <th>Points</th>
-                                  <th>Start</th>
-                                  <th>End</th>
-                                  <th>Limit</th>
+                                  <th>Category</th>
                                   <th>Created At</th>
                                   <th>Updated At</th>
                                   <th>Action</th>
