@@ -192,7 +192,7 @@
     </style>
 </head>
 
-<body oncontextmenu="return false;">
+<body>
 
     <div class="loading">
         &nbsp;
