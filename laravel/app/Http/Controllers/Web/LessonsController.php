@@ -27,6 +27,7 @@ class LessonsController extends Controller {
 				->where('lessons.category_id', '=', $category->id)
 				->paginate(10);
 		} else {
+
 			$results = lessons::leftJoin('categories', 'lessons.category_id', '=', 'categories.id')
 				->select('lessons.*', 'categories.title as category_title')
 				->where('lessons.status', '=', 1)
@@ -149,6 +150,7 @@ class LessonsController extends Controller {
 		// }
 
 		if($store){
+			//notif untuk contributor
 			DB::table('contributor_notif')->insert([
 				'contributor_id'=> $lessons->contributor_id,
 				'category'=>'coments',
@@ -157,6 +159,7 @@ class LessonsController extends Controller {
 				'status'        => 0,
 				'created_at'    => new DateTime()
 			]);
+
 
 			$comment     = DB::table('coments')
 				->leftJoin('members','members.id','=','coments.member_id')

@@ -37,6 +37,7 @@ class SearchController extends Controller
           $results  = lessons::leftJoin('categories', 'lessons.category_id', '=', 'categories.id')
                       ->select('lessons.*','categories.title as category_title')
                       ->where('lessons.enable','=',1)
+                      ->where('lessons.status', '=', 1)
                       ->where('lessons.title','like','%'.$q.'%')
                       ->where('lessons.category_id','=',$cateid)
                       ->paginate(10);
@@ -48,6 +49,7 @@ class SearchController extends Controller
           $results  = lessons::leftJoin('categories', 'lessons.category_id', '=', 'categories.id')
                       ->select('lessons.*','categories.title as category_title')
                       ->where('lessons.enable','=',1)
+                      ->where('lessons.status', '=', 1)
                       ->where('lessons.title','like','%'.$q.'%')
                       ->paginate(10);
 
@@ -66,7 +68,7 @@ class SearchController extends Controller
 
   		$keyword 			= Input::get('term');
 
-  		$lessons 	= lessons::where('enable','=','1')->where('title','like','%'.$keyword.'%')->orderBy('id', 'DESC')->get();
+  		$lessons 	= lessons::where('enable','=','1')->where('lessons.status', '=', 1)->where('title','like','%'.$keyword.'%')->orderBy('id', 'DESC')->get();
 
 
 
