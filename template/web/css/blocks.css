@@ -1,0 +1,79 @@
+/*!
+ *
+ * Main Banner
+ *
+ */
+
+.main-banner{
+  padding: 50px 0;
+  background-position: center center;
+  background-size: cover;
+  background-image: url('../img/main-banner.jpg');
+  margin-bottom: 200px;
+}
+.main-banner .caption{
+  display: table;
+    min-height: 300px;
+}
+.main-banner .caption .inner{
+  display: table-cell;
+  vertical-align: middle;
+}
+.main-banner .caption p{
+  color: #fff;
+  font-size: 20px;
+  letter-spacing: 1.5px;
+}
+.main-banner .card-row{
+  position: relative;
+}
+@media (min-width:992px) {
+  .main-banner .card-area{
+    position: absolute;
+    top: -20px;
+  }
+}
+
+.main-banner .card{
+  background: #fff;
+  padding: 25px 25px;
+  border-bottom: 4px solid #2ba8e2;
+  border-left: 1px solid #eee;
+  border-top: 1px solid #eee;
+  border-right: 1px solid #eee;
+  border-radius: 5px 5px 0px 0px;
+  letter-spacing: 1.5px;
+}
+
+.main-banner .card .title{
+  color: #2ba8e2;
+}
+
+/*!
+ *
+ * Tutorial
+ *
+ */
+
+
+
+/*!
+ *
+ * Step
+ *
+ */
+
+
+/*!
+ *
+ * Banner Register Now
+ *
+ */
+
+
+
+/*!
+ *
+ * FAQ
+ *
+ */

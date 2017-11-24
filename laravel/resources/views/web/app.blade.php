@@ -190,10 +190,15 @@
 }
 
     </style>
+
+
+    <link rel="stylesheet" href="{{ asset('template/web/css/helper.css') }}">
+    <link rel="stylesheet" href="{{ asset('template/web/css/blocks.css') }}">
+    @push('css')
 </head>
 
-<body oncontextmenu="return false;">
-
+<!-- <body oncontextmenu="return false;"> -->
+<body>
     <!--<div class="loading">
         &nbsp;
         <div class="middle">
@@ -530,6 +535,7 @@
 
     <!-- Custom Js -->
     <script type="text/javascript" src="{{asset('template/web/js/custom.js') }}"></script>
+    @push('js')
 </body>
 
 </html>

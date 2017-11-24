@@ -1,3 +1,4 @@
+@import "./blocks.css";
 @font-face {
     font-family: "opensans-bold";
     src: url("../fonts/OpenSans-Bold.ttf") format("truetype");
@@ -21,9 +22,17 @@ html, body {
     min-height: 80px;
     background-color: #2ba8e2;
 }
-.main-wrapper{
-  margin-top: 50px;
+@media (max-width:768px) {
+  .main-wrapper{
+    margin-top: 50px;
+  }
 }
+@media (min-width:768px) {
+  .main-wrapper{
+    margin-top: 76px;
+  }
+}
+
 .logo-container {
     padding-top: 15px;
     float: left;
@@ -89,13 +98,13 @@ html, body {
     -moz-box-shadow: 4px 4px 13px 0px rgba(0,0,0,0.18);
     box-shadow: 4px 4px 13px 0px rgba(0,0,0,0.18);
 }
-#top-section {
+/*#top-section {
     padding: 50px 0;
     min-height: 300px;
     background-position: center center;
     background-size: cover;
     background-image: url('../img/Bakcground.jpg');
-}
+}*/
 #top-section-contrib {
     padding: 50px 0;
     min-height: 300px;
@@ -112,7 +121,7 @@ html, body {
 .daftar-btn {
     display: block;
     width: 180px;
-    margin: auto;
+    /*margin: auto;*/
     margin-top: 35px;
     padding: 15px 60px;
     line-height: 20px;
@@ -372,10 +381,10 @@ html, body {
 
 @media(max-width:768px){
 .playlist-title{
-    
+
 
 color: #2ba8e2;
-    
+
 
 font-size: 19px;
 
@@ -387,10 +396,10 @@ font-size: 19px;
 
 @media(min-width:768px){
 .playlist-title{
-    
+
 
 color: #2ba8e2;
-    
+
 
 font-size: 26px;
 
@@ -435,4 +444,3 @@ font-size: 26px;
     border-radius: 6px;
     }
 }
-
