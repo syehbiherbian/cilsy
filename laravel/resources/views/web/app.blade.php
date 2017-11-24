@@ -243,7 +243,7 @@
             <i class="ion ion-ios-search-strong"></i>
           </button>
           <a class="navbar-brand" href="{{ url('/') }}"><img class="logo" src="{{asset('template/web/img/logo.png')}}"></a>
-          <a href="{{ url('lessons/browse/all') }}" class="browse-btn">Browse Tutorial</a>
+          <a href="{{ url('lessons/browse/all') }}" class="browse-btn">Browse Tutorial tes</a>
         </div>
 
 
