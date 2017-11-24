@@ -106,6 +106,45 @@
         <!-- /.List Tutorial -->
 
 
+        <!-- Button Tutorial -->
+        <div class="row">
+          <div class=" col-md-6">
+            <a href="#" class="">
+              <div class="card button">
+                <div class="row">
+                  <div class="col-xs-12 col-md-4 text-center">
+                    <i class="ion-android-apps"></i>
+                  </div>
+                  <div class="col-xs-12 col-md-8">
+                    <h2>Lihat Semua Kategori</h2>
+                    <p class="description">Pilih Kategori sesuai minat Anda</p>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+          <div class="col-md-6">
+            <a href="#" class="">
+              <div class="card button">
+                <div class="row">
+                  <div class="col-xs-12 col-md-4 text-center">
+                    <i class="ion-play"></i>
+                  </div>
+                  <div class="col-xs-12 col-md-8">
+                    <h2>Lihat Semua Tutorial</h2>
+                    <p class="description">Tampilkan lebih banyak tutorial</p>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <!--/. Button Tutorial -->
+
+
+
+
       </div>
     </div>
   </div>
