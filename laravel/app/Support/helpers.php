@@ -6,12 +6,17 @@ use App\Contributors;
 use App\income_details;
 use App\lessons;
 use App\contributor_notif;
+use App\videos;
 /**
  *
  */
 class Helper
 {
-
+  static function getTotalVideo($lesson_id)
+  {
+    $data = videos::where('enable',1)->where('lessons_id',$lesson_id)->count();
+    return $data;
+  }
   static function member($field)
   {
       $mem_id   = Session::get('memberID');

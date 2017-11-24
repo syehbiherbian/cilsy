@@ -28,11 +28,7 @@
 .navbar-default .navbar-nav>li>a:focus, .navbar-default .navbar-nav>li>a:hover{
     color: #f3f3f3;
 }
-@media (min-width:768px) {
-  .navbar-default .navbar-nav>li>a:first-child{
-    border-right: 2px solid #fff;
-    margin-right: 15px;
-  }
+
 
 
   .navbar-default .navbar-nav>li:last-child >a{
@@ -134,8 +130,5 @@
     color: #636c72;
     cursor: not-allowed;
     background-color: transparent
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> b90e1163dd00a4c271974147e8830b63634025b9
+

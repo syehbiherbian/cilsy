@@ -1,0 +1,222 @@
+/*!
+ *
+ * Main Banner
+ *
+ */
+
+.main-banner{
+  padding: 50px 0;
+  background-position: center center;
+  background-size: cover;
+  background-image: url('../img/main-banner.jpg');
+  margin-bottom: 100px;
+}
+.main-banner .caption{
+  display: table;
+    min-height: 300px;
+}
+.main-banner .caption .inner{
+  display: table-cell;
+  vertical-align: middle;
+}
+.main-banner .caption p{
+  color: #fff;
+  font-size: 20px;
+  letter-spacing: 1.5px;
+}
+.main-banner .card-row{
+  position: relative;
+}
+@media (min-width:992px) {
+  .main-banner .card-area{
+    position: absolute;
+    top: -20px;
+  }
+}
+
+.main-banner .card{
+  background: #fff;
+  padding: 25px 25px;
+  border-bottom: 4px solid #2ba8e2;
+  border-left: 1px solid #eee;
+  border-top: 1px solid #eee;
+  border-right: 1px solid #eee;
+  border-radius: 5px 5px 0px 0px;
+  letter-spacing: 1.5px;
+}
+
+.main-banner .card .title{
+  color: #2ba8e2;
+}
+
+/*!
+ *
+ * Tutorial
+ *
+ */
+.tutorial .tutorial-row{
+  background-color: #2ba8e2;
+  padding: 25px 25px;
+  color: #fff;
+  margin-bottom: 25px;
+}
+
+.tutorial .tutorial-row .title-area{
+  display: table;
+  width:100%;
+}
+
+.tutorial .tutorial-row .title-area .inner{
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.tutorial .tutorial-row a{
+  color: #09121a;
+}
+
+.tutorial .tutorial-row a:hover{
+  color: #09121a;
+  text-decoration: none;
+}
+
+.tutorial .tutorial-row .card{
+  background-color: #fff;
+
+}
+
+.tutorial .tutorial-row .card .caption{
+  padding: 25px 15px;
+
+}
+
+.tutorial .tutorial-row .card .footer{
+  padding: 10px 15px 1px 15px;
+  border-top: 1px solid #eee;
+}
+
+.tutorial .tutorial-row .btn-more{
+  background-color: #fff;
+  border-color: #f3f3f3;
+  border-radius: 15px;
+  color: #09121a;
+}
+
+
+.tutorial .button{
+  padding: 25px;
+  background: #f3f3f3;
+  color: #2ba8e2;
+}
+.tutorial .button i{
+  font-size: 60px;
+}
+.tutorial .button .description{
+  color: #09121a;
+}
+/*!
+ *
+ * Guide
+ *
+ */
+
+
+/*!
+ *
+ * Call-to-action
+ *
+ */
+
+.call-to-action{
+  background-color: #2ba8e2;
+  color: #fff;
+}
+.call-to-action h2{
+  margin-top: 0px;
+}
+@media (max-width:768px) {
+  .call-to-action{
+  text-align: center;
+  }
+}
+.call-to-action .middle-wrap{
+  display: table;
+
+  width: 100%;
+}
+@media (max-width:768px) {
+  .call-to-action .middle-wrap{
+    min-height: 100px;
+  }
+}
+@media (min-width:768px) {
+  .call-to-action .middle-wrap{
+    min-height: 150px;
+  }
+}
+.call-to-action .middle-wrap .inner{
+  display: table-cell;
+  vertical-align: middle;
+}
+.call-to-action a,.call-to-action a:hover{
+  text-align: center;
+  color: #2ba8e2;
+}
+
+/*!
+ *
+ * FAQ
+ *
+ */
+.faq .panel-heading{
+  background-color: #f3f3f3;
+  border:0px;
+  padding: 25px 15px;
+  border-radius: 0px;
+}
+.faq .panel-heading .border{
+  position: absolute;
+  background-color: #2ba8e2;
+  width: 30px;
+  height: 40px;
+  left: 0px;
+  top: 15px;
+}
+.faq .panel-heading .number{
+  color: #2ba8e2;
+  margin-left: 15px;
+  margin-right: 10px;
+}
+/*.faq .panel-heading .title{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: normal;
+}*/
+
+
+
+.faq .panel-heading a,.faq .panel-heading a:hover{
+  color: ##09121a;
+  display: block;
+  line-height: 1.5;
+  letter-spacing: 1px;
+  text-decoration: none;
+}
+.faq .panel-heading .accordion-toggle:after {
+     /* symbol for "opening" panels */
+     font-family: 'Glyphicons Halflings';  /* essential for enabling glyphicon */
+     content: "\e114";    /* adjust as needed, taken from bootstrap.css */
+     float: right;        /* adjust as needed */
+     color: grey;         /* adjust as needed */
+ }
+.faq .panel-heading .accordion-toggle.collapsed:after {
+     /* symbol for "collapsed" panels */
+     content: "\e080";    /* adjust as needed, taken from bootstrap.css */
+ }
+.faq .btn-more{
+  color: #09121a;
+  text-decoration: none;
+  font-size: 18px;
+  margin-top: 25px;
+}

@@ -134,7 +134,7 @@
       }*/
       @media (min-width: 768px){
         .navbar-form {
-          width: 23%;
+          width: 29%;
       }
       }
 
@@ -197,16 +197,16 @@
     height: 43px;
     padding-left: 25%;
 }
-@media (min-width: 768px)
-.navbar-default .navbar-nav>li>a:first-child {
-     border-right: 0px; 
-     margin-right: 0px; 
-}
     </style>
+
+
+    <link rel="stylesheet" href="{{ asset('template/web/css/helper.css') }}">
+    <link rel="stylesheet" href="{{ asset('template/web/css/blocks.css') }}">
+    @stack('css')
 </head>
 
+<!-- <body oncontextmenu="return false;"> -->
 <body>
-
     <!--<div class="loading">
         &nbsp;
         <div class="middle">
@@ -382,10 +382,10 @@
       </div><!-- /.container-fluid -->
     </nav>
     <script type="text/javascript">
-    $("#close").ready(function(){
+    // $("#close").ready(function(){
 
-      $("#top-section").css("margin-top", "76px")
-    })
+    //   $("#top-section").css("margin-top", "76px")
+    // })
     $(document).ready(function() {
       var btncategory = $('.btn-category').width();
       $('.dropdown-item').css('width',btncategory);
@@ -435,7 +435,7 @@
 
 
 
-    <div id="header" class="hidden" style="margin-top:100px;">
+    <div id="header" class="hidden">
         <div class="container">
             <a href="{{ url('/') }}">
                 <img class="logo" src="{{asset('template/web/img/logo.png')}}"></img>
@@ -545,6 +545,7 @@
 
     <!-- Custom Js -->
     <script type="text/javascript" src="{{asset('template/web/js/custom.js') }}"></script>
+    @stack('js')
 </body>
 
 </html>
