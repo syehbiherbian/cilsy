@@ -63,6 +63,7 @@
 
 .tutorial .tutorial-row .title-area{
   display: table;
+  width:100%;
 }
 
 .tutorial .tutorial-row .title-area .inner{
@@ -130,6 +131,9 @@
   background-color: #2ba8e2;
   color: #fff;
 }
+.call-to-action h2{
+  margin-top: 0px;
+}
 @media (max-width:768px) {
   .call-to-action{
   text-align: center;
@@ -164,3 +168,55 @@
  * FAQ
  *
  */
+.faq .panel-heading{
+  background-color: #f3f3f3;
+  border:0px;
+  padding: 25px 15px;
+  border-radius: 0px;
+}
+.faq .panel-heading .border{
+  position: absolute;
+  background-color: #2ba8e2;
+  width: 30px;
+  height: 40px;
+  left: 0px;
+  top: 15px;
+}
+.faq .panel-heading .number{
+  color: #2ba8e2;
+  margin-left: 15px;
+  margin-right: 10px;
+}
+/*.faq .panel-heading .title{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: normal;
+}*/
+
+
+
+.faq .panel-heading a,.faq .panel-heading a:hover{
+  color: ##09121a;
+  display: block;
+  line-height: 1.5;
+  letter-spacing: 1px;
+  text-decoration: none;
+}
+.faq .panel-heading .accordion-toggle:after {
+     /* symbol for "opening" panels */
+     font-family: 'Glyphicons Halflings';  /* essential for enabling glyphicon */
+     content: "\e114";    /* adjust as needed, taken from bootstrap.css */
+     float: right;        /* adjust as needed */
+     color: grey;         /* adjust as needed */
+ }
+.faq .panel-heading .accordion-toggle.collapsed:after {
+     /* symbol for "collapsed" panels */
+     content: "\e080";    /* adjust as needed, taken from bootstrap.css */
+ }
+.faq .btn-more{
+  color: #09121a;
+  text-decoration: none;
+  font-size: 18px;
+  margin-top: 25px;
+}

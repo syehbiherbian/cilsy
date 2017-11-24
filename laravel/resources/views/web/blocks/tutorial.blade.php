@@ -56,52 +56,109 @@
         <!-- /.New Tutorial -->
 
         <!-- List Tutorial -->
-        <?php foreach ($categories as $key => $category): ?>
-        <div class="tutorial-row">
-          <div class="row">
-            <div class="col-md-3">
-              <div class="title-area pb-25 hidden">
-                <div class="inner">
-                  <h2 class="mb-25">{{ $category->title }}</h2>
-                  <?= $category->description;?>
+        <?php
+        $c = 1;
+        foreach ($categories as $key => $category): ?>
+        <?php if($c % 2 == 0 ){?>
+          <!-- Genap -->
+          <div class="tutorial-row">
+            <div class="row">
+              <div class="col-md-3">
+                <div class="title-area pb-25 hidden">
+                  <div class="inner">
+                    <h2 class="mb-25">{{ $category->title }}</h2>
+                    <?= $category->description;?>
+                  </div>
                 </div>
               </div>
-            </div>
-            <?php
-              $i = 1;
-              foreach ($lessons as $key => $lesson): ?>
-                <?php if ($category->id == $lesson->category_id) {?>
-                  <?php if ($i <= 3) {?>
-                    <div class="col-md-3">
-                      <a href="{{ url('lessons/'.$lesson->slug)}}">
-                        <div class="card">
-                          <?php if (!empty($lesson->image)) {?>
-                            <img src="{{ asset($lesson->image) }}" alt="" class="img-responsive">
-                          <?php } else {?>
-                            <img src="{{ asset('template/web/img/no-image-available.png') }}" alt="" class="img-responsive">
-                          <?php }?>
-                          <div class="caption">
-                            <p>{{ $lesson->title }}</p>
+              <?php
+                $i = 1;
+                foreach ($lessons as $key => $lesson): ?>
+                  <?php if ($category->id == $lesson->category_id) {?>
+                    <?php if ($i <= 3) {?>
+                      <div class="col-md-3">
+                        <a href="{{ url('lessons/'.$lesson->slug)}}">
+                          <div class="card">
+                            <?php if (!empty($lesson->image)) {?>
+                              <img src="{{ asset($lesson->image) }}" alt="" class="img-responsive">
+                            <?php } else {?>
+                              <img src="{{ asset('template/web/img/no-image-available.png') }}" alt="" class="img-responsive">
+                            <?php }?>
+                            <div class="caption">
+                              <p>{{ $lesson->title }}</p>
+                            </div>
+                            <div class="footer">
+                              <p>Total <?php echo Helper::getTotalVideo($lesson->id);?> Video</p>
+                            </div>
                           </div>
-                          <div class="footer">
-                            <p>Total <?php echo Helper::getTotalVideo($lesson->id);?> Video</p>
-                          </div>
-                        </div>
-                      </a>
-                    </div>
+                        </a>
+                      </div>
+                  <?php } ?>
+                  <?php $i++;?>
                 <?php } ?>
-                <?php $i++;?>
-              <?php } ?>
 
-            <?php endforeach; ?>
+              <?php endforeach; ?>
 
-          </div>
-          <div class="row">
-            <div class="col-md-12">
-              <a href="{{ url('lessons/category/'.$category->title)}}" class="btn btn-default btn-more pull-right">Selengkapnya <i class="ion-arrow-right-c"></i></a>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <a href="{{ url('lessons/category/'.$category->title)}}" class="btn btn-default btn-more pull-right">Selengkapnya <i class="ion-arrow-right-c"></i></a>
+              </div>
             </div>
           </div>
-        </div>
+          <?php $c++; ?>
+        <?php }else{ ?>
+          <!-- Ganjil -->
+          <div class="tutorial-row">
+            <div class="row">
+
+              <?php
+                $i = 1;
+                foreach ($lessons as $key => $lesson): ?>
+                  <?php if ($category->id == $lesson->category_id) {?>
+                    <?php if ($i <= 3) {?>
+                      <div class="col-md-3">
+                        <a href="{{ url('lessons/'.$lesson->slug)}}">
+                          <div class="card">
+                            <?php if (!empty($lesson->image)) {?>
+                              <img src="{{ asset($lesson->image) }}" alt="" class="img-responsive">
+                            <?php } else {?>
+                              <img src="{{ asset('template/web/img/no-image-available.png') }}" alt="" class="img-responsive">
+                            <?php }?>
+                            <div class="caption">
+                              <p>{{ $lesson->title }}</p>
+                            </div>
+                            <div class="footer">
+                              <p>Total <?php echo Helper::getTotalVideo($lesson->id);?> Video</p>
+                            </div>
+                          </div>
+                        </a>
+                      </div>
+                  <?php } ?>
+                  <?php $i++;?>
+                <?php } ?>
+
+              <?php endforeach; ?>
+
+              <div class="col-md-3 text-right">
+                <div class="title-area pb-25 hidden ">
+                  <div class="inner">
+                    <h2 class="mb-25">{{ $category->title }}</h2>
+                    <?= $category->description;?>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <a href="{{ url('lessons/category/'.$category->title)}}" class="btn btn-default btn-more pull-left">Selengkapnya <i class="ion-arrow-right-c"></i></a>
+              </div>
+            </div>
+          </div>
+          <?php $c++; ?>
+        <?php } ?>
+
         <?php endforeach; ?>
         <!-- /.List Tutorial -->
 
@@ -109,7 +166,7 @@
         <!-- Button Tutorial -->
         <div class="row">
           <div class=" col-md-6">
-            <a href="#" class="">
+            <a href="{{ url('lessons/browse/all') }}" class="">
               <div class="card button">
                 <div class="row">
                   <div class="col-xs-12 col-md-4 text-center">
@@ -124,7 +181,7 @@
             </a>
           </div>
           <div class="col-md-6">
-            <a href="#" class="">
+            <a href="{{ url('lessons/browse/all') }}" class="">
               <div class="card button">
                 <div class="row">
                   <div class="col-xs-12 col-md-4 text-center">

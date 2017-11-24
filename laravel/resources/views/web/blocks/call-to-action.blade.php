@@ -17,7 +17,11 @@
       <div class="col-md-6">
         <div class="middle-wrap">
           <div class="inner text-center">
-            <a href="#" class="btn btn-default btn-lg">Buat Akun</a>
+            <?php if (Session::get('memberID')): ?>
+              <a href="{{ url('lessons/browse/all')}}" class="btn btn-default btn-lg">Browse</a>
+            <?php else: ?>
+              <a href="{{ url('member/signup')}}" class="btn btn-default btn-lg">Buat Akun</a>
+            <?php endif;?>
           </div>
         </div>
       </div>
