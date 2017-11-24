@@ -12,7 +12,7 @@
           <div class="inner">
             <p>
               Belajar dari 500++ tutorial, Networking & Server Ekslusif ini.</br>
-              Bisa Bertanya dengan rainer 24 jam.</br>
+              Bisa Bertanya dengan Trainer 24 jam.</br>
               Online. Kapanpun, Dimanapun.<br>
             </p>
             <?php if (Session::get('memberID')): ?>

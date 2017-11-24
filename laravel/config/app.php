@@ -12,7 +12,7 @@ return [
     | any other location as required by the application or its packages.
     */
 
-    'name' => 'Cilsy Fiolution',
+    'name' => 'Kursus Online Jaringan & Server terlengkap dipandu Trainer Profesional | Cilsy Fiolution',
 
     /*
     |--------------------------------------------------------------------------
