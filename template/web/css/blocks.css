@@ -115,18 +115,49 @@
 }
 /*!
  *
- * Step
+ * Guide
  *
  */
 
 
 /*!
  *
- * Banner Register Now
+ * Call-to-action
  *
  */
 
+.call-to-action{
+  background-color: #2ba8e2;
+  color: #fff;
+}
+@media (max-width:768px) {
+  .call-to-action{
+  text-align: center;
+  }
+}
+.call-to-action .middle-wrap{
+  display: table;
 
+  width: 100%;
+}
+@media (max-width:768px) {
+  .call-to-action .middle-wrap{
+    min-height: 100px;
+  }
+}
+@media (min-width:768px) {
+  .call-to-action .middle-wrap{
+    min-height: 150px;
+  }
+}
+.call-to-action .middle-wrap .inner{
+  display: table-cell;
+  vertical-align: middle;
+}
+.call-to-action a,.call-to-action a:hover{
+  text-align: center;
+  color: #2ba8e2;
+}
 
 /*!
  *

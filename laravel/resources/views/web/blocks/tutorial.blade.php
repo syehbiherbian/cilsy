@@ -4,7 +4,7 @@
 @endpush
 
 <!-- BEGIN TUTORIAL -->
-<section class="tutorial">
+<section class="tutorial mb-50">
   <div class="container">
     <div class="row">
       <div class="col-md-12">
@@ -117,7 +117,7 @@
                   </div>
                   <div class="col-xs-12 col-md-8">
                     <h2>Lihat Semua Kategori</h2>
-                    <p class="description">Pilih Kategori sesuai minat Anda</p>
+                    <p class="description">Pilih kategori sesuai minat Anda</p>
                   </div>
                 </div>
               </div>

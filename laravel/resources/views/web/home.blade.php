@@ -4,8 +4,8 @@
 
 @include('web.blocks.main-banner')
 @include('web.blocks.tutorial')
-@include('web.blocks.step')
-@include('web.blocks.banner-register-now')
+@include('web.blocks.guide')
+@include('web.blocks.call-to-action')
 @include('web.blocks.faq')
 
 @endsection
