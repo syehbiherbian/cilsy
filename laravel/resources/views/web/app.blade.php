@@ -194,7 +194,7 @@
 
     <link rel="stylesheet" href="{{ asset('template/web/css/helper.css') }}">
     <link rel="stylesheet" href="{{ asset('template/web/css/blocks.css') }}">
-    @push('css')
+    @stack('css')
 </head>
 
 <!-- <body oncontextmenu="return false;"> -->
@@ -535,7 +535,7 @@
 
     <!-- Custom Js -->
     <script type="text/javascript" src="{{asset('template/web/js/custom.js') }}"></script>
-    @push('js')
+    @stack('js')
 </body>
 
 </html>

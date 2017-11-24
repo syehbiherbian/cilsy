@@ -9,7 +9,7 @@
   background-position: center center;
   background-size: cover;
   background-image: url('../img/main-banner.jpg');
-  margin-bottom: 200px;
+  margin-bottom: 100px;
 }
 .main-banner .caption{
   display: table;
@@ -54,6 +54,52 @@
  * Tutorial
  *
  */
+.tutorial .tutorial-row{
+  background-color: #2ba8e2;
+  padding: 25px 25px;
+  color: #fff;
+  margin-bottom: 25px;
+}
+
+.tutorial .tutorial-row .title-area{
+  display: table;
+}
+
+.tutorial .tutorial-row .title-area .inner{
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.tutorial .tutorial-row a{
+  color: #09121a;
+}
+
+.tutorial .tutorial-row a:hover{
+  color: #09121a;
+  text-decoration: none;
+}
+
+.tutorial .tutorial-row .card{
+  background-color: #fff;
+
+}
+
+.tutorial .tutorial-row .card .caption{
+  padding: 25px 15px;
+
+}
+
+.tutorial .tutorial-row .card .footer{
+  padding: 10px 15px 1px 15px;
+  border-top: 1px solid #eee;
+}
+
+.tutorial .tutorial-row .btn-more{
+  background-color: #fff;
+  border-color: #f3f3f3;
+  border-radius: 15px;
+  color: #09121a;
+}
 
 
 
