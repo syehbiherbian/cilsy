@@ -14,8 +14,8 @@
           <div class="row">
 
             <div class="col-md-3">
-              <div class="title-area hidden">
-                <div class="inner">
+              <div class="title-area pb-25 hidden">
+                <div class="inner ">
                   <h2 class="mb-25">Tutorial baru</h2>
                   <p>Belajar dengan dukungan Trainer Profesional</p>
                 </div>
@@ -49,7 +49,7 @@
           </div>
           <div class="row">
             <div class="col-md-12">
-              <a href="{{ url('lessons/browse/all') }}" class="btn btn-default btn-more pull-right">Selengkapnya</a>
+              <a href="{{ url('lessons/browse/all') }}" class="btn btn-default btn-more pull-right">Selengkapnya <i class="ion-arrow-right-c"></i></a>
             </div>
           </div>
         </div>
@@ -60,7 +60,7 @@
         <div class="tutorial-row">
           <div class="row">
             <div class="col-md-3">
-              <div class="title-area">
+              <div class="title-area pb-25 hidden">
                 <div class="inner">
                   <h2 class="mb-25">{{ $category->title }}</h2>
                   <?= $category->description;?>
@@ -98,7 +98,7 @@
           </div>
           <div class="row">
             <div class="col-md-12">
-              <a href="{{ url('lessons/category/'.$category->title)}}" class="btn btn-default btn-more pull-right">Selengkapnya</a>
+              <a href="{{ url('lessons/category/'.$category->title)}}" class="btn btn-default btn-more pull-right">Selengkapnya <i class="ion-arrow-right-c"></i></a>
             </div>
           </div>
         </div>
