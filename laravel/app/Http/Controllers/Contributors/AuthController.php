@@ -98,7 +98,6 @@ class AuthController extends Controller {
 			$store->save();
 
 			$send = Contributors::findOrFail($store->id);
-
 			Mail::to($store->email)->send(new EmailVerification($send));
 			return Redirect()->to('/contributor/register')->with('success', 'Berhasil Kirim Email! Silahkan Cek Email Anda');
 

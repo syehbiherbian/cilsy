@@ -47,7 +47,7 @@
     // mixpanel.init("b208ef84bd5045e39433ef24aa0b823c");
     </script>
     <!-- end Mixpanel -->
-    <?php if (Session::get('memberID'));{?>
+{{--     <?php if (Session::get('memberID'));{?>
     <script>
     document.onkeydown = function(e) {
     if(event.keyCode == 123) {
@@ -64,7 +64,7 @@
     }
     }
     </script>
-    <?php }?>
+    <?php }?> --}}
     <style media="screen">
     .owl-prev {
     width: 15px;
@@ -134,7 +134,7 @@
       }*/
       @media (min-width: 768px){
         .navbar-form {
-          width: 42%;
+          width: 23%;
       }
       }
 
@@ -188,11 +188,24 @@
     color: #fffff;
     text-align: center;
 }
-
+.navbar-form .btn-category .btn {
+    padding: 10px 12px;
+    background: #fff;
+    width: 59%;
+}
+.navbar-form .form-control {
+    height: 43px;
+    padding-left: 25%;
+}
+@media (min-width: 768px)
+.navbar-default .navbar-nav>li>a:first-child {
+     border-right: 0px; 
+     margin-right: 0px; 
+}
     </style>
 </head>
 
-<body oncontextmenu="return false;">
+<body>
 
     <!--<div class="loading">
         &nbsp;
@@ -266,9 +279,7 @@
               <div class="input-group-btn btn-category">
                 <button type="button" class="btn btn-secondary dropdown-toggle " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <span class="cate_title">
-
-                    Semua Kategori
-
+                  <i class="fa fa-th" aria-hidden="true"></i>
                   </span> <i class="ion-android-arrow-dropdown"></i>
                 </button>
                 <div class="dropdown-menu dropdown-menu-right">
@@ -289,6 +300,8 @@
           <ul class="nav navbar-nav navbar-right">
             <!-- <li><a href="{{ url('member/signin') }}">Masuk</a></li>
             <li><a href="{{ url('member/signup') }}">Daftar</a></li> -->
+            <li><a href="{{ url('member/signin') }}">Cara Pesan & Harga</a></li>
+              <li><a href="{{ url('member/signin') }}">FAQ</a></li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Halo, <?=Helper::member('username');?> <span class="caret"></span></a>
               <ul class="dropdown-menu">
@@ -318,6 +331,8 @@
           </ul>
           <?php } else {?>
             <ul class="nav navbar-nav navbar-right">
+              <li><a href="{{ url('member/signin') }}">Cara Pesan & Harga</a></li>
+              <li><a href="{{ url('member/signin') }}">FAQ</a></li>
               <li><a href="{{ url('member/signin') }}">Masuk</a></li>
               <li><a href="{{ url('member/signup') }}">Daftar</a></li>
               <!-- <li class="dropdown">

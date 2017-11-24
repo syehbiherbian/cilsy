@@ -32,9 +32,16 @@
   <div class="container">
     <div class="row">
       <div class="col-sm-6 col-sm-offset-3 text-center ">
-        <h3>Terima kasih</h3>
-        <p class="pay-desc">Paket langganan anda akan segera aktif jika transaksi pembayaran anda telah berhasil kami validasi .</p>
-        <a href="{{ url('/') }}" class="btn btn-info">Telusuri Tutorial Sekarang</a>
+        <h3>Pemesanan Paket Langganan Cilsy Telah Berhasil </h3>
+        <p class="pay-desc">Silahkan selesaikan terlebih dahulu proses pembayarannya dengan mengikuti petunjuk 
+pembayaran dari invoice yang anda dapatkan di email masing-masing.
+Setelah membayar, paket langganan akan langsung aktif tanpa perlu konfirmasi. Anda tinggal
+langsung login saja dan semua tutorial sudah langsung terbuka aksesnya.
+Jika mengalami kesulitan pembayaran, bisa langsung kontak ke whatsapp 089630713487 atau
+email ke support@cilsy.id.
+nb : Khusus bagi yang membayar via kartu kredit dan sukses, maka paket langganan anda sudah
+aktif dan tinggal langsung login saja. </p>
+        <a href="{{ url('/lessons/browse/all') }}" class="btn btn-info">Mulai Belajar</a>
       </div>
     </div>
   </div>

@@ -82,7 +82,7 @@ hr {
     </div>
 
 <div id="table-section">
-<div class="col-md-6 kotak" style="border-radius: 5px;">
+<div class="col-md-4 kotak" style="border-radius: 5px;">
 <form action="{{ url('member/package')}}" method="post">
 {{ csrf_field() }}
 <input type="hidden" name="packages_id" value="1">
@@ -96,13 +96,16 @@ hr {
     <li></li>
     <li></li>
     <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
     <hr>
     <li class=""><button type="submit" class="button" id="pilih">Pilih Paket</button></li>
   </ul>
 </form>
 </div>
 
-<div class="col-md-6" style="border-radius: 5px;">
+<div class="col-md-4" style="border-radius: 5px;">
 <form action="{{ url('member/package')}}" method="post">
 {{ csrf_field() }}
 
@@ -116,6 +119,29 @@ hr {
     <li>Chat Dengan Trainer dijawab dalam 1x24 Jam</li>
     <li>Download Semua Materi Video</li>
     <li>Download Berkas Praktek</li>
+    <li></li>
+    <li></li>
+    <hr>
+    <li class=""><button type="submit" class="button" id="pilih">Pilih Paket</button></li>
+  </ul>
+  </form>
+</div>
+<div class="col-md-4" style="border-radius: 5px;">
+<form action="{{ url('member/package')}}" method="post">
+{{ csrf_field() }}
+
+<input type="hidden" name="packages_id" value="3">
+  <ul class="price">
+    <li class="header">Platinum</li>
+    <hr>
+    <li class="grey">Rp. <?=$packages['2']->price;?> / <?=$packages['2']->expired;?> Hari</li>
+    <li>Bebas Akses ke Semua Video Tutorial</li>
+    <li>Update Hingga 50 Video lebih perbulan</li>
+    <li>Chat Dengan Trainer dijawab dalam 1x24 Jam</li>
+    <li>Download Semua Materi Video</li>
+    <li>Download Berkas Praktek</li>
+    <li>Support Remote Teamviewer (Kuota remote 2x
+perbulan, durasi per-remote 1 jam)</li>
     <hr>
     <li class=""><button type="submit" class="button" id="pilih">Pilih Paket</button></li>
   </ul>

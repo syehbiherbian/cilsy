@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Web\Members;
 use App\Http\Controllers\Controller;
 use App\Mail\ForgetPassword;
 use App\members;
+use Mail;
 use DateTime;
 use DB;
+use App\Mail\InformasiUser;
 use Illuminate\Support\Facades\Input;
 use PHPMailer;
 use Redirect;
@@ -93,7 +95,8 @@ class AuthController extends Controller {
 			$members->password = $password;
 			$members->created_at = $now;
 			$members->save();
-
+			$send = members::findOrFail($members->id);
+			Mail::to($members->email)->send(new InformasiUser($send));
 			// store
 			$member = members::where('username', '=', $username)->where('email', '=', $email)->first();
 
