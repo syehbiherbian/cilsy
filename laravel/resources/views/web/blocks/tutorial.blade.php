@@ -16,8 +16,8 @@
             <div class="col-md-3">
               <div class="title-area pb-25 hidden">
                 <div class="inner ">
-                  <h2 class="mb-25">Tutorial baru</h2>
-                  <p>Belajar dengan dukungan Trainer Profesional</p>
+                  <h2 class="mb-25">Materi Terbaru</h2>
+                  <p>Update materi tutorial baru setiap bulan</p>
                 </div>
               </div>
             </div>

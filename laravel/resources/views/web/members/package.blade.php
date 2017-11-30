@@ -89,17 +89,15 @@ hr {
   <ul class="price">
     <li class="header">Pro</li>
     <hr>
-    <li class="grey">Rp. <?=$packages['0']->price;?> /30 Hari</li>
-    <li>Bebas Akses ke Semua Video Tutorial</li>
+    <li class="grey">Rp. <?=$packages['0']->price;?> / <?=$packages['0']->expired;?> Hari<br><br></li>
+    <li>Bebas Streaming ke Semua Video Tutorial</li>
     <li>Update Hingga 50 Video lebih perbulan</li>
-    <li>Chat Dengan Trainer dijawab dalam 3x24 Jam</li>
+    <li>Konsultasi dengan trainer via chat dijawab max dalam 3x24 Jam</li>
+    <li><strike><font color="red">Download Semua Materi Video</font></strike></li>
+    <li><strike><font color="red">Download Ebook & File Praktek</font></strike></li>
+    <li><strike><font color="red">Support Remote Teamviewer</font></strike></li>    
     <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <hr>
+   <hr>
     <li class=""><button type="submit" class="button" id="pilih">Pilih Paket</button></li>
   </ul>
 </form>
@@ -111,15 +109,16 @@ hr {
 
 <input type="hidden" name="packages_id" value="2">
   <ul class="price">
-    <li class="header">Premium</li>
+    <li class="header">Premium <font color="red">Disc 10%!</font></li>
     <hr>
-    <li class="grey">Rp. <?=$packages['1']->price;?> / <?=$packages['1']->expired;?> Hari</li>
-    <li>Bebas Akses ke Semua Video Tutorial</li>
+    <li class="grey">Rp. <?=$packages['1']->price;?> / <?=$packages['1']->expired;?> Hari
+    <br><strike><font color="red"><font size="2">Rp. 349000</strike> | Hemat 162.000!</font></font></li>
+    <li>Bebas Streaming ke Semua Video Tutorial</li>
     <li>Update Hingga 50 Video lebih perbulan</li>
-    <li>Chat Dengan Trainer dijawab dalam 1x24 Jam</li>
+    <li>Konsultasi dengan trainer via chat dijawab max dalam 2x24 Jam</li>
     <li>Download Semua Materi Video</li>
-    <li>Download Berkas Praktek</li>
-    <li></li>
+    <li>Download Ebook & File Praktek</li>
+    <li><strike><font color="red">Support Remote Teamviewer</font></strike></li>
     <li></li>
     <hr>
     <li class=""><button type="submit" class="button" id="pilih">Pilih Paket</button></li>
@@ -132,16 +131,16 @@ hr {
 
 <input type="hidden" name="packages_id" value="3">
   <ul class="price">
-    <li class="header">Platinum</li>
+    <li class="header">Platinum <font color="red">Disc 10%!</font></li>
     <hr>
-    <li class="grey">Rp. <?=$packages['2']->price;?> / <?=$packages['2']->expired;?> Hari</li>
-    <li>Bebas Akses ke Semua Video Tutorial</li>
+    <li class="grey">Rp. <?=$packages['2']->price;?> / <?=$packages['2']->expired;?> Hari
+    <br><strike><font color="red"><font size="2">Rp. 499000</strike> | Hemat 265.000!</font></font></li>
+    <li>Bebas Streaming ke Semua Video Tutorial</li>
     <li>Update Hingga 50 Video lebih perbulan</li>
-    <li>Chat Dengan Trainer dijawab dalam 1x24 Jam</li>
+    <li>Konsultasi dengan Trainer via chat dijawab max dalam 1x24 Jam</li>
     <li>Download Semua Materi Video</li>
     <li>Download Berkas Praktek</li>
-    <li>Support Remote Teamviewer (Kuota remote 2x
-perbulan, durasi per-remote 1 jam)</li>
+    <li>Support Remote Teamviewer (Kuota remote 2x perbulan, durasi per-remote 1 jam)</li>
     <hr>
     <li class=""><button type="submit" class="button" id="pilih">Pilih Paket</button></li>
   </ul>

@@ -300,8 +300,8 @@
           <ul class="nav navbar-nav navbar-right">
             <!-- <li><a href="{{ url('member/signin') }}">Masuk</a></li>
             <li><a href="{{ url('member/signup') }}">Daftar</a></li> -->
-            <li><a href="{{ url('member/signin') }}">Cara Pesan & Harga</a></li>
-              <li><a href="{{ url('member/signin') }}">FAQ</a></li>
+            <li><a href="{{ url('pages/carapesan') }}">Cara Pesan</a></li>
+              <li><a href="{{ url('pages/harga') }}">Harga</a></li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Halo, <?=Helper::member('username');?> <span class="caret"></span></a>
               <ul class="dropdown-menu">
@@ -331,8 +331,8 @@
           </ul>
           <?php } else {?>
             <ul class="nav navbar-nav navbar-right">
-              <li><a href="{{ url('member/signin') }}">Cara Pesan & Harga</a></li>
-              <li><a href="{{ url('member/signin') }}">FAQ</a></li>
+              <li><a href="{{ url('pages/carapesan') }}">Cara Pesan</a></li>
+              <li><a href="{{ url('pages/harga') }}">Harga</a></li>
               <li><a href="{{ url('member/signin') }}">Masuk</a></li>
               <li><a href="{{ url('member/signup') }}">Daftar</a></li>
               <!-- <li class="dropdown">
@@ -483,8 +483,7 @@
                     <img class="footer-logo" src="{{asset('template/web/img/logo-only.png') }}" alt=""></img>
                     <span class="footer-logo-text">Cilsy</span>
                     <p>
-                        Adalah platform tutorial jaringan dan server online yang memudahkan semua
-                        orang yang ingin belajar dan berdiskusi dengan ahli.
+                        Satu-satunya kursus online jaringan dan server yang dipandu sampai bisa. Terdapat ratusan video tutorial eksklusif serta trainer profesional yang siap membantu proses belajar anda. 
                     </p>
                     <p class="copyrigth-text">
                         Copyright Cilsy Fiolution 2016-2017
@@ -509,6 +508,10 @@
                         <li>Bantuan</li>
                         <li><a href="{{ url('/kontak') }}">Kontak</a></li>
                         <li><a href="{{ url('/kebijakan') }}">Kebijakan Layanan</a></li>
+                        <li><a href="{{ url('/pages/carapesan') }}">Cara Pesan & Berlangganan</a></li>
+                        <li><a href="{{ url('/pages/harga') }}">Harga & Perbandingan Paket</a></li>
+                        <li><a href="{{ url('/pages/petunjukcarabayar') }}">Petunjuk Pembayaran</a></li>
+                        <li><a href="{{ url('/pages/faq') }}">FAQ</a></li>
                     </ul>
                 </div>
                 <div class="col-md-3">
