@@ -33,7 +33,12 @@
     top: -20px;
   }
 }
-
+@media (min-width:1200px) {
+  .main-banner .card-area{
+    position: absolute;
+    top: 20px;
+  }
+}
 .main-banner .card{
   background: #fff;
   padding: 25px 25px;
