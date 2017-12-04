@@ -1,5 +1,5 @@
 @extends('contrib.app')
-@section('title','')
+@section('title','Change')
 @section('breadcumbs')
 <div id="navigation">
 		<ul class="breadcrumb">

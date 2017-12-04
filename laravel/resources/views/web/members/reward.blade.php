@@ -1,15 +1,6 @@
-@extends('contrib.app')
-@section('title','')
-@section('breadcumbs')
-<div id="navigation">
-    <div class="container">
-            <ul class="breadcrumb">
-                    <li><a href="{{ url('contributor/dashboard') }}">Dashboard</a></li>
-            <li>Reward</li>
-            </ul>
-    </div>
-</div>
-@endsection
+@extends('web.app')
+@section('title','Reward | ')
+@section('content')
 
 <style media="screen">
 .category-sliders .description{
@@ -107,10 +98,13 @@
     right: 0px;
 }
 </style>
-@section('content')
+
+<div id="table-section">
+
+<div class="container" style="margin-top:20px;">
 <div class="row">
+
   <div class="col-md-12">
-    <div class="box-white">
         @if($errors->all())
          <div class="alert\ alert-danger">
              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -157,21 +151,21 @@
 
                     </div>
                 </div>
-                <div class="icon hide">
+                <div class="icon">
                     <div class="col-md-4 rounded-circle" style="background:#1cc327;">
                             <img class="photo" src="{{asset('template/web/icon/bertanya.png')}}" height="30px" width="30px" style="object-fit:scale-down;">
                             <p>Bertanya</p>
-                            <p>200 Pts</p>
+                            <p>{{$contrib->asked_point}} Pts</p>
                     </div>
                     <div class="col-md-4 rounded-circle" style="background:#2798cc;">
                             <img class="photo" src="{{asset('template/web/icon/menjawab.png')}}" height="30px" width="30px" style="object-fit:scale-down;">
                             <p>Menjawab Pertanyaan</p>
-                            <p>200 Pts</p>
+                            <p>{{$contrib->reply_point}} Pts</p>
                     </div>
                     <div class="col-md-4 rounded-circle" style="background:#a238b9;">
                             <img class="photo" src="{{asset('template/web/icon/menyelesaikan.png')}}" height="30px" width="30px" style="object-fit:scale-down;">
                             <p>Menyelesaikan Totorial</p>
-                            <p>200 Pts</p>
+                            <p>{{$contrib->complete_point}} Pts</p>
                     </div>
                 </div>
 
@@ -180,7 +174,7 @@
                 <a class="btn blue" href="#">Pelajari lebih lanjut tentang point</a>
                 <p style="margin-top:20px; font-size:18px;">Point akan berubah atau bertambah dalam waktu 24 jam</p>
             </div>
-            <?php if (count($myreward) > 0): ?>
+            <?php if (count($myreward)> 0): ?>
                 <div class="col-md-12" style="margin-top:30px;">
                     <h3>Reward Saya</h3>
                 </div>
@@ -194,7 +188,7 @@
                       <h4  style="padding-bottom:10px;">{{$value->name}}</h4>
                       <p  style="padding-bottom:10px;"><?php echo nl2br($value->description); ?></p>
                       <h4  style="padding-bottom:10px;">{{$value->poin}} Pts</h4>
-                      <a class="btn blue" href="{{url('contributor/reward/'.$value->myid.'/detail')}}">Lihat</a>
+                      <a class="btn blue" href="{{url('member/rewards/'.$value->myid.'/detail')}}">Lihat</a>
                   </div>
               </div>
            </div>
@@ -218,7 +212,7 @@
                                      <h4  style="padding-bottom:10px;">{{$value->name}}</h4>
                                      <p  style="padding-bottom:10px;"><?php echo nl2br($value->description); ?></p>
                                      <h4  style="padding-bottom:10px;">{{$value->poin}} Pts</h4>
-                                     <a class="btn blue" href="{{url('contributor/reward/'.$value->slug.'/change')}}">Tukar</a>
+                                     <a class="btn blue" href="{{url('member/rewards/'.$value->slug.'/change')}}">Tukar</a>
                                  </div>
                              </div>
                           </div>
@@ -228,10 +222,10 @@
                 </div>
               <?php endforeach; ?>
         </div>
-    </div>
   </div>
 </div>
-
+</div>
+</div>
 <script type="text/javascript">
     $('.category-sliders').owlCarousel({
     loop:true,

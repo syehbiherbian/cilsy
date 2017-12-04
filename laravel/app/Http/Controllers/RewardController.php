@@ -64,9 +64,11 @@ class rewardController extends Controller
           'limit'     => 'required',
           'cat'       =>'required',
           'type'      =>'required',
-          'image'  => 'required',
-          'desc'   =>'required',
-          'url'     =>'required'
+          'image'     => 'required',
+          'desc'      =>'required',
+          'url'       =>'required',
+          'to'        =>'required',
+          'reward_in' =>'required',
         );
         $validator = Validator::make(Input::all(), $rules);
 
@@ -77,6 +79,8 @@ class rewardController extends Controller
 
             $now        = new DateTime();
             $enab       = Input::get('enable');
+            $to         = Input::get('to');
+            $reward_in  = Input::get('reward_in');
             $code       = Input::get('code');
             $name       = Input::get('name');
             $value      = Input::get('value');
@@ -99,6 +103,8 @@ class rewardController extends Controller
 
             $store = new reward;
             $store->enable      = $enable;
+            $store->to          = $to;
+            $store->reward_in   = $reward_in;
             $store->code        = $code;
             $store->name        = $name;
             $store->value       = $value;
@@ -159,18 +165,20 @@ class rewardController extends Controller
     {
         $rules = array(
             'code'       => 'required|unique:reward,code,'.$id,
-            'name' => 'required',
+            'name'       => 'required',
             'slug'       => 'required|unique:reward,slug,'.$id,
-            'value'     => 'required',
-            'poin'   => 'required',
+            'value'      => 'required',
+            'poin'       => 'required',
             'start'      => 'required',
-            'end'      => 'required',
+            'end'        => 'required',
             'limit'      => 'required',
-            'cat' =>'required',
-            'type'        =>'required',
-            'image'  => 'required',
-            'desc'=>'required',
-            'url' =>'required'
+            'cat'        =>'required',
+            'type'       =>'required',
+            'image'      => 'required',
+            'desc'       =>'required',
+            'url'        =>'required',
+            'to'         =>'required',
+            'reward_in' =>'required',
         );
         $validator = Validator::make(Input::all(), $rules);
 
@@ -181,6 +189,8 @@ class rewardController extends Controller
 
             $now        = new DateTime();
             $enab       = Input::get('enable');
+            $to         = Input::get('to');
+            $reward_in  = Input::get('reward_in');
             $code       = Input::get('code');
             $name       = Input::get('name');
             $value      = Input::get('value');
@@ -204,6 +214,8 @@ class rewardController extends Controller
             // store
             $store = reward::find($id);
             $store->enable      = $enable;
+            $store->to          = $to;
+            $store->reward_in   = $reward_in;
             $store->code        = $code;
             $store->name        =$name;
             $store->value       = $value;

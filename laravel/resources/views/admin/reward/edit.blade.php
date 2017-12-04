@@ -30,14 +30,30 @@
                                 <label for="basic_checkbox_2">Enable</label>
                               </div>
                             </div>
-
-                            <div class="form-group">
-                                <label class="form-label">Code</label>
+                            <div class="form-group form-float">
+                                <label class="form-label">Reward in </label>
                                 <div class="form-line">
-                                   <input type="text" name="code" class="form-control" value="{{$data->code}}">
+                                    <select class="form-control show-tick" name="reward_in" required>
+                                        <option value="">-- Please select --</option>
+                                            <option value="0"<?php if($data->reward_in==0){echo "selected";}?>>Cilsy</option>
+                                            <option value="1"<?php if($data->reward_in==1){echo "selected";}?>>Others</option>
+                                    </select>
+                                    <label class="form-label">Icon</label>
                                 </div>
                             </div>
 
+                            <div class="form-group form-float">
+                                <label class="form-label">Target (To) </label>
+                                <div class="form-line">
+                                    <select class="form-control show-tick" name="to" required>
+                                        <option value="">-- Please select --</option>
+                                            <option value="0"<?php if($data->to==0){echo "selected";}?>>All</option>
+                                            <option value="1"<?php if($data->to==1){echo "selected";}?>>Members</option>
+                                            <option value="2"<?php if($data->to==2){echo "selected";}?>>Contributors</option>
+                                    </select>
+                                    <label class="form-label">Icon</label>
+                                </div>
+                            </div>
                             <div class="form-group form-float">
                                 <label class="form-label">Category</label>
                                 <div class="form-line">
@@ -50,6 +66,14 @@
                                     <label class="form-label">Icon</label>
                                 </div>
                             </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Code</label>
+                                <div class="form-line">
+                                   <input type="text" name="code" class="form-control" value="{{$data->code}}">
+                                </div>
+                            </div>
+
 
                             <div class="form-group">
                                 <label class="form-label">Title</label>
@@ -80,9 +104,10 @@
                               <div class="form-group form-float">
                                   <label class="form-label">Type</label>
                                   <div class="form-line">
-                                      <select class="form-control show-tick" name="type">
+                                      <select class="form-control show-tick" name="type" onchange="getType()" id="type">
                                             <option value="persent"<?php if($data->type=='persent'){echo "selected";}?>>Percent(%)</option>
                                             <option value="ammount"<?php if($data->type=='ammount'){echo "selected";}?>>Ammount(Rp)</option>
+                                            <option value="free"<?php if($data->type=='free'){echo "selected";}?>>Free(0)</option>
                                       </select>
                                       <label class="form-label">Icon</label>
                                   </div>
@@ -91,8 +116,8 @@
 
                             <div class="form-group">
                                 <label class="form-label">Value</label>
-                                <div class="form-line">
-                                   <input type="text" name="value" class="form-control" value="{{ $data->value}}">
+                                <div class="form-line" >
+                                   <input type="text" id="type_value" name="value" class="form-control" value="{{ $data->value}}">
                                 </div>
                             </div>
 
@@ -147,6 +172,18 @@
         <!-- Vertical Layout | With Floating Label -->
     </div>
     </section>
+    <script type="text/javascript">
+        function getType(){
+
+            var type= $('#type').val();
+
+            if (type=='free'){
+                $('#type_value').val('0');
+            }else{
+                $('#type_value').val('');
+            }
+        }
+    </script>
     <script>
           function changeURL(){
             var str =$('#title').val();

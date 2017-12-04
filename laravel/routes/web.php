@@ -23,7 +23,6 @@ Route::post('lessons/coments/postcomment','Web\LessonsController@postcomment');
 // Search
 Route::get('search', 'Web\SearchController@index');
 Route::get('search/autocomplete', 'Web\SearchController@autocomplete');
-
 // PAGES
 Route::get('pages/{pages}', 'Web\PagesController@index');
 
@@ -84,6 +83,13 @@ Route::get('member/dashboard', function () {
 
 Route::get('member/package', 'Web\Members\PackageController@index');
 Route::post('member/package', 'Web\Members\PackageController@dopackage');
+
+//member reward
+Route::get('member/rewards', 'Web\Members\RewardController@index');
+Route::get('member/rewards/{id}/change', 'Web\Members\RewardController@change');
+Route::post('member/rewards/{id}/change', 'Web\Members\RewardController@doChange');
+Route::get('member/rewards/{id}/detail','Web\Members\RewardController@detail');
+
 
 /*
 |--------------------------------------------------------------------------

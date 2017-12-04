@@ -12,12 +12,11 @@
     <link href="{{asset('template/kontributor/css/bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{asset('template/kontributor/css/sweetalert.css')}}" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-
     <link rel="stylesheet" href="{{asset('template/kontributor/css/owlcarousel2/owl.carousel.css')}}" type="text/css" />
     <link rel="stylesheet" href="{{asset('template/kontributor/css/owlcarousel2/owl.theme.default.min.css')}}" type="text/css" />
-
     <script type="text/javascript" src="{{asset('template/kontributor/js/jquery.min.js')}}"></script>
     <script src="{{ asset('template/kontributor/js/owl.carousel.js')}}"></script>
+
 
 </head>
 
@@ -49,7 +48,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#">
+                                    <a href="{{ url('contributor/reward') }}">
                                         {{points()}} Pts
                                     </a>
                                 </li>
@@ -171,6 +170,7 @@
     <script type="text/javascript" src="{{asset('template/kontributor/js/bootstrap.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('template/kontributor/js/custom.js')}}"></script>
     <script type="text/javascript" src="{{asset('template/kontributor/js/sweetalert.min.js')}}"></script>
+
     <!-- <script type="text/javascript">
       function notifview(id){
         var token   = "{{csrf_token()}}";

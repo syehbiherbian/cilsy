@@ -286,6 +286,7 @@
             </div>
           </form>
           <?php if (!empty(Session::get('memberID'))) {?>
+             <?php $check = DB::table('members')->where('id',Session::get('memberID'))->first(); ?>
           <ul class="nav navbar-nav navbar-right">
             <!-- <li><a href="{{ url('member/signin') }}">Masuk</a></li>
             <li><a href="{{ url('member/signup') }}">Daftar</a></li> -->
@@ -301,6 +302,10 @@
                     <tr>
                       <td>Masa Aktif</td>
                       <td>: <?=Helper::package('expired');?> hari</td>
+                    </tr>
+                    <tr>
+                      <td>Point</td>
+                      <td>: {{$check->points}} Pts  <a href="{{ url('member/rewards') }}" class="btn btn-primary btn-xs" style="margin-bottom:5px;">Rewards</a></td>
                     </tr>
                     <tr>
                       <td><a href="{{ url('member/package') }}" class="btn btn-danger btn-package">Perpanjang</a></td>

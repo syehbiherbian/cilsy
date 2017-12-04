@@ -150,6 +150,23 @@ class LessonsController extends Controller {
 		// }
 
 		if($store){
+			//penambahan point untuk members
+			$point = members::find($uid);
+			$point->points      = $member->points + 2;
+			$point->asked_point = $member->asked_point + 2;
+			$point->updated_at  = new DateTime();
+			$point->save();
+			//notif untuk member
+			DB::table('member_notif')->insert([
+				'member_id'=> $uid,
+				'category'=>'point',
+				'title'   => 'Anda mendapat penambahan sebanyak 2 point ',
+				'notif'        => 'Anda mendapat penambahan karena berkomentar/bertanya: 2 point',
+				'status'        => 0,
+				'created_at'    => new DateTime()
+			]);
+
+
 			//notif untuk contributor
 			DB::table('contributor_notif')->insert([
 				'contributor_id'=> $lessons->contributor_id,
@@ -248,26 +265,34 @@ class LessonsController extends Controller {
 			'status'        => 0,
 			'created_at'    => new DateTime()
 		]);
-		$check=DB::table('coments')->where('parent',$comment_id)->get();
-		// if(count($check)==1){
-		// 	$check_contri=Contributors::where('id',$uid)->first();
-		// 	if(count($check_contri)>0){
-		// 	  $contri = Contributors::find($uid);
-		// 	  $contri->points      = $check_contri->points + 3;
-		// 	  $contri->updated_at  = new DateTime();
-		// 	  $contri->save();
-		//
-		// 	  DB::table('contributor_notif')->insert([
-		// 		  'contributor_id'=> $uid,
-		// 		  'category'=>'point',
-		// 		  'title'   => 'Anda mendapatkan pemambahan 3 point',
-		// 		  'notif'        => 'Anda mendapatkan pemambahan sebanyak 3 point karena  mereplay komentar dari '.$lessons->title.' ',
-		// 		  'status'        => 0,
-		// 		  'created_at'    => new DateTime()
-		// 	  ]);
-		// 	}
-		//
-		// }
+
+		$check=DB::table('coments')->where('id',$comment_id)->first();
+
+		if(count($check)==1 and $check->member_id !== $uid) {
+			//penambahan point untuk members
+			$point = members::find($uid);
+			$point->points      = $member->points + 3;
+			$point->reply_point = $member->reply_point + 3;
+			$point->updated_at  = new DateTime();
+			$point->save();
+			//notif untuk member
+			DB::table('member_notif')->insert([
+				'member_id'=> $uid,
+				'category'=>'point',
+				'title'   => 'Anda mendapat penambahan sebanyak 3 point ',
+				'notif'        => 'Anda mendapat penambahan point karena mereply/menjawab pertanyaan orang : 3 point',
+				'status'        => 0,
+				'created_at'    => new DateTime()
+			]);
+			DB::table('member_notif')->insert([
+				'member_id'=> $check->member_id,
+				'category'=>'coments',
+				'title'   => 'Pertanyaan telah direply',
+				'notif'        => 'Anda mendapatkan reply atas pertanyaan anda dari '.$member->username,
+				'status'        => 0,
+				'created_at'    => new DateTime()
+			]);
+		}
 
 		DB::table('contributor_notif')->insert([
 			'contributor_id'=> $lessons->contributor_id,

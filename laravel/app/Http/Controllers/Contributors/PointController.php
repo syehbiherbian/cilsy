@@ -27,7 +27,7 @@ class PointController extends Controller
     	$date = date_format($now,'Y-m-d');
 		$contrib= Contributors::where('id',$uid)->first();
 		$category =reward_category::where('enable',1)->get();
-		$reward = reward::where('enable',1)->where('end','>=',$date )->where('limit','>',0)->get();
+		$reward = reward::where('enable',1)->where('reward_in','!=',1)->where('end','>=',$date )->where('limit','>',0)->get();
 		$myreward = contributor_reward::join('reward','contributor_reward.reward_id','=','reward.id')
 		  			->select('reward.*','contributor_reward.id as myid')
 					->where('reward.end','>=',$date )->get();

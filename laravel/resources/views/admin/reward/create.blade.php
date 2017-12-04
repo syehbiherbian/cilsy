@@ -30,23 +30,48 @@
                               </div>
                             </div>
 
-
-                            <div class="form-group">
-                                <label class="form-label">Code</label>
+                            <div class="form-group form-float">
+                                <label class="form-label">Reward in </label>
                                 <div class="form-line">
-                                   <input type="text" name="code" class="form-control" value="{{ old('code') }}">
+                                    <select class="form-control show-tick" name="reward_in" required>
+                                        <option value="">-- Please select --</option>
+                                            <option value="0">Cilsy</option>
+                                            <option value="1">Others</option>
+                                    </select>
+                                    <label class="form-label">Icon</label>
                                 </div>
                             </div>
+
+                            <div class="form-group form-float">
+                                <label class="form-label">Target (To) </label>
+                                <div class="form-line">
+                                    <select class="form-control show-tick" name="to" required>
+                                        <option value="">-- Please select --</option>
+                                            <option value="0">All</option>
+                                            <option value="1">Members</option>
+                                            <option value="2">Contributors</option>
+                                    </select>
+                                    <label class="form-label">Icon</label>
+                                </div>
+                            </div>
+
+
                             <div class="form-group form-float">
                                 <label class="form-label">Category</label>
                                 <div class="form-line">
-                                    <select class="form-control show-tick" name="cat">
+                                    <select class="form-control show-tick" name="cat" required>
                                         <option value="">-- Please select --</option>
                                         @foreach($cat as $cats)
                                             <option value="{{$cats->id}}">{{$cats->name}}</option>
                                         @endforeach
                                     </select>
                                     <label class="form-label">Icon</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Code</label>
+                                <div class="form-line">
+                                   <input type="text" name="code" class="form-control" value="{{ old('code') }}">
                                 </div>
                             </div>
 
@@ -59,30 +84,31 @@
                             <div class="form-group">
                             <label class="form-label">Slug</label>
                                 <div class="form-line">
-                                   <input type="text" name="slug" class="form-control" id="change">
+                                   <input type="text" name="slug" class="form-control" id="change" value="{{ old('slug') }}">
 
                                 </div>
                             </div>
                             <div class="form-group">
                             <label class="form-label">Url Reward</label>
                                 <div class="form-line">
-                                   <input type="text" name="url" class="form-control">
+                                   <input type="text" name="url" class="form-control" value="{{ old('url') }}">
 
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="form-label">Description</label>
                                 <div class="form-line">
-                                     <textarea rows="4" name="desc" class="form-control" placeholder="Please type what you want..."></textarea>
+                                     <textarea rows="4" name="desc" class="form-control" placeholder="Please type what you want...">{{ old('desc') }}</textarea>
                                 </div>
                             </div>
 
                               <div class="form-group form-float">
                                   <label class="form-label">Type</label>
                                   <div class="form-line">
-                                      <select class="form-control show-tick" name="type">
+                                      <select class="form-control show-tick" name="type"  onchange="getType()" id="type">
                                             <option value="persent">Percent(%)</option>
                                             <option value="ammount">Ammount(Rp)</option>
+                                            <option value="free">free(0)</option>
                                       </select>
                                       <label class="form-label">Icon</label>
                                   </div>
@@ -91,7 +117,7 @@
                             <div class="form-group">
                                 <label class="form-label">Value</label>
                                 <div class="form-line">
-                                   <input type="text" name="value" class="form-control" value="{{ old('value') }}">
+                                   <input type="text" id="type_value" name="value" class="form-control" value="{{ old('value') }}">
                                 </div>
                             </div>
 
@@ -131,7 +157,7 @@
                             <div class="form-group">
                                 <label class="form-label">Content</label>
                                 <div class="form-line">
-                                     <textarea rows="4" name="content" class="form-control no-resize" placeholder="Please type what you want..."></textarea>
+                                     <textarea rows="4" name="content" class="form-control no-resize" placeholder="Please type what you want...">{{ old('content') }}</textarea>
                                 </div>
                             </div>
 
@@ -145,6 +171,18 @@
         <!-- Vertical Layout | With Floating Label -->
     </div>
     </section>
+    <script type="text/javascript">
+        function getType(){
+
+            var type= $('#type').val();
+
+            if (type=='free'){
+                $('#type_value').val('0');
+            }else{
+                $('#type_value').val('');
+            }
+        }
+    </script>
     <script>
           function changeURL(){
             var str =$('#title').val();

@@ -1,16 +1,6 @@
-@extends('contrib.app')
-@section('title','')
-@section('breadcumbs')
-<div id="navigation">
-    <div class="container">
-            <ul class="breadcrumb">
-                    <li><a href="{{ url('contributor/dashboard') }}">Dashboard</a></li>
-            <li>Reward</li>
-            </ul>
-    </div>
-</div>
-@endsection
-
+@extends('web.app')
+@section('title','Reward Details')
+@section('content')
 <style media="screen">
 .box-group{
     padding: 15px;
@@ -91,8 +81,8 @@
 }
 
 </style>
-@section('content')
-
+<div id="table-section">
+<div class="container" style="margin-top:20px;">
 <div class="row">
   <div class="col-md-6 col-md-offset-3 box-group">
     <div class="box-white">
@@ -167,7 +157,7 @@
                   $str = preg_replace('#^https?://#', '', rtrim($str,'/'));
                   ?>
                 <div class="button" style="text-align:center;margin-top:15px;">
-                   <a class="btn blue" href="{{$row->url}}">{{$str}}</a>
+                   <a class="btn blue" style="font-size:13px;" href="{{$row->url}}">{{$str}}</a>
                 </div>
             </div>
             <div class="col-md-12" style="margin-top:30px;">
@@ -176,9 +166,8 @@
        </div>
     </div>
   </div>
-
-
 </div>
-
+</div>
+</div>
 
 @endsection()

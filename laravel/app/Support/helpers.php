@@ -104,7 +104,7 @@ class Helper
 function notif(){
 
     $contribID = Session::get('contribID');
-    $notif =contributor_notif::where('contributor_id',$contribID)->where('status',0)->get();
+    $notif =contributor_notif::where('contributor_id',$contribID)->where('status',0)->orderBy('id','=','DESC')->paginate(6);
     $url=url('');
     $html='';
     foreach ($notif as  $value) {

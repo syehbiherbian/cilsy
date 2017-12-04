@@ -90,7 +90,16 @@
                                       @endif
                                     </td>
                                     <td>{{ $row->code }}</td>
-                                    <td>Rp <?php echo number_format($row->value,0,",",".") ?></td>
+                                    <td>
+                                        <?php if ($row->type=='ammount'): ?>
+                                                Rp <?php echo number_format($row->value,0,",",".") ?>
+                                        <?php elseif ($row->type=='persent'): ?>
+                                                {{$row->value}}%
+                                        <?php elseif ($row->type=='free'): ?>
+                                                Free
+                                        <?php endif; ?>
+
+                                    </td>
                                     <td>{{ $row->poin }}</td>
                                     <td>{{ $row->start }}</td>
                                     <td>{{ $row->end }}</td>
