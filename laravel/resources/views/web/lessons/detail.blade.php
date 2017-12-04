@@ -610,7 +610,9 @@
             <?php foreach ($main_videos as $row) {?>
             <li>
               <strong><?=nl2br($row->title);?></strong>
-              <span class="pull-right"><a href="{{ $main_videos->video }}" class="btn btn-info btn-md" ><i class="fa fa-download"></i> Download Video</a></span>
+              <?php if ($services) {?>
+              <span class="pull-right"><a href="{{ $row->video }}" class="btn btn-info btn-md" download><i class="fa fa-download"></i> Download Video</a></span>
+              <?php }?>
               <p><?=nl2br($row->description);?></p>
             </li>
             <?php }?>
@@ -622,7 +624,7 @@
           <h1>File Praktek</h1>
           <?php if ($services) {?>
               @foreach($file as $key => $files)
-                  <a href="{{ $files->source }}" class="btn btn-info btn-md"> Download {{ $files->title}}</a><br><br>
+                  <a href="{{ $files->source }}" class="btn btn-info btn-md" download><i class="fa fa-download"></i> Download {{ $files->title}}</a><br><br>
               @endforeach
 
           <?php } else {?>
