@@ -38,7 +38,7 @@ class LessonsController extends Controller {
 	public function detail($slug) {
 		$now = new DateTime();
 		$mem_id = Session::get('memberID');
-		$services = services::where('status', '=', 1, 'AND', 'status', '=', 2)->where('download', '=', 1)->where('members_id', '=', $mem_id)->where('expired', '>=', $now)->first();
+		$services = services::where('status', '=', 1, 'AND', 'status', '=', 2)->where('download', '=', 1)->where('members_id', '=', $mem_id)->where('expired', '>', $now)->first();
 		$lessons = lessons::where('enable', '=', 1)->where('slug', '=', $slug)->first();
 		$main_videos = videos::where('enable', '=', 1)->where('lessons_id', '=', $lessons->id)->orderBy('id', 'asc')->get();
 		$files = files::where('enable', '=', 1)->where('lesson_id', '=', $lessons->id)->orderBy('id', 'asc')->get();
@@ -67,7 +67,7 @@ class LessonsController extends Controller {
 
 		$memberID = Session::get('memberID');
 		$members = members::where('id', '=', $memberID)->first();
-		$services = services::where('status', '=', 1)->where('members_id', '=', $memberID)->where('expired', '>=', $now)->first();
+		$services = services::where('status', '=', 1)->where('members_id', '=', $memberID)->where('expired', '>', $now)->first();
 
 		if (count($services) > 0) {
 			if ($services->access == 1) {
