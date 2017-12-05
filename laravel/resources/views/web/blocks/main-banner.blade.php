@@ -6,7 +6,7 @@
 <!-- BEGIN MAIN BANNER -->
 <section class="main-banner">
   <div class="container">
-    <div class="row caption-area ">
+    <div class="row caption-area " style="margin-bottom: 65px;">
       <div class="col-md-12">
         <div class="caption">
           <div class="inner">
