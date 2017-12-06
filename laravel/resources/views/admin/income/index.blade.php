@@ -63,6 +63,7 @@
                                     <th>Year</th>
                                     <th>Contributor</th>
                                     <th>Total</th>
+                                  
                                     <th>Crated At</th>
                                     <th>Updated At</th>
                                     <th>Action</th>
@@ -127,19 +128,6 @@
                                 </tr>
                                 @endforeach
                             </tbody>
-                            <tfoot>
-                                <tr>
-                                  <th>ID</th>
-                                  <th>Enable</th>
-                                  <th>Title</th>
-                                  <th>Url</th>
-                                  <th>Meta Desc</th>
-                                  <th>Tags</th>
-                                  <th>Created At</th>
-                                  <th>Updated At</th>
-                                  <th>Action</th>
-                                </tr>
-                            </tfoot>
                         </table>
                     </div>
                 </div>
@@ -193,12 +181,21 @@
                           <option value="">--Select Bank--</option>
                           @foreach($bank as $value)
                             @if($value->contributor_id == $row->contributor_id)
-                                <option value="{{$value->id}}">Bank: {{$value->bank}}  - Holder: {{$value->holder}} - No: {{$value->account_no}} </option>
+                                <option value="{{$value->id}}"<?php if($row->bank==$value->id){echo "selected";}?>>Bank: {{$value->bank}}  - Holder: {{$value->holder}} - No: {{$value->account_no}} </option>
                             @endif
                           @endforeach
                       </select>
                   </div>
               </div>
+                  <br> <br> <br>
+                <div class="col-md-3">
+                    <label class="form-label">Transfer Date</label>
+                </div>
+                <div class="col-md-9">
+                  <div class="form-line">
+                     <input type="date" name="date{{$row->id}}" value="{{$row->transfer_date}}" class="form-control">
+                  </div>
+                </div>
           </div>
           </div>
       </div>

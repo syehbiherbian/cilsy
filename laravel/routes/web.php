@@ -17,6 +17,9 @@ Route::get('/', 'Web\HomeController@index');
 Route::get('lessons/{by}/{keyword}', 'Web\LessonsController@index');
 Route::get('lessons/{lessons}', 'Web\LessonsController@detail');
 Route::post('lessons/getplaylist', 'Web\LessonsController@getplaylist');
+Route::post('lessons/coments/kirimcomment','Web\LessonsController@kirimcomment');
+Route::post('lessons/coments/postcomment','Web\LessonsController@postcomment');
+
 // Search
 Route::get('search', 'Web\SearchController@index');
 Route::get('search/autocomplete', 'Web\SearchController@autocomplete');
@@ -111,6 +114,8 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::post('system/members/editServices', 'MembersController@editServices');
 
 	Route::resource('system/cat', 'KategoriController');
+	Route::resource('system/reward', 'RewardController');
+	Route::resource('system/reward-category', 'RewardCategoryController');
 	Route::resource('system/pages', 'PagesController');
 	Route::resource('system/lessons', 'LessonController');
 	Route::resource('system/files', 'FilesController');
@@ -118,7 +123,7 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::resource('system/income','IncomeController');
 });
 
-// Route::get('system/generate-income', 'GenerateIncomeController@generate');
+ Route::get('cron/system/generate-income', 'GenerateIncomeController@generate');
 /*
 |--------------------------------------------------------------------------
 | Contributor Routes
@@ -149,6 +154,8 @@ Route::get('contributor/lessons', 'Contributors\LessonsController@redirect');
 Route::get('contributor/lessons/{filter}/list', 'Contributors\LessonsController@index');
 Route::get('contributor/lessons/create', 'Contributors\LessonsController@create');
 Route::post('contributor/lessons/create', 'Contributors\LessonsController@doCreate');
+Route::get('contributor/lessons/revision/{id}/proccess', 'Contributors\LessonsController@doProcess');
+
 
 Route::get('contributor/lessons/{id}/view', 'Contributors\LessonsController@view');
 Route::get('contributor/lessons/{id}/edit', 'Contributors\LessonsController@edit');
@@ -194,8 +201,13 @@ Route::get('contributor/income/account/{id}/delete', 'Contributors\IncomeControl
 Route::post('contributor/income/account/{id}/edit', 'Contributors\IncomeController@doEdit');
 Route::get('contributor/income/view-all', 'Contributors\IncomeController@view');
 
-//point
-Route::get('contributor/point','Contributors\PointController@index');
+//reward
+Route::get('contributor/reward','Contributors\PointController@index');
+Route::get('contributor/reward/{id}/change', 'Contributors\PointController@change');
+Route::post('contributor/reward/{id}/change', 'Contributors\PointController@doChange');
+Route::get('contributor/reward/{id}/detail','Contributors\PointController@detail');
+
+// Route::get('contributor/info-point','Contributors\PointController@point');
 //notif
 Route::get('contributor/notif','Contributors\NotifController@index');
 Route::get('ajax/notif/view','Contributors\NotifController@view');

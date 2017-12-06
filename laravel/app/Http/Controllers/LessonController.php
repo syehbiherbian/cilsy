@@ -271,8 +271,6 @@ class LessonController extends Controller
                   $update_revision->save();
                 }
               }
-
-
             }
             // redirect
             return redirect('system/lessons')->with('success','Data successfully updated');

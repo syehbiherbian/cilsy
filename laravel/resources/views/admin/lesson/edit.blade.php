@@ -53,7 +53,7 @@
                             <div class="form-group">
                             <label class="form-label">File Praktek</label>
                                 <div class="form-line">
-                                   <input type="file" name="file[]" id="filetiket1" class="form-control" required>
+                                   <input type="file" name="file[]" id="filetiket1" class="form-control">
                                 </div>
                             </div>
                             <div id="dynamic_field">
@@ -123,6 +123,7 @@
                                     <th>No</th>
                                     <th>Note</th>
                                     <th>Status</th>
+                                    <th>Action</th>
                                   </tr>
                                 </thead>
                                 <tbody>
@@ -132,13 +133,26 @@
                                   <tr>
                                     <td>{{ $i }} <input type="hidden" name="revisi_id[]" id="revisi<?php echo $i; ?>" value="{{$value->id}}"></td>
                                     <td><?php echo nl2br($value->notes);?></td>
+                                    <td>
+                                        <?php
+                                        if($value->status==2){
+                                            echo "Revision Proses";
+                                         }elseif($value->status==3){
+                                            echo "Revision Failed";
+                                        }elseif ($value->status==1) {
+                                            echo "Revision Success";
+                                        }else{
+                                            echo "Revision Pending";
+                                        }
+                                        ?>
+                                    </td>
                                     <td width="20%">
                                       <select class="form-control show-tick" id="revisi_status<?php echo $i; ?>" name="revisi_status[]" onchange="chageRevisiSatus()">
-                                          <option value="">-- Please select --</option>
+                                          <!-- <option value="">-- Please select --</option> -->
                                           <option value="0"<?php if($value->status==0){echo "selected";} ?>>Pending</option>
-                                          <!-- <option value="2"<?php if($value->status==3){echo "selected";} ?>>Process</option> -->
-                                          <option value="1"<?php if($value->status==1){echo "selected";} ?>>Oke</option>
-                                          <option value="3"<?php if($value->status==2){echo "selected";} ?>>No</option>
+                                          <!-- <option value="2"<?php if($value->status==2){echo "selected";} ?>>Process</option> -->
+                                          <option value="1"<?php if($value->status==1){echo "selected";} ?>>Acc</option>
+                                          <option value="3"<?php if($value->status==3){echo "selected";} ?>>Failed</option>
 
                                       </select>
                                     </td>

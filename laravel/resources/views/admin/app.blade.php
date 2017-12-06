@@ -350,6 +350,24 @@
                         </a>
                     </li>
                     <li>
+                        <a href="{{ url('system/income') }}">
+                            <i class="material-icons">assignment</i>
+                            <span>Income</span>
+                        </a>
+                    </li>
+                    <li>
+                         <a href="{{ url('system/reward-category') }}">
+                             <i class="material-icons">assignment</i>
+                             <span>Reward Category</span>
+                         </a>
+                     </li>
+					         <li>
+                        <a href="{{ url('system/reward') }}">
+                            <i class="material-icons">assignment</i>
+                            <span>Reward</span>
+                        </a>
+                    </li>
+                    <li>
                         <a href="{{ url('system/pages') }}">
                             <i class="material-icons">assignment</i>
                             <span>Pages</span>

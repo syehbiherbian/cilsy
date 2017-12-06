@@ -59,6 +59,7 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Enable</th>
+                                    <th>Status</th>
                                     <th>Title</th>
                                     <th>Category</th>
                                     <th>Created At</th>
@@ -76,6 +77,17 @@
                                         <?php }else if ($lesson->enable == 1){ ?>
                                             <div class="label label-success">Yes</div>
                                         <?php } ?>
+                                    </td>
+                                    <td>
+                                        <?php if ($lesson->status == 0): ?>
+                                          <div class="label label-warning">Draft</div>
+                                        <?php elseif($lesson->status == 1): ?>
+                                            <div class="label label-success">Publish</div>
+                                        <?php elseif($lesson->status == 2): ?>
+                                            <div class="label label-info">Proses</div>
+                                        <?php elseif($lesson->status == 3): ?>
+                                            <div class="label label-warning">Revisi</div>
+                                        <?php endif; ?>
                                     </td>
                                     <td>{{ $lesson->title }}</td>
                                     <td>{{ $lesson->category_title }}</td>

@@ -1,6 +1,16 @@
 @extends('contrib.app')
 @section('title','')
 @section('breadcumbs')
+<style media="screen">
+	.select-file{
+	overflow:hidden;
+	position:relative;
+	}
+	.fileinput{
+	position:absolute;
+	top:-100px;
+	}
+</style>
 <div id="navigation">
 		<ul class="breadcrumb">
 				<li><a href="{{ url('contributor/dashboard') }}">Dashboard</a></li>
@@ -37,14 +47,14 @@
 							</div>
 							<div class="col-md-6 text-right">
 								<div class="btn-group">
-								  <button type="button" class="btn btn-default btn-outline"><i class=""></i></button>
-								  <button type="button" class="btn btn-default btn-outline"><i class=""></i></button>
-								  <button type="button" class="btn btn-default btn-outline btn_remove" id="{{$i}}" ><i class=""></i></button>
+									<button type="button" class="btn btn-default btn-outline sorttop"  id="t{{$i}}"  onclick="sorttop({{$i}})"><i class="fa fa-arrow-circle-up" aria-hidden="true"></i></button>
+									<button type="button" class="btn btn-default btn-outline sortdown" id="d{{$i}}" onclick="sortdown({{$i}})" ><i class="fa fa-arrow-circle-down" aria-hidden="true"></i></button>
+								  <button type="button" class="btn btn-default btn-outline btn_remove" id="{{$i}}" > <i class="fa fa-trash" aria-hidden="true"></i></button>
 								</div>
 							</div>
 						</div>
 					</div>
-
+					
 					<div class="form-group">
 						<label class="col-sm-2 control-label">Judul</label>
 						<div class="col-sm-10">
@@ -54,9 +64,13 @@
 
 					<div class="form-group">
 					 <label class="col-sm-2 control-label">Pilih lampiran</label>
-					 <div class="col-sm-10">
-						 <input type="file" class="form-control" name="files[]" id="files{{$i}}" >
-						 <input type="hidden" name="files_text[]" id="files_text{{$i}}" value="{{$value->source}}" class="form-control">
+					 <div class="col-sm-10" id="tampilfiles{{$i}}">
+					   <div class="select-file" id="ambilfiles{{$i}}">
+					    <a href="#" class="btnfile" id="btnfiles{{$i}}" onclick="getfilefiles({{$i}})">Choose File {{$i}}</a>
+					    <input type="file" class="form-control fileinput" name="files[]" id="files{{$i}}"  onchange="getfilename({{$i}})">
+					    <input type="hidden" name="files_text[]" id="files_text{{$i}}" value="{{$value->source}}" class="form-control">
+					    <label id="textfiles{{$i}}"></label>
+					   </div>
 					 </div>
 				 	</div>
 	 	      <div class="form-group">
@@ -68,13 +82,14 @@
 			</div>
 
 			@endforeach
+			<input type="hidden" id="countrow" value="{{$i}}">
 			<div class="row" id="dynamic_field">
 
 			</div>
 
 	      <div class="form-group">
 					<div class="col-sm-2">
-						<button type="button"  id="addanswer" name="button" class="btn btn-default btn-outline"><i class=""></i>tambah lampiran</button>
+						<button type="button"  id="addanswer" name="button" class="btn btn-default btn-outline"><i class=""></i>Tambah Lampiran</button>
 					</div>
 
 	      </div>
@@ -92,6 +107,118 @@
 
 
 <script type="text/javascript" src="{{asset('template/kontributor/js/jquery.min.js')}}"></script>
+<script type="text/javascript">
+	function getfilefiles(id){
+		$("#files"+id).focus().click();
+
+	}
+
+	function getfilename(id){
+		var filename = $("#files"+id).val().split('\\').pop();
+		$('#textfiles'+id).html(filename);
+		// $('#filestext'+id).val(filename);
+	}
+
+
+		function sorttop(id){
+
+
+			var judul_now = $('#judul'+id).val();
+			var ambilfiles_now =document.getElementById('ambilfiles'+id);
+			var desc_now=$('#desc'+id).val();
+
+			var max =	 $('#countrow').val();
+
+			 for (i = id; i >= 0; i--) {
+				 var text = $('#judul'+i);
+
+				if (text.length &&  i < id){
+
+					var judul_down = $('#judul'+i).val();
+					$('#judul'+id).val(judul_down);
+					$('#judul'+i).val(judul_now);
+
+					var desc_down = $('#desc'+i).val();
+					$('#desc'+id).val(desc_down);
+					$('#desc'+i).val(desc_now);
+
+					var ambilfiles_down =document.getElementById('ambilfiles'+i);
+					 $('#tampilfiles'+id).html(ambilfiles_down);
+					 $('#tampilfiles'+i).html(ambilfiles_now);
+
+
+	 				//files
+	 				document.getElementById('ambilfiles'+i).setAttribute('id', 'ambilfiles'+id);
+	 				document.getElementById('files'+i).setAttribute('onchange', 'getfilename('+id+')');
+	 				document.getElementById('files'+i).setAttribute('id', 'files'+id);
+	 				document.getElementById('btnfiles'+i).setAttribute('onclick', 'getfilefiles('+id+')');
+	 				document.getElementById('btnfiles'+i).setAttribute('id', 'btnfiles'+id);
+	 				document.getElementById('textfiles'+i).setAttribute('id', 'textfiles'+id);
+					document.getElementById('files_text'+i).setAttribute('id', 'files_text'+id);
+
+	 				document.getElementById('ambilfiles'+id).setAttribute('id', 'ambilfiles'+i);
+	 				document.getElementById('files'+id).setAttribute('onchange', 'getfilename('+i+')');
+	 				document.getElementById('files'+id).setAttribute('id', 'files'+i);
+	 				document.getElementById('btnfiles'+id).setAttribute('onclick', 'getfilefiles('+i+')');
+	 				document.getElementById('btnfiles'+id).setAttribute('id', 'btnfiles'+i);
+	 				document.getElementById('textfiles'+id).setAttribute('id', 'textfiles'+i)
+					document.getElementById('files_text'+id).setAttribute('id', 'files_text'+i);
+
+
+					break;
+				}else{
+
+				}
+			 }
+		}
+	function sortdown(id){
+
+		var judul_now = $('#judul'+id).val();
+		var ambilfiles_now =document.getElementById('ambilfiles'+id);
+
+
+		var desc_now=$('#desc'+id).val();
+		var max =	 $('#countrow').val();
+		 for (i = id; i <= max; i++) {
+			 var text = $('#judul'+i);
+			 if (text.length &&  i > id){
+				 var judul_down = $('#judul'+i).val();
+				 $('#judul'+id).val(judul_down);
+ 			   	 $('#judul'+i).val(judul_now);
+
+				 var desc_down = $('#desc'+i).val();
+				 $('#desc'+id).val(desc_down);
+				 $('#desc'+i).val(desc_now);
+
+				 var ambilfiles_down =document.getElementById('ambilfiles'+i);
+
+				$('#tampilfiles'+id).html(ambilfiles_down);
+				$('#tampilfiles'+i).html(ambilfiles_now);
+
+				 //files
+				 document.getElementById('ambilfiles'+id).setAttribute('id', 'ambilfiles'+i);
+				 document.getElementById('files'+id).setAttribute('onchange', 'getfilename('+i+')');
+				 document.getElementById('files'+id).setAttribute('id', 'files'+i);
+				 document.getElementById('btnfiles'+id).setAttribute('onclick', 'getfilefiles('+i+')');
+				 document.getElementById('btnfiles'+id).setAttribute('id', 'btnfiles'+i);
+				 document.getElementById('textfiles'+id).setAttribute('id', 'textfiles'+i);
+				 	document.getElementById('files_text'+id).setAttribute('id', 'files_text'+i);
+
+				 document.getElementById('ambilfiles'+i).setAttribute('id', 'ambilfiles'+id);
+				 document.getElementById('files'+i).setAttribute('onchange', 'getfilename('+id+')');
+				 document.getElementById('files'+i).setAttribute('id', 'files'+id);
+				 document.getElementById('btnfiles'+i).setAttribute('onclick', 'getfilefiles('+id+')');
+				 document.getElementById('btnfiles'+i).setAttribute('id', 'btnfiles'+id);
+				 document.getElementById('textfiles'+i).setAttribute('id', 'textfiles'+id);
+				 document.getElementById('files_text'+i).setAttribute('id', 'files_text'+id);
+			   break;
+		   }else{
+			    // alert('Does not exist!');
+		   }
+		 }
+
+	}
+</script>
 <script>
      $(document).ready(function(){
 
@@ -100,6 +227,7 @@
           $('#addanswer').click(function(){
 			   var no= $('.count-all').last().val();
 			   n=parseInt(no) + 1;
+				 	$('#countrow').val(n);
               //<td width="40%"><input type="text" class="form-control" name="varianname[]" id="varname'+ j +'"></td>
               // <td><input type="hidden" class="form-control" name="qty[]" id="varqty'+ j +'"></td>
                $('#dynamic_field').append('<div class="col-sm-12"style="margin-top:20px;margin-bottom:20px;" id="row'+n+'">'+
@@ -112,9 +240,9 @@
 						   '</div>'+
 						   '<div class="col-md-6 text-right">'+
 							  ' <div class="btn-group">'+
-								 '<button type="button" class="btn btn-default btn-outline"><i class=""></i></button>'+
-								' <button type="button" class="btn btn-default btn-outline"><i class=""></i></button>'+
-								' <button type="button" class="btn btn-default btn-outline btn_remove " id="'+n+'"><i class=""></i></button>'+
+								'<button type="button" class="btn btn-default btn-outline" id="t'+n+'" onclick="sorttop('+n+')" >  <i class="fa fa-arrow-circle-up" aria-hidden="true"></i></button>'+
+							   ' <button type="button" class="btn btn-default btn-outline sortdown" id="d'+n+'" onclick="sortdown('+n+')"><i class="fa fa-arrow-circle-down" aria-hidden="true"></i></button>'+
+								' <button type="button" class="btn btn-default btn-outline btn_remove " id="'+n+'"> <i class="fa fa-trash" aria-hidden="true"></i></button>'+
 							  ' </div>'+
 						  ' </div>'+
 					   '</div>'+
@@ -129,10 +257,16 @@
 
 				  ' <div class="form-group">'+
 					'<label class="col-sm-2 control-label">Pilih lampiran</label>'+
-					'<div class="col-sm-10">'+
-						'<input type="file" class="form-control" name="files[]" id="files'+n+'">'+
-						'<input type="hidden" name="files_text[]" id="files_text'+n+'" value="" class="form-control">'+
+					'<div class="col-sm-10" id="tampilfiles'+ n +'">'+
+					'<div class="select-file" id="ambilfiles'+ n +'">'+
+					'<a href="#" class="btnfile" id="btnfiles'+ n +'" onclick="getfilefiles('+ n +')">Choose File '+ n +'</a>'+
+					'<input type="file" class="form-control fileinput" name="files[]" id="files'+ n +'"  onchange="getfilename('+ n +')">'+
+					'<input type="hidden" name="files_text[]" id="files_text'+n+'" value="" class="form-control">'+
+
+					  '<label id="textfiles'+ n +'"></label>'+
 					'</div>'+
+					'</div>'+
+
 				'</div>'+
 			 '<div class="form-group">'+
 			   '<label class="col-sm-2 control-label">Description</label>'+
