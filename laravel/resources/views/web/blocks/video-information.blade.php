@@ -42,12 +42,31 @@
             <?php }?>
           </div>
           <div id="tab4" class="tab-pane fade">
-            
+            <!-- Comment Form -->
+            <form id="form-comment">
+              {{ csrf_field() }}
+              <input type="hidden" name="lesson_id" value="{{ $lessons->id }}">
+              <input type="hidden" name="parent" value="0">
+              <div class="form-group">
+                <label>Komentar</label>
+                <textarea name="name" rows="8" cols="80" class="form-control" name="comment"></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary">Kirim</button>
+            </form><!--./ Comment Form -->
+
+            <!-- Comments Lists -->
+            <div id="comments-lists"></div>
+            <!--./ Comments Lists -->
+
+
+
           </div>
         </div><!--./ Tabs -->
 
       </div>
     </div>
+    <?php if ($contributors): ?>
+
     <div class="row contributor mb-25">
       <div class="col-md-12">
         <!-- Panel -->
@@ -65,10 +84,10 @@
                 </div>
               </div>
               <div class="col-md-9">
-                <strong>Rizal Rahman</strong>
-                <p class="help-block">Praktisi</p>
+                <strong>{{ $contributors->username }}</strong>
+                <p class="help-block">{{ $contributors->job }}</p>
                 <a href="#" class="btn btn-warning mb-15">Lihat Profile</a>
-                <p >Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                <p ><?= $contributors->about ?></p>
                 <a href="#">Lebih Banyak</a>
               </div>
             </div>
@@ -77,10 +96,68 @@
         <!-- ./Panel -->
       </div>
     </div>
+
+    <?php endif; ?>
   </div>
 </section><!-- ./VIDEO INFORMATION -->
 
 @push('js')
+<script type="text/javascript">
+$(document).on('ready',function () {
+  getComments();
+});
 
+
+  $('#form-comment').on('submit',function(e) {
+    e.preventDefault();
+
+
+    $.ajax({
+        type    :'POST',
+        url     :'{{ url("lessons/coments/doComment") }}',
+        data    : $(this).serialize(),
+
+        success:function(data){
+
+          if (data.success == false) {
+             window.location.href = '{{ url("member/signin") }}';
+          }else {
+            getComments();
+          }
+
+        }
+    });
+
+  });
+
+  function getComments() {
+
+    // var postData =
+    //             {
+    //                 "_token":"{{ csrf_token() }}",
+    //                 "lessons_id": "{{ $lessons->id }}"
+    //             }
+
+    $.ajax({
+        type    :'GET',
+        url     :'{{ url("lessons/coments/getComments/".$lessons->id) }}',
+        // dataType: json,
+        // data    : postData,
+        success:function(data){
+
+          if (data.success == false) {
+             window.location.href = '{{ url("member/signin") }}';
+          }else {
+
+            // alert(data);
+            $('#comments-lists').html(data.html);
+
+
+          }
+
+        }
+    });
+  }
+</script>
 
 @endpush

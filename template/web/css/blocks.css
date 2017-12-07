@@ -286,6 +286,17 @@
   background-color: #f5f5f5;
   padding: 25px 15px;
 }
+
+.video-information .video .tab-content .materi_list{
+  padding: 0px;
+}
+.video-information .video .tab-content .materi_list > li{
+  list-style: none;
+  border-bottom: 1px solid #eee;
+}
+.video-information .video .tab-content .materi_list > li:last-child{
+  border-bottom: 0px solid transparent;
+}
 .video-information .contributor .text-about{
   margin-top: 25px;
 }

@@ -98,31 +98,149 @@ class LessonsController extends Controller {
 
 		}
 
+		$contributors = DB::table('contributors')->where('id',$lessons->contributor_id)->first();
 		return view('web.lessons.detail', [
 			'lessons' => $lessons,
-
 			'main_videos' => $main_videos,
 			'file' => $files,
 			'services' => $services,
 			'datacomment'=>$getcomment,
+			'contributors' => $contributors
 		]);
 	}
 
-	public function kirimcomment(){
+	public function doComment()
+	{
+		$response= array();
+		if (empty(Session::get('memberID'))) {
+			$response['success'] 		= false;
+		}else {
+
+			$now 				= new DateTime();
+			$uid 				= Session::get('memberID');
+			$comment  	= Input::get('comment');
+			$lesson_id  = Input::get('lesson_id');
+			$parent  		= Input::get('parent');
+
+			$store= DB::table('coments')->insertGetId([
+					'lesson_id'     => $lesson_id,
+					'member_id'			=> $uid,
+					'description'   => $comment,
+					'parent'        => 0,
+					'status'        => 0,
+					'created_at'    => $now,
+					'updated_at'    => $now
+			]);
+
+			if ($store) {
+				$response['success'] 		= true;
+			}
+
+		}
+
+		echo json_encode($response);
+
+	}
+
+	public function getComments()
+	{
+
+		$response= array();
+		if (empty(Session::get('memberID'))) {
+			$response['success'] 		= false;
+		}else {
+
+
+			// $comment     = DB::table('coments')
+			// 	->leftJoin('members','members.id','=','coments.member_id')
+			//  	->select('coments.*','members.username as username')
+			// 	->where('coments.id',$store)
+			// 	->where('coments.parent',0)
+			// 	->where('coments.status',0)
+			// 	->orderBy('coments.created_at','DESC')
+			// 	->first();
+			// $comments = DB::table('coments')
+			// ->leftJoin('members','members.id','=','coments.member_id')
+			// ->where('parents')
+			// ->get();
+
+			$response['success']= true;
+
+			$response['html'] 	= '<div class="col-md-12" style="margin-bottom:30px;" id="row'.$comment->id.'">';
+			$response['html'] 	= '<img class="user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png"height="40px" width="40px" style="object-fit:scale-down;border-radius: 100%;margin-bottom:10px;">';
+			$response['html'] 	= '<strong>'.$comment->username .'</strong> pada <strong>'.date('d/m/Y',strtotime($comment->created_at)).'</strong>';
+			$response['html'] 	= '<strong style="color:#ff5e10;">';
+							if($comment->member_id !==null){
+			$response['html'] 	= 'User' ;
+							}
+							if($comment->contributor_id  !==null){
+			$response['html'] 	= 'Contributor';
+							}
+			$response['html'] 	= '</strong>';
+
+			$response['html'] 	= '<div class="col-md-12" style="margin-top:10px;padding-left:5%;">'. $comment->description.'</div>';
+			$response['html'] 	= '<br><br>';
+
+							$getchild = DB::table('coments')
+							->leftJoin('members','members.id','=','coments.member_id')
+							->leftJoin('contributors','contributors.id','=','coments.contributor_id')
+							->where('coments.lesson_id',$lessons->id)
+							->where('parent',$comment->id)
+							->orderBy('coments.created_at','ASC')
+							->select('coments.*','members.username as username','contributors.username as contriname')
+							->get();
+
+							if (count($getchild) > 0) {
+							foreach ($getchild as $child) {
+
+			$response['html'] 	= '<div class="col-md-12" style="margin-top:10px;padding-left:7%;">';
+			$response['html'] 	= '<img class="user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png"height="40px" width="40px" style="object-fit:scale-down;border-radius: 100%;margin-bottom:10px;">';
+			$response['html'] 	= '<strong>';
+						if(!empty($child->username)){
+			$response['html'] 	= $child->username.'';
+							}else{
+			$response['html'] 	= $child->contriname.'';
+
+							}
+			$response['html'] 	= '</strong> pada <strong>'.date('d/m/Y',strtotime($child->created_at)).'</strong>';
+			$response['html'] 	= '<div class="col-md-12" style="margin-top:10px;margin-bottom:10px;padding-left:5%;">';
+			$response['html'] 	= $child->description.'';
+			$response['html'] 	= '</div>';
+			$response['html'] 	= '<div class="clearfix"></div>';
+			$response['html'] 	= '</div>';
+
+								}
+								}
+
+			$response['html'] 	= '<div class="col-md-12" id="balas'.$comment->id.'" style="padding-top:10px; padding-left:0px; padding-right:0px;">';
+			$response['html'] 	= '<a href="javascript:void(0)" class="btn btn-info pull-right" onclick="formbalas('.$comment->id.')">Balas</a>';
+			$response['html'] 	= '	</div>';
+			$response['html'] 	= '</div>';
+
+
+		}
+
+		echo json_encode($response);
+
+
+	}
+
+	public function doComment_bak(){
 		if (empty(Session::get('memberID'))) {
 			return 0;
 			exit();
 		}
 		$uid = Session::get('memberID');
-		$member=DB::table('members')->where('id',$uid)->first();
-		$isi_kirim  = Input::get('isi_kirim');
+
+		$member			= DB::table('members')->where('id',$uid)->first();
+		$comment  	= Input::get('comment');
 		$lesson_id  = Input::get('lesson_id');
-		$lessons = DB::table('lessons')->where('id',$lesson_id)->first();
+		$lessons 		= DB::table('lessons')->where('id',$lesson_id)->first();
 
 		$store= DB::table('coments')->insertGetId([
 				'lesson_id'     => $lesson_id,
-				'member_id'=> $uid,
-				'description'   => $isi_kirim,
+				'member_id'			=> $uid,
+				'description'   => $comment,
 				'parent'        => 0,
 				'status'        => 0,
 				'created_at'    => new DateTime()

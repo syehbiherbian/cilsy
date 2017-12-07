@@ -1,6 +1,6 @@
 @push('css')
-<link href="{{ asset('node_modules/video.js/dist/video-js.css') }}" rel="stylesheet">
-<link href="{{ asset('node_modules/videojs-playlist-ui/dist/videojs-playlist-ui.vertical.css') }}" rel="stylesheet">
+<link rel="stylesheet" href="{{ asset('template/web/css/video-js.css') }}">
+<link rel="stylesheet" href="{{ asset('template/web/css/videojs-playlist-ui.vertical.css') }}">
 <link rel="stylesheet" href="{{ asset('template/web/css/video-js-custom.css') }}">
 @endpush
 
@@ -45,9 +45,9 @@
 </section><!-- ./VIDEO PLAYER -->
 
 @push('js')
-<script src="{{ asset('node_modules/video.js/dist/video.js') }}"></script>
-<script src="{{ asset('node_modules/videojs-playlist/dist/videojs-playlist.js') }}"></script>
-<script src="{{ asset('node_modules/videojs-playlist-ui/dist/videojs-playlist-ui.js') }}"></script>
+<script src="{{ asset('template/web/js/video.js') }}"></script>
+<script src="{{ asset('template/web/js/videojs-playlist.js') }}"></script>
+<script src="{{ asset('template/web/js/videojs-playlist-ui.js') }}"></script>
 <script type="text/javascript">
 
 $(document).ready(function() {
