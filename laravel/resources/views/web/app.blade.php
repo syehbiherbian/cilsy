@@ -202,6 +202,7 @@
 
 
     <link rel="stylesheet" href="{{ asset('template/web/css/helper.css') }}">
+    <link rel="stylesheet" href="{{ asset('template/web/css/common.css') }}">
     <link rel="stylesheet" href="{{ asset('template/web/css/blocks.css') }}">
     @stack('css')
 </head>
@@ -484,7 +485,7 @@
                     <img class="footer-logo" src="{{asset('template/web/img/logo-only.png') }}" alt=""></img>
                     <span class="footer-logo-text">Cilsy</span>
                     <p>
-                        Satu-satunya kursus online jaringan dan server yang dipandu sampai bisa. Terdapat ratusan video tutorial eksklusif serta trainer profesional yang siap membantu proses belajar anda. 
+                        Satu-satunya kursus online jaringan dan server yang dipandu sampai bisa. Terdapat ratusan video tutorial eksklusif serta trainer profesional yang siap membantu proses belajar anda.
                     </p>
                     <p class="copyrigth-text">
                         Copyright Cilsy Fiolution 2016-2017
