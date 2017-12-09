@@ -42,6 +42,13 @@
             <?php }?>
           </div>
           <div id="tab4" class="tab-pane fade">
+
+            <?php if (empty(Session::get('memberID'))) { ?>
+              <div class="text-center mb-25">
+                Silahkan <a href="{{ url('member/signin') }}" class="btn btn-primary"> Masuk</a> untuk memberikan komentar
+              </div>
+          	<?php	}else { ?>
+
             <!-- Comment Form -->
             <div class="comments-form mb-25">
               <!-- <form id="form-comment" class="mb-25">
@@ -55,6 +62,8 @@
                 <button type="button" class="btn btn-primary" onClick="doComment({{ $lessons->id }},0)" >Kirim</button>
               <!-- </form><!--./ Comment Form -->
             </div>
+
+            <?php } ?>
 
             <!-- Comments Lists -->
             <div id="comments-lists">
@@ -79,11 +88,15 @@
           <div class="panel-body">
             <div class="row">
               <div class="col-md-3">
-                <img src="{{ asset('template/kontributor/img/icon/avatar.png') }}" alt="" class="img-responsive img-center">
+                <?php if ($contributors->avatar): ?>
+                  <img src="{{ asset($contributors->avatar) }}" alt="" class="img-responsive img-center">
+                <?php else: ?>
+                  <img src="{{ asset('template/kontributor/img/icon/avatar.png') }}" alt="" class="img-responsive img-center">
+                <?php endif; ?>
                 <div class="text-center mt-15">
                   <div class="btn-group">
-                    <button type="button" class="btn btn-primary">10 Tutorial</button>
-                    <button type="button" class="btn btn-primary">500 View</button>
+                    <button type="button" class="btn btn-primary">{{ count($contributors_total_lessons) }} Tutorial</button>
+                    <button type="button" class="btn btn-primary">{{ $contributors_total_view }} View</button>
                   </div>
                 </div>
               </div>

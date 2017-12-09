@@ -41,63 +41,144 @@ class LessonsController extends Controller {
 	}
 
 	public function detail($slug) {
+
+
 		$now = new DateTime();
 		$mem_id = Session::get('memberID');
 
 		$services = services::where('status', '=', 1)->where('download', '=', 1)->where('members_id', '=', $mem_id)->where('expired', '>', $now)->first();
 		$lessons = lessons::where('enable', '=', 1)->where('lessons.status', '=', 1)->where('slug', '=', $slug)->first();
 
-		$main_videos = videos::where('enable', '=', 1)->where('lessons_id', '=', $lessons->id)->orderBy('id', 'asc')->get();
-		$files = files::where('enable', '=', 1)->where('lesson_id', '=', $lessons->id)->orderBy('id', 'asc')->get();
+	  if ($this->checkViewers($lessons->id)) {
+				$main_videos = videos::where('enable', '=', 1)->where('lessons_id', '=', $lessons->id)->orderBy('id', 'asc')->get();
+				$files = files::where('enable', '=', 1)->where('lesson_id', '=', $lessons->id)->orderBy('id', 'asc')->get();
 
 
-		$date= $now->format('Y-m-d');
-		$moth=$now->format('m');
-		$year=$now->format('Y');
-		$check=lessons_detail::where('lesson_id',$lessons->id)->where('moth',$moth)->where('year',$year)->first();
 
-		//hitung view;
-		if(count($check) == 0){
-			$store                  = new lessons_detail;
-			$store->lesson_id       = $lessons->id;
-			$store->moth           = $moth;
-			$store->year		    = $year;
-			$store->view			= 1;
-			$store->created_at      = $now;
-			$store->save();
-
-			$detail = new lessons_detail_view;
-			$detail->detail_id =$store->id;
-			$detail->member_id =$mem_id;
-			$detail->created_at= $now;
-			$detail->save();
-
-		}else{
-			$checkdetail= lessons_detail_view::where('detail_id',$check->id)->where('member_id',$mem_id)->get();
-			if(count($checkdetail) == 0 ){
-				$store                  = lessons_detail::find($check->id);
-				$store->view			= $check->view + 1;
-				$store->updated_at      = $now;
-				$store->save();
-
-				$detail = new lessons_detail_view;
-				$detail->detail_id =$store->id;
-				$detail->member_id =$mem_id;
-				$detail->created_at= $now;
-				$detail->save();
+	    //
+			// $date= $now->format('Y-m-d');
+			// $moth=$now->format('m');
+			// $year=$now->format('Y');
+			// $check=lessons_detail::where('lesson_id',$lessons->id)->where('moth',$moth)->where('year',$year)->first();
+	    //
+			// //hitung view;
+			// if(count($check) == 0){
+			// 	$store                  = new lessons_detail;
+			// 	$store->lesson_id       = $lessons->id;
+			// 	$store->moth           = $moth;
+			// 	$store->year		    = $year;
+			// 	$store->view			= 1;
+			// 	$store->created_at      = $now;
+			// 	$store->save();
+	    //
+			// 	$detail = new lessons_detail_view;
+			// 	$detail->detail_id =$store->id;
+			// 	$detail->member_id =$mem_id;
+			// 	$detail->created_at= $now;
+			// 	$detail->save();
+	    //
+			// }else{
+			// 	$checkdetail= lessons_detail_view::where('detail_id',$check->id)->where('member_id',$mem_id)->get();
+			// 	if(count($checkdetail) == 0 ){
+			// 		$store                  = lessons_detail::find($check->id);
+			// 		$store->view			= $check->view + 1;
+			// 		$store->updated_at      = $now;
+			// 		$store->save();
+	    //
+			// 		$detail = new lessons_detail_view;
+			// 		$detail->detail_id =$store->id;
+			// 		$detail->member_id =$mem_id;
+			// 		$detail->created_at= $now;
+			// 		$detail->save();
+			// 	}
+	    //
+			// }
+			// Contributor
+			$contributors = DB::table('contributors')->where('id',$lessons->contributor_id)->first();
+			$contributors_total_lessons = lessons::where('enable', '=', 1)->where('contributor_id', '=', $lessons->contributor_id)->get();
+			$contributors_total_view 		= 0;
+			foreach ($contributors_total_lessons as $key => $counttotal) {
+				$viewers = DB::table('lessons_viewers')->where('lesson_id', '=', $counttotal->id)->first();
+				if ($viewers) {
+					$contributors_total_view = $contributors_total_view + $viewers->hits;
+				}
 			}
 
+			return view('web.lessons.detail', [
+				'lessons' => $lessons,
+				'main_videos' => $main_videos,
+				'file' => $files,
+				'services' => $services,
+				'contributors' => $contributors,
+				'contributors_total_lessons' => $contributors_total_lessons,
+				'contributors_total_view' => $contributors_total_view,
+			]);
 		}
-
-		$contributors = DB::table('contributors')->where('id',$lessons->contributor_id)->first();
-		return view('web.lessons.detail', [
-			'lessons' => $lessons,
-			'main_videos' => $main_videos,
-			'file' => $files,
-			'services' => $services,
-			'contributors' => $contributors
-		]);
 	}
+
+
+  public function checkViewers($lesson_id)
+  {
+    // ADD VIEWERS
+    $now            = new DateTime();
+		if (Session::get('memberID')) {
+			$mem_id = Session::get('memberID');
+		}else {
+			$mem_id = 0;
+		}
+    $ip_address     = $this->getUserIP();
+    $lessons_viewers  = DB::table('lessons_viewers')->where('lesson_id',$lesson_id)->where('ip_address',$ip_address)->first();
+
+    if (count($lessons_viewers) > 0) {
+
+      // Update hits Viewers
+			DB::table('lessons_viewers')->where('lesson_id',$lesson_id)
+			->update([
+				'member_id' 	=> $mem_id,
+				'hits' 				=> $lessons_viewers->hits + 1,
+				'updated_at' 	=> $now,
+			]);
+
+      return true;
+
+    }else {
+
+      // Create New Viewers
+			DB::table('lessons_viewers')->insert([
+				'lesson_id' 		=> $lesson_id,
+				'ip_address' 	=> $ip_address,
+				'hits' 				=> 1,
+				'member_id' 	=> $mem_id,
+				'created_at' 	=> $now,
+				'updated_at' 	=> $now,
+			]);
+
+      return true;
+    }
+
+  }
+
+  private static function getUserIP()
+  {
+    $client  = @$_SERVER['HTTP_CLIENT_IP'];
+    $forward = @$_SERVER['HTTP_X_FORWARDED_FOR'];
+    $remote  = $_SERVER['REMOTE_ADDR'];
+
+    if(filter_var($client, FILTER_VALIDATE_IP))
+    {
+        $ip = $client;
+    }
+    elseif(filter_var($forward, FILTER_VALIDATE_IP))
+    {
+        $ip = $forward;
+    }
+    else
+    {
+        $ip = $remote;
+    }
+
+    return $ip;
+  }
 
 	public function doComment()
 	{
@@ -135,21 +216,14 @@ class LessonsController extends Controller {
 	public function getComments($lesson_id)
 	{
 
-		$html = '';
-		if (empty(Session::get('memberID'))) {
-			$html = '';
-		}else {
-
-
-
-
 			$comments     = DB::table('comments')
 											->leftJoin('members','members.id','=','comments.member_id')
 											->select('comments.*','members.username as username','members.avatar as avatar')
 											->where('comments.parent_id','=',0)
+											->where('comments.lesson_id','=',$lesson_id)
 											->orderBy('comments.id','DESC')
 											->get();
-
+			$html = '';
 			$i = 1;
 			foreach ($comments as $key => $comment) {
 
@@ -172,34 +246,37 @@ class LessonsController extends Controller {
 				                    </div>
 				                    <div class="panel-body">
 				                      '.$comment->body.'
-				                    </div>
-				                    <div class="panel-footer reply-btn-area text-right">
-				                        <button type="button" name="button" class="btn btn-primary" data-toggle="collapse" data-target="#reply'.$comment->id.'"><i class="glyphicon glyphicon-share-alt"></i> Balas</button>
-				                    </div>
-				                    <div class="collapse" id="reply'.$comment->id.'">
-				                      <div class="panel-footer ">
-				                        <div class="row reply">
-				                          <div class="col-md-12">
-				                            <div class="form-group">
-				                              <label>Komentar</label>
-				                              <textarea name="name" rows="8" cols="80" class="form-control" name="body" id="textbody'.$comment->id.'"></textarea>
-				                            </div>
-				                            <button type="submit" class="btn btn-primary pull-right" onClick="doComment('.$lesson_id.','.$comment->id.')" >Kirim</button>
-				                          </div>
-				                        </div>
-				                      </div>
-				                    </div>
+				                    </div>';
+														if (!empty(Session::get('memberID'))) {
+				                    $html .= '<div class="panel-footer reply-btn-area text-right">
+									                        <button type="button" name="button" class="btn btn-primary" data-toggle="collapse" data-target="#reply'.$comment->id.'"><i class="glyphicon glyphicon-share-alt"></i> Balas</button>
+									                    </div>
+									                    <div class="collapse" id="reply'.$comment->id.'">
+									                      <div class="panel-footer ">
+									                        <div class="row reply">
+									                          <div class="col-md-12">
+									                            <div class="form-group">
+									                              <label>Komentar</label>
+									                              <textarea name="name" rows="8" cols="80" class="form-control" name="body" id="textbody'.$comment->id.'"></textarea>
+									                            </div>
+									                            <button type="submit" class="btn btn-primary pull-right" onClick="doComment('.$lesson_id.','.$comment->id.')" >Kirim</button>
+									                          </div>
+									                        </div>
+									                      </div>
+									                    </div>';
+														}
 
 
 
 
-				                  </div><!-- /panel panel-default -->';
+				                  $html .= '</div><!-- /panel panel-default -->';
 
 
 						$childcomments  = DB::table('comments')
 														->leftJoin('members','members.id','=','comments.member_id')
 														->select('comments.*','members.username as username','members.avatar as avatar')
 														->where('comments.parent_id','=',$comment->id)
+														->where('comments.lesson_id','=',$lesson_id)
 														->orderBy('comments.id','DESC')
 														->get();
 
@@ -237,10 +314,6 @@ class LessonsController extends Controller {
 				              </div><!-- ./row -->';
 				$i++;
 			}
-
-		}
-
-
 		echo $html;
 	}
 
