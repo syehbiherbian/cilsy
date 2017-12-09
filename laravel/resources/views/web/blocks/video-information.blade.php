@@ -43,19 +43,23 @@
           </div>
           <div id="tab4" class="tab-pane fade">
             <!-- Comment Form -->
-            <form id="form-comment">
-              {{ csrf_field() }}
-              <input type="hidden" name="lesson_id" value="{{ $lessons->id }}">
-              <input type="hidden" name="parent" value="0">
-              <div class="form-group">
-                <label>Komentar</label>
-                <textarea name="name" rows="8" cols="80" class="form-control" name="comment"></textarea>
-              </div>
-              <button type="submit" class="btn btn-primary">Kirim</button>
-            </form><!--./ Comment Form -->
+            <div class="comments-form mb-25">
+              <!-- <form id="form-comment" class="mb-25">
+                {{-- csrf_field() --}}
+                <input type="hidden" name="lesson_id" value="{{-- $lessons->id --}}">
+                <input type="hidden" name="parent_id" value="0"> -->
+                <div class="form-group">
+                  <label>Komentar</label>
+                  <textarea rows="8" cols="80" class="form-control" name="body" id="textbody0"></textarea>
+                </div>
+                <button type="button" class="btn btn-primary" onClick="doComment({{ $lessons->id }},0)" >Kirim</button>
+              <!-- </form><!--./ Comment Form -->
+            </div>
 
             <!-- Comments Lists -->
-            <div id="comments-lists"></div>
+            <div id="comments-lists">
+              <p>Memuat Komentar . . .</p>
+            </div>
             <!--./ Comments Lists -->
 
 
@@ -106,57 +110,77 @@
 $(document).on('ready',function () {
   getComments();
 });
-
-
-  $('#form-comment').on('submit',function(e) {
-    e.preventDefault();
-
-
-    $.ajax({
-        type    :'POST',
-        url     :'{{ url("lessons/coments/doComment") }}',
-        data    : $(this).serialize(),
-
-        success:function(data){
-
-          if (data.success == false) {
-             window.location.href = '{{ url("member/signin") }}';
-          }else {
-            getComments();
-          }
-
-        }
-    });
-
-  });
+  //
+  // $('#form-comment').on('submit',function(e) {
+  //   e.preventDefault();
+  //
+  //   var body = $('[name=body]').val();
+  //   if (body == '') {
+  //     alert('Harap Isi Komentar !')
+  //   }else {
+  //       $.ajax({
+  //           type    :'POST',
+  //           url     :'{{ url("lessons/coments/doComment") }}',
+  //           dataType: 'json',
+  //           data    : $(this).serialize(),
+  //           success:function(data){
+  //             if (data.success == false) {
+  //                window.location.href = '{{ url("member/signin") }}';
+  //             }else if (data.success == true) {
+  //               document.getElementById('form-comment').reset();
+  //               getComments();
+  //             }
+  //           }
+  //       });
+  //   }
+  //
+  // });
 
   function getComments() {
-
-    // var postData =
-    //             {
-    //                 "_token":"{{ csrf_token() }}",
-    //                 "lessons_id": "{{ $lessons->id }}"
-    //             }
-
     $.ajax({
         type    :'GET',
         url     :'{{ url("lessons/coments/getComments/".$lessons->id) }}',
-        // dataType: json,
-        // data    : postData,
         success:function(data){
-
-          if (data.success == false) {
-             window.location.href = '{{ url("member/signin") }}';
+          if (data == '') {
+            $('#comments-lists').html('Tidak Ada Komentar');
           }else {
-
-            // alert(data);
-            $('#comments-lists').html(data.html);
-
-
+            $('#comments-lists').html(data);
           }
-
         }
     });
+  }
+
+  function doComment(lesson_id, parent_id) {
+
+    var body = $('#textbody'+parent_id).val();
+    if (body == '') {
+      alert('Harap Isi Komentar !')
+    }else {
+
+
+      var postData =
+                  {
+                      "_token":"{{ csrf_token() }}",
+                      "lesson_id": lesson_id,
+                      "parent_id": parent_id,
+                      "body": body
+                  }
+
+      $.ajax({
+          type    :'POST',
+          url     :'{{ url("lessons/coments/doComment") }}',
+          dataType: 'json',
+          data    : postData,
+          success:function(data){
+            if (data.success == false) {
+               window.location.href = '{{ url("member/signin") }}';
+            }else if (data.success == true) {
+              $('#textbody'+parent_id).val('');
+              getComments();
+            }
+          }
+      });
+    }
   }
 </script>
 

@@ -50,15 +50,6 @@ class LessonsController extends Controller {
 		$main_videos = videos::where('enable', '=', 1)->where('lessons_id', '=', $lessons->id)->orderBy('id', 'asc')->get();
 		$files = files::where('enable', '=', 1)->where('lesson_id', '=', $lessons->id)->orderBy('id', 'asc')->get();
 
-		//coments
-        $getcomment     = DB::table('coments')
-            ->leftJoin('members','members.id','=','coments.member_id')
-			 ->select('coments.*','members.username as username')
-            ->where('coments.lesson_id',$lessons->id)
-            ->where('coments.parent',0)
-            ->where('coments.status',0)
-            ->orderBy('coments.created_at','DESC')
-            ->get();
 
 		$date= $now->format('Y-m-d');
 		$moth=$now->format('m');
@@ -104,7 +95,6 @@ class LessonsController extends Controller {
 			'main_videos' => $main_videos,
 			'file' => $files,
 			'services' => $services,
-			'datacomment'=>$getcomment,
 			'contributors' => $contributors
 		]);
 	}
@@ -118,15 +108,15 @@ class LessonsController extends Controller {
 
 			$now 				= new DateTime();
 			$uid 				= Session::get('memberID');
-			$comment  	= Input::get('comment');
+			$body 	  	= Input::get('body');
 			$lesson_id  = Input::get('lesson_id');
-			$parent  		= Input::get('parent');
+			$parent_id 	= Input::get('parent_id');
 
-			$store= DB::table('coments')->insertGetId([
+			$store= DB::table('comments')->insertGetId([
 					'lesson_id'     => $lesson_id,
 					'member_id'			=> $uid,
-					'description'   => $comment,
-					'parent'        => 0,
+					'body'   				=> $body,
+					'parent_id'     => $parent_id,
 					'status'        => 0,
 					'created_at'    => $now,
 					'updated_at'    => $now
@@ -142,87 +132,145 @@ class LessonsController extends Controller {
 
 	}
 
-	public function getComments()
+	public function getComments($lesson_id)
 	{
 
-		$response= array();
+		$html = '';
 		if (empty(Session::get('memberID'))) {
-			$response['success'] 		= false;
+			$html = '';
 		}else {
 
 
-			// $comment     = DB::table('coments')
-			// 	->leftJoin('members','members.id','=','coments.member_id')
-			//  	->select('coments.*','members.username as username')
-			// 	->where('coments.id',$store)
-			// 	->where('coments.parent',0)
-			// 	->where('coments.status',0)
-			// 	->orderBy('coments.created_at','DESC')
-			// 	->first();
-			// $comments = DB::table('coments')
-			// ->leftJoin('members','members.id','=','coments.member_id')
-			// ->where('parents')
-			// ->get();
 
-			$response['success']= true;
 
-			$response['html'] 	= '<div class="col-md-12" style="margin-bottom:30px;" id="row'.$comment->id.'">';
-			$response['html'] 	= '<img class="user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png"height="40px" width="40px" style="object-fit:scale-down;border-radius: 100%;margin-bottom:10px;">';
-			$response['html'] 	= '<strong>'.$comment->username .'</strong> pada <strong>'.date('d/m/Y',strtotime($comment->created_at)).'</strong>';
-			$response['html'] 	= '<strong style="color:#ff5e10;">';
-							if($comment->member_id !==null){
-			$response['html'] 	= 'User' ;
-							}
-							if($comment->contributor_id  !==null){
-			$response['html'] 	= 'Contributor';
-							}
-			$response['html'] 	= '</strong>';
+			$comments     = DB::table('comments')
+											->leftJoin('members','members.id','=','comments.member_id')
+											->select('comments.*','members.username as username','members.avatar as avatar')
+											->where('comments.parent_id','=',0)
+											->orderBy('comments.id','DESC')
+											->get();
 
-			$response['html'] 	= '<div class="col-md-12" style="margin-top:10px;padding-left:5%;">'. $comment->description.'</div>';
-			$response['html'] 	= '<br><br>';
+			$i = 1;
+			foreach ($comments as $key => $comment) {
 
-							$getchild = DB::table('coments')
-							->leftJoin('members','members.id','=','coments.member_id')
-							->leftJoin('contributors','contributors.id','=','coments.contributor_id')
-							->where('coments.lesson_id',$lessons->id)
-							->where('parent',$comment->id)
-							->orderBy('coments.created_at','ASC')
-							->select('coments.*','members.username as username','contributors.username as contriname')
-							->get();
+				$html .= '<div class="row">
+				                <div class="col-sm-1">
+													<div class="thumbnail">';
+														if ($comment->avatar) {
+														$html .= '<img class="img-responsive user-photo" src="'.asset($comment->avatar).'">';
+														}else{
+														$html .= '<img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">';
+														}
+													$html .= '</div><!-- /thumbnail -->
+				                </div>
 
-							if (count($getchild) > 0) {
-							foreach ($getchild as $child) {
+				                <div class="col-sm-11">
 
-			$response['html'] 	= '<div class="col-md-12" style="margin-top:10px;padding-left:7%;">';
-			$response['html'] 	= '<img class="user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png"height="40px" width="40px" style="object-fit:scale-down;border-radius: 100%;margin-bottom:10px;">';
-			$response['html'] 	= '<strong>';
-						if(!empty($child->username)){
-			$response['html'] 	= $child->username.'';
-							}else{
-			$response['html'] 	= $child->contriname.'';
+				                  <div class="panel panel-default">
+				                    <div class="panel-heading">
+				                      <strong>'.$comment->username.'</strong> <span class="text-muted">commented '.$this->time_elapsed_string($comment->created_at).'</span>
+				                    </div>
+				                    <div class="panel-body">
+				                      '.$comment->body.'
+				                    </div>
+				                    <div class="panel-footer reply-btn-area text-right">
+				                        <button type="button" name="button" class="btn btn-primary" data-toggle="collapse" data-target="#reply'.$comment->id.'"><i class="glyphicon glyphicon-share-alt"></i> Balas</button>
+				                    </div>
+				                    <div class="collapse" id="reply'.$comment->id.'">
+				                      <div class="panel-footer ">
+				                        <div class="row reply">
+				                          <div class="col-md-12">
+				                            <div class="form-group">
+				                              <label>Komentar</label>
+				                              <textarea name="name" rows="8" cols="80" class="form-control" name="body" id="textbody'.$comment->id.'"></textarea>
+				                            </div>
+				                            <button type="submit" class="btn btn-primary pull-right" onClick="doComment('.$lesson_id.','.$comment->id.')" >Kirim</button>
+				                          </div>
+				                        </div>
+				                      </div>
+				                    </div>
 
-							}
-			$response['html'] 	= '</strong> pada <strong>'.date('d/m/Y',strtotime($child->created_at)).'</strong>';
-			$response['html'] 	= '<div class="col-md-12" style="margin-top:10px;margin-bottom:10px;padding-left:5%;">';
-			$response['html'] 	= $child->description.'';
-			$response['html'] 	= '</div>';
-			$response['html'] 	= '<div class="clearfix"></div>';
-			$response['html'] 	= '</div>';
 
-								}
-								}
 
-			$response['html'] 	= '<div class="col-md-12" id="balas'.$comment->id.'" style="padding-top:10px; padding-left:0px; padding-right:0px;">';
-			$response['html'] 	= '<a href="javascript:void(0)" class="btn btn-info pull-right" onclick="formbalas('.$comment->id.')">Balas</a>';
-			$response['html'] 	= '	</div>';
-			$response['html'] 	= '</div>';
 
+				                  </div><!-- /panel panel-default -->';
+
+
+						$childcomments  = DB::table('comments')
+														->leftJoin('members','members.id','=','comments.member_id')
+														->select('comments.*','members.username as username','members.avatar as avatar')
+														->where('comments.parent_id','=',$comment->id)
+														->orderBy('comments.id','DESC')
+														->get();
+
+						foreach ($childcomments as $key => $child) {
+
+				     $html .= '<!-- Comments Child -->
+				                  <div class="row">
+				                    <div class="col-sm-1">
+				                      <div class="thumbnail">';
+																if ($child->avatar) {
+				                        $html .= '<img class="img-responsive user-photo" src="'.asset($child->avatar).'">';
+																}else{
+					                      $html .= '<img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">';
+																}
+				                      $html .= '</div><!-- /thumbnail -->
+				                    </div><!-- /col-sm-1 -->
+
+				                    <div class="col-sm-11">
+				                      <div class="panel panel-default">
+				                        <div class="panel-heading">
+				                          <strong>'.$child->username.'</strong> <span class="text-muted">commented '.$this->time_elapsed_string($child->created_at).'</span>
+				                        </div>
+				                        <div class="panel-body">
+				                          '.$child->body.'
+				                        </div><!-- /panel-body -->
+				                      </div><!-- /panel panel-default -->
+				                    </div><!-- /col-sm-5 -->
+				                  </div><!-- ./row -->
+				                  <!-- ./Comments Childs -->';
+
+
+											}
+
+				          $html .= '</div><!-- /col-sm-5 -->
+				              </div><!-- ./row -->';
+				$i++;
+			}
 
 		}
 
-		echo json_encode($response);
 
+		echo $html;
+	}
 
+	private static function time_elapsed_string($datetime, $full = false) {
+    $now = new DateTime;
+    $ago = new DateTime($datetime);
+    $diff = $now->diff($ago);
+
+    $diff->w = floor($diff->d / 7);
+    $diff->d -= $diff->w * 7;
+
+    $string = array(
+        'y' => 'year',
+        'm' => 'month',
+        'w' => 'week',
+        'd' => 'day',
+        'h' => 'hour',
+        'i' => 'minute',
+        's' => 'second',
+    );
+    foreach ($string as $k => &$v) {
+        if ($diff->$k) {
+            $v = $diff->$k . ' ' . $v . ($diff->$k > 1 ? 's' : '');
+        } else {
+            unset($string[$k]);
+        }
+    }
+
+    if (!$full) $string = array_slice($string, 0, 1);
+    return $string ? implode(', ', $string) . ' ago' : 'just now';
 	}
 
 	public function doComment_bak(){

@@ -296,7 +296,7 @@ html, body {
 .tab-content button {
     display: block;
     padding: 8px 45px;
-    margin: auto;
+    /*margin: auto;*/
 }
 .tab-content input {
     border: none;

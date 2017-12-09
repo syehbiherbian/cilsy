@@ -287,6 +287,11 @@
   padding: 25px 15px;
 }
 
+.video-information .video .reply-btn-area{
+  background-color: #fff;
+  border-top: 0px;
+}
+
 .video-information .video .tab-content .materi_list{
   padding: 0px;
 }
