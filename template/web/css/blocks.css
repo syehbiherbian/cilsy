@@ -309,3 +309,63 @@
   background-color: transparent;
   border-color: transparent;
 }
+
+
+/*!
+ *
+ * CONTRIBUTOR PROFILE HEADER
+ *
+ */
+.contributor-profile-header{
+  background-color: #f5f4f5;
+}
+
+.contributor-profile-header strong{
+  color: #2ba8e2;
+}
+.contributor-profile-header .middle-wrap {
+  min-height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: left;
+}
+
+.contributor-profile-header .inner {
+  max-width: 50%;
+}
+
+/*!
+ *
+ * CONTRIBUTOR PROFILE BODY
+ *
+ */
+.contributor-profile-body .lessons-grid{
+  padding-top: 25px;
+  padding-bottom: 25px;
+}
+
+
+.contributor-profile-body .lessons-grid a{
+  color: #09121a;
+}
+
+.contributor-profile-body .lessons-grid a:hover{
+  color: #09121a;
+  text-decoration: none;
+}
+
+.contributor-profile-body .lessons-grid .card{
+  background-color: #fff;
+  border: 1px solid #eee;
+
+}
+
+.contributor-profile-body .lessons-grid .card .caption{
+  padding: 25px 15px;
+
+}
+
+.contributor-profile-body .lessons-grid .card .footer{
+  padding: 10px 15px 1px 15px;
+  border-top: 1px solid #eee;
+}
