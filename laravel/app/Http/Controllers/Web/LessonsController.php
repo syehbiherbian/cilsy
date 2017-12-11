@@ -41,88 +41,327 @@ class LessonsController extends Controller {
 	}
 
 	public function detail($slug) {
+
+
 		$now = new DateTime();
 		$mem_id = Session::get('memberID');
 
 		$services = services::where('status', '=', 1)->where('download', '=', 1)->where('members_id', '=', $mem_id)->where('expired', '>', $now)->first();
 		$lessons = lessons::where('enable', '=', 1)->where('lessons.status', '=', 1)->where('slug', '=', $slug)->first();
 
-		$main_videos = videos::where('enable', '=', 1)->where('lessons_id', '=', $lessons->id)->orderBy('id', 'asc')->get();
-		$files = files::where('enable', '=', 1)->where('lesson_id', '=', $lessons->id)->orderBy('id', 'asc')->get();
+	  if ($this->checkViewers($lessons->id)) {
+				$main_videos = videos::where('enable', '=', 1)->where('lessons_id', '=', $lessons->id)->orderBy('id', 'asc')->get();
+				$files = files::where('enable', '=', 1)->where('lesson_id', '=', $lessons->id)->orderBy('id', 'asc')->get();
 
-		//coments
-        $getcomment     = DB::table('coments')
-            ->leftJoin('members','members.id','=','coments.member_id')
-			 ->select('coments.*','members.username as username')
-            ->where('coments.lesson_id',$lessons->id)
-            ->where('coments.parent',0)
-            ->where('coments.status',0)
-            ->orderBy('coments.created_at','DESC')
-            ->get();
 
-		$date= $now->format('Y-m-d');
-		$moth=$now->format('m');
-		$year=$now->format('Y');
-		$check=lessons_detail::where('lesson_id',$lessons->id)->where('moth',$moth)->where('year',$year)->first();
 
-		//hitung view;
-		if(count($check) == 0){
-			$store                  = new lessons_detail;
-			$store->lesson_id       = $lessons->id;
-			$store->moth           = $moth;
-			$store->year		    = $year;
-			$store->view			= 1;
-			$store->created_at      = $now;
-			$store->save();
+	    //
+			// $date= $now->format('Y-m-d');
+			// $moth=$now->format('m');
+			// $year=$now->format('Y');
+			// $check=lessons_detail::where('lesson_id',$lessons->id)->where('moth',$moth)->where('year',$year)->first();
+	    //
+			// //hitung view;
+			// if(count($check) == 0){
+			// 	$store                  = new lessons_detail;
+			// 	$store->lesson_id       = $lessons->id;
+			// 	$store->moth           = $moth;
+			// 	$store->year		    = $year;
+			// 	$store->view			= 1;
+			// 	$store->created_at      = $now;
+			// 	$store->save();
+	    //
+			// 	$detail = new lessons_detail_view;
+			// 	$detail->detail_id =$store->id;
+			// 	$detail->member_id =$mem_id;
+			// 	$detail->created_at= $now;
+			// 	$detail->save();
+	    //
+			// }else{
+			// 	$checkdetail= lessons_detail_view::where('detail_id',$check->id)->where('member_id',$mem_id)->get();
+			// 	if(count($checkdetail) == 0 ){
+			// 		$store                  = lessons_detail::find($check->id);
+			// 		$store->view			= $check->view + 1;
+			// 		$store->updated_at      = $now;
+			// 		$store->save();
+	    //
+			// 		$detail = new lessons_detail_view;
+			// 		$detail->detail_id =$store->id;
+			// 		$detail->member_id =$mem_id;
+			// 		$detail->created_at= $now;
+			// 		$detail->save();
+			// 	}
+	    //
+			// }
+			// Contributor
+			$contributors = DB::table('contributors')->where('id',$lessons->contributor_id)->first();
+			$contributors_total_lessons = lessons::where('enable', '=', 1)->where('contributor_id', '=', $lessons->contributor_id)->get();
+			$contributors_total_view 		= 0;
+			foreach ($contributors_total_lessons as $key => $counttotal) {
+				$viewers = DB::table('lessons_viewers')->where('lesson_id', '=', $counttotal->id)->first();
+				if ($viewers) {
+					$contributors_total_view = $contributors_total_view + $viewers->hits;
+				}
+			}
 
-			$detail = new lessons_detail_view;
-			$detail->detail_id =$store->id;
-			$detail->member_id =$mem_id;
-			$detail->created_at= $now;
-			$detail->save();
+			return view('web.lessons.detail', [
+				'lessons' => $lessons,
+				'main_videos' => $main_videos,
+				'file' => $files,
+				'services' => $services,
+				'contributors' => $contributors,
+				'contributors_total_lessons' => $contributors_total_lessons,
+				'contributors_total_view' => $contributors_total_view,
+			]);
+		}
+	}
 
-		}else{
-			$checkdetail= lessons_detail_view::where('detail_id',$check->id)->where('member_id',$mem_id)->get();
-			if(count($checkdetail) == 0 ){
-				$store                  = lessons_detail::find($check->id);
-				$store->view			= $check->view + 1;
-				$store->updated_at      = $now;
-				$store->save();
 
-				$detail = new lessons_detail_view;
-				$detail->detail_id =$store->id;
-				$detail->member_id =$mem_id;
-				$detail->created_at= $now;
-				$detail->save();
+  public function checkViewers($lesson_id)
+  {
+    // ADD VIEWERS
+    $now            = new DateTime();
+		if (Session::get('memberID')) {
+			$mem_id = Session::get('memberID');
+		}else {
+			$mem_id = 0;
+		}
+    $ip_address     = $this->getUserIP();
+    $lessons_viewers  = DB::table('lessons_viewers')->where('lesson_id',$lesson_id)->where('ip_address',$ip_address)->first();
+
+    if (count($lessons_viewers) > 0) {
+
+      // Update hits Viewers
+			DB::table('lessons_viewers')->where('lesson_id',$lesson_id)
+			->update([
+				'member_id' 	=> $mem_id,
+				'hits' 				=> $lessons_viewers->hits + 1,
+				'updated_at' 	=> $now,
+			]);
+
+      return true;
+
+    }else {
+
+      // Create New Viewers
+			DB::table('lessons_viewers')->insert([
+				'lesson_id' 		=> $lesson_id,
+				'ip_address' 	=> $ip_address,
+				'hits' 				=> 1,
+				'member_id' 	=> $mem_id,
+				'created_at' 	=> $now,
+				'updated_at' 	=> $now,
+			]);
+
+      return true;
+    }
+
+  }
+
+  private static function getUserIP()
+  {
+    $client  = @$_SERVER['HTTP_CLIENT_IP'];
+    $forward = @$_SERVER['HTTP_X_FORWARDED_FOR'];
+    $remote  = $_SERVER['REMOTE_ADDR'];
+
+    if(filter_var($client, FILTER_VALIDATE_IP))
+    {
+        $ip = $client;
+    }
+    elseif(filter_var($forward, FILTER_VALIDATE_IP))
+    {
+        $ip = $forward;
+    }
+    else
+    {
+        $ip = $remote;
+    }
+
+    return $ip;
+  }
+
+	public function doComment()
+	{
+		$response= array();
+		if (empty(Session::get('memberID'))) {
+			$response['success'] 		= false;
+		}else {
+
+			$now 				= new DateTime();
+			$uid 				= Session::get('memberID');
+			$body 	  	= Input::get('body');
+			$lesson_id  = Input::get('lesson_id');
+			$parent_id 	= Input::get('parent_id');
+
+			$store= DB::table('comments')->insertGetId([
+					'lesson_id'     => $lesson_id,
+					'member_id'			=> $uid,
+					'body'   				=> $body,
+					'parent_id'     => $parent_id,
+					'status'        => 0,
+					'created_at'    => $now,
+					'updated_at'    => $now
+			]);
+
+			if ($store) {
+				$response['success'] 		= true;
 			}
 
 		}
 
-		return view('web.lessons.detail', [
-			'lessons' => $lessons,
+		echo json_encode($response);
 
-			'main_videos' => $main_videos,
-			'file' => $files,
-			'services' => $services,
-			'datacomment'=>$getcomment,
-		]);
 	}
 
-	public function kirimcomment(){
+	public function getComments($lesson_id)
+	{
+
+			$comments     = DB::table('comments')
+											->leftJoin('members','members.id','=','comments.member_id')
+											->select('comments.*','members.username as username','members.avatar as avatar')
+											->where('comments.parent_id','=',0)
+											->where('comments.lesson_id','=',$lesson_id)
+											->orderBy('comments.id','DESC')
+											->get();
+			$html = '';
+			$i = 1;
+			foreach ($comments as $key => $comment) {
+
+				$html .= '<div class="row">
+				                <div class="col-sm-1">
+													<div class="thumbnail">';
+														if ($comment->avatar) {
+														$html .= '<img class="img-responsive user-photo" src="'.asset($comment->avatar).'">';
+														}else{
+														$html .= '<img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">';
+														}
+													$html .= '</div><!-- /thumbnail -->
+				                </div>
+
+				                <div class="col-sm-11">
+
+				                  <div class="panel panel-default">
+				                    <div class="panel-heading">
+				                      <strong>'.$comment->username.'</strong> <span class="text-muted">commented '.$this->time_elapsed_string($comment->created_at).'</span>
+				                    </div>
+				                    <div class="panel-body">
+				                      '.$comment->body.'
+				                    </div>';
+														if (!empty(Session::get('memberID'))) {
+				                    $html .= '<div class="panel-footer reply-btn-area text-right">
+									                        <button type="button" name="button" class="btn btn-primary" data-toggle="collapse" data-target="#reply'.$comment->id.'"><i class="glyphicon glyphicon-share-alt"></i> Balas</button>
+									                    </div>
+									                    <div class="collapse" id="reply'.$comment->id.'">
+									                      <div class="panel-footer ">
+									                        <div class="row reply">
+									                          <div class="col-md-12">
+									                            <div class="form-group">
+									                              <label>Komentar</label>
+									                              <textarea name="name" rows="8" cols="80" class="form-control" name="body" id="textbody'.$comment->id.'"></textarea>
+									                            </div>
+									                            <button type="submit" class="btn btn-primary pull-right" onClick="doComment('.$lesson_id.','.$comment->id.')" >Kirim</button>
+									                          </div>
+									                        </div>
+									                      </div>
+									                    </div>';
+														}
+
+
+
+
+				                  $html .= '</div><!-- /panel panel-default -->';
+
+
+						$childcomments  = DB::table('comments')
+														->leftJoin('members','members.id','=','comments.member_id')
+														->select('comments.*','members.username as username','members.avatar as avatar')
+														->where('comments.parent_id','=',$comment->id)
+														->where('comments.lesson_id','=',$lesson_id)
+														->orderBy('comments.id','DESC')
+														->get();
+
+						foreach ($childcomments as $key => $child) {
+
+				     $html .= '<!-- Comments Child -->
+				                  <div class="row">
+				                    <div class="col-sm-1">
+				                      <div class="thumbnail">';
+																if ($child->avatar) {
+				                        $html .= '<img class="img-responsive user-photo" src="'.asset($child->avatar).'">';
+																}else{
+					                      $html .= '<img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">';
+																}
+				                      $html .= '</div><!-- /thumbnail -->
+				                    </div><!-- /col-sm-1 -->
+
+				                    <div class="col-sm-11">
+				                      <div class="panel panel-default">
+				                        <div class="panel-heading">
+				                          <strong>'.$child->username.'</strong> <span class="text-muted">commented '.$this->time_elapsed_string($child->created_at).'</span>
+				                        </div>
+				                        <div class="panel-body">
+				                          '.$child->body.'
+				                        </div><!-- /panel-body -->
+				                      </div><!-- /panel panel-default -->
+				                    </div><!-- /col-sm-5 -->
+				                  </div><!-- ./row -->
+				                  <!-- ./Comments Childs -->';
+
+
+											}
+
+				          $html .= '</div><!-- /col-sm-5 -->
+				              </div><!-- ./row -->';
+				$i++;
+			}
+		echo $html;
+	}
+
+	private static function time_elapsed_string($datetime, $full = false) {
+    $now = new DateTime;
+    $ago = new DateTime($datetime);
+    $diff = $now->diff($ago);
+
+    $diff->w = floor($diff->d / 7);
+    $diff->d -= $diff->w * 7;
+
+    $string = array(
+        'y' => 'year',
+        'm' => 'month',
+        'w' => 'week',
+        'd' => 'day',
+        'h' => 'hour',
+        'i' => 'minute',
+        's' => 'second',
+    );
+    foreach ($string as $k => &$v) {
+        if ($diff->$k) {
+            $v = $diff->$k . ' ' . $v . ($diff->$k > 1 ? 's' : '');
+        } else {
+            unset($string[$k]);
+        }
+    }
+
+    if (!$full) $string = array_slice($string, 0, 1);
+    return $string ? implode(', ', $string) . ' ago' : 'just now';
+	}
+
+	public function doComment_bak(){
 		if (empty(Session::get('memberID'))) {
 			return 0;
 			exit();
 		}
 		$uid = Session::get('memberID');
-		$member=DB::table('members')->where('id',$uid)->first();
-		$isi_kirim  = Input::get('isi_kirim');
+
+		$member			= DB::table('members')->where('id',$uid)->first();
+		$comment  	= Input::get('comment');
 		$lesson_id  = Input::get('lesson_id');
-		$lessons = DB::table('lessons')->where('id',$lesson_id)->first();
+		$lessons 		= DB::table('lessons')->where('id',$lesson_id)->first();
 
 		$store= DB::table('coments')->insertGetId([
 				'lesson_id'     => $lesson_id,
-				'member_id'=> $uid,
-				'description'   => $isi_kirim,
+				'member_id'			=> $uid,
+				'description'   => $comment,
 				'parent'        => 0,
 				'status'        => 0,
 				'created_at'    => new DateTime()

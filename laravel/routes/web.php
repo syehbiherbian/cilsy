@@ -17,12 +17,16 @@ Route::get('/', 'Web\HomeController@index');
 Route::get('lessons/{by}/{keyword}', 'Web\LessonsController@index');
 Route::get('lessons/{lessons}', 'Web\LessonsController@detail');
 Route::post('lessons/getplaylist', 'Web\LessonsController@getplaylist');
-Route::post('lessons/coments/kirimcomment','Web\LessonsController@kirimcomment');
-Route::post('lessons/coments/postcomment','Web\LessonsController@postcomment');
+Route::get('lessons/coments/getComments/{lesson_id}','Web\LessonsController@getComments');
+Route::post('lessons/coments/doComment','Web\LessonsController@doComment');
+// Route::post('lessons/coments/postcomment','Web\LessonsController@postcomment');
 
 // Search
 Route::get('search', 'Web\SearchController@index');
 Route::get('search/autocomplete', 'Web\SearchController@autocomplete');
+
+// Conributor Profile
+Route::get('contributor/profile/{username}', 'Web\ContributorsController@getProfile');
 
 // PAGES
 Route::get('pages/{pages}', 'Web\PagesController@index');

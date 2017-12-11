@@ -289,14 +289,14 @@ html, body {
 .tab-btn-container a:hover {
     cursor: pointer;
 }
-.tab-content {
-    margin-top: 68px;
+/*.tab-content {
+    /*margin-top: 68px;
     padding: 25px 15px;
-}
+}*/
 .tab-content button {
     display: block;
     padding: 8px 45px;
-    margin: auto;
+    /*margin: auto;*/
 }
 .tab-content input {
     border: none;
