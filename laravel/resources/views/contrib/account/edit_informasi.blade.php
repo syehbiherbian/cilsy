@@ -56,31 +56,32 @@
         <div class="form-group">
           <label class="col-sm-2 control-label">Email</label>
           <div class="col-sm-10">
-            <input type="email" class="form-control" name="email" value="{{ $contrib->email }}" disabled>
+            <input type="email" class="form-control" name="email" value="{{ $contrib->email }}" >
           </div>
         </div>
         <hr>
         <div class="form-group">
           <label class="col-sm-2 control-label">Password Lama</label>
           <div class="col-sm-10">
-            <input type="email" class="form-control" name="old_password" disabled>
+            <input type="password" class="form-control" name="old_password" >
           </div>
         </div>
         <div class="form-group">
           <label class="col-sm-2 control-label">Password Baru</label>
           <div class="col-sm-10">
-            <input type="email" class="form-control" name="new_password" disabled> 
+            <input type="password" class="form-control" name="new_password" > 
           </div>
         </div>
         <div class="form-group">
           <label class="col-sm-2 control-label">Konfirmasi Password Baru</label>
           <div class="col-sm-10">
-            <input type="email" class="form-control" name="new_confirm" disabled>
+            <input type="password" class="form-control" name="new_confirm" >
           </div>
         </div>
         <div class="form-group">
           <div class="col-sm-offset-2 col-sm-10 text-right">
-            <a href="{{ url('contributor/account/informasi/'.$contrib->id.'/edit') }}" class="btn btn-info">Edit</a>
+            <button type="submit" class="btn btn-danger">Batal</button>
+            <button type="submit" class="btn btn-info">Save</button>
           </div>
         </div>
       </form>

@@ -11,6 +11,7 @@ use Mail;
 use Redirect;
 use Session;
 use Validator;
+use Hash;
 
 class AuthController extends Controller {
 	/**
@@ -39,11 +40,10 @@ class AuthController extends Controller {
 		} else {
 
 			$email = Input::get('email');
-			$password = md5(Input::get('password'));
+			$password = bcrypt(Input::get('password'));
 			$now = new DateTime();
-
 			// store
-			$contributors = Contributors::where('email', '=', $email)->where('password', '=', $password)->first();
+			$contributors = Contributors::where('email', '=', $email)->where('password', '=', hash::make($password))->first();
 
 			if (count($contributors) > 0) {
 				Session::set('contribID', $contributors->id);
@@ -82,7 +82,7 @@ class AuthController extends Controller {
 
 			$username = Input::get('username');
 			$email = Input::get('email');
-			$password = md5(Input::get('password'));
+			$password = bcrypt(Input::get('password'));
 			$token = str_random(30) . $email;
 			$now = new DateTime();
 			$url = env('APP_URL');
