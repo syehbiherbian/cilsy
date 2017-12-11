@@ -61,7 +61,7 @@ class AccountController extends Controller
 					$update = DB::table('contributors')
 						->where('email', $checkid->email)
 						->update([
-							'password' => bcrypt($passwordbaru),
+							'password' => md5($passwordbaru),
 						]);
 					if ($update) {
 						return Redirect()->to('/contributor/account/informasi')->with('success', 'Sukses Perbaharui Informasi Akun');
