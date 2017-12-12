@@ -222,3 +222,10 @@ Route::get('contributor/coments','Contributors\ComentsController@index');
 Route::get('contributor/coments/detail/{coment_id}','Contributors\ComentsController@detail');
 Route::post('contributor/coments/postcomment','Contributors\ComentsController@postcomment');
 Route::post('contributor/coments/deletecomment/{coment_id}','Contributors\ComentsController@deletecomment');
+
+//Akun Contributor dan Halaman Contributor
+Route::get('contributor/account/informasi', 'Contributors\AccountController@informasi');
+Route::get('contributor/account/informasi/{id}/edit', 'Contributors\AccountController@edit');
+Route::post('contributor/account/informasi/{id}/edit', 'Contributors\AccountController@update_informasi');
+Route::get('contributor/account/profile', 'Contributors\AccountController@halaman');
+

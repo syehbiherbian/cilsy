@@ -208,7 +208,6 @@ class AuthController extends Controller {
 			$passwordbaru = (Input::get('password'));
 			$retypepassword = (Input::get('retypepassword'));
 			$checkid = DB::table('members')->where('email', '=', $email)->first();
-			echo $email;
 			$check = DB::table('members')->where('email', '=', $email)->count();
 
 			if ($check > 0) {

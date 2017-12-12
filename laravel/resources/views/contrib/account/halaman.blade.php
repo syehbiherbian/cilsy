@@ -47,7 +47,7 @@
 
         <ul class="nav nav-tabs" style="margin-bottom: 20px;">
           <li class=""><a href="{{ url('contributor/account/informasi') }}">Informasi Akun</a></li>
-          <li class="active"><a href="{{ url('contributor/account/halaman') }}">Halaman Kontributor</a></li>
+          <li class="active"><a href="{{ url('contributor/account/profile') }}">Halaman Kontributor</a></li>
         </ul>
 
         <div class="tab-content" >

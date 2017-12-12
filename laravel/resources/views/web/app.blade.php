@@ -300,10 +300,10 @@
           </form>
           <?php if (!empty(Session::get('memberID'))) {?>
           <ul class="nav navbar-nav navbar-right">
-            <!-- <li><a href="{{ url('member/signin') }}">Masuk</a></li>
-            <li><a href="{{ url('member/signup') }}">Daftar</a></li> -->
-            <li><a href="{{ url('pages/carapesan') }}">Cara Pesan</a></li>
-              <li><a href="{{ url('pages/harga') }}">Harga</a></li>
+            <li><a href="{{ url('pages/carapesan') }}">Tutorial Saya</a></li>
+            <li class="has-dropdown">
+                        <img src="{{asset('template/kontributor/img/icon/Notifikasi.png')}}" alt="" style="height: 28px; padding: 0 12px; position: relative; margin-top: 10px;">
+            </li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Halo, <?=Helper::member('username');?> <span class="caret"></span></a>
               <ul class="dropdown-menu">

@@ -11,6 +11,7 @@ use Mail;
 use Redirect;
 use Session;
 use Validator;
+use Hash;
 
 class AuthController extends Controller {
 	/**
@@ -41,7 +42,6 @@ class AuthController extends Controller {
 			$email = Input::get('email');
 			$password = md5(Input::get('password'));
 			$now = new DateTime();
-
 			// store
 			$contributors = Contributors::where('email', '=', $email)->where('password', '=', $password)->first();
 
