@@ -76,6 +76,15 @@ Route::post('member/signup', 'Web\Members\AuthController@dosignup');
 Route::get('member/signin', 'Web\Members\AuthController@signin');
 Route::post('member/signin', 'Web\Members\AuthController@dosignin');
 Route::get('member/signout', 'Web\Members\AuthController@signout');
+
+Route::get('member/profile', 'Web\Members\ProfileController@index');
+Route::post('member/profile', 'Web\Members\ProfileController@doSubmit');
+Route::get('member/change-password', 'Web\Members\PasswordController@index');
+Route::post('member/change-password', 'Web\Members\PasswordController@doSubmit');
+Route::get('member/subscriptions', 'Web\Members\SubscriptionsController@index');
+Route::get('member/subscriptions/unsubscribe/{id}', 'Web\Members\SubscriptionsController@doUnsubscribe');
+
+
 Route::post('member/change', 'Web\Members\AuthController@doreset');
 Route::get('member/change', 'Web\Members\AuthController@resetpassword');
 Route::get('member/reset', 'Web\Members\AuthController@forgetpassword');
@@ -228,4 +237,3 @@ Route::get('contributor/account/informasi', 'Contributors\AccountController@info
 Route::get('contributor/account/informasi/{id}/edit', 'Contributors\AccountController@edit');
 Route::post('contributor/account/informasi/{id}/edit', 'Contributors\AccountController@update_informasi');
 Route::get('contributor/account/profile', 'Contributors\AccountController@halaman');
-

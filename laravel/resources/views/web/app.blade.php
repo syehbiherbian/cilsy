@@ -319,7 +319,7 @@
                     </tr>
                     <tr>
                       <td><a href="{{ url('member/package') }}" class="btn btn-danger btn-package">Perpanjang</a></td>
-                      <td><a href="{{ url('member/change') }}" class="btn btn-success">Ganti Password</a></td>
+                      <td><a href="{{ url('member/profile') }}" class="btn btn-success">Profil Saya</a></td>
                       <td><a href="{{ url('member/signout') }}" class="btn btn-primary btn-signout">Logout</a></td>
                     </tr>
                   </table>
