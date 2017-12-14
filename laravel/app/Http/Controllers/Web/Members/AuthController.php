@@ -95,8 +95,9 @@ class AuthController extends Controller {
 			$members->password = $password;
 			$members->created_at = $now;
 			$members->save();
-			// $send = members::findOrFail($members->id);
-			// Mail::to($members->email)->send(new InformasiUser($send));
+			$send = members::findOrFail($members->id);
+			Mail::to($members->email)->send(new InformasiUser($send));
+			
 			// store
 			$member = members::where('username', '=', $username)->where('email', '=', $email)->first();
 
