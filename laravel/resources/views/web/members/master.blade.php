@@ -1,5 +1,5 @@
 @extends('web.app')
-@section('title','Dashboard | ')
+
 @section('content')
 
 
@@ -21,7 +21,7 @@
         <div class="panel-body">
             @yield('member-content')
         </div>
-      </div>      
+      </div>
     </div>
   </div>
 

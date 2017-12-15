@@ -1,4 +1,5 @@
 @extends('web.members.master')
+@section('title','Ubah Password | ')
 @section('member-content')
 
 <h3>Ubah Password</h3>

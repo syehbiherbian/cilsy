@@ -1,4 +1,5 @@
 @extends('web.members.master')
+@section('title','Status Berlangganan | ')
 @section('member-content')
 
 <h3>Status Langganan</h3>
@@ -95,7 +96,7 @@
 
     var c = confirm("Yakin Berhenti berlangganan paket ini ?");
     if (c == true) {
-        window.location = '{{ url("member/subscriptions/unsubscribe/") }}/'+id;  
+        window.location = '{{ url("member/subscriptions/unsubscribe/") }}/'+id;
     }
   }
 </script>

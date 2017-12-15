@@ -1,4 +1,5 @@
 @extends('web.members.master')
+@section('title','Profil | ')
 @section('member-content')
 
 <h3>Profile</h3>
