@@ -83,10 +83,11 @@ Route::get('member/change-password', 'Web\Members\PasswordController@index');
 Route::post('member/change-password', 'Web\Members\PasswordController@doSubmit');
 Route::get('member/subscriptions', 'Web\Members\SubscriptionsController@index');
 Route::get('member/subscriptions/unsubscribe/{id}', 'Web\Members\SubscriptionsController@doUnsubscribe');
+Route::get('member/point', 'Web\Members\PointController@index');
 
 
-Route::post('member/change', 'Web\Members\AuthController@doreset');
-Route::get('member/change', 'Web\Members\AuthController@resetpassword');
+// Route::post('member/change', 'Web\Members\AuthController@doreset');
+// Route::get('member/change', 'Web\Members\AuthController@resetpassword');
 Route::get('member/reset', 'Web\Members\AuthController@forgetpassword');
 Route::post('member/reset', 'Web\Members\AuthController@doforgetpassword');
 Route::post('member/reset/update', 'Web\Members\AuthController@doupdate');
