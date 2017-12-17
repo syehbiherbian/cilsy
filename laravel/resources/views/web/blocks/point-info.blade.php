@@ -1,17 +1,5 @@
-@extends('web.app')
-@section('title','Point | ')
-@section('content')
-
-
-<section class="member-point mb-25">
-  <div class="container-fluid p-0 mb-25">
-    <div class="row m-0">
-      <div class="col-md-12 p-0">
-            <img src="{{ asset('template/web/img/banner_point.png') }}" alt="" class="img-responsive">
-      </div>
-    </div>
-  </div>
-
+<!-- BEGIN POINT INFO -->
+<section class="point-info mb-50">
   <div class="container">
     <div class="row mb-25">
       <div class="col-md-12 text-center">
@@ -34,7 +22,7 @@
         <div class="text-center">
           <img src="{{ asset('template/web/img/point/point_reply_comments.png') }}" alt="" class="img-responsive img-center">
           <div class="caption mt-15">
-            <strong>2 Point</strong>
+            <strong>3 Point</strong>
             <p>Menjawab Komentar</p>
           </div>
         </div>
@@ -43,14 +31,11 @@
         <div class="text-center">
           <img src="{{ asset('template/web/img/point/point_tutorial.png') }}" alt="" class="img-responsive img-center">
           <div class="caption mt-15">
-            <strong>2 Point</strong>
+            <strong>10 Point</strong>
             <p>Menyelesaikan Tutorial</p>
           </div>
         </div>
       </div>
     </div>
   </div>
-</section>
-
-
-@endsection
+</section><!-- ./POINT INFO -->

@@ -25,6 +25,9 @@ Route::post('lessons/coments/doComment','Web\LessonsController@doComment');
 Route::get('search', 'Web\SearchController@index');
 Route::get('search/autocomplete', 'Web\SearchController@autocomplete');
 
+// Point
+Route::get('point', 'Web\PointController@index');
+
 // Conributor Profile
 Route::get('contributor/profile/{username}', 'Web\ContributorsController@getProfile');
 
