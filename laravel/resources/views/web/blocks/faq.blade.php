@@ -106,7 +106,7 @@
 
     <div class="row">
       <div class="col-md-12 text-center">
-        <a href="{{ url('pages/faq')}}" class="btn btn-link btn-more">Lihat semua pertanyaan <i class="ion-arrow-right-c"></i></a>
+        <a href="{{ url('/faq')}}" class="btn btn-link btn-more">Lihat semua pertanyaan <i class="ion-arrow-right-c"></i></a>
       </div>
     </div>
   </div>
