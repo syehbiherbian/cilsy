@@ -203,6 +203,7 @@
 
     <link rel="stylesheet" href="{{ asset('template/web/css/helper.css') }}">
     <link rel="stylesheet" href="{{ asset('template/web/css/blocks.css') }}">
+    
     @stack('css')
 </head>
 
@@ -301,7 +302,7 @@
           <ul class="nav navbar-nav navbar-right">
             <!-- <li><a href="{{ url('member/signin') }}">Masuk</a></li>
             <li><a href="{{ url('member/signup') }}">Daftar</a></li> -->
-            <li><a href="{{ url('pages/carapesan') }}">Cara Pesan</a></li>
+            <li><a href="{{ url('/carapesan') }}">Cara Pesan</a></li>
               <li><a href="{{ url('pages/harga') }}">Harga</a></li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Halo, <?=Helper::member('username');?> <span class="caret"></span></a>
@@ -332,7 +333,7 @@
           </ul>
           <?php } else {?>
             <ul class="nav navbar-nav navbar-right">
-              <li><a href="{{ url('pages/carapesan') }}">Cara Pesan</a></li>
+              <li><a href="{{ url('/carapesan') }}">Cara Pesan</a></li>
               <li><a href="{{ url('pages/harga') }}">Harga</a></li>
               <li><a href="{{ url('member/signin') }}">Masuk</a></li>
               <li><a href="{{ url('member/signup') }}">Daftar</a></li>

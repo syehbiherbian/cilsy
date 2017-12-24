@@ -33,6 +33,9 @@ Route::get('payment/{response}', 'Web\PaymentController@index');
 Route::get('/kontak', function () {
 	return view('web.contact');
 });
+Route::get('/carapesan', function () {
+	return view('web.cara');
+});
 Route::get('/kebijakan', function () {
 	return view('web.kebijakan');
 });
