@@ -29,9 +29,12 @@ Route::get('checkout', 'Veritrans\VtwebController@vtweb');
 Route::post('notification/handling', 'Veritrans\VtwebController@notification');
 // PAYMENT
 Route::get('payment/{response}', 'Web\PaymentController@index');
-
+Route::get('/harga', 'HargaController@index');
 Route::get('/kontak', function () {
 	return view('web.contact');
+});
+Route::get('/faq', function () {
+	return view('web.faq');
 });
 Route::get('/carapesan', function () {
 	return view('web.cara');

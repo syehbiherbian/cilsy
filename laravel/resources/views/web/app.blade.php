@@ -12,6 +12,9 @@
     <link href="{{asset('template/web/css/app.css')}}" rel="stylesheet">
     <link href="{{asset('template/web/css/navbar.css')}}" rel="stylesheet">
     <link href="{{asset('template/web/css/pace.css')}}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('template/web/css/owl.carousel.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('template/web/css/owl.theme.default.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('template/web/css/owl.theme.green.min.css') }}">
     <link rel="shortcut icon" type="image/png" href="{{asset('template/kontributor/img/logo-only.png')}}"/>
     <link rel="stylesheet" href="{{ asset('template/web/plugins/ionicons-2.0.1/css/ionicons.min.css') }}">
     <link rel="stylesheet" href="{{ asset('template/web/plugins/OwlCarousel2-2.2.1/dist/assets/owl.carousel.css')}}">
@@ -303,7 +306,7 @@
             <!-- <li><a href="{{ url('member/signin') }}">Masuk</a></li>
             <li><a href="{{ url('member/signup') }}">Daftar</a></li> -->
             <li><a href="{{ url('/carapesan') }}">Cara Pesan</a></li>
-              <li><a href="{{ url('pages/harga') }}">Harga</a></li>
+              <li><a href="{{ url('harga') }}">Harga</a></li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Halo, <?=Helper::member('username');?> <span class="caret"></span></a>
               <ul class="dropdown-menu">
