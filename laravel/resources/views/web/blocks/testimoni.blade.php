@@ -24,13 +24,13 @@
                         <div class="cover">
                         </div>
                         <div class="user">
-                            <img class="img-circle" src="http://demos.creative-tim.com/images/rotating_card_profile2.png"/>
+                            <img class="img-circle" src="{{ url('/assets/source/images/testimoni/fitrih.png') }}"/>
                         </div>
                         <div class="content">
                             <div class="main">
-                                <p class="text-center">"Lamborghini Mercy <br>Your chick she so thirsty <br>I'm in that two seat Lambo"</p>
-                                <h3 class="name">Andrew Mike</h3>
-                                <p class="profession">Web Developer</p>
+                                <p class="text-center">"Alhamdulillaah...saya mendapat banyak ilmu disini. Mudah2an saya bisa lebih percaya diri mengajar karena banyak kosakata baru di dunia IT."</p>
+                                <h3 class="name">Fitri Handayani</h3>
+                                <p class="profession">Guru SMK</p>
                             </div>
                         </div>
                     </div> <!-- end front panel -->
@@ -85,13 +85,13 @@
                         <div class="cover">
                         </div>
                         <div class="user">
-                            <img class="img-circle" src="http://demos.creative-tim.com/images/rotating_card_profile2.png"/>
+                            <img class="img-circle" src="{{ url('/assets/source/images/testimoni/ludy.png') }}"/>
                         </div>
                         <div class="content">
                             <div class="main">
-                                <p class="text-center">"Lamborghini Mercy <br>Your chick she so thirsty <br>I'm in that two seat Lambo"</p>
-                                <h3 class="name">Andrew Mike</h3>
-                                <p class="profession">Web Developer</p>
+                                <p class="text-center">"Materi sangat bagus dan bisa didownload. Jadi bisa belajar kapanpun dirumah.<br>Saya pun bisa minta dipandu step by stepnya oleh trainernya. Jadi ngga takut gagal. <br>Mau perpanjang langganan kursus lagi aahh. hehehe"</p>
+                                <h3 class="name">Ludy</h3>
+                                <p class="profession">Sysadmin</p>
                             </div>
                         </div>
                     </div> <!-- end front panel -->
@@ -146,13 +146,13 @@
                         <div class="cover">
                         </div>
                         <div class="user">
-                            <img class="img-circle" src="http://demos.creative-tim.com/images/rotating_card_profile2.png"/>
+                            <img class="img-circle" src="{{ url('/assets/source/images/testimoni/ekas.png') }}"/>
                         </div>
                         <div class="content">
                             <div class="main">
-                                <p class="text-center">"Lamborghini Mercy <br>Your chick she so thirsty <br>I'm in that two seat Lambo"</p>
-                                <h3 class="name">Andrew Mike</h3>
-                                <p class="profession">Web Developer</p>
+                                <p class="text-center">"Pengajar bersertifikasi dan berpengalaman, <br>nanya-nanya sama trainernya pun malem juga tetep dijawab. mantap. <br>Saya belajar banyak ilmu baru disini yang berguna menunjang pekerjaan saya."</p>
+                                <h3 class="name">Eka Saeful</h3>
+                                <p class="profession">Trainer Mikrotik</p>
                             </div>
                         </div>
                     </div> <!-- end front panel -->
@@ -207,13 +207,13 @@
                         <div class="cover">
                         </div>
                         <div class="user">
-                            <img class="img-circle" src="http://demos.creative-tim.com/images/rotating_card_profile2.png"/>
+                            <img class="img-circle" src="{{ url('/assets/source/images/testimoni/muhf.png') }}"/>
                         </div>
                         <div class="content">
                             <div class="main">
-                                <p class="text-center">"Lamborghini Mercy <br>Your chick she so thirsty <br>I'm in that two seat Lambo"</p>
-                                <h3 class="name">Andrew Mike</h3>
-                                <p class="profession">Web Developer</p>
+                                <p class="text-center">"Dengan Harga yang terjangkau saya merasa puas dengan semua materi yang diberikan. <br>Pilihan materi pun banyak dan bagus-bagus. Cocok untuk pemula hingga advanced. Orang jaringan sangat recommended kursus online disini."</p>
+                                <h3 class="name">Muh Fitrah</h3>
+                                <p class="profession">Network Admin</p>
                             </div>
                         </div>
                     </div> <!-- end front panel -->
@@ -268,13 +268,13 @@
                         <div class="cover">
                         </div>
                         <div class="user">
-                            <img class="img-circle" src="http://demos.creative-tim.com/images/rotating_card_profile2.png"/>
+                            <img class="img-circle" src="{{ url('/assets/source/images/testimoni/safarulm.png') }}"/>
                         </div>
                         <div class="content">
                             <div class="main">
-                                <p class="text-center">"Lamborghini Mercy <br>Your chick she so thirsty <br>I'm in that two seat Lambo"</p>
-                                <h3 class="name">Andrew Mike</h3>
-                                <p class="profession">Web Developer</p>
+                                <p class="text-center">"Alhamdulillah cukup puas dengan materi yang disampaikan.<br>Singkat, padat dan jelas. <br>Lebih paham, sekalipun peserta awam."</p>
+                                <h3 class="name">Safarul M</h3>
+                                <p class="profession">IT Support</p>
                             </div>
                         </div>
                     </div> <!-- end front panel -->
@@ -329,13 +329,13 @@
                         <div class="cover">
                         </div>
                         <div class="user">
-                            <img class="img-circle" src="http://demos.creative-tim.com/images/rotating_card_profile2.png"/>
+                            <img class="img-circle" src="{{ url('/assets/source/images/testimoni/sentota.png') }}"/>
                         </div>
                         <div class="content">
                             <div class="main">
-                                <p class="text-center">"Lamborghini Mercy <br>Your chick she so thirsty <br>I'm in that two seat Lambo"</p>
-                                <h3 class="name">Andrew Mike</h3>
-                                <p class="profession">Web Developer</p>
+                                <p class="text-center">"Sangat interaktif, penjelasan juga analogi pemahamannya mudah dipahami<br>sehingga materi yang disampaikan dapat langsung diaplikasikan"</p>
+                                <h3 class="name">Sentot Andi</h3>
+                                <p class="profession">Staff IT</p>
                             </div>
                         </div>
                     </div> <!-- end front panel -->
@@ -390,13 +390,13 @@
                         <div class="cover">
                         </div>
                         <div class="user">
-                            <img class="img-circle" src="http://demos.creative-tim.com/images/rotating_card_profile2.png"/>
+                            <img class="img-circle" src="{{ url('/assets/source/images/testimoni/aguss.png') }}"/>
                         </div>
                         <div class="content">
                             <div class="main">
-                                <p class="text-center">"Lamborghini Mercy <br>Your chick she so thirsty <br>I'm in that two seat Lambo"</p>
-                                <h3 class="name">Andrew Mike</h3>
-                                <p class="profession">Web Developer</p>
+                                <p class="text-center">"Updatean materinya ditunggu mas. hehehe <br>Ngga sabar buat belajar materi-materi baru terus di cilsy."</p>
+                                <h3 class="name">Agus Supriyono</h3>
+                                <p class="profession">Technical Support</p>
                             </div>
                         </div>
                     </div> <!-- end front panel -->
@@ -451,13 +451,13 @@
                         <div class="cover">
                         </div>
                         <div class="user">
-                            <img class="img-circle" src="http://demos.creative-tim.com/images/rotating_card_profile2.png"/>
+                            <img class="img-circle" src="{{ url('/assets/source/images/testimoni/michaels.png') }}"/>
                         </div>
                         <div class="content">
                             <div class="main">
-                                <p class="text-center">"Lamborghini Mercy <br>Your chick she so thirsty <br>I'm in that two seat Lambo"</p>
-                                <h3 class="name">Andrew Mike</h3>
-                                <p class="profession">Web Developer</p>
+                                <p class="text-center">"Penyampaian materi sangat mudah dipahami, harga kursus online sangat terjangkau. Sukses Selalu Buat Cilsy Foulation"</p>
+                                <h3 class="name">Michael Situmorang</h3>
+                                <p class="profession">Network Admin</p>
                             </div>
                         </div>
                     </div> <!-- end front panel -->

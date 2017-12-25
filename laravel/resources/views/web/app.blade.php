@@ -223,17 +223,17 @@
     <!-- Navbar -->
 
     <nav class="navbar navbar-default navbar-fixed-top">
-    <!--<div class="global-notification">
+    <div class="global-notification">
     <div class="container">
     <h4>
-    Diskon 19% paket PREMIUM diperpanjang sampai 4 November 2017. Daftar sekarang.
+    <a href="{{ url('member/signup') }}"><font color="red">Promo akhir tahun diskon hingga 10%! Pesan Disini!</font></a>
     </h4>
     <span id='close' onclick='this.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode); return false;' style="    position: absolute;
     right: 20px;
     top: 10px;">x</span>
 
     </div>
-    </div>-->
+    </div>
       <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
@@ -513,10 +513,10 @@
                         <li>Bantuan</li>
                         <li><a href="{{ url('/kontak') }}">Kontak</a></li>
                         <li><a href="{{ url('/kebijakan') }}">Kebijakan Layanan</a></li>
-                        <li><a href="{{ url('/pages/carapesan') }}">Cara Pesan & Berlangganan</a></li>
-                        <li><a href="{{ url('/pages/harga') }}">Harga & Perbandingan Paket</a></li>
+                        <li><a href="{{ url('/carapesan') }}">Cara Pesan & Berlangganan</a></li>
+                        <li><a href="{{ url('/harga') }}">Harga & Perbandingan Paket</a></li>
                         <li><a href="{{ url('/pages/petunjukcarabayar') }}">Petunjuk Pembayaran</a></li>
-                        <li><a href="{{ url('/pages/faq') }}">FAQ</a></li>
+                        <li><a href="{{ url('/faq') }}">FAQ</a></li>
                     </ul>
                 </div>
                 <div class="col-md-3">
