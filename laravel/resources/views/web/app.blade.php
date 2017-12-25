@@ -337,7 +337,7 @@
           <?php } else {?>
             <ul class="nav navbar-nav navbar-right">
               <li><a href="{{ url('/carapesan') }}">Cara Pesan</a></li>
-              <li><a href="{{ url('pages/harga') }}">Harga</a></li>
+              <li><a href="{{ url('/harga') }}">Harga</a></li>
               <li><a href="{{ url('member/signin') }}">Masuk</a></li>
               <li><a href="{{ url('member/signup') }}">Daftar</a></li>
               <!-- <li class="dropdown">
@@ -513,10 +513,10 @@
                         <li>Bantuan</li>
                         <li><a href="{{ url('/kontak') }}">Kontak</a></li>
                         <li><a href="{{ url('/kebijakan') }}">Kebijakan Layanan</a></li>
-                        <li><a href="{{ url('/pages/carapesan') }}">Cara Pesan & Berlangganan</a></li>
-                        <li><a href="{{ url('/pages/harga') }}">Harga & Perbandingan Paket</a></li>
+                        <li><a href="{{ url('/carapesan') }}">Cara Pesan & Berlangganan</a></li>
+                        <li><a href="{{ url('/harga') }}">Harga & Perbandingan Paket</a></li>
                         <li><a href="{{ url('/pages/petunjukcarabayar') }}">Petunjuk Pembayaran</a></li>
-                        <li><a href="{{ url('/pages/faq') }}">FAQ</a></li>
+                        <li><a href="{{ url('/faq') }}">FAQ</a></li>
                     </ul>
                 </div>
                 <div class="col-md-3">

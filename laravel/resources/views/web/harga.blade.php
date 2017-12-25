@@ -145,7 +145,7 @@ hr {
 {{-- <div id="table-bg"> --}}
 <section class="intro">
   <div class="container">
-    <h1 style="text-align: center;">CARA PESAN</h1>
+    <h1 style="text-align: center;">HARGA</h1>
     <h4 style="text-align: center;">Bandingkan pilihan paket langganan sesuai kebutuhan anda</h4>
   </div>
 </section>
@@ -158,15 +158,16 @@ hr {
     <li class="header">Pro</li>
     
     <hr>
-    <li class="grey">Rp. <?=$packages['0']->price;?> / <?=$packages['0']->expired;?> Hari<br><br></li>
+    <li class="grey"><font color="red"><font size="3"><strike>Rp. 119000</strike> | Diskon 10%!</font></font>
+    <br>Rp. <?=$packages['0']->price;?> / <?=$packages['0']->expired;?> Hari</li>
     <li>Bebas Streaming ke Semua Video Tutorial</li>
     <li>Update Hingga 50 Video lebih perbulan</li>
     <li>Konsultasi dengan trainer via chat dijawab max dalam 3x24 Jam</li>
     <li><strike><font color="red">Download Semua Materi Video</font></strike></li>
     <li><strike><font color="red">Download Ebook & File Praktek</font></strike></li>
-    <li><strike><font color="red">Support Remote Teamviewer</font></strike></li>    
+    <li><strike><font color="red">Support Remote Teamviewer</font></strike></li>
     <li></li>
-   <hr>
+    <hr>
     <li class=""><button class="button"><a href="{{ url('member/signup') }}" style="color: #ffffff;"">DAFTAR</a></button></li>
   </ul>
 </div>
@@ -174,10 +175,10 @@ hr {
 <div class="col-md-4" style="border-radius: 5px;">
   <h3 class="plan-recommended" style="margin-top: 0px; margin-bottom: 0px;">Best Value</h3>
   <ul class="price-recomended">
-    <li class="header">Premium <font color="red">Disc 10%!</font></li>
+    <li class="header">Premium</li>
     <hr>
-    <li class="grey">Rp. <?=$packages['1']->price;?> / <?=$packages['1']->expired;?> Hari
-    <br><strike><font color="red"><font size="2">Rp. 349000</strike> | Hemat 162.000!</font></font></li>
+    <li class="grey"><font color="red"><font size="3"><strike>Rp. 349000</strike> | Diskon 10%!</font></font>
+    <br>Rp. <?=$packages['1']->price;?> / <?=$packages['1']->expired;?> Hari</li>
     <li>Bebas Streaming ke Semua Video Tutorial</li>
     <li>Update Hingga 50 Video lebih perbulan</li>
     <li>Konsultasi dengan trainer via chat dijawab max dalam 2x24 Jam</li>
@@ -191,15 +192,15 @@ hr {
 </div>
 <div class="col-md-4" style="border-radius: 5px;">
   <ul class="price">
-    <li class="header">Platinum <font color="red">Disc 10%!</font></li>
+    <li class="header">Platinum</li>
     <hr>
-    <li class="grey">Rp. <?=$packages['2']->price;?> / <?=$packages['2']->expired;?> Hari
-    <br><strike><font color="red"><font size="2">Rp. 499000</strike> | Hemat 265.000!</font></font></li>
+    <li class="grey"><font color="red"><font size="3"><strike>Rp. 499000</strike> | Diskon 10%!</font></font>
+    <br>Rp. <?=$packages['2']->price;?> / <?=$packages['2']->expired;?> Hari</li>
     <li>Bebas Streaming ke Semua Video Tutorial</li>
     <li>Update Hingga 50 Video lebih perbulan</li>
     <li>Konsultasi dengan Trainer via chat dijawab max dalam 1x24 Jam</li>
     <li>Download Semua Materi Video</li>
-    <li>Download Berkas Praktek</li>
+    <li>Download Ebook & File Praktek</li>
     <li>Support Remote Teamviewer (Kuota remote 2x perbulan, durasi per-remote 1 jam)</li>
     <hr>
     <li class=""><button class="button"><a href="{{ url('member/signup') }}" style="color: #ffffff;">DAFTAR</a></button></li>
@@ -217,13 +218,13 @@ hr {
                         <div class="cover">
                         </div>
                         <div class="user">
-                            <img class="img-circle" src="http://demos.creative-tim.com/images/rotating_card_profile2.png"/>
+                            <img class="img-circle" src="{{ url('/assets/source/images/testimoni/fitrih.png') }}"/>
                         </div>
                         <div class="content">
                             <div class="main">
-                                <p class="text-center">"Lamborghini Mercy <br>Your chick she so thirsty <br>I'm in that two seat Lambo"</p>
-                                <h3 class="name">Andrew Mike</h3>
-                                <p class="profession">Web Developer</p>
+                                <p class="text-center">"Alhamdulillaah...saya mendapat banyak ilmu disini. Mudah2an saya bisa lebih percaya diri mengajar karena banyak kosakata baru di dunia IT."</p>
+                                <h3 class="name">Fitri Handayani</h3>
+                                <p class="profession">Guru SMK</p>
                             </div>
                         </div>
                     </div> <!-- end front panel -->
@@ -278,13 +279,13 @@ hr {
                         <div class="cover">
                         </div>
                         <div class="user">
-                            <img class="img-circle" src="http://demos.creative-tim.com/images/rotating_card_profile2.png"/>
+                            <img class="img-circle" src="{{ url('/assets/source/images/testimoni/ludy.png') }}"/>
                         </div>
                         <div class="content">
                             <div class="main">
-                                <p class="text-center">"Lamborghini Mercy <br>Your chick she so thirsty <br>I'm in that two seat Lambo"</p>
-                                <h3 class="name">Andrew Mike</h3>
-                                <p class="profession">Web Developer</p>
+                                <p class="text-center">"Materi sangat bagus dan bisa didownload. Jadi bisa belajar kapanpun dirumah.<br>Saya pun bisa minta dipandu step by stepnya oleh trainernya. Jadi ngga takut gagal. <br>Mau perpanjang langganan kursus lagi aahh. hehehe"</p>
+                                <h3 class="name">Ludy</h3>
+                                <p class="profession">Sysadmin</p>
                             </div>
                         </div>
                     </div> <!-- end front panel -->
@@ -339,13 +340,13 @@ hr {
                         <div class="cover">
                         </div>
                         <div class="user">
-                            <img class="img-circle" src="http://demos.creative-tim.com/images/rotating_card_profile2.png"/>
+                            <img class="img-circle" src="{{ url('/assets/source/images/testimoni/ekas.png') }}"/>
                         </div>
                         <div class="content">
                             <div class="main">
-                                <p class="text-center">"Lamborghini Mercy <br>Your chick she so thirsty <br>I'm in that two seat Lambo"</p>
-                                <h3 class="name">Andrew Mike</h3>
-                                <p class="profession">Web Developer</p>
+                                <p class="text-center">"Pengajar bersertifikasi dan berpengalaman, <br>nanya-nanya sama trainernya pun malem juga tetep dijawab. mantap. <br>Saya belajar banyak ilmu baru disini yang berguna menunjang pekerjaan saya."</p>
+                                <h3 class="name">Eka Saeful</h3>
+                                <p class="profession">Trainer Mikrotik</p>
                             </div>
                         </div>
                     </div> <!-- end front panel -->
@@ -400,13 +401,13 @@ hr {
                         <div class="cover">
                         </div>
                         <div class="user">
-                            <img class="img-circle" src="http://demos.creative-tim.com/images/rotating_card_profile2.png"/>
+                            <img class="img-circle" src="{{ url('/assets/source/images/testimoni/muhf.png') }}"/>
                         </div>
                         <div class="content">
                             <div class="main">
-                                <p class="text-center">"Lamborghini Mercy <br>Your chick she so thirsty <br>I'm in that two seat Lambo"</p>
-                                <h3 class="name">Andrew Mike</h3>
-                                <p class="profession">Web Developer</p>
+                                <p class="text-center">"Dengan Harga yang terjangkau saya merasa puas dengan semua materi yang diberikan. <br>Pilihan materi pun banyak dan bagus-bagus. Cocok untuk pemula hingga advanced. Orang jaringan sangat recommended kursus online disini."</p>
+                                <h3 class="name">Muh Fitrah</h3>
+                                <p class="profession">Network Admin</p>
                             </div>
                         </div>
                     </div> <!-- end front panel -->
@@ -461,13 +462,13 @@ hr {
                         <div class="cover">
                         </div>
                         <div class="user">
-                            <img class="img-circle" src="http://demos.creative-tim.com/images/rotating_card_profile2.png"/>
+                            <img class="img-circle" src="{{ url('/assets/source/images/testimoni/safarulm.png') }}"/>
                         </div>
                         <div class="content">
                             <div class="main">
-                                <p class="text-center">"Lamborghini Mercy <br>Your chick she so thirsty <br>I'm in that two seat Lambo"</p>
-                                <h3 class="name">Andrew Mike</h3>
-                                <p class="profession">Web Developer</p>
+                                <p class="text-center">"Alhamdulillah cukup puas dengan materi yang disampaikan.<br>Singkat, padat dan jelas. <br>Lebih paham, sekalipun peserta awam."</p>
+                                <h3 class="name">Safarul M</h3>
+                                <p class="profession">IT Support</p>
                             </div>
                         </div>
                     </div> <!-- end front panel -->
@@ -522,13 +523,13 @@ hr {
                         <div class="cover">
                         </div>
                         <div class="user">
-                            <img class="img-circle" src="http://demos.creative-tim.com/images/rotating_card_profile2.png"/>
+                            <img class="img-circle" src="{{ url('/assets/source/images/testimoni/sentota.png') }}"/>
                         </div>
                         <div class="content">
                             <div class="main">
-                                <p class="text-center">"Lamborghini Mercy <br>Your chick she so thirsty <br>I'm in that two seat Lambo"</p>
-                                <h3 class="name">Andrew Mike</h3>
-                                <p class="profession">Web Developer</p>
+                                <p class="text-center">"Sangat interaktif, penjelasan juga analogi pemahamannya mudah dipahami<br>sehingga materi yang disampaikan dapat langsung diaplikasikan"</p>
+                                <h3 class="name">Sentot Andi</h3>
+                                <p class="profession">Staff IT</p>
                             </div>
                         </div>
                     </div> <!-- end front panel -->
@@ -583,13 +584,13 @@ hr {
                         <div class="cover">
                         </div>
                         <div class="user">
-                            <img class="img-circle" src="http://demos.creative-tim.com/images/rotating_card_profile2.png"/>
+                            <img class="img-circle" src="{{ url('/assets/source/images/testimoni/aguss.png') }}"/>
                         </div>
                         <div class="content">
                             <div class="main">
-                                <p class="text-center">"Lamborghini Mercy <br>Your chick she so thirsty <br>I'm in that two seat Lambo"</p>
-                                <h3 class="name">Andrew Mike</h3>
-                                <p class="profession">Web Developer</p>
+                                <p class="text-center">"Updatean materinya ditunggu mas. hehehe <br>Ngga sabar buat belajar materi-materi baru terus di cilsy."</p>
+                                <h3 class="name">Agus Supriyono</h3>
+                                <p class="profession">Technical Support</p>
                             </div>
                         </div>
                     </div> <!-- end front panel -->
@@ -644,13 +645,13 @@ hr {
                         <div class="cover">
                         </div>
                         <div class="user">
-                            <img class="img-circle" src="http://demos.creative-tim.com/images/rotating_card_profile2.png"/>
+                            <img class="img-circle" src="{{ url('/assets/source/images/testimoni/michaels.png') }}"/>
                         </div>
                         <div class="content">
                             <div class="main">
-                                <p class="text-center">"Lamborghini Mercy <br>Your chick she so thirsty <br>I'm in that two seat Lambo"</p>
-                                <h3 class="name">Andrew Mike</h3>
-                                <p class="profession">Web Developer</p>
+                                <p class="text-center">"Penyampaian materi sangat mudah dipahami, harga kursus online sangat terjangkau. Sukses Selalu Buat Cilsy Foulation"</p>
+                                <h3 class="name">Michael Situmorang</h3>
+                                <p class="profession">Network Admin</p>
                             </div>
                         </div>
                     </div> <!-- end front panel -->
@@ -806,7 +807,7 @@ hr {
 
     <div class="row">
       <div class="col-md-12 text-center">
-        <a href="{{ url('pages/faq')}}" class="btn btn-link btn-more">Lihat semua pertanyaan <i class="ion-arrow-right-c"></i></a>
+        <a href="{{ url('faq')}}" class="btn btn-link btn-more">Lihat semua pertanyaan <i class="ion-arrow-right-c"></i></a>
       </div>
     </div>
   </div>

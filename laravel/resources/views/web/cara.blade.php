@@ -42,8 +42,8 @@
 <section class="intro">
   <div class="container">
     <h1>Akses ke semua tutorial sekarang!</h1>
-    <button type="button" class="btn btn-lg"><a href="{{ url('harga') }}" style="text-decoration: none; padding: 20px;">Lihat Harga Paket</a></button>
-    <button type="button" class="btn btn-lg btn-yellow" ><a href="{{ url('member/signup') }}" style="text-decoration: none; padding: 20px;">Buat akun sekarang</a></button>
+    <button type="button" class="btn btn-lg"><a href="{{ url('/harga') }}" style="text-decoration: none; padding: 20px;">Lihat Harga Paket</a></button>
+    <button type="button" class="btn btn-lg btn-yellow" ><a href="{{ url('/member/signup') }}" style="text-decoration: none; padding: 20px;">Buat akun sekarang</a></button>
   </div>
 </section>	
 <script>
