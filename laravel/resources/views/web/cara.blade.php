@@ -1,7 +1,55 @@
 @extends('web.app')
 @section('title','Cara Pesan | ')
 <link href="{{asset('template/web/css/page.css')}}" rel="stylesheet">
+<style>
+.input-group-btn:first-child>.btn, .input-group-btn:first-child>.btn-group {
+    margin-right: 70px;
+}
+  .button-harga {
+    background-color: #ffcd1c;
+    border: none;
+    border-radius: 5px;
+    color: black;
+    padding: 10px 15px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 18px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
 
+.button-harga a{
+    text-decoration: none;
+}
+
+.button-harga:hover{
+  text-decoration: none;
+  background-color: #ffcd1c;
+  color :black;
+}
+.button-daftar {
+    background-color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    color: #003fef;
+    padding: 10px 15px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 18px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.button-daftar a{
+    text-decoration: none;
+}
+
+.button-daftar:hover{
+  text-decoration: none;
+  background-color: #ffffff;
+  color :#003fef;
+}
+</style>
 @section('content')
 <section class="intro">
   <div class="container">
@@ -42,8 +90,8 @@
 <section class="intro">
   <div class="container">
     <h1>Akses ke semua tutorial sekarang!</h1>
-    <button type="button" class="btn btn-lg"><a href="{{ url('/harga') }}" style="text-decoration: none; padding: 20px;">Lihat Harga Paket</a></button>
-    <button type="button" class="btn btn-lg btn-yellow" ><a href="{{ url('/member/signup') }}" style="text-decoration: none; padding: 20px;">Buat akun sekarang</a></button>
+    <a class="btn button-daftar"  href="{{ url('/harga') }}">Lihat Harga Paket</a>
+    <a class="btn button-harga" href="{{ url('/member/signup') }}" >Buat akun sekarang</a>
   </div>
 </section>	
 <script>

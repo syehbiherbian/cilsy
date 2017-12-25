@@ -3,8 +3,7 @@
 
 @endpush
 
-<!-- BEGIN CALL TO ACTION -->
-<section class="call-to-action mb-50">
+<section class="intro" style="margin-bottom: 0px; padding: 20px;">
   <div class="container">
     <div class="row ">
       <div class="col-md-6">

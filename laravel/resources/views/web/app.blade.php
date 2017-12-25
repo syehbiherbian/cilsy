@@ -70,6 +70,7 @@
     </script>
     <?php }?> --}}
     <style media="screen">
+
     .owl-prev {
     width: 15px;
     height: 100px;
@@ -200,6 +201,9 @@
 .navbar-form .form-control {
     height: 43px;
     padding-left: 25%;
+}
+.input-group-btn:first-child>.btn, .input-group-btn:first-child>.btn-group {
+    margin-right: 70px;
 }
     </style>
 

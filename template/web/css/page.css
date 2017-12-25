@@ -5,7 +5,9 @@
   padding: 0;
   box-sizing: border-box;
 }
-
+.input-group-btn:first-child > .btn, .input-group-btn:first-child > .btn-group {
+    margin-right: 70px;
+}
 body {
   font: normal 16px/1.5 "Helvetica Neue", sans-serif;
   background: #456990;

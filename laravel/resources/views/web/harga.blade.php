@@ -168,7 +168,7 @@ hr {
     <li><strike><font color="red">Support Remote Teamviewer</font></strike></li>
     <li></li>
     <hr>
-    <li class=""><button class="button"><a href="{{ url('member/signup') }}" style="color: #ffffff;"">DAFTAR</a></button></li>
+    <li class=""><a class="button" href="{{ url('member/signup') }}" style="color: #ffffff;"">DAFTAR</a></li>
   </ul>
 </div>
 
@@ -187,8 +187,8 @@ hr {
     <li><strike><font color="red">Support Remote Teamviewer</font></strike></li>
     <li></li>
     <hr>
-    <li class=""><button class="button"><a href="{{ url('member/signup') }}" style="color: #ffffff;">DAFTAR</a></button></li>
-  </ul>
+    <li class=""><a class="button" href="{{ url('member/signup') }}" style="color: #ffffff;"">DAFTAR</a></li>
+    </ul>
 </div>
 <div class="col-md-4" style="border-radius: 5px;">
   <ul class="price">
@@ -203,7 +203,7 @@ hr {
     <li>Download Ebook & File Praktek</li>
     <li>Support Remote Teamviewer (Kuota remote 2x perbulan, durasi per-remote 1 jam)</li>
     <hr>
-    <li class=""><button class="button"><a href="{{ url('member/signup') }}" style="color: #ffffff;">DAFTAR</a></button></li>
+    <li class=""><a class="button" href="{{ url('member/signup') }}" style="color: #ffffff;"">DAFTAR</a></li>
   </ul>
 </div>
 
@@ -813,7 +813,7 @@ hr {
   </div>
 </section><!-- ./END GUIDE -->
 <!-- BEGIN CALL TO ACTION -->
-<section class="call-to-action mb-50" style="margin-bottom: 0px;">
+<section class="intro" style="margin-bottom: 0px; padding: 20px;">
   <div class="container">
     <div class="row ">
       <div class="col-md-6">
