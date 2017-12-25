@@ -367,9 +367,7 @@
               <div class="input-group-btn btn-category">
                 <button type="button" class="btn btn-secondary dropdown-toggle " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <span class="cate_title">
-
-                    Semua Kategori
-
+                    <i class="fa fa-th" aria-hidden="true"></i>
                   </span> <i class="ion-android-arrow-dropdown"></i>
                 </button>
                 <div class="dropdown-menu dropdown-menu-right">
