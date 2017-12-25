@@ -168,7 +168,11 @@ hr {
     <li><strike><font color="red">Support Remote Teamviewer</font></strike></li>
     <li></li>
     <hr>
-    <li class=""><a class="button" href="{{ url('member/signup') }}" style="color: #ffffff;"">DAFTAR</a></li>
+    <?php if (Session::get('memberID')): ?>
+        <li class=""><a class="button" href="{{ url('member/package') }}" style="color: #ffffff;"">PILIH PAKET</a></li>
+    <?php else: ?>
+        <li class=""><a class="button" href="{{ url('member/signup') }}" style="color: #ffffff;"">DAFTAR</a></li>
+    <?php endif;?>
   </ul>
 </div>
 
@@ -187,7 +191,11 @@ hr {
     <li><strike><font color="red">Support Remote Teamviewer</font></strike></li>
     <li></li>
     <hr>
-    <li class=""><a class="button" href="{{ url('member/signup') }}" style="color: #ffffff;"">DAFTAR</a></li>
+    <?php if (Session::get('memberID')): ?>
+        <li class=""><a class="button" href="{{ url('member/package') }}" style="color: #ffffff;"">PILIH PAKET</a></li>
+    <?php else: ?>
+        <li class=""><a class="button" href="{{ url('member/signup') }}" style="color: #ffffff;"">DAFTAR</a></li>
+    <?php endif;?>
     </ul>
 </div>
 <div class="col-md-4" style="border-radius: 5px;">
@@ -203,7 +211,11 @@ hr {
     <li>Download Ebook & File Praktek</li>
     <li>Support Remote Teamviewer (Kuota remote 2x perbulan, durasi per-remote 1 jam)</li>
     <hr>
-    <li class=""><a class="button" href="{{ url('member/signup') }}" style="color: #ffffff;"">DAFTAR</a></li>
+    <?php if (Session::get('memberID')): ?>
+        <li class=""><a class="button" href="{{ url('member/package') }}" style="color: #ffffff;"">PILIH PAKET</a></li>
+    <?php else: ?>
+        <li class=""><a class="button" href="{{ url('member/signup') }}" style="color: #ffffff;"">DAFTAR</a></li>
+    <?php endif;?>
   </ul>
 </div>
 
@@ -819,7 +831,11 @@ hr {
       <div class="col-md-6">
         <div class="middle-wrap">
           <div class="inner">
-            <h2>Akses ke semua tutorial sekarang!</h2>
+            <?php if (Session::get('memberID')): ?>
+              <h2 style="margin-top: 4px;">Perpanjang Paket Sekarang!</h2>
+            <?php else: ?>
+                <h2 style="margin-top: 4px;">Akses ke semua tutorial sekarang!</h2>
+            <?php endif;?>
           </div>
         </div>
       </div>
@@ -827,7 +843,7 @@ hr {
         <div class="middle-wrap">
           <div class="inner text-center">
             <?php if (Session::get('memberID')): ?>
-              <a href="{{ url('lessons/browse/all')}}" class="btn btn-default btn-lg">Browse</a>
+              <a href="{{ url('member/packages')}}" class="btn btn-default btn-lg">Pilih Paket</a>
             <?php else: ?>
               <a href="{{ url('member/signup')}}" class="btn btn-default btn-lg">Buat Akun</a>
             <?php endif;?>
