@@ -97,10 +97,6 @@ class AuthController extends Controller {
 			$members->save();
 			$send = members::findOrFail($members->id);
 			Mail::to($members->email)->send(new InformasiUser($send));
-<<<<<<< HEAD
-			
-=======
->>>>>>> origin/baru
 			// store
 			$member = members::where('username', '=', $username)->where('email', '=', $email)->first();
 
@@ -138,7 +134,7 @@ class AuthController extends Controller {
 			$email = Input::get('email');
 			$token = str_random(30) . $email;
 			$now = new DateTime();
-			$url = "https://www.cilsy.id";
+			$url = env(APP_URL);
 
 			$forget = DB::table('password_resets')->insert([
 				'email' => $email,

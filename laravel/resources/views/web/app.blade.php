@@ -308,13 +308,10 @@
           </form>
           <?php if (!empty(Session::get('memberID'))) {?>
           <ul class="nav navbar-nav navbar-right">
-<<<<<<< HEAD
             <li><a href="{{ url('pages/carapesan') }}">Tutorial Saya</a></li>
             <li class="has-dropdown">
                         <img src="{{asset('template/kontributor/img/icon/Notifikasi.png')}}" alt="" style="height: 28px; padding: 0 12px; position: relative; margin-top: 10px;">
             </li>
-=======
->>>>>>> origin/baru
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Halo, <?=Helper::member('username');?> <span class="caret"></span></a>
               <ul class="dropdown-menu">
@@ -330,7 +327,7 @@
                     </tr>
                     <tr>
                       <td><a href="{{ url('member/package') }}" class="btn btn-danger btn-package">Perpanjang</a></td>
-                      <td><a href="{{ url('member/change') }}" class="btn btn-success">Ganti Password</a></td>
+                      <td><a href="{{ url('member/profile') }}" class="btn btn-success">Profil Saya</a></td>
                       <td><a href="{{ url('member/signout') }}" class="btn btn-primary btn-signout">Logout</a></td>
                     </tr>
                   </table>
