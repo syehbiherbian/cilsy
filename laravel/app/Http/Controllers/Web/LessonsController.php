@@ -47,9 +47,9 @@ class LessonsController extends Controller {
 		$mem_id = Session::get('memberID');
 
 		$services = services::where('status', '=', 1)->where('download', '=', 1)->where('members_id', '=', $mem_id)->where('expired', '>', $now)->first();
-		$lessons = lessons::where('enable', '=', 1)->where('lessons.status', '=', 1)->where('slug', '=', $slug)->first();
+		$lessons = lessons::where('enable', '=', 1)->where('status', '=', 1)->where('slug', '=', $slug)->first();
 
-	  if ($this->checkViewers($lessons->id)) {
+	  if (count($lessons) > 0 && $this->checkViewers($lessons->id)) {
 				$main_videos = videos::where('enable', '=', 1)->where('lessons_id', '=', $lessons->id)->orderBy('id', 'asc')->get();
 				$files = files::where('enable', '=', 1)->where('lesson_id', '=', $lessons->id)->orderBy('id', 'asc')->get();
 
@@ -113,6 +113,8 @@ class LessonsController extends Controller {
 				'contributors_total_lessons' => $contributors_total_lessons,
 				'contributors_total_view' => $contributors_total_view,
 			]);
+		}else {
+			abort(404);
 		}
 	}
 
