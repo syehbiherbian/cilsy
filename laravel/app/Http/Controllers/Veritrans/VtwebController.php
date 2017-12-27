@@ -27,7 +27,7 @@ class VtwebController extends Controller {
 		$packages = packages::where('id', '=', Session::get('packageID'))->first();
 		$invoice = invoice::where('code', '=', Session::get('invoiceCODE'))->first();
 
-		if ($members == null || $packages == null || $invoice == null) {
+		if ($members == null || $members == null || $invoice == null) {
 			die('Anda belum memilih paket langganan Cilsy !');
 		}
 
