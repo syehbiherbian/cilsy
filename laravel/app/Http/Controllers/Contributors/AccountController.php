@@ -79,6 +79,11 @@ class AccountController extends Controller
 
     public function halaman()
     {
-    	return view('contrib.account.halaman');
+    	$contribID = Session::get('contribID');
+    	$contributor = Contributors::find($contribID);
+
+    	return view('contrib.account.halaman', [
+    		'contrib' => $contributor
+    	]);
     }
 }

@@ -67,43 +67,37 @@
           <div class="form-group">
             <label class="col-lg-3 control-label">First name:</label>
             <div class="col-lg-8">
-              <input class="form-control" type="text" value="Jane">
+              <input class="form-control" type="text" value="{{ $contrib->first_name }}">
             </div>
           </div>
           <div class="form-group">
             <label class="col-lg-3 control-label">Last name:</label>
             <div class="col-lg-8">
-              <input class="form-control" type="text" value="Bishop">
+              <input class="form-control" type="text" value="{{ $contrib->last_name }}">
             </div>
           </div>
           <div class="form-group">
-            <label class="col-lg-3 control-label">Company:</label>
+            <label class="col-lg-3 control-label">Pekerjaan :</label>
             <div class="col-lg-8">
-              <input class="form-control" type="text" value="">
+              <input class="form-control" type="text" value="{{ $contrib->pekerjaan }}">
             </div>
           </div>
           <div class="form-group">
-            <label class="col-lg-3 control-label">Email:</label>
+            <label class="col-lg-3 control-label">Tempat Lahir:</label>
             <div class="col-lg-8">
-              <input class="form-control" type="text" value="janesemail@gmail.com">
+              <input class="form-control" type="text" value="{{ $contrib->tempat_lahir }}">
             </div>
           </div>
           <div class="form-group">
-            <label class="col-md-3 control-label">Username:</label>
-            <div class="col-md-8">
-              <input class="form-control" type="text" value="janeuser">
+            <label class="col-lg-3 control-label">Tanggal Lahir:</label>
+            <div class="col-lg-8">
+              <input class="form-control" type="text" value="{{ $contrib->tanggal_lahir }}">
             </div>
           </div>
           <div class="form-group">
-            <label class="col-md-3 control-label">Password:</label>
+            <label class="col-md-3 control-label">Bio:</label>
             <div class="col-md-8">
-              <input class="form-control" type="password" value="11111122333">
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="col-md-3 control-label">Confirm password:</label>
-            <div class="col-md-8">
-              <input class="form-control" type="password" value="11111122333">
+              <textarea class="form-control" name="" id="" cols="30" rows="10"></textarea>
             </div>
           </div>
           <div class="form-group">
