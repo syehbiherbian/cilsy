@@ -52,11 +52,7 @@ class VtwebController extends Controller {
 		// Populate customer's Info
 		$customer_details = array(
 			'first_name' => $members->username,
-			// 'last_name'             => "Setiawan",
 			'email' => $members->email,
-			// 'phone'                 => "081322311801",
-			// 'billing_address'       => $billing_address,
-			// 'shipping_address'      => $shipping_address
 		);
 
 		// Data yang akan dikirim untuk request redirect_url.
@@ -116,6 +112,9 @@ class VtwebController extends Controller {
 						]);
 						// Create New Services
 						$this->create_services($order_id);
+						$member = DB::table('invoice')->where('members_id', '=', $order_id)->first();
+						$send = members::findOrFail($member->id);
+						Mail::to($member->email)->send(new SuksesMail($send));
 
 					}
 				}
@@ -127,6 +126,9 @@ class VtwebController extends Controller {
 					'notes' => "Transaction order_id: " . $order_id . " successfully transfered using " . $type,
 				]);
 				// Create New Services
+				$member = DB::table('invoice')->where('members_id', '=', $order_id)->first();
+				$send = members::findOrFail($member->id);
+				Mail::to($member->email)->send(new SuksesMail($send));
 				$this->create_services($order_id);
 			} else if ($transaction == 'pending') {
 				// TODO set payment status in merchant's database to 'Pending'
@@ -135,6 +137,9 @@ class VtwebController extends Controller {
 					'type' => $type,
 					'notes' => "Waiting customer to finish transaction order_id: " . $order_id . " using " . $type,
 				]);
+				$member = DB::table('invoice')->where('members_id', '=', $order_id)->first();
+				$send = members::findOrFail($member->id);
+				Mail::to($member->email)->send(new InvoiceMail($send));
 			} else if ($transaction == 'deny') {
 				// TODO set payment status in merchant's database to 'Denied'
 				DB::table('invoice')->where('code', '=', $order_id)->update([
@@ -149,6 +154,8 @@ class VtwebController extends Controller {
 		error_log(print_r($result, TRUE));
 
 	}
+
+
 
 	private function create_services($order_id) {
 		// echo "create new services";
