@@ -1,239 +1,188 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Info Pemesanan Paket</title>
-    <!-- Designed by https://github.com/kaytcat -->
-    <!-- Robot header image designed by Freepik.com -->
-
-    <style type="text/css">
-        @import url(http://fonts.googleapis.com/css?family=Droid+Sans);
-
-        /* Take care of image borders and formatting */
-
-        img {
-            max-width: 600px;
-            outline: none;
-            text-decoration: none;
-            -ms-interpolation-mode: bicubic;
-        }
-
-        a {
-            text-decoration: none;
-            border: 0;
-            outline: none;
-            color: #bbbbbb;
-        }
-
-        a img {
-            border: none;
-        }
-
-        /* General styling */
-
-        td, h1, h2, h3  {
-            font-family: Helvetica, Arial, sans-serif;
-            font-weight: 400;
-        }
-
-        td {
-            text-align: center;
-        }
-
-        body {
-            -webkit-font-smoothing:antialiased;
-            -webkit-text-size-adjust:none;
-            width: 100%;
-            height: 100%;
-            color: #37302d;
-            background: #ffffff;
-            font-size: 16px;
-        }
-
-        table {
-            border-collapse: collapse !important;
-        }
-
-        .headline {
-            color: #ffffff;
-            font-size: 36px;
-        }
-
-        .force-full-width {
-            width: 100% !important;
-        }
-
-
-
-
-    </style>
-
-    <style type="text/css" media="screen">
-        @media screen {
-            /*Thanks Outlook 2013! http://goo.gl/XLxpyl*/
-            td, h1, h2, h3 {
-                font-family: 'Droid Sans', 'Helvetica Neue', 'Arial', 'sans-serif' !important;
-            }
-        }
-    </style>
-
-    <style type="text/css" media="only screen and (max-width: 480px)">
-        /* Mobile styles */
-        @media only screen and (max-width: 480px) {
-
-            table[class="w320"] {
-                width: 320px !important;
-            }
-
-
-        }
-    </style>
-</head>
-<body class="body" style="padding:0; margin:0; display:block; background:#ffffff; -webkit-text-size-adjust:none" bgcolor="#ffffff">
-<table align="center" cellpadding="0" cellspacing="0" width="100%" height="100%" >
-    <tr>
-        <td align="center" valign="top" bgcolor="#ffffff"  width="100%">
-            <center>
-                <table style="margin: 0 auto;" cellpadding="0" cellspacing="0" width="600" class="w320">
+<center class="wrapper" style="width:100%;table-layout:fixed;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;background-color:#f3f2f0;">
+<table bgcolor="#f3f2f0;" border="0" cellpadding="0" cellspacing="0" style="background-color:#f3f2f0;" width="100%">
+    <tbody>
+        <tr>
+            <td width="100%">
+            <div class="webkit" style="max-width:600px;Margin:0 auto;">
+            <table align="center" border="0" cellpadding="0" cellspacing="0" class="outer" style="border-spacing:0;Margin:0 auto;width:100%;max-width:600px;">
+                <tbody>
                     <tr>
-                        <td align="center" valign="top">
-
-                            <table style="margin: 0 auto;" cellpadding="0" cellspacing="0" width="100%" style="margin:0 auto;">
-                                <tr>
-                                    <td style="font-size: 30px; text-align:center;">
-                                        <br>
-                                        Cilsy Fiolution
-                                        <br>
-                                        <br>
-                                    </td>
-                                </tr>
-                            </table>
-
-                            <table style="margin: 0 auto;" cellpadding="0" cellspacing="0" width="100%" bgcolor="#2BA8E2">
+                        <td style="padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;">
+                        <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                            <tbody>
                                 <tr>
                                     <td>
-                                        <br>
-                                        <img src="https://www.cilsy.id/template/web/img/logo-only.png" width="150" height="130" alt="logo cilsy">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="headline">
-                                        Berhasil
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-
-                                        <center>
-                                            <table style="margin: 0 auto;" cellpadding="0" cellspacing="0" width="60%">
-                                                <tr>
-                                                    <td style="color:#ffffff;">
-                                                        <br>
-                                                        Pembayaran anda sudah kami terima dan Anda sudah mengaktifkan langganan Paket PREMIUM
-                                                        ini otomatis dimunculin nama paket langganannya dengan masa aktif sampai 25 desember 2017
-                                                        Penting! Silahkan baca Informasi penting dibawah ini dengan seksama.
-                                                        <b>Apa yang harus saya lakukan sekarang?</b>
-                                                        Anda bisa langsung login ke cilsy.id dengan klik tombol dibawah ini : <br />
-                                                        <a href="https://cilsy.id/member/signin"
-                                               style="background-color:#ffffff;border-radius:4px;color:#2BA8E2;display:inline-block;font-family:Helvetica, Arial, sans-serif;font-size:16px;font-weight:bold;line-height:50px;text-align:center;text-decoration:none;width:200px;-webkit-text-size-adjust:none;">LOGIN KE CILSY</a>
-                                                        <br>
-                                                        Lalu anda bisa mulai belajar dengan mencari tutorial-tutorial yang anda mau dengan 2 cara
-                                                        berikut :
-                                                        1. Ketikkan judul/kata kunci tutorial yang anda mau di tombol search.
-                                                        2. Browse tutorial berdasarkan kategori dengan klik tombol Browse Tutorial, atau klik tombol
-                                                        dibawah ini : <br />
-                                                        <a href="https://cilsy.id/lessons/browse/all"
-                                               style="background-color:#ffffff;border-radius:4px;color:#2BA8E2;display:inline-block;font-family:Helvetica, Arial, sans-serif;font-size:16px;font-weight:bold;line-height:50px;text-align:center;text-decoration:none;width:200px;-webkit-text-size-adjust:none;">Mulai Belajar</a><br />
-                                                        <b>Bagaimana cara mendownload video dan ebook?</b>
-                                                        Khusus bagi pengguna PREMIUM dan PLATINUM, anda bisa melakukan download video
-                                                        dengan memilih menu Daftar Materi di bagian bawah tengah, lalu klik tombol Download di
-                                                        samping masing-masing judul materi.
-                                                        Sedangkan untuk mendownload file-file praktek seperti modul ebook dan script-script penting,
-                                                        bisa melalui menu File Praktek di bagian bawah kanan.
-                                                        Untuk pengguna PRO tidak disediakan fitur untuk mendownload video maupun download file
-                                                        praktek.
-                                                        Bagaimana saya bisa bertanya dengan trainer? ← ini di bold
-                                                        Saat ini Anda bisa bertanya dengan trainer kapanpun melalui 3 cara dibawah ini :
-                                                        1. Melalui fitur chat langsung di web cilsy.id
-                                                        2. Melalui grup telegram. Join grupnya dengan klik link ini :
-                                                        <a href="https://t.me/joinchat/CeVU_wjUpaxpB_T_hwkGDg">https://t.me/joinchat/CeVU_wjUpaxpB_T_hwkGDg</a>
-                                                        3. Melalui email ke support@cilsy.id
-                                                        Bagaimana saya bisa meminta support remote teamviewer?
-                                                        Khusus bagi pengguna PLATINUM yang ingin meminta support remote teamviewer, silahkan
-                                                        langsung kirimkan format berikut ke whatsapp 089630713487 :
-                                                        Email : (isi dengan email anda)
-                                                        Paket : PLATINUM
-                                                        Permintaan : Butuh Support Remote Teamviewer
-                                                        Nanti tim kami akan memfollow up untuk proses support remote teamviewernya.
-                                                        Selamat belajar!
-                                                        Best regards
-                                                        Tim Cilsy
-                                                        <br>
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </center>
-
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div><!--[if mso]>
-                                            <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="http://" style="height:50px;v-text-anchor:middle;width:200px;" arcsize="8%" stroke="f" fillcolor="#178f8f">
-                                                <w:anchorlock/>
+                                    <table border="0" cellpadding="0" cellspacing="0" style="width:100%;">
+                                        <tbody>
+                                            <tr>
+                                                <td align="center">
                                                 <center>
-                                            <![endif]-->
-                                            <br />
-                                            
-                                            <!--[if mso]>
-                                            </center>
-                                            </v:roundrect>
-                                            <![endif]--></div>
-                                        <br>
-                                        <br>
+                                                <table align="center" border="0" cellpadding="0" cellspacing="0" style="Margin: 0 auto;" width="100%">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td bgcolor="#FFFFFF" class="one-column" style="padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;">
+                                                            <table bgcolor="#f3f2f0" border="0" cellpadding="0" cellspacing="0" width="100%">
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td class="two-column" style="padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;text-align:left;font-size:0;">
+                                                                        <div class="column" style="width:100%;max-width:150px;display:inline-block;vertical-align:top;">
+                                                                        <table class="contents" style="border-spacing:0; width:100%">
+                                                                            <tbody>
+                                                                                <tr>
+                                                                                    <td align="left" style="padding-top:0;padding-bottom:0;padding-right:0;padding-left:5px;"><a href="#" target="_blank"><img align="left" alt="" shrinktofit="true" src="https://cilsy.id/assets/0.png" style="border-width:0; max-width:150px;height:auto; display:block" width="100" /></a></td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                        </div>
+                                                                        <!--[if (gte mso 9)|(IE)]>
+                                                    </td><td width="80%" valign="top" style="padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;" >
+                                                    <![endif]--><!--[if (gte mso 9)|(IE)]>
+                                                    </td>
+                                                    </tr>
+                                                    </table>
+                                                    <![endif]--></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>&nbsp;</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                </center>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                     </td>
                                 </tr>
-                            </table>
+                            </tbody>
+                        </table>
+                        <!-- ======= end header ======= --><!-- ======= start hero image ======= --><!-- ======= end hero image ======= --><!-- ======= start hero article ======= -->
 
-
-                            <table style="margin: 0 auto;" cellpadding="0" cellspacing="0" class="force-full-width" bgcolor="#414141" style="margin: 0 auto">
+                        <table bgcolor="#FFFFFF" border="0" cellpadding="0" cellspacing="0" class="one-column" style="border-spacing:0; border-left:1px solid #e8e7e5; border-right:1px solid #e8e7e5; border-bottom:1px solid #e8e7e5; border-top:1px solid #e8e7e5" width="100%">
+                            <tbody>
                                 <tr>
-                                    <td style="background-color:#414141;">
-                                        <br>
-                                        <br>
-                                        <img src="https://www.filepicker.io/api/file/R4VBTe2UQeGdAlM7KDc4" alt="google+">
-                                        <img src="https://www.filepicker.io/api/file/cvmSPOdlRaWQZnKFnBGt" alt="facebook">
-                                        <img src="https://www.filepicker.io/api/file/Gvu32apSQDqLMb40pvYe" alt="twitter">
-                                        <br>
-                                        <br>
+                                    <td align="left" style="padding:50px 50px 50px 50px">
+                                    <p style="color:#000000; font-size:16px; text-align:left; font-family: Verdana, Geneva, sans-serif; line-height:22px ">&nbsp;</p>
+
+                                    <h1><span style="color:#000000;"><span style="font-family: verdana, geneva, sans-serif;"><strong> Selamat! Paket langganan cilsy anda sudah aktif.</strong></span></span></h1>
+
+                                    <p><span style="font-family:verdana,geneva,sans-serif;"><span style="font-size:16px; text-align: justify; text-justify: inter-word;"><span style="color: rgb(0, 0, 0);">
+                                        Pembayaran anda sudah kami terima dan Anda sudah mengaktifkan langganan Paket <b>{{ $service->title }}</b> dengan masa aktif sampai <b>{{ $service-> expired }}</b>
+                                        Penting! Silahkan baca Informasi penting dibawah ini dengan seksama. <br>
+                                        <b>Apa yang harus saya lakukan sekarang?</b><br>
+                                        Anda bisa langsung login ke cilsy.id dengan klik tombol dibawah ini :
+                                    </span></span></span></p>
+
+                                    <p style="text-align: center;"><span style="font-family:verdana,geneva,sans-serif;"><a href="https://cilsy.id/member/signin"
+                                               style="background-color:#ffffff;border-radius:4px;color:#2BA8E2;display:inline-block;font-family:Helvetica, Arial, sans-serif;font-size:16px;font-weight:bold;line-height:50px;text-align:center;text-decoration:none;width:200px;-webkit-text-size-adjust:none;">Login Ke Cilsy</a>
+                                           </span></p>
+                                    <p><span style="font-family:verdana,geneva,sans-serif;"><span style="font-size:16px; text-align: justify; text-justify: inter-word;"><span style="color: rgb(0, 0, 0);">
+                                        Lalu anda bisa mulai belajar dengan mencari tutorial-tutorial yang anda mau dengan 2 cara
+                                        berikut :
+                                        <ol>
+                                            <li>
+                                                Ketikkan judul/kata kunci tutorial yang anda mau di tombol search.
+                                            </li>
+                                            <li>
+                                                Browse tutorial berdasarkan kategori dengan klik tombol Browse Tutorial, atau klik tombol dibawah ini :
+                                            </li>
+                                        </ol>
+                                    </span></span></span></p>
+
+                                    <p style="text-align: center;"><span style="font-family:verdana,geneva,sans-serif;"><a href="https://cilsy.id/lessons/browse/all"
+                                               style="background-color:#ffffff;border-radius:4px;color:#2BA8E2;display:inline-block;font-family:Helvetica, Arial, sans-serif;font-size:16px;font-weight:bold;line-height:50px;text-align:center;text-decoration:none;width:200px;-webkit-text-size-adjust:none;">Browse Tutorial</a>
+                                           </span></p>
+                                    <p>&nbsp;</p>
+                                    <p><span style="font-family:verdana,geneva,sans-serif;"><span style="font-size:16px; text-align: justify; text-justify: inter-word;"><span style="color: rgb(0, 0, 0);">
+                                        <b>Punya Pertanyaan Lain? klik tombol dibawah ini</b><br>
+                                    </span></span></span></p>
+                                    <p style="text-align: center;"><span style="font-family:verdana,geneva,sans-serif;"><a href="https://cilsy.id/faq"
+                                               style="background-color:#ffffff;border-radius:4px;color:#2BA8E2;display:inline-block;font-family:Helvetica, Arial, sans-serif;font-size:16px;font-weight:bold;line-height:50px;text-align:center;text-decoration:none;width:200px;-webkit-text-size-adjust:none;">Baca F.A.Q</a>
+                                           </span></p>
+                                    <p style="color:#000000; font-size:16px; text-align:left; font-family: Verdana, Geneva, sans-serif; line-height:22px ">Best Regards,<br />
+                                    Tim Cilsy</p>
                                     </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <!-- ======= end hero article ======= --><!-- ======= start footer ======= -->
+
+                        <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                            <tbody>
+                                <tr>
+                                    <td height="30">&nbsp;</td>
                                 </tr>
                                 <tr>
-                                    <td style="color:#bbbbbb; font-size:12px;">
-                                        <a href="#">View in browser</a> | <a href="#">Unsubscribe</a> | <a href="#">Contact</a>
-                                        <br><br>
-                                    </td>
+                                    <td class="two-column" style="padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;text-align:center;font-size:0;"><!--[if (gte mso 9)|(IE)]>
+                                                    <table width="100%" style="border-spacing:0" >
+                                                    <tr>
+                                                    <td width="60%" valign="top" style="padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;" >
+                                                    <![endif]-->
+                                    <div class="column" style="width:100%;max-width:350px;display:inline-block;vertical-align:top;">
+                                    <table class="contents" style="border-spacing:0; width:100%">
+                                        <tbody>
+                                            <tr>
+                                                <td align="right" style="padding-top:0;padding-bottom:0;padding-right:0px;padding-left:0;" width="39%"><a href="#" target="_blank"><img alt="" shrinktofit="true" src="https://cilsy.id/assets/2.png" style="border-width:0; max-width:59px;height:auto; display:block; padding-right:20px" width="59" /></a></td>
+                                                <td align="left" style="padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;" valign="middle" width="61%">
+                                                <p style="color:#787777; font-size:10px; text-align:left; font-family: Verdana, Geneva, sans-serif">PT Cilsy Fiolution Indonesia<br />
+                                                Jl. Dr. Djundjunan No 169 RT 002 RW 002 Kel Husein Sastranegara Kec Cicendo Bandung<br />
+                                                </p>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    </div>
+                                    <!--[if (gte mso 9)|(IE)]>
+                                                    </td><td width="40%" valign="top" style="padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;" >                                 <![endif]-->
+
+                                    <div class="column" style="width:100%;max-width:248px;display:inline-block;vertical-align:top;">
+                                    <table style="border-spacing:0" width="100%">
+                                        <tbody>
+                                            <tr>
+                                                <td class="inner" style="padding-top:0px;padding-bottom:10px; padding-right:10px;padding-left:10px;">
+                                                <table class="contents" style="border-spacing:0; width:100%">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td align="center" style="padding-top:10px" valign="top" width="32%">
+                                                            <table border="0" cellpadding="0" cellspacing="0" width="150">
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td align="center" width="33"><a href="https://phplist.cilsy.id/lists/lt.php?tid=LR5WD1MPUFNXBxpRVlMATFFXVgsZAFBUAE5QAVNXAAxWAAQODgtNVFJVAgxWWFNMAVIKAxlWUQAFTgAHUwAYAgAHDgpVWldWDlIPSVICAFVcAQIEGVZRU1dOVQ5TVRgNUlRSFA9fVwAEBwIEBlQHVw" target="_blank"><img alt="facebook" border="0" shrinktofit="true" src="https://cilsy.id/assets/fb.png" style="border-width:0; max-width:36px;height:auto; display:block; max-height:36px" width="26" /></a></td>
+                                                                        <td align="center" width="33"><a href="https://phplist.cilsy.id/lists/lt.php?tid=LR4HC1MBBFYEVBpQBVhVTFFcBgsZAAIBAU5QU1IHBwIBBwYAUl1NVFJVAgxWWFNMAVIKAxlWUQAFTgAHUwAYAgAHDgpVWldWDlIPSVICAFVcAQIEGVZRU1dOVQ5TVRgNUlRSFA9fVwAEBwIEBlQHVw" target="_blank"><img alt="instagram" border="0" shrinktofit="true" src="https://cilsy.id/assets/1.png" style="border-width:0; max-width:36px;height:auto; display:block; max-height:36px" width="36" /></a></td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    </div>
+                                    <!--[if (gte mso 9)|(IE)]>     </td>                                             </tr> </table>                                     <![endif]--></td>
                                 </tr>
                                 <tr>
-                                    <td style="color:#bbbbbb; font-size:12px;">
-                                        © 2017 All Rights Reserved
-                                        <br>
-                                        <br>
-                                    </td>
+                                    <td height="30">&nbsp;</td>
                                 </tr>
-                            </table>
-
-
-
-
-
-                        </td>
+                            </tbody>
+                        </table>
+                        <!-- ======= end footer ======= --></td>
                     </tr>
-                </table>
-            </center>
-        </td>
-    </tr>
+                </tbody>
+            </table>
+            <!--[if (gte mso 9)|(IE)]>
+                    </td>
+                </tr>
+            </table>
+            <![endif]--></div>
+            </td>
+        </tr>
+    </tbody>
 </table>
-</body>
-</html>
+</center>
