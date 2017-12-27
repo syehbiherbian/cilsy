@@ -72,7 +72,7 @@
 
                                     <p><span style="font-family:verdana,geneva,sans-serif;"><span style="font-size:16px;"><span style="color: rgb(0, 0, 0);">Mau bisa akses dan download semua tutorial yang ada di cilsy?</span></span></span></p>
 
-                                    <p style="text-align: center;"><span style="font-family:verdana,geneva,sans-serif;"><a href="https://cilsy.id/pages/harga"
+                                    <p style="text-align: center;"><span style="font-family:verdana,geneva,sans-serif;"><a href="https://cilsy.id/harga"
                                                style="background-color:#ffffff;border-radius:4px;color:#2BA8E2;display:inline-block;font-family:Helvetica, Arial, sans-serif;font-size:16px;font-weight:bold;line-height:50px;text-align:center;text-decoration:none;width:200px;-webkit-text-size-adjust:none;">Berlangganan Sekarang</a></span></p>
 
                                     <p>&nbsp;</p>
