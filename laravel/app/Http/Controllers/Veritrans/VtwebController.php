@@ -116,9 +116,6 @@ class VtwebController extends Controller {
 						]);
 						// Create New Services
 						$this->create_services($order_id);
-						$members = members::where('id', '=', Session::get('memberID'))->first();
-						$send = members::findOrFail($members->id);
-						Mail::to($members->email)->send(new SuksesMail($send));
 
 					}
 				}
@@ -130,9 +127,6 @@ class VtwebController extends Controller {
 					'notes' => "Transaction order_id: " . $order_id . " successfully transfered using " . $type,
 				]);
 				// Create New Services
-				$members = members::where('id', '=', Session::get('memberID'))->first();
-				$send = members::findOrFail($members->id);
-				Mail::to($members->email)->send(new SuksesMail($send));
 				$this->create_services($order_id);
 			} else if ($transaction == 'pending') {
 				// TODO set payment status in merchant's database to 'Pending'
@@ -141,9 +135,6 @@ class VtwebController extends Controller {
 					'type' => $type,
 					'notes' => "Waiting customer to finish transaction order_id: " . $order_id . " using " . $type,
 				]);
-				$members = members::where('id', '=', Session::get('memberID'))->first();
-				$send = members::findOrFail($members->id);
-				Mail::to($members->email)->send(new InvoiceMail($send));
 			} else if ($transaction == 'deny') {
 				// TODO set payment status in merchant's database to 'Denied'
 				DB::table('invoice')->where('code', '=', $order_id)->update([
