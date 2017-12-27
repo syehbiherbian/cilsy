@@ -131,17 +131,17 @@ class VtwebController extends Controller {
 				Mail::to($member->email)->send(new SuksesMail($send));
 				$this->create_services($order_id);
 			} else if ($transaction == 'pending') {
+				$member = DB::table('invoice')->where('members_id', '=', $order_id)->first();
+				dd($member);
+				$send = members::findOrFail($member->id);
+				Mail::to($member->email)->send(new InvoiceMail($send));
 				// TODO set payment status in merchant's database to 'Pending'
 				DB::table('invoice')->where('code', '=', $order_id)->update([
 					'status' => 2,
 					'type' => $type,
 					'notes' => "Waiting customer to finish transaction order_id: " . $order_id . " using " . $type,
 				]);
-				$member = DB::table('invoice')->where('members_id', '=', $order_id)->first();
-				var_dump($member);
-				$send = members::findOrFail($member->id);
-
-				Mail::to($member->email)->send(new InvoiceMail($send));
+				
 			} else if ($transaction == 'deny') {
 				// TODO set payment status in merchant's database to 'Denied'
 				DB::table('invoice')->where('code', '=', $order_id)->update([
