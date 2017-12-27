@@ -97,7 +97,10 @@ class AuthController extends Controller {
 			$members->save();
 			$send = members::findOrFail($members->id);
 			Mail::to($members->email)->send(new InformasiUser($send));
+<<<<<<< HEAD
 			
+=======
+>>>>>>> origin/baru
 			// store
 			$member = members::where('username', '=', $username)->where('email', '=', $email)->first();
 
