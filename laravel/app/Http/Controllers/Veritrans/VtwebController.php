@@ -138,7 +138,9 @@ class VtwebController extends Controller {
 					'notes' => "Waiting customer to finish transaction order_id: " . $order_id . " using " . $type,
 				]);
 				$member = DB::table('invoice')->where('members_id', '=', $order_id)->first();
+				var_dump($member);
 				$send = members::findOrFail($member->id);
+
 				Mail::to($member->email)->send(new InvoiceMail($send));
 			} else if ($transaction == 'deny') {
 				// TODO set payment status in merchant's database to 'Denied'
