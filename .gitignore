@@ -2,6 +2,11 @@ node_modules
 assets/thumbs/videos
 assets/source/videos
 assets/source
+<<<<<<< HEAD
 .phpintel
 .phpintel/*
+=======
+.phpintel/
+.phpintel/index
+>>>>>>> origin/baru
 
