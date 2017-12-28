@@ -126,13 +126,10 @@ class VtwebController extends Controller {
 					'notes' => "Transaction order_id: " . $order_id . " successfully transfered using " . $type,
 				]);
 				// Create New Services
-				$member = DB::table('invoice')->where('members_id', '=', $order_id)->first();
-				$send = members::findOrFail($member->id);
-				Mail::to($member->email)->send(new SuksesMail($send));
+				$send = members::findOrFail($members->id);
+				Mail::to($members->email)->send(new SuksesMail($send));
 				$this->create_services($order_id);
 			} else if ($transaction == 'pending') {
-				$member = DB::table('invoice')->where('members_id', '=', $order_id)->first();
-				dd($member);
 				$send = members::findOrFail($member->id);
 				Mail::to($member->email)->send(new InvoiceMail($send));
 				// TODO set payment status in merchant's database to 'Pending'
@@ -156,7 +153,6 @@ class VtwebController extends Controller {
 		error_log(print_r($result, TRUE));
 
 	}
-
 
 
 	private function create_services($order_id) {
