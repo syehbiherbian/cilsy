@@ -111,9 +111,9 @@ class VtwebController extends Controller {
 							'notes' => "Transaction order_id: " . $order_id . " successfully captured using " . $type,
 						]);
 						// Create New Services
-				$		$this->sukses_mail($order_id);
 						$this->create_services($order_id);
-
+						$this->sukses_mail($order_id);
+						
 					}
 				}
 			} else if ($transaction == 'settlement') {
@@ -124,8 +124,8 @@ class VtwebController extends Controller {
 					'notes' => "Transaction order_id: " . $order_id . " successfully transfered using " . $type,
 				]);
 				// Create New Services
-				$this->sukses_mail($order_id);
 				$this->create_services($order_id);
+				$this->sukses_mail($order_id);
 			} else if ($transaction == 'pending') {
 				// TODO set payment status in merchant's database to 'Pending'
 				DB::table('invoice')->where('code', '=', $order_id)->update([
