@@ -102,10 +102,10 @@
               </div>
               <div class="col-md-9">
                 <strong>{{ $contributors->username }}</strong>
-                <p class="help-block">{{ $contributors->job }}</p>
+                <p class="help-block">{{ $contributors->pekerjaan }}</p>
                 <a href="{{ url('contributor/profile/'.$contributors->username) }}" class="btn btn-warning mb-15">Lihat Profile</a>
                 <div class="about-text">
-                  <?= $contributors->about ?>
+                  <?= $contributors->deskripsi ?>
                 </div>
                 <a href="#">Lebih Banyak</a>
               </div>

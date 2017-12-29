@@ -2,10 +2,9 @@
 @section('title','')
 @section('breadcumbs')
 <div id="navigation">
-    <a href="{{ url('contributor/lessons/create')}}" class="btn btn-info pull-right">Buat Tutorial</a>
     <ul class="breadcrumb">
         <li><a href="{{ url('contributor') }}">Dashboard</a></li>
-        <li>Kelola Tutorial</li>
+        <li>Kelola Halaman</li>
     </ul>
 </div>
 @endsection
@@ -51,65 +50,76 @@
         </ul>
 
         <div class="tab-content" >
+
         <!-- left column -->
+      <form class="form-horizontal" role="form">
       <div class="col-md-3">
         <div class="text-center">
-          <img src="//placehold.it/100" class="avatar img-circle" alt="avatar">
+          <img src="{{$contrib->avatar}}" class="avatar img-circle" alt="avatar" style="height: 150px; width: 150px;">
           <h6>Upload a different photo...</h6>
           
-          <input type="file" class="form-control">
+          <input type="file" class="form-control" name="avatar" disabled>
         </div>
       </div>
       
       <!-- edit form column -->
       <div class="col-md-9 personal-info">   
-        <form class="form-horizontal" role="form">
+        
+          <div class="form-group">
+            <label class="col-lg-3 control-label">Username :</label>
+            <div class="col-lg-8">
+              <input class="form-control" type="text" value="{{ $contrib->username }}" name="username" disabled="">
+            </div>
+          </div>
           <div class="form-group">
             <label class="col-lg-3 control-label">First name:</label>
             <div class="col-lg-8">
-              <input class="form-control" type="text" value="{{ $contrib->first_name }}">
+              <input class="form-control" type="text" value="{{ $contrib->first_name }}" name="first_name" disabled="">
             </div>
           </div>
           <div class="form-group">
             <label class="col-lg-3 control-label">Last name:</label>
             <div class="col-lg-8">
-              <input class="form-control" type="text" value="{{ $contrib->last_name }}">
+              <input class="form-control" type="text" value="{{ $contrib->last_name }}" name="last_name" disabled="">
             </div>
           </div>
           <div class="form-group">
             <label class="col-lg-3 control-label">Pekerjaan :</label>
             <div class="col-lg-8">
-              <input class="form-control" type="text" value="{{ $contrib->pekerjaan }}">
+              <input class="form-control" type="text" value="{{ $contrib->pekerjaan }}" name="pekerjaan" disabled="">
             </div>
           </div>
           <div class="form-group">
             <label class="col-lg-3 control-label">Tempat Lahir:</label>
             <div class="col-lg-8">
-              <input class="form-control" type="text" value="{{ $contrib->tempat_lahir }}">
+              <input class="form-control" type="text" value="{{ $contrib->tempat_lahir }}" name="tempat_lahir" disabled="">
             </div>
           </div>
           <div class="form-group">
             <label class="col-lg-3 control-label">Tanggal Lahir:</label>
             <div class="col-lg-8">
-              <input class="form-control" type="text" value="{{ $contrib->tanggal_lahir }}">
+              <div class="input-group date">
+              <input type="text" class="form-control" value="{{ $contrib->tanggal_lahir }}" name="tanggal_lahir" disabled="">
+              <div class="input-group-addon">
+                  <span class="fa fa-calendar"></span>
+              </div>
+              </div>
             </div>
           </div>
           <div class="form-group">
             <label class="col-md-3 control-label">Bio:</label>
             <div class="col-md-8">
-              <textarea class="form-control" name="" id="" cols="30" rows="10"></textarea>
+              <textarea class="form-control" value="" name="bio" id="" cols="30" rows="10" disabled="">{{ $contrib->deskripsi }}</textarea>
             </div>
           </div>
           <div class="form-group">
-            <div class="col-md-4 pull-right">
-              <input type="button" class="btn btn-primary" value="Save Changes">
-              <span></span>
-              <input type="reset" class="btn btn-default" value="Cancel">
+            <div class="col-md-2 pull-right">
+              <a href="{{ url('contributor/account/profile/'.$contrib->id.'/edit') }}" class="btn btn-info">Edit</a>
             </div>
           </div>
-        </form>
       </div>
-        
+      </form>
+      
           </div>
         </div>
     </div>

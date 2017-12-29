@@ -247,3 +247,5 @@ Route::get('contributor/account/informasi', 'Contributors\AccountController@info
 Route::get('contributor/account/informasi/{id}/edit', 'Contributors\AccountController@edit');
 Route::post('contributor/account/informasi/{id}/edit', 'Contributors\AccountController@update_informasi');
 Route::get('contributor/account/profile', 'Contributors\AccountController@halaman');
+Route::get('contributor/account/profile/{id}/edit', 'Contributors\AccountController@edit_halaman');
+Route::post('contributor/account/profile/{id}/edit', 'Contributors\AccountController@update_halaman');
