@@ -150,7 +150,7 @@ class VtwebController extends Controller {
 
 	private function send_mail($order_id){
 		$invoice = DB::table('invoice')->where('code', '=', $order_id)->first();
-		$members = DB::table('members')->('id', '=', $invoice->members_id)->first();
+		$members = DB::table('members')->where('id', '=', $invoice->members_id)->first();
 		$send = members::findOrFail($members->id);
 		Mail::to($members->email)->send(new InvoiceMail($send));
 	}
