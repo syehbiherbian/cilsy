@@ -22,7 +22,7 @@
             <form action="{{ url('member/signup') }}" method="post">
               {{ csrf_field() }}
                 <div class="form-group @if ($errors->has('username')) has-error @endif">
-                    <label>Nama Pengguna :</label>
+                    <label>Username :</label>
                     <input type="text" class="form-control" name="username" value="{{ old('username') }}">
                     @if ($errors->has('username')) <p class="help-block">{{ $errors->first('username') }}</p> @endif
                 </div>
