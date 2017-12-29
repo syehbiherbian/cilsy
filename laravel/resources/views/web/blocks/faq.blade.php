@@ -27,7 +27,7 @@
           </div>
           <div id="collapse1" class="panel-collapse collapse">
             <div class="panel-body">
-              Harganya ada di kisaran Rp. 119.000 - Rp. 499.000 tergantung paket langganan yang anda pilih. Untuk melihat perbedaan antar paket bisa lihat link ini : <a href="{{ url('pages/harga')}}" target="_blank">Lihat Perbedaan antar paket</a>
+              Harganya ada di kisaran Rp. 119.000 - Rp. 499.000 tergantung paket langganan yang anda pilih. Untuk melihat perbedaan antar paket bisa lihat link ini : <a href="{{ url('harga')}}" target="_blank">Lihat Perbedaan antar paket</a>
             </div>
           </div>
         </div>
@@ -71,7 +71,7 @@
           </div>
           <div id="collapse3" class="panel-collapse collapse">
             <div class="panel-body">
-              Perbedaan utama dari 3 paket tersebut adalah dari segi durasi dan fasilitas yang didapatkan. Paket yang paling lengkap fasilitasnya dan paling hemat adalah paket PLATINUM dengan masa aktif 6 bulan, bisa download video, ebook, serta dapat support remote teamviewer. Untuk melihat perbedaan antar paket lebih jelas bisa lihat link ini : <a href="{{ url('pages/harga')}}"target="_blank">Lihat Perbedaan antar paket</a>
+              Perbedaan utama dari 3 paket tersebut adalah dari segi durasi dan fasilitas yang didapatkan. Paket yang paling lengkap fasilitasnya dan paling hemat adalah paket PLATINUM dengan masa aktif 6 bulan, bisa download video, ebook, serta dapat support remote teamviewer. Untuk melihat perbedaan antar paket lebih jelas bisa lihat link ini : <a href="{{ url('harga')}}"target="_blank">Lihat Perbedaan antar paket</a>
             </div>
           </div>
         </div>
@@ -94,7 +94,7 @@
           </div>
           <div id="collapse4" class="panel-collapse collapse">
             <div class="panel-body">
-              Bisa, apabila anda berlangganan paket PREMIUM atau PLATINUM. Untuk melihat lebih jelas perbedaan antar paket bisa lihat di link berikut : <a href="{{ url('pages/harga')}}"target="_blank">Lihat Perbedaan antar paket</a>
+              Bisa, apabila anda berlangganan paket PREMIUM atau PLATINUM. Untuk melihat lebih jelas perbedaan antar paket bisa lihat di link berikut : <a href="{{ url('harga')}}"target="_blank">Lihat Perbedaan antar paket</a>
             </div>
           </div>
         </div>
@@ -106,7 +106,7 @@
 
     <div class="row">
       <div class="col-md-12 text-center">
-        <a href="{{ url('pages/faq')}}" class="btn btn-link btn-more">Lihat semua pertanyaan <i class="ion-arrow-right-c"></i></a>
+        <a href="{{ url('/faq')}}" class="btn btn-link btn-more">Lihat semua pertanyaan <i class="ion-arrow-right-c"></i></a>
       </div>
     </div>
   </div>

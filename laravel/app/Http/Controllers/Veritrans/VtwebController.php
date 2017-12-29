@@ -9,6 +9,10 @@ use App\Veritrans\Veritrans;
 use DateTime;
 use DB;
 use Session;
+use Mail;
+use App\Mail\InvoiceMail;
+use App\Mail\SuksesMail;
+
 
 class VtwebController extends Controller {
 	public function __construct() {
@@ -44,36 +48,11 @@ class VtwebController extends Controller {
 			),
 		];
 
-		// Populate customer's billing address
-		// $billing_address = array(
-		//     'first_name'        => "Andri",
-		//     'last_name'         => "Setiawan",
-		//     'address'           => "Karet Belakang 15A, Setiabudi.",
-		//     'city'              => "Jakarta",
-		//     'postal_code'       => "51161",
-		//     'phone'             => "081322311801",
-		//     'country_code'      => 'IDN'
-		//     );
-
-		// Populate customer's shipping address
-		// $shipping_address = array(
-		//     'first_name'    => "John",
-		//     'last_name'     => "Watson",
-		//     'address'       => "Bakerstreet 221B.",
-		//     'city'              => "Jakarta",
-		//     'postal_code' => "51162",
-		//     'phone'             => "081322311801",
-		//     'country_code'=> 'IDN'
-		//     );
 
 		// Populate customer's Info
 		$customer_details = array(
 			'first_name' => $members->username,
-			// 'last_name'             => "Setiawan",
 			'email' => $members->email,
-			// 'phone'                 => "081322311801",
-			// 'billing_address'       => $billing_address,
-			// 'shipping_address'      => $shipping_address
 		);
 
 		// Data yang akan dikirim untuk request redirect_url.
@@ -152,6 +131,7 @@ class VtwebController extends Controller {
 					'type' => $type,
 					'notes' => "Waiting customer to finish transaction order_id: " . $order_id . " using " . $type,
 				]);
+				
 			} else if ($transaction == 'deny') {
 				// TODO set payment status in merchant's database to 'Denied'
 				DB::table('invoice')->where('code', '=', $order_id)->update([
@@ -166,6 +146,7 @@ class VtwebController extends Controller {
 		error_log(print_r($result, TRUE));
 
 	}
+
 
 	private function create_services($order_id) {
 		// echo "create new services";
@@ -233,7 +214,7 @@ class VtwebController extends Controller {
 				'created_at' => $now,
 				'updated_at' => $now,
 			]);
-
+			
 			echo "Services successfully added";
 		}
 	}

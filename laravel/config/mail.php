@@ -23,7 +23,7 @@ return [
 		],
 	],
 
-	'driver' => env('MAIL_DRIVER', 'smtp'),
+	'driver' => ('smtp'),//env('MAIL_DRIVER', ),
 
 	/*
 		    |--------------------------------------------------------------------------
@@ -36,7 +36,7 @@ return [
 		    |
 	*/
 
-	'host' => env('MAIL_HOST', 'localhost'),
+	'host' => ('localhost'),//env('MAIL_HOST', 'localhost'),
 
 	/*
 		    |--------------------------------------------------------------------------
@@ -49,7 +49,7 @@ return [
 		    |
 	*/
 
-	'port' => env('MAIL_PORT', 465),
+	'port' => 465, //env('MAIL_PORT', 465),
 
 	/*
 		    |--------------------------------------------------------------------------
@@ -63,8 +63,8 @@ return [
 	*/
 
 	'from' => [
-		'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
-		'name' => env('MAIL_FROM_NAME', 'Example'),
+		'address' => ('noreply@cilsy.id'),
+		'name' => ('No Reply'),
 	],
 
 	/*
@@ -78,7 +78,7 @@ return [
 		    |
 	*/
 
-	'encryption' => env('MAIL_ENCRYPTION', 'ssl'),
+	'encryption' => ('ssl'),
 
 	/*
 		    |--------------------------------------------------------------------------
@@ -91,7 +91,7 @@ return [
 		    |
 	*/
 
-	'username' => env('MAIL_USERNAME'),
+	'username' => ('noreply@cilsy.id'),
 
 	/*
 		    |--------------------------------------------------------------------------
@@ -104,7 +104,7 @@ return [
 		    |
 	*/
 
-	'password' => env('MAIL_PASSWORD'),
+	'password' => ('5cb09re'),
 
 	/*
 		    |--------------------------------------------------------------------------

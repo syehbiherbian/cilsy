@@ -89,7 +89,8 @@ hr {
   <ul class="price">
     <li class="header">Pro</li>
     <hr>
-    <li class="grey">Rp. <?=$packages['0']->price;?> / <?=$packages['0']->expired;?> Hari<br><br></li>
+    <li class="grey"><font color="red"><font size="3"><strike>Rp. 119000</strike> | Diskon 10%!</font></font>
+    <br>Rp. <?=$packages['0']->price;?> / <?=$packages['0']->expired;?> Hari</li>
     <li>Bebas Streaming ke Semua Video Tutorial</li>
     <li>Update Hingga 50 Video lebih perbulan</li>
     <li>Konsultasi dengan trainer via chat dijawab max dalam 3x24 Jam</li>
@@ -109,10 +110,10 @@ hr {
 
 <input type="hidden" name="packages_id" value="2">
   <ul class="price">
-    <li class="header">Premium <font color="red">Disc 10%!</font></li>
+    <li class="header">Premium <font color="red">Best!</font></li>
     <hr>
-    <li class="grey">Rp. <?=$packages['1']->price;?> / <?=$packages['1']->expired;?> Hari
-    <br><strike><font color="red"><font size="2">Rp. 349000</strike> | Hemat 162.000!</font></font></li>
+    <li class="grey"><font color="red"><font size="3"><strike>Rp. 349000</strike> | Diskon 10%!</font></font>
+    <br>Rp. <?=$packages['1']->price;?> / <?=$packages['1']->expired;?> Hari</li>
     <li>Bebas Streaming ke Semua Video Tutorial</li>
     <li>Update Hingga 50 Video lebih perbulan</li>
     <li>Konsultasi dengan trainer via chat dijawab max dalam 2x24 Jam</li>
@@ -131,15 +132,15 @@ hr {
 
 <input type="hidden" name="packages_id" value="3">
   <ul class="price">
-    <li class="header">Platinum <font color="red">Disc 10%!</font></li>
+    <li class="header">Platinum</li>
     <hr>
-    <li class="grey">Rp. <?=$packages['2']->price;?> / <?=$packages['2']->expired;?> Hari
-    <br><strike><font color="red"><font size="2">Rp. 499000</strike> | Hemat 265.000!</font></font></li>
+    <li class="grey"><font color="red"><font size="3"><strike>Rp. 499000</strike> | Diskon 10%!</font></font>
+    <br>Rp. <?=$packages['2']->price;?> / <?=$packages['2']->expired;?> Hari</li>
     <li>Bebas Streaming ke Semua Video Tutorial</li>
     <li>Update Hingga 50 Video lebih perbulan</li>
     <li>Konsultasi dengan Trainer via chat dijawab max dalam 1x24 Jam</li>
     <li>Download Semua Materi Video</li>
-    <li>Download Berkas Praktek</li>
+    <li>Download Ebook & File Praktek</li>
     <li>Support Remote Teamviewer (Kuota remote 2x perbulan, durasi per-remote 1 jam)</li>
     <hr>
     <li class=""><button type="submit" class="button" id="pilih">Pilih Paket</button></li>
