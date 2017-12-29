@@ -222,7 +222,7 @@ class VtwebController extends Controller {
 				'updated_at' => $now,
 			]);
 
-			$members = DB::table('members')->('id', '=', $invoice->members_id)->first();
+			$members = DB::table('members')->where('id', '=', $invoice->members_id)->first();
 			$send = members::findOrFail($members->id);
 			Mail::to($members->email)->send(new SuksesMail($send));
 			echo "Services successfully added";
