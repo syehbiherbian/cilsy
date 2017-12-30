@@ -123,8 +123,7 @@ class VtwebController extends Controller {
 				]);
 				// Create New Services
 				$this->create_services($order_id);
-				//send sukses mail
-				$this->sukses_mail($order_id);
+			
 			} else if ($transaction == 'pending') {
 				// TODO set payment status in merchant's database to 'Pending'
 				DB::table('invoice')->where('code', '=', $order_id)->update([
