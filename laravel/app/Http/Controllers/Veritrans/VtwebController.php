@@ -112,7 +112,8 @@ class VtwebController extends Controller {
 						]);
 						// Create New Services
 						$this->create_services($order_id);
-
+						//send sukses mail
+						$this->sukses_mail($order_id);
 					}
 				}
 			} else if ($transaction == 'settlement') {
@@ -124,6 +125,8 @@ class VtwebController extends Controller {
 				]);
 				// Create New Services
 				$this->create_services($order_id);
+				//send sukses mail
+				$this->sukses_mail($order_id);
 			} else if ($transaction == 'pending') {
 				// TODO set payment status in merchant's database to 'Pending'
 				DB::table('invoice')->where('code', '=', $order_id)->update([
@@ -154,7 +157,13 @@ class VtwebController extends Controller {
 		$send = members::findOrFail($members->id);
 		Mail::to($members->email)->send(new InvoiceMail($send));
 	}
-
+	
+	private function sukses_mail($order_id){
+		$invoice = DB::table('invoice')->where('code', '=', $order_id)->first();
+		$members = DB::table('members')->where('id', '=', $invoice->members_id)->first();
+		$send = members::findOrFail($members->id);
+		Mail::to($members->email)->send(new SuksesMail($send));
+	}
 	private function create_services($order_id) {
 		// echo "create new services";
 		# If invoice status completed
@@ -206,7 +215,7 @@ class VtwebController extends Controller {
 			}
 
 			// Create new Services
-			$create = DB::table('services')->insert([
+			DB::table('services')->insert([
 				'status' => 1, // 1 = Active
 				'members_id' => $invoice->members_id,
 				'invoice_id' => $invoice->code,
@@ -221,13 +230,8 @@ class VtwebController extends Controller {
 				'created_at' => $now,
 				'updated_at' => $now,
 			]);
-			if($create){
-				$members = DB::table('members')->where('id', '=', $invoice->members_id)->first();
-				$send = members::findOrFail($members->id);
-				Mail::to($members->email)->send(new SuksesMail($send));
-				echo "Services successfully added";
-			}
-			
+
+			echo "Services successfully added";			
 		}
 	}
 }
