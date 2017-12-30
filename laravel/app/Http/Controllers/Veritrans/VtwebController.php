@@ -112,8 +112,6 @@ class VtwebController extends Controller {
 						]);
 						// Create New Services
 						$this->create_services($order_id);
-						//send sukses mail
-						$this->sukses_mail($order_id);
 					}
 				}
 			} else if ($transaction == 'settlement') {
