@@ -17,6 +17,8 @@ use DB;
 
 use App\Contributors;
 use App\lessons;
+use App\videos;
+use App\Viewers;
 
 class ContributorsController extends Controller
 {
@@ -28,12 +30,17 @@ class ContributorsController extends Controller
     if ($contributors) {
       $contributors_lessons = lessons::where('enable', '=', 1)->where('contributor_id', '=', $contributors->id)->get();
       $contributors_total_view 		= 0;
-      foreach ($contributors_lessons as $key => $counttotal) {
-        $viewers = DB::table('lessons_viewers')->where('lesson_id', '=', $counttotal->id)->first();
-        if ($viewers) {
-          $contributors_total_view = $contributors_total_view + $viewers->hits;
-        }
-      }
+      foreach ($contributors_lessons as $key => $lesson) {
+				$videos = videos::where('lessons_id',$lesson->id)->get();
+				if ($videos) {
+					foreach ($videos as $key => $video) {
+						$viewers = Viewers::where('video_id', '=', $video->id)->first();
+						if ($viewers) {
+							$contributors_total_view = $contributors_total_view + 1;
+						}
+					}
+				}
+			}
       return view('web.contributors.profile',[
           'contributors'              => $contributors,
           'contributors_lessons'      => $contributors_lessons,

@@ -1,19 +1,25 @@
 <?php
 
 namespace App\Http\Controllers\Web;
+
+use Illuminate\Support\Facades\Input;
+use App\Http\Requests;
+use Validator;
+use DateTime;
+use Session;
+use DB;
+
+
 use App\categories;
 use App\files;
 use App\Http\Controllers\Controller;
 use App\lessons;
+use App\videos;
+use App\Viewers;
 use App\members;
 use App\services;
 use App\lessons_detail;
 use App\lessons_detail_view;
-use App\videos;
-use DateTime;
-use Illuminate\Support\Facades\Input;
-use Session;
-use DB;
 
 class LessonsController extends Controller {
 	public function index($by, $keyword) {
@@ -49,7 +55,7 @@ class LessonsController extends Controller {
 		$services = services::where('status', '=', 1)->where('download', '=', 1)->where('members_id', '=', $mem_id)->where('expired', '>', $now)->first();
 		$lessons = lessons::where('enable', '=', 1)->where('status', '=', 1)->where('slug', '=', $slug)->first();
 
-	  if (count($lessons) > 0 && $this->checkViewers($lessons->id)) {
+	  if (count($lessons) > 0) {
 				$main_videos = videos::where('enable', '=', 1)->where('lessons_id', '=', $lessons->id)->orderBy('id', 'asc')->get();
 				$files = files::where('enable', '=', 1)->where('lesson_id', '=', $lessons->id)->orderBy('id', 'asc')->get();
 
@@ -97,10 +103,17 @@ class LessonsController extends Controller {
 			$contributors = DB::table('contributors')->where('id',$lessons->contributor_id)->first();
 			$contributors_total_lessons = lessons::where('enable', '=', 1)->where('contributor_id', '=', $lessons->contributor_id)->get();
 			$contributors_total_view 		= 0;
-			foreach ($contributors_total_lessons as $key => $counttotal) {
-				$viewers = DB::table('lessons_viewers')->where('lesson_id', '=', $counttotal->id)->first();
-				if ($viewers) {
-					$contributors_total_view = $contributors_total_view + $viewers->hits;
+      //
+      //
+			foreach ($contributors_total_lessons as $key => $lesson) {
+				$videos = videos::where('lessons_id',$lesson->id)->get();
+				if ($videos) {
+					foreach ($videos as $key => $video) {
+						$viewers = Viewers::where('video_id', '=', $video->id)->first();
+						if ($viewers) {
+							$contributors_total_view = $contributors_total_view + 1;
+						}
+					}
 				}
 			}
 
@@ -118,47 +131,100 @@ class LessonsController extends Controller {
 		}
 	}
 
-
-  public function checkViewers($lesson_id)
-  {
-    // ADD VIEWERS
-    $now            = new DateTime();
+	public function videoTracking()
+	{
 		if (Session::get('memberID')) {
 			$mem_id = Session::get('memberID');
 		}else {
 			$mem_id = 0;
 		}
-    $ip_address     = $this->getUserIP();
-    $lessons_viewers  = DB::table('lessons_viewers')->where('lesson_id',$lesson_id)->where('ip_address',$ip_address)->first();
 
-    if (count($lessons_viewers) > 0) {
+		$rules = array(
+			'videosrc'      => 'required|min:3|max:255'
+		);
+		$validator = Validator::make(Input::all(), $rules);
 
-      // Update hits Viewers
-			DB::table('lessons_viewers')->where('lesson_id',$lesson_id)
-			->update([
-				'member_id' 	=> $mem_id,
-				'hits' 				=> $lessons_viewers->hits + 1,
-				'updated_at' 	=> $now,
-			]);
+		// process the login
+		if ($validator->fails()) {
+			return redirect()->back()->withErrors($validator)->withInput();
+		} else {
 
-      return true;
+			$now 				= new DateTime();
+		  $ip_address = $this->getUserIP();
+			$videosrc 	= Input::get('videosrc');
 
-    }else {
+			$video 			= videos::where('video','like','%'.$videosrc.'%')->first();
+			if ($video) {
 
-      // Create New Viewers
-			DB::table('lessons_viewers')->insert([
-				'lesson_id' 		=> $lesson_id,
-				'ip_address' 	=> $ip_address,
-				'hits' 				=> 1,
-				'member_id' 	=> $mem_id,
-				'created_at' 	=> $now,
-				'updated_at' 	=> $now,
-			]);
+				$viewers  = Viewers::where('video_id',$video->id)->where('ip_address',$ip_address)->where('member_id',$mem_id)->first();
 
-      return true;
-    }
+				if ($viewers) { // Viewers exist
 
-  }
+					$update = Viewers::find($viewers->id);
+					$update->member_id 	= $mem_id;
+					$update->hits 			= $viewers->hits + 1;
+					$update->updated_at = $now;
+					if ($update->save()) {
+						return 'true';
+					}
+				}else { // Create new Viewers
+
+					$store = new Viewers;
+					$store->video_id 		= $video->id;
+					$store->ip_address 	= $ip_address;
+					$store->hits				= 1;
+					$store->member_id 	= $mem_id;
+					$store->created_at 	= $now;
+					$store->updated_at 	= $now;
+					if($store->save()){
+						return 'true';
+					}
+				}
+			}
+		}
+	}
+
+  //
+  // public function checkViewers($lesson_id)
+  // {
+  //   // ADD VIEWERS
+  //   $now            = new DateTime();
+	// 	if (Session::get('memberID')) {
+	// 		$mem_id = Session::get('memberID');
+	// 	}else {
+	// 		$mem_id = 0;
+	// 	}
+  //   $ip_address     = $this->getUserIP();
+  //   $lessons_viewers  = DB::table('lessons_viewers')->where('lesson_id',$lesson_id)->where('ip_address',$ip_address)->first();
+  //
+  //   if (count($lessons_viewers) > 0) {
+  //
+  //     // Update hits Viewers
+	// 		DB::table('lessons_viewers')->where('lesson_id',$lesson_id)
+	// 		->update([
+	// 			'member_id' 	=> $mem_id,
+	// 			'hits' 				=> $lessons_viewers->hits + 1,
+	// 			'updated_at' 	=> $now,
+	// 		]);
+  //
+  //     return true;
+  //
+  //   }else {
+  //
+  //     // Create New Viewers
+	// 		DB::table('lessons_viewers')->insert([
+	// 			'lesson_id' 		=> $lesson_id,
+	// 			'ip_address' 	=> $ip_address,
+	// 			'hits' 				=> 1,
+	// 			'member_id' 	=> $mem_id,
+	// 			'created_at' 	=> $now,
+	// 			'updated_at' 	=> $now,
+	// 		]);
+  //
+  //     return true;
+  //   }
+  //
+  // }
 
   private static function getUserIP()
   {
