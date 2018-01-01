@@ -86,7 +86,7 @@ Route::get('member/change-password', 'Web\Members\PasswordController@index');
 Route::post('member/change-password', 'Web\Members\PasswordController@doSubmit');
 Route::get('member/subscriptions', 'Web\Members\SubscriptionsController@index');
 Route::get('member/subscriptions/unsubscribe/{id}', 'Web\Members\SubscriptionsController@doUnsubscribe');
-Route::get('member/point', 'Web\Members\PointController@index');
+Route::get('member/point', 'Web\PointController@index');
 
 
 // Route::post('member/change', 'Web\Members\AuthController@doreset');
