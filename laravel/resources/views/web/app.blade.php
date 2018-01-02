@@ -514,7 +514,7 @@
                         <li><a href="{{ url('/kebijakan') }}">Kebijakan Layanan</a></li>
                         <li><a href="{{ url('/carapesan') }}">Cara Pesan & Berlangganan</a></li>
                         <li><a href="{{ url('/harga') }}">Harga & Perbandingan Paket</a></li>
-                        <li><a href="{{ url('/pages/petunjukcarabayar') }}">Petunjuk Pembayaran</a></li>
+                        <li><a href="{{ url('/petunjuk') }}">Petunjuk Pembayaran</a></li>
                         <li><a href="{{ url('/faq') }}">FAQ</a></li>
                     </ul>
                 </div>
