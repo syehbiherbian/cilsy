@@ -40,6 +40,9 @@ Route::get('/faq', function () {
 Route::get('/carapesan', function () {
 	return view('web.cara');
 });
+Route::get('/petunjuk', function () {
+	return view('web.petunjuk');
+});
 Route::get('/kebijakan', function () {
 	return view('web.kebijakan');
 });

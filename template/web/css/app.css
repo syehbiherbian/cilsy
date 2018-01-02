@@ -691,6 +691,14 @@ font-size: 19px;
 
 }
 
+.field-icon {
+  float: right;
+  margin-left: -25px;
+  margin-top: -25px;
+  position: relative;
+  z-index: 2;
+  margin-right:10px;
+}
 
 }
 
