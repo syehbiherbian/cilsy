@@ -56,7 +56,7 @@
                 </div>
                 <div class="form-group @if ($errors->has('password')) has-error @endif">
                     <label for="exampleInputFile">Password :</label>
-                    <input type="password" class="form-control" name="password">
+                    <input type="password" class="form-control" id="password" name="password" data-toggle="password">
                     @if ($errors->has('password')) <p class="help-block">{{ $errors->first('password') }}</p> @endif
                 </div>
                 <button type="submit" class="btn btn-primary">MASUK</button>
@@ -67,5 +67,7 @@
         </div>
     </div>
 </div>
-
+<script type="text/javascript">
+    $("#password").password('toggle');
+</script>
 @endsection

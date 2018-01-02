@@ -15,20 +15,22 @@
               {{ csrf_field() }}
                 <div class="form-group">
                     <label for="exampleInputFile">Password Lama :</label>
-                    <input type="password" class="form-control" name="password">
+                    <input type="password" class="form-control" name="password" data-toggle="password">
                 </div>
                 <div class="form-group">
                     <label for="exampleInputFile">Password Baru :</label>
-                    <input type="password" class="form-control" name="password">
+                    <input type="password" class="form-control" name="password" data-toggle="password">
                 </div>
                 <div class="form-group">
                     <label for="exampleInputFile">Konfirmasi Password :</label>
-                    <input type="password" class="form-control" name="retypepassword">
+                    <input type="password" class="form-control" name="retypepassword" data-toggle="password">
                 </div>
                 <button type="submit" class="btn btn-primary">Ganti Password</button>
             </form>
 
     </div>
 </div>
-
+<script>
+    $("#password").password('toggle');
+</script>
 @endsection

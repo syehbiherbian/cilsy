@@ -405,7 +405,7 @@
 
       }
     </script>
-
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-show-password/1.0.3/bootstrap-show-password.min.js"></script>
 
     <!-- Search Form Auto complete -->
     <script type="text/javascript">
