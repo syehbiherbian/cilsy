@@ -56,7 +56,8 @@
                 </div>
                 <div class="form-group @if ($errors->has('password')) has-error @endif">
                     <label for="exampleInputFile">Password :</label>
-                    <input type="password" class="form-control" id="password" name="password" data-toggle="password">
+                    <input type="password" class="form-control" id="password-field" name="password">
+                    <span title="Click here to show/hide password" toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
                     @if ($errors->has('password')) <p class="help-block">{{ $errors->first('password') }}</p> @endif
                 </div>
                 <button type="submit" class="btn btn-primary">MASUK</button>
@@ -68,6 +69,15 @@
     </div>
 </div>
 <script type="text/javascript">
-    $("#password").password('toggle');
+    $(".toggle-password").click(function() {
+
+      $(this).toggleClass("fa-eye fa-eye-slash");
+      var input = $($(this).attr("toggle"));
+      if (input.attr("type") == "password") {
+        input.attr("type", "text");
+      } else {
+        input.attr("type", "password");
+      }
+    });
 </script>
 @endsection
