@@ -18,6 +18,141 @@ html, body {
     -o-transition: ease-out .3s;
     transition: ease-out .3s;
 }
+.header-menu {
+    float: right;
+    height: 70px;
+    padding: 20px;
+}
+
+.header-menu  ul {
+    padding: 0;
+}
+
+.header-menu > ul > li {
+    float: left;
+    position: relative;
+    height: 28px;
+    padding: 0 12px;
+    list-style: none;
+}
+
+.header-menu ul li:last-child {
+    border-right: none;
+}
+
+.hello-user {
+    display: block;
+    margin-top: 5px;
+    margin-right: 5px;
+    color: #FFF;
+}
+.hello-user a {
+    text-decoration:none;
+    display: block;
+    margin-top: 5px;
+    margin-right: 5px;
+    color: #FFF;
+}
+.header-menu ul li img {
+    display: block;
+    height: 35px;
+    margin-top: -4px;
+    cursor: pointer;
+    -webkit-filter: invert(100%);
+    filter: invert(100%);
+}
+
+.header-menu ul li i {
+    display: block;
+    height: 35px;
+    margin-top: -4px;
+    cursor: pointer;
+    -webkit-filter: invert(100%);
+    filter: invert(100%);
+}
+
+.header-menu ul li img:hover {
+    opacity: .7;
+}
+
+.dropdown-container {
+    display: none;
+    position: absolute;
+    top: 70px;
+    right: 0;
+    width: 250px;
+    padding: 10px 0;
+    border: 1px solid #DBDEDE;
+    border-radius: 6px;
+    background-color: #FFF;
+    z-index: 99;
+}
+
+.dropdown-container:before {
+    content: ' ';
+    position: absolute;
+    right: 15px;
+    top: -11px;
+    width: 0;
+    height: 0;
+    border-left: 14px solid transparent;
+    border-right: 14px solid transparent;
+    border-bottom: 16px solid #FFF;
+    z-index: 91;
+}
+
+.dropdown-container:after {
+    content: ' ';
+    position: absolute;
+    right: 19px;
+    top: -13px;
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 12px solid #DBDEDE;
+    z-index: -30;
+}
+
+.dropdown-container ul {
+    padding: 0;
+}
+
+.dropdown-container ul li {
+    width: 100%;
+    list-style: none;
+}
+
+.dropdown-container ul li a {
+    position: relative;
+    display: block;
+    padding: 5px 12px;
+    margin: 0 2px;
+    min-height: 30px;
+    color: #2F3136;
+    text-decoration: none;
+}
+
+.dropdown-container ul li a:after {
+    content: ' ';
+    display: none;
+    position: absolute;
+    top: 4px;
+    right: 15px;
+    height: 22px;
+    width: 22px;
+    background-size: 22px 22px;
+    background-image: url('../img/icon/arrow_right.png');
+}
+
+.dropdown-container ul li:hover a:after {
+    display: block;
+
+}
+
+.dropdown-container ul li a:hover {
+    background-color: #E7E7E7;
+}
 .intro {
   background: linear-gradient(to bottom, #33cccc 0%, #6600cc 100%);
   color : #fff;

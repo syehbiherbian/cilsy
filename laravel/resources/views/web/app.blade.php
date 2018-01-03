@@ -307,38 +307,54 @@
             </div>
           </form>
           <?php if (!empty(Session::get('memberID'))) {?>
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="{{ url('pages/carapesan') }}">Tutorial Saya</a></li>
-            <li class="has-dropdown">
-                        <img src="{{asset('template/kontributor/img/icon/Notifikasi.png')}}" alt="" style="height: 28px; padding: 0 12px; position: relative; margin-top: 10px;">
-            </li>
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Halo, <?=Helper::member('username');?> <span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li style="padding: 15px; background: #fff;">
-                  <table cellpadding="15">
-                    <tr>
-                      <td>Status Paket</td>
-                      <td>: <?=Helper::package('title');?></td>
-                    </tr>
-                    <tr>
-                      <td>Masa Aktif</td>
-                      <td>: <?=Helper::package('expired');?> hari</td>
-                    </tr>
-                    <tr>
-                      <td><a href="{{ url('member/package') }}" class="btn btn-danger btn-package">Perpanjang</a></td>
-                      <td><a href="{{ url('member/profile') }}" class="btn btn-success">Profil Saya</a></td>
-                      <td><a href="{{ url('member/signout') }}" class="btn btn-primary btn-signout">Logout</a></td>
-                    </tr>
-                  </table>
-                </li>
-                <!-- <li><a href="#">Another action</a></li>
-                <li><a href="#">Something else here</a></li>
-                <li role="separator" class="divider"></li>
-                <li><a href="#">Separated link</a></li> -->
-              </ul>
-            </li>
-          </ul>
+            <div class="header-menu">
+                <ul>
+                    <li><span class="hello-user"><a href="{{ url('pages/carapesan') }}">Tutorial Saya</a></span></li>
+                    <li class="has-dropdown">
+                        <img src="{{asset('template/kontributor/img/icon/Notifikasi.png')}}" alt="">
+                        <div class="dropdown-container">
+                            <ul>
+                              {{-- <?php echo notif();?> --}}
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="hello-user">Halo, <?=Helper::member('username');?></span>
+                    </li>
+                    <li class="has-dropdown">
+                        <img src="{{asset('template/kontributor/img/icon/Akun.png')}}" alt="">
+                        <div class="dropdown-container">
+                            <ul>
+                                <li>
+                                    <a href="{{ url('member/profile') }}">
+                                        Profile
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ url('member/change-password') }}">
+                                        Pengaturan Akun
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ url('member/point') }}">
+                                        Point
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ url('member/subscriptions') }}">
+                                        Riwayat dan Status Langganan
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ url('member/signout') }}">
+                                        Keluar
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
           <?php } else {?>
             <ul class="nav navbar-nav navbar-right">
               <li><a href="{{ url('/carapesan') }}">Cara Pesan</a></li>
