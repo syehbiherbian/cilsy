@@ -10,6 +10,7 @@ use Redirect;
 use Validator;
 use Illuminate\Support\Facades\Input;
 use DB;
+use DateTime;
 
 class AccountController extends Controller
 {
@@ -79,6 +80,79 @@ class AccountController extends Controller
 
     public function halaman()
     {
-    	return view('contrib.account.halaman');
+    	$contribID = Session::get('contribID');
+    	$contributor = Contributors::find($contribID);
+
+    	return view('contrib.account.halaman', [
+    		'contrib' => $contributor
+    	]);
+    }
+    public function edit_halaman($id)
+    {
+        $contribID = Session::get('contribID');
+        $contributor = Contributors::find($contribID);
+
+        return view('contrib.account.edit_halaman', [
+            'contrib' => $contributor
+        ]);
+    }
+
+    public function update_halaman(Request $request, $id)
+    {
+        $rules = array(
+            'username' => 'required|alpha_dash',
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'pekerjaan' => 'required',
+            'tempat_lahir' => 'required',
+            'tanggal_lahir' => 'required',
+            'bio' => 'required',
+            'avatar' => 'required'
+        );
+        $validator = Validator::make(Input::all(), $rules);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator); // send back all errors to the login form
+        }else{
+            $now          = new DateTime();
+            $username = Input::get('username');
+            $firstname = Input::get('first_name');
+            $last_name = Input::get('last_name');
+            $pekerjaan = Input::get('pekerjaan');
+            $tempat_lahir = Input::get('tempat_lahir');
+            $tanggal_lahir = Input::get('tanggal_lahir');
+            $bio = Input::get('bio');
+            $avatar = Input::file('avatar');
+
+            $avatarDestinationPath= 'assets/source/avatar';
+
+            if(!empty($avatar)){
+                $avatarfilename    = $avatar->getClientOriginalName();
+                $avatar->move($avatarDestinationPath, $avatarfilename);
+            }else{
+                $avatarfilename    = '';
+            }
+            if($avatarfilename ==''){
+                $url_image= $avatarfilename;
+            }else{
+                $urls=url('');
+                $url_image= $urls.'/assets/source/avatar/'.$avatarfilename;
+            }
+
+            $halaman = Contributors::find($id);
+            $halaman->username = $username;
+            $halaman->first_name = $firstname;
+            $halaman->last_name = $last_name;
+            $halaman->pekerjaan = $pekerjaan;
+            $halaman->tempat_lahir = $tempat_lahir;
+            $halaman->tanggal_lahir = $tanggal_lahir;
+            $halaman->deskripsi = $bio;
+            $halaman->avatar = $url_image;
+            $halaman->created_at = $now;
+            $halaman->save();
+
+            return Redirect()->to('/contributor/account/profile')->with('success', 'Sukses Perbaharui Informasi Akun');
+        }
     }
 }

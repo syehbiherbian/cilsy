@@ -11,6 +11,8 @@
     <link href="{{asset('template/kontributor/css/custom.css')}}" rel="stylesheet">
     <link href="{{asset('template/kontributor/css/bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{asset('template/kontributor/css/sweetalert.css')}}" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker.css" rel="stylesheet">
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <link rel="stylesheet" href="{{asset('template/kontributor/css/owlcarousel2/owl.carousel.css')}}" type="text/css" />
@@ -171,6 +173,8 @@
     <script type="text/javascript" src="{{asset('template/kontributor/js/bootstrap.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('template/kontributor/js/custom.js')}}"></script>
     <script type="text/javascript" src="{{asset('template/kontributor/js/sweetalert.min.js')}}"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js"></script>
+
     <!-- <script type="text/javascript">
       function notifview(id){
         var token   = "{{csrf_token()}}";
