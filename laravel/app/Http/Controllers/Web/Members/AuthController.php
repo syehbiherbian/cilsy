@@ -71,7 +71,7 @@ class AuthController extends Controller {
 		// validate
 		// read more on validation at http://laravel.com/docs/validation
 		$rules = array(
-			'username' => 'required|unique:members',
+			'username' => 'required|alpha_dash|unique:members',
 			'email' => 'required|email|unique:members',
 			'password' => 'required|min:8',
 			'retype_password' => 'required|min:8|same:password',

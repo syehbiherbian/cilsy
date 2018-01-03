@@ -22,7 +22,7 @@
             <form action="{{ url('member/signup') }}" method="post">
               {{ csrf_field() }}
                 <div class="form-group @if ($errors->has('username')) has-error @endif">
-                    <label>Nama Pengguna :</label>
+                    <label>Username :</label>
                     <input type="text" class="form-control" name="username" value="{{ old('username') }}">
                     @if ($errors->has('username')) <p class="help-block">{{ $errors->first('username') }}</p> @endif
                 </div>
@@ -33,12 +33,15 @@
                 </div>
                 <div class="form-group @if ($errors->has('password')) has-error @endif">
                     <label >Password :</label>
-                    <input type="password" class="form-control" name="password">
+                    <input type="password" class="form-control" name="password" id="password-field">
+                    <span title="Click here to show/hide password" toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+                    
                     @if ($errors->has('password')) <p class="help-block">{{ $errors->first('password') }}</p> @endif
                 </div>
                 <div class="form-group @if ($errors->has('retype_password')) has-error @endif">
                     <label>Konfirmasi Password :</label>
-                    <input type="password" class="form-control" name="retype_password">
+                    <input type="password" class="form-control" name="retype_password" id="password">
+                    <span title="Click here to show/hide password" toggle="#password" class="fa fa-fw fa-eye field-icon toggle-password"></span>
                     @if ($errors->has('retype_password')) <p class="help-block">{{ $errors->first('retype_password') }}</p> @endif
                 </div>
                 <button type="submit" class="btn btn-primary">DAFTAR</button>
@@ -62,5 +65,16 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    $(".toggle-password").click(function() {
 
+      $(this).toggleClass("fa-eye fa-eye-slash");
+      var input = $($(this).attr("toggle"));
+      if (input.attr("type") == "password") {
+        input.attr("type", "text");
+      } else {
+        input.attr("type", "password");
+      }
+    });
+</script>
 @endsection

@@ -358,7 +358,7 @@
           <?php } else {?>
             <ul class="nav navbar-nav navbar-right">
               <li><a href="{{ url('/carapesan') }}">Cara Pesan</a></li>
-              <li><a href="{{ url('/harga') }}">Harga</a></li>
+              <li><a href="{{ url('/member/package') }}">Harga</a></li>
               <li><a href="{{ url('member/signin') }}">Masuk</a></li>
               <li><a href="{{ url('member/signup') }}">Daftar</a></li>
               <!-- <li class="dropdown">
@@ -426,6 +426,8 @@
 
       }
     </script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-show-password/1.0.3/bootstrap-show-password.min.js"></script>
+
     <script>
       $(document).ready(function() {
 
@@ -445,6 +447,7 @@
 
   $('.header-menu .has-dropdown').on('click', function(event) {
     var _this = $(this).children('.dropdown-container');
+
 
     if (_this.css('display').toLowerCase() !== 'block') {
       $('.header-menu .dropdown-container').hide()
@@ -492,6 +495,7 @@
       });
 
     });
+    
     </script>
     <!--/. End Navbar -->
 
@@ -572,7 +576,7 @@
                         <li><a href="{{ url('/kebijakan') }}">Kebijakan Layanan</a></li>
                         <li><a href="{{ url('/carapesan') }}">Cara Pesan & Berlangganan</a></li>
                         <li><a href="{{ url('/harga') }}">Harga & Perbandingan Paket</a></li>
-                        <li><a href="{{ url('/pages/petunjukcarabayar') }}">Petunjuk Pembayaran</a></li>
+                        <li><a href="{{ url('/petunjuk') }}">Petunjuk Pembayaran</a></li>
                         <li><a href="{{ url('/faq') }}">FAQ</a></li>
                     </ul>
                 </div>
