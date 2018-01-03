@@ -151,12 +151,11 @@ hr {
 </section>
 <div id="table-section">
 <div class="col-md-4 kotak  " style="border-radius: 5px;">
-    
-
-<input type="hidden" name="packages_id" value="1">
-  <ul class="price">
+    <form action="{{ url('member/package')}}" method="post">
+    {{ csrf_field() }} 
+    <input type="hidden" name="packages_id" value="1">
+    <ul class="price">
     <li class="header">Pro</li>
-    
     <hr>
     <li class="grey"><font color="red"><font size="3"><strike>Rp. 119000</strike> | Diskon 10%!</font></font>
     <br>Rp. <?=$packages['0']->price;?> / <?=$packages['0']->expired;?> Hari</li>
@@ -169,14 +168,18 @@ hr {
     <li></li>
     <hr>
     <?php if (Session::get('memberID')): ?>
-        <li class=""><a class="button" href="{{ url('member/package') }}" style="color: #ffffff;"">PILIH PAKET</a></li>
+        <li class=""><button type="submit" class="button" id="pilih">PILIH PAKET</button></li>
     <?php else: ?>
         <li class=""><a class="button" href="{{ url('member/signup') }}" style="color: #ffffff;"">DAFTAR</a></li>
     <?php endif;?>
-  </ul>
+    </ul>
+    </form>
 </div>
 
 <div class="col-md-4" style="border-radius: 5px;">
+    <form action="{{ url('member/package')}}" method="post">
+    {{ csrf_field() }} 
+    <input type="hidden" name="packages_id" value="2">
   <h3 class="plan-recommended" style="margin-top: 0px; margin-bottom: 0px;">Best Value</h3>
   <ul class="price-recomended">
     <li class="header">Premium</li>
@@ -192,13 +195,17 @@ hr {
     <li></li>
     <hr>
     <?php if (Session::get('memberID')): ?>
-        <li class=""><a class="button" href="{{ url('member/package') }}" style="color: #ffffff;"">PILIH PAKET</a></li>
+        <li class=""><button type="submit" class="button" id="pilih">PILIH PAKET</button></li>
     <?php else: ?>
         <li class=""><a class="button" href="{{ url('member/signup') }}" style="color: #ffffff;"">DAFTAR</a></li>
     <?php endif;?>
     </ul>
+</form>
 </div>
 <div class="col-md-4" style="border-radius: 5px;">
+    <form action="{{ url('member/package')}}" method="post">
+    {{ csrf_field() }} 
+    <input type="hidden" name="packages_id" value="3">
   <ul class="price">
     <li class="header">Platinum</li>
     <hr>
@@ -212,7 +219,7 @@ hr {
     <li>Support Remote Teamviewer (Kuota remote 2x perbulan, durasi per-remote 1 jam)</li>
     <hr>
     <?php if (Session::get('memberID')): ?>
-        <li class=""><a class="button" href="{{ url('member/package') }}" style="color: #ffffff;"">PILIH PAKET</a></li>
+        <li class=""><button type="submit" class="button" id="pilih">PILIH PAKET</button></li>
     <?php else: ?>
         <li class=""><a class="button" href="{{ url('member/signup') }}" style="color: #ffffff;"">DAFTAR</a></li>
     <?php endif;?>
