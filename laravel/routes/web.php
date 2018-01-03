@@ -19,7 +19,7 @@ Route::get('lessons/{lessons}', 'Web\LessonsController@detail');
 Route::post('lessons/getplaylist', 'Web\LessonsController@getplaylist');
 Route::get('lessons/coments/getComments/{lesson_id}','Web\LessonsController@getComments');
 Route::post('lessons/coments/doComment','Web\LessonsController@doComment');
-// Route::post('lessons/coments/postcomment','Web\LessonsController@postcomment');
+Route::post('lessons/videoTracking','Web\LessonsController@videoTracking');
 
 // Search
 Route::get('search', 'Web\SearchController@index');

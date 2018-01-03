@@ -72,12 +72,49 @@ function getPlayList() {
       // $('#hasil').html('<tr><td colspan="6">Loading...</td></tr>');
     },
     success: function (data){
+
       // Adding Playlist
       var player = videojs('video');
       player.playlist(data);
       player.playlistUi();
 
+
       // player.DurationDisplay( player,[options] )
+    }
+  });
+}
+
+// Video ended
+var video = videojs('video').ready(function(){
+  var player = this;
+
+  player.on('ended', function() {
+    var videosrc = player.currentSrc();
+    videoTracking(videosrc);
+  });
+});
+
+
+function videoTracking(videosrc) {
+  var postData =
+              {
+                  "_token":"{{ csrf_token() }}",
+                  "videosrc": videosrc
+              }
+  $.ajax({
+    type: "POST",
+    url: "{{ url('lessons/videoTracking')}}",
+    data: postData,
+    // dataType: "json",
+    beforeSend: function() {
+      // $('#hasil').html('<tr><td colspan="6">Loading...</td></tr>');
+    },
+    success: function (data){
+
+      if (data == true) {
+        console.log('Viewers has been updated');
+      }
+
     }
   });
 }
