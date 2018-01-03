@@ -433,7 +433,7 @@
     $('#sidebar').toggleClass('sidebar-expand');
     console.log('clicked');
 
-    event.preventDefault();
+    
   });
 
   $('#sidebar ul li').click(function(event) {
@@ -453,7 +453,6 @@
       _this.hide()
     }
   
-    event.preventDefault();
   });
 
   $(document).click(function(){
