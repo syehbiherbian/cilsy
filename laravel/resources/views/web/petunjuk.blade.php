@@ -26,12 +26,12 @@
     <ul class="nav nav-pills">
       <li class="active"><a data-toggle="pill" href="#cc" style="padding: 17px 91px;">KARTU KREDIT</a></li>
       <li class="dropdown">
-	    <a class="dropdown-toggle" data-toggle="dropdown" href="#" style="padding: 17px 91px;">ATM
+	    <a class="dropdown-toggle" data-toggle="dropdown" href="#" style="padding: 17px 91px;">TRANSFER BANK
 	    <span class="caret"></span></a>
 	    <ul class="dropdown-menu">
 	      <li><a data-toggle="pill" href="#mandiri" style="padding: 17px 91px;">BANK MANDIRI</a></li>
 	      <li><a data-toggle="pill" href="#permata" style="padding: 17px 91px;">BANK PERMATA</a></li>
-	      <li><a data-toggle="pill" href="#bersama" style="padding: 17px 91px;">BANK LAINNYA</a></li> 
+	      <li><a data-toggle="pill" href="#bersama" style="padding: 17px 91px;">BANK LAINNYA (BCA,BNI,BRI,dll)</a></li> 
 	    </ul>
 	  	</li>
     </ul>
