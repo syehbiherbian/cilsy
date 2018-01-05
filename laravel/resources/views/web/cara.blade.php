@@ -62,27 +62,27 @@
   <ul>
     <li>
       <div>
-        <time>DAFTAR</time> Klik daftar untuk membuat akun baru
+        <time>DAFTAR</time> Klik <a href="{{ url('member/signup')}}" target="_blank">Disini</a> untuk membuat akun baru, atau klik <a href="{{ url('member/signin')}}" target="_blank">Login</a> untuk masuk ke akun yang sudah pernah anda buat.
       </div>
     </li>
     <li>
       <div>
-        <time>Pilih Paket Langganan</time> Pilih paket sesuai budget dan kebutuhan anda
+        <time>Pilih Paket Langganan</time> <a href="{{ url('harga')}}" target="_blank">Pilih Paket</a> sesuai budget dan kebutuhan anda
       </div>
     </li>
     <li>
       <div>
-        <time>Pilih Metode Pembayaran</time> Tentukan metode pembyaran yang anda inginkan, bisa melalui kartu kredit atau bank transfer
+        <time>Pilih Metode Pembayaran</time> Tentukan metode pembayaran yang anda inginkan, bisa melalui kartu kredit atau bank transfer
       </div>
     </li>
     <li>
       <div>
-        <time>Bayar</time> Lakukan pembayaran sesuai petunjuk dan metode yang anda pilih, tanpa melakukan konfirmasi pembayaran
+        <time>Bayar</time> Lakukan pembayaran sesuai petunjuk dan metode yang anda pilih, tanpa perlu melakukan konfirmasi pembayaran. Lihat petunjuk pembayaran <a href="{{ url('petunjuk')}}" target="_blank">Disini</a> 
       </div>
     </li>
     <li>
       <div>
-        <time>Akses Video Tutorial</time> Berhasil,  Silahkan Login kembali dan akses semua materi tutorial
+        <time>Akses Video Tutorial</time> Berhasil, Silahkan Login kembali dan <a href="{{ url('lessons/browse/all')}}" target="_blank">akses semua tutorial</a>.
       </div>
     </li>
   </ul>
