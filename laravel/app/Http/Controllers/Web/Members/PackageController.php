@@ -47,13 +47,11 @@ class PackageController extends Controller
 
           $packages_id    = Input::get('packages_id');
           $packages       = packages::where('id','=',$packages_id)->first();
-
-
           $member_id      = Session::get('memberID');
           $now            = new DateTime();
-
-
-
+          if($member_id == null){
+                return redirect('member/signup')->with('success', 'Silahkan Daftar Dulu!');
+          }
           $code           = $this->generateCode();
           // store
           $invoice = new invoice;
