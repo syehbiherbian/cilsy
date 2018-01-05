@@ -59,7 +59,7 @@
           <img src="{{ $contrib->avatar}}" style="height: 150px; width: 150px;" class="avatar img-circle" alt="avatar">
           <h6>Upload a different photo...</h6>
           
-          <input type="file" class="form-control" name="avatar">
+          <input type="file" class="form-control" name="avatar" value="{{ $contrib->avatar}}">
         </div>
       </div>
       

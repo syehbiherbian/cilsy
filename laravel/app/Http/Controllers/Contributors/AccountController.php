@@ -107,7 +107,6 @@ class AccountController extends Controller
             'tempat_lahir' => 'required',
             'tanggal_lahir' => 'required',
             'bio' => 'required',
-            'avatar' => 'required'
         );
         $validator = Validator::make(Input::all(), $rules);
 

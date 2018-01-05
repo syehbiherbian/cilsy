@@ -8,7 +8,7 @@
     src: url("../fonts/OpenSans-Regular.ttf") format("truetype");
 }
 html, body {
-    min-height: 1000vh;
+    min-height: 100%;
     position: relative;
 }
 * {
