@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web\Members;
 use App\Http\Controllers\Controller;
 use App\Mail\ForgetPassword;
 use App\members;
+use App\invoice;
 use Mail;
 use DateTime;
 use DB;
@@ -95,15 +96,20 @@ class AuthController extends Controller {
 			$members->password = $password;
 			$members->created_at = $now;
 			$members->save();
-			$send = members::findOrFail($members->id);
-			Mail::to($members->email)->send(new InformasiUser($send));
+			// $send = members::findOrFail($members->id);
+			// Mail::to($members->email)->send(new InformasiUser($send));
 			// store
 			$member = members::where('username', '=', $username)->where('email', '=', $email)->first();
 
 			Session::set('memberID', $member->id);
 			Session::set('membername', $member->username);
+
+			if(invoice::where('code', '=', Session::get('invoiceCODE'))->first()){
+				return redirect('checkout');
+			}else{
+				return redirect('member/package')->with('success', 'Silahkan Pilih Paket Anda !');
+			}
 			// redirect
-			return redirect('member/package')->with('success', 'Silahkan Pilih Paket Anda !');
 		}
 	}
 
