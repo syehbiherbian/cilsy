@@ -190,11 +190,7 @@ hr {
     <li><strike><font color="red">Support Remote Teamviewer</font></strike></li>
     <li></li>
     <hr>
-    <?php if (Session::get('memberID')): ?>
         <li class=""><button type="submit" class="button" id="pilih">PILIH PAKET</button></li>
-    <?php else: ?>
-        <li class=""><a class="button" href="{{ url('member/signup') }}" style="color: #ffffff;"">DAFTAR</a></li>
-    <?php endif;?>
     </ul>
 </form>
 </div>
@@ -214,12 +210,9 @@ hr {
     <li>Download Ebook & File Praktek</li>
     <li>Support Remote Teamviewer (Kuota remote 2x perbulan, durasi per-remote 1 jam)</li>
     <hr>
-    <?php if (Session::get('memberID')): ?>
         <li class=""><button type="submit" class="button" id="pilih">PILIH PAKET</button></li>
-    <?php else: ?>
-        <li class=""><a class="button" href="{{ url('member/signup') }}" style="color: #ffffff;"">DAFTAR</a></li>
-    <?php endif;?>
   </ul>
+</form>
 </div>
 
 </div>
