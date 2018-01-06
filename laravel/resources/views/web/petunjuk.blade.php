@@ -40,7 +40,7 @@
 <div class="tab-content">
 	<div id="mandiri" class="tab-pane fade">
 	<div class="col-md-6">
-	Langkah Langkah Membayar menggunakan Mandiri ATM/Internet Banking
+	Langkah Langkah Membayar menggunakan Bank Mandiri
 	</div>
 	<div class="col-md-6">
 		<ol>
@@ -57,41 +57,42 @@
 				<img class="img-responsive" src="{{ asset('template/web/img/step-3-mandiri.png') }}" alt="step 1" style="margin-top: 20px; margin-bottom: 20px;">
 			</li>
 			<li>
-				<b>Catat Nomor rekening dan Kode Perusahaan untuk melanjutkan pembayaran melalui ATM Mandiri, Ikuti Petunjuk pada tab Bagaimana Cara Bayar. Anda bisa menyimpan intruksi cara pembayaran, Klik Selesai</b>
+				<b>Catat Nomor rekening dan Kode Perusahaan untuk melanjutkan pembayaran melalui ATM/Internet Banking Mandiri, Ikuti Petunjuk pada tab Bagaimana Cara Bayar untuk melakukan pembayaran. Klik Selesai</b>
 				<img class="img-responsive" src="{{ asset('template/web/img/step-4-mandiri.png') }}" alt="step 1" style="margin-top: 20px; margin-bottom: 20px;">
 			</li>
 			<li>
-				<b>Invoice dan cara pembayaran akan di kirimkan melalui email. Segera lakukan pembayaran sebelum tanggal yang tercantum. Anda tidak diharuskan untuk melakukan konfirmasi pembayaran. Jika pembayaran sudah dilakukan, akan ada pemberitahuan melalui email jika berhasil. Setelahnya silahkan anda login kembali dan akun anda sudah aktif berlangganan. </b>
+				<b>Invoice dan cara pembayaran akan di kirimkan melalui email. Segera lakukan pembayaran sebelum tanggal yang tercantum. Anda tidak diharuskan untuk melakukan konfirmasi pembayaran. Jika pembayaran sudah dilakukan, akan ada pemberitahuan melalui email. Setelahnya silahkan anda login kembali dan akun anda sudah aktif secara otomatis. </b>
 			</li>
 		</ol>
 		</div>
 	</div>
 	<div id="cc" class="tab-pane fade in active">
 	<div class="col-md-6">
-	Langkah Langkah Membayar menggunakan Mandiri ATM/Internet Banking
+	Langkah Langkah Membayar menggunakan Kartu Kredit
 	</div>
 	<div class="col-md-6">
 		<ol>
 			<li>
 				<b>Pilih Pembayaran Kartu Kredit</b> <br>
-				<img class="img-responsive" src="{{ asset('template/web/img/step-1-mandiri.png') }}" alt="step 1" style="margin-top: 20px; margin-bottom: 20px;">
+				<img class="img-responsive" src="{{ asset('template/web/img/image-cc-1.png') }}" alt="step 1" style="margin-top: 20px; margin-bottom: 20px;">
 			</li>
 			<li>
-				<b>Isikan data yang diperlukan dan klik 'BAYAR SEKARANG'</b><br>
-				<img class="img-responsive" src="{{ asset('template/web/img/step-cc.png') }}" alt="step 1" style="margin-top: 20px; margin-bottom: 20px;">
+				<b>Isikan data kartu kredit Anda lalu klik 'BAYAR SEKARANG'</b><br>
+				<img class="img-responsive" src="{{ asset('template/web/img/image-cc-2.png') }}" alt="step 1" style="margin-top: 20px; margin-bottom: 20px;">
 			</li>
 			<li>
-				<b>Ikuti langkah selanjutnya</b>
+				<b>Pembayaran berhasil. Klik tombol Selesai.</b>
+				<img class="img-responsive" src="{{ asset('template/web/img/image-cc-3.png') }}" alt="step 1" style="margin-top: 20px; margin-bottom: 20px;">
 			</li>
 			<li>
-				<b>Anda tidak diharuskan untuk melakukan konfirmasi pembayaran. Jika pembayaran sudah dilakukan, akan ada pemberitahuan melalui email jika berhasil. Setelahnya silahkan anda login kembali dan akun anda sudah aktif berlangganan. </b>
+				<b>Anda tidak diharuskan untuk melakukan konfirmasi pembayaran. Silahkan anda login kembali dan akun anda sudah aktif secara otomatis. </b>
 			</li>
 		</ol>	
 	</div>
 	</div>
 	<div id="bersama" class="tab-pane fade">
 	<div class="col-md-6">
-	Langkah Langkah Membayar menggunakan Bank Lainnya.
+	Langkah Langkah Membayar menggunakan Bank Lainnya (Jika anda menggunakan bank BCA, BRI, BNI, dll).
 	</div>
 	<div class="col-md-6">
 		<ol>
@@ -101,25 +102,25 @@
 			</li>
 			<li>
 				<b>Pilih Bank Lainnya</b><br>
-				<img class="img-responsive" src="{{ asset('template/web/img/step-2-mandiri.png') }}" alt="step 1" style="margin-top: 20px; margin-bottom: 20px;">
+				<img class="img-responsive" src="{{ asset('template/web/img/step-2-lainnya.png') }}" alt="step 1" style="margin-top: 20px; margin-bottom: 20px;">
 			</li>
 			<li>
-				<b>Dipilihan ini terdapat 3 pilihan Bank, Yaitu ATM Bersama, ATM Prima, dan ATM Alto. Anda bisa memilih salah satu dari 3 pilihan ATM ini.</b>
+				<b>Pilih Lihat Nomor Rekening</b>
 				<img class="img-responsive" src="{{ asset('template/web/img/step-3-lainnya.png') }}" alt="step 1" style="margin-top: 20px; margin-bottom: 20px;">
 			</li>
 			<li>
-				<b>Catat Nomor rekening dan Kode Perusahaan untuk melanjutkan pembayaran melalui ATM yang anda pilih, Ikuti Petunjuk pada tab Bagaimana Cara Bayar. Anda bisa menyimpan intruksi cara pembayaran, Klik Selesai</b>
-				<img class="img-responsive" src="{{ asset('template/web/img/step-4-mandiri.png') }}" alt="step 1" style="margin-top: 20px; margin-bottom: 20px;">
+				<b>Catat Nomor Rekening untuk melanjutkan pembayaran melalui bank anda masing-masing. Ikuti Petunjuk pada tab Bagaimana Cara Bayar untuk melakukan pembayaran. Klik Selesai</b>
+				<img class="img-responsive" src="{{ asset('template/web/img/step-4-lainnya.png') }}" alt="step 1" style="margin-top: 20px; margin-bottom: 20px;">
 			</li>
 			<li>
-				<b>Invoice dan cara pembayaran akan di kirimkan melalui email. Segera lakukan pembayaran sebelum tanggal yang tercantum. Anda tidak diharuskan untuk melakukan konfirmasi pembayaran. Jika pembayaran sudah dilakukan, akan ada pemberitahuan melalui email jika berhasil. Setelahnya silahkan anda login kembali dan akun anda sudah aktif berlangganan. </b>
+				<b>Invoice dan cara pembayaran akan di kirimkan melalui email. Segera lakukan pembayaran sebelum tanggal yang tercantum. Anda tidak diharuskan untuk melakukan konfirmasi pembayaran. Jika pembayaran sudah dilakukan, akan ada pemberitahuan melalui email. Setelahnya silahkan anda login kembali dan akun anda sudah aktif secara otomatis. </b>
 			</li>
 		</ol>
 		</div>
 	</div>
 	<div id="permata" class="tab-pane fade">
 	<div class="col-md-6">
-	Langkah Langkah Membayar menggunakan Permata ATM
+	Langkah Langkah Membayar menggunakan Bank Permata
 	</div>
 	<div class="col-md-6">
 		<ol>
@@ -129,18 +130,18 @@
 			</li>
 			<li>
 				<b>Pilih Permata</b><br>
-				<img class="img-responsive" src="{{ asset('template/web/img/step-2-mandiri.png') }}" alt="step 1" style="margin-top: 20px; margin-bottom: 20px;">
+				<img class="img-responsive" src="{{ asset('template/web/img/step-2-permata.png') }}" alt="step 1" style="margin-top: 20px; margin-bottom: 20px;">
 			</li>
 			<li>
 				<b>Klik Lihat Nomor Rekening</b>
 				<img class="img-responsive" src="{{ asset('template/web/img/permata-3.png') }}" alt="step 1" style="margin-top: 20px; margin-bottom: 20px;">
 			</li>
 			<li>
-				<b>Catat Nomor rekening dan Kode Perusahaan untuk melanjutkan pembayaran melalui ATM Permata, Ikuti Petunjuk pada tab Bagaimana Cara Bayar. Anda bisa menyimpan intruksi cara pembayaran, Klik Selesai</b>
+				<b>Catat Nomor rekening untuk melanjutkan pembayaran melalui Bank Permata, Ikuti Petunjuk pada tab Bagaimana Cara Bayar untuk melakukan pembayaran. Klik Selesai</b>
 				<img class="img-responsive" src="{{ asset('template/web/img/permata-4.png') }}" alt="step 1" style="margin-top: 20px; margin-bottom: 20px;">
 			</li>
 			<li>
-				<b>Invoice dan cara pembayaran akan di kirimkan melalui email. Segera lakukan pembayaran sebelum tanggal yang tercantum. Anda tidak diharuskan untuk melakukan konfirmasi pembayaran. Jika pembayaran sudah dilakukan, akan ada pemberitahuan melalui email jika berhasil. Setelahnya silahkan anda login kembali dan akun anda sudah aktif berlangganan. </b>
+				<b>Invoice dan cara pembayaran akan di kirimkan melalui email. Segera lakukan pembayaran sebelum tanggal yang tercantum. Anda tidak diharuskan untuk melakukan konfirmasi pembayaran. Jika pembayaran sudah dilakukan, akan ada pemberitahuan melalui email. Setelahnya silahkan anda login kembali dan akun anda sudah aktif secara otomatis. </b>
 			</li>
 		</ol>
 		</div>

@@ -230,7 +230,7 @@
     <div class="global-notification">
     <div class="container">
     <h4>
-    <a href="{{ url('harga') }}"><font color="red">7 hari lagi promo potongan harga 10% berakhir! Pesan Segera Disini!</font></a>
+    <a href="{{ url('member/package') }}"><font color="red">4 hari lagi promo potongan harga 10% berakhir! Pesan Segera Disini!</font></a>
     </h4>
     <span id='close' onclick='this.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode); return false;' style="    position: absolute;
     right: 20px;
@@ -513,7 +513,7 @@
                         <li><a href="{{ url('/kontak') }}">Kontak</a></li>
                         <li><a href="{{ url('/kebijakan') }}">Kebijakan Layanan</a></li>
                         <li><a href="{{ url('/carapesan') }}">Cara Pesan & Berlangganan</a></li>
-                        <li><a href="{{ url('/harga') }}">Harga & Perbandingan Paket</a></li>
+                        <li><a href="{{ url('member/package') }}">Harga & Perbandingan Paket</a></li>
                         <li><a href="{{ url('/petunjuk') }}">Petunjuk Pembayaran</a></li>
                         <li><a href="{{ url('/faq') }}">FAQ</a></li>
                     </ul>
