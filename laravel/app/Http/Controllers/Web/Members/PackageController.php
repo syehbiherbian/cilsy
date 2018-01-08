@@ -49,9 +49,8 @@ class PackageController extends Controller
           $packages       = packages::where('id','=',$packages_id)->first();
           $member_id      = Session::get('memberID');
           $now            = new DateTime();
-          if($member_id == null){
-                return redirect('member/signup')->with('success', 'Silahkan Daftar Dulu!');
-          }
+          var_dump($packages_id);
+
           $code           = $this->generateCode();
           // store
           $invoice = new invoice;
@@ -64,10 +63,16 @@ class PackageController extends Controller
           $invoice->save();
           // store
           $invoice = invoice::where('code','=',$code)->first();
-
           Session::set('invoiceCODE',$invoice->code);
-          # code...
-          return redirect('checkout');
+          if($member_id == null){
+                return redirect('member/signup');
+          } else{
+            # code...
+            return redirect('checkout');
+          }
+          
+          
+          
       }
     }
     private function generateCode()

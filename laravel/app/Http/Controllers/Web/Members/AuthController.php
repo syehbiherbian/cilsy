@@ -104,7 +104,10 @@ class AuthController extends Controller {
 			Session::set('memberID', $member->id);
 			Session::set('membername', $member->username);
 
-			if(invoice::where('code', '=', Session::get('invoiceCODE'))->first()){
+			if(Session::get('invoiceCODE')){
+				DB::table('invoice')->where('code', '=', Session::get('invoiceCODE'))->update([
+					'members_id' => $member->id,
+				]);
 				return redirect('checkout');
 			}else{
 				return redirect('member/package')->with('success', 'Silahkan Pilih Paket Anda !');
