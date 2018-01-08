@@ -39,9 +39,19 @@ Route::get('checkout', 'Veritrans\VtwebController@vtweb');
 Route::post('notification/handling', 'Veritrans\VtwebController@notification');
 // PAYMENT
 Route::get('payment/{response}', 'Web\PaymentController@index');
-
+//page
+Route::get('/harga', 'HargaController@index');
 Route::get('/kontak', function () {
 	return view('web.contact');
+});
+Route::get('/faq', function () {
+	return view('web.faq');
+});
+Route::get('/carapesan', function () {
+	return view('web.cara');
+});
+Route::get('/petunjuk', function () {
+	return view('web.petunjuk');
 });
 Route::get('/kebijakan', function () {
 	return view('web.kebijakan');
@@ -241,3 +251,5 @@ Route::get('contributor/account/informasi', 'Contributors\AccountController@info
 Route::get('contributor/account/informasi/{id}/edit', 'Contributors\AccountController@edit');
 Route::post('contributor/account/informasi/{id}/edit', 'Contributors\AccountController@update_informasi');
 Route::get('contributor/account/profile', 'Contributors\AccountController@halaman');
+Route::get('contributor/account/profile/{id}/edit', 'Contributors\AccountController@edit_halaman');
+Route::post('contributor/account/profile/{id}/edit', 'Contributors\AccountController@update_halaman');

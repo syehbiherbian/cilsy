@@ -12,6 +12,9 @@
     <link href="{{asset('template/web/css/app.css')}}" rel="stylesheet">
     <link href="{{asset('template/web/css/navbar.css')}}" rel="stylesheet">
     <link href="{{asset('template/web/css/pace.css')}}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('template/web/css/owl.carousel.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('template/web/css/owl.theme.default.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('template/web/css/owl.theme.green.min.css') }}">
     <link rel="shortcut icon" type="image/png" href="{{asset('template/kontributor/img/logo-only.png')}}"/>
     <link rel="stylesheet" href="{{ asset('template/web/plugins/ionicons-2.0.1/css/ionicons.min.css') }}">
     <link rel="stylesheet" href="{{ asset('template/web/plugins/OwlCarousel2-2.2.1/dist/assets/owl.carousel.css')}}">
@@ -67,6 +70,7 @@
     </script>
     <?php }?> --}}
     <style media="screen">
+
     .owl-prev {
     width: 15px;
     height: 100px;
@@ -198,12 +202,16 @@
     height: 43px;
     padding-left: 25%;
 }
+.input-group-btn:first-child>.btn, .input-group-btn:first-child>.btn-group {
+    margin-right: 70px;
+}
     </style>
 
 
     <link rel="stylesheet" href="{{ asset('template/web/css/helper.css') }}">
     <link rel="stylesheet" href="{{ asset('template/web/css/common.css') }}">
     <link rel="stylesheet" href="{{ asset('template/web/css/blocks.css') }}">
+
     @stack('css')
 </head>
 
@@ -220,17 +228,17 @@
     <!-- Navbar -->
 
     <nav class="navbar navbar-default navbar-fixed-top">
-    <!--<div class="global-notification">
+    <div class="global-notification">
     <div class="container">
     <h4>
-    Diskon 19% paket PREMIUM diperpanjang sampai 4 November 2017. Daftar sekarang.
+    <a href="{{ url('member/signup') }}"><font color="red">Promo akhir tahun diskon hingga 10%! Pesan Disini!</font></a>
     </h4>
     <span id='close' onclick='this.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode); return false;' style="    position: absolute;
     right: 20px;
     top: 10px;">x</span>
 
     </div>
-    </div>-->
+    </div>
       <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
@@ -299,55 +307,58 @@
             </div>
           </form>
           <?php if (!empty(Session::get('memberID'))) {?>
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="{{ url('pages/carapesan') }}">Tutorial Saya</a></li>
-            <li class="has-dropdown">
-                        <img src="{{asset('template/kontributor/img/icon/Notifikasi.png')}}" alt="" style="height: 28px; padding: 0 12px; position: relative; margin-top: 10px;">
-            </li>
-            <li class="dropdown">
-              <a class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                Halo, <?=Helper::member('username');?>
-                <span class="caret"></span>
-              </a>
-              <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                <li><a href="{{ url('member/profile') }}">Profil</a></li>
-                <li><a href="{{ url('member/change-password') }}">Ubah Password</a></li>
-                <li><a href="{{ url('member/point') }}">Point</a></li>
-                <li><a href="{{ url('member/subscriptions') }}">Riwayat dan Status langganan</a></li>
-                <li><a href="{{ url('member/signout') }}">Keluar</a></li>
-              </ul>
-            </li>
-            <!-- <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Halo, <?php //Helper::member('username');?> <span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li style="padding: 15px; background: #fff;">
-                  <table cellpadding="15">
-                    <tr>
-                      <td>Status Paket</td>
-                      <td>: <?php //Helper::package('title');?></td>
-                    </tr>
-                    <tr>
-                      <td>Masa Aktif</td>
-                      <td>: <?php //Helper::package('expired');?> hari</td>
-                    </tr>
-                    <tr>
-                      <td><a href="{{ url('member/package') }}" class="btn btn-danger btn-package">Perpanjang</a></td>
-                      <td><a href="{{ url('member/profile') }}" class="btn btn-success">Profil Saya</a></td>
-                      <td><a href="{{ url('member/signout') }}" class="btn btn-primary btn-signout">Logout</a></td>
-                    </tr>
-                  </table>
-                </li>
-                <!-- <li><a href="#">Another action</a></li>
-                <li><a href="#">Something else here</a></li>
-                <li role="separator" class="divider"></li>
-                <li><a href="#">Separated link</a></li> -
-              </ul>
-            </li> -->
-          </ul>
+            <div class="header-menu">
+                <ul>
+                    <li><span class="hello-user"><a href="{{ url('pages/carapesan') }}">Tutorial Saya</a></span></li>
+                    <li class="has-dropdown">
+                        <img src="{{asset('template/kontributor/img/icon/Notifikasi.png')}}" alt="">
+                        <div class="dropdown-container">
+                            <ul>
+                              {{-- <?php echo notif();?> --}}
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="hello-user">Halo, <?=Helper::member('username');?></span>
+                    </li>
+                    <li class="has-dropdown">
+                        <img src="{{asset('template/kontributor/img/icon/Akun.png')}}" alt="">
+                        <div class="dropdown-container">
+                            <ul>
+                                <li>
+                                    <a href="{{ url('member/profile') }}">
+                                        Profile
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ url('member/change-password') }}">
+                                        Pengaturan Akun
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ url('member/point') }}">
+                                        Point
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ url('member/subscriptions') }}">
+                                        Riwayat dan Status Langganan
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ url('member/signout') }}">
+                                        Keluar
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
           <?php } else {?>
             <ul class="nav navbar-nav navbar-right">
-              <li><a href="{{ url('pages/carapesan') }}">Cara Pesan</a></li>
-              <li><a href="{{ url('pages/harga') }}">Harga</a></li>
+              <li><a href="{{ url('/carapesan') }}">Cara Pesan</a></li>
+              <li><a href="{{ url('/member/package') }}">Harga</a></li>
               <li><a href="{{ url('member/signin') }}">Masuk</a></li>
               <li><a href="{{ url('member/signup') }}">Daftar</a></li>
               <!-- <li class="dropdown">
@@ -373,9 +384,7 @@
               <div class="input-group-btn btn-category">
                 <button type="button" class="btn btn-secondary dropdown-toggle " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <span class="cate_title">
-
-                    Semua Kategori
-
+                    <i class="fa fa-th" aria-hidden="true"></i>
                   </span> <i class="ion-android-arrow-dropdown"></i>
                 </button>
                 <div class="dropdown-menu dropdown-menu-right">
@@ -417,8 +426,49 @@
 
       }
     </script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-show-password/1.0.3/bootstrap-show-password.min.js"></script>
+
+    <script>
+      $(document).ready(function() {
+
+  $('.menu-icon').click(function(event){
+    $('#sidebar').toggleClass('sidebar-expand');
+    console.log('clicked');
 
 
+  });
+
+  $('#sidebar ul li').click(function(event) {
+    $('#sidebar ul li').removeClass('icon-active')
+    $(this).addClass('icon-active')
+
+  });
+
+
+  $('.header-menu .has-dropdown').on('click', function(event) {
+    var _this = $(this).children('.dropdown-container');
+
+
+    if (_this.css('display').toLowerCase() !== 'block') {
+      $('.header-menu .dropdown-container').hide()
+      _this.show()
+    } else {
+      _this.hide()
+    }
+
+  });
+
+  $(document).click(function(){
+    $('.dropdown-container').hide();
+    $('#sidebar').removeClass('sidebar-expand');
+  });
+
+  $('.header-menu .has-dropdown, #sidebar').click(function(e){
+    e.stopPropagation();
+  });
+
+});
+    </script>
     <!-- Search Form Auto complete -->
     <script type="text/javascript">
     $(function() {
@@ -445,6 +495,7 @@
       });
 
     });
+
     </script>
     <!--/. End Navbar -->
 
@@ -523,10 +574,10 @@
                         <li>Bantuan</li>
                         <li><a href="{{ url('/kontak') }}">Kontak</a></li>
                         <li><a href="{{ url('/kebijakan') }}">Kebijakan Layanan</a></li>
-                        <li><a href="{{ url('/pages/carapesan') }}">Cara Pesan & Berlangganan</a></li>
-                        <li><a href="{{ url('/pages/harga') }}">Harga & Perbandingan Paket</a></li>
-                        <li><a href="{{ url('/pages/petunjukcarabayar') }}">Petunjuk Pembayaran</a></li>
-                        <li><a href="{{ url('/pages/faq') }}">FAQ</a></li>
+                        <li><a href="{{ url('/carapesan') }}">Cara Pesan & Berlangganan</a></li>
+                        <li><a href="{{ url('/harga') }}">Harga & Perbandingan Paket</a></li>
+                        <li><a href="{{ url('/petunjuk') }}">Petunjuk Pembayaran</a></li>
+                        <li><a href="{{ url('/faq') }}">FAQ</a></li>
                     </ul>
                 </div>
                 <div class="col-md-3">

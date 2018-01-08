@@ -352,7 +352,7 @@
      type: "warning",
      showCancelButton: true,
      confirmButtonColor: "#DD6B55",
-     confirmButtonText: "Ya, Hapus Totorial!",
+     confirmButtonText: "Ya, Hapus Tutorial!",
      cancelButtonText: "Tidak, Batalkan!",
      closeOnConfirm: false,
      closeOnCancel: false

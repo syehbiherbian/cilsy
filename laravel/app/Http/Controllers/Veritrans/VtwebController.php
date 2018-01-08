@@ -9,6 +9,10 @@ use App\Veritrans\Veritrans;
 use DateTime;
 use DB;
 use Session;
+use Mail;
+use App\Mail\InvoiceMail;
+use App\Mail\SuksesMail;
+
 
 class VtwebController extends Controller {
 	public function __construct() {
@@ -44,36 +48,11 @@ class VtwebController extends Controller {
 			),
 		];
 
-		// Populate customer's billing address
-		// $billing_address = array(
-		//     'first_name'        => "Andri",
-		//     'last_name'         => "Setiawan",
-		//     'address'           => "Karet Belakang 15A, Setiabudi.",
-		//     'city'              => "Jakarta",
-		//     'postal_code'       => "51161",
-		//     'phone'             => "081322311801",
-		//     'country_code'      => 'IDN'
-		//     );
-
-		// Populate customer's shipping address
-		// $shipping_address = array(
-		//     'first_name'    => "John",
-		//     'last_name'     => "Watson",
-		//     'address'       => "Bakerstreet 221B.",
-		//     'city'              => "Jakarta",
-		//     'postal_code' => "51162",
-		//     'phone'             => "081322311801",
-		//     'country_code'=> 'IDN'
-		//     );
 
 		// Populate customer's Info
 		$customer_details = array(
 			'first_name' => $members->username,
-			// 'last_name'             => "Setiawan",
 			'email' => $members->email,
-			// 'phone'                 => "081322311801",
-			// 'billing_address'       => $billing_address,
-			// 'shipping_address'      => $shipping_address
 		);
 
 		// Data yang akan dikirim untuk request redirect_url.
@@ -133,7 +112,6 @@ class VtwebController extends Controller {
 						]);
 						// Create New Services
 						$this->create_services($order_id);
-
 					}
 				}
 			} else if ($transaction == 'settlement') {
@@ -145,6 +123,7 @@ class VtwebController extends Controller {
 				]);
 				// Create New Services
 				$this->create_services($order_id);
+			
 			} else if ($transaction == 'pending') {
 				// TODO set payment status in merchant's database to 'Pending'
 				DB::table('invoice')->where('code', '=', $order_id)->update([
@@ -152,6 +131,8 @@ class VtwebController extends Controller {
 					'type' => $type,
 					'notes' => "Waiting customer to finish transaction order_id: " . $order_id . " using " . $type,
 				]);
+				//send mail invoice pending
+				$this->send_mail($order_id);
 			} else if ($transaction == 'deny') {
 				// TODO set payment status in merchant's database to 'Denied'
 				DB::table('invoice')->where('code', '=', $order_id)->update([
@@ -167,6 +148,19 @@ class VtwebController extends Controller {
 
 	}
 
+	private function send_mail($order_id){
+		$invoice = DB::table('invoice')->where('code', '=', $order_id)->first();
+		$members = DB::table('members')->where('id', '=', $invoice->members_id)->first();
+		$send = members::findOrFail($members->id);
+		Mail::to($members->email)->send(new InvoiceMail($send));
+	}
+	
+	private function sukses_mail($order_id){
+		$invoice = DB::table('invoice')->where('code', '=', $order_id)->first();
+		$members = DB::table('members')->where('id', '=', $invoice->members_id)->first();
+		$send = members::findOrFail($members->id);
+		Mail::to($members->email)->send(new SuksesMail($send));
+	}
 	private function create_services($order_id) {
 		// echo "create new services";
 		# If invoice status completed
@@ -234,7 +228,8 @@ class VtwebController extends Controller {
 				'updated_at' => $now,
 			]);
 
-			echo "Services successfully added";
+			echo "Services successfully added";			
+
 		}
 	}
 }

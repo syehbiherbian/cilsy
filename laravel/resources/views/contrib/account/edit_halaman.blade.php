@@ -52,13 +52,14 @@
         <div class="tab-content" >
 
         <!-- left column -->
-      <form class="form-horizontal" role="form">
+      <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
+      {{ csrf_field() }}
       <div class="col-md-3">
         <div class="text-center">
-          <img src="{{$contrib->avatar}}" class="avatar img-circle" alt="avatar" style="height: 150px; width: 150px;">
+          <img src="{{ $contrib->avatar}}" style="height: 150px; width: 150px;" class="avatar img-circle" alt="avatar">
           <h6>Upload a different photo...</h6>
           
-          <input type="file" class="form-control" name="avatar" disabled>
+          <input type="file" class="form-control" name="avatar">
         </div>
       </div>
       
@@ -68,38 +69,38 @@
           <div class="form-group">
             <label class="col-lg-3 control-label">Username :</label>
             <div class="col-lg-8">
-              <input class="form-control" type="text" value="{{ $contrib->username }}" name="username" disabled="">
+              <input class="form-control" type="text" value="{{ $contrib->username }}" name="username">
             </div>
           </div>
           <div class="form-group">
             <label class="col-lg-3 control-label">First name:</label>
             <div class="col-lg-8">
-              <input class="form-control" type="text" value="{{ $contrib->first_name }}" name="first_name" disabled="">
+              <input class="form-control" type="text" value="{{ $contrib->first_name }}" name="first_name">
             </div>
           </div>
           <div class="form-group">
             <label class="col-lg-3 control-label">Last name:</label>
             <div class="col-lg-8">
-              <input class="form-control" type="text" value="{{ $contrib->last_name }}" name="last_name" disabled="">
+              <input class="form-control" type="text" value="{{ $contrib->last_name }}" name="last_name">
             </div>
           </div>
           <div class="form-group">
             <label class="col-lg-3 control-label">Pekerjaan :</label>
             <div class="col-lg-8">
-              <input class="form-control" type="text" value="{{ $contrib->pekerjaan }}" name="pekerjaan" disabled="">
+              <input class="form-control" type="text" value="{{ $contrib->pekerjaan }}" name="pekerjaan">
             </div>
           </div>
           <div class="form-group">
             <label class="col-lg-3 control-label">Tempat Lahir:</label>
             <div class="col-lg-8">
-              <input class="form-control" type="text" value="{{ $contrib->tempat_lahir }}" name="tempat_lahir" disabled="">
+              <input class="form-control" type="text" value="{{ $contrib->tempat_lahir }}" name="tempat_lahir">
             </div>
           </div>
           <div class="form-group">
             <label class="col-lg-3 control-label">Tanggal Lahir:</label>
             <div class="col-lg-8">
               <div class="input-group date">
-              <input type="text" class="form-control" value="{{ $contrib->tanggal_lahir }}" name="tanggal_lahir" disabled="">
+              <input type="text" class="form-control" value="{{ $contrib->tanggal_lahir }}" name="tanggal_lahir">
               <div class="input-group-addon">
                   <span class="fa fa-calendar"></span>
               </div>
@@ -109,12 +110,14 @@
           <div class="form-group">
             <label class="col-md-3 control-label">Bio:</label>
             <div class="col-md-8">
-              <textarea class="form-control" value="" name="bio" id="" cols="30" rows="10" disabled="">{{ $contrib->deskripsi }}</textarea>
+              <textarea class="form-control" name="bio" id="" cols="30" rows="10">{{ $contrib->deskripsi }}</textarea>
             </div>
           </div>
           <div class="form-group">
-            <div class="col-md-2 pull-right">
-              <a href="{{ url('contributor/account/profile/'.$contrib->id.'/edit') }}" class="btn btn-info">Edit</a>
+            <div class="col-md-4 pull-right">
+              <input type="submit" class="btn btn-primary" value="Save Changes">
+              <span></span>
+              <input type="reset" class="btn btn-default" value="Cancel">
             </div>
           </div>
       </div>
@@ -125,4 +128,11 @@
     </div>
   </div>
 </div>
+<script>
+  $(function(){
+   $('.date').datepicker({
+      format: 'dd/mm/yyyy'
+    });
+});
+</script>
 @endsection()

@@ -111,7 +111,7 @@ hr {
         width: 100%;
 }
 .kotak {
-    margin-bottom: 20px;
+	margin-bottom: 20px;
 }
 }
 .plan-highlight {
