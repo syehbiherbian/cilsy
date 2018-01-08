@@ -67,7 +67,7 @@
     </li>
     <li>
       <div>
-        <time>Pilih Paket Langganan</time> <a href="{{ url('harga')}}" target="_blank">Pilih Paket</a> sesuai budget dan kebutuhan anda
+        <time>Pilih Paket Langganan</time> <a href="{{ url('member/package')}}" target="_blank">Pilih Paket</a> sesuai budget dan kebutuhan anda
       </div>
     </li>
     <li>
@@ -90,7 +90,7 @@
 <section class="intro">
   <div class="container">
     <h1>Akses ke semua tutorial sekarang!</h1>
-    <a class="btn button-daftar"  href="{{ url('/harga') }}">Lihat Harga Paket</a>
+    <a class="btn button-daftar"  href="{{ url('/member/package') }}">Lihat Harga Paket</a>
     <a class="btn button-harga" href="{{ url('/member/signup') }}" >Buat akun sekarang</a>
   </div>
 </section>	

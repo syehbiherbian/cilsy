@@ -21,7 +21,7 @@
         <div class="middle-wrap">
           <div class="inner text-center">
             <?php if (Session::get('memberID')): ?>
-              <a href="{{ url('member/packages')}}" class="btn btn-default btn-lg">Pilih Paket</a>
+              <a href="{{ url('member/package')}}" class="btn btn-default btn-lg">Pilih Paket</a>
             <?php else: ?>
               <a href="{{ url('member/signup')}}" class="btn btn-default btn-lg">Buat Akun</a>
             <?php endif;?>
