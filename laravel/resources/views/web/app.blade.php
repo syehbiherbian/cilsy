@@ -305,17 +305,30 @@
                         <img src="{{asset('template/kontributor/img/icon/Notifikasi.png')}}" alt="" style="height: 28px; padding: 0 12px; position: relative; margin-top: 10px;">
             </li>
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Halo, <?=Helper::member('username');?> <span class="caret"></span></a>
+              <a class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                Halo, <?=Helper::member('username');?>
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                <li><a href="{{ url('member/profile') }}">Profil</a></li>
+                <li><a href="{{ url('member/change-password') }}">Ubah Password</a></li>
+                <li><a href="{{ url('member/point') }}">Point</a></li>
+                <li><a href="{{ url('member/subscriptions') }}">Riwayat dan Status langganan</a></li>
+                <li><a href="{{ url('member/signout') }}">Keluar</a></li>
+              </ul>
+            </li>
+            <!-- <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Halo, <?php //Helper::member('username');?> <span class="caret"></span></a>
               <ul class="dropdown-menu">
                 <li style="padding: 15px; background: #fff;">
                   <table cellpadding="15">
                     <tr>
                       <td>Status Paket</td>
-                      <td>: <?=Helper::package('title');?></td>
+                      <td>: <?php //Helper::package('title');?></td>
                     </tr>
                     <tr>
                       <td>Masa Aktif</td>
-                      <td>: <?=Helper::package('expired');?> hari</td>
+                      <td>: <?php //Helper::package('expired');?> hari</td>
                     </tr>
                     <tr>
                       <td><a href="{{ url('member/package') }}" class="btn btn-danger btn-package">Perpanjang</a></td>
@@ -327,9 +340,9 @@
                 <!-- <li><a href="#">Another action</a></li>
                 <li><a href="#">Something else here</a></li>
                 <li role="separator" class="divider"></li>
-                <li><a href="#">Separated link</a></li> -->
+                <li><a href="#">Separated link</a></li> -
               </ul>
-            </li>
+            </li> -->
           </ul>
           <?php } else {?>
             <ul class="nav navbar-nav navbar-right">

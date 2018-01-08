@@ -10,7 +10,7 @@ use App\Http\Requests;
 use Validator;
 use Redirect;
 use App\members;
-// use App\invoice;
+use App\Points;
 // use App\packages;
 use Session;
 // use Hash;
@@ -33,8 +33,15 @@ class PointController extends Controller
       }
       $members = members::where('status',1)->where('id',$mem_id)->first();
       if ($members) {
+
+        $point_question = Points::where('status',0)->where('type','QUESTION')->where('member_id',$mem_id)->sum('value');
+        $point_reply    = Points::where('status',0)->where('type','REPLY')->where('member_id',$mem_id)->sum('value');
+        $point_complete = Points::where('status',0)->where('type','COMPLETE')->where('member_id',$mem_id)->sum('value');
         return view('web.members.point', [
-          'members' => $members
+          'members'         => $members,
+          'point_question'  => $point_question,
+          'point_reply'     => $point_reply,
+          'point_complete'  => $point_complete
         ]);
       }else {
         return redirect('/member/signin');

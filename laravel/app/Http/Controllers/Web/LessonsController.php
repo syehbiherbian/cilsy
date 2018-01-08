@@ -20,6 +20,7 @@ use App\members;
 use App\services;
 use App\lessons_detail;
 use App\lessons_detail_view;
+use App\Points;
 
 class LessonsController extends Controller {
 	public function index($by, $keyword) {
@@ -103,8 +104,6 @@ class LessonsController extends Controller {
 			$contributors = DB::table('contributors')->where('id',$lessons->contributor_id)->first();
 			$contributors_total_lessons = lessons::where('enable', '=', 1)->where('contributor_id', '=', $lessons->contributor_id)->get();
 			$contributors_total_view 		= 0;
-      //
-      //
 			foreach ($contributors_total_lessons as $key => $lesson) {
 				$videos = videos::where('lessons_id',$lesson->id)->get();
 				if ($videos) {
@@ -165,7 +164,7 @@ class LessonsController extends Controller {
 					$update->hits 			= $viewers->hits + 1;
 					$update->updated_at = $now;
 					if ($update->save()) {
-						return 'true';
+							return 'true';
 					}
 				}else { // Create new Viewers
 
@@ -177,9 +176,41 @@ class LessonsController extends Controller {
 					$store->created_at 	= $now;
 					$store->updated_at 	= $now;
 					if($store->save()){
-						return 'true';
+						if($this->createCompletePoints($video->lessons_id,$mem_id)){
+							return 'true';
+						}
 					}
 				}
+
+
+
+			}
+		}
+	}
+
+	private static function createCompletePoints($lessons_id,$mem_id)
+	{
+		// create points
+		$now = new DateTime();
+		$total_videos 	= videos::where('lessons_id',$lessons_id)->where('enable',1)->get();
+		$total_viewing 	= 0;
+		foreach ($total_videos as $key => $totv) {
+			$view 	= Viewers::where('video_id',$totv->id)->where('member_id',$mem_id)->first();
+			if ($view) {
+				$total_viewing = $total_viewing + 1;
+			}
+		}
+
+		if ($total_viewing >= count($total_videos) ) {
+			$point = new Points;
+			$point->status 		= 0;
+			$point->member_id	= $mem_id;
+			$point->type 			= 'COMPLETE';
+			$point->value 		= 10;
+			$point->created_at= $now;
+			$point->updated_at= $now;
+			if($point->save()){
+				return true;
 			}
 		}
 	}
@@ -272,9 +303,30 @@ class LessonsController extends Controller {
 			]);
 
 			if ($store) {
-				$response['success'] 		= true;
-			}
 
+				// Create Point
+				if ($parent_id == 0) { // Berkomentar
+					$point = new Points;
+					$point->status 		= 0;
+					$point->member_id	= $uid;
+					$point->type 			= 'QUESTION';
+					$point->value 		= 2;
+					$point->created_at= $now;
+					$point->updated_at= $now;
+				}else { // Membalas Komentar
+					$point = new Points;
+					$point->status 		= 0;
+					$point->member_id	= $uid;
+					$point->type 			= 'REPLY';
+					$point->value 		= 3;
+					$point->created_at= $now;
+					$point->updated_at= $now;
+				}
+
+				if ($point->save()) {
+					$response['success'] 		= true;
+				}
+			}
 		}
 
 		echo json_encode($response);

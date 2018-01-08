@@ -47,7 +47,7 @@
                 </div>
                 <div class="text-center">
                   <h3 class="name">Muhammad</h3>
-                  <p class="total-point">210 pts</p>
+                  <p class="total-point"><?= $point_question + $point_reply + $point_complete;?> pts</p>
                 </div>
               </div>
             </div>
@@ -57,7 +57,7 @@
                   <div class="inner">
                     <img src="" alt="">
                     <p>Bertanya</p>
-                    <p>210 pts</p>
+                    <p>{{ $point_question }} pts</p>
                   </div>
                 </div>
               </div>
@@ -66,7 +66,7 @@
                   <div class="inner">
                     <img src="" alt="">
                     <p>Menjawab Pertanyaan</p>
-                    <p>210 pts</p>
+                    <p>{{ $point_reply }} pts</p>
                   </div>
                 </div>
               </div>
@@ -75,7 +75,7 @@
                   <div class="inner">
                     <img src="" alt="">
                     <p>Menyeselesaikan Tutorial</p>
-                    <p>210 pts</p>
+                    <p>{{ $point_complete }} pts</p>
                   </div>
                 </div>
               </div>
