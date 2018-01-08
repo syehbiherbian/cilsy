@@ -49,7 +49,7 @@ class PackageController extends Controller
           $packages       = packages::where('id','=',$packages_id)->first();
           $member_id      = Session::get('memberID');
           $now            = new DateTime();
-          var_dump($packages_id);
+          // var_dump($packages_id);
 
           $code           = $this->generateCode();
           // store
