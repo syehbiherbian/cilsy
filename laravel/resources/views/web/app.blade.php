@@ -228,15 +228,15 @@
 
     <nav class="navbar navbar-default navbar-fixed-top">
     <div class="global-notification">
-    <div class="container">
+    {{--  <div class="container">
     <h4>
-    <a href="{{ url('member/package') }}"><font color="red">2 hari lagi promo potongan harga 10% berakhir! Pesan Segera Disini!</font></a>
+    <a href="{{ url('member/package') }}"><font color="red">HARI INI promo potongan harga 10% berakhir! Pesan Segera Disini!</font></a>
     </h4>
     <span id='close' onclick='this.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode); return false;' style="    position: absolute;
     right: 20px;
     top: 10px;">x</span>
 
-    </div>
+    </div>  --}}
     </div>
       <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
