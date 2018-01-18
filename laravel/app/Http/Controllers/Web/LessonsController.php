@@ -58,47 +58,6 @@ class LessonsController extends Controller {
 	  if (count($lessons) > 0) {
 				$main_videos = videos::where('enable', '=', 1)->where('lessons_id', '=', $lessons->id)->orderBy('id', 'asc')->get();
 				$files = files::where('enable', '=', 1)->where('lesson_id', '=', $lessons->id)->orderBy('id', 'asc')->get();
-
-
-
-	    //
-			// $date= $now->format('Y-m-d');
-			// $moth=$now->format('m');
-			// $year=$now->format('Y');
-			// $check=lessons_detail::where('lesson_id',$lessons->id)->where('moth',$moth)->where('year',$year)->first();
-	    //
-			// //hitung view;
-			// if(count($check) == 0){
-			// 	$store                  = new lessons_detail;
-			// 	$store->lesson_id       = $lessons->id;
-			// 	$store->moth           = $moth;
-			// 	$store->year		    = $year;
-			// 	$store->view			= 1;
-			// 	$store->created_at      = $now;
-			// 	$store->save();
-	    //
-			// 	$detail = new lessons_detail_view;
-			// 	$detail->detail_id =$store->id;
-			// 	$detail->member_id =$mem_id;
-			// 	$detail->created_at= $now;
-			// 	$detail->save();
-	    //
-			// }else{
-			// 	$checkdetail= lessons_detail_view::where('detail_id',$check->id)->where('member_id',$mem_id)->get();
-			// 	if(count($checkdetail) == 0 ){
-			// 		$store                  = lessons_detail::find($check->id);
-			// 		$store->view			= $check->view + 1;
-			// 		$store->updated_at      = $now;
-			// 		$store->save();
-	    //
-			// 		$detail = new lessons_detail_view;
-			// 		$detail->detail_id =$store->id;
-			// 		$detail->member_id =$mem_id;
-			// 		$detail->created_at= $now;
-			// 		$detail->save();
-			// 	}
-	    //
-			// }
 			// Contributor
 			$contributors = DB::table('contributors')->where('id',$lessons->contributor_id)->first();
 			$contributors_total_lessons = lessons::where('enable', '=', 1)->where('contributor_id', '=', $lessons->contributor_id)->get();

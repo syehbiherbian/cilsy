@@ -309,7 +309,7 @@
           <?php if (!empty(Session::get('memberID'))) {?>
             <div class="header-menu">
                 <ul>
-                    <li><span class="hello-user"><a href="{{ url('pages/carapesan') }}">Tutorial Saya</a></span></li>
+                    <li><span class="hello-user"><a href="{{ url('member/dashboard') }}">Tutorial Saya</a></span></li>
                     <li class="has-dropdown">
                         <img src="{{asset('template/kontributor/img/icon/Notifikasi.png')}}" alt="">
                         <div class="dropdown-container">

@@ -16,6 +16,7 @@ Route::get('/', 'Web\HomeController@index');
 // LESSONS PAGE
 Route::get('lessons/{by}/{keyword}', 'Web\LessonsController@index');
 Route::get('lessons/{lessons}', 'Web\LessonsController@detail');
+Route::get('dashboard/{lessons}', 'Web\Members\LessonsMemberController@detail');
 Route::post('lessons/getplaylist', 'Web\LessonsController@getplaylist');
 Route::get('lessons/coments/getComments/{lesson_id}','Web\LessonsController@getComments');
 Route::post('lessons/coments/doComment','Web\LessonsController@doComment');
@@ -105,9 +106,7 @@ Route::get('member/reset', 'Web\Members\AuthController@forgetpassword');
 Route::post('member/reset', 'Web\Members\AuthController@doforgetpassword');
 Route::post('member/reset/update', 'Web\Members\AuthController@doupdate');
 Route::get('member/reset/update/{token}', 'Web\Members\AuthController@updatereset');
-Route::get('member/dashboard', function () {
-	echo "Halaman Member !";
-});
+Route::get('member/dashboard', 'Web\Members\LessonsMemberController@index');
 
 Route::get('member/package', 'Web\Members\PackageController@index');
 Route::post('member/package', 'Web\Members\PackageController@dopackage');

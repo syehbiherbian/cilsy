@@ -417,7 +417,7 @@ function getPlayList() {
         player.playlist.autoadvance(JSON.parse(value));
       });
     });
-
+    
     /* ADD PREVIOUS */
     var Button = videojs.getComponent('Button');
 
