@@ -156,7 +156,7 @@ class AuthController extends Controller {
 				$mail->SMTPDebug = 3; // Enable verbose debug output
 
 				$mail->isSMTP(); // Set mailer to use SMTP
-				$mail->Host = 'localhost'; // Specify main and backup SMTP servers
+				$mail->Host = 'email.cilsy.id'; // Specify main and backup SMTP servers
 				$mail->SMTPAuth = true; // Enable SMTP authentication
 				$mail->Username = 'noreply@cilsy.id'; // SMTP username
 				$mail->Password = '5cb09re'; // SMTP password
