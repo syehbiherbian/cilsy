@@ -49,7 +49,7 @@ class AuthController extends Controller {
 			// store
 			$member = members::where('email', '=', $email)->where('password', '=', $password)->first();
 
-			if (count($member) > 0) {
+			if ($member > 0) {
 				Session::set('memberID', $member->id);
 				// redirect
 				return redirect('/')->with('success', 'Selamat datang kembali,' . $member->username);
@@ -57,7 +57,7 @@ class AuthController extends Controller {
 				// return redirect('member/dashboard')->with('success','Selamat datang,'.$member->username);
 			} else {
 				// redirect
-				return redirect()->back()->with('error', 'Akun tidak di temukan !');
+				return redirect()->back()->with('error', 'Username atau Password Salah');
 			}
 		}
 	}
@@ -156,10 +156,10 @@ class AuthController extends Controller {
 				$mail->SMTPDebug = 3; // Enable verbose debug output
 
 				$mail->isSMTP(); // Set mailer to use SMTP
-				$mail->Host = 'localhost'; // Specify main and backup SMTP servers
+				$mail->Host = 'mail.cilsy.id'; // Specify main and backup SMTP servers
 				$mail->SMTPAuth = true; // Enable SMTP authentication
 				$mail->Username = 'noreply@cilsy.id'; // SMTP username
-				$mail->Password = '5cb09re'; // SMTP password
+				$mail->Password = '@Noreply0055@.'; // SMTP password
 				$mail->SMTPSecure = 'ssl'; // Enable TLS encryption, `ssl` also accepted
 				$mail->Port = 465; // TCP port to connect to
 				#$mail->SMTPOptions = ['ssl' => ['allow_self_signed' => true]];
