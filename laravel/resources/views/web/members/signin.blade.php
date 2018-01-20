@@ -9,25 +9,6 @@
 
     <div class="tab-content">
         <div id="tab-1-content" style="display: none;">
-            <!-- <form>
-                <div class="form-group">
-                    <label for="exampleInputEmail1">Nama Lengkap :</label>
-                    <input type="nama" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label for="exampleInputPassword1">Email :</label>
-                    <input type="email" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label for="exampleInputFile">Password :</label>
-                    <input type="password" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label for="exampleInputFile">Konfirmasi Password :</label>
-                    <input type="password" class="form-control">
-                </div>
-                <button type="submit" class="btn btn-primary">DAFTAR</button>
-            </form> -->
         </div>
         <div id="tab-2-content" >
 
