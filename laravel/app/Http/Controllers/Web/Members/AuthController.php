@@ -52,7 +52,15 @@ class AuthController extends Controller {
 			if ($member > 0) {
 				Session::set('memberID', $member->id);
 				// redirect
+				if(Session::get('invoiceCODE')){
+				DB::table('invoice')->where('code', '=', Session::get('invoiceCODE'))->update([
+					'members_id' => $member->id,
+				]);
+				return redirect('checkout');
+			}else{
 				return redirect('/')->with('success', 'Selamat datang kembali,' . $member->username);
+			}
+				
 
 				// return redirect('member/dashboard')->with('success','Selamat datang,'.$member->username);
 			} else {
