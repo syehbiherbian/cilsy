@@ -49,7 +49,7 @@ class AuthController extends Controller {
 			// store
 			$member = members::where('email', '=', $email)->where('password', '=', $password)->first();
 
-			if ($member > 0) {
+			if ($member) {
 				Session::set('memberID', $member->id);
 				// redirect
 				if(Session::get('invoiceCODE')){
@@ -104,8 +104,8 @@ class AuthController extends Controller {
 			$members->password = $password;
 			$members->created_at = $now;
 			$members->save();
-			// $send = members::findOrFail($members->id);
-			// Mail::to($members->email)->send(new InformasiUser($send));
+			$send = members::findOrFail($members->id);
+			Mail::to($members->email)->send(new InformasiUser($send));
 			// store
 			$member = members::where('username', '=', $username)->where('email', '=', $email)->first();
 
