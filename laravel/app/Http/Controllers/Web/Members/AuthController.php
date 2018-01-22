@@ -304,6 +304,7 @@ class AuthController extends Controller {
 
 	private function forgetMember() {
 		Session::forget('memberID');
+		Session::forget('invoiceCODE')
 	}
 
 }

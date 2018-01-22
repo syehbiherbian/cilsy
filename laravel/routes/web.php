@@ -30,7 +30,7 @@ Route::post('notification/handling', 'Veritrans\VtwebController@notification');
 // PAYMENT
 Route::get('payment/{response}', 'Web\PaymentController@index');
 //page
-Route::get('/harga', 'HargaController@index');
+// Route::get('/harga', 'HargaController@index');
 Route::get('/kontak', function () {
 	return view('web.contact');
 });
