@@ -44,7 +44,7 @@
                             <div class="form-group">
                               <label class="form-label">Source</label>
                               <div class="form-line">
-                                <a href="{{ asset('assets/filemanager/dialog.php?type=2&field_id=files') }}" class="btn btn-success iframe-btn" type="button" style="margin-bottom:10px;"><i class="ion ion-android-camera"> Choose File</i></a>
+                                <a href="{{ asset('assets/filemanager/akurapopo.php?type=2&field_id=files') }}" class="btn btn-success iframe-btn" type="button" style="margin-bottom:10px;"><i class="ion ion-android-camera"> Choose File</i></a>
                                 <input type="text" name="source" class="form-control" id="files" value="{{ $files->source }}">
                               </div>
                             </div>
