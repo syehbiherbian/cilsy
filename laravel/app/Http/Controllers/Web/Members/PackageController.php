@@ -43,8 +43,6 @@ class PackageController extends Controller
           return redirect()->back()->withErrors($validator)->withInput();
       } else {
 
-
-
           $packages_id    = Input::get('packages_id');
           $packages       = packages::where('id','=',$packages_id)->first();
           $member_id      = Session::get('memberID');
@@ -66,6 +64,7 @@ class PackageController extends Controller
           Session::set('invoiceCODE',$invoice->code);
           if($member_id == null){
                 return redirect('member/signup');
+                // dd(Session::get('invoiceCODE'));
           } else{
             # code...
             return redirect('checkout');

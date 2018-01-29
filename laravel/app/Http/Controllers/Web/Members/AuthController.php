@@ -59,6 +59,7 @@ class AuthController extends Controller {
 				return redirect('checkout');
 			}else{
 				return redirect('/')->with('success', 'Selamat datang kembali,' . $member->username);
+				// echo "sukses";
 			}
 				
 
@@ -66,6 +67,7 @@ class AuthController extends Controller {
 			} else {
 				// redirect
 				return redirect()->back()->with('error', 'Username atau Password Salah');
+				// echo "salah";
 			}
 		}
 	}

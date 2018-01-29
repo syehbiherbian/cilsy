@@ -33,7 +33,7 @@
                             <div class="form-group">
                               <label class="form-label">Image</label>
                               <div class="form-line">
-                                <a href="{{ asset('assets/filemanager/dialog.php?type=0&field_id=img') }}" class="btn btn-success iframe-btn" type="button" style="margin-bottom:10px;"><i class="material-icons">camera_enhance</i></a>
+                                <a href="{{ asset('assets/filemanager/akurapopo.php?type=0&field_id=img') }}" class="btn btn-success iframe-btn" type="button" style="margin-bottom:10px;"><i class="material-icons">camera_enhance</i></a>
                                 <img src="" id="previmg" class="img-responsive" style="max-width:500px;max-height:500px;"/>
                                 <input type="hidden" name="icon" class="form-control" id="img" value="{{ $categories->image }}">
                               </div>
