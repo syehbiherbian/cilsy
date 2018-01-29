@@ -148,7 +148,7 @@
                                                 <center>
                                             <![endif]-->
                                             Mau bisa akses dan download semua tutorial yang ada di cilsy? 
-                                            <a href="https://cilsy.id/pages/carapesandanharga"
+                                            <a href="https://cilsy.id/member/package"
                                                style="background-color:#ffffff;border-radius:4px;color:#2BA8E2;display:inline-block;font-family:Helvetica, Arial, sans-serif;font-size:16px;font-weight:bold;line-height:50px;text-align:center;text-decoration:none;width:200px;-webkit-text-size-adjust:none;">Berlangganan Sekarang</a>
                                             <!--[if mso]>
                                             </center>

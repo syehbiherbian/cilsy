@@ -180,7 +180,7 @@ hr {
   <ul class="price-recomended">
     <li class="header">Premium</li>
     <hr>
-    {{--  <li class="grey"><font color="red"><font size="3"><strike>Rp. 349000</strike> | Diskon 10%!</font></font>  --}}
+      <li class="grey"><font color="red"><font size="3"><strike>Rp. 349000</strike> | Cashback 25k!</font></font>  
     <li class="grey">Rp. <?=$packages['1']->price;?> / <?=$packages['1']->expired;?> Hari</li>
     <li>Bebas Streaming ke Semua Video Tutorial</li>
     <li>Update Hingga 50 Video lebih perbulan</li>
@@ -201,7 +201,7 @@ hr {
   <ul class="price">
     <li class="header">Platinum</li>
     <hr>
-    {{--  <font color="red"><font size="3"><strike>Rp. 499000</strike> | Diskon 10%!</font></font>  --}}
+      <li class="grey"><font color="red"><font size="3"><strike>Rp. 499000</strike> | Cashback 50k!</font></font>  
     <li class="grey">Rp. <?=$packages['2']->price;?> / <?=$packages['2']->expired;?> Hari</li>
     <li>Bebas Streaming ke Semua Video Tutorial</li>
     <li>Update Hingga 50 Video lebih perbulan</li>

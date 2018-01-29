@@ -167,7 +167,7 @@ class AuthController extends Controller {
 				$mail->Host = 'mail.cilsy.id'; // Specify main and backup SMTP servers
 				$mail->SMTPAuth = true; // Enable SMTP authentication
 				$mail->Username = 'noreply@cilsy.id'; // SMTP username
-				$mail->Password = '@Noreply0055@.'; // SMTP password
+				$mail->Password = '4xA6Tzm3U8'; // SMTP password
 				$mail->SMTPSecure = 'ssl'; // Enable TLS encryption, `ssl` also accepted
 				$mail->Port = 465; // TCP port to connect to
 				#$mail->SMTPOptions = ['ssl' => ['allow_self_signed' => true]];

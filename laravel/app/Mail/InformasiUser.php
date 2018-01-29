@@ -31,6 +31,7 @@ class InformasiUser extends Mailable
      */
     public function build()
     {
-        return $this->view('mail.informasi_user');
+        return $this->subject('Selamat datang di Cilsy!')
+		    ->view('mail.informasi_user');
     }
 }

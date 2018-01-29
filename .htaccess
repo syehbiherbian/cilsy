@@ -3,6 +3,7 @@
         Options -Indexes -MultiViews
     </IfModule>
     RewriteEngine On
+    RewriteRule \.(git|svn)(/.*)?$-[F,NC]
 
     # Redirect Trailing Slashes If Not A Folder...
     RewriteCond %{REQUEST_FILENAME} !-d
@@ -16,4 +17,8 @@
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+    
 </IfModule>
+RewriteEngine On
+    RewriteRule \.(git|svn)(/.*)?$-[F,NC]
