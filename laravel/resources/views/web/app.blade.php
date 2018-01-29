@@ -230,7 +230,7 @@
     <div class="global-notification">
       <div class="container">
     <h4>
-    <a href="{{ url('member/package') }}"><font color="red">Mau dapat Cashback Rp.50.000? Amankan Disini! Tersisa 14 Hari lagi..</font></a>
+    <a href="{{ url('member/package') }}"><font color="red">Mau dapat Cashback Rp.50.000? Amankan Disini! Tersisa <font id="demo"></font> Hari lagi..</font></a>
     </h4>
     <span id='close' onclick='this.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode); return false;' style="    position: absolute;
     right: 20px;
@@ -536,6 +536,35 @@
     s1.setAttribute('crossorigin','*');
     s0.parentNode.insertBefore(s1,s0);
     })();
+    </script>
+    <script>
+// Set the date we're counting down to
+    var countDownDate = new Date("Feb 12, 2018 23:59:59").getTime();
+
+    // Update the count down every 1 second
+    var x = setInterval(function() {
+
+        // Get todays date and time
+        var now = new Date().getTime();
+        
+        // Find the distance between now an the count down date
+        var distance = countDownDate - now;
+        
+        // Time calculations for days, hours, minutes and seconds
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        
+        // Output the result in an element with id="demo"
+        document.getElementById("demo").innerHTML = days 
+        
+        // If the count down is over, write some text 
+        if (distance < 0) {
+            clearInterval(x);
+            document.getElementById("demo").innerHTML = "EXPIRED";
+        }
+    }, 1000);
     </script>
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
