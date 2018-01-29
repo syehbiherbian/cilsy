@@ -227,6 +227,7 @@
     <!-- Navbar -->
 
     <nav class="navbar navbar-default navbar-fixed-top">
+    <?php if (empty(Session::get('memberID'))) {?>
     <div class="global-notification">
       <div class="container">
     <h4>
@@ -238,6 +239,7 @@
 
     </div>  
     </div>
+    <?php } ?>
       <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
