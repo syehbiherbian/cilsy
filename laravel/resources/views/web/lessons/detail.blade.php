@@ -549,6 +549,10 @@
     -ms-flex: none;
     flex: none;
 }
+.vjs-error .vjs-error-display .vjs-modal-dialog-content {
+    font-size: 16px;
+    text-align: center;
+}
 </style>
 
 <div id="content-section">
