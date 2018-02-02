@@ -111,7 +111,7 @@ class LessonsController extends Controller {
 						'src' => $video->video,
 						'type' => $video->type_video,
 					]),
-					'poster' => $video->image,
+					'poster' => null,
 					'thumbnail' => array([
 						'srcset' => $video->image,
 						'type' => 'image/png',
