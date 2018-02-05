@@ -49,13 +49,18 @@ class AuthController extends Controller {
 			// store
 			$member = members::where('email', '=', $email)->where('password', '=', $password)->first();
 
-			if ($member && Session::get('invoiceCODE')) {
+			if ($member) {
 				Session::set('memberID', $member->id);
 				// redirect
-				DB::table('invoice')->where('code', '=', Session::get('invoiceCODE'))->update([
+				if(Session::get('invoiceCODE')){
+					DB::table('invoice')->where('code', '=', Session::get('invoiceCODE'))->update([
 					'members_id' => $member->id,
 				]);
 				return redirect('checkout');
+			} else{
+				return redirect('/');
+			}
+				
 			}else{
 				return redirect()->back()->with('error', 'Username atau Password Salah');
 				// echo "sukses";
