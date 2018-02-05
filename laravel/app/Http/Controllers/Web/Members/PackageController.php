@@ -63,8 +63,9 @@ class PackageController extends Controller
           $invoice = invoice::where('code','=',$code)->first();
           Session::set('invoiceCODE',$invoice->code);
           if($member_id == null){
-                return redirect('member/signup');
                 // dd(Session::get('invoiceCODE'));
+                return redirect('member/signup');
+                
           } else{
             # code...
             return redirect('checkout');

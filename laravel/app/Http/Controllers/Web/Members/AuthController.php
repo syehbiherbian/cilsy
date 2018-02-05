@@ -49,26 +49,20 @@ class AuthController extends Controller {
 			// store
 			$member = members::where('email', '=', $email)->where('password', '=', $password)->first();
 
-			if ($member) {
+			if ($member && Session::get('invoiceCODE')) {
 				Session::set('memberID', $member->id);
 				// redirect
-				if(Session::get('invoiceCODE')){
 				DB::table('invoice')->where('code', '=', Session::get('invoiceCODE'))->update([
 					'members_id' => $member->id,
 				]);
 				return redirect('checkout');
 			}else{
-				return redirect('/')->with('success', 'Selamat datang kembali,' . $member->username);
+				return redirect()->back()->with('error', 'Username atau Password Salah');
 				// echo "sukses";
 			}
 				
 
 				// return redirect('member/dashboard')->with('success','Selamat datang,'.$member->username);
-			} else {
-				// redirect
-				return redirect()->back()->with('error', 'Username atau Password Salah');
-				// echo "salah";
-			}
 		}
 	}
 
@@ -114,9 +108,10 @@ class AuthController extends Controller {
 			Session::set('memberID', $member->id);
 			Session::set('membername', $member->username);
 
+			// dd(Session::get('invoiceCODE'));
 			if(Session::get('invoiceCODE')){
 				DB::table('invoice')->where('code', '=', Session::get('invoiceCODE'))->update([
-					'members_id' => $member->id,
+					'members_id' => $member->id
 				]);
 				return redirect('checkout');
 			}else{
@@ -128,7 +123,7 @@ class AuthController extends Controller {
 
 	public function signout() {
 		$this->forgetMember();
-
+		Session::forget('invoiceCODE');
 		return redirect('member/signin');
 	}
 
@@ -306,7 +301,7 @@ class AuthController extends Controller {
 
 	private function forgetMember() {
 		Session::forget('memberID');
-		Session::forget('invoiceCODE');
+		// 
 	}
 
 }
