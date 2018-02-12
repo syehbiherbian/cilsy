@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web\Members;
 use App\Http\Controllers\Controller;
 use App\Mail\ForgetPassword;
 use App\members;
+use App\invoice;
 use Mail;
 use DateTime;
 use DB;
@@ -48,16 +49,25 @@ class AuthController extends Controller {
 			// store
 			$member = members::where('email', '=', $email)->where('password', '=', $password)->first();
 
-			if (count($member) > 0) {
+			if ($member) {
 				Session::set('memberID', $member->id);
 				// redirect
-				return redirect('/')->with('success', 'Selamat datang kembali,' . $member->username);
+				if(Session::get('invoiceCODE')){
+					DB::table('invoice')->where('code', '=', Session::get('invoiceCODE'))->update([
+					'members_id' => $member->id,
+				]);
+				return redirect('checkout');
+			} else{
+				return redirect('/');
+			}
+				
+			}else{
+				return redirect()->back()->with('error', 'Username atau Password Salah');
+				// echo "sukses";
+			}
+				
 
 				// return redirect('member/dashboard')->with('success','Selamat datang,'.$member->username);
-			} else {
-				// redirect
-				return redirect()->back()->with('error', 'Akun tidak di temukan !');
-			}
 		}
 	}
 
@@ -102,14 +112,23 @@ class AuthController extends Controller {
 
 			Session::set('memberID', $member->id);
 			Session::set('membername', $member->username);
+
+			// dd(Session::get('invoiceCODE'));
+			if(Session::get('invoiceCODE')){
+				DB::table('invoice')->where('code', '=', Session::get('invoiceCODE'))->update([
+					'members_id' => $member->id
+				]);
+				return redirect('checkout');
+			}else{
+				return redirect('member/package')->with('success', 'Silahkan Pilih Paket Anda !');
+			}
 			// redirect
-			return redirect('member/package')->with('success', 'Silahkan Pilih Paket Anda !');
 		}
 	}
 
 	public function signout() {
 		$this->forgetMember();
-
+		Session::forget('invoiceCODE');
 		return redirect('member/signin');
 	}
 
@@ -147,10 +166,10 @@ class AuthController extends Controller {
 				$mail->SMTPDebug = 3; // Enable verbose debug output
 
 				$mail->isSMTP(); // Set mailer to use SMTP
-				$mail->Host = 'localhost'; // Specify main and backup SMTP servers
+				$mail->Host = 'mail.cilsy.id'; // Specify main and backup SMTP servers
 				$mail->SMTPAuth = true; // Enable SMTP authentication
 				$mail->Username = 'noreply@cilsy.id'; // SMTP username
-				$mail->Password = '5cb09re'; // SMTP password
+				$mail->Password = '4xA6Tzm3U8'; // SMTP password
 				$mail->SMTPSecure = 'ssl'; // Enable TLS encryption, `ssl` also accepted
 				$mail->Port = 465; // TCP port to connect to
 				#$mail->SMTPOptions = ['ssl' => ['allow_self_signed' => true]];
@@ -286,6 +305,7 @@ class AuthController extends Controller {
 
 	private function forgetMember() {
 		Session::forget('memberID');
+		// 
 	}
 
 }

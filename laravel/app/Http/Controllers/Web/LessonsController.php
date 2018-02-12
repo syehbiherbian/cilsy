@@ -20,6 +20,7 @@ use App\members;
 use App\services;
 use App\lessons_detail;
 use App\lessons_detail_view;
+use App\Quiz;
 
 class LessonsController extends Controller {
 	public function index($by, $keyword) {
@@ -108,8 +109,8 @@ class LessonsController extends Controller {
 			return redirect()->back()->withErrors($validator)->withInput();
 		} else {
 
-			$now 				= new DateTime();
-		  $ip_address = $this->getUserIP();
+			$now 		= new DateTime();
+		  	$ip_address = $this->getUserIP();
 			$videosrc 	= Input::get('videosrc');
 
 			$video 			= videos::where('video','like','%'.$videosrc.'%')->first();
@@ -141,6 +142,36 @@ class LessonsController extends Controller {
 				}
 			}
 		}
+	}
+	public function LessonsQuiz(){
+		if (Session::get('memberID')) {
+			$mem_id = Session::get('memberID');
+		}else {
+			$mem_id = 0;
+		}
+		$rules = array(
+			'videosrc'      => 'required|min:3|max:255'
+		);
+		$validator = Validator::make(Input::all(), $rules);
+
+		// process the login
+		if ($validator->fails()) {
+			return redirect()->back()->withErrors($validator)->withInput();
+		} else {
+
+			// $now 				= new DateTime();
+		 //  	$ip_address = $this->getUserIP();
+			$videosrc 	= Input::get('videosrc');
+
+			$video 		= videos::where('video','like','%'.$videosrc.'%')->first();
+			$check = Quiz::where('video_id', '=', $video->id)->first();
+
+			if ($check) {
+
+				return $check;
+			}
+		}
+
 	}
 
   //
@@ -394,26 +425,6 @@ class LessonsController extends Controller {
 				'created_at'    => new DateTime()
 		]);
 
-		// if(count($check)==1){
-		// 	$check_contri=Contributors::where('id',$uid)->first();
-		// 	if(count($check_contri)>0){
-		// 	  $contri = Contributors::find($uid);
-		// 	  $contri->points      = $check_contri->points + 3;
-		// 	  $contri->updated_at  = new DateTime();
-		// 	  $contri->save();
-		//
-		// 	  DB::table('contributor_notif')->insert([
-		// 		  'contributor_id'=> $uid,
-		// 		  'category'=>'point',
-		// 		  'title'   => 'Anda mendapatkan pemambahan 3 point',
-		// 		  'notif'        => 'Anda mendapatkan pemambahan sebanyak 3 point karena  mereplay komentar dari '.$lessons->title.' ',
-		// 		  'status'        => 0,
-		// 		  'created_at'    => new DateTime()
-		// 	  ]);
-		// 	}
-		//
-		// }
-
 		if($store){
 			DB::table('contributor_notif')->insert([
 				'contributor_id'=> $lessons->contributor_id,
@@ -473,7 +484,7 @@ class LessonsController extends Controller {
 					echo'	<div class="col-md-12" style="margin-top:10px;margin-bottom:10px;padding-left:5%;">';
 					echo''.$child->description.'';
 					echo'</div>';
-					echo'	<div class="clearfix"></div>';
+					echo'<div class="clearfix"></div>';
 					echo'</div>';
 
 					}
@@ -512,25 +523,6 @@ class LessonsController extends Controller {
 			'created_at'    => new DateTime()
 		]);
 		$check=DB::table('coments')->where('parent',$comment_id)->get();
-		// if(count($check)==1){
-		// 	$check_contri=Contributors::where('id',$uid)->first();
-		// 	if(count($check_contri)>0){
-		// 	  $contri = Contributors::find($uid);
-		// 	  $contri->points      = $check_contri->points + 3;
-		// 	  $contri->updated_at  = new DateTime();
-		// 	  $contri->save();
-		//
-		// 	  DB::table('contributor_notif')->insert([
-		// 		  'contributor_id'=> $uid,
-		// 		  'category'=>'point',
-		// 		  'title'   => 'Anda mendapatkan pemambahan 3 point',
-		// 		  'notif'        => 'Anda mendapatkan pemambahan sebanyak 3 point karena  mereplay komentar dari '.$lessons->title.' ',
-		// 		  'status'        => 0,
-		// 		  'created_at'    => new DateTime()
-		// 	  ]);
-		// 	}
-		//
-		// }
 
 		DB::table('contributor_notif')->insert([
 			'contributor_id'=> $lessons->contributor_id,
@@ -596,7 +588,7 @@ class LessonsController extends Controller {
 						'src' => $video->video,
 						'type' => $video->type_video,
 					]),
-					'poster' => $video->image,
+					'poster' => null,
 					'thumbnail' => array([
 						'srcset' => $video->image,
 						'type' => 'image/png',

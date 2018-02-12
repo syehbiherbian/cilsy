@@ -157,8 +157,8 @@ hr {
     <ul class="price">
     <li class="header">Pro</li>
     <hr>
-    <li class="grey"><font color="red"><font size="3"><strike>Rp. 119000</strike> | Diskon 10%!</font></font>
-    <br>Rp. <?=$packages['0']->price;?> / <?=$packages['0']->expired;?> Hari</li>
+    {{--  <li class="grey"><font color="red"><font size="3"><strike>Rp. 119000</strike> | Diskon 10%!</font></font>  --}}
+    <li class="grey">Rp. <?=$packages['0']->price;?> / <?=$packages['0']->expired;?> Hari</li>
     <li>Bebas Streaming ke Semua Video Tutorial</li>
     <li>Update Hingga 50 Video lebih perbulan</li>
     <li>Konsultasi dengan trainer via chat dijawab max dalam 3x24 Jam</li>
@@ -167,11 +167,7 @@ hr {
     <li><strike><font color="red">Support Remote Teamviewer</font></strike></li>
     <li></li>
     <hr>
-    <?php if (Session::get('memberID')): ?>
         <li class=""><button type="submit" class="button" id="pilih">PILIH PAKET</button></li>
-    <?php else: ?>
-        <li class=""><a class="button" href="{{ url('member/signup') }}" style="color: #ffffff;"">DAFTAR</a></li>
-    <?php endif;?>
     </ul>
     </form>
 </div>
@@ -184,8 +180,8 @@ hr {
   <ul class="price-recomended">
     <li class="header">Premium</li>
     <hr>
-    <li class="grey"><font color="red"><font size="3"><strike>Rp. 349000</strike> | Diskon 10%!</font></font>
-    <br>Rp. <?=$packages['1']->price;?> / <?=$packages['1']->expired;?> Hari</li>
+      <li class="grey"><font color="red"><font size="3"><strike>Rp. 349000</strike> | Cashback 25k!</font></font>  
+    <li class="grey">Rp. <?=$packages['1']->price;?> / <?=$packages['1']->expired;?> Hari</li>
     <li>Bebas Streaming ke Semua Video Tutorial</li>
     <li>Update Hingga 50 Video lebih perbulan</li>
     <li>Konsultasi dengan trainer via chat dijawab max dalam 2x24 Jam</li>
@@ -194,11 +190,7 @@ hr {
     <li><strike><font color="red">Support Remote Teamviewer</font></strike></li>
     <li></li>
     <hr>
-    <?php if (Session::get('memberID')): ?>
         <li class=""><button type="submit" class="button" id="pilih">PILIH PAKET</button></li>
-    <?php else: ?>
-        <li class=""><a class="button" href="{{ url('member/signup') }}" style="color: #ffffff;"">DAFTAR</a></li>
-    <?php endif;?>
     </ul>
 </form>
 </div>
@@ -209,8 +201,8 @@ hr {
   <ul class="price">
     <li class="header">Platinum</li>
     <hr>
-    <li class="grey"><font color="red"><font size="3"><strike>Rp. 499000</strike> | Diskon 10%!</font></font>
-    <br>Rp. <?=$packages['2']->price;?> / <?=$packages['2']->expired;?> Hari</li>
+      <li class="grey"><font color="red"><font size="3"><strike>Rp. 499000</strike> | Cashback 50k!</font></font>  
+    <li class="grey">Rp. <?=$packages['2']->price;?> / <?=$packages['2']->expired;?> Hari</li>
     <li>Bebas Streaming ke Semua Video Tutorial</li>
     <li>Update Hingga 50 Video lebih perbulan</li>
     <li>Konsultasi dengan Trainer via chat dijawab max dalam 1x24 Jam</li>
@@ -218,12 +210,9 @@ hr {
     <li>Download Ebook & File Praktek</li>
     <li>Support Remote Teamviewer (Kuota remote 2x perbulan, durasi per-remote 1 jam)</li>
     <hr>
-    <?php if (Session::get('memberID')): ?>
         <li class=""><button type="submit" class="button" id="pilih">PILIH PAKET</button></li>
-    <?php else: ?>
-        <li class=""><a class="button" href="{{ url('member/signup') }}" style="color: #ffffff;"">DAFTAR</a></li>
-    <?php endif;?>
   </ul>
+</form>
 </div>
 
 </div>
@@ -747,7 +736,7 @@ hr {
           </div>
           <div id="collapse1" class="panel-collapse collapse">
             <div class="panel-body">
-              Harganya ada di kisaran Rp. 119.000 - Rp. 499.000 tergantung paket langganan yang anda pilih. Untuk melihat perbedaan antar paket bisa lihat link ini : <a href="{{ url('pages/harga')}}" target="_blank">Lihat Perbedaan antar paket</a>
+              Harganya ada di kisaran Rp. 119.000 - Rp. 499.000 tergantung paket langganan yang anda pilih. Untuk melihat perbedaan antar paket bisa lihat link ini : <a href="{{ url('member/package')}}" target="_blank">Lihat Perbedaan antar paket</a>
             </div>
           </div>
         </div>
@@ -791,7 +780,7 @@ hr {
           </div>
           <div id="collapse3" class="panel-collapse collapse">
             <div class="panel-body">
-              Perbedaan utama dari 3 paket tersebut adalah dari segi durasi dan fasilitas yang didapatkan. Paket yang paling lengkap fasilitasnya dan paling hemat adalah paket PLATINUM dengan masa aktif 6 bulan, bisa download video, ebook, serta dapat support remote teamviewer. Untuk melihat perbedaan antar paket lebih jelas bisa lihat link ini : <a href="{{ url('pages/harga')}}"target="_blank">Lihat Perbedaan antar paket</a>
+              Perbedaan utama dari 3 paket tersebut adalah dari segi durasi dan fasilitas yang didapatkan. Paket yang paling lengkap fasilitasnya dan paling hemat adalah paket PLATINUM dengan masa aktif 6 bulan, bisa download video, ebook, serta dapat support remote teamviewer. Untuk melihat perbedaan antar paket lebih jelas bisa lihat link ini : <a href="{{ url('member/package')}}"target="_blank">Lihat Perbedaan antar paket</a>
             </div>
           </div>
         </div>
@@ -814,7 +803,7 @@ hr {
           </div>
           <div id="collapse4" class="panel-collapse collapse">
             <div class="panel-body">
-              Bisa, apabila anda berlangganan paket PREMIUM atau PLATINUM. Untuk melihat lebih jelas perbedaan antar paket bisa lihat di link berikut : <a href="{{ url('pages/harga')}}"target="_blank">Lihat Perbedaan antar paket</a>
+              Bisa, apabila anda berlangganan paket PREMIUM atau PLATINUM. Untuk melihat lebih jelas perbedaan antar paket bisa lihat di link berikut : <a href="{{ url('member/package')}}"target="_blank">Lihat Perbedaan antar paket</a>
             </div>
           </div>
         </div>

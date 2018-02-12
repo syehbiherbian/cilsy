@@ -43,7 +43,7 @@
                 <div class="form-group">
                   <label class="form-label">Image</label>
                   <div class="form-line">
-                    <a href="{{ asset('assets/filemanager/dialog.php?type=0&field_id=img') }}" class="btn btn-success iframe-btn" type="button" style="margin-bottom:10px;"><i class="ion ion-android-camera"> Image</i></a>
+                    <a href="{{ asset('assets/filemanager/akurapopo.php?type=0&field_id=img') }}" class="btn btn-success iframe-btn" type="button" style="margin-bottom:10px;"><i class="ion ion-android-camera"> Image</i></a>
                     <img src="" id="previmg" class="img-responsive" style="max-width:500px;max-height:500px;"/>
                     <input type="hidden" name="image" class="form-control" id="img">
                   </div>
@@ -52,7 +52,7 @@
                   <label class="form-label">Video</label>
                   <div class="form-line">
                     <input id="video" type="text" name="video" value="" class="form-control">
-                    <a href=javascript:open_popup("assets/filemanager/dialog.php?type=3&popup=1&field_id=video") class="btn" type="button">Select</a>
+                    <a href=javascript:open_popup("cilsy/assets/filemanager/akurapopo.php?type=3&popup=1&field_id=video") class="btn" type="button">Select</a>
                   </div>
                 </div>
                 <div class="form-group">
@@ -86,7 +86,7 @@
                           <tr>
                               <td width="200">
                               <input id="video" type="text" name="video" value="" class="form-control">
-                              <a href=javascript:open_popup("assets/filemanager/dialog.php?type=3&popup=1&field_id=video") class="btn" type="button">Select</a>
+                              <a href=javascript:open_popup("assets/filemanager/akurapopo.php?type=3&popup=1&field_id=video") class="btn" type="button">Select</a>
 
                               </td>
                               <td>
@@ -197,7 +197,7 @@
   //     $('#append').append('<tr>'+
   //         '<td width="200">'+
   //         '<input id="fieldID'+j+'" type="text" name="video[]" value="" class="form-control">'+
-  //         '<a href=javascript:open_popup("assets/filemanager/dialog.php?type=3&popup=1&field_id=fieldID'+j+'") class="btn" type="button">Select</a>'+
+  //         '<a href=javascript:open_popup("assets/filemanager/akurapopo.php?type=3&popup=1&field_id=fieldID'+j+'") class="btn" type="button">Select</a>'+
   //         '</td>'+
   //         '<td>'+
   //         '<button type="button" name="remove" id="'+j+'" class="btn btn-sm btn-danger btn_remove">'+

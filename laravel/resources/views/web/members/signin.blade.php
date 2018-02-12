@@ -9,25 +9,6 @@
 
     <div class="tab-content">
         <div id="tab-1-content" style="display: none;">
-            <!-- <form>
-                <div class="form-group">
-                    <label for="exampleInputEmail1">Nama Lengkap :</label>
-                    <input type="nama" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label for="exampleInputPassword1">Email :</label>
-                    <input type="email" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label for="exampleInputFile">Password :</label>
-                    <input type="password" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label for="exampleInputFile">Konfirmasi Password :</label>
-                    <input type="password" class="form-control">
-                </div>
-                <button type="submit" class="btn btn-primary">DAFTAR</button>
-            </form> -->
         </div>
         <div id="tab-2-content" >
 
@@ -39,11 +20,17 @@
 
             @if (count($errors) > 0)
                 <div class="alert alert-danger">
+                    <strong>Whoops!</strong><br><br>
                     <ul>
                         @foreach ($errors->all() as $error)
                             <li>{{ $error }}</li>
                         @endforeach
                     </ul>
+                </div>
+            @endif
+            @if (session('error'))
+                <div class="alert alert-danger">
+                    {{ session('error') }}
                 </div>
             @endif
 

@@ -68,35 +68,18 @@
                                     <td align="left" style="padding:50px 50px 50px 50px">
                                     <p style="color:#000000; font-size:16px; text-align:left; font-family: Verdana, Geneva, sans-serif; line-height:22px ">&nbsp;</p>
 
-                                    <h1><span style="color:#000000;"><span style="font-family: verdana, geneva, sans-serif;"><strong>Terima kasih sudah memesan paket langganan Cilsy. :)</strong></span></span></h1>
+                                    <h1><span style="color:#000000;"><span style="font-family: verdana, geneva, sans-serif;"><strong>Tinggal satu langkah lagi..</strong></span></span></h1>
 
                                     <p><span style="font-family:verdana,geneva,sans-serif;"><span style="font-size:16px; text-align: justify; text-justify: inter-word;"><span style="color: rgb(0, 0, 0);">
-                                        Silahkan selesaikan terlebih dahulu proses pembayarannya dengan mengikuti petunjuk
-                                        pembayaran dari invoice yang anda dapatkan di email masing-masing.
-                                        Berikut sedikit tips dari kami agar tidak bingung saat mengikuti petunjuk pembayaran :
-                                        Kalau anda memilih cara membayar via Bank Lainnya/Jaringan Bank Lainnya maka anda akan
-                                        mendapatkan petunjuk untuk membayar ke rekening bernomor 8778xxxxxxxxxxxxxx dengan
-                                        kode pembayaran 013 bukan?
-                                        Nah anda tidak perlu bingung dengan kode 013 ini. Simpelnya nomor rekening tujuan untuk
-                                        anda transfer adalah hanya yang 8778xxxxxxxxxxxxx, dan nomor ini adalah nomor rekening
-                                        Bank Permata.
-                                        Jadi, dari bank apapun yang anda punya, sebenarnya anda tinggal transfer seperti cara transfer
-                                        ke beda bank pada umumnya saja. Bedanya ini transfernya ke Bank Permata, dan nomor
-                                        rekeningnya yang 8778xxxxxxxxxxxxxx. Sedangkan kode 013 hanya perlu dimasukkan kalau
-                                        anda membayar di ATM, selain itu (misalnya mobile banking/internet banking) tidak perlu.
-                                        Setelah membayar, paket langganan akan langsung aktif tanpa perlu konfirmasi. Anda tinggal
-                                        langsung login saja dan semua tutorial sudah langsung terbuka aksesnya.
-                                        Jika mengalami kesulitan pembayaran, bisa langsung kontak ke whatsapp 089630713487 atau
-                                        email ke support@cilsy.id.
-                                        nb : Khusus bagi yang membayar via kartu kredit dan sukses, maka paket langganan anda sudah
-                                        aktif dan tinggal langsung login saja.
-                                    </span></span></span></p>
+                                      Silahkan selesaikan proses pembayaran Anda dengan membaca petunjuk cara bayar dari Invoice yang sudah dikirim ke email anda. Masih bingung?
+                                                                                </span></span></span></p>
 
-                                    <p style="text-align: center;"><span style="font-family:verdana,geneva,sans-serif;"><a href="https://cilsy.id/lessons/browse/all"
-                                               style="background-color:#ffffff;border-radius:4px;color:#2BA8E2;display:inline-block;font-family:Helvetica, Arial, sans-serif;font-size:16px;font-weight:bold;line-height:50px;text-align:center;text-decoration:none;width:200px;-webkit-text-size-adjust:none;">Mulai Belajar</a>
+                                    <p style="text-align: center;"><span style="font-family:verdana,geneva,sans-serif;"><a href="https://cilsy.id/petunjuk"
+                                               style="background-color:#ffffff;border-radius:4px;color:#2BA8E2;display:inline-block;font-family:Helvetica, Arial, sans-serif;font-size:16px;font-weight:bold;line-height:50px;text-align:center;text-decoration:none;width:200px;-webkit-text-size-adjust:none;">Lihat Petunjuk Bayar</a>
                                            </span></p>
 
-                                    <p>&nbsp;</p>
+<p><p><span style="font-family:verdana,geneva,sans-serif;"><span style="font-size:16px; text-align: justify; text-justify: inter-word;"><span style="color: rgb(0, 0, 0);">
+nb : abaikan email ini jika anda sudah berhasil membayar via kartu kredit.</span</span></span></p>
 
                                     <p style="color:#000000; font-size:16px; text-align:left; font-family: Verdana, Geneva, sans-serif; line-height:22px ">Best Regards,<br />
                                     Tim Cilsy</p>

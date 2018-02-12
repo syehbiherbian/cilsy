@@ -21,6 +21,7 @@ Route::post('lessons/getplaylist', 'Web\LessonsController@getplaylist');
 Route::get('lessons/coments/getComments/{lesson_id}','Web\LessonsController@getComments');
 Route::post('lessons/coments/doComment','Web\LessonsController@doComment');
 Route::post('lessons/videoTracking','Web\LessonsController@videoTracking');
+Route::post('lessons/LessonsQuiz','Web\LessonsController@LessonsQuiz');
 
 // Search
 Route::get('search', 'Web\SearchController@index');
@@ -41,7 +42,7 @@ Route::post('notification/handling', 'Veritrans\VtwebController@notification');
 // PAYMENT
 Route::get('payment/{response}', 'Web\PaymentController@index');
 //page
-Route::get('/harga', 'HargaController@index');
+// Route::get('/harga', 'HargaController@index');
 Route::get('/kontak', function () {
 	return view('web.contact');
 });
