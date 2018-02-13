@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Web\Members;
 
+use Illuminate\Support\Str;
 use App\Http\Controllers\Controller;
 use App\Mail\ForgetPassword;
 use App\members;
@@ -151,7 +152,7 @@ class AuthController extends Controller {
 			return redirect()->back()->withErrors($validator)->withInput();
 		} else {
 			$email = Input::get('email');
-			$token = str_random(30) . $email;
+			$token = Str::random(30) . $email;
 			$now = new DateTime();
 			$url = "https://www.cilsy.id";
 
@@ -212,7 +213,9 @@ class AuthController extends Controller {
 
 	public function doupdate() {
 		$rules = array(
-			'password' => 'required|min:6', // password can only be alphanumeric and has to be greater than 3 characters
+			'token' => 'required',
+            'email' => 'required|email',
+            'password' => 'required|confirmed|min:6',
 
 		);
 		// run the validation rules on the inputs from the form
@@ -227,7 +230,6 @@ class AuthController extends Controller {
 			$passwordbaru = (Input::get('password'));
 			$retypepassword = (Input::get('retypepassword'));
 			$checkid = DB::table('members')->where('email', '=', $email)->first();
-			echo $email;
 			$check = DB::table('members')->where('email', '=', $email)->count();
 
 			if ($check > 0) {
@@ -242,7 +244,7 @@ class AuthController extends Controller {
 							'password' => md5($passwordbaru),
 						]);
 					if ($update) {
-						return Redirect()->to('/member/signin')->with('success', 'Successfully change Password,please your login again   !');
+						return Redirect()->to('/member/signin')->with('success', 'Successfully change Password,please login again   !');
 
 					} else {
 						return Redirect()->back()->with('error', 'Sorry something is error !');
