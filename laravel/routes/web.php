@@ -85,10 +85,7 @@ Route::get('member/change', 'Web\Members\AuthController@resetpassword');
 // Route::post('member/reset/update', 'Web\Members\AuthController@doupdate');
 // Route::get('member/reset/update/{token}', 'Web\Members\AuthController@updatereset');
 
-
-Route::get('/', ['middleware' => 'guest', function()
-{
-   Route::get('member/signup', 'Web\Members\MemberAuth\RegisterController@showRegistrationForm');
+Route::get('member/signup', 'Web\Members\MemberAuth\RegisterController@showRegistrationForm');
 Route::post('member/signup', 'Web\Members\MemberAuth\RegisterController@register');
 Route::get('member/signin', 'Web\Members\MemberAuth\LoginController@showLoginForm');
 Route::post('member/signin', 'Web\Members\MemberAuth\LoginController@login');
@@ -97,7 +94,7 @@ Route::post('member/email', 'Web\Members\MemberAuth\ForgotPasswordController@sen
 Route::get('member/reset', 'Web\Members\MemberAuth\ForgotPasswordController@showLinkRequestForm');
 Route::post('member/reset', 'Web\Members\MemberAuth\ResetPasswordController@reset');
 Route::get('member/reset/{token}', 'Web\Members\MemberAuth\ResetPasswordController@showResetForm');
-}]);
+
 Route::get('member/package', 'Web\Members\PackageController@index');
 Route::post('member/package', 'Web\Members\PackageController@dopackage');
 
