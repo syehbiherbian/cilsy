@@ -47,7 +47,7 @@ class PackageController extends Controller
 
           $packages_id    = Input::get('packages_id');
           $packages       = packages::where('id','=',$packages_id)->first();
-          if(Auth::check()){
+          if(Auth::guard('members')->user()){
             $member_id      = Auth::guard('members')->user()->id;
           }else{
             $member_id      = null;
