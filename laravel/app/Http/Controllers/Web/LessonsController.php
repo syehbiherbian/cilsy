@@ -38,7 +38,11 @@ class LessonsController extends Controller {
 
 	public function detail($slug) {
 		$now = new DateTime();
-		$mem_id = Auth::guard('members')->user()->id;
+		if(Auth::guard('members')->user()){
+            $mem_id      = Auth::guard('members')->user()->id;
+          }else{
+            $mem_id      = null;
+          }
 		$services = services::where('status', '=', 1, 'AND', 'status', '=', 2)->where('download', '=', 1)->where('members_id', '=', $mem_id)->where('expired', '>', $now)->first();
 		$lessons = lessons::where('enable', '=', 1)->where('slug', '=', $slug)->first();
 		$main_videos = videos::where('enable', '=', 1)->where('lessons_id', '=', $lessons->id)->orderBy('id', 'asc')->get();
