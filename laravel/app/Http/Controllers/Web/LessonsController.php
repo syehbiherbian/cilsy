@@ -41,8 +41,8 @@ class LessonsController extends Controller {
 		if(Auth::guard('members')->user()){
             $mem_id      = Auth::guard('members')->user()->id;
           }else{
-            $mem_id      = null;
-          }
+            $mem_id      = 0;
+        }
 		$services = services::where('status', '=', 1, 'AND', 'status', '=', 2)->where('download', '=', 1)->where('members_id', '=', $mem_id)->where('expired', '>', $now)->first();
 		$lessons = lessons::where('enable', '=', 1)->where('slug', '=', $slug)->first();
 		$main_videos = videos::where('enable', '=', 1)->where('lessons_id', '=', $lessons->id)->orderBy('id', 'asc')->get();
@@ -69,8 +69,11 @@ class LessonsController extends Controller {
 		$now = date('Y-m-d');
 		$lessons_id = Input::get('lessons_id');
 		$videos = videos::where('enable', '=', 1)->where('lessons_id', '=', $lessons_id)->orderBy('id', 'asc')->get();
-
-		$memberID = Auth::guard('members')->user()->id;
+		if (Auth::guard('members')->user()) {
+			$memberID = Auth::guard('members')->user()->id;
+		}else {
+			$memberID = 0;
+		}
 		$members = members::where('id', '=', $memberID)->first();
 		$services = services::where('status', '=', 1)->where('members_id', '=', $memberID)->where('expired', '>', $now)->first();
 
