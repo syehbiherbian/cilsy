@@ -164,6 +164,7 @@ hr {
     <li>Konsultasi dengan trainer via chat dijawab max dalam 3x24 Jam</li>
     <li><strike><font color="red">Download Semua Materi Video</font></strike></li>
     <li><strike><font color="red">Download Ebook & File Praktek</font></strike></li>
+    <li><strike><font color="red">e-Sertifikat Eksklusif</font></strike></li>
     <li><strike><font color="red">Support Remote Teamviewer</font></strike></li>
     <li></li>
     <hr>
@@ -187,6 +188,7 @@ hr {
     <li>Konsultasi dengan trainer via chat dijawab max dalam 2x24 Jam</li>
     <li>Download Semua Materi Video</li>
     <li>Download Ebook & File Praktek</li>
+    <li><strike><font color="red">e-Sertifikat Eksklusif</font></strike></li>
     <li><strike><font color="red">Support Remote Teamviewer</font></strike></li>
     <li></li>
     <hr>
@@ -208,6 +210,7 @@ hr {
     <li>Konsultasi dengan Trainer via chat dijawab max dalam 1x24 Jam</li>
     <li>Download Semua Materi Video</li>
     <li>Download Ebook & File Praktek</li>
+    <li>e-Sertifikat Eksklusif</li>
     <li>Support Remote Teamviewer (Kuota remote 2x perbulan, durasi per-remote 1 jam)</li>
     <hr>
         <li class=""><button type="submit" class="button" id="pilih">PILIH PAKET</button></li>
@@ -855,9 +858,9 @@ hr {
     $('[name=packages_id]').val(id);
   }
 </script>
-<script>
+<!--<script>
 fbq('track', 'CompleteRegistration');
-</script>
+</script>-->
 <script type="text/javascript">
   var button = document.getElementById('pilih');
   button.addEventListener(

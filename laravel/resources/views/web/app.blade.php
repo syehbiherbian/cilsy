@@ -231,7 +231,7 @@
     <div class="global-notification">
       <div class="container">
     <h4>
-    <a href="{{ url('member/package') }}"><font color="red">Mau dapat Cashback Rp.50.000? Amankan Disini! Tersisa <font id="demo"></font> Hari lagi..</font></a>
+    <a href="{{ url('member/package') }}"><font color="red">Promo cashback Rp. 50.000 + Free 3 bulan diperpanjang hingga <font id="demo"></font> Hari lagi. Pesan Disini!</font></a>
     </h4>
     <span id='close' onclick='this.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode); return false;' style="    position: absolute;
     right: 20px;
@@ -541,7 +541,7 @@
     </script>
     <script>
 // Set the date we're counting down to
-    var countDownDate = new Date("Feb 10, 2018 23:59:59").getTime();
+    var countDownDate = new Date("Feb 20, 2018 23:59:59").getTime();
 
     // Update the count down every 1 second
     var x = setInterval(function() {
