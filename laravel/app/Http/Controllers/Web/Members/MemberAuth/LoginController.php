@@ -42,7 +42,7 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest', ['except' => 'logout']);
+        $this->middleware('RedirectIfMember', ['except' => 'logout']);
     }
 
     /**
@@ -57,7 +57,15 @@ class LoginController extends Controller
     public function login(Request $request)
     {
         $this->validateLogin($request);
-        $members = Auth::guard('members')->user();
+        // $members = Auth::guard('members')->user()->id;
+        // if(Session::get('invoiceCODE')){
+        //     DB::table('invoice')->where('code', '=', Session::get('invoiceCODE'))->update([
+        //     'members_id' => $members,
+        // ]);
+        // return redirect('checkout');
+        // } else{
+        //     return redirect($this->redirectTo);
+        // }
         // If the class is using the ThrottlesLogins trait, we can automatically throttle
         // the login attempts for this application. We'll key this by the username and
         // the IP address of the client making these requests into this application.
@@ -68,13 +76,6 @@ class LoginController extends Controller
         }
 
         if ($this->attemptLogin($request)) {
-            // redirect
-            if(Session::get('invoiceCODE')){
-                DB::table('invoice')->where('code', '=', Session::get('invoiceCODE'))->update([
-                'members_id' => $members ->id,
-            ]);
-            return redirect('checkout');
-            }
             return $this->sendLoginResponse($request);
         }
 
@@ -82,7 +83,6 @@ class LoginController extends Controller
         // to login and redirect the user back to the login form. Of course, when this
         // user surpasses their maximum number of attempts they will get locked out.
         $this->incrementLoginAttempts($request);
-
         return $this->sendFailedLoginResponse($request);
     }
 
