@@ -43,6 +43,7 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('RedirectIfMember', ['except' => 'logout']);
+        
     }
 
     /**
@@ -57,15 +58,7 @@ class LoginController extends Controller
     public function login(Request $request)
     {
         $this->validateLogin($request);
-        // $members = Auth::guard('members')->user()->id;
-        // if(Session::get('invoiceCODE')){
-        //     DB::table('invoice')->where('code', '=', Session::get('invoiceCODE'))->update([
-        //     'members_id' => $members,
-        // ]);
-        // return redirect('checkout');
-        // } else{
-        //     return redirect($this->redirectTo);
-        // }
+        
         // If the class is using the ThrottlesLogins trait, we can automatically throttle
         // the login attempts for this application. We'll key this by the username and
         // the IP address of the client making these requests into this application.
@@ -84,6 +77,24 @@ class LoginController extends Controller
         // user surpasses their maximum number of attempts they will get locked out.
         $this->incrementLoginAttempts($request);
         return $this->sendFailedLoginResponse($request);
+    }
+    /**
+     * The user has been authenticated.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  mixed  $user
+     * @return mixed
+     */
+    protected function authenticated(Request $request, $user)
+    {
+        if(Session::get('invoiceCODE')){
+            DB::table('invoice')->where('code', '=', Session::get('invoiceCODE'))->update([
+            'members_id' => Auth::guard('members')->user()->id,
+        ]);
+        return redirect('checkout');
+        } else{
+            return redirect($this->redirectTo);
+        }
     }
 
     /**
