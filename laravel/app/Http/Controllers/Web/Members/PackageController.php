@@ -16,6 +16,8 @@ use Session;
 use Hash;
 use DateTime;
 use DB;
+use Auth;
+
 class PackageController extends Controller
 {
     /**
@@ -45,7 +47,11 @@ class PackageController extends Controller
 
           $packages_id    = Input::get('packages_id');
           $packages       = packages::where('id','=',$packages_id)->first();
-          $member_id      = Session::get('memberID');
+          if(Auth::check()){
+            $member_id      = Auth::guard('members')->user()->id;
+          }else{
+            $member_id      = null;
+          }
           $now            = new DateTime();
           // var_dump($packages_id);
 

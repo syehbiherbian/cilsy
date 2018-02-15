@@ -10,6 +10,7 @@
     <title>@yield('title') {{ config('app.name') }}</title>
     <link href="{{asset('template/web/css/bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{asset('template/web/css/app.css')}}" rel="stylesheet">
+    <link href="{{asset('template/web/css/video-js.css')}}" rel="stylesheet">
     <link href="{{asset('template/web/css/navbar.css')}}" rel="stylesheet">
     <link href="{{asset('template/web/css/pace.css')}}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('template/web/css/owl.carousel.min.css') }}">
@@ -307,10 +308,10 @@
                </span>
             </div>
           </form>
-          <?php if (!empty(Session::get('memberID'))) {?>
-          <ul class="nav navbar-nav navbar-right">
+          @if (Auth::guard("members")->user())
+              <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Halo, <?=Helper::member('username');?> <span class="caret"></span></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Halo, {{ Auth::guard('members')->user()->username }} <span class="caret"></span></a>
               <ul class="dropdown-menu">
                 <li style="padding: 15px; background: #fff;">
                   <table cellpadding="15">
@@ -329,31 +330,17 @@
                     </tr>
                   </table>
                 </li>
-                <!-- <li><a href="#">Another action</a></li>
-                <li><a href="#">Something else here</a></li>
-                <li role="separator" class="divider"></li>
-                <li><a href="#">Separated link</a></li> -->
               </ul>
             </li>
           </ul>
-          <?php } else {?>
-            <ul class="nav navbar-nav navbar-right">
+          @else
+              <ul class="nav navbar-nav navbar-right">
               <li><a href="{{ url('/carapesan') }}">Cara Pesan</a></li>
               <li><a href="{{ url('/member/package') }}">Harga</a></li>
               <li><a href="{{ url('member/signin') }}">Masuk</a></li>
               <li><a href="{{ url('member/signup') }}">Daftar</a></li>
-              <!-- <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-                <ul class="dropdown-menu">
-                  <li><a href="#">Action</a></li>
-                  <li><a href="#">Another action</a></li>
-                  <li><a href="#">Something else here</a></li>
-                  <li role="separator" class="divider"></li>
-                  <li><a href="#">Separated link</a></li>
-                </ul>
-              </li> -->
             </ul>
-          <?php }?>
+          @endif
         </div><!-- /.navbar-collapse -->
 
         <div class="collapse navbar-collapse hidden-sm hidden-md hidden-lg" id="bs-example-navbar-collapse-search">

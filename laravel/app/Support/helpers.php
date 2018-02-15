@@ -7,6 +7,7 @@ use App\income_details;
 use App\lessons;
 use App\contributor_notif;
 use App\videos;
+// use Auth;
 /**
  *
  */
@@ -19,7 +20,7 @@ class Helper
   }
   static function member($field)
   {
-      $mem_id   = Session::get('memberID');
+      $mem_id   = Auth::guard('members')->user()->id ;
       if ($mem_id) {
         $members  = members::where('id','=',$mem_id)->first();
         $result   = $members->$field;
@@ -31,7 +32,7 @@ class Helper
       $now = new DateTime();
 
 
-      $mem_id   = Session::get('memberID');
+      $mem_id   =  Auth::guard('members')->user()->id;
       if ($mem_id) {
         $services  = services::where('status','=',1)->where('members_id','=',$mem_id)->where('expired','>=',$now)->first();
         if(count($services) > 0){

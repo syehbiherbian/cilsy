@@ -38,11 +38,11 @@
                     
                     @if ($errors->has('password')) <p class="help-block">{{ $errors->first('password') }}</p> @endif
                 </div>
-                <div class="form-group @if ($errors->has('retype_password')) has-error @endif">
+                <div class="form-group @if ($errors->has('password_confirmation')) has-error @endif">
                     <label>Konfirmasi Password :</label>
-                    <input type="password" class="form-control" name="retype_password" id="password">
+                    <input type="password" class="form-control" name="password_confirmation" id="password">
                     <span title="Click here to show/hide password" toggle="#password" class="fa fa-fw fa-eye field-icon toggle-password"></span>
-                    @if ($errors->has('retype_password')) <p class="help-block">{{ $errors->first('retype_password') }}</p> @endif
+                    @if ($errors->has('password_confirmation')) <p class="help-block">{{ $errors->first('password_confirmation') }}</p> @endif
                 </div>
                 <!-- <button type="submit" class="btn btn-primary">DAFTAR</button> -->
                 <button type="submit" class="btn btn-primary" id="daftar">DAFTAR</button>

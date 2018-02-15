@@ -11,6 +11,7 @@ use App\videos;
 use DateTime;
 use Illuminate\Support\Facades\Input;
 use Session;
+use Auth;
 
 class LessonsController extends Controller {
 	public function index($by, $keyword) {
@@ -65,7 +66,7 @@ class LessonsController extends Controller {
 		$lessons_id = Input::get('lessons_id');
 		$videos = videos::where('enable', '=', 1)->where('lessons_id', '=', $lessons_id)->orderBy('id', 'asc')->get();
 
-		$memberID = Session::get('memberID');
+		$memberID = Auth::guard('members')->user()->id;
 		$members = members::where('id', '=', $memberID)->first();
 		$services = services::where('status', '=', 1)->where('members_id', '=', $memberID)->where('expired', '>', $now)->first();
 
