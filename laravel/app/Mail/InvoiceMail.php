@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Mail;
-use App\members;
+use App\Models\Member;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;

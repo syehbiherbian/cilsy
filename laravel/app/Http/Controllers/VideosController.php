@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\lessons;
-use App\videos;
+use App\Models\Lesson;
+use App\Models\Video;
 use DateTime;
 use DB;
 use Illuminate\Http\Request;
@@ -18,7 +18,7 @@ class VideosController extends Controller {
 	 * @return \Illuminate\Http\Response
 	 */
 	public function index() {
-		$videos = videos::leftJoin('lessons', 'videos.lessons_id', '=', 'lessons.id')
+		$videos = Video::leftJoin('lessons', 'videos.lessons_id', '=', 'lessons.id')
 			->select('videos.*', 'lessons.title as lessons_title')
 			->get();
 		return view('admin.videos.index', [
@@ -59,7 +59,7 @@ class VideosController extends Controller {
 			return redirect()->back()->withErrors($validator)->withInput();
 		} else {
 
-			$videos = new videos;
+			$videos = new Video;
 			$videos->enable = 1;
 			$videos->lessons_id = Input::get('lesson_id');
 			$videos->title = Input::get('title');
@@ -93,8 +93,8 @@ class VideosController extends Controller {
 	 * @return \Illuminate\Http\Response
 	 */
 	public function edit($id) {
-		$videos = videos::find($id);
-		$lessons = lessons::where('enable', '=', '1')->get();
+		$videos = Video::find($id);
+		$lessons = Lesson::where('enable', '=', '1')->get();
 		return view('admin.videos.edit', [
 			'lessons' => $lessons,
 			'videos' => $videos,
@@ -124,7 +124,7 @@ class VideosController extends Controller {
 		} else {
 
 			// store
-			$store = videos::find($id);
+			$store = Video::find($id);
 			$store->enable = 1;
 			$store->lessons_id = Input::get('lesson_id');
 			$store->title = Input::get('title');
@@ -148,7 +148,7 @@ class VideosController extends Controller {
 	 * @return \Illuminate\Http\Response
 	 */
 	public function destroy($id) {
-		$delete = videos::find($id);
+		$delete = Video::find($id);
 		$delete->delete();
 
 		return redirect()->back()->with('success', 'Data successfully deleted');

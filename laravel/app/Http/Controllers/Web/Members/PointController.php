@@ -5,49 +5,49 @@ namespace App\Http\Controllers\Web\Members;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Input;
-
 use App\Http\Requests;
 use Validator;
 use Redirect;
-use App\members;
-use App\Points;
-// use App\packages;
+use App\Models\Member;
+use App\Models\Point;
+// use App\Models\Package;
 use Session;
 // use Hash;
 use DateTime;
+
 // use DB;
-class PointController extends Controller
-{
+class PointController extends Controller {
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-      // Authentication
-      $mem_id = Session::get('memberID');
-      if (!$mem_id) {
-        return redirect('/member/signin');
-        exit;
-      }
-      $members = members::where('status',1)->where('id',$mem_id)->first();
-      if ($members) {
+    public function index() {
+        // Authentication
+        $mem_id = Session::get('memberID');
+        if (!$mem_id) {
+            return redirect('/member/signin');
+            exit;
+        }
+        $members = Member::where('status', 1)->where('id', $mem_id)->first();
+        if ($members) {
 
-        $point_question = Points::where('status',0)->where('type','QUESTION')->where('member_id',$mem_id)->sum('value');
-        $point_reply    = Points::where('status',0)->where('type','REPLY')->where('member_id',$mem_id)->sum('value');
-        $point_complete = Points::where('status',0)->where('type','COMPLETE')->where('member_id',$mem_id)->sum('value');
-        return view('web.members.point', [
-          'members'         => $members,
-          'point_question'  => $point_question,
-          'point_reply'     => $point_reply,
-          'point_complete'  => $point_complete
-        ]);
-      }else {
-        return redirect('/member/signin');
-        exit;
-      }
+            $point_question = Point::where('status', 0)->where('type', 'QUESTION')->where('member_id', $mem_id)->sum('value');
+            $point_reply = Point::where('status', 0)->where('type', 'REPLY')->where('member_id', $mem_id)->sum('value');
+            $point_complete = Point::where('status', 0)->where('type', 'COMPLETE')->where('member_id', $mem_id)->sum('value');
+            return view('web.members.point', [
+                'members' => $members,
+                'point_question' => $point_question,
+                'point_reply' => $point_reply,
+                'point_complete' => $point_complete
+            ]);
+        } else {
+            return redirect('/member/signin');
+            exit;
+        }
     }
+
     //
     //
     // public function doSubmit()
@@ -75,7 +75,7 @@ class PointController extends Controller
     //     $username = Input::get('username');
     //     $email    = Input::get('email');
     //
-    //     $update = members::findOrFail($mem_id);
+    //     $update = Member::findOrFail($mem_id);
     //     $update->username   = $username;
     //     $update->email      = $email;
     //     $update->updated_at = $now;
@@ -85,5 +85,4 @@ class PointController extends Controller
     //     }
     //   }
     // }
-
 }

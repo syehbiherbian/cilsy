@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Contributors;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Session;
-use App\Contributors;
+use App\Model\Contributor;
 use Redirect;
 use Validator;
 use Illuminate\Support\Facades\Input;
@@ -17,7 +17,7 @@ class AccountController extends Controller
     public function informasi()
     {
     	$contribID = Session::get('contribID');
-    	$contributor = Contributors::find($contribID);
+    	$contributor = Contributor::find($contribID);
 
     	return view('contrib.account.informasi', [
     		'contrib' => $contributor
@@ -27,7 +27,7 @@ class AccountController extends Controller
     public function edit($id)
     {
     	$contribID = Session::get('contribID');
-    	$contributor = Contributors::find($contribID);
+    	$contributor = Contributor::find($contribID);
 
     	return view('contrib.account.edit_informasi', [
     		'contrib' => $contributor
@@ -81,7 +81,7 @@ class AccountController extends Controller
     public function halaman()
     {
     	$contribID = Session::get('contribID');
-    	$contributor = Contributors::find($contribID);
+    	$contributor = Contributor::find($contribID);
 
     	return view('contrib.account.halaman', [
     		'contrib' => $contributor
@@ -90,7 +90,7 @@ class AccountController extends Controller
     public function edit_halaman($id)
     {
         $contribID = Session::get('contribID');
-        $contributor = Contributors::find($contribID);
+        $contributor = Contributor::find($contribID);
 
         return view('contrib.account.edit_halaman', [
             'contrib' => $contributor
@@ -140,7 +140,7 @@ class AccountController extends Controller
                 $url_image= $urls.'/assets/source/avatar/'.$avatarfilename;
             }
 
-            $halaman = Contributors::find($id);
+            $halaman = Contributor::find($id);
             $halaman->username = $username;
             $halaman->first_name = $firstname;
             $halaman->last_name = $last_name;

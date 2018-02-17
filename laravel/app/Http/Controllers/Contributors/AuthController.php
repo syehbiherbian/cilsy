@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Contributors;
 
-use App\Contributors;
+use App\Model\Contributor;
 use App\Http\Controllers\Controller;
 use App\Mail\EmailVerification;
 use DateTime;
@@ -43,7 +43,7 @@ class AuthController extends Controller {
 			$password = md5(Input::get('password'));
 			$now = new DateTime();
 			// store
-			$contributors = Contributors::where('email', '=', $email)->where('password', '=', $password)->first();
+			$contributors = Contributor::where('email', '=', $email)->where('password', '=', $password)->first();
 
 			if (count($contributors) > 0) {
 				Session::set('contribID', $contributors->id);
@@ -97,7 +97,7 @@ class AuthController extends Controller {
 			$store->created_at = $now;
 			$store->save();
 
-			$send = Contributors::findOrFail($store->id);
+			$send = Contributor::findOrFail($store->id);
 
 			Mail::to($store->email)->send(new EmailVerification($send));
 			return Redirect()->to('/contributor/register')->with('success', 'Berhasil Kirim Email! Silahkan Cek Email Anda');
@@ -111,7 +111,7 @@ class AuthController extends Controller {
 	}
 
 	public function aktivasi($token) {
-		Contributors::where('token', $token)
+		Contributor::where('token', $token)
 			->update(['status' => 1]);
 		return redirect('contributor/login')->with('success', 'Sukses Aktivasi!, silahkan login ke akun anda');
 	}

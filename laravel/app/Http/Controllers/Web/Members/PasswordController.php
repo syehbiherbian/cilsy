@@ -9,9 +9,9 @@ use Illuminate\Support\Facades\Input;
 use App\Http\Requests;
 use Validator;
 use Redirect;
-use App\members;
-// use App\invoice;
-// use App\packages;
+use App\Models\Member;
+// use App\Models\Invoice;
+// use App\Models\Package;
 use Session;
 // use Hash;
 use DateTime;
@@ -31,7 +31,7 @@ class PasswordController extends Controller
         return redirect('/member/signin');
         exit;
       }
-      // $packages = packages::all();
+      // $packages = Package::all();
       return view('web.members.change-password', [
         // 'packages' => $packages
       ]);
@@ -61,9 +61,9 @@ class PasswordController extends Controller
         $now = new DateTime();
         $old_password = md5(Input::get('old_password'));
         $password = md5(Input::get('password'));
-        $check_password = members::where('status',1)->where('id',$mem_id)->where('password',$old_password)->first();
+        $check_password = Member::where('status',1)->where('id',$mem_id)->where('password',$old_password)->first();
         if ($check_password) {
-          $update = members::find($mem_id);
+          $update = Member::find($mem_id);
           $update->password = $password;
           $update->updated_at = $now;
           $update->save();

@@ -5,17 +5,17 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Validator;
-use App\members;
-use App\lessons;
-use App\categories;
-use App\videos;
+use App\Models\Member;
+use App\Models\Lesson;
+use App\Models\Category;
+use App\Models\Video;
 use App\Quiz;
-use App\services;
-use App\files;
-use App\Questions;
-use App\Answars;
-use App\revision;
-use App\lessons_detail;
+use App\Models\Service;
+use App\Models\File;
+use App\Models\Question;
+use App\Models\Answer;
+use App\Models\Revision;
+use App\Models\Lesson_detail;
 use DateTime;
 
 
@@ -41,31 +41,31 @@ class LessonsController extends Controller
 
     $contribID = Session::get('contribID');
     if ($filter == 'pending') {
-      $data = lessons::where('contributor_id',$contribID)
+      $data = Lesson::where('contributor_id',$contribID)
       ->leftJoin('categories', 'lessons.category_id', '=', 'categories.id')
       ->select('lessons.*','categories.title as category_title')
       ->where('lessons.status',0)
       ->get();
     }elseif ($filter == 'processing') {
-      $data = lessons::where('contributor_id',$contribID)
+      $data = Lesson::where('contributor_id',$contribID)
       ->leftJoin('categories', 'lessons.category_id', '=', 'categories.id')
       ->select('lessons.*','categories.title as category_title')
       ->where('lessons.status',2)
       ->get();
     }elseif ($filter == 'publish') {
-      $data = lessons::where('contributor_id',$contribID)
+      $data = Lesson::where('contributor_id',$contribID)
       ->leftJoin('categories', 'lessons.category_id', '=', 'categories.id')
       ->select('lessons.*','categories.title as category_title')
       ->where('lessons.status',1)
       ->get();
     }elseif($filter == 'revision'){
-        $data = lessons::where('contributor_id',$contribID)
+        $data = Lesson::where('contributor_id',$contribID)
         ->leftJoin('categories', 'lessons.category_id', '=', 'categories.id')
         ->select('lessons.*','categories.title as category_title')
         ->where('lessons.status',3)
         ->get();
     }else {
-      $data = lessons::where('contributor_id',$contribID)
+      $data = Lesson::where('contributor_id',$contribID)
       ->leftJoin('categories', 'lessons.category_id', '=', 'categories.id')
       ->select('lessons.*','categories.title as category_title')
       ->get();
@@ -74,8 +74,8 @@ class LessonsController extends Controller
     $date= $now->format('Y-m-d');
     $moth=$now->format('m');
     $year=$now->format('Y');
-    $views=lessons_detail::where('moth',$moth)->where('year',$year)->get();
-    $students=lessons_detail::join('lessons_detail_view','lessons_detail.id','=','lessons_detail_view.detail_id')
+    $views=LessonDetail::where('moth',$moth)->where('year',$year)->get();
+    $students=LessonDetail::join('lessons_detail_view','lessons_detail.id','=','lessons_detail_view.detail_id')
                             ->where('lessons_detail.moth',$moth)->where('lessons_detail.year',$year)->get();
 
 
@@ -96,7 +96,7 @@ class LessonsController extends Controller
       return redirect('contributor/login');
     }
 
-    $categories = categories::where('enable',1)->get();
+    $categories = Category::where('enable',1)->get();
     # code...
     return view('contrib.lessons.create',[
       'categories' => $categories
@@ -145,7 +145,7 @@ class LessonsController extends Controller
 
 
         $str = strtolower($title);
-        $store                  = new lessons;
+        $store                  = new Lesson();
         $store->contributor_id  = $cid;
         $store->status          = 0;
         $store->enable          = 1;
@@ -174,18 +174,18 @@ class LessonsController extends Controller
     }
     # code...
     $contribID = Session::get('contribID');
-    $check = lessons::where('contributor_id',$contribID)
+    $check = Lesson::where('contributor_id',$contribID)
         ->where('id',$id)->first();
     if($check ==null){
         return redirect('not-found');
     }
-    $row = lessons::where('contributor_id',$contribID)
+    $row = Lesson::where('contributor_id',$contribID)
         ->where('id',$id)->where('status',0)->first();
         if($row ==null){
             return redirect()->back()->with('no-delete','Totorial sedang / dalam verifikasi!');
         }
 
-        // $checkvideo = videos::where('lessons_id',$id)->get();
+        // $checkvideo = Video::where('lessons_id',$id)->get();
         // if(count($checkvideo) < 5){
         //     return redirect()->back()->with('no-delete','Minimal harus 5 buah video 1 tutorial untuk Verifikasi!');
         // }
@@ -194,7 +194,7 @@ class LessonsController extends Controller
         //     return redirect()->back()->with('no-delete','Minimal harus ada 2 buah kuis dalam 1 tutorial untuk Verifikasi!');
         // }
         // foreach ($checkkuis as $key => $value) {
-        //     $questions=Questions::where('quiz_id',$value->id)->get();
+        //     $questions=Question::where('quiz_id',$value->id)->get();
         //     if(count($questions ) < 20 ){
         //         return redirect()->back()->with('no-delete',' Dalam 1 kuis minimal harus membuat 20 soal untuk Verifikasi!');
         //     }
@@ -218,7 +218,7 @@ class LessonsController extends Controller
       }
       $now                    = new DateTime();;
       $cid                    = Session::get('contribID');
-      $store                  = lessons::find($id);
+      $store                  = Lesson::find($id);
       $store->status          = 2;
       $store->updated_at      = $now;
       $store->save();
@@ -247,16 +247,16 @@ class LessonsController extends Controller
     }
 
     $contribID = Session::get('contribID');
-    $row = lessons::where('contributor_id',$contribID)
+    $row = Lesson::where('contributor_id',$contribID)
     ->where('lessons.id',$id)
     ->leftJoin('categories', 'lessons.category_id', '=', 'categories.id')
     ->leftJoin('lessons_detail','lessons.id','lessons_detail.lesson_id')
     ->select('lessons.*','categories.title as category_title')
     ->first();
-    $video =videos::where('lessons_id',$id)->get();
+    $video =Video::where('lessons_id',$id)->get();
     $quiz = Quiz::where('lesson_id',$id)->get();
-    $files= files::where('lesson_id',$id)->get();
-    $revisi = revision::where('lession_id',$id)->get();
+    $files= File::where('lesson_id',$id)->get();
+    $revisi = Revision::where('lession_id',$id)->get();
     # code...
     return view('contrib.lessons.view',[
         'row'=>$row,
@@ -272,9 +272,9 @@ class LessonsController extends Controller
     if (empty(Session::get('contribID'))) {
       return redirect('contributor/login');
     }
-    $categories = categories::where('enable',1)->get();
+    $categories = Category::where('enable',1)->get();
     $contribID = Session::get('contribID');
-    $row = lessons::where('contributor_id',$contribID)
+    $row = Lesson::where('contributor_id',$contribID)
     ->where('lessons.id',$id)
     ->leftJoin('categories', 'lessons.category_id', '=', 'categories.id')
     ->leftJoin('lessons_detail','lessons.id','lessons_detail.lesson_id')
@@ -328,7 +328,7 @@ class LessonsController extends Controller
               $url_image= $urls.'/assets/source/lessons/'.$lessonsfilename;
           }
           $str = strtolower($title);
-          $store                  = lessons::find($id);
+          $store                  = Lesson::find($id);
           $store->contributor_id  = $cid;
           // $store->status          = 0;
           $store->enable          = 1;
@@ -353,17 +353,17 @@ class LessonsController extends Controller
         return redirect('contributor/login');
       }
      $contribID = Session::get('contribID');
-     $lessons =lessons::where('id',$id)->where('contributor_id',$contribID)->delete();
+     $lessons =Lesson::where('id',$id)->where('contributor_id',$contribID)->delete();
      if($lessons){
-         $video =videos::where('lessons_id',$id)->delete();
-         $files= files::where('lesson_id',$id)->delete();
+         $video =Video::where('lessons_id',$id)->delete();
+         $files= File::where('lesson_id',$id)->delete();
          $quiz = Quiz::where('lesson_id',$id)->get();
          foreach ($quiz as $key => $value) {
-             $question = Questions::where('quiz_id',$value->id)->get();
+             $question = Question::where('quiz_id',$value->id)->get();
              foreach ($question as $key => $qu) {
-                  $answer = Answars::where('question_id',$qu->id)->delete();
+                  $answer = Answer::where('question_id',$qu->id)->delete();
              }
-             Questions::where('quiz_id',$value->id)->delete();
+             Question::where('quiz_id',$value->id)->delete();
 
          }
          Quiz::where('lesson_id',$id)->delete();
@@ -382,7 +382,7 @@ class LessonsController extends Controller
       }
         $now          = new DateTime();
         $cid          = Session::get('contribID');
-        $update = revision::find($id);
+        $update = Revision::find($id);
         $update->status = 2;
         $update->updated_at=$now;
         $update->save();

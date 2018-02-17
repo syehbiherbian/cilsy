@@ -10,7 +10,7 @@ use Session;
 use Hash;
 use DateTime;
 use DB;
-use App\Contributors;
+use App\Model\Contributor;
 class ComentsController extends Controller
 {
     /**
@@ -96,9 +96,9 @@ class ComentsController extends Controller
         ]);
         $check=DB::table('coments')->where('parent',$comment_id)->get();
         if(count($check)==1){
-            $check_contri=Contributors::where('id',$uid)->first();
+            $check_contri=Contributor::where('id',$uid)->first();
             if(count($check_contri)>0){
-              $contri = Contributors::find($uid);
+              $contri = Contributor::find($uid);
               $contri->points      = $check_contri->points + 3;
               $contri->updated_at  = new DateTime();
               $contri->save();

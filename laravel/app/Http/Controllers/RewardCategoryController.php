@@ -12,7 +12,8 @@ use Redirect;
 use DateTime;
 use Helper;
 use Auth;
-use App\reward_category;
+use App\RewardCategory;
+
 class RewardCategoryController extends Controller
 {
     /**
@@ -21,7 +22,7 @@ class RewardCategoryController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(){
-        $data = reward_category::all();
+        $data = RewardCategory::all();
         return view('admin.reward-category.index',[
             'data' => $data,
         ]);
@@ -69,7 +70,7 @@ class RewardCategoryController extends Controller
               $enable = 0;
             }
 
-            $store = new reward_category;
+            $store = new RewardCategory;
             $store->enable      = $enable;
             $store->name        = $name;
             $store->slug        = $slug;
@@ -101,7 +102,7 @@ class RewardCategoryController extends Controller
      */
     public function edit($id)
     {
-        $data    = reward_category::find($id);
+        $data    = RewardCategory::find($id);
         return view('admin.reward-category.edit',[
             'data'    => $data,
         ]);
@@ -139,7 +140,7 @@ class RewardCategoryController extends Controller
             }
 
             // store
-            $store = reward_category::find($id);
+            $store = RewardCategory::find($id);
             $store->enable      = $enable;
             $store->name        =$name;
             $store->slug        = $slug;
@@ -159,7 +160,7 @@ class RewardCategoryController extends Controller
      */
     public function destroy($id)
     {
-        $data = reward_category::find($id);
+        $data = RewardCategory::find($id);
         $data->delete();
 
         return redirect()->back()->with('success','Data successfully deleted');

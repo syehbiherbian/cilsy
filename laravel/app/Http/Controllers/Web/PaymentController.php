@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Web;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Validator;
-use App\invoice;
+use App\Models\Invoice;
 use DB;
 use Session;
 class PaymentController extends Controller

@@ -1,12 +1,12 @@
 <?php
-use App\members;
-use App\Pages;
-use App\services;
-use App\Contributors;
-use App\income_details;
-use App\lessons;
-use App\contributor_notif;
-use App\videos;
+use App\Models\Member;
+use App\Models\Page;
+use App\Models\Service;
+use App\Model\Contributor;
+use App\Models\IncomeDetail;
+use App\Models\Lesson;
+use App\Models\ContributorNotif;
+use App\Models\Video;
 /**
  *
  */
@@ -14,14 +14,14 @@ class Helper
 {
   static function getTotalVideo($lesson_id)
   {
-    $data = videos::where('enable',1)->where('lessons_id',$lesson_id)->count();
+    $data = Video::where('enable',1)->where('lessons_id',$lesson_id)->count();
     return $data;
   }
   static function member($field)
   {
       $mem_id   = Session::get('memberID');
       if ($mem_id) {
-        $members  = members::where('id','=',$mem_id)->first();
+        $members  = Member::where('id','=',$mem_id)->first();
         $result   = $members->$field;
         return $result;
       }
@@ -33,7 +33,7 @@ class Helper
 
       $mem_id   = Session::get('memberID');
       if ($mem_id) {
-        $services  = services::where('status','=',1)->where('members_id','=',$mem_id)->where('expired','>=',$now)->first();
+        $services  = Service::where('status','=',1)->where('members_id','=',$mem_id)->where('expired','>=',$now)->first();
         if(count($services) > 0){
           if ($field == 'title') {
             $result = $services->title;
@@ -66,7 +66,7 @@ class Helper
 
   static function pageMenu()
   {
-    $pages  = Pages::where('enable',1)->paginate(3);
+    $pages  = Page::where('enable',1)->paginate(3);
     $html   = '';
     $html .='<ul class="nav-footer">';
     $html .='<li>Cilsy</li>';
@@ -109,7 +109,7 @@ class Helper
 function notif(){
 
     $contribID = Session::get('contribID');
-    $notif =contributor_notif::where('contributor_id',$contribID)->where('status',0)->get();
+    $notif =ContributorNotif::where('contributor_id',$contribID)->where('status',0)->get();
     $url = 'http://localhost/cilsy';
     $html='';
     foreach ($notif as  $value) {
@@ -142,7 +142,7 @@ function coments(){
 }
 function badge(){
       $contribID = Session::get('contribID');
-      $cotrib= Contributors::where('id',$contribID)->first();
+      $cotrib= Contributor::where('id',$contribID)->first();
 
       $html='';
       if($cotrib !==null){
@@ -168,7 +168,7 @@ function points(){
       $contribID = Session::get('contribID');
       $html='';
       if($contribID !==null){
-          $cotrib= Contributors::where('id',$contribID)->first();
+          $cotrib= Contributor::where('id',$contribID)->first();
           $html.=''.$cotrib->points.'';
 
       }
@@ -185,9 +185,9 @@ function income(){
     $contribID = Session::get('contribID');
     $html='';
     if($contribID !==null){
-        $row = income_details::where('contributor_id',$contribID)->where('moth',$moth)->where('year',$year)->first();
+        $row = IncomeDetail::where('contributor_id',$contribID)->where('moth',$moth)->where('year',$year)->first();
         if(count($row) ==0){
-        $row = income_details::where('contributor_id',$contribID)->orderBy('created_at','desc')->first();
+        $row = IncomeDetail::where('contributor_id',$contribID)->orderBy('created_at','desc')->first();
         }
 
         if(count($row)>0){
@@ -202,7 +202,7 @@ function lessons_pending(){
       $contribID = Session::get('contribID');
       $html='';
       if($contribID !==null){
-          $data = lessons::where('contributor_id',$contribID)->where('lessons.status',0)->count();
+          $data = Lesson::where('contributor_id',$contribID)->where('lessons.status',0)->count();
           $html.=''.$data.'';
 
       }
@@ -212,7 +212,7 @@ function lessons_publish(){
       $contribID = Session::get('contribID');
       $html='';
       if($contribID !==null){
-          $data = lessons::where('contributor_id',$contribID)->where('lessons.status',1)->count();
+          $data = Lesson::where('contributor_id',$contribID)->where('lessons.status',1)->count();
           $html.=''.$data.'';
 
       }

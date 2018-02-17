@@ -15,26 +15,26 @@ use DB;
 
 
 
-use App\Contributors;
-use App\lessons;
-use App\videos;
-use App\Viewers;
+use App\Model\Contributor;
+use App\Models\Lesson;
+use App\Models\Video;
+use App\Models\Viewer;
 
 class ContributorsController extends Controller
 {
 
   public function getProfile($username='')
   {
-    $contributors = Contributors::where('username',$username)->first();
+    $contributors = Contributor::where('username',$username)->first();
 
     if ($contributors) {
-      $contributors_lessons = lessons::where('enable', '=', 1)->where('contributor_id', '=', $contributors->id)->get();
+      $contributors_lessons = Lesson::where('enable', '=', 1)->where('contributor_id', '=', $contributors->id)->get();
       $contributors_total_view 		= 0;
       foreach ($contributors_lessons as $key => $lesson) {
-				$videos = videos::where('lessons_id',$lesson->id)->get();
+				$videos = Video::where('lessons_id',$lesson->id)->get();
 				if ($videos) {
 					foreach ($videos as $key => $video) {
-						$viewers = Viewers::where('video_id', '=', $video->id)->first();
+						$viewers = Viewer::where('video_id', '=', $video->id)->first();
 						if ($viewers) {
 							$contributors_total_view = $contributors_total_view + 1;
 						}
