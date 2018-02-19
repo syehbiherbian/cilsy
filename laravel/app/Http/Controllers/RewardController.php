@@ -12,8 +12,9 @@ use Redirect;
 use DateTime;
 use Helper;
 use Auth;
-use App\reward_category;
-use App\reward;
+use App\RewardCategory;
+use App\Reward;
+
 class rewardController extends Controller
 {
     /**
@@ -24,7 +25,7 @@ class rewardController extends Controller
     public function index()
     {   $now = new DateTime;
         $date = date_format($now,'Y-m-d');
-        $data = reward::all();
+        $data = Reward::all();
         return view('admin.reward.index',[
             'data' => $data,
             'date'  =>$date,
@@ -38,7 +39,7 @@ class rewardController extends Controller
      */
     public function create()
     {
-        $cat = reward_category::where('enable',1)->get();
+        $cat = RewardCategory::where('enable',1)->get();
         return view('admin.reward.create',[
           'cat'=>$cat,
         ]);
@@ -97,7 +98,7 @@ class rewardController extends Controller
               $enable = 0;
             }
 
-            $store = new reward;
+            $store = new Reward;
             $store->enable      = $enable;
             $store->code        = $code;
             $store->name        = $name;
@@ -140,8 +141,8 @@ class rewardController extends Controller
      */
     public function edit($id)
     {
-        $cat = reward_category::where('enable',1)->get();
-        $data    = reward::find($id);
+        $cat = RewardCategory::where('enable',1)->get();
+        $data    = Reward::find($id);
         return view('admin.reward.edit',[
             'data'    => $data,
             'cat'     => $cat
@@ -202,7 +203,7 @@ class rewardController extends Controller
             }
 
             // store
-            $store = reward::find($id);
+            $store = Reward::find($id);
             $store->enable      = $enable;
             $store->code        = $code;
             $store->name        =$name;
@@ -234,7 +235,7 @@ class rewardController extends Controller
      */
     public function destroy($id)
     {
-        $data = reward::find($id);
+        $data = Reward::find($id);
         $data->delete();
 
         return redirect()->back()->with('success','Data successfully deleted');

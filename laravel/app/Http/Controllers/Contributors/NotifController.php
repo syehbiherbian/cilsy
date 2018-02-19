@@ -10,8 +10,8 @@ use Session;
 use Hash;
 use DateTime;
 use DB;
-use App\Contributors;
-use App\contributor_notif;
+use App\Model\Contributor;
+use App\Models\ContributorNotif;
 class NotifController extends Controller
 {
     /**
@@ -35,13 +35,13 @@ class NotifController extends Controller
 
     public function read(){
       $id = Input::get('id');
-      $update= contributor_notif::find($id);
+      $update= ContributorNotif::find($id);
       $update->status=1;
       $update->save();
     }
     public function view(){
       $id = Input::get('id');
-      $update= contributor_notif::find($id);
+      $update= ContributorNotif::find($id);
       $update->status=2;
       $update->save();
     }

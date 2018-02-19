@@ -7,14 +7,14 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Validator;
 
-use App\Pages;
+use App\Models\Page;
 
 use Session;
 class PagesController extends Controller
 {
   public function index($page)
   {
-    $pages = Pages::where('enable','=',1)->where('url','=',$page)->first();
+    $pages = Page::where('enable','=',1)->where('url','=',$page)->first();
     if (count($pages) > 0) {
       return view('web.pages',[
         'pages' => $pages

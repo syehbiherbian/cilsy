@@ -10,15 +10,15 @@ use Session;
 use Hash;
 use DateTime;
 use DB;
-// use App\services;
-// use App\invoice;
-// use App\members;
-use App\Contributors;
-// use App\lessons;
-// use App\lessons_detail;
-use App\income_details;
-use App\contributor_account;
-use App\income_transfer;
+// use App\Models\Service;
+// use App\Models\Invoice;
+// use App\Models\Member;
+use App\Model\Contributor;
+// use App\Models\Lesson;
+// use App\Models\Lesson_detail;
+use App\Models\IncomeDetail;
+use App\Models\ContributorAccount;
+use App\Models\IncomeTransfer;
 class IncomeController extends Controller
 {
     /**
@@ -31,11 +31,11 @@ class IncomeController extends Controller
         $date= new DateTime();
         $moth= $date->format('m');
         $year= $date->format('Y');
-        $data= income_details::join('contributors','income_details.contributor_id','=','contributors.id')
+        $data= IncomeDetail::join('contributors','income_details.contributor_id','=','contributors.id')
                 ->select('income_details.*','income_details.status as status_paid','contributors.username as name')
             //    ->where('moth',$moth)->where('year',$year)
                ->orderby('income_details.id','=','desc')->get();
-        $bank= contributor_account::all();
+        $bank= ContributorAccount::all();
         return view('admin.income.index',[
             'data' => $data,
             'bank' =>$bank
@@ -59,7 +59,7 @@ class IncomeController extends Controller
             $bankid         = Input::get('bankid'.$id);
             $date_transfer  = Input::get('date'.$id);
             // update
-            $updates = income_details::find($id);
+            $updates = IncomeDetail::find($id);
             $updates->status      = $status;
             if(!empty($date_transfer)){
               $updates->transfer_date =$date_transfer;
@@ -72,8 +72,8 @@ class IncomeController extends Controller
             $updates->save();
 
             if(!empty($bankid)){
-                $bank= contributor_account::where('id',$bankid)->first();
-                $store = new income_transfer;
+                $bank= ContributorAccount::where('id',$bankid)->first();
+                $store = new IncomeTransfer();
                 $store->detail_income_id = $id;
                 $store->bank_transfer=$bank->id;
                 $store->transfer_date =$date_transfer;

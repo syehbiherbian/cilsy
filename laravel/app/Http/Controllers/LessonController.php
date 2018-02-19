@@ -11,10 +11,10 @@ use Redirect;
 use DateTime;
 use Helper;
 use Auth;
-use App\lessons;
-use App\categories;
-use App\revision;
-use App\Contributors;
+use App\Models\Lesson;
+use App\Models\Category;
+use App\Models\Revision;
+use App\Model\Contributor;
 
 class LessonController extends Controller
 {
@@ -164,9 +164,9 @@ class LessonController extends Controller
      */
     public function edit($id)
     {
-        $lessons    = lessons::find($id);
-        $categories = categories::where('enable','=','1')->get();
-        $revisi = revision::where('lession_id',$id)->get();
+        $lessons    = Lesson::find($id);
+        $categories = Category::where('enable','=','1')->get();
+        $revisi = Revision::where('lession_id',$id)->get();
         return view('admin.lesson.edit',[
             'categories'    => $categories,
             'lessons'       => $lessons,
@@ -198,8 +198,8 @@ class LessonController extends Controller
         } else {
             $title=Input::get('title');
             // store
-            $check= lessons::where('id',$id)->first();
-            $store = lessons::find($id);
+            $check= Lesson::where('id',$id)->first();
+            $store = Lesson::find($id);
             $store->enable      = Input::get('enable');
             $store->title       = Input::get('title');
             $store->category_id = Input::get('category_id');
@@ -212,10 +212,10 @@ class LessonController extends Controller
 
             if($check->status !== 1){
               if($store->status==1){
-                $check_contri=Contributors::where('id',$store->contributor_id)->first();
+                $check_contri=Contributor::where('id',$store->contributor_id)->first();
 
                 if(count($check_contri)>0){
-                  $contri = Contributors::find($store->contributor_id);
+                  $contri = Contributor::find($store->contributor_id);
                   $contri->points      = $check_contri->points + 10;
                   $contri->updated_at  = new DateTime();
                   $contri->save();
@@ -241,7 +241,7 @@ class LessonController extends Controller
               }
             }
             if(Input::get('status')==3 and input::get('notes') !== ''){
-              $store_revision= new revision;
+              $store_revision= new Revision;
               $store_revision->lession_id =$id;
               $store_revision->notes=input::get('notes');
               $store_revision->status=0;
@@ -257,7 +257,7 @@ class LessonController extends Controller
                   'created_at'    => new DateTime()
               ]);
             }
-            $revisi = revision::where('lession_id',$id)->get();
+            $revisi = Revision::where('lession_id',$id)->get();
 
             if(count($revisi) > 0 ){
               $revisi_id= Input::get('revisi_id');
@@ -265,7 +265,7 @@ class LessonController extends Controller
 
               if($revisi_id !==null){
                 foreach ($revisi_id as $key => $revisiid) {
-                  $update_revision= revision::find($revisiid);
+                  $update_revision= Revision::find($revisiid);
                   $update_revision->status=$revisi_status[$key];
                   $update_revision->updated_at  = new DateTime();
                   $update_revision->save();
@@ -285,7 +285,7 @@ class LessonController extends Controller
      */
     public function destroy($id)
     {
-        $delete = lessons::find($id);
+        $delete = Lesson::find($id);
         $delete->delete();
 
         return redirect()->back()->with('success','Data successfully deleted');

@@ -9,9 +9,9 @@ use Illuminate\Support\Facades\Input;
 use App\Http\Requests;
 use Validator;
 use Redirect;
-use App\members;
-// use App\invoice;
-// use App\packages;
+use App\Models\Member;
+// use App\Models\Invoice;
+// use App\Models\Package;
 use Session;
 // use Hash;
 use DateTime;
@@ -31,7 +31,7 @@ class ProfileController extends Controller
         return redirect('/member/signin');
         exit;
       }
-      $members = members::where('status',1)->where('id',$mem_id)->first();
+      $members = Member::where('status',1)->where('id',$mem_id)->first();
       if ($members) {
         return view('web.members.profile', [
           'members' => $members
@@ -68,7 +68,7 @@ class ProfileController extends Controller
         $username = Input::get('username');
         $email    = Input::get('email');
 
-        $update = members::findOrFail($mem_id);
+        $update = Member::findOrFail($mem_id);
         $update->username   = $username;
         $update->email      = $email;
         $update->updated_at = $now;

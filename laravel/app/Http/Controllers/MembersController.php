@@ -9,10 +9,10 @@ use Illuminate\Support\Facades\Input;
 use DB;
 use Validator;
 use DateTime;
-use App\members;
-use App\packages;
-use App\invoice;
-use App\services;
+use App\Models\Member;
+use App\Models\Package;
+use App\Models\Invoice;
+use App\Models\Service;
 
 class MembersController extends Controller
 {
@@ -23,7 +23,7 @@ class MembersController extends Controller
      */
     public function index()
     {
-        $members = members::all();
+        $members = Member::all();
         return view('admin.members.index', [
             'members' => $members
             ]);
@@ -36,7 +36,7 @@ class MembersController extends Controller
      */
     public function create()
     {
-        $packages = packages::all();
+        $packages = Package::all();
         return view('admin.members.create',[
           'packages'=>$packages
         ]);
@@ -76,7 +76,7 @@ class MembersController extends Controller
           $now            = new DateTime();
 
           // store
-          $members = new members;
+          $members = new Member();
           $members->status       = 1;
           $members->username     = $username;
           $members->email        = $email;
@@ -85,13 +85,13 @@ class MembersController extends Controller
           $members->save();
 
 
-          $packages = packages::where('id',$services_packages)->first();
+          $packages = Package::where('id',$services_packages)->first();
 
           // ADD INVOICE
           $code           = $this->generateCode();
 
           // store
-          $invoice = new invoice;
+          $invoice = new Invoice;
           $invoice->status       = $services_status;
           $invoice->code         = $code;
           $invoice->members_id   = $members->id;
@@ -109,7 +109,7 @@ class MembersController extends Controller
           $expired  = date('Y-m-d', strtotime(' + '.$packages->expired.' days'));
 
           // store
-          $services = new services;
+          $services = new Service;
           $services->status       = $services_status;
           $services->members_id   = $members->id;
           $services->invoice_id   = $invoice->code;
@@ -152,13 +152,13 @@ class MembersController extends Controller
 
 
 
-            $packages = packages::where('id',$services_packages)->first();
+            $packages = Package::where('id',$services_packages)->first();
 
             // ADD INVOICE
             $code           = $this->generateCode();
 
             // store
-            $invoice = new invoice;
+            $invoice = new Invoice;
             $invoice->status       = $services_status;
             $invoice->code         = $code;
             $invoice->members_id   = $members_id;
@@ -185,7 +185,7 @@ class MembersController extends Controller
 
 
             // store
-            $services = new services;
+            $services = new Service;
             $services->status       = $services_status;
             $services->members_id   = $members_id;
             $services->invoice_id   = $invoice->code;
@@ -211,7 +211,7 @@ class MembersController extends Controller
     {
       $randomCode     = 'INV'.rand(000000,999999);
       // $randomCode = uniqid();
-      $check = invoice::where('code','=',$randomCode)->count();
+      $check = Invoice::where('code','=',$randomCode)->count();
       if($check > 0){
         $this->generateCode();
       }else{
@@ -237,8 +237,8 @@ class MembersController extends Controller
      */
     public function edit($id)
     {
-        $members    = members::find($id);
-        $packages   = packages::all();
+        $members    = Member::find($id);
+        $packages   = Package::all();
 
         return view('admin.members.edit',[
             'members'     => $members,
@@ -249,7 +249,7 @@ class MembersController extends Controller
     public function getServices()
     {
       $members_id     = Input::get('members_id');
-      $services       = services::where('members_id',$members_id)->orderBy('id','DESC')->get();
+      $services       = Service::where('members_id',$members_id)->orderBy('id','DESC')->get();
 
       $html = '';
       if (count($services) > 0) {
@@ -289,9 +289,9 @@ class MembersController extends Controller
     public function getEditServices()
     {
         $services_id  = Input::get('services_id');
-        $services     = services::where('id',$services_id)->first();
-        $invoice      = invoice::where('code',$services->invoice_id)->first();
-        $packages     = packages::all();
+        $services     = Service::where('id',$services_id)->first();
+        $invoice      = Invoice::where('code',$services->invoice_id)->first();
+        $packages     = Package::all();
 
         $html = '';
 
@@ -381,7 +381,7 @@ class MembersController extends Controller
 
 
 
-                  $packages = packages::where('id',$services_packages)->first();
+                  $packages = Package::where('id',$services_packages)->first();
 
               
                   $services = DB::table('services')->where('id','=',$services_id)->where('members_id','=',$members_id)->first();
@@ -428,7 +428,7 @@ class MembersController extends Controller
 
 
                   // store
-                  // $services = new services;
+                  // $services = new Service;
                   // $services->status       = $services_status;
                   // $services->members_id   = $members_id;
                   // $services->invoice_id   = $invoice->code;
@@ -478,7 +478,7 @@ class MembersController extends Controller
           $now            = new DateTime();
 
           // get old password
-          $members = members::where('id',$id)->first();
+          $members = Member::where('id',$id)->first();
 
           if (!empty('password') && !empty('retype_password')) {
             $password = $members->password;
@@ -488,7 +488,7 @@ class MembersController extends Controller
 
 
           // store
-          $store = members::find($id);
+          $store = Member::find($id);
           $store->status       = 1;
           $store->username     = $username;
           $store->email        = $email;
@@ -509,7 +509,7 @@ class MembersController extends Controller
      */
     public function destroy($id)
     {
-        $delete = members::find($id);
+        $delete = Member::find($id);
         $delete->delete();
 
         return redirect()->back()->with('success','Data successfully deleted');

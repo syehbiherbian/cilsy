@@ -12,10 +12,10 @@ use Session;
 use Hash;
 use DateTime;
 use DB;
-use App\Contributors;
-use App\reward;
-use App\reward_category;
-use App\contributor_reward;
+use App\Model\Contributor;
+use App\Reward;
+use App\RewardCategory;
+use App\Models\ContributorReward;
 class PointController extends Controller
 {
 	public function index(){
@@ -25,10 +25,10 @@ class PointController extends Controller
 		$uid = Session::get('contribID');
 		$now = new DateTime;
     	$date = date_format($now,'Y-m-d');
-		$contrib= Contributors::where('id',$uid)->first();
-		$category =reward_category::where('enable',1)->get();
-		$reward = reward::where('enable',1)->where('end','>=',$date )->where('limit','>',0)->get();
-		$myreward = contributor_reward::join('reward','contributor_reward.reward_id','=','reward.id')
+		$contrib= Contributor::where('id',$uid)->first();
+		$category =RewardCategory::where('enable',1)->get();
+		$reward = Reward::where('enable',1)->where('end','>=',$date )->where('limit','>',0)->get();
+		$myreward = ContributorReward::join('reward','contributor_reward.reward_id','=','reward.id')
 		  			->select('reward.*','contributor_reward.id as myid')
 					->where('reward.end','>=',$date )->get();
 		return view('contrib.point.reward',[
@@ -45,12 +45,12 @@ class PointController extends Controller
 		$uid = Session::get('contribID');
 		$now = new DateTime;
         $date = date_format($now,'Y-m-d');
-		$contrib= Contributors::where('id',$uid)->first();
+		$contrib= Contributor::where('id',$uid)->first();
 		// $category =reward_category::where('enable',1)->get();
-		$row = contributor_reward::join('reward','contributor_reward.reward_id','=','reward.id')
+		$row = ContributorReward::join('reward','contributor_reward.reward_id','=','reward.id')
 		  			->select('reward.*','contributor_reward.id as myid')
 					->where('contributor_reward.id',$id)->first();
-		// $row = contributor_reward::where('id',$id)->first();
+		// $row = ContributorReward::where('id',$id)->first();
 		if ($row==null) {
 			return redirect('contributor/reward')->with('no-processing','Reward tidak ditemukan');
 		}
@@ -75,8 +75,8 @@ class PointController extends Controller
 		$contribID = Session::get('contribID');
 		$now = new DateTime;
 		$date = date_format($now,'Y-m-d');
-		$reward = reward::where('enable',1)->where('end','>=',$date )->where('limit','>',0)->where('slug',$id)->first();
-		$contrib= Contributors::where('id',$contribID)->first();
+		$reward = Reward::where('enable',1)->where('end','>=',$date )->where('limit','>',0)->where('slug',$id)->first();
+		$contrib= Contributor::where('id',$contribID)->first();
 		if($reward==null){
 			return redirect('contributor/reward')->with('no-processing','Reward tidak ditemukan');
 		}
@@ -100,8 +100,8 @@ class PointController extends Controller
 		$contribID = Session::get('contribID');
 		$now = new DateTime;
 		$date = date_format($now,'Y-m-d');
-		$reward = reward::where('enable',1)->where('end','>=',$date )->where('limit','>',0)->where('slug',$id)->first();
-		$contrib= Contributors::where('id',$contribID)->first();
+		$reward = Reward::where('enable',1)->where('end','>=',$date )->where('limit','>',0)->where('slug',$id)->first();
+		$contrib= Contributor::where('id',$contribID)->first();
 		if($reward==null){
 			return redirect('contributor/reward')->with('no-processing','Reward tidak ditemukan');
 		}
@@ -109,7 +109,7 @@ class PointController extends Controller
 			return redirect('contributor/reward')->with('no-processing','Poin anda tidak mencukupi untuk reward ini!');
 		}
 
-		$store = new contributor_reward;
+		$store = new ContributorReward();
 		$store->contributor_id  = $contribID;
 		$store->reward_id  = $reward->id;
 		// $store->code        = $reward->code;
@@ -128,12 +128,12 @@ class PointController extends Controller
 		$store->created_at  = $now;
 		$store->save();
 
-		$poin_update = Contributors::find($contribID);
+		$poin_update = Contributor::find($contribID);
 		$poin_update->points = $contrib->points - $store->poin;
 		// $poin_update->updated_at  = $now;
 		$poin_update->save();
 
-		$reward_update = reward::find($reward->id);
+		$reward_update = Reward::find($reward->id);
 		$reward_update->limit =$reward->limit - 1 ;
 				// $poin_update->updated_at  = $now;
 		$reward_update->save();

@@ -1,10 +1,10 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class contributor_reward extends Model
+class ContributorReward extends Model
 {
     //tablename
     protected $table = "contributor_reward";

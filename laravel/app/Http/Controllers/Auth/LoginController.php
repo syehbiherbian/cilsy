@@ -1,5 +1,5 @@
 <?php
-use App\User;
+use App\Models\User;
 
 namespace App\Http\Controllers\Auth;
 

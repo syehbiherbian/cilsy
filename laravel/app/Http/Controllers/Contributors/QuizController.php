@@ -6,10 +6,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Validator;
 use App\Quiz;
-use App\Questions;
-use App\videos;
-use App\lessons;
-use App\Contributors;
+use App\Models\Question;
+use App\Models\Video;
+use App\Models\Lesson;
+use App\Model\Contributor;
 use DateTime;
 use Session;
 use DB;
@@ -22,7 +22,7 @@ class QuizController extends Controller
     }
     # code...
 
-    $data = lessons::where('contributor_id',Session::get('contribID'))
+    $data = Lesson::where('contributor_id',Session::get('contribID'))
     ->where('id',$lessons_id)
     ->first();
     if(empty($data)){
@@ -32,7 +32,7 @@ class QuizController extends Controller
         return redirect('contributor/lessons/'.$lessons_id.'/view')->with('no-delete','Totorial sedang / dalam verifikasi!');
     }
 
-    $video= videos::where('lessons_id',$lessons_id)->get();
+    $video= Video::where('lessons_id',$lessons_id)->get();
 
     return view('contrib.quiz.create', [
       'lessons_id'=>$lessons_id,
@@ -67,10 +67,10 @@ class QuizController extends Controller
            $store->save();
 
            //point contributor
-           $check_contri=lessons::join('contributors','lessons.contributor_id','=','contributors.id')
+           $check_contri=Lesson::join('contributors','lessons.contributor_id','=','contributors.id')
                         ->where('lessons.id',$lessons_id)->first();
            if(count($check_contri)>0){
-             $contri = Contributors::find($check_contri->contributor_id);
+             $contri = Contributor::find($check_contri->contributor_id);
              $contri->points      = $check_contri->points + 1;
              $contri->updated_at  = new DateTime();
              $contri->save();
@@ -99,8 +99,8 @@ class QuizController extends Controller
     if($row==null){
       return redirect()->back();
     }
-    $lessons=lessons::where('lessons.id',$row->lesson_id)->first();
-    $question=Questions::where('quiz_id',$row->id)->get();
+    $lessons=Lesson::where('lessons.id',$row->lesson_id)->first();
+    $question=Question::where('quiz_id',$row->id)->get();
 
     # code...
     return view('contrib.quiz.view', [
@@ -118,9 +118,9 @@ class QuizController extends Controller
     if($row==null){
      return redirect('not-found');
     }
-    $lessons=lessons::where('lessons.id',$row->lesson_id)->first();
-    $question=Questions::where('quiz_id',$row->id)->get();
-    $video= videos::where('lessons_id',$row->lesson_id)->get();
+    $lessons=Lesson::where('lessons.id',$row->lesson_id)->first();
+    $question=Question::where('quiz_id',$row->id)->get();
+    $video= Video::where('lessons_id',$row->lesson_id)->get();
     # code...
     return view('contrib.quiz.edit', [
         'row'=>$row,
@@ -164,7 +164,7 @@ class QuizController extends Controller
         return redirect('contributor/login');
       }
        $data= DB::table('quiz')->where('id',$id)->first();
-       $checkdata=Questions::where('id',$id)->get();
+       $checkdata=Question::where('id',$id)->get();
         foreach ($checkdata as $key => $questions) {
           DB::table('answers')->where('question_id',$questions->question_id)->delete();
         }

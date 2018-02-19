@@ -10,31 +10,31 @@ use Session;
 use DB;
 
 
-use App\categories;
-use App\files;
+use App\Models\Category;
+use App\Models\File;
 use App\Http\Controllers\Controller;
-use App\lessons;
-use App\videos;
-use App\Viewers;
-use App\members;
-use App\services;
-use App\lessons_detail;
-use App\lessons_detail_view;
-use App\Quiz;
+use App\Models\Lesson;
+use App\Models\Video;
+use App\Models\Viewer;
+use App\Models\Member;
+use App\Models\Service;
+use App\Models\LessonDetail;
+use App\Models\LessonDetailView;
+use App\Models\Point;
 
 class LessonsController extends Controller {
 	public function index($by, $keyword) {
-		$categories = categories::where('enable', '=', 1)->get();
+		$categories = Category::where('enable', '=', 1)->get();
 		if ($by == 'category') {
-			$category = categories::where('enable', '=', 1)->where('title', 'like', '%' . $keyword . '%')->first();
-			$results = lessons::leftJoin('categories', 'lessons.category_id', '=', 'categories.id')
+			$category = Category::where('enable', '=', 1)->where('title', 'like', '%' . $keyword . '%')->first();
+			$results = Lesson::leftJoin('categories', 'lessons.category_id', '=', 'categories.id')
 				->select('lessons.*', 'categories.title as category_title')
 				->where('lessons.enable', '=', 1)
 				->where('lessons.status', '=', 1)
 				->where('lessons.category_id', '=', $category->id)
 				->paginate(10);
 		} else {
-			$results = lessons::leftJoin('categories', 'lessons.category_id', '=', 'categories.id')
+			$results = Lesson::leftJoin('categories', 'lessons.category_id', '=', 'categories.id')
 				->select('lessons.*', 'categories.title as category_title')
 				->where('lessons.status', '=', 1)
 				->where('lessons.enable', '=', 1)
@@ -53,23 +53,62 @@ class LessonsController extends Controller {
 		$now = new DateTime();
 		$mem_id = Session::get('memberID');
 
-		$services = services::where('status', '=', 1)->where('download', '=', 1)->where('members_id', '=', $mem_id)->where('expired', '>', $now)->first();
-		$lessons = lessons::where('enable', '=', 1)->where('status', '=', 1)->where('slug', '=', $slug)->first();
+		$services = Service::where('status', '=', 1)->where('download', '=', 1)->where('members_id', '=', $mem_id)->where('expired', '>', $now)->first();
+		$lessons = Lesson::where('enable', '=', 1)->where('status', '=', 1)->where('slug', '=', $slug)->first();
 
 	  if (count($lessons) > 0) {
-				$main_videos = videos::where('enable', '=', 1)->where('lessons_id', '=', $lessons->id)->orderBy('id', 'asc')->get();
-				$files = files::where('enable', '=', 1)->where('lesson_id', '=', $lessons->id)->orderBy('id', 'asc')->get();
+				$main_videos = Video::where('enable', '=', 1)->where('lessons_id', '=', $lessons->id)->orderBy('id', 'asc')->get();
+				$files = File::where('enable', '=', 1)->where('lesson_id', '=', $lessons->id)->orderBy('id', 'asc')->get();
+
+
+
+	    //
+			// $date= $now->format('Y-m-d');
+			// $moth=$now->format('m');
+			// $year=$now->format('Y');
+			// $check=LessonDetail::where('lesson_id',$lessons->id)->where('moth',$moth)->where('year',$year)->first();
+	    //
+			// //hitung view;
+			// if(count($check) == 0){
+			// 	$store                  = new LessonDetail;
+			// 	$store->lesson_id       = $lessons->id;
+			// 	$store->moth           = $moth;
+			// 	$store->year		    = $year;
+			// 	$store->view			= 1;
+			// 	$store->created_at      = $now;
+			// 	$store->save();
+	    //
+			// 	$detail = new LessonDetailView;
+			// 	$detail->detail_id =$store->id;
+			// 	$detail->member_id =$mem_id;
+			// 	$detail->created_at= $now;
+			// 	$detail->save();
+	    //
+			// }else{
+			// 	$checkdetail= LessonDetailView::where('detail_id',$check->id)->where('member_id',$mem_id)->get();
+			// 	if(count($checkdetail) == 0 ){
+			// 		$store                  = LessonDetail::find($check->id);
+			// 		$store->view			= $check->view + 1;
+			// 		$store->updated_at      = $now;
+			// 		$store->save();
+	    //
+			// 		$detail = new lessons_detail_view;
+			// 		$detail->detail_id =$store->id;
+			// 		$detail->member_id =$mem_id;
+			// 		$detail->created_at= $now;
+			// 		$detail->save();
+			// 	}
+	    //
+			// }
 			// Contributor
 			$contributors = DB::table('contributors')->where('id',$lessons->contributor_id)->first();
-			$contributors_total_lessons = lessons::where('enable', '=', 1)->where('contributor_id', '=', $lessons->contributor_id)->get();
+			$contributors_total_lessons = Lesson::where('enable', '=', 1)->where('contributor_id', '=', $lessons->contributor_id)->get();
 			$contributors_total_view 		= 0;
-      //
-      //
 			foreach ($contributors_total_lessons as $key => $lesson) {
-				$videos = videos::where('lessons_id',$lesson->id)->get();
+				$videos = Video::where('lessons_id',$lesson->id)->get();
 				if ($videos) {
 					foreach ($videos as $key => $video) {
-						$viewers = Viewers::where('video_id', '=', $video->id)->first();
+						$viewers = Viewer::where('video_id', '=', $video->id)->first();
 						if ($viewers) {
 							$contributors_total_view = $contributors_total_view + 1;
 						}
@@ -113,19 +152,19 @@ class LessonsController extends Controller {
 		  	$ip_address = $this->getUserIP();
 			$videosrc 	= Input::get('videosrc');
 
-			$video 			= videos::where('video','like','%'.$videosrc.'%')->first();
+			$video 			= Video::where('video','like','%'.$videosrc.'%')->first();
 			if ($video) {
 
-				$viewers  = Viewers::where('video_id',$video->id)->where('ip_address',$ip_address)->where('member_id',$mem_id)->first();
+				$viewers  = Viewer::where('video_id',$video->id)->where('ip_address',$ip_address)->where('member_id',$mem_id)->first();
 
 				if ($viewers) { // Viewers exist
 
-					$update = Viewers::find($viewers->id);
+					$update = Viewer::find($viewers->id);
 					$update->member_id 	= $mem_id;
 					$update->hits 			= $viewers->hits + 1;
 					$update->updated_at = $now;
 					if ($update->save()) {
-						return 'true';
+							return 'true';
 					}
 				}else { // Create new Viewers
 
@@ -137,9 +176,41 @@ class LessonsController extends Controller {
 					$store->created_at 	= $now;
 					$store->updated_at 	= $now;
 					if($store->save()){
-						return 'true';
+						if($this->createCompletePoints($video->lessons_id,$mem_id)){
+							return 'true';
+						}
 					}
 				}
+
+
+
+			}
+		}
+	}
+
+	private static function createCompletePoints($lessons_id,$mem_id)
+	{
+		// create points
+		$now = new DateTime();
+		$total_videos 	= Video::where('lessons_id',$lessons_id)->where('enable',1)->get();
+		$total_viewing 	= 0;
+		foreach ($total_videos as $key => $totv) {
+			$view 	= Viewer::where('video_id',$totv->id)->where('member_id',$mem_id)->first();
+			if ($view) {
+				$total_viewing = $total_viewing + 1;
+			}
+		}
+
+		if ($total_viewing >= count($total_videos) ) {
+			$point = new Points;
+			$point->status 		= 0;
+			$point->member_id	= $mem_id;
+			$point->type 			= 'COMPLETE';
+			$point->value 		= 10;
+			$point->created_at= $now;
+			$point->updated_at= $now;
+			if($point->save()){
+				return true;
 			}
 		}
 	}
@@ -262,9 +333,30 @@ class LessonsController extends Controller {
 			]);
 
 			if ($store) {
-				$response['success'] 		= true;
-			}
 
+				// Create Point
+				if ($parent_id == 0) { // Berkomentar
+					$point = new Points;
+					$point->status 		= 0;
+					$point->member_id	= $uid;
+					$point->type 			= 'QUESTION';
+					$point->value 		= 2;
+					$point->created_at= $now;
+					$point->updated_at= $now;
+				}else { // Membalas Komentar
+					$point = new Points;
+					$point->status 		= 0;
+					$point->member_id	= $uid;
+					$point->type 			= 'REPLY';
+					$point->value 		= 3;
+					$point->created_at= $now;
+					$point->updated_at= $now;
+				}
+
+				if ($point->save()) {
+					$response['success'] 		= true;
+				}
+			}
 		}
 
 		echo json_encode($response);
@@ -425,6 +517,26 @@ class LessonsController extends Controller {
 				'created_at'    => new DateTime()
 		]);
 
+		// if(count($check)==1){
+		// 	$check_contri=Contributor::where('id',$uid)->first();
+		// 	if(count($check_contri)>0){
+		// 	  $contri = Contributor::find($uid);
+		// 	  $contri->points      = $check_contri->points + 3;
+		// 	  $contri->updated_at  = new DateTime();
+		// 	  $contri->save();
+		//
+		// 	  DB::table('contributor_notif')->insert([
+		// 		  'contributor_id'=> $uid,
+		// 		  'category'=>'point',
+		// 		  'title'   => 'Anda mendapatkan pemambahan 3 point',
+		// 		  'notif'        => 'Anda mendapatkan pemambahan sebanyak 3 point karena  mereplay komentar dari '.$lessons->title.' ',
+		// 		  'status'        => 0,
+		// 		  'created_at'    => new DateTime()
+		// 	  ]);
+		// 	}
+		//
+		// }
+
 		if($store){
 			DB::table('contributor_notif')->insert([
 				'contributor_id'=> $lessons->contributor_id,
@@ -523,6 +635,25 @@ class LessonsController extends Controller {
 			'created_at'    => new DateTime()
 		]);
 		$check=DB::table('coments')->where('parent',$comment_id)->get();
+		// if(count($check)==1){
+		// 	$check_contri=Contributor::where('id',$uid)->first();
+		// 	if(count($check_contri)>0){
+		// 	  $contri = Contributor::find($uid);
+		// 	  $contri->points      = $check_contri->points + 3;
+		// 	  $contri->updated_at  = new DateTime();
+		// 	  $contri->save();
+		//
+		// 	  DB::table('contributor_notif')->insert([
+		// 		  'contributor_id'=> $uid,
+		// 		  'category'=>'point',
+		// 		  'title'   => 'Anda mendapatkan pemambahan 3 point',
+		// 		  'notif'        => 'Anda mendapatkan pemambahan sebanyak 3 point karena  mereplay komentar dari '.$lessons->title.' ',
+		// 		  'status'        => 0,
+		// 		  'created_at'    => new DateTime()
+		// 	  ]);
+		// 	}
+		//
+		// }
 
 		DB::table('contributor_notif')->insert([
 			'contributor_id'=> $lessons->contributor_id,
@@ -540,11 +671,11 @@ class LessonsController extends Controller {
 
 		$now = date('Y-m-d');
 		$lessons_id = Input::get('lessons_id');
-		$videos = videos::where('enable', '=', 1)->where('lessons_id', '=', $lessons_id)->orderBy('id', 'asc')->get();
+		$videos = Video::where('enable', '=', 1)->where('lessons_id', '=', $lessons_id)->orderBy('id', 'asc')->get();
 
 		$memberID = Session::get('memberID');
-		$members = members::where('id', '=', $memberID)->first();
-		$services = services::where('status', '=', 1)->where('members_id', '=', $memberID)->where('expired', '>=', $now)->first();
+		$members = Member::where('id', '=', $memberID)->first();
+		$services = Service::where('status', '=', 1)->where('members_id', '=', $memberID)->where('expired', '>=', $now)->first();
 
 		if (count($services) > 0) {
 			if ($services->access == 1) {

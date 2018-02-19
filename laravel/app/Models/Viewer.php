@@ -1,10 +1,10 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Viewers extends Model
+class Viewer extends Model
 {
     //table name
     protected $table = "viewers";

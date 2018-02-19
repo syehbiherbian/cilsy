@@ -10,14 +10,14 @@ use Session;
 use Hash;
 use DateTime;
 use DB;
-use App\services;
-use App\invoice;
-use App\members;
-use App\Contributors;
-use App\lessons;
-use App\lessons_detail;
-use App\income_details;
-use App\contributor_account;
+use App\Models\Service;
+use App\Models\Invoice;
+use App\Models\Member;
+use App\Model\Contributor;
+use App\Models\Lesson;
+use App\Models\Lesson_detail;
+use App\Models\IncomeDetail;
+use App\Models\ContributorAccount;
 class IncomeController extends Controller
 {
     /**
@@ -35,12 +35,12 @@ class IncomeController extends Controller
         $year= $date->format('Y');
 
         $contribID = Session::get('contribID');
-        $row = income_details::where('contributor_id',$contribID)->where('moth',$moth)->where('year',$year)->first();
+        $row = IncomeDetail::where('contributor_id',$contribID)->where('moth',$moth)->where('year',$year)->first();
         if(count($row) ==0){
-        $row = income_details::where('contributor_id',$contribID)->orderBy('created_at','desc')->first();
+        $row = IncomeDetail::where('contributor_id',$contribID)->orderBy('created_at','desc')->first();
         }
 
-      $rekening=contributor_account::where('contributor_id',$contribID)->get();
+      $rekening=ContributorAccount::where('contributor_id',$contribID)->get();
       return view('contrib.income.index', [
         'row'=>$row,
         'rekening'=>$rekening,
@@ -77,7 +77,7 @@ class IncomeController extends Controller
           $noreg        = Input::get('noreg');
           $name         = Input::get('name');
 
-          $store                  = new contributor_account;
+          $store                  = new ContributorAccount();
           $store->contributor_id  = $contribID;
           $store->account_no      = $noreg;
           $store->bank            = $bank;
@@ -96,7 +96,7 @@ class IncomeController extends Controller
           return redirect('contributor/login');
         }
         $contribID = Session::get('contribID');
-        $row =contributor_account::where('contributor_id',$contribID)->where('id',$id)->first();
+        $row =ContributorAccount::where('contributor_id',$contribID)->where('id',$id)->first();
         if(count($row)==0){
             return Redirect('not-found');
         }
@@ -131,7 +131,7 @@ class IncomeController extends Controller
           $noreg        = Input::get('noreg');
           $name         = Input::get('name');
 
-          $store                  = contributor_account::find($id);
+          $store                  = ContributorAccount::find($id);
           $store->contributor_id  = $contribID;
           $store->account_no      = $noreg;
           $store->bank            = $bank;
@@ -154,7 +154,7 @@ class IncomeController extends Controller
         $year= $date->format('Y');
 
         $contribID = Session::get('contribID');
-        $row = income_details::where('contributor_id',$contribID)->get();
+        $row = IncomeDetail::where('contributor_id',$contribID)->get();
       return view('contrib.income.view', [
         'row'=>$row,
       ]);
@@ -166,12 +166,12 @@ class IncomeController extends Controller
           return redirect('contributor/login');
         }
         $contribID = Session::get('contribID');
-        $row =contributor_account::where('contributor_id',$contribID)->where('id',$id)->first();
+        $row =ContributorAccount::where('contributor_id',$contribID)->where('id',$id)->first();
         if(count($row)==0){
             return Redirect('not-found');
         }
 
-      $i = contributor_account::where('contributor_id',$contribID)->where('id',$id)->delete();
+      $i = ContributorAccount::where('contributor_id',$contribID)->where('id',$id)->delete();
       if($i > 0)
       {
         return redirect('contributor/income')->with('success-delete','Rekening berhasil di hapus');

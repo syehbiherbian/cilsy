@@ -9,9 +9,9 @@ use Illuminate\Support\Facades\Input;
 use App\Http\Requests;
 use Validator;
 use Redirect;
-use App\services;
-// use App\invoice;
-// use App\packages;
+use App\Models\Service;
+// use App\Models\Invoice;
+// use App\Models\Package;
 use Session;
 // use Hash;
 use DateTime;
@@ -31,8 +31,8 @@ class SubscriptionsController extends Controller
         return redirect('/member/signin');
         exit;
       }
-      $service  = services::where('status',1)->where('members_id',$mem_id)->first();
-      $services = services::where('members_id',$mem_id)->orderBy('id','DESC')->get();
+      $service  = Service::where('status',1)->where('members_id',$mem_id)->first();
+      $services = Service::where('members_id',$mem_id)->orderBy('id','DESC')->get();
       return view('web.members.subscriptions', [
         'service'   => $service,
         'services'  => $services
@@ -48,9 +48,9 @@ class SubscriptionsController extends Controller
         exit;
       }
       $now = new DateTime();
-      $service  = services::where('status',1)->where('members_id',$mem_id)->where('id',$id)->first();
+      $service  = Service::where('status',1)->where('members_id',$mem_id)->where('id',$id)->first();
       if ($service) {
-        $update             = services::findOrFail($id);
+        $update             = Service::findOrFail($id);
         $update->status     = 2;
         $update->updated_at = $now;
         if ($update->save()) {

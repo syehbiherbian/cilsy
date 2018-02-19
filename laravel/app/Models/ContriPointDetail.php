@@ -1,10 +1,10 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class contri_point_details extends Model
+class ContriPointDetail extends Model
 {
     //tablename
     protected $table = "contri_point_details";

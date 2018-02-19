@@ -13,7 +13,7 @@ use DateTime;
 use Helper;
 use Auth;
 
-use App\Pages;
+use App\Models\Page;
 
 class PagesController extends Controller
 {
@@ -24,7 +24,7 @@ class PagesController extends Controller
      */
     public function index()
     {
-        $data = Pages::all();
+        $data = Page::all();
         return view('admin.pages.index',[
             'data' => $data,
         ]);
@@ -112,7 +112,7 @@ class PagesController extends Controller
      */
     public function edit($id)
     {
-        $data    = Pages::find($id);
+        $data    = Page::find($id);
         return view('admin.pages.edit',[
             'data'    => $data
         ]);
@@ -156,7 +156,7 @@ class PagesController extends Controller
             }
 
             // store
-            $store = Pages::find($id);
+            $store = Page::find($id);
             $store->enable    = $enable;
             $store->url       = $url;
             $store->meta_desc = $meta_desc;
@@ -179,7 +179,7 @@ class PagesController extends Controller
      */
     public function destroy($id)
     {
-        $data = Pages::find($id);
+        $data = Page::find($id);
         $data->delete();
 
         return redirect()->back()->with('success','Data successfully deleted');

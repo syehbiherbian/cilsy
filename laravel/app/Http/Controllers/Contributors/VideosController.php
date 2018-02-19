@@ -8,8 +8,8 @@ use Illuminate\Support\Facades\Input;
 use Validator;
 use Session;
 use DateTime;
-use App\videos;
-use App\lessons;
+use App\Models\Video;
+use App\Models\Lesson;
 class VideosController extends Controller
 {
   public function create($lessonsid)
@@ -17,7 +17,7 @@ class VideosController extends Controller
     if (empty(Session::get('contribID'))) {
       return redirect('contributor/login');
     }
-    $lesson= lessons::where('id',$lessonsid)->first();
+    $lesson= Lesson::where('id',$lessonsid)->first();
 
     if($lesson==null){
         return redirect('not-found');
@@ -25,7 +25,7 @@ class VideosController extends Controller
     if($lesson->status==2){
         return redirect('contributor/lessons/'.$lessonsid.'/view')->with('no-delete','Totorial sedang / dalam verifikasi!');
     }
-    $video=videos::where('lessons_id',$lessonsid)->get();
+    $video=Video::where('lessons_id',$lessonsid)->get();
     $count_video=count($video);
 
     # code...
@@ -65,7 +65,7 @@ class VideosController extends Controller
 
         $description  = Input::get('desc');
 
-        $video=videos::where('lessons_id',$lessonsid)->get();
+        $video=Video::where('lessons_id',$lessonsid)->get();
         $count_video=count($video);
 
 
@@ -110,7 +110,7 @@ class VideosController extends Controller
                 }
 
 
-                $store                  = new videos;
+                $store                  = new Video;
                 $store->lessons_id      = $lessonsid;
                 $store->title           = $titles;
                 $store->image           = $url_image;
@@ -138,7 +138,7 @@ class VideosController extends Controller
       if (empty(Session::get('contribID'))) {
         return redirect('contributor/login');
       }
-      $lesson= lessons::where('id',$lessonsid)->first();
+      $lesson= Lesson::where('id',$lessonsid)->first();
 
       if($lesson==null){
           return redirect('not-found');
@@ -146,7 +146,7 @@ class VideosController extends Controller
       if($lesson->status==2){
           return redirect('contributor/lessons/'.$lessonsid.'/view')->with('no-delete','Totorial sedang / dalam verifikasi!');
       }
-      $video=videos::where('lessons_id',$lessonsid)->get();
+      $video=Video::where('lessons_id',$lessonsid)->get();
       $count_video=count($video);
 
       # code...
@@ -187,8 +187,8 @@ class VideosController extends Controller
         $type_videos         = Input::get('type_video');
         $description        = Input::get('desc');
 
-        $delete= videos::where('lessons_id',$lessonsid)->delete();
-        $video=videos::where('lessons_id',$lessonsid)->get();
+        $delete= Video::where('lessons_id',$lessonsid)->delete();
+        $video=Video::where('lessons_id',$lessonsid)->get();
         $count_video=count($video);
 
 
@@ -238,7 +238,7 @@ class VideosController extends Controller
                     $url_video= $urls.'/assets/source/lessons/video-'.$i.'/'.$lessonsfilename;
                 }
 
-                $store                  = new videos;
+                $store                  = new Video;
                 $store->lessons_id      = $lessonsid;
                 $store->title           = $titles;
                 $store->image           = $url_image;

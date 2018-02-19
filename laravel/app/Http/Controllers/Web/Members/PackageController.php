@@ -9,9 +9,9 @@ use Illuminate\Support\Facades\Input;
 use App\Http\Requests;
 use Validator;
 use Redirect;
-use App\members;
-use App\invoice;
-use App\packages;
+use App\Models\Member;
+use App\Models\Invoice;
+use App\Models\Package;
 use Session;
 use Hash;
 use DateTime;
@@ -25,7 +25,7 @@ class PackageController extends Controller
      */
     public function index()
     {
-      $packages = packages::all();
+      $packages = Package::all();
       return view('web.members.package', [
         'packages' => $packages
       ]);
@@ -44,14 +44,16 @@ class PackageController extends Controller
       } else {
 
           $packages_id    = Input::get('packages_id');
-          $packages       = packages::where('id','=',$packages_id)->first();
+          $packages       = Package::where('id','=',$packages_id)->first();
+
+
           $member_id      = Session::get('memberID');
           $now            = new DateTime();
           // var_dump($packages_id);
 
           $code           = $this->generateCode();
           // store
-          $invoice = new invoice;
+          $invoice = new Invoice;
           $invoice->status       = 0;
           $invoice->code         = $code;
           $invoice->members_id   = $member_id;
@@ -60,7 +62,8 @@ class PackageController extends Controller
           $invoice->created_at   = $now;
           $invoice->save();
           // store
-          $invoice = invoice::where('code','=',$code)->first();
+          $invoice = Invoice::where('code','=',$code)->first();
+
           Session::set('invoiceCODE',$invoice->code);
           if($member_id == null){
                 // dd(Session::get('invoiceCODE'));
@@ -79,7 +82,7 @@ class PackageController extends Controller
     {
       $randomCode     = 'INV'.rand(000000,999999);
       // $randomCode = uniqid();
-      $check = invoice::where('code','=',$randomCode)->count();
+      $check = Invoice::where('code','=',$randomCode)->count();
       if($check > 0){
         $this->generateCode();
       }else{

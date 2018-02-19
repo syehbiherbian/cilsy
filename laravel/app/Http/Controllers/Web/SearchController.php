@@ -7,12 +7,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Validator;
 
-// use App\members;
-use App\lessons;
-use App\categories;
-// use App\videos;
-// use App\services;
-// use App\files;
+// use App\Models\Member;
+use App\Models\Lesson;
+use App\Models\Category;
+// use App\Models\Video;
+// use App\Models\Service;
+// use App\Models\File;
 use DateTime;
 
 use Session;
@@ -23,18 +23,18 @@ class SearchController extends Controller
     $c  = Input::get('category');
     $q  = Input::get('q');
 
-    $categories = categories::where('enable','=',1)->get();
+    $categories = Category::where('enable','=',1)->get();
 
     if (!empty($c)) { //with Category
 
-          $category = categories::where('enable','=',1)->where('title','like','%'.$c.'%')->first();
+          $category = Category::where('enable','=',1)->where('title','like','%'.$c.'%')->first();
           if (count($category) > 0) {
             $cateid = $category->id;
           }else {
             $cateid = 0;
           }
 
-          $results  = lessons::leftJoin('categories', 'lessons.category_id', '=', 'categories.id')
+          $results  = Lesson::leftJoin('categories', 'lessons.category_id', '=', 'categories.id')
                       ->select('lessons.*','categories.title as category_title')
                       ->where('lessons.enable','=',1)
                       ->where('lessons.title','like','%'.$q.'%')
@@ -45,7 +45,7 @@ class SearchController extends Controller
 
     }else { //Without Category
 
-          $results  = lessons::leftJoin('categories', 'lessons.category_id', '=', 'categories.id')
+          $results  = Lesson::leftJoin('categories', 'lessons.category_id', '=', 'categories.id')
                       ->select('lessons.*','categories.title as category_title')
                       ->where('lessons.enable','=',1)
                       ->where('lessons.title','like','%'.$q.'%')
@@ -66,7 +66,7 @@ class SearchController extends Controller
 
   		$keyword 			= Input::get('term');
 
-  		$lessons 	= lessons::where('enable','=','1')->where('title','like','%'.$keyword.'%')->orderBy('id', 'DESC')->get();
+  		$lessons 	= Lesson::where('enable','=','1')->where('title','like','%'.$keyword.'%')->orderBy('id', 'DESC')->get();
 
 
 

@@ -11,9 +11,9 @@ use Hash;
 use DateTime;
 use DB;
 use App\Quiz;
-use App\Questions;
-use App\Answars;
-use App\lessons;
+use App\Models\Question;
+use App\Models\Answer;
+use App\Models\Lesson;
 class QuestionQuizController extends Controller
 {
 
@@ -26,12 +26,12 @@ class QuestionQuizController extends Controller
       if(count($quiz) < 1){
         return redirect('not-found');
       }
-      $lesson= lessons::where('id',$quiz->lesson_id)->first();
+      $lesson= Lesson::where('id',$quiz->lesson_id)->first();
       if($lesson->status==2){
           return redirect('contributor/lessons/'.$quiz->lesson_id.'/view')->with('no-delete','Totorial sedang / dalam verifikasi!');
       }
 
-      $question=Questions::where('quiz_id',$quiz_id)->get();
+      $question=Question::where('quiz_id',$quiz_id)->get();
       $count_question=count($question);
 
       return view('contrib.questions-quiz.create',[
@@ -56,7 +56,7 @@ class QuestionQuizController extends Controller
              $question           = Input::get('question');
              $questionid           = Input::get('questionid');
 
-              $count=Questions::where('id',$quiz_id)->count();
+              $count=Question::where('id',$quiz_id)->count();
               $i=0;
               foreach ($question as $key => $questions) {
                 $no =$i + 1 + $count;
@@ -69,10 +69,10 @@ class QuestionQuizController extends Controller
                 $answer           = Input::get('answer'.$questionid[$key]);
                 $i=$questionid[$key];
 
-                $check=Questions::where('quiz_id','=',$quiz_id)->orderBy('id','=','desc')->first();
+                $check=Question::where('quiz_id','=',$quiz_id)->orderBy('id','=','desc')->first();
                 $j=0;
                 foreach ($answer as $key => $a) {
-                  $store_answer_a = new Answars();
+                  $store_answer_a = new Answer();
                   $store_answer_a->question_id= $check->id;
                   $store_answer_a->type = $j;
                   $store_answer_a->answer = $a;
@@ -103,12 +103,12 @@ class QuestionQuizController extends Controller
           if(count($quiz) < 1){
             return redirect('not-found');
           }
-          $lesson= lessons::where('id',$quiz->lesson_id)->first();
+          $lesson= Lesson::where('id',$quiz->lesson_id)->first();
           if($lesson->status==2){
               return redirect('contributor/lessons/'.$quiz->lesson_id.'/view')->with('no-delete','Totorial sedang / dalam verifikasi!');
           }
-          $question = Questions::where('quiz_id',$quiz_id)->get();
-          $answer = Answars::all();
+          $question = Question::where('quiz_id',$quiz_id)->get();
+          $answer = Answer::all();
           $count_question=count($question);
           # code...
           return view('contrib.questions-quiz.edit',[
@@ -137,7 +137,7 @@ class QuestionQuizController extends Controller
                $questionid           = Input::get('questionid');
 
                //delete questin old
-               $checkdata=Questions::where('quiz_id',$quiz_id)->get();
+               $checkdata=Question::where('quiz_id',$quiz_id)->get();
                 foreach ($checkdata as $key => $questions) {
                   DB::table('answers')->where('question_id',$questions->question_id)->delete();
                 }
@@ -154,11 +154,11 @@ class QuestionQuizController extends Controller
                   $store_question->save();
                   $answer           = Input::get('answer'.$questionid[$key]);
                   $i=$questionid[$key];
-                  $check=Questions::where('quiz_id','=',$quiz_id)->orderBy('id','=','desc')->first();
+                  $check=Question::where('quiz_id','=',$quiz_id)->orderBy('id','=','desc')->first();
                   $j=0;
 
                   foreach ($answer as $key => $a) {
-                    $store_answer_a = new Answars();
+                    $store_answer_a = new Answer();
                     $store_answer_a->question_id= $check->id;
                     $store_answer_a->type = $j;
                     $store_answer_a->answer = $a;

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DB;
 use Mail;
-use App\Contributors;
+use App\Model\Contributor;
 use Validator;
 use App\Mail\EmailVerification;
 use App\Http\Controllers\Controller;

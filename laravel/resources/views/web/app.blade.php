@@ -212,7 +212,7 @@
     <link rel="stylesheet" href="{{ asset('template/web/css/helper.css') }}">
     <link rel="stylesheet" href="{{ asset('template/web/css/common.css') }}">
     <link rel="stylesheet" href="{{ asset('template/web/css/blocks.css') }}">
-    
+
     @stack('css')
 </head>
 
@@ -438,7 +438,7 @@
     $('#sidebar').toggleClass('sidebar-expand');
     console.log('clicked');
 
-    
+
   });
 
   $('#sidebar ul li').click(function(event) {
@@ -458,7 +458,7 @@
     } else {
       _this.hide()
     }
-  
+
   });
 
   $(document).click(function(){
@@ -498,7 +498,7 @@
       });
 
     });
-    
+
     </script>
     <!--/. End Navbar -->
 

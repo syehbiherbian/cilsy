@@ -13,7 +13,7 @@ use Redirect;
 use DateTime;
 use Helper;
 use Auth;
-use App\videos;
+use App\Models\Video;
 
 class VideoController extends Controller
 {
@@ -62,7 +62,7 @@ class VideoController extends Controller
           return redirect()->back()->withErrors($validator)->withInput();
       } else {
 
-          $videos = new videos;
+          $videos = new Video;
           $videos->lessons_id = Input::get('lesson_id');
           $videos->title      = Input::get('title');
           $videos->durasi      = Input::get('durasi');
