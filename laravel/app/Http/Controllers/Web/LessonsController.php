@@ -9,7 +9,7 @@ use DateTime;
 use Session;
 use DB;
 
-
+use Auth;
 use App\Models\Category;
 use App\Models\File;
 use App\Http\Controllers\Controller;
@@ -51,55 +51,20 @@ class LessonsController extends Controller {
 
 
 		$now = new DateTime();
-		$mem_id = Session::get('memberID');
-
-		$services = Service::where('status', '=', 1)->where('download', '=', 1)->where('members_id', '=', $mem_id)->where('expired', '>', $now)->first();
-		$lessons = Lesson::where('enable', '=', 1)->where('status', '=', 1)->where('slug', '=', $slug)->first();
-
-	  if (count($lessons) > 0) {
+		if(Auth::guard('members')->user()){
+            $mem_id      = Auth::guard('members')->user()->id;
+          }else{
+            $mem_id      = 0;
+        }
+		$services = Service::where('status', '=', 1, 'AND', 'status', '=', 2)->where('download', '=', 1)->where('members_id', '=', $mem_id)->where('expired', '>', $now)->first();
+		$lessons = Lesson::where('enable', '=', 1)->where('slug', '=', $slug)->first();
+		$main_videos = Video::where('enable', '=', 1)->where('lessons_id', '=', $lessons->id)->orderBy('id', 'asc')->get();
+		$files = File::where('enable', '=', 1)->where('lesson_id', '=', $lessons->id)->orderBy('id', 'asc')->get();
+		// dd($mem_id);
+	  	if (count($lessons) > 0) {
 				$main_videos = Video::where('enable', '=', 1)->where('lessons_id', '=', $lessons->id)->orderBy('id', 'asc')->get();
 				$files = File::where('enable', '=', 1)->where('lesson_id', '=', $lessons->id)->orderBy('id', 'asc')->get();
 
-
-
-	    //
-			// $date= $now->format('Y-m-d');
-			// $moth=$now->format('m');
-			// $year=$now->format('Y');
-			// $check=LessonDetail::where('lesson_id',$lessons->id)->where('moth',$moth)->where('year',$year)->first();
-	    //
-			// //hitung view;
-			// if(count($check) == 0){
-			// 	$store                  = new LessonDetail;
-			// 	$store->lesson_id       = $lessons->id;
-			// 	$store->moth           = $moth;
-			// 	$store->year		    = $year;
-			// 	$store->view			= 1;
-			// 	$store->created_at      = $now;
-			// 	$store->save();
-	    //
-			// 	$detail = new LessonDetailView;
-			// 	$detail->detail_id =$store->id;
-			// 	$detail->member_id =$mem_id;
-			// 	$detail->created_at= $now;
-			// 	$detail->save();
-	    //
-			// }else{
-			// 	$checkdetail= LessonDetailView::where('detail_id',$check->id)->where('member_id',$mem_id)->get();
-			// 	if(count($checkdetail) == 0 ){
-			// 		$store                  = LessonDetail::find($check->id);
-			// 		$store->view			= $check->view + 1;
-			// 		$store->updated_at      = $now;
-			// 		$store->save();
-	    //
-			// 		$detail = new lessons_detail_view;
-			// 		$detail->detail_id =$store->id;
-			// 		$detail->member_id =$mem_id;
-			// 		$detail->created_at= $now;
-			// 		$detail->save();
-			// 	}
-	    //
-			// }
 			// Contributor
 			$contributors = DB::table('contributors')->where('id',$lessons->contributor_id)->first();
 			$contributors_total_lessons = Lesson::where('enable', '=', 1)->where('contributor_id', '=', $lessons->contributor_id)->get();
@@ -132,11 +97,11 @@ class LessonsController extends Controller {
 
 	public function videoTracking()
 	{
-		if (Session::get('memberID')) {
-			$mem_id = Session::get('memberID');
-		}else {
-			$mem_id = 0;
-		}
+		if(Auth::guard('members')->user()){
+            $mem_id      = Auth::guard('members')->user()->id;
+          }else{
+            $mem_id      = 0;
+        }
 
 		$rules = array(
 			'videosrc'      => 'required|min:3|max:255'
@@ -215,11 +180,11 @@ class LessonsController extends Controller {
 		}
 	}
 	public function LessonsQuiz(){
-		if (Session::get('memberID')) {
-			$mem_id = Session::get('memberID');
-		}else {
-			$mem_id = 0;
-		}
+		if(Auth::guard('members')->user()){
+            $mem_id      = Auth::guard('members')->user()->id;
+          }else{
+            $mem_id      = 0;
+        }
 		$rules = array(
 			'videosrc'      => 'required|min:3|max:255'
 		);
@@ -244,48 +209,6 @@ class LessonsController extends Controller {
 		}
 
 	}
-
-  //
-  // public function checkViewers($lesson_id)
-  // {
-  //   // ADD VIEWERS
-  //   $now            = new DateTime();
-	// 	if (Session::get('memberID')) {
-	// 		$mem_id = Session::get('memberID');
-	// 	}else {
-	// 		$mem_id = 0;
-	// 	}
-  //   $ip_address     = $this->getUserIP();
-  //   $lessons_viewers  = DB::table('lessons_viewers')->where('lesson_id',$lesson_id)->where('ip_address',$ip_address)->first();
-  //
-  //   if (count($lessons_viewers) > 0) {
-  //
-  //     // Update hits Viewers
-	// 		DB::table('lessons_viewers')->where('lesson_id',$lesson_id)
-	// 		->update([
-	// 			'member_id' 	=> $mem_id,
-	// 			'hits' 				=> $lessons_viewers->hits + 1,
-	// 			'updated_at' 	=> $now,
-	// 		]);
-  //
-  //     return true;
-  //
-  //   }else {
-  //
-  //     // Create New Viewers
-	// 		DB::table('lessons_viewers')->insert([
-	// 			'lesson_id' 		=> $lesson_id,
-	// 			'ip_address' 	=> $ip_address,
-	// 			'hits' 				=> 1,
-	// 			'member_id' 	=> $mem_id,
-	// 			'created_at' 	=> $now,
-	// 			'updated_at' 	=> $now,
-	// 		]);
-  //
-  //     return true;
-  //   }
-  //
-  // }
 
   private static function getUserIP()
   {
@@ -312,12 +235,12 @@ class LessonsController extends Controller {
 	public function doComment()
 	{
 		$response= array();
-		if (empty(Session::get('memberID'))) {
+		if (empty(Auth::guard('members')->user()->id)) {
 			$response['success'] 		= false;
 		}else {
 
 			$now 				= new DateTime();
-			$uid 				= Session::get('memberID');
+			$uid 				= Auth::guard('members')->user()->id;
 			$body 	  	= Input::get('body');
 			$lesson_id  = Input::get('lesson_id');
 			$parent_id 	= Input::get('parent_id');
@@ -615,11 +538,11 @@ class LessonsController extends Controller {
 
 	}
 	public function postcomment(){
-		if (empty(Session::get('memberID'))) {
+		if (empty(Auth::guard('members')->user()->id)) {
 			return 0;
 			exit();
 		}
-		$uid = Session::get('memberID');
+		$uid = Auth::guard('members')->user()->id;
 		$member=DB::table('members')->where('id',$uid)->first();
 		$isi_balas  = Input::get('isi_balas');
 		$comment_id = Input::get('comment_id');
@@ -672,8 +595,7 @@ class LessonsController extends Controller {
 		$now = date('Y-m-d');
 		$lessons_id = Input::get('lessons_id');
 		$videos = Video::where('enable', '=', 1)->where('lessons_id', '=', $lessons_id)->orderBy('id', 'asc')->get();
-
-		$memberID = Session::get('memberID');
+		$memberID = Auth::guard('members')->user()->id;
 		$members = Member::where('id', '=', $memberID)->first();
 		$services = Service::where('status', '=', 1)->where('members_id', '=', $memberID)->where('expired', '>=', $now)->first();
 

@@ -32,7 +32,6 @@
             <?php if (count($main_videos) > 0) {?>
                 <source src="<?php if (!empty($main_videos[0]->video)) {echo $main_videos[0]->video;}?>" type="<?php if (!empty($main_videos[0]->type_video)) {echo $main_videos[0]->type_video;}?>">
             <?php }?>
-            <!-- <source src="http://vjs.zencdn.net/v/oceans.webm" type="video/webm"> -->
           </video>
 
           <!-- Playlist Video -->

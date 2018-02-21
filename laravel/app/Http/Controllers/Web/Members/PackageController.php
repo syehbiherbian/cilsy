@@ -16,6 +16,8 @@ use Session;
 use Hash;
 use DateTime;
 use DB;
+use Auth;
+
 class PackageController extends Controller
 {
     /**

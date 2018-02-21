@@ -1,13 +1,17 @@
 <?php
 
-namespace App\Models;
+namespace App;
 
-use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use App\Notifications\MemberResetPasswordNotification;
 
-class Member extends User {
+class members extends User
+{
     protected $table = "members";
+
+    protected $fillable = [
+        'username', 'email', 'password',
+    ];
     /**
      * Send the password reset notification.
      *

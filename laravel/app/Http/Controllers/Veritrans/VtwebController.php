@@ -13,6 +13,7 @@ use Session;
 use Mail;
 use App\Mail\InvoiceMail;
 use App\Mail\SuksesMail;
+use Auth;
 
 class VtwebController extends Controller {
 
@@ -24,7 +25,7 @@ class VtwebController extends Controller {
     }
 
     public function vtweb() {
-        $members = Member::where('id', '=', Session::get('memberID'))->first();
+        $members = Member::where('id', '=', Auth::guard('members')->user()->id)->first();
         $packages = Package::where('id', '=', Session::get('packageID'))->first();
         $invoice = Invoice::where('code', '=', Session::get('invoiceCODE'))->first();
 
@@ -45,7 +46,7 @@ class VtwebController extends Controller {
                 'id' => $invoice->code,
                 'price' => $invoice->price,
                 'quantity' => 1,
-                'name' => "Pemesanan Paket Cilsy",
+                'name' => "Pembayaran Paket Cilsy",
             ),
         ];
 

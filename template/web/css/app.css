@@ -24,6 +24,10 @@ html, body {
     padding: 20px;
 }
 
+.tab-content{
+    margin-top: 68px;
+    padding: 25px 15px;
+}
 .header-menu  ul {
     padding: 0;
 }

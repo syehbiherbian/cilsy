@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Web\Members;
 
+use Illuminate\Support\Str;
+use App\Providers\AppServiceProvider;
 use App\Http\Controllers\Controller;
 use App\Mail\ForgetPassword;
 use App\Models\Member;
@@ -14,6 +16,8 @@ use PHPMailer;
 use Redirect;
 use Session;
 use Validator;
+use Auth;
+use Request;
 
 class AuthController extends Controller {
 
@@ -233,48 +237,34 @@ class AuthController extends Controller {
         }
     }
 
-    public function doreset() {
-        if (Session::get('memberID')) {
-            $memberid = Session::get('memberID');
-            # code...
-            // validate the info, create rules for the inputs
-            $rules = array(
-                'password' => 'required|min:6', // password can only be alphanumeric and has to be greater than 3 characters
-            );
-            // run the validation rules on the inputs from the form
-            $validator = Validator::make(Input::all(), $rules);
-            // if the validator fails, redirect back to the form
-            if ($validator->fails()) {
-                return redirect()->back()
-                                ->withErrors($validator) // send back all errors to the login form
-                                ->withInput(Input::except('password')); // send back the input (not the password) so that we can repopulate the form
-            } else {
-
-                $passwordbaru = md5(Input::get('password'));
-                $retypepassword = md5(Input::get('retypepassword'));
-
-                if ($retypepassword !== $passwordbaru) {
-                    return Redirect()->back()->with('error_get', 'These passwords don t match. Try again?!');
-                } else {
-
-                    $update = DB::table('members')
-                            ->where('id', $memberid)
-                            ->update([
-                        'password' => $passwordbaru,
-                    ]);
-                    if ($update) {
-
-                        return Redirect()->to('/member/signin')->with('success', 'Successfully change Password,please your login again   !');
-                    } else {
-                        return Redirect()->back()->with('error', 'Sorry something is error !');
-                    }
-                }
-            }
-        } else {
-            Session::flash('error_must_login', 'You must sign');
-            return Redirect('member/login');
+    public function doreset(Request $request) {
+		$user = Auth::guard('members')->user();
+		// dd($user);
+        $rules = array(
+			'current_password' => 'required|current_password_match',
+            'new_password'     => 'required|min:6|confirmed',
+		);
+		// run the validation rules on the inputs from the form
+		$validator = Validator::make(Input::all(), $rules);
+        if ($validator->fails()) {
+			return redirect()->back()
+				->withErrors($validator) // send back all errors to the login form
+				->withInput(Input::except('password')); // sen d back the input (not the password) so that we can repopulate the form
+		}else{
+			$retypepassword = (Input::get('new_password'));
+			$update = DB::table('members')
+						->update([
+							'password' => bcrypt($retypepassword),
+						]);
+        if($update){
+            return back()->with('success', 'Selamat Password Anda Berhasil Di ubah!');
+        }else{
+        	return back()->with('errors', 'Gagal Reset Password');
         }
-    }
+        
+		}
+        
+	}
 
     private function forgetMember() {
         Session::forget('memberID');

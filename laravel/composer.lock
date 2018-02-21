@@ -1702,11 +1702,7 @@
             ],
             "description": "Symfony EventDispatcher Component",
             "homepage": "https://symfony.com",
-            "time": "2018-01-03T07:37:34+00:00"
-<<<<<<< HEAD
-=======
-        },
-        {
+            "time": "2018-01-03T07:37:34+00:00",
             "name": "symfony/filesystem",
             "version": "v3.4.4",
             "source": {
@@ -1754,7 +1750,6 @@
             "description": "Symfony Filesystem Component",
             "homepage": "https://symfony.com",
             "time": "2018-01-03T07:37:34+00:00"
->>>>>>> baru
         },
         {
             "name": "symfony/finder",

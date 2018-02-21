@@ -22,15 +22,37 @@
                 </div>
             @endif
 
-            <form action="{{ url('member/reset') }}" method="post">
-              {{ csrf_field() }}
-                <div class="form-group @if ($errors->has('email')) has-error @endif">
-                    <label for="exampleInputPassword1">Masukkan Email :</label>
-                    <input type="email" class="form-control" name="email">
-                    @if ($errors->has('email')) <p class="help-block">{{ $errors->first('email') }}</p> @endif
+            @if (session('status'))
+                <div class="alert alert-success">
+                    {{ session('status') }}
                 </div>
-                <button type="submit" class="btn btn-primary">KIRIM</button>
-            </form>
+            @endif
+
+                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/member/email') }}">
+                        {{ csrf_field() }}
+
+                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+                            <label for="email" class="col-md-4 control-label">E-Mail Address</label>
+
+                            <div class="col-md-12">
+                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required>
+
+                                @if ($errors->has('email'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('email') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-6 col-md-offset-4">
+                                <button type="submit" class="btn btn-primary">
+                                    Send Password Reset Link
+                                </button>
+                            </div>
+                        </div>
+                    </form>
         </div>
     </div>
 </div>
