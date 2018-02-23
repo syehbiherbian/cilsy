@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Contributors;
 
-use App\Model\Contributor;
+use App\Models\Contributor;
 use App\Http\Controllers\Controller;
 use App\Mail\EmailVerification;
 use DateTime;
@@ -43,10 +43,10 @@ class AuthController extends Controller {
 			$password = md5(Input::get('password'));
 			$now = new DateTime();
 			// store
-			$contributors = Contributor::where('email', '=', $email)->where('password', '=', $password)->first();
+			$contributors = Contributor::where('email', '=', $email, 'AND', 'password', '=', $password)->first();
 
 			if (count($contributors) > 0) {
-				Session::set('contribID', $contributors->id);
+				Session::put('contribID', $contributors->id);
 				// redirect
 				return redirect('contributor/dashboard')->with('success', 'Selamat datang kembali,' . $contributors->name);
 

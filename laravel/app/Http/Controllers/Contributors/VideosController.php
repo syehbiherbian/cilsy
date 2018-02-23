@@ -10,6 +10,9 @@ use Session;
 use DateTime;
 use App\Models\Video;
 use App\Models\Lesson;
+use FFMpeg;
+// use FFProbe;
+
 class VideosController extends Controller
 {
   public function create($lessonsid)
@@ -59,7 +62,7 @@ class VideosController extends Controller
         $title        = Input::get('judul');
         $image_video = Input::file('image');
         $lessons_video = Input::file('video');
-
+        
 
 
 
@@ -108,6 +111,9 @@ class VideosController extends Controller
                     $urls=url('');
                     $url_video= $urls.'/assets/source/lessons/video-'.$i.'/'.$lessonsfilename;
                 }
+                $media = FFMpeg::open($url_video);
+                $frame = $media->getFrameFromString('00:00:13.37');
+                dd($media);
 
 
                 $store                  = new Video;

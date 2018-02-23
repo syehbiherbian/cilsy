@@ -9,13 +9,13 @@ use App\Models\Member;
 use App\Models\Lesson;
 use App\Models\Category;
 use App\Models\Video;
-use App\Quiz;
+use App\Models\Quiz;
 use App\Models\Service;
 use App\Models\File;
 use App\Models\Question;
 use App\Models\Answer;
 use App\Models\Revision;
-use App\Models\Lesson_detail;
+use App\Models\LessonDetail;
 use DateTime;
 
 

@@ -2,7 +2,7 @@
 use App\Models\Member;
 use App\Models\Page;
 use App\Models\Service;
-use App\Model\Contributor;
+use App\Models\Contributor;
 use App\Models\IncomeDetail;
 use App\Models\Lesson;
 use App\Models\ContributorNotif;
