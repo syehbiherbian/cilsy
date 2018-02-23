@@ -4,7 +4,11 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
+<<<<<<< HEAD
     "content-hash": "236dff162b3d380994c93f7563c871d7",
+=======
+    "content-hash": "e60c26b6998a1ab8482291170c9a008e",
+>>>>>>> 2df3319b1c66cf72df72553e40fcc7341b705306
     "packages": [
         {
             "name": "doctrine/cache",
@@ -827,6 +831,7 @@
             "time": "2018-02-07T21:11:57+00:00"
         },
         {
+<<<<<<< HEAD
             "name": "paragonie/random_compat",
             "version": "v2.0.11",
             "source": {
@@ -838,6 +843,19 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/paragonie/random_compat/zipball/5da4d3c796c275c55f057af5a643ae297d96b4d8",
                 "reference": "5da4d3c796c275c55f057af5a643ae297d96b4d8",
+=======
+            "name": "nikic/php-parser",
+            "version": "v3.1.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nikic/PHP-Parser.git",
+                "reference": "e57b3a09784f846411aa7ed664eedb73e3399078"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/e57b3a09784f846411aa7ed664eedb73e3399078",
+                "reference": "e57b3a09784f846411aa7ed664eedb73e3399078",
+>>>>>>> 2df3319b1c66cf72df72553e40fcc7341b705306
                 "shasum": ""
             },
             "require": {
@@ -872,7 +890,11 @@
                 "pseudorandom",
                 "random"
             ],
+<<<<<<< HEAD
             "time": "2017-09-27T21:40:39+00:00"
+=======
+            "time": "2018-01-25T21:31:33+00:00"
+>>>>>>> 2df3319b1c66cf72df72553e40fcc7341b705306
         },
         {
             "name": "pbmedia/binary-driver",
@@ -995,6 +1017,7 @@
             "time": "2018-02-20T12:38:47+00:00"
         },
         {
+<<<<<<< HEAD
             "name": "pbmedia/php-ffmpeg",
             "version": "0.14.0",
             "source": {
@@ -1006,6 +1029,19 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/pascalbaljetmedia/PHP-FFMpeg/zipball/6fd1c00dc06a0652424a3d14353cdf7059888e16",
                 "reference": "6fd1c00dc06a0652424a3d14353cdf7059888e16",
+=======
+            "name": "php-ffmpeg/php-ffmpeg",
+            "version": "v0.11.1-pl-1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/PHP-FFMpeg/PHP-FFMpeg.git",
+                "reference": "e91b2276e349e28030e6d2a46eb292294fd5e947"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/PHP-FFMpeg/PHP-FFMpeg/zipball/e91b2276e349e28030e6d2a46eb292294fd5e947",
+                "reference": "e91b2276e349e28030e6d2a46eb292294fd5e947",
+>>>>>>> 2df3319b1c66cf72df72553e40fcc7341b705306
                 "shasum": ""
             },
             "require": {
@@ -1016,7 +1052,12 @@
                 "php": "^5.6 || ^7.0"
             },
             "require-dev": {
+<<<<<<< HEAD
                 "phpunit/phpunit": "^4.8",
+=======
+                "phpunit/phpunit": "^4.8.36",
+                "sami/sami": "~1.0",
+>>>>>>> 2df3319b1c66cf72df72553e40fcc7341b705306
                 "silex/silex": "~1.0"
             },
             "suggest": {
@@ -1070,7 +1111,11 @@
                 "video",
                 "video processing"
             ],
+<<<<<<< HEAD
             "time": "2018-02-20T12:27:53+00:00"
+=======
+            "time": "2018-02-21T19:24:02+00:00"
+>>>>>>> 2df3319b1c66cf72df72553e40fcc7341b705306
         },
         {
             "name": "phpmailer/phpmailer",
@@ -1375,6 +1420,7 @@
         },
         {
             "name": "swiftmailer/swiftmailer",
+<<<<<<< HEAD
             "version": "v6.0.2",
             "source": {
                 "type": "git",
@@ -1385,6 +1431,18 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/412333372fb6c8ffb65496a2bbd7321af75733fc",
                 "reference": "412333372fb6c8ffb65496a2bbd7321af75733fc",
+=======
+            "version": "v5.4.9",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/swiftmailer/swiftmailer.git",
+                "reference": "7ffc1ea296ed14bf8260b6ef11b80208dbadba91"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/7ffc1ea296ed14bf8260b6ef11b80208dbadba91",
+                "reference": "7ffc1ea296ed14bf8260b6ef11b80208dbadba91",
+>>>>>>> 2df3319b1c66cf72df72553e40fcc7341b705306
                 "shasum": ""
             },
             "require": {
@@ -1420,13 +1478,21 @@
                 }
             ],
             "description": "Swiftmailer, free feature-rich PHP mailer",
+<<<<<<< HEAD
             "homepage": "http://swiftmailer.symfony.com",
+=======
+            "homepage": "https://swiftmailer.symfony.com",
+>>>>>>> 2df3319b1c66cf72df72553e40fcc7341b705306
             "keywords": [
                 "email",
                 "mail",
                 "mailer"
             ],
+<<<<<<< HEAD
             "time": "2017-09-30T22:39:41+00:00"
+=======
+            "time": "2018-01-23T07:37:21+00:00"
+>>>>>>> 2df3319b1c66cf72df72553e40fcc7341b705306
         },
         {
             "name": "symfony/console",
@@ -1666,7 +1732,11 @@
             ],
             "description": "Symfony EventDispatcher Component",
             "homepage": "https://symfony.com",
+<<<<<<< HEAD
             "time": "2018-01-03T07:38:00+00:00"
+=======
+            "time": "2018-01-03T07:37:34+00:00"
+>>>>>>> 2df3319b1c66cf72df72553e40fcc7341b705306
         },
         {
             "name": "symfony/filesystem",
@@ -1965,6 +2035,7 @@
             "time": "2018-01-30T19:27:44+00:00"
         },
         {
+<<<<<<< HEAD
             "name": "symfony/polyfill-php72",
             "version": "v1.7.0",
             "source": {
@@ -1976,6 +2047,19 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/symfony/polyfill-php72/zipball/8eca20c8a369e069d4f4c2ac9895144112867422",
                 "reference": "8eca20c8a369e069d4f4c2ac9895144112867422",
+=======
+            "name": "symfony/polyfill-php56",
+            "version": "v1.7.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/polyfill-php56.git",
+                "reference": "ebc999ce5f14204c5150b9bd15f8f04e621409d8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/polyfill-php56/zipball/ebc999ce5f14204c5150b9bd15f8f04e621409d8",
+                "reference": "ebc999ce5f14204c5150b9bd15f8f04e621409d8",
+>>>>>>> 2df3319b1c66cf72df72553e40fcc7341b705306
                 "shasum": ""
             },
             "require": {
@@ -2017,7 +2101,63 @@
                 "portable",
                 "shim"
             ],
+<<<<<<< HEAD
             "time": "2018-01-31T17:43:24+00:00"
+=======
+            "time": "2018-01-30T19:27:44+00:00"
+        },
+        {
+            "name": "symfony/polyfill-util",
+            "version": "v1.7.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/polyfill-util.git",
+                "reference": "e17c808ec4228026d4f5a8832afa19be85979563"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/polyfill-util/zipball/e17c808ec4228026d4f5a8832afa19be85979563",
+                "reference": "e17c808ec4228026d4f5a8832afa19be85979563",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.7-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Polyfill\\Util\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolas Grekas",
+                    "email": "p@tchwork.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony utilities for portability of PHP codes",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "compat",
+                "compatibility",
+                "polyfill",
+                "shim"
+            ],
+            "time": "2018-01-31T18:08:44+00:00"
+>>>>>>> 2df3319b1c66cf72df72553e40fcc7341b705306
         },
         {
             "name": "symfony/process",
@@ -3866,6 +4006,7 @@
         },
         {
             "name": "symfony/yaml",
+<<<<<<< HEAD
             "version": "v4.0.4",
             "source": {
                 "type": "git",
@@ -3876,6 +4017,18 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/symfony/yaml/zipball/ffc60bda1d4a00ec0b32eeabf39dc017bf480028",
                 "reference": "ffc60bda1d4a00ec0b32eeabf39dc017bf480028",
+=======
+            "version": "v3.3.16",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/yaml.git",
+                "reference": "af615970e265543a26ee712c958404eb9b7ac93d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/af615970e265543a26ee712c958404eb9b7ac93d",
+                "reference": "af615970e265543a26ee712c958404eb9b7ac93d",
+>>>>>>> 2df3319b1c66cf72df72553e40fcc7341b705306
                 "shasum": ""
             },
             "require": {
@@ -3920,7 +4073,11 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
+<<<<<<< HEAD
             "time": "2018-01-21T19:06:11+00:00"
+=======
+            "time": "2018-01-20T15:04:53+00:00"
+>>>>>>> 2df3319b1c66cf72df72553e40fcc7341b705306
         },
         {
             "name": "webmozart/assert",
