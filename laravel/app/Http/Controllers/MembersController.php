@@ -13,6 +13,7 @@ use App\members;
 use App\packages;
 use App\invoice;
 use App\services;
+use Hash;
 
 class MembersController extends Controller
 {
@@ -66,7 +67,7 @@ class MembersController extends Controller
 
           $username           = Input::get('username');
           $email              = Input::get('email');
-          $password           = md5(Input::get('password'));
+          $password           = Input::get('password');
 
 
           $services_status    = Input::get('services_status');
@@ -80,7 +81,7 @@ class MembersController extends Controller
           $members->status       = 1;
           $members->username     = $username;
           $members->email        = $email;
-          $members->password     = $password;
+          $members->password     = bcrypt($password);
           $members->created_at   = $now;
           $members->save();
 

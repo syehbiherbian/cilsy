@@ -52,7 +52,7 @@
                   <label class="form-label">Video</label>
                   <div class="form-line">
                     <input id="video" type="text" name="video" value="" class="form-control">
-                    <a href=javascript:open_popup("cilsy/assets/filemanager/akurapopo.php?type=3&popup=1&field_id=video") class="btn" type="button">Select</a>
+                    <a href=javascript:open_popup("assets/filemanager/akurapopo.php?type=3&popup=1&field_id=video") class="btn" type="button">Select</a>
                   </div>
                 </div>
                 <div class="form-group">
