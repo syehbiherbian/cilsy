@@ -13,6 +13,7 @@ use App\members;
 use App\packages;
 use App\invoice;
 use App\services;
+use Hash;
 
 class MembersController extends Controller
 {
@@ -66,15 +67,13 @@ class MembersController extends Controller
 
           $username           = Input::get('username');
           $email              = Input::get('email');
-          $password           = md5(Input::get('password'));
+          $password           = bcrypt(Input::get('password'));
 
 
           $services_status    = Input::get('services_status');
           $services_packages  = Input::get('services_packages');
 
-
           $now            = new DateTime();
-
           // store
           $members = new members;
           $members->status       = 1;
@@ -272,6 +271,8 @@ class MembersController extends Controller
             $html .= '<td>'.$service->updated_at.'</td>';
 
             if ($service->status !== 2) {
+
+          dd($password);
               $html .= '<td><button type="button" class="btn bg-pink waves-effect" onclick="openEdit('.$service->id.')">Edit</button></td>';
             }else {
               $html .= '<td><button type="button" class="btn bg-pink waves-effect " disabled onclick="disabledEdit()">Edit</button></td>';
@@ -422,6 +423,7 @@ class MembersController extends Controller
                     'update'    => $packages->update ,
                     'chat'      => $packages->chat ,
                     'download'  => $packages->download ,
+
                     'updated_at'=> $now
                   ]);
 
@@ -483,9 +485,9 @@ class MembersController extends Controller
           if (!empty('password') && !empty('retype_password')) {
             $password = $members->password;
           }else{
-            $password = md5(Input::get('password'));
+            $password = bcrypt(Input::get('password'));
           }
-
+          
 
           // store
           $store = members::find($id);
@@ -495,7 +497,6 @@ class MembersController extends Controller
           $store->password     = $password;
           $store->updated_at   = new DateTime();
           $store->save();
-
           // redirect
           return redirect('system/members')->with('success','Data successfully updated');
       }
