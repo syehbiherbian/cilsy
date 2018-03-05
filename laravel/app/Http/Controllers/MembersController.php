@@ -79,7 +79,7 @@ class MembersController extends Controller
           $members->status       = 1;
           $members->username     = $username;
           $members->email        = $email;
-          $members->password     = $password;
+          $members->password     = bcrypt($password);
           $members->created_at   = $now;
           $members->save();
 

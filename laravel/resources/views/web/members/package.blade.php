@@ -164,6 +164,7 @@ hr {
     <li>Konsultasi dengan trainer via chat dijawab max dalam 3x24 Jam</li>
     <li><strike><font color="red">Download Semua Materi Video</font></strike></li>
     <li><strike><font color="red">Download Ebook & File Praktek</font></strike></li>
+    <li><strike><font color="red">e-Sertifikat Eksklusif</font></strike></li>
     <li><strike><font color="red">Support Remote Teamviewer</font></strike></li>
     <li></li>
     <hr>
@@ -180,13 +181,14 @@ hr {
   <ul class="price-recomended">
     <li class="header">Premium</li>
     <hr>
-      <li class="grey"><font color="red"><font size="3"><strike>Rp. 349000</strike> | Cashback 25k!</font></font>  
+      <li class="grey"><font color="red"><font size="3"><strike>Rp. 349000</strike> | Hemat 10%!</font></font>
     <li class="grey">Rp. <?=$packages['1']->price;?> / <?=$packages['1']->expired;?> Hari</li>
     <li>Bebas Streaming ke Semua Video Tutorial</li>
     <li>Update Hingga 50 Video lebih perbulan</li>
     <li>Konsultasi dengan trainer via chat dijawab max dalam 2x24 Jam</li>
     <li>Download Semua Materi Video</li>
     <li>Download Ebook & File Praktek</li>
+    <li><strike><font color="red">e-Sertifikat Eksklusif</font></strike></li>
     <li><strike><font color="red">Support Remote Teamviewer</font></strike></li>
     <li></li>
     <hr>
@@ -201,13 +203,14 @@ hr {
   <ul class="price">
     <li class="header">Platinum</li>
     <hr>
-      <li class="grey"><font color="red"><font size="3"><strike>Rp. 499000</strike> | Cashback 50k!</font></font>  
+      <li class="grey"><font color="red"><font size="3"><strike>Rp. 499000</strike> | Hemat 10%!</font></font>
     <li class="grey">Rp. <?=$packages['2']->price;?> / <?=$packages['2']->expired;?> Hari</li>
     <li>Bebas Streaming ke Semua Video Tutorial</li>
     <li>Update Hingga 50 Video lebih perbulan</li>
     <li>Konsultasi dengan Trainer via chat dijawab max dalam 1x24 Jam</li>
     <li>Download Semua Materi Video</li>
     <li>Download Ebook & File Praktek</li>
+    <li>e-Sertifikat Eksklusif</li>
     <li>Support Remote Teamviewer (Kuota remote 2x perbulan, durasi per-remote 1 jam)</li>
     <hr>
         <li class=""><button type="submit" class="button" id="pilih">PILIH PAKET</button></li>
@@ -855,9 +858,9 @@ hr {
     $('[name=packages_id]').val(id);
   }
 </script>
-<script>
+<!--<script>
 fbq('track', 'CompleteRegistration');
-</script>
+</script>-->
 <script type="text/javascript">
   var button = document.getElementById('pilih');
   button.addEventListener(
