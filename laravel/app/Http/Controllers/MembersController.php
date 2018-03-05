@@ -464,8 +464,7 @@ class MembersController extends Controller
       $rules = array(
           'username'        => 'required|unique:members,username,'.$id,
           'email'           => 'required|unique:members,email,'.$id,
-          'password'        => 'min:8',
-          'retype_password' => 'min:8|same:password'
+          'password'         => 'required|min:8|confirmed',
       );
       $validator = Validator::make(Input::all(), $rules);
 
@@ -482,11 +481,14 @@ class MembersController extends Controller
           // get old password
           $members = members::where('id',$id)->first();
 
-          if (!empty('password') && !empty('retype_password')) {
-            $password = $members->password;
+          if (!empty(Input::get('password'))) {
+              # new password
+              $password = Input::get('password'); 
           }else{
-            $password = bcrypt(Input::get('password'));
+              # old Password
+              $password = $members->password;
           }
+          // dd($password);
           
 
           // store
@@ -494,9 +496,10 @@ class MembersController extends Controller
           $store->status       = 1;
           $store->username     = $username;
           $store->email        = $email;
-          $store->password     = $password;
+          $store->password     = bcrypt($password);
           $store->updated_at   = new DateTime();
           $store->save();
+          // dd($store);
           // redirect
           return redirect('system/members')->with('success','Data successfully updated');
       }
