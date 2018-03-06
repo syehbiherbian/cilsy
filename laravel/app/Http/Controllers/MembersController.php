@@ -67,7 +67,7 @@ class MembersController extends Controller
 
           $username           = Input::get('username');
           $email              = Input::get('email');
-          $password           = bcrypt(Input::get('password'));
+          $password           = Input::get('password');
 
 
           $services_status    = Input::get('services_status');
@@ -79,10 +79,10 @@ class MembersController extends Controller
           $members->status       = 1;
           $members->username     = $username;
           $members->email        = $email;
-          $members->password     = $password;
+          $members->password     = Hash::make($password);
           $members->created_at   = $now;
           $members->save();
-
+            
 
           $packages = packages::where('id',$services_packages)->first();
 
@@ -476,7 +476,7 @@ class MembersController extends Controller
           // Input
           $username       = Input::get('username');
           $email          = Input::get('email');
-          $password       = bcrypt(Input::get('password')); 
+          $password       = Input::get('password'); 
           $now            = new DateTime();
 
           // // get old password
@@ -497,7 +497,7 @@ class MembersController extends Controller
           $store->status       = 1;
           $store->username     = $username;
           $store->email        = $email;
-          $store->password     = $password;
+          $store->password     = Hash::make($password);
           $store->updated_at   = new DateTime();
           $store->save();
           // dd($store);
