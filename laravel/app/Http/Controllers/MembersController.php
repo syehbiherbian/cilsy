@@ -79,7 +79,7 @@ class MembersController extends Controller
           $members->status       = 1;
           $members->username     = $username;
           $members->email        = $email;
-          $members->password     = bcrypt($password);
+          $members->password     = $password;
           $members->created_at   = $now;
           $members->save();
 
@@ -464,7 +464,7 @@ class MembersController extends Controller
       $rules = array(
           'username'        => 'required|unique:members,username,'.$id,
           'email'           => 'required|unique:members,email,'.$id,
-          'password'         => 'required|min:8|confirmed',
+          'password'         => 'min:8|confirmed',
       );
       $validator = Validator::make(Input::all(), $rules);
 
@@ -476,19 +476,20 @@ class MembersController extends Controller
           // Input
           $username       = Input::get('username');
           $email          = Input::get('email');
+          $password       = bcrypt(Input::get('password')); 
           $now            = new DateTime();
 
-          // get old password
-          $members = members::where('id',$id)->first();
+          // // get old password
+          // $members = members::where('id',$id)->first();
 
-          if (!empty(Input::get('password'))) {
-              # new password
-              $password = Input::get('password'); 
-          }else{
-              # old Password
-              $password = $members->password;
-          }
-          // dd($password);
+          // if (!empty(Input::get('password')) && !empty(Input::get('password_confirmation'))) {
+          //     # new password
+          //     $password = Input::get('password'); 
+          // }else{
+          //     # old Password
+          //     $password = $members->password;
+          // }
+          // // dd($password);
           
 
           // store
@@ -496,7 +497,7 @@ class MembersController extends Controller
           $store->status       = 1;
           $store->username     = $username;
           $store->email        = $email;
-          $store->password     = bcrypt($password);
+          $store->password     = $password;
           $store->updated_at   = new DateTime();
           $store->save();
           // dd($store);
