@@ -86,24 +86,6 @@ class LoginController extends Controller
     }
 
     /**
-     * Get the needed authorization credentials from the request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array
-     */
-    protected function credentials(Request $request)
-    {
-        $field = filter_var($request->get($this->username()), FILTER_VALIDATE_EMAIL)
-            ? $this->username()
-            : 'username';
-
-        return [
-            $field => $request->get($this->username()),
-            'password' => $request->password,
-        ];
-    }
-
-    /**
      * Log the user out of the application.
      *
      * @param  Request  $request
