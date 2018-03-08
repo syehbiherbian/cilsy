@@ -817,6 +817,14 @@
         player.DurationDisplay( player,[options] )
           }
     });
+
+  player.on('Invalid', function() {
+
+    // Modals are temporary by default. They dispose themselves when they are
+    // closed; so, we can create a new one each time the player is paused and
+    // not worry about leaving extra nodes hanging around.
+    var modal = player.createModal('This is a modal!');
+  });
   </script>
   <script>
     (function() {

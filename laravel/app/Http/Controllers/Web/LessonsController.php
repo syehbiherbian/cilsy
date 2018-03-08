@@ -96,7 +96,7 @@ class LessonsController extends Controller {
 				$item = array(
 					'name' => $video->title,
 					'description' => strip_tags($video->description),
-					'duration' => $video->durasi,
+					'duration' => 'duration',
 					'sources' => 'Invalid',
 					'poster' => 'https://www.cilsy.id/template/web/img/video-lock.png',
 					'thumbnail' => array([
@@ -114,7 +114,7 @@ class LessonsController extends Controller {
 				$item = array(
 					'name' => $video->title,
 					'description' => strip_tags($video->description),
-					'duration' => $video->durasi,
+					'duration' => 'duration',
 					'sources' => array([
 						'src' => $video->video,
 						'type' => $video->type_video,
