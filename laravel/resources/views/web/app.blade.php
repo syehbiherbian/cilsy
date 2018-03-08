@@ -12,6 +12,7 @@
     <link href="{{asset('template/web/css/bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{asset('template/web/css/app.css')}}" rel="stylesheet">
     <link href="{{asset('template/web/css/video-js.css')}}" rel="stylesheet">
+    <link href="{{asset('template/web/css/videojs-errors.css')}}" rel="stylesheet">    
     <link href="{{asset('template/web/css/navbar.css')}}" rel="stylesheet">
     <link href="{{asset('template/web/css/pace.css')}}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('template/web/css/owl.carousel.min.css') }}">

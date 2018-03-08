@@ -3,6 +3,7 @@
 @section('content')
 {{--  <link href="{{ asset('node_modules/video.js/dist/video-js.css') }}" rel="stylesheet">  --}}
 <link href="{{ asset('node_modules/videojs-playlist-ui/dist/videojs-playlist-ui.vertical.css') }}" rel="stylesheet">
+<link href="{{ asset('node_modules/videojs-errors/dist/videojs-errors.css') }}" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet"/>
 {{-- <link href="https://vjs.zencdn.net/5.16.0/video-js.min.css" rel="stylesheet"/> --}}
 <script src="https://vjs.zencdn.net/5.16.0/video.min.js"></script>
@@ -704,6 +705,8 @@
   <script src="{{ asset('node_modules/video.js/dist/video.js') }}"></script>
   <script src="{{ asset('node_modules/videojs-playlist/dist/videojs-playlist.js') }}"></script>
   <script src="{{ asset('node_modules/videojs-playlist-ui/dist/videojs-playlist-ui.js') }}"></script>
+  <script src="{{ asset('template/web/js/videojs-errors.js') }}"></script>
+  
   <script>
     fbq('track', 'ViewContent');
   </script>
@@ -817,7 +820,13 @@
         player.DurationDisplay( player,[options] )
           }
     });
-
+  player.errors({
+  errors: {
+    4: {
+      message: 'Dengan support trainer, anda akan dipandu belajar sampai bisa. Kapanpun Anda Mau.'
+    }
+  }
+});
   player.on('Invalid', function() {
 
     // Modals are temporary by default. They dispose themselves when they are
