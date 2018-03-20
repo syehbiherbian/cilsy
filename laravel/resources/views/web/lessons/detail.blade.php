@@ -667,6 +667,9 @@
                         <?php foreach ($main_videos as $row) {?>
                         <li>
                           <strong><?=nl2br($row->title);?></strong>
+                          <?php if ($services) {?>
+                          <span class="pull-right"><a href="{{ $row->video }}" class="btn btn-info btn-md" download><i class="fa fa-download"></i></a></span>
+                          <?php }?>
                           <p><?=nl2br($row->description);?></p>
                         </li>
                         <?php }?>
