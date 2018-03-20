@@ -95,9 +95,9 @@ class LoginController extends Controller
     {
         $this->guard()->logout();
 
-        $request->session()->flush();
-
-        $request->session()->regenerate();
+        $request->session()->invalidate();
+        
+        //hapus invoice code
         Session::forget('invoiceCODE');
 
         return redirect('/member/signin');
