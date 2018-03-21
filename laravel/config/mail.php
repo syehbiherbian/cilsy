@@ -36,7 +36,8 @@ return [
 		    |
 	*/
 
-	'host' => ('mail.cilsy.id'),//env('MAIL_HOST', 'localhost'),
+	//'host' => ('mail.cilsy.id'),//env('MAIL_HOST', 'localhost'),
+	'host' => ('smtp.gmail.com'),//env('MAIL_HOST', 'localhost'),
 
 	/*
 		    |--------------------------------------------------------------------------
@@ -49,7 +50,8 @@ return [
 		    |
 	*/
 
-	'port' => 465, //env('MAIL_PORT', 465),
+	//'port' => 465, //env('MAIL_PORT', 465),
+	'port' => 587, //env('MAIL_PORT', 465),
 
 	/*
 		    |--------------------------------------------------------------------------
@@ -63,8 +65,9 @@ return [
 	*/
 
 	'from' => [
-		'address' => ('noreply@cilsy.id'),
-		'name' => ('No Reply'),
+		//'address' => ('noreply@cilsy.id'),
+		'address' => ('noreplycilsy@gmail.com'),
+		'name' => ('No Reply Cilsy Reset Password'),
 	],
 
 	/*
@@ -78,7 +81,8 @@ return [
 		    |
 	*/
 
-	'encryption' => ('ssl'),
+	//'encryption' => ('ssl'),
+	'encryption' => ('tls'),
 
 	/*
 		    |--------------------------------------------------------------------------
@@ -91,7 +95,8 @@ return [
 		    |
 	*/
 
-	'username' => ('noreply@cilsy.id'),
+	//'username' => ('noreply@cilsy.id'),
+	'username' => ('noreplycilsy@gmail.com'),
 
 	/*
 		    |--------------------------------------------------------------------------
@@ -104,7 +109,8 @@ return [
 		    |
 	*/
 
-	'password' => ('4xA6Tzm3U8'),
+	//'password' => ('4xA6Tzm3U8'),
+	'password' => ('41Q66TRRr1QON7KKUkOW'),
 
 	/*
 		    |--------------------------------------------------------------------------

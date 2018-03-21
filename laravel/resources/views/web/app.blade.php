@@ -234,7 +234,7 @@
     <div class="global-notification">
       <div class="container">
     <h4>
-    <a href="{{ url('member/package') }}"><font color="red">Diskon 10% mulai HARI INI. Tersisa <font id="demo"></font> hari lagi. Pesan segera disini!</font></a>
+    <a href="{{ url('member/package') }}"><font color="red">Diskon 10% berakhir HARI INI. <!-- <font id="demo"></font>-->Pesan segera disini!</font></a>
     </h4>
     <span id='close' onclick='this.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode); return false;' style="    position: absolute;
     right: 20px;
