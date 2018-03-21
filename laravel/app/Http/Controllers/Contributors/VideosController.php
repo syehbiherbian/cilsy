@@ -11,7 +11,9 @@ use DateTime;
 use App\Models\Video;
 use App\Models\Lesson;
 use FFMpeg;
-// use FFProbe;
+use FFProbe;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades;
 
 class VideosController extends Controller
 {
@@ -26,7 +28,7 @@ class VideosController extends Controller
         return redirect('not-found');
     }
     if($lesson->status==2){
-        return redirect('contributor/lessons/'.$lessonsid.'/view')->with('no-delete','Totorial sedang / dalam verifikasi!');
+        return redirect('contributor/lessons/'.$lessonsid.'/view')->with('no-delete','Tutorial sedang / dalam verifikasi!');
     }
     $video=Video::where('lessons_id',$lessonsid)->get();
     $count_video=count($video);
@@ -51,35 +53,26 @@ class VideosController extends Controller
     //   'image.*' => 'mimes:jpeg,jpg,png,gif|required|max:30000'
     );
     $validator = Validator::make(Input::all(), $rules);
-
     // process the login
     if ($validator->fails()) {
         return redirect()->back()->withErrors($validator)->withInput();
     } else {
-
         $now          = new DateTime();
         $cid          = Session::get('contribID');
         $title        = Input::get('judul');
         $image_video = Input::file('image');
         $lessons_video = Input::file('video');
-        
-
-
-
+        // dd($lessons_video);
         $description  = Input::get('desc');
-
         $video=Video::where('lessons_id',$lessonsid)->get();
         $count_video=count($video);
-
-
+        // dd(!is_dir("assets/source/lessons/lessons-$lessonsid"));
         if (!is_dir("assets/source/lessons/lessons-$lessonsid")) {
                 $newforder=mkdir("assets/source/lessons/lessons-".$lessonsid);
         }
-
         $i=$count_video + 1;
         foreach ($title as $key => $titles) {
                 $type_video =$lessons_video[$key]->getMimeType();
-
                 if (!is_dir("assets/source/lessons/lessons-".$lessonsid."/video-".$i)) {
                         $newforder=mkdir("assets/source/lessons/lessons-".$lessonsid."/video-".$i);
                 }
@@ -95,9 +88,8 @@ class VideosController extends Controller
                     $url_image= $imagefilename;
                 }else{
                     $urls=url('');
-                    $url_image= $urls.'/assets/source/lessons/video-'.$i.'/'.$imagefilename;
+                    $url_image= $urls.'/assets/source/lessons/lessons-'.$lessonsid.'/video-'.$i.'/'.$imagefilename;
                 }
-
                 //insert video
                 if(!empty($lessons_video[$key])){
                     $lessonsfilename    = $lessons_video[$key]->getClientOriginalName();
@@ -109,34 +101,52 @@ class VideosController extends Controller
                     $url_video= $lessonsfilename;
                 }else{
                     $urls=url('');
-                    $url_video= $urls.'/assets/source/lessons/video-'.$i.'/'.$lessonsfilename;
+                    $url_video= $urls.'/assets/source/lessons/lessons-'.$lessonsid.'/video-'.$i.'/'.$lessonsfilename;
                 }
-                $media = FFMpeg::open($url_video);
-                $frame = $media->getFrameFromString('00:00:13.37');
-                dd($media);
 
+                /* siapin video */
+                $media = FFMpeg::fromDisk('local_public')->open($DestinationPath.'/'.$lessonsfilename);
+                /* ambil durasi */
+                $duration = $media->getDurationInSeconds();
+                // dd($duration);
+                /* generate thumbnail */
+                $filename = pathinfo($lessonsfilename, PATHINFO_FILENAME);
+                $thumbnailname = 'thumbnail-'.$filename.'.jpg';
+                $thumnail = $media->getFrameFromSeconds(0)->export()->save($DestinationPath.'/'.$thumbnailname);
+                // dd($thumnail);
 
                 $store                  = new Video;
                 $store->lessons_id      = $lessonsid;
                 $store->title           = $titles;
-                $store->image           = $url_image;
+                $store->image           = $thumbnailname;
                 $store->video           = $url_video;
                 $store->description     = $description[$key];
                 $store->type_video      = $type_video;
-                $store->durasi          =0;
+                $store->durasi          = $duration;
                 $store->created_at      = $now;
                 $store->enable=1;
                 $store->save();
+                /*if($store){
+                    // dd($url_video);
+                    $media = FFMpeg::open($url_video);
+                    // $frame = FFMpeg::open($link)
+                    //         ->getFrameFromSeconds(10)
+                    //         ->export()
+                    //         ->toDisk('public')
+                    //         ->save($filename.'.png');
+                    dd($media);
+                    $durationInSeconds = $media->getDurationInSeconds();
+                    // dd($media);
+                    
+
+                }*/
         $i++;
         }
-
         // Session::set('lessons_title',$title);
         // Session::set('lessons_category_id',$category_id);
         // Session::set('lessons_image',$image);
         // Session::set('lessons_description',$description);
-
         return redirect('contributor/lessons/'.$lessonsid.'/view')->with('success','Penambahan video berhasil');
-
     }
   }
 
@@ -243,15 +253,25 @@ class VideosController extends Controller
                     $urls=url('');
                     $url_video= $urls.'/assets/source/lessons/video-'.$i.'/'.$lessonsfilename;
                 }
-
+                /* siapin video */
+                $media = FFMpeg::fromDisk('local_public')->open($DestinationPath.'/'.$lessonsfilename);
+                /* ambil durasi */
+                $duration = $media->getDurationInSeconds();
+                // dd($duration);
+                /* generate thumbnail */
+                $filename = pathinfo($lessonsfilename, PATHINFO_FILENAME);
+                $thumbnailname = 'thumbnail-'.$filename.'.jpg';
+                $thumnail = $media->getFrameFromSeconds(0)->export()->save($DestinationPath.'/'.$thumbnailname);
+                // dd($thumnail);
+                
                 $store                  = new Video;
                 $store->lessons_id      = $lessonsid;
                 $store->title           = $titles;
-                $store->image           = $url_image;
+                $store->image           = $thumbnailname;
                 $store->video           = $url_video;
                 $store->description     = $description[$key];
                 $store->type_video      = $type_video;
-                $store->durasi          =0;
+                $store->durasi          = $duration;
                 $store->created_at      = $now;
                 $store->enable=1;
                 $store->save();
