@@ -39,9 +39,9 @@
                     <input type="password" class="form-control" name="password" placeholder="Password">
                     @if ($errors->has('password')) <p class="help-block">{{ $errors->first('password') }}</p> @endif
                 </div>
-                <div class="form-group @if ($errors->has('retype_password')) has-error @endif">
-                    <input type="password" class="form-control" name="retype_password" placeholder="Konfirmasi Password">
-                    @if ($errors->has('retype_password')) <p class="help-block">{{ $errors->first('retype_password') }}</p> @endif
+                <div class="form-group @if ($errors->has('password_confirmation')) has-error @endif">
+                    <input type="password" class="form-control" name="password_confirmation" placeholder="Konfirmasi Password">
+                    @if ($errors->has('password_confirmation')) <p class="help-block">{{ $errors->first('password_confirmation') }}</p> @endif
                 </div>
                 <div class="form-group">
                     <input type="checkbox" class="" value="syarat" required=""><b>Saya Setuju dengan semua persyaratan layanan</b>

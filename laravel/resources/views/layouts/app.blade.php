@@ -78,6 +78,11 @@
             </div>
         </nav>
 
+
+        <div class="container">
+            @include('layout.partials_alert')
+        </div>
+        
         @yield('content')
     </div>
 
