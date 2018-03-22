@@ -203,7 +203,7 @@ hr {
   <ul class="price">
     <li class="header">Platinum</li>
     <hr>
-      <li class="grey"><font color="red"><font size="3"><strike>Rp. 499000</strike> | Hemat 10%!</font></font>
+     <li class="grey"><font color="red"><font size="3"><strike>Rp. 499000</strike> | Hemat 10%!</font></font>
     <li class="grey">Rp. <?=$packages['2']->price;?> / <?=$packages['2']->expired;?> Hari</li>
     <li>Bebas Streaming ke Semua Video Tutorial</li>
     <li>Update Hingga 50 Video lebih perbulan</li>
