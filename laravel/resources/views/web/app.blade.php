@@ -208,6 +208,40 @@
 .input-group-btn:first-child>.btn, .input-group-btn:first-child>.btn-group {
     margin-right: 70px;
 }
+.navbar-toggle.navbar-left {
+  float: left;
+  margin-left: 10px;
+}
+.navbar-toggle{
+  float:left
+}
+.search-toogle {
+    font-size: 20px;
+    color: #fff;
+    padding-top: 4px;
+    float:right;
+    padding-bottom: 0px;
+}
+@media (max-width:768px) {
+  .navbar-default .logo{
+    height: 40px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    display: block;
+    margin: 0 auto;
+    margin-top: -10px;
+  }
+}
+.navbar-brand {
+    float: left;
+    height: 50px;
+    padding: 15px;
+    font-size: 18px;
+    line-height: 20px;
+    text-align: center;
+
+}
     </style>
 
 
@@ -230,7 +264,7 @@
     <!-- Navbar -->
 
     <nav class="navbar navbar-default navbar-fixed-top">
-    <?php if (empty(Session::get('memberID'))) {?>
+    <?php if (empty(Auth::guard('members')->user()->id)) {?>
     <div class="global-notification">
       <div class="container">
     <h4>
@@ -244,9 +278,10 @@
     </div>
     <?php } ?>
       <div class="container">
+        
         <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <div class="navbar-header navbar-fixed-side navbar-fixed-side-left">
+          <button type="button" class="navbar-toggle collapsed navbar-left " data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
@@ -257,7 +292,7 @@
             <i class="ion ion-ios-search-strong"></i>
           </button>
           <a class="navbar-brand" href="{{ url('/') }}"><img class="logo" src="{{asset('template/web/img/logo.png')}}"></a>
-          <a href="{{ url('lessons/browse/all') }}" class="browse-btn">Browse Tutorial</a>
+          <a href="{{ url('lessons/browse/all') }}" class="browse-btn hidden-xs hidden-sm">Browse Tutorial</a>
         </div>
 
 
