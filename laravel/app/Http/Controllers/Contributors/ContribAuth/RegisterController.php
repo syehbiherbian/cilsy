@@ -131,11 +131,8 @@ class RegisterController extends Controller
         //sending mail
         event(new ContribActivationEmail($contrib));
 
-        $this->guard()->logout();
-
-        return redirect()->route('contributor/login')
-            ->withSuccess('Registered. Please check your email to acctivate your account.');
-
+         $this->guard()->logout();
+        return redirect()->route('contributor/login')->withSuccess('Registered. Please check your email to activate your account.');
     }
 }
 
