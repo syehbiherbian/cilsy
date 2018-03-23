@@ -153,7 +153,7 @@ Route::group(['middleware' => ['auth']], function () {
 |--------------------------------------------------------------------------
 | Contributor Routes
 |--------------------------------------------------------------------------
-|
+|	
 | Here is where you can register web routes for your application. These
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
@@ -162,12 +162,24 @@ Route::group(['middleware' => ['auth']], function () {
 
 // Authentication
 
-Route::get('contributor/login', 'Contributors\AuthController@login');
-Route::post('contributor/login', 'Contributors\AuthController@doLogin');
+Route::get('contributor/login', 'Contributors\ContribAuth\LoginController@showLoginForm');
+Route::post('contributor/login', 'Contributors\ContribAuth\LoginController@Login');
+Route::post('contributor/logout', 'Contributors\ContribAuth\LogoutController@Logout');
+Route::post('contributor/password/email', 'Contributors\ContribAuth\ForgotPasswordController@sendResetLinkEmail');
+Route::get('contributor/password/reset', 'Contributors\ContribAuth\ForgotPasswordController@showLinkRequestForm');
+Route::post('contributor/password/reset', 'Contributors\ContribAuth\ForgotPasswordController@reset');
+Route::get('contributor/password/reset/{token}', 'Contributors\ContribAuth\ResetPasswordController@showResetForm');
+Route::get('contributor/register', 'Contributors\ContribAuth\RegisterController@showRegistrationForm');
+Route::post('contributor/register', 'Contributors\ContribAuth\RegisterController@register');
 
-Route::get('contributor/register', 'Contributors\AuthController@register');
-Route::post('contributor/register', 'Contributors\AuthController@doRegister');
-Route::get('contributor/aktivasi/{token}', 'Contributors\AuthController@aktivasi');
+// Route::get('contributor/login', 'Contributors\AuthController@login');
+// Route::post('contributor/login', 'Contributors\AuthController@doLogin');
+
+// Route::get('contributor/register', 'Contributors\AuthController@register');
+// Route::post('contributor/register', 'Contributors\AuthController@doRegister');
+Route::get('contributor/aktivasi/{token}', 'Contributors\ContribAuth\AuthController@aktivasi');
+Route::get('contribauth/activate','Contributors\ContribAuth\ActivationController@active')->name('auth.activate');
+
 
 Route::get('contributor/logout', 'Contributors\AuthController@logout');
 

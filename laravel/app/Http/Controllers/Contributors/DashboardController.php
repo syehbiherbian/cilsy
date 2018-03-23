@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Contributors;
 use App\Http\Controllers\Controller;
+use Auth;
 use Session;
 
 class DashboardController extends Controller {
@@ -11,7 +12,7 @@ class DashboardController extends Controller {
 
 	}
 	public function index() {
-		if (empty(Session::get('contribID'))) {
+		if (empty(Auth::guard("contributors")->user())) {
 		  return redirect('contributor/login');
 		}
 		return view('contrib.dashboard');

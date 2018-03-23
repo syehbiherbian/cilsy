@@ -44,7 +44,10 @@ return [
             'driver' => 'session',
             'provider' => 'members',
         ],
-
+        'contributors' => [
+            'driver' => 'session',
+            'provider' => 'contributors',
+        ],
         'api' => [
             'driver' => 'token',
             'provider' => 'users',
@@ -77,6 +80,10 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\Member::class,
         ],
+        'contributors' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Contributor::class,
+        ],
 
         // 'users' => [
         //     'driver' => 'database',
@@ -107,6 +114,11 @@ return [
         ],
         'members' => [
             'provider' => 'members',
+            'table' => 'password_resets',
+            'expire' => 30,
+        ],
+        'contributors' => [
+            'provider' => 'contributors',
             'table' => 'password_resets',
             'expire' => 30,
         ],
