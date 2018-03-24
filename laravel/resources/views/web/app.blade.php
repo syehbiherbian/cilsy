@@ -14,6 +14,8 @@
     <link href="{{asset('template/web/css/video-js.css')}}" rel="stylesheet">
     <link href="{{asset('template/web/css/videojs-errors.css')}}" rel="stylesheet">    
     <link href="{{asset('template/web/css/navbar.css')}}" rel="stylesheet">
+    <link href="{{asset('template/web/css/sidebar.css')}}" rel="stylesheet">  
+    <link href="{{asset('template/web/css/animate.css')}}" rel="stylesheet">      
     <link href="{{asset('template/web/css/pace.css')}}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('template/web/css/owl.carousel.min.css') }}">
     <link rel="stylesheet" href="{{ asset('template/web/css/owl.theme.default.min.css') }}">
@@ -242,6 +244,129 @@
     text-align: center;
 
 }
+a,
+.side_menu {
+	-webkit-transition: all 300ms ease-in-out;
+	transition: all 300ms ease-in-out;
+}
+
+/* MENU CONTAINER ----- */
+	.side_menu {
+		background: rgba(0,20,60,.9);
+		height: 100vh;
+		left: -250px;
+		position: fixed;
+		top: 0;
+		width: 250px;
+	}
+	.side_menu .container {
+		padding: 0 1em;
+	}
+
+/* HAMBURGER STYLES ----- */
+	.burger_box {
+		display: block;
+		float: right;
+		margin-right: -45px;
+	}
+	.burger_box a.menu-icon {
+		display: inline-block;
+		float: none;
+		height: 25px;
+		padding: 10px;
+		opacity: .5;
+		width: 25px;
+		z-index: 100;
+	}
+	.burger_box a.menu-icon:hover,
+	.burger_box a.menu-icon.opened {
+		opacity: 1;
+	}
+	.burger_box a.menu-icon.opened {
+		background: rgba(0,20,60,.9);
+	}
+	.burger_box .menu-icon_box {
+		display: inline-block;
+		height: 25px;
+		position: relative;
+		text-align: left;
+		width: 25px;
+	}
+	.burger_box .menu-icon_line {
+		background: #fff;
+		border-radius: 2px;
+		display: inline-block;
+		height: 3px;
+		position: absolute;
+		width: 100%;
+	}
+	.burger_box .menu-icon_line--1 {
+		top: 2px;
+	}
+	.burger_box .menu-icon_line--2 {
+		top: 10px;
+	}
+	.burger_box .menu-icon_line--3 {
+		top: 18px;
+	}
+	.burger_box .menu-icon_line--1 {
+		transition: top 200ms 250ms, transform 200ms;
+		-webkit-transition: top 200ms 250ms, -webkit-transform 200ms;
+	}
+	.burger_box .menu-icon_line--2 {
+		transition: opacity 0ms 300ms;
+		-webkit-transition: opacity 0ms 300ms;
+	}
+	.burger_box .menu-icon_line--3 {
+		transition: top 100ms 300ms, transform 200ms;
+		-webkit-transition: top 100ms 300ms, -webkit-transform 200ms;
+	}
+	.burger_box .menu-icon.opened .menu-icon_box {
+		transform: scale3d(0.9, 0.9, 0.9);
+		-webkit-transform: scale3d(0.9, 0.9, 0.9);
+	}
+	.burger_box .menu-icon.opened .menu-icon_line {
+		top: 10px;
+	}
+	.burger_box .menu-icon.opened .menu-icon_line--1 {
+		transform: rotate3d(0, 0, 1, 45deg);
+		-webkit-transform: rotate3d(0, 0, 1, 45deg);
+		transition: top 100ms, transform 200ms 250ms;
+		-webkit-transition: top 100ms, -webkit-transform 200ms 250ms;
+	}
+	.burger_box .menu-icon.opened .menu-icon_line--2 {
+		opacity: 0;
+		transition: opacity 200ms;
+		-webkit-transition: opacity 200ms;
+	}
+	.burger_box .menu-icon.opened .menu-icon_line--3 {
+		transform: rotate3d(0, 0, 1, -45deg);
+		-webkit-transform: rotate3d(0, 0, 1, -45deg);
+		transition: top 200ms, transform 200ms 250ms;
+		-webkit-transition: top 200ms, -webkit-transform 200ms 250ms;
+	}
+
+/* STAGGER LIST ----- */
+	.list_load {
+		display: none;
+		list-style: none;
+		padding: 0;
+	}
+	.list_item {
+		margin-left: -20px;
+		opacity: 0;
+		-webkit-transition: all 200ms ease-in-out;
+		transition: all 200ms ease-in-out;
+	}
+	.list_item a {
+		color: #fff;
+		display: block;
+		padding: 5px 10px;
+		text-decoration: none;
+	}
+	.list_item a:hover {
+		background: rgba(255,255,255,.2);
+	}
     </style>
 
 
@@ -277,9 +402,11 @@
     </div>  
     </div>
     <?php } ?>
-      <div class="container">
+        
+
         
         <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="container">
         <div class="navbar-header navbar-fixed-side navbar-fixed-side-left">
           <button type="button" class="navbar-toggle collapsed navbar-left " data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
             <span class="sr-only">Toggle navigation</span>
@@ -294,6 +421,47 @@
           <a class="navbar-brand" href="{{ url('/') }}"><img class="logo" src="{{asset('template/web/img/logo.png')}}"></a>
           <a href="{{ url('lessons/browse/all') }}" class="browse-btn hidden-xs hidden-sm">Browse Tutorial</a>
         </div>
+
+        <div id="wrapper">
+						<!-- Sidebar -->
+						<div id="sidebar-wrapper">
+
+							<ul class="sidebar-nav">
+								<li>
+									<a class="menu-toggle mobile-toggle" style="width:100%; margin-left:0;font-size:11pt; text-align:right; padding-right:9%;"><i class="fa fa-angle-left fa-lg" aria-hidden="true" style="padding-top:5%; float:left;"></i>Tutup</a>
+								</li>
+								<li>
+									<?php if(empty(Auth::guard('members')->user()->id)){?> 
+										<a href="{{ url('login') }}">
+											<i class="fa fa-user" aria-hidden="true" style="display: inline"></i> &nbsp;Masuk / Daftar
+										</a>
+										 <?php }else{ ?>
+											<a href="{{ url('account/profile') }}">
+												<i class="icon ion-ios-person-outline" aria-hidden="true" style="display: inline"></i>Hi, {{ Auth::guard('members')->user()->username }}
+											</a>
+											<?php } ?>
+										</li>
+										<li>
+											<a href="{{ url('/') }}">Halaman Awal</a></a>
+										</li>
+										<li>
+											<a class="collapsed" data-toggle="collapse" data-target="#appCategory" href="#">Kategori</a>
+                                            
+										</li>
+										<li>
+											<a href="{{ url('account/invoice') }}">Cek Status Pesanan</a>
+										</li>
+										<li>
+											<a href="#ComingSoon">Contact Us</a>
+										</li>
+									</hr>
+									<li>
+										<a href="{{ url('page/Panduan-Belanja') }}">Panduan</a>
+									</li>
+
+									</ul>
+								</div>
+								<!-- /#sidebar-wrapper -->
 
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -372,6 +540,7 @@
           </ul>
           @else
               <ul class="nav navbar-nav navbar-right">
+              <li><a href="{{ url('lessons/browse/all') }}" class="hidden-lg hidden-md">Browse Tutorial</a></li>
               <li><a href="{{ url('/carapesan') }}">Cara Pesan</a></li>
               <li><a href="{{ url('/member/package') }}">Harga</a></li>
               <li><a href="{{ url('member/signin') }}">Masuk</a></li>
@@ -603,8 +772,43 @@
 
     </script>
     <script type="text/javascript" src="{{asset('template/web/js/bootstrap.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('template/web/js/bootsnav.js')}}"></script>    
     <script type="text/javascript" src="{{asset('template/web/js/pace.js') }}"></script>
+    <script>
+      $(document).on('click','.js-menu_toggle.closed',function(e){
+	e.preventDefault(); $('.list_load, .list_item').stop();
+	$(this).removeClass('closed').addClass('opened');
 
+	$('.side_menu').css({ 'left':'0px' });
+
+	var count = $('.list_item').length;
+	$('.list_load').slideDown( (count*.6)*100 );
+	$('.list_item').each(function(i){
+		var thisLI = $(this);
+		timeOut = 100*i;
+		setTimeout(function(){
+			thisLI.css({
+				'opacity':'1',
+				'margin-left':'0'
+			});
+		},100*i);
+	});
+});
+
+$(document).on('click','.js-menu_toggle.opened',function(e){
+	e.preventDefault(); $('.list_load, .list_item').stop();
+	$(this).removeClass('opened').addClass('closed');
+
+	$('.side_menu').css({ 'left':'-250px' });
+
+	var count = $('.list_item').length;
+	$('.list_item').css({
+		'opacity':'0',
+		'margin-left':'-20px'
+	});
+	$('.list_load').slideUp(300);
+});
+    </script>
     <!-- Custom Js -->
     <script type="text/javascript" src="{{asset('template/web/js/custom.js') }}"></script>
     @stack('js')
