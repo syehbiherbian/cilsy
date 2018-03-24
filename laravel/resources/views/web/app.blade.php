@@ -540,6 +540,7 @@ a,
           </ul>
           @else
               <ul class="nav navbar-nav navbar-right">
+              <li><a href="{{ url('lessons/browse/all') }}" class="hidden-lg hidden-md">Browse Tutorial</a></li>
               <li><a href="{{ url('/carapesan') }}">Cara Pesan</a></li>
               <li><a href="{{ url('/member/package') }}">Harga</a></li>
               <li><a href="{{ url('member/signin') }}">Masuk</a></li>
