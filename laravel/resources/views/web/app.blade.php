@@ -514,7 +514,8 @@ a,
             </div>
           </form>
           @if (Auth::guard("members")->user())
-              <ul class="nav navbar-nav navbar-right">
+            <ul class="nav navbar-nav navbar-right">
+            <li><a href="{{ url('lessons/browse/all') }}" class="hidden-lg hidden-md">Browse Tutorial</a></li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Halo, {{ Auth::guard('members')->user()->username }} <span class="caret"></span></a>
               <ul class="dropdown-menu">
