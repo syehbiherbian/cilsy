@@ -1,5 +1,6 @@
 @extends('web.app')
 @section('title','Cara Pesan | ')
+@section('description', 'Ini Halaman Cara Pesan')
 <link href="{{asset('template/web/css/page.css')}}" rel="stylesheet">
 <style>
 .input-group-btn:first-child>.btn, .input-group-btn:first-child>.btn-group {

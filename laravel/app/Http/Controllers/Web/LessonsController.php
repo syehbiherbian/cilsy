@@ -19,13 +19,14 @@ class LessonsController extends Controller {
 		if ($by == 'category') {
 			$category = categories::where('enable', '=', 1)->where('title', 'like', '%' . $keyword . '%')->first();
 			$results = lessons::leftJoin('categories', 'lessons.category_id', '=', 'categories.id')
-				->select('lessons.*', 'categories.title as category_title')
+				->select('lessons.*', 'categories.title as category_title', 'categories.meta_desc')
 				->where('lessons.enable', '=', 1)
 				->where('lessons.category_id', '=', $category->id)
 				->paginate(10);
+				// dd($results);
 		} else {
 			$results = lessons::leftJoin('categories', 'lessons.category_id', '=', 'categories.id')
-				->select('lessons.*', 'categories.title as category_title')
+				->select('lessons.*', 'categories.title as category_title', 'categories.meta_desc')
 				->where('lessons.enable', '=', 1)
 				->paginate(10);
 		}

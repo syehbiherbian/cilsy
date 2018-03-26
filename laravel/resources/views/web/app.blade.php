@@ -4,6 +4,8 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="@yield('description')" />
+    <meta name="title" content="@yield('title')" />    
     <meta name="google-site-verification" content="4yTZI7aHiFWK-AD03jB5ffbkI5Q8svP423zsKLmtp4I" />
     <meta name="google-site-verification" content="TEkMNo9O-bbzq6RHg_-9vqtlXQLKMRgiJyIBlvKDa30" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8; IE=edge" />

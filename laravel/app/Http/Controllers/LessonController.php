@@ -77,6 +77,7 @@ class LessonController extends Controller
             $slug         = Input::get('slug');
             $image        = Input::get('image');
             $tiket_upload_status=1;
+            $pre = preg_replace('/<p[^>]*>(.*)<\/p[^>]*>/i', '$1', $desc);            
             if (!is_dir("assets/filepraktek/")) {
                 $newforder=mkdir("assets/filepraktek");
             }
@@ -97,6 +98,7 @@ class LessonController extends Controller
               'image'       => $image,
               'description' => $desc,
               'slug'        => $slug,
+              'meta_desc'   => str_limit($pre, 150),
               'created_at'  => $now,
               'updated_at'  => $now
             ]);
@@ -197,6 +199,7 @@ class LessonController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         } else {
             $title=Input::get('title');
+            $pre = preg_replace('/<p[^>]*>(.*)<\/p[^>]*>/i', '$1', Input::get('description'));
             // store
             $check= lessons::where('id',$id)->first();
             $store = lessons::find($id);
@@ -206,6 +209,7 @@ class LessonController extends Controller
             $store->image       = Input::get('image');
             $store->description = Input::get('description');
             $store->slug        = Input::get('slug');
+            $store->meta_desc   = str_limit($pre, 150);
             $store->status      = Input::get('status');
             $store->updated_at  = new DateTime();
             $store->save();

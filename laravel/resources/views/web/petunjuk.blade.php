@@ -1,5 +1,6 @@
 @extends('web.app')
 @section('title','Petunjuk Pembayaran | ')
+@section('description', 'Ini Halaman Petunjuk Pembayaran')
 @section('content')
 <style>
 .centered-pills { text-align:center; }
