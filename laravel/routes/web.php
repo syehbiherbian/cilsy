@@ -1,5 +1,5 @@
 <?php
-
+use Spatie\Sitemap\SitemapGenerator;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -10,6 +10,26 @@
 | contains the "web" middleware group. Now create something great!
 |
  */
+
+ // SITEMAP
+
+Route::get('generate-sitemap/', 'SitemapController@index');
+Route::get('{filename}', function ($filename)
+{
+    $path = storage_path($filename);
+
+    if (!File::exists($path)) {
+        abort(404);
+    }
+
+    $file = File::get($path);
+    $type = File::mimeType($path);
+
+    $response = Response::make($file, 200);
+    $response->header("Content-Type", $type);
+
+    return $response;
+});
 
 // HOME PAGE
 Route::get('/', 'Web\HomeController@index');
