@@ -67,7 +67,7 @@ return [
 	'from' => [
 		//'address' => ('noreply@cilsy.id'),
 		'address' => ('noreplycilsy@gmail.com'),
-		'name' => ('No Reply Cilsy Reset Password'),
+		'name' => ('No Reply Cilsy'),
 	],
 
 	/*

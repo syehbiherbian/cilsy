@@ -390,17 +390,17 @@ a,
 
     <nav class="navbar navbar-default navbar-fixed-top">
     <?php if (empty(Auth::guard('members')->user()->id)) {?>
-    <div class="global-notification">
+    <!--<div class="global-notification">
       <div class="container">
     <h4>
-    <a href="{{ url('member/package') }}"><font color="red">Diskon 10% diperpanjang! Tersisa <font id="demo"></font> hari lagi. Pesan segera disini!</font></a>
+    <a href="{{ url('member/package') }}"><font color="red">Diskon 10% Terakhir hanya sampai HARI INI. <font id="demo"></font>Klaim disini!</font></a>
     </h4>
     <span id='close' onclick='this.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode); return false;' style="    position: absolute;
     right: 20px;
     top: 10px;">x</span>
 
     </div>  
-    </div>
+    </div>-->
     <?php } ?>
         
 
