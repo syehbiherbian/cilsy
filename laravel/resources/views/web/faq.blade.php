@@ -1,5 +1,6 @@
 @extends('web.app')
 @section('title','F.A.Q | ')
+@section('description', 'Ini Halaman F.A.Q')
 @section('content')
 @push('css')
 @endpush

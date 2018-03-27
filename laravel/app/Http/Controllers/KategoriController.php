@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Redirect;
 use Validator;
+use App\categories;
 
 class KategoriController extends Controller {
 	/**
@@ -62,7 +63,8 @@ class KategoriController extends Controller {
 			$icon = Input::get('icon');
 			$desc = Input::get('desc');
 			$now = new DateTime();
-
+            $pre = preg_replace('/<p[^>]*>(.*)<\/p[^>]*>/i', '$1', Input::get('description'));
+			
 			$insert = DB::table('categories')->insert([
 				'title' => $nama_kat,
 				'image' => $icon,
@@ -118,9 +120,33 @@ class KategoriController extends Controller {
 	 * @return \Illuminate\Http\Response
 	 */
 	public function update(Request $request, $id) {
-		//
-	}
+		$rules = array(
+            'title'         => 'required|unique:categories,title,'.$id,
+            'description'   => 'required',
+            'image'         => 'required',
+        );
+        $validator = Validator::make(Input::all(), $rules);
 
+        // process the login
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        } else {
+            $title=Input::get('title');
+            $pre = preg_replace('/<p[^>]*>(.*)<\/p[^>]*>/i', '$1', Input::get('description'));
+            // store
+            $check= categories::where('id',$id)->first();
+            $store = categories::find($id);
+            $store->enable      = Input::get('enable');
+            $store->title       = Input::get('title');
+            $store->image       = Input::get('image');
+            $store->description = Input::get('description');
+            $store->meta_desc   = str_limit($pre, 150);
+            $store->updated_at  = new DateTime();
+			$store->save();
+			// redirect
+            return redirect('system/cat')->with('success','Data successfully updated');
+		}
+	}
 	/**
 	 * Remove the specified resource from storage.
 	 *
