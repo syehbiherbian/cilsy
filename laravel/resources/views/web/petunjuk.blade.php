@@ -31,8 +31,11 @@
 	    <span class="caret"></span></a>
 	    <ul class="dropdown-menu">
 	      <li><a data-toggle="pill" href="#mandiri" style="padding: 17px 91px;">BANK MANDIRI</a></li>
-	      <li><a data-toggle="pill" href="#permata" style="padding: 17px 91px;">BANK PERMATA</a></li>
-	      <li><a data-toggle="pill" href="#bersama" style="padding: 17px 91px;">BANK LAINNYA (BCA,BNI,BRI,dll)</a></li> 
+	      <li><a data-toggle="pill" href="#bca" style="padding: 17px 91px;">BANK BCA</a></li>
+	      <li><a data-toggle="pill" href="#bri" style="padding: 17px 91px;">BANK BRI</a></li>
+	      <li><a data-toggle="pill" href="#bni" style="padding: 17px 91px;">BANK BNI</a></li>
+	      <!--<li><a data-toggle="pill" href="#permata" style="padding: 17px 91px;">BANK PERMATA</a></li>-->
+	      <li><a data-toggle="pill" href="#bersama" style="padding: 17px 91px;">BANK LAINNYA (Selain Bank Diatas)</a></li> 
 	    </ul>
 	  	</li>
     </ul>
@@ -41,7 +44,7 @@
 <div class="tab-content">
 	<div id="mandiri" class="tab-pane fade">
 	<div class="col-md-6">
-	Langkah Langkah Membayar menggunakan Bank Mandiri
+	Langkah Langkah Membayar menggunakan Bank Mandiri<br>
 	</div>
 	<div class="col-md-6">
 		<ol>
@@ -58,18 +61,22 @@
 				<img class="img-responsive" src="{{ asset('template/web/img/step-3-mandiri.png') }}" alt="step 1" style="margin-top: 20px; margin-bottom: 20px;">
 			</li>
 			<li>
-				<b>Catat Nomor rekening dan Kode Perusahaan untuk melanjutkan pembayaran melalui ATM/Internet Banking Mandiri, Ikuti Petunjuk pada tab Bagaimana Cara Bayar untuk melakukan pembayaran. Klik Selesai</b>
+				<b>Catat Nomor rekening/Kode Bayar dan Kode Perusahaan untuk melanjutkan pembayaran melalui ATM/Internet Banking Mandiri. Klik Selesai</b>
 				<img class="img-responsive" src="{{ asset('template/web/img/step-4-mandiri.png') }}" alt="step 1" style="margin-top: 20px; margin-bottom: 20px;">
 			</li>
 			<li>
-				<b>Invoice dan cara pembayaran akan di kirimkan melalui email. Segera lakukan pembayaran sebelum tanggal yang tercantum. Anda tidak diharuskan untuk melakukan konfirmasi pembayaran. Jika pembayaran sudah dilakukan, akan ada pemberitahuan melalui email. Setelahnya silahkan anda login kembali dan akun anda sudah aktif secara otomatis. </b>
+				<b>Segera lakukan pembayaran dalam waktu 24 jam.  Jika Anda membayar menggunakan ATM Mandiri Anda bisa mengikuti video berikut :
+                                <iframe width="560" height="315" src="https://www.youtube.com/embed/_h_7TAKp75Y" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                                Jika Anda membayar menggunakan Internet Banking Mandiri : 
+                                <iframe width="560" height="315" src="https://www.youtube.com/embed/2mJIELuoUdM" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                        Setelah pembayaran dilakukan, Akun Anda sudah otomatis aktif tanpa perlu melakukan Konfirmasi Pembayaran. </b>
 			</li>
 		</ol>
 		</div>
 	</div>
 	<div id="cc" class="tab-pane fade in active">
 	<div class="col-md-6">
-	Langkah Langkah Membayar menggunakan Kartu Kredit
+	Langkah Langkah Membayar menggunakan Kartu Kredit<br>
 	</div>
 	<div class="col-md-6">
 		<ol>
@@ -86,14 +93,50 @@
 				<img class="img-responsive" src="{{ asset('template/web/img/image-cc-3.png') }}" alt="step 1" style="margin-top: 20px; margin-bottom: 20px;">
 			</li>
 			<li>
-				<b>Anda tidak diharuskan untuk melakukan konfirmasi pembayaran. Silahkan anda login kembali dan akun anda sudah aktif secara otomatis. </b>
+				<b>Anda tidak diharuskan untuk melakukan konfirmasi pembayaran. Silahkan anda login kembali dan akun anda sudah aktif secara otomatis. Jika Anda masih kesulitan saat melakukan pembayaran, Anda bisa coba lihat video berikut :
+<iframe width="560" height="315" src="https://www.youtube.com/embed/S3MnLRBwhN8" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe> </b>
 			</li>
 		</ol>	
 	</div>
 	</div>
 	<div id="bersama" class="tab-pane fade">
 	<div class="col-md-6">
-	Langkah Langkah Membayar menggunakan Bank Lainnya (Jika anda menggunakan bank BCA, BRI, BNI, dll).
+	Langkah Langkah Membayar menggunakan Bank Lainnya (Jika anda menggunakan bank BJB, CIMB, Maybank, dll).<br>
+	</div>
+	<div class="col-md-6">
+		<ol>
+			<li>
+				<b>Pilih Pembayaran ATM/Bank Transfer</b> <br>
+				<img class="img-responsive" src="{{ asset('template/web/img/step-1-mandiri.png') }}" alt="step 1" style="margin-top: 20px; margin-bottom: 20px;">
+			</li>
+			<li>
+				<b>Pilih Bank Lainnya</b><br>
+				<img class="img-responsive" src="{{ asset('template/web/img/step-2-lainnya.png') }}" alt="step 1" style="margin-top: 20px; margin-bottom: 20px;">
+			</li>
+			<li>
+				<b>Pilih Lihat Nomor Rekening</b>
+				<img class="img-responsive" src="{{ asset('template/web/img/step-3-lainnya.png') }}" alt="step 1" style="margin-top: 20px; margin-bottom: 20px;">
+			</li>
+			<!--<li>
+				<b>Catat Nomor Rekening untuk melanjutkan pembayaran melalui bank anda masing-masing. Ikuti Petunjuk pada tab Bagaimana Cara Bayar untuk melakukan pembayaran. Klik Selesai</b>
+				<img class="img-responsive" src="{{ asset('template/web/img/step-4-lainnya.png') }}" alt="step 1" style="margin-top: 20px; margin-bottom: 20px;">
+			</li>
+			<li>
+				<b>Invoice dan cara pembayaran akan di kirimkan melalui email. Segera lakukan pembayaran sebelum tanggal yang tercantum. Anda tidak diharuskan untuk melakukan konfirmasi pembayaran. Jika pembayaran sudah dilakukan, akan ada pemberitahuan melalui email. Setelahnya silahkan anda login kembali dan akun anda sudah aktif secara otomatis. </b>
+			</li>-->
+                        <li>
+                                <b>Catat Nomor Rekening Bank Permata milik Cilsy Fiolution yang muncul. Jika sudah dicatat, Klik Selesai</b>
+                                <img class="img-responsive" src="{{ asset('template/web/img/step-4-lainnya.png') }}" alt="step 1" style="margin-top: 20px; margin-bottom: 20px;">
+                        </li>
+                        <li>
+                                <b>Segera lakukan pembayaran dalam waktu 24 jam.  Untuk Invoice dan Tata cara pembayaran yang lebih lengkap dapat Anda lihat di Email Anda. Setelah pembayaran dilakukan, Akun Anda sudah otomatis aktif tanpa perlu melakukan Konfirmasi Pembayaran. </b>
+                        </li>
+		</ol>
+		</div>
+	</div>
+	<div id="bca" class="tab-pane fade">
+	<div class="col-md-6">
+	Langkah Langkah Membayar menggunakan Bank BCA<br>
 	</div>
 	<div class="col-md-6">
 		<ol>
@@ -110,16 +153,98 @@
 				<img class="img-responsive" src="{{ asset('template/web/img/step-3-lainnya.png') }}" alt="step 1" style="margin-top: 20px; margin-bottom: 20px;">
 			</li>
 			<li>
+				<b>Catat Nomor Rekening Bank Permata milik Cilsy Fiolution yang muncul. Jika sudah dicatat, Klik Selesai</b>
+				<img class="img-responsive" src="{{ asset('template/web/img/step-4-lainnya.png') }}" alt="step 1" style="margin-top: 20px; margin-bottom: 20px;">
+			</li>
+			<li>
+				<b>Segera lakukan pembayaran dalam waktu 24 jam.  Jika Anda membayar menggunakan ATM BCA Anda bisa mengikuti video berikut :
+				<iframe width="560" height="315" src="https://www.youtube.com/embed/OzLhzNojY_E" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+				Jika Anda membayar menggunakan Mobile Banking BCA : 
+				<iframe width="560" height="315" src="https://www.youtube.com/embed/yxL4hVHBYWk" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+			Setelah pembayaran dilakukan, Akun Anda sudah otomatis aktif tanpa perlu melakukan Konfirmasi Pembayaran. Sebagai catatan, Anda juga dapat melihat Invoice dan Tata Cara Pembayaran di Email Anda.</b>
+			</li>
+		</ol>
+		</div>
+	</div>
+
+	<div id="bri" class="tab-pane fade">
+	<div class="col-md-6">
+	Langkah Langkah Membayar menggunakan Bank BRI<br>
+	</div>
+	<div class="col-md-6">
+		<ol>
+			<li>
+				<b>Pilih Pembayaran ATM/Bank Transfer</b> <br>
+				<img class="img-responsive" src="{{ asset('template/web/img/step-1-mandiri.png') }}" alt="step 1" style="margin-top: 20px; margin-bottom: 20px;">
+			</li>
+			<li>
+				<b>Pilih Bank Lainnya</b><br>
+				<img class="img-responsive" src="{{ asset('template/web/img/step-2-lainnya.png') }}" alt="step 1" style="margin-top: 20px; margin-bottom: 20px;">
+			</li>
+			<li>
+				<b>Pilih Lihat Nomor Rekening</b>
+				<img class="img-responsive" src="{{ asset('template/web/img/step-3-lainnya.png') }}" alt="step 1" style="margin-top: 20px; margin-bottom: 20px;">
+			</li>
+			<!--<li>
 				<b>Catat Nomor Rekening untuk melanjutkan pembayaran melalui bank anda masing-masing. Ikuti Petunjuk pada tab Bagaimana Cara Bayar untuk melakukan pembayaran. Klik Selesai</b>
 				<img class="img-responsive" src="{{ asset('template/web/img/step-4-lainnya.png') }}" alt="step 1" style="margin-top: 20px; margin-bottom: 20px;">
 			</li>
 			<li>
 				<b>Invoice dan cara pembayaran akan di kirimkan melalui email. Segera lakukan pembayaran sebelum tanggal yang tercantum. Anda tidak diharuskan untuk melakukan konfirmasi pembayaran. Jika pembayaran sudah dilakukan, akan ada pemberitahuan melalui email. Setelahnya silahkan anda login kembali dan akun anda sudah aktif secara otomatis. </b>
+			</li>-->
+			<li>
+				<b>Catat Nomor Rekening Bank Permata milik Cilsy Fiolution yang muncul. Jika sudah dicatat, Klik Selesai</b>
+				<img class="img-responsive" src="{{ asset('template/web/img/step-4-lainnya.png') }}" alt="step 1" style="margin-top: 20px; margin-bottom: 20px;">
+			</li>
+			<li>
+				<b>Segera lakukan pembayaran dalam waktu 24 jam.  Jika Anda membayar menggunakan ATM BRI Anda bisa mengikuti video berikut :
+				<iframe width="560" height="315" src="https://www.youtube.com/embed/oHFSjxYWFPs" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+				Jika Anda membayar menggunakan Internet Banking BRI : 
+				<iframe width="560" height="315" src="https://www.youtube.com/embed/kvHhclBalJ8" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+			Setelah pembayaran dilakukan, Akun Anda sudah otomatis aktif tanpa perlu melakukan Konfirmasi Pembayaran. Sebagai catatan, Anda juga dapat melihat Invoice dan Tata Cara Pembayaran di Email Anda.</b>
 			</li>
 		</ol>
 		</div>
 	</div>
-	<div id="permata" class="tab-pane fade">
+
+	<div id="bni" class="tab-pane fade">
+	<div class="col-md-6">
+	Langkah Langkah Membayar menggunakan Bank BNI<br>
+	</div>
+	<div class="col-md-6">
+		<ol>
+			<li>
+				<b>Pilih Pembayaran ATM/Bank Transfer</b> <br>
+				<img class="img-responsive" src="{{ asset('template/web/img/step-1-mandiri.png') }}" alt="step 1" style="margin-top: 20px; margin-bottom: 20px;">
+			</li>
+			<li>
+				<b>Pilih Bank Lainnya</b><br>
+				<img class="img-responsive" src="{{ asset('template/web/img/step-2-lainnya.png') }}" alt="step 1" style="margin-top: 20px; margin-bottom: 20px;">
+			</li>
+			<li>
+				<b>Pilih Lihat Nomor Rekening</b>
+				<img class="img-responsive" src="{{ asset('template/web/img/step-3-lainnya.png') }}" alt="step 1" style="margin-top: 20px; margin-bottom: 20px;">
+			</li>
+			<!--<li>
+				<b>Catat Nomor Rekening untuk melanjutkan pembayaran melalui bank anda masing-masing. Ikuti Petunjuk pada tab Bagaimana Cara Bayar untuk melakukan pembayaran. Klik Selesai</b>
+				<img class="img-responsive" src="{{ asset('template/web/img/step-4-lainnya.png') }}" alt="step 1" style="margin-top: 20px; margin-bottom: 20px;">
+			</li>
+			<li>
+				<b>Invoice dan cara pembayaran akan di kirimkan melalui email. Segera lakukan pembayaran sebelum tanggal yang tercantum. Anda tidak diharuskan untuk melakukan konfirmasi pembayaran. Jika pembayaran sudah dilakukan, akan ada pemberitahuan melalui email. Setelahnya silahkan anda login kembali dan akun anda sudah aktif secara otomatis. </b>
+			</li>-->
+			<li>
+				<b>Catat Nomor Rekening Bank Permata milik Cilsy Fiolution yang muncul. Jika sudah dicatat, Klik Selesai</b>
+				<img class="img-responsive" src="{{ asset('template/web/img/step-4-lainnya.png') }}" alt="step 1" style="margin-top: 20px; margin-bottom: 20px;">
+			</li>
+			<li>
+				<b>Segera lakukan pembayaran dalam waktu 24 jam.  Jika Anda membayar menggunakan ATM BNI Anda bisa mengikuti video berikut :
+				<iframe width="560" height="315" src="https://www.youtube.com/embed/rrBWhfJR0oM" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+			Setelah pembayaran dilakukan, Akun Anda sudah otomatis aktif tanpa perlu melakukan Konfirmasi Pembayaran. Sebagai catatan, Anda juga dapat melihat Invoice dan Tata Cara Pembayaran di Email Anda.</b>
+			</li>
+		</ol>
+		</div>
+	</div>
+	<!--<div id="permata" class="tab-pane fade">
 	<div class="col-md-6">
 	Langkah Langkah Membayar menggunakan Bank Permata
 	</div>
@@ -146,7 +271,7 @@
 			</li>
 		</ol>
 		</div>
-	</div>
+	</div>-->
 </div>
 
 </section>

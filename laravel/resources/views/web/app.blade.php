@@ -714,6 +714,7 @@ a,
                         <li><a href="{{ url('member/package') }}">Harga & Perbandingan Paket</a></li>
                         <li><a href="{{ url('/petunjuk') }}">Petunjuk Pembayaran</a></li>
                         <li><a href="{{ url('/faq') }}">FAQ</a></li>
+                        <li><a href="{{ url('https://blog.cilsy.id') }}">Blog</a></li>
                     </ul>
                 </div>
                 <div class="col-md-3">
