@@ -20,7 +20,7 @@ class ResetPasswordController extends Controller
     | explore this trait and override any methods you wish to tweak.
     |
     */
-    protected $redirectTo = "contributors_login";
+    protected $redirectTo = "contributor/dashboard";
 
     use ResetsPasswords;
 
@@ -45,10 +45,11 @@ class ResetPasswordController extends Controller
      */
     public function showResetForm(Request $request, $token = null)
     {
-        return view('contributors.form-forget')->with(
+        return view('contrib.home.password.reset')->with(
             ['token' => $token, 'email' => $request->email]
         );
     }
+
 
     /**
      * Get the broker to be used during password reset.

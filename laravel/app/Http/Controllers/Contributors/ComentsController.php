@@ -11,6 +11,8 @@ use Hash;
 use DateTime;
 use DB;
 use App\Model\Contributor;
+use Auth;
+
 class ComentsController extends Controller
 {
     /**
@@ -19,10 +21,10 @@ class ComentsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(){
-        if (empty(Session::get('contribID'))) {
+        if (empty(Auth::guard('contributors')->user()->id)) {
           return redirect('contributor/login');
         }
-        $uid = Session::get('contribID');
+        $uid = Auth::guard('contributors')->user()->id;
         $getcomment = DB::table('coments')
             ->leftJoin('lessons','lessons.id','=','coments.lesson_id')
             ->where('coments.parent',0)
@@ -49,10 +51,10 @@ class ComentsController extends Controller
     }
 
     public function detail($id){
-        if (empty(Session::get('contribID'))) {
+        if (empty(Auth::guard('contributors')->user()->id)) {
           return redirect('contributor/login');
         }
-        $uid = Session::get('contribID');
+        $uid = Auth::guard('contributors')->user()->id;
 
         $detailcomment  = DB::table('coments')->where('id',$id)->first();
         $getlesson      = DB::table('lessons')->where('id',$detailcomment->lesson_id)->first();
@@ -76,11 +78,11 @@ class ComentsController extends Controller
     }
 
     public function postcomment(){
-        if (empty(Session::get('contribID'))) {
+        if (empty(Auth::guard('contributors')->user()->id)) {
             return 0;
             exit();
         }
-        $uid = Session::get('contribID');
+        $uid = Auth::guard('contributors')->user()->id;
         $isi_balas  = Input::get('isi_balas');
         $comment_id = Input::get('comment_id');
         $lesson_id  = Input::get('lesson_id');
@@ -128,10 +130,10 @@ class ComentsController extends Controller
     }
 
     public function deletecomment($id){
-        if (empty(Session::get('contribID'))) {
+        if (empty(Auth::guard('contributors')->user()->id)) {
           return redirect('contributor/login');
         }
-        $uid = Session::get('contribID');
+        $uid = Auth::guard('contributors')->user()->id;
         $detailcomment  = DB::table('coments')->where('id',$id)->first();
         $getlesson      = DB::table('lessons')->where('id',$detailcomment->lesson_id)->first();
 
@@ -148,7 +150,7 @@ class ComentsController extends Controller
 
     // public function create()
     // {
-    //   if (empty(Session::get('contribID'))) {
+    //   if (empty(Auth::guard('contributors')->user()->id)) {
     //     return redirect('contributor/login');
     //   }
     //   # code...

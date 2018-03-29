@@ -112,8 +112,9 @@ class AuthController extends Controller {
 	}
 
 	public function aktivasi($token) {
-		Contributor::where('token', $token)
-			->update(['status' => 1]);
+		Contributor::where('activation_token', $token)
+			->update(['active' => true,
+            'activation_token' => null ]);
 		return redirect('contributor/login')->with('success', 'Sukses Aktivasi!, silahkan login ke akun anda');
 	}
 

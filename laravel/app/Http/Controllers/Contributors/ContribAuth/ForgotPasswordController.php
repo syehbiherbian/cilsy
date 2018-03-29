@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Contributors\ContribAuth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 use Illuminate\Support\Facades\Password;
-use Illuminate\Auth\Passwords\CanResetPassword;
 
 class ForgotPasswordController extends Controller
 {
@@ -39,7 +38,7 @@ class ForgotPasswordController extends Controller
      */
     public function showLinkRequestForm()
     {
-        return view('contributors.forget-password');
+        return view('contrib.home.password.email');
     }
 
     /**

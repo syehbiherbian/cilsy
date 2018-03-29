@@ -14,12 +14,14 @@ use FFMpeg;
 use FFProbe;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades;
+use Auth;
+
 
 class VideosController extends Controller
 {
   public function create($lessonsid)
   {
-    if (empty(Session::get('contribID'))) {
+    if (empty(Auth::guard('contributors')->user()->id)) {
       return redirect('contributor/login');
     }
     $lesson= Lesson::where('id',$lessonsid)->first();
@@ -41,7 +43,7 @@ class VideosController extends Controller
   }
   public function doCreate($lessonsid)
   {
-      if (empty(Session::get('contribID'))) {
+      if (empty(Auth::guard('contributors')->user()->id)) {
         return redirect('contributor/login');
       }
     # code...
@@ -58,7 +60,7 @@ class VideosController extends Controller
         return redirect()->back()->withErrors($validator)->withInput();
     } else {
         $now          = new DateTime();
-        $cid          = Session::get('contribID');
+        $cid          = Auth::guard('contributors')->user()->id;
         $title        = Input::get('judul');
         $image_video = Input::file('image');
         $lessons_video = Input::file('video');
@@ -151,7 +153,7 @@ class VideosController extends Controller
   }
 
   public function edit($lessonsid){
-      if (empty(Session::get('contribID'))) {
+      if (empty(Auth::guard('contributors')->user()->id)) {
         return redirect('contributor/login');
       }
       $lesson= Lesson::where('id',$lessonsid)->first();
@@ -175,7 +177,7 @@ class VideosController extends Controller
 
   public function doEdit($lessonsid)
   {
-      if (empty(Session::get('contribID'))) {
+      if (empty(Auth::guard('contributors')->user()->id)) {
         return redirect('contributor/login');
       }
     # code...
@@ -194,7 +196,7 @@ class VideosController extends Controller
     } else {
 
         $now                = new DateTime();
-        $cid                = Session::get('contribID');
+        $cid                = Auth::guard('contributors')->user()->id;
         $title              = Input::get('judul');
         $image_video        = Input::file('image');
         $image_text         = Input::get('image_text');

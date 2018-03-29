@@ -17,6 +17,7 @@ use App\Models\Answer;
 use App\Models\Revision;
 use App\Models\LessonDetail;
 use DateTime;
+use Auth;
 
 
 use Session;
@@ -25,7 +26,7 @@ class LessonsController extends Controller
   //
   public function redirect()
   {
-    if (empty(Session::get('contribID'))) {
+    if (empty(Auth::guard('contributors')->user()->id)) {
       return redirect('contributor/login');
     }
     return redirect('contributor/lessons/pending/list');
@@ -35,11 +36,11 @@ class LessonsController extends Controller
   public function index($filter)
   {
 
-    if (empty(Session::get('contribID'))) {
+    if (empty(Auth::guard('contributors')->user()->id)) {
       return redirect('contributor/login');
     }
 
-    $contribID = Session::get('contribID');
+    $contribID = Auth::guard('contributors')->user()->id;
     if ($filter == 'pending') {
       $data = Lesson::where('contributor_id',$contribID)
       ->leftJoin('categories', 'lessons.category_id', '=', 'categories.id')
@@ -92,7 +93,7 @@ class LessonsController extends Controller
 
   public function create()
   {
-    if (empty(Session::get('contribID'))) {
+    if (empty(Auth::guard('contributors')->user()->id)) {
       return redirect('contributor/login');
     }
 
@@ -122,7 +123,7 @@ class LessonsController extends Controller
     } else {
 
         $now          = new DateTime();
-        $cid          = Session::get('contribID');
+        $cid          = Auth::guard('contributors')->user()->id;
         $title        = Input::get('title');
         $category_id  = Input::get('category_id');
         $lessons_image = Input::file('image');
@@ -169,11 +170,11 @@ class LessonsController extends Controller
   public function submit($id)
   {
 
-    if (empty(Session::get('contribID'))) {
+    if (empty(Auth::guard('contributors')->user()->id)) {
       return redirect('contributor/login');
     }
     # code...
-    $contribID = Session::get('contribID');
+    $contribID = Auth::guard('contributors')->user()->id;
     $check = Lesson::where('contributor_id',$contribID)
         ->where('id',$id)->first();
     if($check ==null){
@@ -213,11 +214,11 @@ class LessonsController extends Controller
 
   public function doSubmit($id)
   {
-      if (empty(Session::get('contribID'))) {
+      if (empty(Auth::guard('contributors')->user()->id)) {
         return redirect('contributor/login');
       }
       $now                    = new DateTime();;
-      $cid                    = Session::get('contribID');
+      $cid                    = Auth::guard('contributors')->user()->id;
       $store                  = Lesson::find($id);
       $store->status          = 2;
       $store->updated_at      = $now;
@@ -242,11 +243,11 @@ class LessonsController extends Controller
   // view
   public function view($id)
   {
-    if (empty(Session::get('contribID'))) {
+    if (empty(Auth::guard('contributors')->user()->id)) {
       return redirect('contributor/login');
     }
 
-    $contribID = Session::get('contribID');
+    $contribID = Auth::guard('contributors')->user()->id;
     $row = Lesson::where('contributor_id',$contribID)
     ->where('lessons.id',$id)
     ->leftJoin('categories', 'lessons.category_id', '=', 'categories.id')
@@ -269,11 +270,11 @@ class LessonsController extends Controller
 
   public function edit($id)
   {
-    if (empty(Session::get('contribID'))) {
+    if (empty(Auth::guard('contributors')->user()->id)) {
       return redirect('contributor/login');
     }
     $categories = Category::where('enable',1)->get();
-    $contribID = Session::get('contribID');
+    $contribID = Auth::guard('contributors')->user()->id;
     $row = Lesson::where('contributor_id',$contribID)
     ->where('lessons.id',$id)
     ->leftJoin('categories', 'lessons.category_id', '=', 'categories.id')
@@ -306,7 +307,7 @@ class LessonsController extends Controller
       } else {
 
           $now          = new DateTime();
-          $cid          = Session::get('contribID');
+          $cid          = Auth::guard('contributors')->user()->id;
           $title        = Input::get('title');
           $category_id  = Input::get('category_id');
           $lessons_image = Input::file('image');
@@ -349,10 +350,10 @@ class LessonsController extends Controller
       }
   }
   public function doDelete($id){
-      if (empty(Session::get('contribID'))) {
+      if (empty(Auth::guard('contributors')->user()->id)) {
         return redirect('contributor/login');
       }
-     $contribID = Session::get('contribID');
+     $contribID = Auth::guard('contributors')->user()->id;
      $lessons =Lesson::where('id',$id)->where('contributor_id',$contribID)->delete();
      if($lessons){
          $video =Video::where('lessons_id',$id)->delete();
@@ -377,11 +378,11 @@ class LessonsController extends Controller
 
   public function doProcess($id){
 
-      if (empty(Session::get('contribID'))) {
+      if (empty(Auth::guard('contributors')->user()->id)) {
         return redirect('contributor/login');
       }
         $now          = new DateTime();
-        $cid          = Session::get('contribID');
+        $cid          = Auth::guard('contributors')->user()->id;
         $update = Revision::find($id);
         $update->status = 2;
         $update->updated_at=$now;

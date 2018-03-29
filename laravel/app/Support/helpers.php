@@ -108,7 +108,7 @@ class Helper
 
 function notif(){
 
-    $contribID = Session::get('contribID');
+    $contribID = Auth::guard('contributors')->user()->id;
     $notif =ContributorNotif::where('contributor_id',$contribID)->where('status',0)->get();
     $url = 'http://localhost/cilsy';
     $html='';
@@ -119,7 +119,7 @@ function notif(){
     return $html;
 }
 function coments(){
-  $contribID = Session::get('contribID');
+  $contribID = Auth::guard('contributors')->user()->id;
   $html='';
   if($contribID !==null){
       $cotrib= DB::table('coments')
@@ -141,7 +141,7 @@ function coments(){
  return $html;
 }
 function badge(){
-      $contribID = Session::get('contribID');
+      $contribID = Auth::guard('contributors')->user()->id;
       $cotrib= Contributor::where('id',$contribID)->first();
 
       $html='';
@@ -165,7 +165,7 @@ function badge(){
       return $html;
 }
 function points(){
-      $contribID = Session::get('contribID');
+      $contribID = Auth::guard('contributors')->user()->id;
       $html='';
       if($contribID !==null){
           $cotrib= Contributor::where('id',$contribID)->first();
@@ -175,14 +175,14 @@ function points(){
      return $html;
 }
 function income(){
-    if (empty(Session::get('contribID'))) {
+    if (empty(Auth::guard('contributors')->user()->id)) {
       return redirect('contributor/login');
     }
     $date= new DateTime();
     $moth= $date->format('m');
     $year= $date->format('Y');
 
-    $contribID = Session::get('contribID');
+    $contribID = Auth::guard('contributors')->user()->id;
     $html='';
     if($contribID !==null){
         $row = IncomeDetail::where('contributor_id',$contribID)->where('moth',$moth)->where('year',$year)->first();
@@ -199,7 +199,7 @@ function income(){
     return $html;
 }
 function lessons_pending(){
-      $contribID = Session::get('contribID');
+      $contribID = Auth::guard('contributors')->user()->id;
       $html='';
       if($contribID !==null){
           $data = Lesson::where('contributor_id',$contribID)->where('lessons.status',0)->count();
@@ -209,7 +209,7 @@ function lessons_pending(){
     return $html;
 }
 function lessons_publish(){
-      $contribID = Session::get('contribID');
+      $contribID = Auth::guard('contributors')->user()->id;
       $html='';
       if($contribID !==null){
           $data = Lesson::where('contributor_id',$contribID)->where('lessons.status',1)->count();

@@ -10,11 +10,13 @@ use Session;
 use DateTime;
 use App\Models\File;
 use App\Models\Lesson;
+use Auth;
+
 class AttachmentsController extends Controller
 {
   public function create($lessonsid)
   {
-    if (empty(Session::get('contribID'))) {
+    if (empty(Auth::guard('contributors')->user()->id)) {
       return redirect('contributor/login');
     }
     $lesson= Lesson::where('id',$lessonsid)->first();
@@ -36,7 +38,7 @@ class AttachmentsController extends Controller
   }
   public function doCreate($lessonsid)
   {
-      if (empty(Session::get('contribID'))) {
+      if (empty(Auth::guard('contributors')->user()->id)) {
         return redirect('contributor/login');
       }
     # code...
@@ -54,7 +56,7 @@ class AttachmentsController extends Controller
     } else {
 
         $now          = new DateTime();
-        $cid          = Session::get('contribID');
+        $cid          = Auth::guard('contributors')->user()->id;
         $title        = Input::get('judul');
         $lessons_files = Input::file('files');
         $description  = Input::get('desc');
@@ -112,7 +114,7 @@ class AttachmentsController extends Controller
   }
 
   public function edit($lessonsid){
-      if (empty(Session::get('contribID'))) {
+      if (empty(Auth::guard('contributors')->user()->id)) {
         return redirect('contributor/login');
       }
       $lesson= Lesson::where('id',$lessonsid)->first();
@@ -136,7 +138,7 @@ class AttachmentsController extends Controller
 
   public function doEdit($lessonsid)
   {
-      if (empty(Session::get('contribID'))) {
+      if (empty(Auth::guard('contributors')->user()->id)) {
         return redirect('contributor/login');
       }
     # code...
@@ -153,7 +155,7 @@ class AttachmentsController extends Controller
     } else {
 
         $now          = new DateTime();
-        $cid          = Session::get('contribID');
+        $cid          = Auth::guard('contributors')->user()->id;
         $title        = Input::get('judul');
 
         $lessons_files = Input::file('files');

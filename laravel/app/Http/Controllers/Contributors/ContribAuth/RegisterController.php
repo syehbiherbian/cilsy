@@ -13,7 +13,7 @@ use Redirect;
 use Session;
 use Illuminate\Auth\Events\Registered;
 use Auth;
-use App\Event\Auth\ContribActivationEmail;
+use App\Events\ContributorRegistered;
 
 
 class RegisterController extends Controller
@@ -104,15 +104,6 @@ class RegisterController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function register(Request $request)
-    {
-        
-        $this->validator($request->all())->validate();
-
-       //Create members
-        $contrib = $this->create($request->all());
-
-    }
 
     protected function guard()
    {
@@ -126,13 +117,13 @@ class RegisterController extends Controller
      * @param  mixed  $user
      * @return mixed
      */
-    protected function registered(Request $request, $contrib)
+    protected function registered(Request $request, $contributor)
     {
         //sending mail
-        event(new ContribActivationEmail($contrib));
+        event(new ContributorRegistered($contributor));
 
          $this->guard()->logout();
-        return redirect()->route('contributor/login')->withSuccess('Registered. Please check your email to activate your account.');
+        return redirect('contributor/login')->withSuccess('Registered. Please check your email to activate your account.');
     }
 }
 

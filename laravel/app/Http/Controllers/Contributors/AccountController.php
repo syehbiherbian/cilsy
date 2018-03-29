@@ -5,18 +5,19 @@ namespace App\Http\Controllers\Contributors;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Session;
-use App\Model\Contributor;
+use App\Models\Contributor;
 use Redirect;
 use Validator;
 use Illuminate\Support\Facades\Input;
 use DB;
 use DateTime;
+use Auth;
 
 class AccountController extends Controller
 {
     public function informasi()
     {
-    	$contribID = Session::get('contribID');
+    	$contribID = Auth::guard('contributors')->user()->id;
     	$contributor = Contributor::find($contribID);
 
     	return view('contrib.account.informasi', [
@@ -26,7 +27,7 @@ class AccountController extends Controller
 
     public function edit($id)
     {
-    	$contribID = Session::get('contribID');
+    	$contribID = Auth::guard('contributors')->user()->id;
     	$contributor = Contributor::find($contribID);
 
     	return view('contrib.account.edit_informasi', [
@@ -80,7 +81,7 @@ class AccountController extends Controller
 
     public function halaman()
     {
-    	$contribID = Session::get('contribID');
+    	$contribID = Auth::guard('contributors')->user()->id;
     	$contributor = Contributor::find($contribID);
 
     	return view('contrib.account.halaman', [
@@ -89,7 +90,7 @@ class AccountController extends Controller
     }
     public function edit_halaman($id)
     {
-        $contribID = Session::get('contribID');
+        $contribID = Auth::guard('contributors')->user()->id;
         $contributor = Contributor::find($contribID);
 
         return view('contrib.account.edit_halaman', [

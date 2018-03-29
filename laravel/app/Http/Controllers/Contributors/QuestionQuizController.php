@@ -14,12 +14,14 @@ use App\Quiz;
 use App\Models\Question;
 use App\Models\Answer;
 use App\Models\Lesson;
+use Auth;
+
 class QuestionQuizController extends Controller
 {
 
     public function create($quiz_id)
     {
-      if (empty(Session::get('contribID'))) {
+      if (empty(Auth::guard('contributors')->user()->id)) {
         return redirect('contributor/login');
       }
       $quiz = Quiz::where('id',$quiz_id)->first();
@@ -41,7 +43,7 @@ class QuestionQuizController extends Controller
     }
 
     public function store(Request $request, $quiz_id){
-      if (empty(Session::get('contribID'))) {
+      if (empty(Auth::guard('contributors')->user()->id)) {
         return redirect('contributor/login');
       }
       //Store new Data
@@ -96,7 +98,7 @@ class QuestionQuizController extends Controller
       }
 
       public function edit($quiz_id){
-          if (empty(Session::get('contribID'))) {
+          if (empty(Auth::guard('contributors')->user()->id)) {
             return redirect('contributor/login');
           }
           $quiz = Quiz::where('id',$quiz_id)->first();
@@ -120,7 +122,7 @@ class QuestionQuizController extends Controller
       }
 
       public function update(Request $request, $quiz_id){
-        if (empty(Session::get('contribID'))) {
+        if (empty(Auth::guard('contributors')->user()->id)) {
           return redirect('contributor/login');
         }
         //Store new Data

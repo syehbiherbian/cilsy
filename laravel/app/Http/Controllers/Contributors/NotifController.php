@@ -12,6 +12,8 @@ use DateTime;
 use DB;
 use App\Model\Contributor;
 use App\Models\ContributorNotif;
+use Auth;
+
 class NotifController extends Controller
 {
     /**
@@ -20,10 +22,10 @@ class NotifController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(){
-        if (empty(Session::get('contribID'))) {
+        if (empty(Auth::guard('contributors')->user()->id)) {
           return redirect('contributor/login');
         }
-        $uid = Session::get('contribID');
+        $uid = Auth::guard('contributors')->user()->id;
         $getnotif = DB::table('contributor_notif')
             ->where('contributor_id',$uid)
             ->orderBy('contributor_notif.created_at','DESC')
@@ -47,10 +49,10 @@ class NotifController extends Controller
     }
 
     public function delete($id){
-        if (empty(Session::get('contribID'))) {
+        if (empty(Auth::guard('contributors')->user()->id)) {
           return redirect('contributor/login');
         }
-        $uid = Session::get('contribID');
+        $uid = Auth::guard('contributors')->user()->id;
         $detail  = DB::table('contributor_notif')
         ->where('id',$id)->first();
         if ($detail->contributor_id == $uid) {

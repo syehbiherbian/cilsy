@@ -18,6 +18,8 @@ use App\Models\Lesson;
 use App\Models\Lesson_detail;
 use App\Models\IncomeDetail;
 use App\Models\ContributorAccount;
+use Auth;
+
 class IncomeController extends Controller
 {
     /**
@@ -27,14 +29,14 @@ class IncomeController extends Controller
      */
     public function index()
     {
-        if (empty(Session::get('contribID'))) {
+        if (empty(Auth::guard('contributors')->user()->id)) {
           return redirect('contributor/login');
         }
         $date= new DateTime();
         $moth= $date->format('m');
         $year= $date->format('Y');
 
-        $contribID = Session::get('contribID');
+        $contribID = Auth::guard('contributors')->user()->id;
         $row = IncomeDetail::where('contributor_id',$contribID)->where('moth',$moth)->where('year',$year)->first();
         if(count($row) ==0){
         $row = IncomeDetail::where('contributor_id',$contribID)->orderBy('created_at','desc')->first();
@@ -53,10 +55,10 @@ class IncomeController extends Controller
     }
     public function doCreate()
     {
-        if (empty(Session::get('contribID'))) {
+        if (empty(Auth::guard('contributors')->user()->id)) {
           return redirect('contributor/login');
         }
-        $contribID = Session::get('contribID');
+        $contribID = Auth::guard('contributors')->user()->id;
       # code...
       // validate
       // read more on validation at http://laravel.com/docs/validation
@@ -92,10 +94,10 @@ class IncomeController extends Controller
     }
 
     public function edit($id){
-        if (empty(Session::get('contribID'))) {
+        if (empty(Auth::guard('contributors')->user()->id)) {
           return redirect('contributor/login');
         }
-        $contribID = Session::get('contribID');
+        $contribID = Auth::guard('contributors')->user()->id;
         $row =ContributorAccount::where('contributor_id',$contribID)->where('id',$id)->first();
         if(count($row)==0){
             return Redirect('not-found');
@@ -107,10 +109,10 @@ class IncomeController extends Controller
 
     public function doEdit($id)
     {
-        if (empty(Session::get('contribID'))) {
+        if (empty(Auth::guard('contributors')->user()->id)) {
           return redirect('contributor/login');
         }
-        $contribID = Session::get('contribID');
+        $contribID = Auth::guard('contributors')->user()->id;
       # code...
       // validate
       // read more on validation at http://laravel.com/docs/validation
@@ -146,14 +148,14 @@ class IncomeController extends Controller
 
     public function view()
     {
-        if (empty(Session::get('contribID'))) {
+        if (empty(Auth::guard('contributors')->user()->id)) {
           return redirect('contributor/login');
         }
         $date= new DateTime();
         $moth= $date->format('m');
         $year= $date->format('Y');
 
-        $contribID = Session::get('contribID');
+        $contribID = Auth::guard('contributors')->user()->id;
         $row = IncomeDetail::where('contributor_id',$contribID)->get();
       return view('contrib.income.view', [
         'row'=>$row,
@@ -162,10 +164,10 @@ class IncomeController extends Controller
 
     public function doDelete($id){
 
-        if (empty(Session::get('contribID'))) {
+        if (empty(Auth::guard('contributors')->user()->id)) {
           return redirect('contributor/login');
         }
-        $contribID = Session::get('contribID');
+        $contribID = Auth::guard('contributors')->user()->id;
         $row =ContributorAccount::where('contributor_id',$contribID)->where('id',$id)->first();
         if(count($row)==0){
             return Redirect('not-found');

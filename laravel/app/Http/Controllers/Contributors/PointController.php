@@ -16,13 +16,15 @@ use App\Model\Contributor;
 use App\Reward;
 use App\RewardCategory;
 use App\Models\ContributorReward;
+use Auth;
+
 class PointController extends Controller
 {
 	public function index(){
-		if (empty(Session::get('contribID'))) {
+		if (empty(Auth::guard('contributors')->user()->id)) {
 			return redirect('contributor/login');
 		}
-		$uid = Session::get('contribID');
+		$uid = Auth::guard('contributors')->user()->id;
 		$now = new DateTime;
     	$date = date_format($now,'Y-m-d');
 		$contrib= Contributor::where('id',$uid)->first();
@@ -39,10 +41,10 @@ class PointController extends Controller
 		]);
 	}
 	public function detail($id){
-		if (empty(Session::get('contribID'))) {
+		if (empty(Auth::guard('contributors')->user()->id)) {
 			return redirect('contributor/login');
 		}
-		$uid = Session::get('contribID');
+		$uid = Auth::guard('contributors')->user()->id;
 		$now = new DateTime;
         $date = date_format($now,'Y-m-d');
 		$contrib= Contributor::where('id',$uid)->first();
@@ -67,12 +69,12 @@ class PointController extends Controller
 	}
 	public function change($id)
 	{
-		if (empty(Session::get('contribID'))) {
+		if (empty(Auth::guard('contributors')->user()->id)) {
 			return redirect('contributor/login');
 		}
 
 		# code...
-		$contribID = Session::get('contribID');
+		$contribID = Auth::guard('contributors')->user()->id;
 		$now = new DateTime;
 		$date = date_format($now,'Y-m-d');
 		$reward = Reward::where('enable',1)->where('end','>=',$date )->where('limit','>',0)->where('slug',$id)->first();
@@ -92,12 +94,12 @@ class PointController extends Controller
 
 	public function doChange($id)
 	{
-		if (empty(Session::get('contribID'))) {
+		if (empty(Auth::guard('contributors')->user()->id)) {
 			return redirect('contributor/login');
 		}
 
 		# code...
-		$contribID = Session::get('contribID');
+		$contribID = Auth::guard('contributors')->user()->id;
 		$now = new DateTime;
 		$date = date_format($now,'Y-m-d');
 		$reward = Reward::where('enable',1)->where('end','>=',$date )->where('limit','>',0)->where('slug',$id)->first();

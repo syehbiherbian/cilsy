@@ -167,7 +167,7 @@ Route::post('contributor/login', 'Contributors\ContribAuth\LoginController@Login
 Route::post('contributor/logout', 'Contributors\ContribAuth\LogoutController@Logout');
 Route::post('contributor/password/email', 'Contributors\ContribAuth\ForgotPasswordController@sendResetLinkEmail');
 Route::get('contributor/password/reset', 'Contributors\ContribAuth\ForgotPasswordController@showLinkRequestForm');
-Route::post('contributor/password/reset', 'Contributors\ContribAuth\ForgotPasswordController@reset');
+Route::post('contributor/password/reset', 'Contributors\ContribAuth\ResetPasswordController@reset');
 Route::get('contributor/password/reset/{token}', 'Contributors\ContribAuth\ResetPasswordController@showResetForm');
 Route::get('contributor/register', 'Contributors\ContribAuth\RegisterController@showRegistrationForm');
 Route::post('contributor/register', 'Contributors\ContribAuth\RegisterController@register');
@@ -177,14 +177,14 @@ Route::post('contributor/register', 'Contributors\ContribAuth\RegisterController
 
 // Route::get('contributor/register', 'Contributors\AuthController@register');
 // Route::post('contributor/register', 'Contributors\AuthController@doRegister');
-Route::get('contributor/aktivasi/{token}', 'Contributors\ContribAuth\AuthController@aktivasi');
+Route::get('contributor/aktivasi/{token}', 'Contributors\AuthController@aktivasi');
 Route::get('contribauth/activate','Contributors\ContribAuth\ActivationController@active')->name('auth.activate');
 
 
 Route::get('contributor/logout', 'Contributors\AuthController@logout');
 
 // Home
-Route::get('contributor/', 'Contributors\DashboardController@home');
+Route::get('contributor/home', 'Contributors\DashboardController@home');
 Route::get('contributor/dashboard', 'Contributors\DashboardController@index');
 // Lessons
 Route::get('contributor/lessons', 'Contributors\LessonsController@redirect');

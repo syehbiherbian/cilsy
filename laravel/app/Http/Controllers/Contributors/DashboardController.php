@@ -3,11 +3,9 @@
 namespace App\Http\Controllers\Contributors;
 use App\Http\Controllers\Controller;
 use Auth;
-use Session;
 
 class DashboardController extends Controller {
 	public function home() {
-
 		return view('contrib.home.home');
 
 	}

@@ -6,22 +6,23 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use App\Contrib;
+use App\Models\Contributor;
 
-class ActivationEmail extends Mailable
+
+class ActivationMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $contrib;
+    public $contributor;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(Contributor $contrib)
+    public function __construct(Contributor $contributor)
     {
-        $this->contributor = $contrib;
+        $this->contributor = $contributor;
     }
 
     /**
@@ -31,6 +32,7 @@ class ActivationEmail extends Mailable
      */
     public function build()
     {
-        return $this->markdown('emails.auth.activation');
+        return $this->view('emails.auth.activation');
+        
     }
 }

@@ -13,16 +13,18 @@ use App\Model\Contributor;
 use DateTime;
 use Session;
 use DB;
+use Auth;
+
 class QuizController extends Controller
 {
   public function create($lessons_id)
   {
-    if (empty(Session::get('contribID'))) {
+    if (empty(Auth::guard('contributors')->user()->id)) {
       return redirect('contributor/login');
     }
     # code...
 
-    $data = Lesson::where('contributor_id',Session::get('contribID'))
+    $data = Lesson::where('contributor_id',Auth::guard('contributors')->user()->id)
     ->where('id',$lessons_id)
     ->first();
     if(empty($data)){
@@ -40,10 +42,10 @@ class QuizController extends Controller
     ]);
   }
   public function store_quiz(Request $request, $lessons_id){
-    if (empty(Session::get('contribID'))) {
+    if (empty(Auth::guard('contributors')->user()->id)) {
       return redirect('contributor/login');
     }
-    $uid = Session::get('contribID');
+    $uid = Auth::guard('contributors')->user()->id;
     //Store new Data
            $validator = Validator::make($request->all(), [
                'title'            => 'required',
@@ -89,7 +91,7 @@ class QuizController extends Controller
            return Redirect('contributor/lessons/quiz/'.$store->id.'/create/questions');
   }
   public function view($quiz_id){
-    if (empty(Session::get('contribID'))) {
+    if (empty(Auth::guard('contributors')->user()->id)) {
       return redirect('contributor/login');
     }
     $row=Quiz::where('quiz.id','=',$quiz_id)
@@ -111,7 +113,7 @@ class QuizController extends Controller
   }
 
   public function edit($quiz_id){
-    if (empty(Session::get('contribID'))) {
+    if (empty(Auth::guard('contributors')->user()->id)) {
       return redirect('contributor/login');
     }
     $row=Quiz::where('id','=',$quiz_id)->first();
@@ -131,7 +133,7 @@ class QuizController extends Controller
   }
 
   public function update_quiz(Request $request, $quiz_id){
-    if (empty(Session::get('contribID'))) {
+    if (empty(Auth::guard('contributors')->user()->id)) {
       return redirect('contributor/login');
     }
     //Store new Data
@@ -160,7 +162,7 @@ class QuizController extends Controller
   }
 
   public function delete_quiz($id){
-      if (empty(Session::get('contribID'))) {
+      if (empty(Auth::guard('contributors')->user()->id)) {
         return redirect('contributor/login');
       }
        $data= DB::table('quiz')->where('id',$id)->first();
