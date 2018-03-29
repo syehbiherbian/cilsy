@@ -667,7 +667,7 @@ a,
           $(".keyword").val(ui.item.label);
           return false;
         },
-        minLength: 0,
+        minLength: 1,
 
       }).bind('focus', function () {
         $('.ui-autocomplete').css('z-index','9999').css('overflow-y','scroll').css('max-height','300px');
