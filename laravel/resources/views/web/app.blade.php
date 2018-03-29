@@ -167,12 +167,12 @@
           margin-left: 25px;
           margin-right: 0px;
       }
-      @media (max-width:768px) {
+      {{--  @media (max-width:768px) {
         #bs-example-navbar-collapse-search{
           min-height: 100vh;
 
         }
-      }
+      }  --}}
 
       @media (min-width:768px) {
         #bs-example-navbar-collapse-search{
@@ -519,7 +519,7 @@ a,
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          <!-- <ul class="nav navbar-nav">
+          <!-- <ul class="nav">
             <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
             <li><a href="#">Link</a></li>
             <li class="dropdown">
@@ -629,7 +629,6 @@ a,
                </span>
             </div>
           </form>
-          <p>Riwayat Pencarian : </p>
         </div>
       </div><!-- /.container-fluid -->
     </nav>
