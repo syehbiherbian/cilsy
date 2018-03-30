@@ -167,12 +167,15 @@
           margin-left: 25px;
           margin-right: 0px;
       }
-      {{--  @media (max-width:768px) {
-        #bs-example-navbar-collapse-search{
-          min-height: 100vh;
-
+      @media (max-width:768px) {
+        .navbar-form {
+            margin-top: 13px;
+            background: #eee;
+            padding: 5px;
+            margin-left: 0px;
+            margin-right: 0px;
         }
-      }  --}}
+      }
 
       @media (min-width:768px) {
         #bs-example-navbar-collapse-search{
@@ -423,98 +426,6 @@ a,
           <a class="navbar-brand" href="{{ url('/') }}"><img class="logo" src="{{asset('template/web/img/logo.png')}}"></a>
           <a href="{{ url('lessons/browse/all') }}" class="browse-btn hidden-xs hidden-sm">Browse Tutorial</a>
         </div>
-
-        <div id="wrapper">
-						<!-- Sidebar -->
-						<div id="sidebar-wrapper">
-
-							<ul class="sidebar-nav">
-								<li>
-									<a class="menu-toggle mobile-toggle" style="width:100%; margin-left:0;font-size:11pt; text-align:right; padding-right:9%;"><i class="fa fa-angle-left fa-lg" aria-hidden="true" style="padding-top:5%; float:left;"></i>Tutup</a>
-								</li>
-								<li>
-									<?php if(empty(Auth::guard('members')->user()->id)){?> 
-										<a href="{{ url('login') }}">
-											<i class="fa fa-user" aria-hidden="true" style="display: inline"></i> &nbsp;Masuk / Daftar
-										</a>
-										 <?php }else{ ?>
-											<a href{{ csrf_field() }}
-
-                        <input type="hidden" name="token" value="{{ $token }}">
-
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label for="email" class="col-md-4 control-label">E-Mail Address</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ $email or old('email') }}" required autofocus>
-
-                                @if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                            <label for="password" class="col-md-4 control-label">Password</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control" name="password" required>
-
-                                @if ($errors->has('password'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group{{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
-                            <label for="password-confirm" class="col-md-4 control-label">Confirm Password</label>
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
-
-                                @if ($errors->has('password_confirmation'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password_confirmation') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
-                                    Reset Password
-                                </button>
-                            </div>
-                        </div>="{{ url('account/profile') }}">
-												<i class="icon ion-ios-person-outline" aria-hidden="true" style="display: inline"></i>Hi, {{ Auth::guard('members')->user()->username }}
-											</a>
-											<?php } ?>
-										</li>
-										<li>
-											<a href="{{ url('/') }}">Halaman Awal</a></a>
-										</li>
-										<li>
-											<a class="collapsed" data-toggle="collapse" data-target="#appCategory" href="#">Kategori</a>
-                                            
-										</li>
-										<li>
-											<a href="{{ url('account/invoice') }}">Cek Status Pesanan</a>
-										</li>
-										<li>
-											<a href="#ComingSoon">Contact Us</a>
-										</li>
-									</hr>
-									<li>
-										<a href="{{ url('page/Panduan-Belanja') }}">Panduan</a>
-									</li>
-
-									</ul>
-								</div>
-								<!-- /#sidebar-wrapper -->
 
 
         <!-- Collect the nav links, forms, and other content for toggling -->
