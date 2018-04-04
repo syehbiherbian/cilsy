@@ -4,20 +4,14 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="@yield('description')" />
-    <meta name="title" content="@yield('title')" />    
     <meta name="google-site-verification" content="4yTZI7aHiFWK-AD03jB5ffbkI5Q8svP423zsKLmtp4I" />
-    <meta name="google-site-verification" content="TEkMNo9O-bbzq6RHg_-9vqtlXQLKMRgiJyIBlvKDa30" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8; IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no" />
     <title>@yield('title') {{ config('app.name') }}</title>
     <link href="{{asset('template/web/css/bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{asset('template/web/css/app.css')}}" rel="stylesheet">
     <link href="{{asset('template/web/css/video-js.css')}}" rel="stylesheet">
-    <link href="{{asset('template/web/css/videojs-errors.css')}}" rel="stylesheet">    
     <link href="{{asset('template/web/css/navbar.css')}}" rel="stylesheet">
-    <link href="{{asset('template/web/css/sidebar.css')}}" rel="stylesheet">  
-    <link href="{{asset('template/web/css/animate.css')}}" rel="stylesheet">      
     <link href="{{asset('template/web/css/pace.css')}}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('template/web/css/owl.carousel.min.css') }}">
     <link rel="stylesheet" href="{{ asset('template/web/css/owl.theme.default.min.css') }}">
@@ -32,6 +26,7 @@
 
     <link rel="stylesheet" href="{{ asset('template/web/plugins/jquery-ui-1.12.1.custom/jquery-ui.css') }}">
     <script type="text/javascript" src="{{asset('template/web/js/jquery.min.js')}}"></script>
+    <script type="text/javascript" src="https://unpkg.com/sweetalert2@7.9.2/dist/sweetalert2.all.js"></script>
     <!-- Jquery UI   -->
     <script type="text/javascript" src="{{ asset('template/web/plugins/jquery-ui-1.12.1.custom/jquery-ui.js') }}"></script>
     <script type="text/javascript" src="{{ asset('template/web/plugins/OwlCarousel2-2.2.1/dist/owl.carousel.js') }}"></script>
@@ -77,7 +72,6 @@
     </script>
     <?php }?> --}}
     <style media="screen">
-
     .owl-prev {
     width: 15px;
     height: 100px;
@@ -87,7 +81,6 @@
     display: block!IMPORTANT;
     border:0px solid black;
     }
-
     .owl-next {
         width: 15px;
         height: 100px;
@@ -119,7 +112,6 @@
         /*width: 100%;
         height: 100vh;*/
     }
-
       .drop-down{
         position: relative;
         display: inline-block;
@@ -149,7 +141,6 @@
           width: 29%;
       }
       }
-
       @media (min-width: 768px){
         .navbar-nav>li {
             padding-top: 9px;
@@ -157,9 +148,6 @@
             margin-top: 7px;
         }
       }
-
-
-
       .navbar-form {
           margin-top: 13px;
           background: #eee;
@@ -176,14 +164,11 @@
             margin-right: 0px;
         }
       }
-
       @media (min-width:768px) {
         #bs-example-navbar-collapse-search{
           display: none !important;
         }
       }
-
-
       #bs-example-navbar-collapse-search p{
         border-bottom: 1px solid #fff;
         padding-bottom: 5px;
@@ -192,30 +177,7 @@
       #bs-example-navbar-collapse-search .dropdown-menu{
         position: relative;
       }
-      .search-toogle{
-        font-size: 20px;
-        color: #fff;
-        padding-top: 4px;
-        padding-bottom: 0px;
-      }
-      .global-notification {
-    background: #FFEB3B;
-    color: #fffff;
-    text-align: center;
-}
-.navbar-form .btn-category .btn {
-    padding: 10px 12px;
-    background: #fff;
-    width: 59%;
-}
-.navbar-form .form-control {
-    height: 43px;
-    padding-left: 25%;
-}
-.input-group-btn:first-child>.btn, .input-group-btn:first-child>.btn-group {
-    margin-right: 70px;
-}
-.navbar-toggle.navbar-left {
+      .navbar-toggle.navbar-left {
   float: left;
   margin-left: 10px;
 }
@@ -249,135 +211,30 @@
     text-align: center;
 
 }
-a,
-.side_menu {
-	-webkit-transition: all 300ms ease-in-out;
-	transition: all 300ms ease-in-out;
+      .global-notification {
+    background: #FFEB3B;
+    color: #fffff;
+    text-align: center;
 }
-
-/* MENU CONTAINER ----- */
-	.side_menu {
-		background: rgba(0,20,60,.9);
-		height: 100vh;
-		left: -250px;
-		position: fixed;
-		top: 0;
-		width: 250px;
-	}
-	.side_menu .container {
-		padding: 0 1em;
-	}
-
-/* HAMBURGER STYLES ----- */
-	.burger_box {
-		display: block;
-		float: right;
-		margin-right: -45px;
-	}
-	.burger_box a.menu-icon {
-		display: inline-block;
-		float: none;
-		height: 25px;
-		padding: 10px;
-		opacity: .5;
-		width: 25px;
-		z-index: 100;
-	}
-	.burger_box a.menu-icon:hover,
-	.burger_box a.menu-icon.opened {
-		opacity: 1;
-	}
-	.burger_box a.menu-icon.opened {
-		background: rgba(0,20,60,.9);
-	}
-	.burger_box .menu-icon_box {
-		display: inline-block;
-		height: 25px;
-		position: relative;
-		text-align: left;
-		width: 25px;
-	}
-	.burger_box .menu-icon_line {
-		background: #fff;
-		border-radius: 2px;
-		display: inline-block;
-		height: 3px;
-		position: absolute;
-		width: 100%;
-	}
-	.burger_box .menu-icon_line--1 {
-		top: 2px;
-	}
-	.burger_box .menu-icon_line--2 {
-		top: 10px;
-	}
-	.burger_box .menu-icon_line--3 {
-		top: 18px;
-	}
-	.burger_box .menu-icon_line--1 {
-		transition: top 200ms 250ms, transform 200ms;
-		-webkit-transition: top 200ms 250ms, -webkit-transform 200ms;
-	}
-	.burger_box .menu-icon_line--2 {
-		transition: opacity 0ms 300ms;
-		-webkit-transition: opacity 0ms 300ms;
-	}
-	.burger_box .menu-icon_line--3 {
-		transition: top 100ms 300ms, transform 200ms;
-		-webkit-transition: top 100ms 300ms, -webkit-transform 200ms;
-	}
-	.burger_box .menu-icon.opened .menu-icon_box {
-		transform: scale3d(0.9, 0.9, 0.9);
-		-webkit-transform: scale3d(0.9, 0.9, 0.9);
-	}
-	.burger_box .menu-icon.opened .menu-icon_line {
-		top: 10px;
-	}
-	.burger_box .menu-icon.opened .menu-icon_line--1 {
-		transform: rotate3d(0, 0, 1, 45deg);
-		-webkit-transform: rotate3d(0, 0, 1, 45deg);
-		transition: top 100ms, transform 200ms 250ms;
-		-webkit-transition: top 100ms, -webkit-transform 200ms 250ms;
-	}
-	.burger_box .menu-icon.opened .menu-icon_line--2 {
-		opacity: 0;
-		transition: opacity 200ms;
-		-webkit-transition: opacity 200ms;
-	}
-	.burger_box .menu-icon.opened .menu-icon_line--3 {
-		transform: rotate3d(0, 0, 1, -45deg);
-		-webkit-transform: rotate3d(0, 0, 1, -45deg);
-		transition: top 200ms, transform 200ms 250ms;
-		-webkit-transition: top 200ms, -webkit-transform 200ms 250ms;
-	}
-
-/* STAGGER LIST ----- */
-	.list_load {
-		display: none;
-		list-style: none;
-		padding: 0;
-	}
-	.list_item {
-		margin-left: -20px;
-		opacity: 0;
-		-webkit-transition: all 200ms ease-in-out;
-		transition: all 200ms ease-in-out;
-	}
-	.list_item a {
-		color: #fff;
-		display: block;
-		padding: 5px 10px;
-		text-decoration: none;
-	}
-	.list_item a:hover {
-		background: rgba(255,255,255,.2);
-	}
+.navbar-form .btn-category .btn {
+    padding: 10px 12px;
+    background: #fff;
+    width: 59%;
+}
+.navbar-form .form-control {
+    height: 43px;
+    padding-left: 25%;
+}
+.input-group-btn:first-child>.btn, .input-group-btn:first-child>.btn-group {
+    margin-right: 70px;
+}
     </style>
 
 
     <link rel="stylesheet" href="{{ asset('template/web/css/helper.css') }}">
+    <link rel="stylesheet" href="{{ asset('template/web/css/common.css') }}">
     <link rel="stylesheet" href="{{ asset('template/web/css/blocks.css') }}">
-    
+
     @stack('css')
 </head>
 
@@ -394,24 +251,20 @@ a,
     <!-- Navbar -->
 
     <nav class="navbar navbar-default navbar-fixed-top">
-    <?php if (empty(Auth::guard('members')->user()->id)) {?>
-    <!--<div class="global-notification">
+    <?php if (empty(Session::get('memberID'))) {?>
+    {{--  <div class="global-notification">
       <div class="container">
     <h4>
-    <a href="{{ url('member/package') }}"><font color="red">Diskon 10% Terakhir hanya sampai HARI INI. <font id="demo"></font>Klaim disini!</font></a>
+    <a href="{{ url('member/package') }}"><font color="red">Mau dapat Cashback Rp.50.000? Amankan Disini! Tersisa <font id="demo"></font> Hari lagi..</font></a>
     </h4>
     <span id='close' onclick='this.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode); return false;' style="    position: absolute;
     right: 20px;
     top: 10px;">x</span>
 
     </div>  
-    </div>-->
+    </div>  --}}
     <?php } ?>
-        
-
-        
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="container">
+      <div class="container">
         <div class="navbar-header navbar-fixed-side navbar-fixed-side-left">
           <button type="button" class="navbar-toggle collapsed navbar-left " data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
             <span class="sr-only">Toggle navigation</span>
@@ -545,7 +398,6 @@ a,
     </nav>
     <script type="text/javascript">
     // $("#close").ready(function(){
-
     //   $("#top-section").css("margin-top", "76px")
     // })
     $(document).ready(function() {
@@ -561,38 +413,57 @@ a,
         }else {
             $('.searchcategory').val(category);
         }
-
       }
     </script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-show-password/1.0.3/bootstrap-show-password.min.js"></script>
 
+    <script>
+      $(document).ready(function() {
+  $('.menu-icon').click(function(event){
+    $('#sidebar').toggleClass('sidebar-expand');
+    console.log('clicked');
+  });
+  $('#sidebar ul li').click(function(event) {
+    $('#sidebar ul li').removeClass('icon-active')
+    $(this).addClass('icon-active')
+  });
+  $('.header-menu .has-dropdown').on('click', function(event) {
+    var _this = $(this).children('.dropdown-container');
+    if (_this.css('display').toLowerCase() !== 'block') {
+      $('.header-menu .dropdown-container').hide()
+      _this.show()
+    } else {
+      _this.hide()
+    }
+  });
+  $(document).click(function(){
+    $('.dropdown-container').hide();
+    $('#sidebar').removeClass('sidebar-expand');
+  });
+  $('.header-menu .has-dropdown, #sidebar').click(function(e){
+    e.stopPropagation();
+  });
+});
+    </script>
     <!-- Search Form Auto complete -->
     <script type="text/javascript">
     $(function() {
       $(".keyword").autocomplete({
         source:'{{ url("search/autocomplete")}}',
         select:function(event,ui) {
-
-
           $(".keyword").val(ui.item.label);
           return false;
         },
         minLength: 1,
-
       }).bind('focus', function () {
         $('.ui-autocomplete').css('z-index','9999').css('overflow-y','scroll').css('max-height','300px');
-
         // $('.ui-autocomplete').css('background','#09121a').css('color','#fff');
         // $('.ui-menu .ui-menu-item-wrapper').css('padding','11px 1em 3px 1.4em !important');
         $(this).autocomplete("search");
         // var btncategory = $('.btn-category').width();
         // var left = '-'+btncategory+'px';
-
-
       });
-
     });
-    
     </script>
     <!--/. End Navbar -->
 
@@ -646,7 +517,7 @@ a,
                     <img class="footer-logo" src="{{asset('template/web/img/logo-only.png') }}" alt=""></img>
                     <span class="footer-logo-text">Cilsy</span>
                     <p>
-                        Satu-satunya kursus online jaringan dan server yang dipandu sampai bisa. Terdapat ratusan video tutorial eksklusif serta trainer profesional yang siap membantu proses belajar anda. 
+                        Satu-satunya kursus online jaringan dan server yang dipandu sampai bisa. Terdapat ratusan video tutorial eksklusif serta trainer profesional yang siap membantu proses belajar anda.
                     </p>
                     <p class="copyrigth-text">
                         Copyright Cilsy Fiolution 2016-2017
@@ -675,7 +546,6 @@ a,
                         <li><a href="{{ url('member/package') }}">Harga & Perbandingan Paket</a></li>
                         <li><a href="{{ url('/petunjuk') }}">Petunjuk Pembayaran</a></li>
                         <li><a href="{{ url('/faq') }}">FAQ</a></li>
-                        <li><a href="{{ url('https://blog.cilsy.id') }}">Blog</a></li>
                     </ul>
                 </div>
                 <div class="col-md-3">
@@ -697,13 +567,11 @@ a,
     s0.parentNode.insertBefore(s1,s0);
     })();
     </script>
-    {{--  <script>
+    <script>
 // Set the date we're counting down to
-    var countDownDate = new Date("Mar 25, 2018 23:59:59").getTime();
-
+    var countDownDate = new Date("Feb 10, 2018 23:59:59").getTime();
     // Update the count down every 1 second
     var x = setInterval(function() {
-
         // Get todays date and time
         var now = new Date().getTime();
         
@@ -725,55 +593,18 @@ a,
             document.getElementById("demo").innerHTML = "EXPIRED";
         }
     }, 1000);
-    </script>  --}}
+    </script>
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
       })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
       ga('create', 'UA-101007788-1', 'auto');
       ga('send', 'pageview');
-
     </script>
     <script type="text/javascript" src="{{asset('template/web/js/bootstrap.min.js')}}"></script>
-    <script type="text/javascript" src="{{asset('template/web/js/bootsnav.js')}}"></script>    
     <script type="text/javascript" src="{{asset('template/web/js/pace.js') }}"></script>
-    <script>
-      $(document).on('click','.js-menu_toggle.closed',function(e){
-	e.preventDefault(); $('.list_load, .list_item').stop();
-	$(this).removeClass('closed').addClass('opened');
 
-	$('.side_menu').css({ 'left':'0px' });
-
-	var count = $('.list_item').length;
-	$('.list_load').slideDown( (count*.6)*100 );
-	$('.list_item').each(function(i){
-		var thisLI = $(this);
-		timeOut = 100*i;
-		setTimeout(function(){
-			thisLI.css({
-				'opacity':'1',
-				'margin-left':'0'
-			});
-		},100*i);
-	});
-});
-
-$(document).on('click','.js-menu_toggle.opened',function(e){
-	e.preventDefault(); $('.list_load, .list_item').stop();
-	$(this).removeClass('opened').addClass('closed');
-
-	$('.side_menu').css({ 'left':'-250px' });
-
-	var count = $('.list_item').length;
-	$('.list_item').css({
-		'opacity':'0',
-		'margin-left':'-20px'
-	});
-	$('.list_load').slideUp(300);
-});
-    </script>
     <!-- Custom Js -->
     <script type="text/javascript" src="{{asset('template/web/js/custom.js') }}"></script>
     @stack('js')
