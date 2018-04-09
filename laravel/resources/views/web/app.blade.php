@@ -265,6 +265,7 @@
     </div>  --}}
     <?php } ?>
       <div class="container">
+        
         <div class="navbar-header navbar-fixed-side navbar-fixed-side-left">
           <button type="button" class="navbar-toggle collapsed navbar-left " data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
             <span class="sr-only">Toggle navigation</span>
@@ -279,7 +280,6 @@
           <a class="navbar-brand" href="{{ url('/') }}"><img class="logo" src="{{asset('template/web/img/logo.png')}}"></a>
           <a href="{{ url('lessons/browse/all') }}" class="browse-btn hidden-xs hidden-sm">Browse Tutorial</a>
         </div>
-
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -396,78 +396,7 @@
         </div>
       </div><!-- /.container-fluid -->
     </nav>
-    <script type="text/javascript">
-    // $("#close").ready(function(){
-    //   $("#top-section").css("margin-top", "76px")
-    // })
-    $(document).ready(function() {
-      var btncategory = $('.btn-category').width();
-      $('.dropdown-item').css('width',btncategory);
-    });
-    </script>
-    <script type="text/javascript">
-      function changeCategory(category) {
-        $('.cate_title').text(category);
-        if (category == 'Semua Kategori') {
-            $('.searchcategory').val('');
-        }else {
-            $('.searchcategory').val(category);
-        }
-      }
-    </script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-show-password/1.0.3/bootstrap-show-password.min.js"></script>
-
-    <script>
-      $(document).ready(function() {
-  $('.menu-icon').click(function(event){
-    $('#sidebar').toggleClass('sidebar-expand');
-    console.log('clicked');
-  });
-  $('#sidebar ul li').click(function(event) {
-    $('#sidebar ul li').removeClass('icon-active')
-    $(this).addClass('icon-active')
-  });
-  $('.header-menu .has-dropdown').on('click', function(event) {
-    var _this = $(this).children('.dropdown-container');
-    if (_this.css('display').toLowerCase() !== 'block') {
-      $('.header-menu .dropdown-container').hide()
-      _this.show()
-    } else {
-      _this.hide()
-    }
-  });
-  $(document).click(function(){
-    $('.dropdown-container').hide();
-    $('#sidebar').removeClass('sidebar-expand');
-  });
-  $('.header-menu .has-dropdown, #sidebar').click(function(e){
-    e.stopPropagation();
-  });
-});
-    </script>
-    <!-- Search Form Auto complete -->
-    <script type="text/javascript">
-    $(function() {
-      $(".keyword").autocomplete({
-        source:'{{ url("search/autocomplete")}}',
-        select:function(event,ui) {
-          $(".keyword").val(ui.item.label);
-          return false;
-        },
-        minLength: 1,
-      }).bind('focus', function () {
-        $('.ui-autocomplete').css('z-index','9999').css('overflow-y','scroll').css('max-height','300px');
-        // $('.ui-autocomplete').css('background','#09121a').css('color','#fff');
-        // $('.ui-menu .ui-menu-item-wrapper').css('padding','11px 1em 3px 1.4em !important');
-        $(this).autocomplete("search");
-        // var btncategory = $('.btn-category').width();
-        // var left = '-'+btncategory+'px';
-      });
-    });
-    </script>
     <!--/. End Navbar -->
-
-
 
     <div id="header" class="hidden">
         <div class="container">
@@ -556,6 +485,105 @@
             </div>
         </div>
     </div>
+    <script>
+$(document).ready(function () {
+  var trigger = $('.hamburger'),
+      overlay = $('.overlay'),
+     isClosed = false;
+
+    trigger.click(function () {
+      hamburger_cross();      
+    });
+
+    function hamburger_cross() {
+
+      if (isClosed == true) {          
+        overlay.hide();
+        trigger.removeClass('is-open');
+        trigger.addClass('is-closed');
+        isClosed = false;
+      } else {   
+        overlay.show();
+        trigger.removeClass('is-closed');
+        trigger.addClass('is-open');
+        isClosed = true;
+      }
+  }
+  
+  $('[data-toggle="offcanvas"]').click(function () {
+        $('#wrapper').toggleClass('toggled');
+  });  
+});
+</script>
+ <script type="text/javascript">
+    // $("#close").ready(function(){
+    //   $("#top-section").css("margin-top", "76px")
+    // })
+    $(document).ready(function() {
+      var btncategory = $('.btn-category').width();
+      $('.dropdown-item').css('width',btncategory);
+    });
+    </script>
+    <script type="text/javascript">
+      function changeCategory(category) {
+        $('.cate_title').text(category);
+        if (category == 'Semua Kategori') {
+            $('.searchcategory').val('');
+        }else {
+            $('.searchcategory').val(category);
+        }
+      }
+    </script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-show-password/1.0.3/bootstrap-show-password.min.js"></script>
+
+    <script>
+      $(document).ready(function() {
+  $('.menu-icon').click(function(event){
+    $('#sidebar').toggleClass('sidebar-expand');
+    console.log('clicked');
+  });
+  $('#sidebar ul li').click(function(event) {
+    $('#sidebar ul li').removeClass('icon-active')
+    $(this).addClass('icon-active')
+  });
+  $('.header-menu .has-dropdown').on('click', function(event) {
+    var _this = $(this).children('.dropdown-container');
+    if (_this.css('display').toLowerCase() !== 'block') {
+      $('.header-menu .dropdown-container').hide()
+      _this.show()
+    } else {
+      _this.hide()
+    }
+  });
+  $(document).click(function(){
+    $('.dropdown-container').hide();
+    $('#sidebar').removeClass('sidebar-expand');
+  });
+  $('.header-menu .has-dropdown, #sidebar').click(function(e){
+    e.stopPropagation();
+  });
+});
+    </script>
+    <!-- Search Form Auto complete -->
+    <script type="text/javascript">
+    $(function() {
+      $(".keyword").autocomplete({
+        source:'{{ url("search/autocomplete")}}',
+        select:function(event,ui) {
+          $(".keyword").val(ui.item.label);
+          return false;
+        },
+        minLength: 1,
+      }).bind('focus', function () {
+        $('.ui-autocomplete').css('z-index','9999').css('overflow-y','scroll').css('max-height','300px');
+        // $('.ui-autocomplete').css('background','#09121a').css('color','#fff');
+        // $('.ui-menu .ui-menu-item-wrapper').css('padding','11px 1em 3px 1.4em !important');
+        $(this).autocomplete("search");
+        // var btncategory = $('.btn-category').width();
+        // var left = '-'+btncategory+'px';
+      });
+    });
+    </script>
     <script type="text/javascript">
     var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
     (function(){
