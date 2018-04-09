@@ -26,29 +26,18 @@ class LessonsController extends Controller {
 	public function index($by, $keyword) {
 		$categories = Category::where('enable', '=', 1)->get();
 		if ($by == 'category') {
-<<<<<<< HEAD
 			$category = Category::where('enable', '=', 1)->where('title', 'like', '%' . $keyword . '%')->first();
 			$results = Lesson::leftJoin('categories', 'lessons.category_id', '=', 'categories.id')
 				->select('lessons.*', 'categories.title as category_title')
-=======
-			$category = categories::where('enable', '=', 1)->where('title', 'like', '%' . $keyword . '%')->first();
-			$results = lessons::leftJoin('categories', 'lessons.category_id', '=', 'categories.id')
-				->select('lessons.*', 'categories.title as category_title', 'categories.meta_desc')
->>>>>>> baru
 				->where('lessons.enable', '=', 1)
 				->where('lessons.status', '=', 1)
 				->where('lessons.category_id', '=', $category->id)
 				->paginate(10);
 				// dd($results);
 		} else {
-<<<<<<< HEAD
 			$results = Lesson::leftJoin('categories', 'lessons.category_id', '=', 'categories.id')
 				->select('lessons.*', 'categories.title as category_title')
 				->where('lessons.status', '=', 1)
-=======
-			$results = lessons::leftJoin('categories', 'lessons.category_id', '=', 'categories.id')
-				->select('lessons.*', 'categories.title as category_title', 'categories.meta_desc')
->>>>>>> baru
 				->where('lessons.enable', '=', 1)
 				->paginate(10);
 		}
@@ -72,7 +61,7 @@ class LessonsController extends Controller {
 		$lessons = Lesson::where('enable', '=', 1)->where('slug', '=', $slug)->first();
 		$main_videos = Video::where('enable', '=', 1)->where('lessons_id', '=', $lessons->id)->orderBy('id', 'asc')->get();
 		$files = File::where('enable', '=', 1)->where('lesson_id', '=', $lessons->id)->orderBy('id', 'asc')->get();
-		// dd($mem_id);
+		// dd($main_videos);
 	  	if (count($lessons) > 0) {
 				$main_videos = Video::where('enable', '=', 1)->where('lessons_id', '=', $lessons->id)->orderBy('id', 'asc')->get();
 				$files = File::where('enable', '=', 1)->where('lesson_id', '=', $lessons->id)->orderBy('id', 'asc')->get();
@@ -102,6 +91,7 @@ class LessonsController extends Controller {
 				'contributors_total_lessons' => $contributors_total_lessons,
 				'contributors_total_view' => $contributors_total_view,
 			]);
+			// echo "syehbo";
 		}else {
 			abort(404);
 		}
@@ -607,7 +597,11 @@ class LessonsController extends Controller {
 		$now = date('Y-m-d');
 		$lessons_id = Input::get('lessons_id');
 		$videos = Video::where('enable', '=', 1)->where('lessons_id', '=', $lessons_id)->orderBy('id', 'asc')->get();
-		$memberID = Auth::guard('members')->user()->id;
+		if(Auth::guard('members')->user()){
+            $memberID      = Auth::guard('members')->user()->id;
+          }else{
+            $memberID      = 0;
+        }
 		$members = Member::where('id', '=', $memberID)->first();
 		$services = Service::where('status', '=', 1)->where('members_id', '=', $memberID)->where('expired', '>=', $now)->first();
 
