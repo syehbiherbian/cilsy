@@ -62,7 +62,7 @@
 
                             <div class="form-group form-float">
                                 <div class="form-line">
-                                   <input type="password" name="retype_password" class="form-control">
+                                   <input type="password" name="password_confirmation" class="form-control">
                                     <label class="form-label">Retype Password</label>
                                 </div>
                             </div>

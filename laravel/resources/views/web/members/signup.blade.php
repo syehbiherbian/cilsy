@@ -44,7 +44,8 @@
                     <span title="Click here to show/hide password" toggle="#password" class="fa fa-fw fa-eye field-icon toggle-password"></span>
                     @if ($errors->has('password_confirmation')) <p class="help-block">{{ $errors->first('password_confirmation') }}</p> @endif
                 </div>
-                <button type="submit" class="btn btn-primary">DAFTAR</button>
+                <!-- <button type="submit" class="btn btn-primary">DAFTAR</button> -->
+                <button type="submit" class="btn btn-primary" id="daftar">DAFTAR</button>
             </form>
         </div>
         <div id="tab-2-content" style="display: none;">
@@ -65,6 +66,16 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+  var button = document.getElementById('daftar');
+  button.addEventListener(
+    'click',
+    function() {
+      fbq('track', 'CompleteRegistration');
+    },
+    false
+  );
+</script>
 <script type="text/javascript">
     $(".toggle-password").click(function() {
 

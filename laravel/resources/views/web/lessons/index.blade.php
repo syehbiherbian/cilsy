@@ -1,29 +1,11 @@
 @extends('web.app')
-@section('title','Tutorial | ')
+@foreach($categories as $object)
+@section('title', 'Kategori | ')
+@section('description', $object->meta_desc)
+@endforeach
 @section('content')
 <style>
-.vjs-error .vjs-error-display:before {
-    color: #fff;
-    content: 'DAFTAR';
-    /* font-size: 18px; */
-    /* left: 0; */
-    line-height: 1;
-    margin-top: -.5em;
-    position: absolute;
-    /* text-shadow: 0.05em 0.05em 0.1em #000; */
-    text-align: center;
-    top: 50%;
-    vertical-align: middle;
-    width: 30%;
-    background: #3CA3E0;
-    font-size: 24px;
-    padding: 15px 15px 15px 15px;
-    border-radius: 5px;
-    /* text-align: center; */
-    left: 50%;
-    margin-right: -50%;
-    transform: translate(-50%, -50%);
-    }
+
 @media (max-width:768px) {
     .section-content{
       min-height: 300px;
@@ -121,8 +103,6 @@
   </div>
 </div>
 <script>
-fbq('track', 'Search', {
-search_string: 'leather sandals'
-});
+fbq('track', 'Search');
 </script>
 @endsection

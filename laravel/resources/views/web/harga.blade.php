@@ -1,5 +1,6 @@
 @extends('web.app')
 @section('title','Harga | ')
+@section('description', 'Ini Halaman Harga')
 @section('content')
  <style>
   .owl-theme .owl-dots .owl-dot span {

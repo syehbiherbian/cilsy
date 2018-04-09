@@ -26,17 +26,29 @@ class LessonsController extends Controller {
 	public function index($by, $keyword) {
 		$categories = Category::where('enable', '=', 1)->get();
 		if ($by == 'category') {
+<<<<<<< HEAD
 			$category = Category::where('enable', '=', 1)->where('title', 'like', '%' . $keyword . '%')->first();
 			$results = Lesson::leftJoin('categories', 'lessons.category_id', '=', 'categories.id')
 				->select('lessons.*', 'categories.title as category_title')
+=======
+			$category = categories::where('enable', '=', 1)->where('title', 'like', '%' . $keyword . '%')->first();
+			$results = lessons::leftJoin('categories', 'lessons.category_id', '=', 'categories.id')
+				->select('lessons.*', 'categories.title as category_title', 'categories.meta_desc')
+>>>>>>> baru
 				->where('lessons.enable', '=', 1)
 				->where('lessons.status', '=', 1)
 				->where('lessons.category_id', '=', $category->id)
 				->paginate(10);
+				// dd($results);
 		} else {
+<<<<<<< HEAD
 			$results = Lesson::leftJoin('categories', 'lessons.category_id', '=', 'categories.id')
 				->select('lessons.*', 'categories.title as category_title')
 				->where('lessons.status', '=', 1)
+=======
+			$results = lessons::leftJoin('categories', 'lessons.category_id', '=', 'categories.id')
+				->select('lessons.*', 'categories.title as category_title', 'categories.meta_desc')
+>>>>>>> baru
 				->where('lessons.enable', '=', 1)
 				->paginate(10);
 		}
@@ -618,7 +630,7 @@ class LessonsController extends Controller {
 				$item = array(
 					'name' => $video->title,
 					'description' => strip_tags($video->description),
-					'duration' => $video->durasi,
+					'duration' => 'duration',
 					'sources' => 'Invalid',
 					'poster' => 'https://www.cilsy.id/template/web/img/video-lock.png',
 					'thumbnail' => array([
@@ -636,7 +648,7 @@ class LessonsController extends Controller {
 				$item = array(
 					'name' => $video->title,
 					'description' => strip_tags($video->description),
-					'duration' => $video->durasi,
+					'duration' => 'duration',
 					'sources' => array([
 						'src' => $video->video,
 						'type' => $video->type_video,

@@ -72,7 +72,6 @@
     </script>
     <?php }?> --}}
     <style media="screen">
-
     .owl-prev {
     width: 15px;
     height: 100px;
@@ -82,7 +81,6 @@
     display: block!IMPORTANT;
     border:0px solid black;
     }
-
     .owl-next {
         width: 15px;
         height: 100px;
@@ -114,7 +112,6 @@
         /*width: 100%;
         height: 100vh;*/
     }
-
       .drop-down{
         position: relative;
         display: inline-block;
@@ -144,7 +141,6 @@
           width: 29%;
       }
       }
-
       @media (min-width: 768px){
         .navbar-nav>li {
             padding-top: 9px;
@@ -152,9 +148,6 @@
             margin-top: 7px;
         }
       }
-
-
-
       .navbar-form {
           margin-top: 13px;
           background: #eee;
@@ -163,19 +156,19 @@
           margin-right: 0px;
       }
       @media (max-width:768px) {
-        #bs-example-navbar-collapse-search{
-          min-height: 100vh;
-
+        .navbar-form {
+            margin-top: 13px;
+            background: #eee;
+            padding: 5px;
+            margin-left: 0px;
+            margin-right: 0px;
         }
       }
-
       @media (min-width:768px) {
         #bs-example-navbar-collapse-search{
           display: none !important;
         }
       }
-
-
       #bs-example-navbar-collapse-search p{
         border-bottom: 1px solid #fff;
         padding-bottom: 5px;
@@ -184,12 +177,40 @@
       #bs-example-navbar-collapse-search .dropdown-menu{
         position: relative;
       }
-      .search-toogle{
-        font-size: 20px;
-        color: #fff;
-        padding-top: 4px;
-        padding-bottom: 0px;
-      }
+      .navbar-toggle.navbar-left {
+  float: left;
+  margin-left: 10px;
+}
+.navbar-toggle{
+  float:left
+}
+.search-toogle {
+    font-size: 20px;
+    color: #fff;
+    padding-top: 4px;
+    float:right;
+    padding-bottom: 0px;
+}
+@media (max-width:768px) {
+  .navbar-default .logo{
+    height: 40px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    display: block;
+    margin: 0 auto;
+    margin-top: -10px;
+  }
+}
+.navbar-brand {
+    float: left;
+    height: 50px;
+    padding: 15px;
+    font-size: 18px;
+    line-height: 20px;
+    text-align: center;
+
+}
       .global-notification {
     background: #FFEB3B;
     color: #fffff;
@@ -231,7 +252,7 @@
 
     <nav class="navbar navbar-default navbar-fixed-top">
     <?php if (empty(Session::get('memberID'))) {?>
-    <div class="global-notification">
+    {{--  <div class="global-notification">
       <div class="container">
     <h4>
     <a href="{{ url('member/package') }}"><font color="red">Mau dapat Cashback Rp.50.000? Amankan Disini! Tersisa <font id="demo"></font> Hari lagi..</font></a>
@@ -241,12 +262,12 @@
     top: 10px;">x</span>
 
     </div>  
-    </div>
+    </div>  --}}
     <?php } ?>
       <div class="container">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        
+        <div class="navbar-header navbar-fixed-side navbar-fixed-side-left">
+          <button type="button" class="navbar-toggle collapsed navbar-left " data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
@@ -257,13 +278,12 @@
             <i class="ion ion-ios-search-strong"></i>
           </button>
           <a class="navbar-brand" href="{{ url('/') }}"><img class="logo" src="{{asset('template/web/img/logo.png')}}"></a>
-          <a href="{{ url('lessons/browse/all') }}" class="browse-btn">Browse Tutorial</a>
+          <a href="{{ url('lessons/browse/all') }}" class="browse-btn hidden-xs hidden-sm">Browse Tutorial</a>
         </div>
-
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          <!-- <ul class="nav navbar-nav">
+          <!-- <ul class="nav">
             <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
             <li><a href="#">Link</a></li>
             <li class="dropdown">
@@ -311,7 +331,8 @@
             </div>
           </form>
           @if (Auth::guard("members")->user())
-              <ul class="nav navbar-nav navbar-right">
+            <ul class="nav navbar-nav navbar-right">
+            <li><a href="{{ url('lessons/browse/all') }}" class="hidden-lg hidden-md">Browse Tutorial</a></li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Halo, {{ Auth::guard('members')->user()->username }} <span class="caret"></span></a>
               <ul class="dropdown-menu">
@@ -337,6 +358,7 @@
           </ul>
           @else
               <ul class="nav navbar-nav navbar-right">
+              <li><a href="{{ url('lessons/browse/all') }}" class="hidden-lg hidden-md">Browse Tutorial</a></li>
               <li><a href="{{ url('/carapesan') }}">Cara Pesan</a></li>
               <li><a href="{{ url('/member/package') }}">Harga</a></li>
               <li><a href="{{ url('member/signin') }}">Masuk</a></li>
@@ -371,105 +393,10 @@
                </span>
             </div>
           </form>
-          <p>Riwayat Pencarian : </p>
         </div>
       </div><!-- /.container-fluid -->
     </nav>
-    <script type="text/javascript">
-    // $("#close").ready(function(){
-
-    //   $("#top-section").css("margin-top", "76px")
-    // })
-    $(document).ready(function() {
-      var btncategory = $('.btn-category').width();
-      $('.dropdown-item').css('width',btncategory);
-    });
-    </script>
-    <script type="text/javascript">
-      function changeCategory(category) {
-        $('.cate_title').text(category);
-        if (category == 'Semua Kategori') {
-            $('.searchcategory').val('');
-        }else {
-            $('.searchcategory').val(category);
-        }
-
-      }
-    </script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-show-password/1.0.3/bootstrap-show-password.min.js"></script>
-
-    <script>
-      $(document).ready(function() {
-
-  $('.menu-icon').click(function(event){
-    $('#sidebar').toggleClass('sidebar-expand');
-    console.log('clicked');
-
-
-  });
-
-  $('#sidebar ul li').click(function(event) {
-    $('#sidebar ul li').removeClass('icon-active')
-    $(this).addClass('icon-active')
-
-  });
-
-
-  $('.header-menu .has-dropdown').on('click', function(event) {
-    var _this = $(this).children('.dropdown-container');
-
-
-    if (_this.css('display').toLowerCase() !== 'block') {
-      $('.header-menu .dropdown-container').hide()
-      _this.show()
-    } else {
-      _this.hide()
-    }
-
-  });
-
-  $(document).click(function(){
-    $('.dropdown-container').hide();
-    $('#sidebar').removeClass('sidebar-expand');
-  });
-
-  $('.header-menu .has-dropdown, #sidebar').click(function(e){
-    e.stopPropagation();
-  });
-
-});
-    </script>
-    <!-- Search Form Auto complete -->
-    <script type="text/javascript">
-    $(function() {
-      $(".keyword").autocomplete({
-        source:'{{ url("search/autocomplete")}}',
-        select:function(event,ui) {
-
-
-          $(".keyword").val(ui.item.label);
-          return false;
-        },
-        minLength: 0,
-
-      }).bind('focus', function () {
-        $('.ui-autocomplete').css('z-index','9999').css('overflow-y','scroll').css('max-height','300px');
-
-        // $('.ui-autocomplete').css('background','#09121a').css('color','#fff');
-        // $('.ui-menu .ui-menu-item-wrapper').css('padding','11px 1em 3px 1.4em !important');
-        $(this).autocomplete("search");
-        // var btncategory = $('.btn-category').width();
-        // var left = '-'+btncategory+'px';
-
-
-      });
-
-    });
-
-    </script>
     <!--/. End Navbar -->
-
-
 
     <div id="header" class="hidden">
         <div class="container">
@@ -558,6 +485,105 @@
             </div>
         </div>
     </div>
+    <script>
+$(document).ready(function () {
+  var trigger = $('.hamburger'),
+      overlay = $('.overlay'),
+     isClosed = false;
+
+    trigger.click(function () {
+      hamburger_cross();      
+    });
+
+    function hamburger_cross() {
+
+      if (isClosed == true) {          
+        overlay.hide();
+        trigger.removeClass('is-open');
+        trigger.addClass('is-closed');
+        isClosed = false;
+      } else {   
+        overlay.show();
+        trigger.removeClass('is-closed');
+        trigger.addClass('is-open');
+        isClosed = true;
+      }
+  }
+  
+  $('[data-toggle="offcanvas"]').click(function () {
+        $('#wrapper').toggleClass('toggled');
+  });  
+});
+</script>
+ <script type="text/javascript">
+    // $("#close").ready(function(){
+    //   $("#top-section").css("margin-top", "76px")
+    // })
+    $(document).ready(function() {
+      var btncategory = $('.btn-category').width();
+      $('.dropdown-item').css('width',btncategory);
+    });
+    </script>
+    <script type="text/javascript">
+      function changeCategory(category) {
+        $('.cate_title').text(category);
+        if (category == 'Semua Kategori') {
+            $('.searchcategory').val('');
+        }else {
+            $('.searchcategory').val(category);
+        }
+      }
+    </script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-show-password/1.0.3/bootstrap-show-password.min.js"></script>
+
+    <script>
+      $(document).ready(function() {
+  $('.menu-icon').click(function(event){
+    $('#sidebar').toggleClass('sidebar-expand');
+    console.log('clicked');
+  });
+  $('#sidebar ul li').click(function(event) {
+    $('#sidebar ul li').removeClass('icon-active')
+    $(this).addClass('icon-active')
+  });
+  $('.header-menu .has-dropdown').on('click', function(event) {
+    var _this = $(this).children('.dropdown-container');
+    if (_this.css('display').toLowerCase() !== 'block') {
+      $('.header-menu .dropdown-container').hide()
+      _this.show()
+    } else {
+      _this.hide()
+    }
+  });
+  $(document).click(function(){
+    $('.dropdown-container').hide();
+    $('#sidebar').removeClass('sidebar-expand');
+  });
+  $('.header-menu .has-dropdown, #sidebar').click(function(e){
+    e.stopPropagation();
+  });
+});
+    </script>
+    <!-- Search Form Auto complete -->
+    <script type="text/javascript">
+    $(function() {
+      $(".keyword").autocomplete({
+        source:'{{ url("search/autocomplete")}}',
+        select:function(event,ui) {
+          $(".keyword").val(ui.item.label);
+          return false;
+        },
+        minLength: 1,
+      }).bind('focus', function () {
+        $('.ui-autocomplete').css('z-index','9999').css('overflow-y','scroll').css('max-height','300px');
+        // $('.ui-autocomplete').css('background','#09121a').css('color','#fff');
+        // $('.ui-menu .ui-menu-item-wrapper').css('padding','11px 1em 3px 1.4em !important');
+        $(this).autocomplete("search");
+        // var btncategory = $('.btn-category').width();
+        // var left = '-'+btncategory+'px';
+      });
+    });
+    </script>
     <script type="text/javascript">
     var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
     (function(){
@@ -572,10 +598,8 @@
     <script>
 // Set the date we're counting down to
     var countDownDate = new Date("Feb 10, 2018 23:59:59").getTime();
-
     // Update the count down every 1 second
     var x = setInterval(function() {
-
         // Get todays date and time
         var now = new Date().getTime();
         
@@ -603,10 +627,8 @@
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
       })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
       ga('create', 'UA-101007788-1', 'auto');
       ga('send', 'pageview');
-
     </script>
     <script type="text/javascript" src="{{asset('template/web/js/bootstrap.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('template/web/js/pace.js') }}"></script>

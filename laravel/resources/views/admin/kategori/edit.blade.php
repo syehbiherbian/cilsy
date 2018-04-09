@@ -25,7 +25,7 @@
                             <input type="hidden" name="enable" value="1">
                             <div class="form-group form-float">
                                 <div class="form-line">
-                                    <input type="text" name="nama_kat" class="form-control" value="{{$categories->title}}">
+                                    <input type="text" name="title" class="form-control" value="{{$categories->title}}">
                                     <label class="form-label">Kategori</label>
                                 </div>
                             </div>
@@ -34,8 +34,8 @@
                               <label class="form-label">Image</label>
                               <div class="form-line">
                                 <a href="{{ asset('assets/filemanager/akurapopo.php?type=0&field_id=img') }}" class="btn btn-success iframe-btn" type="button" style="margin-bottom:10px;"><i class="material-icons">camera_enhance</i></a>
-                                <img src="" id="previmg" class="img-responsive" style="max-width:500px;max-height:500px;"/>
-                                <input type="hidden" name="icon" class="form-control" id="img" value="{{ $categories->image }}">
+                                <img src="{{ $categories->image }}" id="previmg" class="img-responsive" style="max-width:500px;max-height:500px;"/>
+                                <input type="hidden" name="image" class="form-control" id="img" value="{{ $categories->image }}">
                               </div>
                             </div>
                             <div class="form-group form-float">
@@ -44,7 +44,7 @@
                                     <div class="col-sm-12">
                                         <div class="form-group">
                                             <div class="form-line">
-                                                <textarea rows="4" name="desc" class="form-control no-resize" placeholder="Please type what you want..." value="{{ $categories->description }}"></textarea>
+                                                <textarea rows="4" name="description" class="form-control no-resize" placeholder="Please type what you want..." value="{{ $categories->description }}"></textarea>
                                             </div>
                                         </div>
                                     </div>

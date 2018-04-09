@@ -22,4 +22,8 @@ class members extends User
     {
         $this->notify(new MemberResetPasswordNotification($token));
     }
+    // public function setPasswordAttribute($password)
+    // {
+    // $this->attributes['password'] = bcrypt($password);
+    // }
 }

@@ -66,24 +66,22 @@ class MembersController extends Controller
 
           $username           = Input::get('username');
           $email              = Input::get('email');
-          $password           = md5(Input::get('password'));
+          $password           = Input::get('password');
 
 
           $services_status    = Input::get('services_status');
           $services_packages  = Input::get('services_packages');
 
-
           $now            = new DateTime();
-
           // store
           $members = new Member();
           $members->status       = 1;
           $members->username     = $username;
           $members->email        = $email;
-          $members->password     = $password;
+          $members->password     = Hash::make($password);
           $members->created_at   = $now;
           $members->save();
-
+            
 
           $packages = Package::where('id',$services_packages)->first();
 
@@ -272,6 +270,8 @@ class MembersController extends Controller
             $html .= '<td>'.$service->updated_at.'</td>';
 
             if ($service->status !== 2) {
+
+          dd($password);
               $html .= '<td><button type="button" class="btn bg-pink waves-effect" onclick="openEdit('.$service->id.')">Edit</button></td>';
             }else {
               $html .= '<td><button type="button" class="btn bg-pink waves-effect " disabled onclick="disabledEdit()">Edit</button></td>';
@@ -422,6 +422,7 @@ class MembersController extends Controller
                     'update'    => $packages->update ,
                     'chat'      => $packages->chat ,
                     'download'  => $packages->download ,
+
                     'updated_at'=> $now
                   ]);
 
@@ -462,8 +463,7 @@ class MembersController extends Controller
       $rules = array(
           'username'        => 'required|unique:members,username,'.$id,
           'email'           => 'required|unique:members,email,'.$id,
-          'password'        => 'min:8',
-          'retype_password' => 'min:8|same:password'
+          'password'         => 'min:8|confirmed',
       );
       $validator = Validator::make(Input::all(), $rules);
 
@@ -475,6 +475,7 @@ class MembersController extends Controller
           // Input
           $username       = Input::get('username');
           $email          = Input::get('email');
+          $password       = Input::get('password'); 
           $now            = new DateTime();
 
           // get old password
@@ -486,16 +487,25 @@ class MembersController extends Controller
             $password = md5(Input::get('password'));
           }
 
+          // if (!empty(Input::get('password')) && !empty(Input::get('password_confirmation'))) {
+          //     # new password
+          //     $password = Input::get('password'); 
+          // }else{
+          //     # old Password
+          //     $password = $members->password;
+          // }
+          // // dd($password);
+          
 
           // store
           $store = Member::find($id);
           $store->status       = 1;
           $store->username     = $username;
           $store->email        = $email;
-          $store->password     = $password;
+          $store->password     = Hash::make($password);
           $store->updated_at   = new DateTime();
           $store->save();
-
+          // dd($store);
           // redirect
           return redirect('system/members')->with('success','Data successfully updated');
       }

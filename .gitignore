@@ -2,6 +2,7 @@ node_modules
 assets/thumbs/videos
 assets/source/videos
 assets/source
-assets/filemanager
-.phpintel
-.phpintel/*
+.phpintel/
+.phpintel/index
+assets/filemanager/.htaccess
+

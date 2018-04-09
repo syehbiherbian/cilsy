@@ -168,7 +168,7 @@ html, body {
 }
 @media (max-width:768px) {
   .main-wrapper{
-    margin-top: 50px;
+    margin-top: 30px;
   }
 }
 @media (min-width:768px) {
@@ -184,6 +184,7 @@ html, body {
     width: 130px;
 }
 .logo {
+    margin-top: -10px;
     height: 60px;
 }
 .browse-btn {
