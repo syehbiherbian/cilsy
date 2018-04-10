@@ -48,6 +48,7 @@ Route::get('pages/{pages}', 'Web\PagesController@index');
 Route::get('checkout', 'Veritrans\VtwebController@vtweb');
 Route::post('notification/handling', 'Veritrans\VtwebController@notification');
 // PAYMENT
+Route::get('summary', 'Web\SummaryController@summary');
 Route::get('payment/{response}', 'Web\PaymentController@index');
 //page
 // Route::get('/harga', 'HargaController@index');
