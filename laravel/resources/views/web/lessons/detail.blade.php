@@ -915,7 +915,7 @@
   player.errors({
   errors: {
     4: {
-      message: 'Dengan support trainer, anda akan dipandu belajar sampai bisa. Kapanpun Anda Mau.'
+      message: 'Dengan support trainer, anda akan dipandu belajar sampai bisa. Kapanpun Anda Mau. ayo'
     }
   }
 });
