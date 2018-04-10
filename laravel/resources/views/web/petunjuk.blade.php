@@ -80,9 +80,9 @@
 			<li>
 				<b>Segera lakukan pembayaran dalam waktu 24 jam.  Jika Anda membayar menggunakan ATM Mandiri Anda bisa mengikuti video berikut :
 					<div class="videoWrapper">
-						<iframe width="560" height="349" src="https://www.youtube.com/embed/_h_7TAKp75Y" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+						<iframe width="560" height="349" src="https://www.youtube.com/embed/_h_7TAKp75Y" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>
                                 Jika Anda membayar menggunakan Internet Banking Mandiri : 
-                                <iframe width="560" height="349" src="https://www.youtube.com/embed/2mJIELuoUdM" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                               <div class="videoWrapper"> <iframe width="560" height="349" src="https://www.youtube.com/embed/2mJIELuoUdM" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 					</div>
                         Setelah pembayaran dilakukan, Akun Anda sudah otomatis aktif tanpa perlu melakukan Konfirmasi Pembayaran. </b>
 			</li>
@@ -175,13 +175,13 @@
 				<img class="img-responsive" src="{{ asset('template/web/img/step-4-lainnya.png') }}" alt="step 1" style="margin-top: 20px; margin-bottom: 20px;">
 			</li>
 			<li>
-				<div class="videoWrapper">
+				
 					<b>Segera lakukan pembayaran dalam waktu 24 jam.  Jika Anda membayar menggunakan ATM BCA Anda bisa mengikuti video berikut :
-				<iframe width="560" height="315" src="https://www.youtube.com/embed/OzLhzNojY_E" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+				<div class="videoWrapper"><iframe width="560" height="315" src="https://www.youtube.com/embed/OzLhzNojY_E" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>
 				Jika Anda membayar menggunakan Mobile Banking BCA : 
-				<iframe width="560" height="315" src="https://www.youtube.com/embed/yxL4hVHBYWk" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+<div class="videoWrapper"><iframe width="560" height="315" src="https://www.youtube.com/embed/yxL4hVHBYWk" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>
 			Setelah pembayaran dilakukan, Akun Anda sudah otomatis aktif tanpa perlu melakukan Konfirmasi Pembayaran. Sebagai catatan, Anda juga dapat melihat Invoice dan Tata Cara Pembayaran di Email Anda.</b>
-				</div>
+			
 				
 			</li>
 		</ol>
@@ -218,12 +218,12 @@
 				<img class="img-responsive" src="{{ asset('template/web/img/step-4-lainnya.png') }}" alt="step 1" style="margin-top: 20px; margin-bottom: 20px;">
 			</li>
 			<li>
-				<div class="videoWrapper"><b>Segera lakukan pembayaran dalam waktu 24 jam.  Jika Anda membayar menggunakan ATM BRI Anda bisa mengikuti video berikut :
-				<iframe width="560" height="315" src="https://www.youtube.com/embed/oHFSjxYWFPs" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+				<b>Segera lakukan pembayaran dalam waktu 24 jam.  Jika Anda membayar menggunakan ATM BRI Anda bisa mengikuti video berikut :
+				<div class="videoWrapper"><iframe width="560" height="315" src="https://www.youtube.com/embed/oHFSjxYWFPs" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>
 				Jika Anda membayar menggunakan Internet Banking BRI : 
-				<iframe width="560" height="315" src="https://www.youtube.com/embed/kvHhclBalJ8" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+<div class="videoWrapper"><iframe width="560" height="315" src="https://www.youtube.com/embed/kvHhclBalJ8" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>
 			Setelah pembayaran dilakukan, Akun Anda sudah otomatis aktif tanpa perlu melakukan Konfirmasi Pembayaran. Sebagai catatan, Anda juga dapat melihat Invoice dan Tata Cara Pembayaran di Email Anda.</b>
-				</div>
+			
 				
 			</li>
 		</ol>
@@ -260,11 +260,11 @@
 				<img class="img-responsive" src="{{ asset('template/web/img/step-4-lainnya.png') }}" alt="step 1" style="margin-top: 20px; margin-bottom: 20px;">
 			</li>
 			<li>
-				<div class="videoWrapper">
+				
 					<b>Segera lakukan pembayaran dalam waktu 24 jam.  Jika Anda membayar menggunakan ATM BNI Anda bisa mengikuti video berikut :
-				<iframe width="560" height="315" src="https://www.youtube.com/embed/rrBWhfJR0oM" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+			<div class="videoWrapper"><iframe width="560" height="315" src="https://www.youtube.com/embed/rrBWhfJR0oM" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>
 			Setelah pembayaran dilakukan, Akun Anda sudah otomatis aktif tanpa perlu melakukan Konfirmasi Pembayaran. Sebagai catatan, Anda juga dapat melihat Invoice dan Tata Cara Pembayaran di Email Anda.</b>
-				</div>
+				
 				
 			</li>
 		</ol>
