@@ -2,7 +2,9 @@ node_modules
 assets/thumbs/videos
 assets/source/videos
 assets/source
+.env
 .phpintel/
 .phpintel/index
 assets/filemanager/.htaccess
+error_log
 

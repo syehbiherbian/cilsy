@@ -32,7 +32,7 @@ class ActivationMail extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.auth.activation');
+        return $this->markdown('emails.auth.activation');
         
     }
 }

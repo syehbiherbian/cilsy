@@ -10,7 +10,7 @@ use Session;
 use Hash;
 use DateTime;
 use DB;
-use App\Quiz;
+use App\Models\Quiz;
 use App\Models\Question;
 use App\Models\Answer;
 use App\Models\Lesson;
@@ -62,7 +62,7 @@ class QuestionQuizController extends Controller
               $i=0;
               foreach ($question as $key => $questions) {
                 $no =$i + 1 + $count;
-                $store_question= new Questions();
+                $store_question= new Question();
                 $store_question->quiz_id =$quiz_id;
                 $store_question->question =$questions;
                 $store_question->question_no=$no;
@@ -148,7 +148,7 @@ class QuestionQuizController extends Controller
                 $i=0;
                 foreach ($question as $key => $questions) {
                   $no = $i + 1 ;
-                  $store_question= new Questions();
+                  $store_question= new Question();
                   $store_question->quiz_id =$quiz_id;
                   $store_question->question =$questions;
                   $store_question->question_no=$no;
