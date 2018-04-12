@@ -68,12 +68,12 @@
                                     <td align="left" style="padding:50px 50px 50px 50px">
                                     <p style="color:#000000; font-size:16px; text-align:left; font-family: Verdana, Geneva, sans-serif; line-height:22px ">&nbsp;</p>
 
-                                    <h1><span style="color:#000000;"><span style="font-family: verdana, geneva, sans-serif;"><strong>Selamat anda telah terdaftar di Cilsy!</strong></span></span></h1>
+                                    <h1><span style="color:#000000;"><span style="font-family: verdana, geneva, sans-serif;"><strong>Selamat anda telah terdaftar sebagai contributor di Cilsy!</strong></span></span></h1>
 
-                                    <p><span style="font-family:verdana,geneva,sans-serif;"><span style="font-size:16px;"><span style="color: rgb(0, 0, 0);">Mau bisa akses dan download semua tutorial yang ada di cilsy?</span></span></span></p>
+                                    <p><span style="font-family:verdana,geneva,sans-serif;"><span style="font-size:16px;"><span style="color: rgb(0, 0, 0);">langkah selanjutnya adalah mengaktifkan akun anda, dengan menekan tombol dibawah ini.</span></span></span></p>
 
                                     <p style="text-align: center;"><span style="font-family:verdana,geneva,sans-serif;"><a href="{{ url('/contributor/aktivasi/'.$contributor->activation_token) }}"
-                                               style="background-color:#ffffff;border-radius:4px;color:#2BA8E2;display:inline-block;font-family:Helvetica, Arial, sans-serif;font-size:16px;font-weight:bold;line-height:50px;text-align:center;text-decoration:none;width:200px;-webkit-text-size-adjust:none;">Berlangganan Sekarang</a></span></p>
+                                               style="background-color:#ffffff;border-radius:4px;color:#2BA8E2;display:inline-block;font-family:Helvetica, Arial, sans-serif;font-size:16px;font-weight:bold;line-height:50px;text-align:center;text-decoration:none;width:200px;-webkit-text-size-adjust:none;">Aktifkan Sekarang</a></span></p>
 
                                     <p>&nbsp;</p>
 
