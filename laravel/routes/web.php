@@ -48,8 +48,10 @@ Route::get('pages/{pages}', 'Web\PagesController@index');
 Route::get('checkout', 'Veritrans\VtwebController@vtweb');
 Route::post('notification/handling', 'Veritrans\VtwebController@notification');
 // PAYMENT
-Route::get('summary', 'Web\SummaryController@summary');
+Route::get('summary', 'Web\SummaryController@summary')->name('summary');;
 Route::get('payment/{response}', 'Web\PaymentController@index');
+Route::post('coupon', 'Web\CouponsController@store')->name('coupon.store');
+Route::delete('coupon', 'Web\CouponsController@destroy')->name('coupon.destroy');
 //page
 // Route::get('/harga', 'HargaController@index');
 Route::get('/kontak', function () {
@@ -153,6 +155,7 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::resource('system/files', 'FilesController');
 	Route::resource('system/videos', 'VideosController');
 	Route::resource('system/income','IncomeController');
+	Route::resource('system/coupon','AdminCouponController');
 });
 
 // Route::get('system/generate-income', 'GenerateIncomeController@generate');

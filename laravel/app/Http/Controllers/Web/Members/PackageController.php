@@ -52,6 +52,47 @@ class PackageController extends Controller
           }else{
             $member_id      = null;
           }
+          $member = members::where('id', '=', $member_id)->first();
+          // dd($packages);
+          Session::set('price', $packages->price);
+          if($member_id == null){
+                // dd(Session::get('invoiceCODE'));
+                return redirect('member/signup');
+                
+          } else{
+            session()->put('package', [
+            'paket' => $packages->title,
+            'harga' => $packages->price,
+            ]);
+            Session::set('email', $member->email);
+            # code...
+            return view('web.payment.summary', compact('packages', 'member')
+              
+            );
+          }
+          
+          
+          
+      }
+    }
+    public function summary(){
+      $rules = array(
+        'packages_id'          => 'required',
+      );
+      $validator = Validator::make(Input::all(), $rules);
+
+      // process the login
+      if ($validator->fails()) {
+          return redirect()->back()->withErrors($validator)->withInput();
+      } else {
+
+          $packages_id    = Input::get('packages_id');
+          $packages       = packages::where('id','=',$packages_id)->first();
+          if(Auth::guard('members')->user()){
+            $member_id      = Auth::guard('members')->user()->id;
+          }else{
+            $member_id      = null;
+          }
           $now            = new DateTime();
           // var_dump($packages_id);
 
@@ -68,6 +109,7 @@ class PackageController extends Controller
           // store
           $invoice = invoice::where('code','=',$code)->first();
           Session::set('invoiceCODE',$invoice->code);
+          Session::set('price', $invoice->price);
           if($member_id == null){
                 // dd(Session::get('invoiceCODE'));
                 return redirect('member/signup');
@@ -76,11 +118,8 @@ class PackageController extends Controller
             # code...
             return redirect('checkout');
           }
-          
-          
-          
-      }
     }
+  }
     private function generateCode()
     {
       $randomCode     = 'INV'.rand(000000,999999);
