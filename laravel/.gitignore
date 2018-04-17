@@ -1,7 +1,0 @@
-./node_modules
-/storage/*.key
-/vendor
-./.idea
-.env
-/assets/filemanager/.htaccess
-
