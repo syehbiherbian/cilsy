@@ -40,22 +40,109 @@ $mobile-width		: 640px;
     margin-bottom: 150px;
     }
     .kiri{
-    min-height: 300px;
+    min-height: 500px;
     border-right: 2px;
     background-color: #fff;
+    padding:60px;
     }
     .kanan {
-    min-height: 300px;
+    min-height: 500px;
     background-color: #fff;
+    padding:60px;
+    }
+    .btn-link{
+    border:none;
+    outline:none;
+    background:none;
+    cursor:pointer;
+    color:#0000EE;
+    padding:0;
+    text-decoration:none;
+    font-family:inherit;
+    font-size:inherit;
+    }
+    .btn-link:active{
+    color:#FF0000;
+    }
+    .ganti{
+        float: right;
+        margin-top: 30px;
+        margin-bottom: 10px;
+        text-decoration: none;
+        font-size :14px;
+        font-color: #3CA3E0;
+    }
+    .ganti:hover{
+        text-decoration:none;
+    }
+    @media(max-width:768px;){
+        .ganti{
+        text-decoration: none;
+    }
+    }
+    ul.paket {
+    list-style-image: url('../template/web/img/check.png');
+    }
+    .icon-ganti{
+        background-image: url('../template/web/img/ganti.png');
+        height: 15px;
+        width: 15px;        
     }
 </style>
 <div class="content-section">
     <div class="container">
   	<div class="shadow">
       <div class="row shadow">
-          <div class="col-sm-12 col-xs-12 col-md-6 kanan"><p>gini bih</p></div>
+          <div class="col-sm-12 col-xs-12 col-md-6 kanan">
+            <div class="col-md-12">
+                <div class="col-md-6">
+                    <h2>{{ session()->get('package')['paket'] }}</h2>
+                </div>
+                <div class="col-md-6">
+                <a href="{{ url('member/package') }}" class="ganti">Ganti Paket</a>
+                </div>                
+            </div>
+            <div class="col-md-12">
+                <div class="col-md-12">
+                <h3>Rp. {{ session()->get('package')['harga'] }} / {{ session()->get('package')['expired'] }} hari</h3>
+                </div>
+            </div>
+            <div class="col-md-12">
+                @if(session()->get('package')['paket'] == 'Pro')
+                <ul class="paket">
+                    <li>Bebas Streaming ke Semua Video Tutorial</li>
+                    <li>Update Hingga 50 Video lebih perbulan</li>
+                    <li>Konsultasi dengan trainer via chat dijawab max dalam 2x24 Jam</li>
+                    <li>Download Semua Materi Video</li>
+                    <li>Download Ebook & File Praktek</li>
+                    <li><strike><font color="red">e-Sertifikat Eksklusif</font></strike></li>
+                    <li><strike><font color="red">Support Remote Teamviewer</font></strike></li>
+                </ul>
+                @elseif(session()->get('package')['paket'] == 'Premium')
+                <ul class="paket">
+                    <li>Bebas Streaming ke Semua Video Tutorial</li>
+                    <li>Update Hingga 50 Video lebih perbulan</li>
+                    <li>Konsultasi dengan trainer via chat dijawab max dalam 2x24 Jam</li>
+                    <li>Download Semua Materi Video</li>
+                    <li>Download Ebook & File Praktek</li>
+                    <li><strike><font color="red">e-Sertifikat Eksklusif</font></strike></li>
+                    <li><strike><font color="red">Support Remote Teamviewer</font></strike></li>
+                </ul>
+                @elseif(session()->get('package')['paket'] == 'Platinum')
+                <ul class="paket">
+                    <li>Bebas Streaming ke Semua Video Tutorial</li>
+                    <li>Update Hingga 50 Video lebih perbulan</li>
+                    <li>Konsultasi dengan Trainer via chat dijawab max dalam 1x24 Jam</li>
+                    <li>Download Semua Materi Video</li>
+                    <li>Download Ebook & File Praktek</li>
+                    <li>e-Sertifikat Eksklusif</li>
+                    <li>Support Remote Teamviewer (Kuota remote 2x perbulan, durasi per-remote 1 jam)</li>
+                </ul>
+                @endif
+            </div>
+          </div>
           <div class="col-sm-12 col-xs-12 col-md-6 kiri">
-              <div class="col-md-12">
+            <div class="col-md-12">
              <h3>Order Summary</h3>
             </div>   
             <div class="col-md-6 bawah">
@@ -73,15 +160,19 @@ $mobile-width		: 640px;
             <hr>
             <div class="col-md-6 bawah">
             @if (session()->has('coupon'))
-            Discount ({{ session()->get('coupon')['name'] }}) :
-            {{--  <form action="{{ route('coupon.destroy') }}" method="POST" style="display:inline">
+            Discount ({{ session()->get('coupon')['name'] }})
+            <form action="{{ url('coupon/delete') }}" method="POST" style="display:inline">
                 {{ csrf_field() }}
                 {{ method_field('delete') }}
-                <button type="submit" style="font-size:14px">Remove</button>
-            </form>  --}}
+                <button type="submit" style="font-size:10px" class="btn-link">Remove</button>
+            </form>
             </div>
             <div class="col-md-6 bawah">
+                @if(session()->get('coupon')['type'] == 'fixed')
                 Rp. {{ session()->get('coupon')['value'] }}
+                @elseif(session()->get('coupon')['type'] == 'percent')
+                Diskon {{ session()->get('coupon')['percent_off'] }} %
+                @endif
             @endif
             </div>
             @if(session()->has('coupon'))
@@ -97,9 +188,9 @@ $mobile-width		: 640px;
             </div>
             <div class="col-md-6 bawah">
                 @if(session()->has('coupon'))
-                Rp. {{ session()->get('coupon')['discount'] }}
-                @elseif(!session()->has('coupon'))
-                Rp. {{ session()->get('price')}}
+                <b>Rp. {{ session()->get('coupon')['discount'] }}</b>
+                @else
+                <b>Rp. {{ session()->get('price')}}</b>
                 @endif
             </div>
             <div class="col-md-12 bawah">
@@ -134,6 +225,7 @@ $mobile-width		: 640px;
                 @endif
             @endif
             </div>
+            <hr>
             <div class="col-md-6 bawah">
                 Email
             </div>
@@ -141,7 +233,10 @@ $mobile-width		: 640px;
                 {{ session()->get('email') }}
             </div>
             <div class="col-md-12">
-                <button class="btn btn-primary" style="width:100%; background-color: #3CA3E0; border-radius:0px;">Selanjutnya</button>
+                <form action="{{ url('member/checkout')}}" method="post">
+                {{ csrf_field() }} 
+                <button class="btn btn-primary" style="width:100%; background-color: #3CA3E0; border-radius:0px;">Lanjutkan Pembayaran</button>
+                </form>
             </div>
           </div>
       </div>

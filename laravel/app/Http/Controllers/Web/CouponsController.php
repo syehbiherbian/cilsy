@@ -56,6 +56,8 @@ class CouponsController extends Controller
             'name' => $coupon->code,
             'value' => $coupon->value,
             'discount' => $coupon->discount(Session::get('price')),
+            'type' => $coupon->type,
+            'percent_off' => $coupon->percent_off,
         ]);
 
         return redirect()->route('summary')->with('success_message', 'Coupon has been applied!');
@@ -101,8 +103,9 @@ class CouponsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy()
     {
-        //
+        session()->forget('coupon');
+        return redirect()->route('summary')->with('success_message', 'Coupon has been removed.');
     }
 }

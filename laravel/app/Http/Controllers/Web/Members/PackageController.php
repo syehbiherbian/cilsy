@@ -63,8 +63,10 @@ class PackageController extends Controller
             session()->put('package', [
             'paket' => $packages->title,
             'harga' => $packages->price,
+            'expired' => $packages->expired,
             ]);
             Session::set('email', $member->email);
+            Session::set('package_id', $packages->id);
             # code...
             return view('web.payment.summary', compact('packages', 'member')
               
@@ -76,17 +78,8 @@ class PackageController extends Controller
       }
     }
     public function summary(){
-      $rules = array(
-        'packages_id'          => 'required',
-      );
-      $validator = Validator::make(Input::all(), $rules);
 
-      // process the login
-      if ($validator->fails()) {
-          return redirect()->back()->withErrors($validator)->withInput();
-      } else {
-
-          $packages_id    = Input::get('packages_id');
+          $packages_id    = Session::get('package_id');
           $packages       = packages::where('id','=',$packages_id)->first();
           if(Auth::guard('members')->user()){
             $member_id      = Auth::guard('members')->user()->id;
@@ -103,7 +96,11 @@ class PackageController extends Controller
           $invoice->code         = $code;
           $invoice->members_id   = $member_id;
           $invoice->packages_id  = $packages_id;
-          $invoice->price        = $packages->price;
+          if(session()->get('coupon')['discount']){
+          $invoice->price        = session()->get('coupon')['discount'];
+          }else{
+          $invoice->price        = $packages->price;            
+          }
           $invoice->created_at   = $now;
           $invoice->save();
           // store
@@ -118,7 +115,6 @@ class PackageController extends Controller
             # code...
             return redirect('checkout');
           }
-    }
   }
     private function generateCode()
     {
