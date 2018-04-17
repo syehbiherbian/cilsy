@@ -6,7 +6,7 @@
     <form id="{{ $row->id }}" action="{{ url('contributor/lessons/'.$row->id.'/delete')}}" method="get">
           <input type="hidden" name="_token" value="{{ csrf_token() }}">
           <input type="hidden" name="_method" value="DELETE">
-          <button type="button"  title="Hapus Totorial" data-toggle="tooltip" class="btn btn-danger pull-right" data-toggle="tooltip" onclick="checkdelete({{$row->id}})">Hapus Tutorial</button>
+          <button type="button"  title="Hapus Tutorial" data-toggle="tooltip" class="btn btn-danger pull-right" data-toggle="tooltip" onclick="checkdelete({{$row->id}})">Hapus Tutorial</button>
     </form>
 		<ul class="breadcrumb">
 				<li><a href="{{ url('contributor/dashboard') }}">Dashboard</a></li>
@@ -338,7 +338,7 @@
 <div class="row">
   <div class="col-md-12" style="text-align:center;">
     <div class="box-white">
-        <a href="{{ url('contributor/lessons/'.$row->id.'/submit')}}" class="btn btn-lg btn-success">Submit Totorial <br> untuk di Verifikasi</a>
+        <a href="{{ url('contributor/lessons/'.$row->id.'/submit')}}" class="btn btn-lg btn-success">Submit Tutorial <br> untuk di Verifikasi</a>
     </div>
 </div>
 </div>

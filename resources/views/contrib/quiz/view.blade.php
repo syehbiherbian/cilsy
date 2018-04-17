@@ -10,7 +10,7 @@
     <!-- <a href="{{ url('')}}" class="btn btn-danger pull-right">Hapus Quiz</a> -->
 		<ul class="breadcrumb">
 				<li><a href="{{ url('contributor/dashboard') }}">Dashboard</a></li>
-        <li><a href="{{ url('contributor/lessons') }}">Kelola Totorial</a></li>
+        <li><a href="{{ url('contributor/lessons') }}">Kelola Tutorial</a></li>
         <li><a href="{{ url('contributor/lessons/'.$row->lesson_id.'/view') }}">Kelola Quiz</a></li>
         <li>View Quiz</li>
 

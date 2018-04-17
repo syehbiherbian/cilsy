@@ -162,7 +162,7 @@ class LessonsController extends Controller
         // Session::set('lessons_image',$image);
         // Session::set('lessons_description',$description);
 
-        return redirect('contributor/lessons/'.$store->id.'/view')->with('success','Pembuatan totorial berhasil');
+        return redirect('contributor/lessons/'.$store->id.'/view')->with('success','Pembuatan tutorial berhasil');
 
     }
   }
@@ -183,7 +183,7 @@ class LessonsController extends Controller
     $row = Lesson::where('contributor_id',$contribID)
         ->where('id',$id)->where('status',0)->first();
         if($row ==null){
-            return redirect()->back()->with('no-delete','Totorial sedang / dalam verifikasi!');
+            return redirect()->back()->with('no-delete','Tutorial sedang / dalam verifikasi!');
         }
 
         // $checkvideo = Video::where('lessons_id',$id)->get();
@@ -223,7 +223,7 @@ class LessonsController extends Controller
       $store->status          = 2;
       $store->updated_at      = $now;
       $store->save();
-      return redirect('contributor/lessons/'.$id.'/view')->with('success','Totorial berhasil di submit!');
+      return redirect('contributor/lessons/'.$id.'/view')->with('success','Tutorial berhasil di submit!');
 
 
   }
@@ -282,7 +282,7 @@ class LessonsController extends Controller
     ->select('lessons.*','categories.title as category_title')
     ->first();
     if($row->status==2){
-        return redirect('contributor/lessons/'.$id.'/view')->with('no-delete','Totorial sedang / dalam verifikasi!');
+        return redirect('contributor/lessons/'.$id.'/view')->with('no-delete','Tutorial sedang / dalam verifikasi!');
     }
     # code...
     return view('contrib.lessons.edit',[
@@ -345,7 +345,7 @@ class LessonsController extends Controller
           // Session::set('lessons_image',$image);
           // Session::set('lessons_description',$description);
 
-          return redirect('contributor/lessons/'.$id.'/view')->with('success','Update totorial berhasil!');
+          return redirect('contributor/lessons/'.$id.'/view')->with('success','Update tutorial berhasil!');
 
       }
   }
@@ -369,9 +369,9 @@ class LessonsController extends Controller
          }
          Quiz::where('lesson_id',$id)->delete();
 
-        return redirect('contributor/lessons')->with('success','Delete totorial berhasil!');
+        return redirect('contributor/lessons')->with('success','Delete tutorial berhasil!');
      }else{
-        return redirect()->back()->with('no-delete','Delete totorial gagal!');
+        return redirect()->back()->with('no-delete','Delete tutorial gagal!');
      }
   }
 

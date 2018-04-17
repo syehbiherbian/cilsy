@@ -31,7 +31,7 @@ class QuizController extends Controller
         return redirect('not-found');
     }
     if($data->status==2){
-        return redirect('contributor/lessons/'.$lessons_id.'/view')->with('no-delete','Totorial sedang / dalam verifikasi!');
+        return redirect('contributor/lessons/'.$lessons_id.'/view')->with('no-delete','Tutorial sedang / dalam verifikasi!');
     }
 
     $video= Video::where('lessons_id',$lessons_id)->get();
@@ -176,7 +176,7 @@ class QuizController extends Controller
         {
           return redirect('contributor/lessons/'.$data->lesson_id.'/view')->with('success-delete','Quiz berhasil di hapus');
         }else{
-          return redirect()->back()->with('no-delete','Delete totorial gagal!');
+          return redirect()->back()->with('no-delete','Delete tutorial gagal!');
         }
 
   }

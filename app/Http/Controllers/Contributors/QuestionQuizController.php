@@ -30,7 +30,7 @@ class QuestionQuizController extends Controller
       }
       $lesson= Lesson::where('id',$quiz->lesson_id)->first();
       if($lesson->status==2){
-          return redirect('contributor/lessons/'.$quiz->lesson_id.'/view')->with('no-delete','Totorial sedang / dalam verifikasi!');
+          return redirect('contributor/lessons/'.$quiz->lesson_id.'/view')->with('no-delete','Tutorial sedang / dalam verifikasi!');
       }
 
       $question=Question::where('quiz_id',$quiz_id)->get();
@@ -107,7 +107,7 @@ class QuestionQuizController extends Controller
           }
           $lesson= Lesson::where('id',$quiz->lesson_id)->first();
           if($lesson->status==2){
-              return redirect('contributor/lessons/'.$quiz->lesson_id.'/view')->with('no-delete','Totorial sedang / dalam verifikasi!');
+              return redirect('contributor/lessons/'.$quiz->lesson_id.'/view')->with('no-delete','Tutorial sedang / dalam verifikasi!');
           }
           $question = Question::where('quiz_id',$quiz_id)->get();
           $answer = Answer::all();

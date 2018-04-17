@@ -159,7 +159,7 @@ class VideosController extends Controller
             return redirect('not-found');
         }
         if ($lesson->status == 2) {
-            return redirect('contributor/lessons/' . $lessonsid . '/view')->with('no-delete', 'Totorial sedang / dalam verifikasi!');
+            return redirect('contributor/lessons/' . $lessonsid . '/view')->with('no-delete', 'Tutorial sedang / dalam verifikasi!');
         }
         $video = Video::where('lessons_id', $lessonsid)->get();
         $count_video = count($video);

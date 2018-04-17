@@ -235,7 +235,7 @@ class LessonController extends Controller
                   DB::table('contributor_notif')->insert([
                       'contributor_id'=> $check_contri->id,
                       'category'=>'publish',
-                      'title'   => 'Totorial berhasil dipublish',
+                      'title'   => 'Tutorial berhasil dipublish',
                       'notif'        => $title.' berhasil dipublish/acc oleh admin',
                       'status'        => 0,
                       'created_at'    => new DateTime()
@@ -255,7 +255,7 @@ class LessonController extends Controller
               DB::table('contributor_notif')->insert([
                   'contributor_id'=> $store->contributor_id,
                   'category'=>'rivisi',
-                  'title'   => 'Totorial perlu rivisi',
+                  'title'   => 'Tutorial perlu rivisi',
                   'notif'        => $title.' perlu direvisi agar dapat dipublish oleh admin.',
                   'status'        => 0,
                   'created_at'    => new DateTime()
