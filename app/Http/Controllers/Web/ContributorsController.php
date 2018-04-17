@@ -15,7 +15,7 @@ use DB;
 
 
 
-use App\Model\Contributor;
+use App\Models\Contributor;
 use App\Models\Lesson;
 use App\Models\Video;
 use App\Models\Viewer;

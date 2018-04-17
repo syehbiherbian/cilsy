@@ -12,7 +12,7 @@ use Session;
 use Hash;
 use DateTime;
 use DB;
-use App\Model\Contributor;
+use App\Models\Contributor;
 use App\Reward;
 use App\RewardCategory;
 use App\Models\ContributorReward;

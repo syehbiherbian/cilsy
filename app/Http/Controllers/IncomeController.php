@@ -13,7 +13,7 @@ use DB;
 // use App\Models\Service;
 // use App\Models\Invoice;
 // use App\Models\Member;
-use App\Model\Contributor;
+use App\Models\Contributor;
 // use App\Models\Lesson;
 // use App\Models\Lesson_detail;
 use App\Models\IncomeDetail;

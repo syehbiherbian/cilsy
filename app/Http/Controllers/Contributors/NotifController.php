@@ -10,7 +10,7 @@ use Session;
 use Hash;
 use DateTime;
 use DB;
-use App\Model\Contributor;
+use App\Models\Contributor;
 use App\Models\ContributorNotif;
 use Auth;
 
