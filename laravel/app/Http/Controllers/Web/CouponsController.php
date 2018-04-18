@@ -40,7 +40,7 @@ class CouponsController extends Controller
     {
         $coupon = Coupon::where('code', $request->coupon_code)->first();
         if (!$coupon) {
-            return redirect()->route('summary')->withErrors('Invalid coupon code. Please try again.');
+            return redirect()->route('summary')->withErrors('Kode Promo yang anda masukkan tidak valid!');
         }
         if($coupon){
             $cut=$coupon->limit_coupon - 1;
@@ -60,7 +60,7 @@ class CouponsController extends Controller
             'percent_off' => $coupon->percent_off,
         ]);
 
-        return redirect()->route('summary')->with('success_message', 'Coupon has been applied!');
+        return redirect()->route('summary')->with('success_message', 'Selamat! Kode Promo berhasil ditambahkan');
     }
 
     /**
