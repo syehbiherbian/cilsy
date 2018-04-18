@@ -18,7 +18,7 @@ class Coupon extends Model
         if ($this->type == 'fixed') {
             return round($total - $this->value);
         } elseif ($this->type == 'percent') {
-            return round(($this->percent_off / 100) * $total);
+            return $total - (($this->percent_off / 100) * $total);
         } else {
             return 0;
         }
