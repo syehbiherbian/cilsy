@@ -72,10 +72,7 @@ $mobile-width		: 640px;
         font-size :14px;
         font-color: #3CA3E0;
         cursor: pointer;
-    }
-    .ganti:hover{
-        cursor: pointer;
-        text-decoration: none;
+        font-family:inherit;
     }
     @media(max-width:768px;){
     }
@@ -146,7 +143,7 @@ $mobile-width		: 640px;
              <h3>Order Summary</h3>
             </div>   
             <div class="col-sm-6 hidden-lg hidden-md">
-                <a href="{{ url('member/package') }}" style="float: right;">Ganti Paket</a>
+                <a href="{{ url('member/package') }}">Ganti Paket</a>
             </div>
             <div class="col-md-6 bawah">
                 Harga 
