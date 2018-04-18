@@ -143,7 +143,11 @@ $mobile-width		: 640px;
              <h3>Order Summary</h3>
             </div>   
             <div class="col-sm-6 hidden-lg hidden-md">
-                <a href="{{ url('member/package') }}">Ganti Paket</a>
+                <form action="{{ url('coupon/ganti') }}" method="POST" style="display:inline">
+                {{ csrf_field() }}
+                {{ method_field('delete') }}
+                <button type="submit" style="font-size:10px" class="btn-link">Ganti Paket</button>
+            </form>
             </div>
             <div class="col-md-6 bawah">
                 Harga 

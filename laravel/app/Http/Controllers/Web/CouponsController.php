@@ -114,4 +114,9 @@ class CouponsController extends Controller
         session()->forget('coupon');
         return redirect()->route('summary')->with('success_message', 'Coupon has been removed.');
     }
+    public function ganti()
+    {
+        session()->forget('coupon');
+        return redirect('member/package');
+    }
 }
