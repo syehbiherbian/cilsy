@@ -200,7 +200,7 @@ $mobile-width		: 640px;
                 <div class="input-group">
                 <input type="text" class="form-control" placeholder="Promo Code" name="coupon_code">
                 <span class="input-group-btn">
-                    <button class="btn btn-primary" type="submit">Gunakan</button>
+                    <button class="btn btn-primary" type="submit" style="background-color: #3CA3E0;">Gunakan</button>
                 </span>
                
                 </div><!-- /input-group -->
