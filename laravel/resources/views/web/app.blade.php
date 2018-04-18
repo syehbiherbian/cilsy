@@ -265,7 +265,6 @@
     </div>  --}}
     <?php } ?>
       <div class="container">
-        
         <div class="navbar-header navbar-fixed-side navbar-fixed-side-left">
           <button type="button" class="navbar-toggle collapsed navbar-left " data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
             <span class="sr-only">Toggle navigation</span>

@@ -332,6 +332,12 @@
                         </a>
                     </li>
                     <li>
+                        <a href="{{ url('system/coupon') }}">
+                            <i class="material-icons">file_upload</i>
+                            <span>Coupon</span>
+                        </a>
+                    </li>
+                    <li>
                         <a href="{{ url('system/members') }}">
                             <i class="material-icons">account_box</i>
                             <span>Members</span>
