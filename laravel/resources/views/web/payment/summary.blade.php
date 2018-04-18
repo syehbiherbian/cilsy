@@ -177,7 +177,6 @@ $mobile-width		: 640px;
             </div>
             @if(session()->has('coupon'))
             <div class="col-md-6 bawah">
-            
             </div>
             @endif
             <div class="col-md-6 bawah">
@@ -195,8 +194,8 @@ $mobile-width		: 640px;
             </div>
             <div class="col-md-12 bawah">
             @if (! session()->has('coupon'))
-            <a href="#" class="have-code">Have a Code?</a>
-            <form action="{{ url('coupon') }}" method="POST">
+            <a href="#" class="have-code" id="hide" style="display:block">Gunakan Kode Promo</a>
+            <form action="{{ url('coupon') }}" method="POST" id="form" style="display:none;">
                 {{ csrf_field() }}
                 <div class="input-group">
                 <input type="text" class="form-control" placeholder="Promo Code" name="coupon_code">
@@ -242,5 +241,13 @@ $mobile-width		: 640px;
       </div>
   	</div>
 </div>
+<script>
+$(document).ready(function(){
+    $("#hide").click(function(){
+        document.getElementById('form').style.display = 'block';
+        document.getElementById('hide').style.display = 'none';
+    });
+});
+</script>
 </div>
 @endsection
