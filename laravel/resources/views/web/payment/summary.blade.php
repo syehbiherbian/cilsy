@@ -71,14 +71,13 @@ $mobile-width		: 640px;
         text-decoration: none;
         font-size :14px;
         font-color: #3CA3E0;
+        cursor: pointer;
     }
     .ganti:hover{
-        text-decoration:none;
-    }
-    @media(max-width:768px;){
-        .ganti{
+        cursor: pointer;
         text-decoration: none;
     }
+    @media(max-width:768px;){
     }
     .paket {
         line-height: 1.5em;
@@ -94,7 +93,7 @@ $mobile-width		: 640px;
     <div class="container">
   	<div class="shadow">
       <div class="row shadow">
-          <div class="col-sm-12 col-xs-12 col-md-6 kanan">
+          <div class="col-sm-12 col-xs-12 col-md-6 kanan hidden-xs hidden-sm">
             <div class="col-md-12">
                 <div class="col-md-6">
                     <h2>{{ session()->get('package')['paket'] }}</h2>
@@ -143,9 +142,12 @@ $mobile-width		: 640px;
             </div>
           </div>
           <div class="col-sm-12 col-xs-12 col-md-6 kiri">
-            <div class="col-md-12">
+            <div class="col-md-12 col-sm-6">
              <h3>Order Summary</h3>
             </div>   
+            <div class="col-sm-6 hidden-lg hidden-md">
+                <a href="{{ url('member/package') }}" style="float: right;">Ganti Paket</a>
+            </div>
             <div class="col-md-6 bawah">
                 Harga 
             </div>
