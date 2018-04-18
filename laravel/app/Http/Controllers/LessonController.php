@@ -14,7 +14,7 @@ use Auth;
 use App\Models\Lesson;
 use App\Models\Category;
 use App\Models\Revision;
-use App\Model\Contributor;
+use App\Models\Contributor;
 
 class LessonController extends Controller
 {

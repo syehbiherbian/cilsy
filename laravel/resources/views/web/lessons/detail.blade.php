@@ -645,7 +645,7 @@
                 </div>
                 <div id="tab4" class="tab-pane fade">
 
-                  <?php if (empty(Session::get('memberID'))) { ?>
+                  <?php if (empty(Auth::guard('members')->user()->id)) { ?>
                     <div class="text-center mb-25">
                       Silahkan <a href="{{ url('member/signin') }}" class="btn btn-primary"> Masuk</a> untuk memberikan komentar
                     </div>
