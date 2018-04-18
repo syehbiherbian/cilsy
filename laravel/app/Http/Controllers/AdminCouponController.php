@@ -76,6 +76,9 @@ class AdminCouponController extends Controller
             if (empty($value)){
                 $value = 0;
             }
+            if (empty($percent)){
+                $percent = 0;
+            }
             $store = new Coupon;
             $store->enable      = $enable;
             $store->code        = $code;
@@ -112,7 +115,10 @@ class AdminCouponController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data    = Coupon::find($id);
+        return view('admin.coupon.edit',[
+            'data'    => $data
+        ]);
     }
 
     /**
@@ -124,7 +130,54 @@ class AdminCouponController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $rules = array(
+          'code'       => 'required',
+          'limit_coupon' => 'required',
+          'minimum'     => 'required',
+          'type'   => 'required',
+        );
+        $validator = Validator::make(Input::all(), $rules);
+
+        // process the login
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        } else {
+
+            $now          = new DateTime();
+            $enab         = Input::get('enable');
+            $code         = Input::get('code');
+            $type          = Input::get('type');
+            $limit    = Input::get('limit_coupon');
+            $minim        = Input::get('minimum');
+            $value      = Input::get('value');
+            $percent         = Input::get('percent_off');
+
+            if (!empty($enab)) {
+              $enable = 1;
+            }else {
+              $enable = 0;
+            }
+            if (empty($value)){
+                $value = 0;
+            }
+            if (empty($percent)){
+                $percent = 0;
+            }
+            $store = Coupon::find($id);
+            $store->enable      = $enable;
+            $store->code        = $code;
+            $store->type       = $type;
+            $store->limit_coupon      = $limit;
+            $store->minimum_checkout   = $minim;
+            $store->value       = $value;
+            $store->percent_off       = $percent;            
+            $store->created_at  = $now;
+            $store->updated_at  = $now;
+            $store->save();
+
+            return redirect('system/coupon')->with('success','Successfully create data');
+
+        }
     }
 
     /**
@@ -135,6 +188,9 @@ class AdminCouponController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $data = Coupon::find($id);
+        $data->delete();
+
+        return redirect()->back()->with('success','Data successfully deleted');
     }
 }

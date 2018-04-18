@@ -86,11 +86,11 @@
                                     <td>{{ $row->value }}</td>
                                     <td>{{ $row->percent_off }}</td>
                                     <td>
-                                        <form id="{{ $row->id }}" action="{{ url('system/pages/'.$row->id) }}" method="post">
+                                        <form id="{{ $row->id }}" action="{{ url('system/coupon/'.$row->id) }}" method="post">
                                             {{ csrf_field() }}
                                             <input type="hidden" name="_method" value="DELETE">
                                             <div class="btn-group" role="group" aria-label="Default button group">
-                                                <a href="{{ url('system/pages/'.$row->id) }}/edit" class="btn bg-pink waves-effect"><i class="material-icons">mode_edit</i></a>
+                                                <a href="{{ url('system/coupon/'.$row->id) }}/edit" class="btn bg-pink waves-effect"><i class="material-icons">mode_edit</i></a>
                                                 <button type="button" class="btn bg-pink waves-effect" onclick="if (confirm('Are you sure?')) { $('#{{$row->id}}').submit() }"><i class="material-icons">delete</i></button>
                                             </div>
                                         </form>
