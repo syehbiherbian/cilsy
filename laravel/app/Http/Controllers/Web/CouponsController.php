@@ -42,7 +42,7 @@ class CouponsController extends Controller
     {
         $now = new DateTime;
         $coupon = Coupon::where('code', $request->coupon_code)->first();
-        if (!$coupon || $coupon->limit_coupon <= 0) {
+        if (!$coupon || $coupon->limit_coupon <= 0 || $coupon->minimum_checkout <= Session::get('price')) {
             return redirect()->route('summary')->withErrors('Kode Promo yang anda masukkan tidak valid!');
         }
         if($coupon){
