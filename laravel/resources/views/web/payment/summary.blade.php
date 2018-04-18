@@ -80,8 +80,9 @@ $mobile-width		: 640px;
         text-decoration: none;
     }
     }
-    ul.paket {
-    list-style-image: url('../template/web/img/check.png');
+    .paket {
+        line-height: 1.5em;
+        list-style-image: url('../template/web/img/check.png');
     }
     .icon-ganti{
         background-image: url('../template/web/img/ganti.png');

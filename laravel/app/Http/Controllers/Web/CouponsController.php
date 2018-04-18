@@ -8,6 +8,8 @@ use App\Coupon;
 use App\invoice;
 use DB;
 use Session;
+use DateTime;
+
 class CouponsController extends Controller
 {
     /**
@@ -38,8 +40,9 @@ class CouponsController extends Controller
      */
     public function store(Request $request)
     {
+        $now = new DateTime;
         $coupon = Coupon::where('code', $request->coupon_code)->first();
-        if (!$coupon) {
+        if (!$coupon || $coupon->limit_coupon <= 0) {
             return redirect()->route('summary')->withErrors('Kode Promo yang anda masukkan tidak valid!');
         }
         if($coupon){
