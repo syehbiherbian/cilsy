@@ -45,6 +45,9 @@ class CouponsController extends Controller
         if (!$coupon || $coupon->limit_coupon <= 0) {
             return redirect()->route('summary')->withErrors('Kode Promo yang anda masukkan tidak valid!');
         }
+        if($coupon->minimum_checkout > Session::get('price')){
+            return redirect()->route('summary')->withErrors('Kode Promo tidak berlaku untuk paket yang anda pilih!');
+        }
         if($coupon){
             $cut=$coupon->limit_coupon - 1;
             DB::table('coupon')
