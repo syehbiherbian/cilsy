@@ -64,15 +64,17 @@ $mobile-width		: 640px;
     .btn-link:active{
     color:#FF0000;
     }
-    .ganti{
+    .btn-ganti{
         float: right;
         margin-top: 30px;
         margin-bottom: 10px;
         text-decoration: none;
-        font-size :14px;
         font-color: #3CA3E0;
         cursor: pointer;
         font-family:inherit;
+        border:none;
+        background:none;
+        padding: 0px;
     }
     @media(max-width:768px;){
     }
@@ -96,7 +98,10 @@ $mobile-width		: 640px;
                     <h2>{{ session()->get('package')['paket'] }}</h2>
                 </div>
                 <div class="col-md-6">
-                <a href="{{ url('member/package') }}" class="ganti">Ganti Paket</a>
+                <form action="{{ url('coupon/ganti') }}" method="POST" style="display:inline">
+                {{ csrf_field() }}
+                {{ method_field('delete') }}
+                <button type="submit" style="font-size:18px" class="btn-ganti">Ganti Paket</button>
                 </div>                
             </div>
             <div class="col-md-12">
@@ -146,7 +151,7 @@ $mobile-width		: 640px;
                 <form action="{{ url('coupon/ganti') }}" method="POST" style="display:inline">
                 {{ csrf_field() }}
                 {{ method_field('delete') }}
-                <button type="submit" style="font-size:10px" class="btn-link">Ganti Paket</button>
+                <button type="submit" style="font-size:18px" class="btn-link">Ganti Paket</button>
             </form>
             </div>
             <div class="col-md-6 bawah">
@@ -168,7 +173,7 @@ $mobile-width		: 640px;
             <form action="{{ url('coupon/delete') }}" method="POST" style="display:inline">
                 {{ csrf_field() }}
                 {{ method_field('delete') }}
-                <button type="submit" style="font-size:10px" class="btn-link">Remove</button>
+                <button type="submit" style="font-size:14px" class="btn-link">Remove</button>
             </form>
             </div>
             <div class="col-md-6 bawah">
