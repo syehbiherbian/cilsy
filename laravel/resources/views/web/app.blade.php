@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="{{ asset('template/web/plugins/ionicons-2.0.1/css/ionicons.min.css') }}">
     <link rel="stylesheet" href="{{ asset('template/web/plugins/OwlCarousel2-2.2.1/dist/assets/owl.carousel.css')}}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- Jquery UI   -->
 
@@ -167,6 +168,8 @@
       @media (min-width:768px) {
         #bs-example-navbar-collapse-search{
           display: none !important;
+          animation: slideInLeft 1s;
+          left: 0px;
         }
       }
       #bs-example-navbar-collapse-search p{
@@ -228,6 +231,99 @@
 .input-group-btn:first-child>.btn, .input-group-btn:first-child>.btn-group {
     margin-right: 70px;
 }
+#btn {
+  position: fixed;
+  z-index: 5;
+  top: 15px;
+  left: 15px;
+  cursor: pointer;
+  transition: left 500ms cubic-bezier(0.6, 0.05, 0.28, 0.91);
+}
+#btn div {
+  width: 35px;
+  height: 2px;
+  margin-bottom: 8px;
+  background-color: #fff;
+  transition: opacity 500ms, background-color 250ms, -webkit-transform 500ms cubic-bezier(0.6, 0.05, 0.28, 0.91);
+  transition: transform 500ms cubic-bezier(0.6, 0.05, 0.28, 0.91), opacity 500ms, background-color 250ms;
+  transition: transform 500ms cubic-bezier(0.6, 0.05, 0.28, 0.91), opacity 500ms, background-color 250ms, -webkit-transform 500ms cubic-bezier(0.6, 0.05, 0.28, 0.91);
+}
+
+#btn.active {
+  left: 400px;
+}
+#btn.active div {
+  background-color: #fff;
+}
+#btn.active #top {
+  -webkit-transform: translateY(10px) rotate(-135deg);
+          transform: translateY(10px) rotate(-135deg);
+}
+#btn.active #middle {
+  opacity: 0;
+  -webkit-transform: rotate(135deg);
+          transform: rotate(135deg);
+}
+#btn.active #bottom {
+  -webkit-transform: translateY(-10px) rotate(-45deg);
+          transform: translateY(-10px) rotate(-45deg);
+}
+
+#box {
+  position: fixed;
+  z-index: 4;
+  overflow: auto;
+  top: 0px;
+  left: -275px;
+  width: 385px;
+  opacity: 0;
+  padding: 20px 0px;
+  height: 100%;
+  background-color: #f6f6f6;
+  color: #343838;
+  transition: all 350ms cubic-bezier(0.6, 0.05, 0.28, 0.91);
+}
+
+#box.active {
+  left: 0px;
+  opacity: 1;
+}
+
+#items {
+  position: relative;
+  top: 25%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+}
+
+#items .item {
+  position: relative;
+  cursor: pointer;
+  font-size: 18px;
+  padding: 20px 20px;
+  transition: all 250ms;
+}
+#items .item a {
+  color: #343838;
+  text-decoration: none;
+}
+#items .item a {
+  color: #343838;
+  text-decoration: none;
+}
+#items .item:hover {
+  padding: 15px 45px;
+  background-color: rgba(52, 56, 56, 0.2);
+}
+
+#btn, #btn * {
+  will-change: transform;
+}
+
+#box {
+  will-change: transform, opacity;
+}
+
     </style>
 
 
@@ -266,12 +362,64 @@
     <?php } ?>
       <div class="container">
         <div class="navbar-header navbar-fixed-side navbar-fixed-side-left">
-          <button type="button" class="navbar-toggle collapsed navbar-left " data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+          {{--  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
-          </button>
+          </button>  --}}
+          <div id="btn" class="hidden-lg hidden-md">
+              <div id='top'></div>
+              <div id='middle'></div>
+              <div id='bottom'></div>
+          </div>
+          <div id="box">
+            @if (Auth::guard("members")->user())
+              <div id="items" style="top:33%">
+                  <div class="item" style="background-color:white">Halo, {{ Auth::guard('members')->user()->username }}</div>
+                  <div class="item browse" style="background-color:#2BA8E2;"><a href="{{ url('lessons/browse/all') }}" class="hidden-lg hidden-md" style="color: #fff;">Browse Tutorial</a></div>                  
+                  <div class="item">Status Paket : <?=Helper::package('title');?></div>
+                  <div class="item">Masa Aktif : <?=Helper::package('expired');?> hari</div>
+                  <div class="item"><a href="{{ url('member/package') }}">Perpanjang</a></div>
+                  <div class="item"><a href="{{ url('member/change') }}" >Ganti Password</a></div>
+                  <div class="item"><a href="{{ url('member/signout') }}">Logout</a></div>
+              </div>
+              @else
+              <div id="items">
+                  <div class="item browse" style="background-color:#2BA8E2;"><a href="{{ url('lessons/browse/all') }}" class="hidden-lg hidden-md" style="color: #fff;">Browse Tutorial</a></div>
+                  <div class="item"><a href="{{ url('/carapesan') }}">Cara Pesan</a></div>
+                  <div class="item"><a href="{{ url('/member/package') }}">Harga</a></div>
+                  <div class="item"><a href="{{ url('member/signin') }}">Masuk</a></div>
+                  <div class="item"><a href="{{ url('member/signup') }}">Daftar</a></div>
+              </div>
+              @endif
+          </div>
+          <script>
+            var sidebarBox = document.querySelector('#box'),
+                sidebarBtn = document.querySelector('#btn'),
+                pageWrapper = document.querySelector('#page-wrapper');
+
+            sidebarBtn.addEventListener('click', function (event) {
+                sidebarBtn.classList.toggle('active');
+                sidebarBox.classList.toggle('active');
+            });
+
+            pageWrapper.addEventListener('click', function (event) {
+
+                if (sidebarBox.classList.contains('active')) {
+                    sidebarBtn.classList.remove('active');
+                    sidebarBox.classList.remove('active');
+                }
+            });
+
+            window.addEventListener('keydown', function (event) {
+
+                if (sidebarBox.classList.contains('active') && event.keyCode === 27) {
+                    sidebarBtn.classList.remove('active');
+                    sidebarBox.classList.remove('active');
+                }
+            });
+          </script>
           <button type="button" class="navbar-toggle collapsed search-toogle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-search" aria-expanded="false">
             <!-- <span class="sr-only">Toggle navigation</span> -->
             <i class="ion ion-ios-search-strong"></i>
