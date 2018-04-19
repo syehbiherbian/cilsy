@@ -395,32 +395,7 @@
               </div>
               @endif
           </div>
-          <script>
-            var sidebarBox = document.querySelector('#box'),
-                sidebarBtn = document.querySelector('#btn'),
-                pageWrapper = document.querySelector('#page-wrapper');
-
-            sidebarBtn.addEventListener('click', function (event) {
-                sidebarBtn.classList.toggle('active');
-                sidebarBox.classList.toggle('active');
-            });
-
-            pageWrapper.addEventListener('click', function (event) {
-
-                if (sidebarBox.classList.contains('active')) {
-                    sidebarBtn.classList.remove('active');
-                    sidebarBox.classList.remove('active');
-                }
-            });
-
-            window.addEventListener('keydown', function (event) {
-
-                if (sidebarBox.classList.contains('active') && event.keyCode === 27) {
-                    sidebarBtn.classList.remove('active');
-                    sidebarBox.classList.remove('active');
-                }
-            });
-          </script>
+         
           <button type="button" class="navbar-toggle collapsed search-toogle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-search" aria-expanded="false">
             <!-- <span class="sr-only">Toggle navigation</span> -->
             <i class="ion ion-ios-search-strong"></i>
@@ -634,36 +609,32 @@
             </div>
         </div>
     </div>
-    <script>
-$(document).ready(function () {
-  var trigger = $('.hamburger'),
-      overlay = $('.overlay'),
-     isClosed = false;
+   <script>
+            var sidebarBox = document.querySelector('#box'),
+                sidebarBtn = document.querySelector('#btn'),
+                pageWrapper = document.querySelector('#page-wrapper');
 
-    trigger.click(function () {
-      hamburger_cross();      
-    });
+            sidebarBtn.addEventListener('click', function (event) {
+                sidebarBtn.classList.toggle('active');
+                sidebarBox.classList.toggle('active');
+            });
 
-    function hamburger_cross() {
+            pageWrapper.addEventListener('click', function (event) {
 
-      if (isClosed == true) {          
-        overlay.hide();
-        trigger.removeClass('is-open');
-        trigger.addClass('is-closed');
-        isClosed = false;
-      } else {   
-        overlay.show();
-        trigger.removeClass('is-closed');
-        trigger.addClass('is-open');
-        isClosed = true;
-      }
-  }
-  
-  $('[data-toggle="offcanvas"]').click(function () {
-        $('#wrapper').toggleClass('toggled');
-  });  
-});
-</script>
+                if (sidebarBox.classList.contains('active')) {
+                    sidebarBtn.classList.remove('active');
+                    sidebarBox.classList.remove('active');
+                }
+            });
+
+            window.addEventListener('keydown', function (event) {
+
+                if (sidebarBox.classList.contains('active') && event.keyCode === 27) {
+                    sidebarBtn.classList.remove('active');
+                    sidebarBox.classList.remove('active');
+                }
+            });
+          </script>
  <script type="text/javascript">
     // $("#close").ready(function(){
     //   $("#top-section").css("margin-top", "76px")

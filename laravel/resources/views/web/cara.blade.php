@@ -54,8 +54,8 @@
 @section('content')
 <section class="intro">
   <div class="container">
-    <h1>CARA PESAN</h1>
-    <h4>Ikuti 5 langkah mudah dibawah ini untuk pesan paket langganan di Cilsy</h4>
+    <h1 style="text-align:center">CARA PESAN</h1>
+    <h4 style="text-align:center">Ikuti 5 langkah mudah dibawah ini untuk pesan paket langganan di Cilsy</h4>
   </div>
 </section>
 
