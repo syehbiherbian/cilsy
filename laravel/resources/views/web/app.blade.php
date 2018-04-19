@@ -250,7 +250,7 @@
 }
 
 #btn.active {
-  left: 400px;
+  left: 360px;
 }
 #btn.active div {
   background-color: #fff;
@@ -275,7 +275,7 @@
   overflow: auto;
   top: 0px;
   left: -275px;
-  width: 385px;
+  width: 345px;
   opacity: 0;
   padding: 20px 0px;
   height: 100%;
@@ -291,7 +291,7 @@
 
 #items {
   position: relative;
-  top: 25%;
+  top: 21%;
   -webkit-transform: translateY(-50%);
           transform: translateY(-50%);
 }
