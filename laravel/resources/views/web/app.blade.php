@@ -377,7 +377,7 @@
           </div>
           <div id="box">
             @if (Auth::guard("members")->user())
-              <div id="items" style="top:33%">
+              <div id="items" style="top:37%">
                   <div class="item" style="background-color:white">Halo, {{ Auth::guard('members')->user()->username }}</div>
                   <div class="item browse" style="background-color:#2BA8E2;"><a href="{{ url('lessons/browse/all') }}" class="hidden-lg hidden-md" style="color: #fff;">Browse Tutorial</a></div>                  
                   <div class="item">Status Paket : <?=Helper::package('title');?></div>
