@@ -231,7 +231,8 @@
 .input-group-btn:first-child>.btn, .input-group-btn:first-child>.btn-group {
     margin-right: 70px;
 }
-#btn {
+@media (max-width:768px) {
+  #btn {
   position: fixed;
   z-index: 5;
   top: 15px;
@@ -250,7 +251,7 @@
 }
 
 #btn.active {
-  left: 360px;
+  left: 335px;
 }
 #btn.active div {
   background-color: #fff;
@@ -275,7 +276,7 @@
   overflow: auto;
   top: 0px;
   left: -275px;
-  width: 345px;
+  width: 320px;
   opacity: 0;
   padding: 20px 0px;
   height: 100%;
@@ -291,7 +292,7 @@
 
 #items {
   position: relative;
-  top: 21%;
+  top: 25%;
   -webkit-transform: translateY(-50%);
           transform: translateY(-50%);
 }
@@ -323,6 +324,8 @@
 #box {
   will-change: transform, opacity;
 }
+}
+
 
     </style>
 
