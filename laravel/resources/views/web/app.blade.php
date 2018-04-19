@@ -515,7 +515,7 @@
           @endif
         </div><!-- /.navbar-collapse -->
 
-        <div class="collapse navbar-collapse hidden-sm hidden-md hidden-lg" id="bs-example-navbar-collapse-search" style="overflow-y: visible;">>
+        <div class="collapse navbar-collapse hidden-sm hidden-md hidden-lg" id="bs-example-navbar-collapse-search" style="overflow-y: visible;">
           <form class="navbar-form navbar-left form-search " action="{{ url('search') }}" method="get">
             <input type="hidden" name="category" value="" class="searchcategory">
 
