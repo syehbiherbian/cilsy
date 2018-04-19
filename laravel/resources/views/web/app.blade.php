@@ -231,7 +231,6 @@
 .input-group-btn:first-child>.btn, .input-group-btn:first-child>.btn-group {
     margin-right: 70px;
 }
-@media (max-width:768px) {
   #btn {
   position: fixed;
   z-index: 5;
@@ -251,7 +250,7 @@
 }
 
 #btn.active {
-  left: 335px;
+  left: 315px;
 }
 #btn.active div {
   background-color: #fff;
@@ -276,7 +275,7 @@
   overflow: auto;
   top: 0px;
   left: -275px;
-  width: 320px;
+  width: 300px;
   opacity: 0;
   padding: 20px 0px;
   height: 100%;
@@ -324,7 +323,7 @@
 #box {
   will-change: transform, opacity;
 }
-}
+
 
 
     </style>
