@@ -65,6 +65,8 @@ Route::post('member/checkout', 'Web\Members\PackageController@summary');
 Route::get('payment/{response}', 'Web\PaymentController@index');
 Route::post('coupon', 'Web\CouponsController@store')->name('coupon.store');
 Route::delete('coupon/delete', 'Web\CouponsController@destroy')->name('coupon.destroy');
+Route::delete('coupon/ganti', 'Web\CouponsController@ganti')->name('coupon.destroy');
+
 //page
 // Route::get('/harga', 'HargaController@index');
 Route::get('/kontak', function () {

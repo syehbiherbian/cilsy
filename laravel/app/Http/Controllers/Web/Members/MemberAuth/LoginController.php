@@ -65,11 +65,8 @@ class LoginController extends Controller
      */
     protected function authenticated(Request $request, $user)
     {
-        if(Session::get('invoiceCODE')){
-            DB::table('invoice')->where('code', '=', Session::get('invoiceCODE'))->update([
-            'members_id' => Auth::guard('members')->user()->id,
-        ]);
-        return redirect('checkout');
+        if(session()->get('package')){
+            return view('web.payment.summary', compact('packages', 'member'));
         } else{
             return redirect($this->redirectTo);
         }
