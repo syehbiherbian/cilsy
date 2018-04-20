@@ -303,11 +303,7 @@
   padding: 20px 20px;
   transition: all 250ms;
 }
-#items .item a {
-  color: #343838;
-  text-decoration: none;
-}
-#items .item a {
+a #items .item {
   color: #343838;
   text-decoration: none;
 }
