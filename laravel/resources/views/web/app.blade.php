@@ -378,20 +378,20 @@
             @if (Auth::guard("members")->user())
               <div id="items" style="top:38%">
                   <div class="item" style="background-color:white">Halo, {{ Auth::guard('members')->user()->username }}</div>
-                  <div class="item browse" style="background-color:#2BA8E2;"><a href="{{ url('lessons/browse/all') }}" class="hidden-lg hidden-md" style="color: #fff;">Browse Tutorial</a></div>                  
+                  <a href="{{ url('lessons/browse/all') }}" class="hidden-lg hidden-md" style="color: #fff;"><div class="item browse" style="background-color:#2BA8E2;">Browse Tutorial</div></a>                  
                   <div class="item">Status Paket : <?=Helper::package('title');?></div>
                   <div class="item">Masa Aktif : <?=Helper::package('expired');?> hari</div>
-                  <div class="item"><a href="{{ url('member/package') }}">Perpanjang</a></div>
-                  <div class="item"><a href="{{ url('member/change') }}" >Ganti Password</a></div>
-                  <div class="item"><a href="{{ url('member/signout') }}">Logout</a></div>
+                  <a href="{{ url('member/package') }}"><div class="item">Perpanjang</div></a>
+                  <a href="{{ url('member/change') }}" ><div class="item">Ganti Password</div></a>
+                  <a href="{{ url('member/signout') }}"><div class="item">Logout</div></a>
               </div>
               @else
               <div id="items">
-                  <div class="item browse" style="background-color:#2BA8E2;"><a href="{{ url('lessons/browse/all') }}" class="hidden-lg hidden-md" style="color: #fff;">Browse Tutorial</a></div>
-                  <div class="item"><a href="{{ url('/carapesan') }}">Cara Pesan</a></div>
-                  <div class="item"><a href="{{ url('/member/package') }}">Harga</a></div>
-                  <div class="item"><a href="{{ url('member/signin') }}">Masuk</a></div>
-                  <div class="item"><a href="{{ url('member/signup') }}">Daftar</a></div>
+                  <a href="{{ url('lessons/browse/all') }}" class="hidden-lg hidden-md" style="color: #fff;"><div class="item browse" style="background-color:#2BA8E2;">Browse Tutorial</div></a>
+                  <a href="{{ url('/carapesan') }}"><div class="item">Cara Pesan</div></a>
+                  <a href="{{ url('/member/package') }}"><div class="item">Harga</div></a>
+                  <a href="{{ url('member/signin') }}"><div class="item">Masuk</div></a>
+                  <a href="{{ url('member/signup') }}"><div class="item">Daftar</div></a>
               </div>
               @endif
           </div>

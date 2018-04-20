@@ -56,6 +56,12 @@ class PackageController extends Controller
           // dd($packages);
           Session::set('price', $packages->price);
           if($member_id == null){
+            session()->put('package', [
+            'paket' => $packages->title,
+            'harga' => $packages->price,
+            'expired' => $packages->expired,
+            ]);
+            Session::set('package_id', $packages->id);
                 // dd(Session::get('invoiceCODE'));
                 return redirect('member/signup');
                 
