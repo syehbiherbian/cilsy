@@ -760,14 +760,14 @@
       inactivityTimeout: 0
     });
      
-    var resetDelay, inactivityTimeout;
+    {{--  var resetDelay, inactivityTimeout;
     player.on('fullscreenchange', function(e) {
     if (player.isFullscreen()) {
       if (player.userActive(false)){
           player.removeAttr('controls');
       }
     }
-    });
+    });  --}}
 
     resetDelay = function(){
         clearTimeout(inactivityTimeout);
