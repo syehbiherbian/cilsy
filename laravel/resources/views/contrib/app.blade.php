@@ -21,6 +21,14 @@
     <script type="text/javascript" src="{{asset('template/kontributor/js/jquery.min.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.2.1/owl.carousel.js"></script>
 
+    <style>
+        .num {
+        position: absolute;
+        right: 11px;
+        top: 6px;
+        color: #fff;
+        }
+    </style>
 </head>
 
 <body>
@@ -31,7 +39,7 @@
             <div class="header-menu">
                 <ul>
                     <li>
-                        <span class="hello-user">Halo Syehbi</span>
+                        <span class="hello-user">Halo, {{ Auth::guard('contributors')->user()->first_name }} </span>
                     </li>
                     <li class="has-dropdown">
                         <img src="{{asset('template/kontributor/img/icon/Notifikasi.png')}}" alt="">
@@ -61,7 +69,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#">
+                                    <a href="{{url('contributor/logout')}}">
                                         Logout
                                     </a>
                                 </li>

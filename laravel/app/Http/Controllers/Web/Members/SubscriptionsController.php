@@ -16,6 +16,8 @@ use Session;
 // use Hash;
 use DateTime;
 // use DB;
+use Auth;
+
 class SubscriptionsController extends Controller
 {
     /**
@@ -26,7 +28,7 @@ class SubscriptionsController extends Controller
     public function index()
     {
       // Authentication
-      $mem_id = Session::get('memberID');
+      $mem_id = Auth::guard('members')->user()->id;
       if (!$mem_id) {
         return redirect('/member/signin');
         exit;
@@ -42,7 +44,7 @@ class SubscriptionsController extends Controller
     public function doUnsubscribe($id)
     {
       // Authentication
-      $mem_id = Session::get('memberID');
+      $mem_id = Auth::guard('members')->user()->id;
       if (!$mem_id) {
         return redirect('/member/signin');
         exit;

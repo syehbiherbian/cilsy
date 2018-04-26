@@ -28,7 +28,7 @@
             <?php
               $i = 1;
               foreach ($contributors_lessons as $key => $lesson): ?>
-                  <?php if ($i <= 3) {?>
+                  <?php if ($i <= 12) {?>
                     <div class="col-md-3">
                       <a href="{{ url('lessons/'.$lesson->slug)}}">
                         <div class="card">
@@ -49,6 +49,11 @@
                 <?php } ?>
                 <?php $i++;?>
             <?php endforeach; ?>
+            <div class="row">
+          <div class="col-md-12 text-center">
+              {{ $contributors_lessons->links() }}
+          </div>
+      </div>
           </div>
       </div>
     </div>

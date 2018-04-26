@@ -46,13 +46,13 @@ class PackageController extends Controller
       } else {
 
           $packages_id    = Input::get('packages_id');
-          $packages       = Packages::where('id','=',$packages_id)->first();
+          $packages       = Package::where('id','=',$packages_id)->first();
           if(Auth::guard('members')->user()){
             $member_id      = Auth::guard('members')->user()->id;
           }else{
             $member_id      = null;
           }
-          $member = members::where('id', '=', $member_id)->first();
+          $member = Member::where('id', '=', $member_id)->first();
           // dd($packages);
           Session::set('price', $packages->price);
           if($member_id == null){
@@ -86,7 +86,7 @@ class PackageController extends Controller
     public function summary(){
 
           $packages_id    = Session::get('package_id');
-          $packages       = packages::where('id','=',$packages_id)->first();
+          $packages       = Package::where('id','=',$packages_id)->first();
           if(Auth::guard('members')->user()){
             $member_id      = Auth::guard('members')->user()->id;
           }else{

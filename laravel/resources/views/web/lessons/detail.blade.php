@@ -823,6 +823,60 @@
     var player = videojs(document.querySelector('video'), {
       inactivityTimeout: 0
     });
+     
+    {{--  var resetDelay, inactivityTimeout;
+    player.on('fullscreenchange', function(e) {
+    if (player.isFullscreen()) {
+      if (player.userActive(false)){
+          player.removeAttr('controls');
+      }
+    }
+    });  --}}
+
+    resetDelay = function(){
+        clearTimeout(inactivityTimeout);
+        inactivityTimeout = setTimeout(function(){
+            player.userActive(false);
+        }, 20);
+    };
+
+    player.on('mousemove', function(){
+        resetDelay();
+    })
+    var userActivity, activityCheck;
+
+    player.on('mousemove', function(){
+        userActivity = true;
+    });
+
+    activityCheck = setInterval(function() {
+
+      // Check to see if the mouse has been moved
+      if (userActivity) {
+
+        // Reset the activity tracker
+        userActivity = false;
+
+        // If the user state was inactive, set the state to active
+        if (player.userActive() === false) {
+          player.userActive(true);
+        }
+
+        // Clear any existing inactivity timeout to start the timer over
+        clearTimeout(inactivityTimeout);
+
+        // In X seconds, if no more activity has occurred 
+        // the user will be considered inactive
+        inactivityTimeout = setTimeout(function() {
+          // Protect against the case where the inactivity timeout can trigger
+          // before the next user activity is picked up  by the 
+          // activityCheck loop.
+          if (!userActivity) {
+            this.userActive(false);
+          }
+        }, 2000);
+      }
+    }, 250);
     try {
       // try on ios
       player.volume(1);

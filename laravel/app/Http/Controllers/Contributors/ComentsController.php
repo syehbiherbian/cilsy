@@ -108,7 +108,7 @@ class ComentsController extends Controller
               DB::table('contributor_notif')->insert([
                   'contributor_id'=> $uid,
                   'category'=>'point',
-                  'title'   => 'Anda mendapatkan pemambahan 3 point',
+                  'title'   => 'Anda mendapatkan penambahan 3 point',
                   'notif'        => 'Anda mendapatkan pemambahan sebanyak 3 point karena  mereplay komentar dari '.$lessons->title.' ',
                   'status'        => 0,
                   'created_at'    => new DateTime()
@@ -120,8 +120,8 @@ class ComentsController extends Controller
         DB::table('contributor_notif')->insert([
             'contributor_id'=> $uid,
             'category'=>'coments',
-            'title'   => 'Anda berhasil mereplay komentar',
-            'notif'        => 'Anda berhasil mereplay komentar pada '.$lessons->title,
+            'title'   => 'Anda berhasil mereply komentar',
+            'notif'        => 'Anda berhasil mereply komentar pada '.$lessons->title,
             'status'        => 0,
             'created_at'    => new DateTime()
         ]);

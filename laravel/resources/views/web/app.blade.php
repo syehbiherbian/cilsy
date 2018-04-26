@@ -450,31 +450,58 @@ a #items .item {
             </div>
           </form>
           @if (Auth::guard("members")->user())
-            <ul class="nav navbar-nav navbar-right">
-            <li><a href="{{ url('lessons/browse/all') }}" class="hidden-lg hidden-md">Browse Tutorial</a></li>
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Halo, {{ Auth::guard('members')->user()->username }} <span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li style="padding: 15px; background: #fff;">
-                  <table cellpadding="15">
-                    <tr>
-                      <td>Status Paket</td>
-                      <td>: <?=Helper::package('title');?></td>
-                    </tr>
-                    <tr>
-                      <td>Masa Aktif</td>
-                      <td>: <?=Helper::package('expired');?> hari</td>
-                    </tr>
-                    <tr>
-                      <td><a href="{{ url('member/package') }}" class="btn btn-danger btn-package">Perpanjang</a></td>
-                      <td><a href="{{ url('member/change') }}" class="btn btn-success">Ganti Password</a></td>
-                      <td><a href="{{ url('member/signout') }}" class="btn btn-primary btn-signout">Logout</a></td>
-                    </tr>
-                  </table>
-                </li>
-              </ul>
-            </li>
-          </ul>
+          <div class="header-menu">
+                <ul>
+                    <li>
+                      <a href="{{ url('member/dashboard')}}" class="hello-user" style=".hello-user:hover{ text-decoration:none;}">
+                        Tutorial Saya
+                      </a>
+                    </li>
+                    <li class="has-dropdown">
+                        <img src="{{asset('template/kontributor/img/icon/Notifikasi.png')}}" alt="">
+                        <div class="dropdown-container">
+                            <ul>
+                              
+                            </ul>
+                        </div>
+                    </li>
+                     <li>
+                        <span class="hello-user">Halo, {{ Auth::guard('members')->user()->username }}</span>
+                    </li>
+                    <li class="has-dropdown">
+                        <img src="{{asset('template/kontributor/img/icon/Akun.png')}}" alt="">
+                        <div class="dropdown-container">
+                            <ul>
+                                <li>
+                                    <a href="{{ url('member/profile')}}">
+                                        Profile
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        Pengaturan Akun
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ url('member/point')}}">
+                                        Point
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ url('member/subscriptions')}}">
+                                        Riwayat dan Status Langganan
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        Logout
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+          </div>
           @else
               <ul class="nav navbar-nav navbar-right">
               <li><a href="{{ url('lessons/browse/all') }}" class="hidden-lg hidden-md">Browse Tutorial</a></li>
