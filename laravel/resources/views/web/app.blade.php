@@ -13,6 +13,9 @@
     <link href="{{asset('template/web/css/video-js.css')}}" rel="stylesheet">
     <link href="{{asset('template/web/css/navbar.css')}}" rel="stylesheet">
     <link href="{{asset('template/web/css/pace.css')}}" rel="stylesheet">
+    <!-- rating -->
+    <link rel="stylesheet" href="{{ asset('template/web/css/star-rating.min.css') }}" />
+    <!-- rating -->
     <link rel="stylesheet" href="{{ asset('template/web/css/owl.carousel.min.css') }}">
     <link rel="stylesheet" href="{{ asset('template/web/css/owl.theme.default.min.css') }}">
     <link rel="stylesheet" href="{{ asset('template/web/css/owl.theme.green.min.css') }}">
@@ -749,6 +752,9 @@ a #items .item {
     <script type="text/javascript" src="{{asset('template/web/js/bootstrap.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('template/web/js/pace.js') }}"></script>
 
+    <!-- rating -->
+    <script src="{{ asset('template/web/js/star-rating.min.js') }}"></script>
+    <!-- rating -->
     <!-- Custom Js -->
     <script type="text/javascript" src="{{asset('template/web/js/custom.js') }}"></script>
     @stack('js')

@@ -7,13 +7,27 @@ use App\invoice;
 use App\lessons;
 use DateTime;
 use Session;
+use Auth;
+use App\rate;
+use DB;
 
 class HomeController extends Controller {
 	//
+
 	public function index() {
 		# code...
-		$now = new DateTime();
-		$mem_id = Session::get('memberID');
+		$mem_id= Auth::guard("members")->user();
+
+		if(($mem_id) != null){
+		$ratenow = rate::select('id_member')
+		->where('id_member', '=', Auth::guard("members")->user()->id)
+    	->whereRaw('YEAR(created_at) = YEAR(now()) AND MONTH(created_at) = MONTH(now())')
+    	->get();
+
+		}else{
+			$ratenow=[''];
+		}
+    	$now = new DateTime();
 		$categories = categories::where('enable', '=', 1)->get();
 		$newlessons = lessons::where('enable', '=', 1)->orderBy('id','DESC')->get();
 		$lessons = lessons::where('enable', '=', 1)->orderBy('id','ASC')->get();
@@ -24,6 +38,7 @@ class HomeController extends Controller {
 			'lessons' => $lessons,
 			'invoice' => $invoice,
 			'mem_id' => $mem_id,
+			'ratenow' => $ratenow
 		]);
 	}
 }

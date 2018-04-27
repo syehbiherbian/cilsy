@@ -159,6 +159,8 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::resource('system/videos', 'VideosController');
 	Route::resource('system/income','IncomeController');
 	Route::resource('system/coupon','AdminCouponController');
+	//rating
+	
 });
 
 // Route::get('system/generate-income', 'GenerateIncomeController@generate');
@@ -249,3 +251,5 @@ Route::get('contributor/coments','Contributors\ComentsController@index');
 Route::get('contributor/coments/detail/{coment_id}','Contributors\ComentsController@detail');
 Route::post('contributor/coments/postcomment','Contributors\ComentsController@postcomment');
 Route::post('contributor/coments/deletecomment/{coment_id}','Contributors\ComentsController@deletecomment');
+//rating
+Route::post('system/rate','RateController@store');
