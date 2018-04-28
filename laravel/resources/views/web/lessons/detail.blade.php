@@ -617,7 +617,7 @@
                 <li><a data-toggle="tab" href="#tab4">Komentar</a></li>
               </ul>
 
-              <div class="tab-content">
+              <div class="tab-content" style="margin-top:0px;">
                 <div id="tab1" class="tab-pane fade in active">
                   <?= $lessons->description ?></p>
                 </div>

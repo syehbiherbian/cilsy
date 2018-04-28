@@ -57,81 +57,67 @@
     left: 20;
     bottom: 0;
 }
-.progress {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: table;
-  table-layout: fixed;
-  width: 100%;
-  color: #849397;
-}
-.progress > li {
+
+.progressbar li{
+  float: left;
+  width: 20%;
   position: relative;
-  display: table-cell;
   text-align: center;
-  font-size: 0.8em;
 }
-.progress > li:before {
-  content: attr(data-step);
+.progressbar li:before{
+  content:"1";
+  width: 30px;
+  height: 30px;
+}
+.progressbar li:before{
+  content:"1";
+  width: 30px;
+  height: 30px;
+  border: 2px solid #bebebe;
   display: block;
-  margin: 0 auto;
-  background: #DFE3E4;
-  width: 3em;
-  height: 3em;
+  margin: 0 auto 10px auto;
+  border-radius: 50%;
+  line-height: 27px;
+  background: white;
+  color: #bebebe;
   text-align: center;
-  margin-bottom: 0.25em;
-  line-height: 3em;
-  border-radius: 100%;
-  position: relative;
-  z-index: 1000;
+  font-weight: bold;
 }
-.progress > li:after {
+.progressbar{
+  counter-reset: step;
+}
+.progressbar li:before{
+  content:counter(step);
+  counter-increment: step;
+  width: 30px;
+  height: 30px;
+  border: 2px solid #bebebe;
+  display: block;
+  margin: 0 auto 10px auto;
+  border-radius: 50%;
+  line-height: 27px;
+  background: white;
+  color: #bebebe;
+  text-align: center;
+  font-weight: bold;
+}
+.progressbar li:after{
   content: '';
   position: absolute;
-  display: block;
-  background: #DFE3E4;
-  width: 100%;
-  height: 0.5em;
-  top: 1.25em;
-  left: 50%;
-  margin-left: 1.5em\9;
+  width:100%;
+  height: 3px;
+  background: #979797;
+  top: 15px;
+  left: -50%;
   z-index: -1;
 }
-.progress > li:last-child:after {
-  display: none;
+.progressbar li.active + li:after{
+ background: #3aac5d;
 }
-.progress > li.is-complete {
-  color: #2ECC71;
-}
-.progress > li.is-complete:before, .progress > li.is-complete:after {
-  color: #FFF;
-  background: #2ECC71;
-}
-.progress > li.is-active {
-  color: #3498DB;
-}
-.progress > li.is-active:before {
-  color: #FFF;
-  background: #3498DB;
-}
-
-/**
- * Needed for IE8
- */
-.progress__last:after {
-  display: none !important;
-}
-
-/**
- * Size Extensions
- */
-.progress--medium {
-  font-size: 1.5em;
-}
-
-.progress--large {
-  font-size: 2em;
+.progressbar li.active + li:before{
+border-color: #3aac5d;
+background: #3aac5d;
+color: white
 }
 </style>
 <div class="container section-content">
@@ -145,15 +131,21 @@
               </div>
               <div class="col-sm-8">
                 <p><strong><h3>{{ $last->title }}</h3></strong></p>
-                <ol class="progress">
-                <li class="is-active" data-step="1">
-                </li>
-                <li data-step="2">
-                </li>
-                <li data-step="3" class="progress__last">
-                </li>
-                </ol>
-                <p><a href="{{ url('dashboard/'.$last->slug) }}" class="btn btn-primary btn-lg pull-right" style="color :white; background-color: #3CA3E0; border-color: #3CA3E0; margin-top: 100px;">Lanjutkan Tutorial</a></p>
+                
+                
+                <ul class="progressbar">
+                  <?php
+                  $i = 1;
+                  foreach ($get as $video => $videos): ?>
+                  <?php if ($i <= $hits) {?>
+                  <li class="active"></li>
+                  <?php }else {?>
+                    <li></li>
+                  <?php } ?>
+                  <?php endforeach; ?>
+                </ul>
+                
+                <p><a href="{{ url('lessons/'.$last->slug) }}" class="btn btn-primary btn-lg pull-right" style="color :white; background-color: #3CA3E0; border-color: #3CA3E0; margin-top: 100px;">Lanjutkan Tutorial</a></p>
                 </p>
               </div>
             </div>

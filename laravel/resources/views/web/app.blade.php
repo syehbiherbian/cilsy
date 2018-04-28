@@ -493,7 +493,7 @@ a #items .item {
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#">
+                                    <a href="{{ url('member/signout')}}">
                                         Logout
                                     </a>
                                 </li>

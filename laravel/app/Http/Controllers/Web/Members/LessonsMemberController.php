@@ -55,6 +55,7 @@ class LessonsMemberController extends Controller
                      ->get(['viewers.member_id', 'lessons.*']);           
 
         $get_videos = Video::where('videos.lessons_id', '=', $last_videos->lessons_id)->get();
+        
 
         $progress = count($watched_video)*100/count($get_videos);
         // dd($progress);
@@ -97,6 +98,10 @@ class LessonsMemberController extends Controller
 
         $get_videos = Video::where('videos.lessons_id', '=', $last_videos->lessons_id)->get();
 
+        $get_hist = Viewer::select('hits')
+                    ->where('member_id', '=', $mem_id)
+                    ->where('video_id', '=',$last_videos)->get();
+        dd($get_hist);
         $progress = count($watched_video)*100/count($get_videos);
 
       if (count($lessons) > 0) {
@@ -130,6 +135,8 @@ class LessonsMemberController extends Controller
                 'contributors_total_view' => $contributors_total_view,
                 'progress' => $progress,
                 'last' => $last_lessons,
+                'get' =>$get_videos,
+                'hits' => $get_hist,
             ]);
         }else {
             abort(404);
