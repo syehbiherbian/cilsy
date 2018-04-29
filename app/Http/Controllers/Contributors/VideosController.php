@@ -76,6 +76,12 @@ class VideosController extends Controller
                     $newforder = mkdir($DestinationPath);
                 }
                 // dd($DestinationPath);
+                //insert video
+                $lessonsfilename = '';
+                if (!empty($lessons_video[$key])) {
+                    $lessonsfilename = $lessons_video[$key]->getClientOriginalName();
+                    $lessons_video[$key]->move($DestinationPath, $lessonsfilename);
+                }
                 //insert image
                 /* if (!empty($image_video[$key])) {
                     $imagefilename = $image_video[$key]->getClientOriginalName();
