@@ -13,6 +13,7 @@ use App\Models\Member;
 use App\Models\Package;
 use App\Models\Invoice;
 use App\Models\Service;
+use Hash;
 
 class MembersController extends Controller
 {
