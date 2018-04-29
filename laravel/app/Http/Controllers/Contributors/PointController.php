@@ -12,9 +12,9 @@ use Session;
 use Hash;
 use DateTime;
 use DB;
-use App\Model\Contributor;
-use App\Reward;
-use App\RewardCategory;
+use App\Models\Contributor;
+use App\Models\Reward;
+use App\Models\RewardCategory;
 use App\Models\ContributorReward;
 use Auth;
 

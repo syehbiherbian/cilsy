@@ -178,6 +178,8 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::resource('system/videos', 'VideosController');
 	Route::resource('system/income','IncomeController');
 	Route::resource('system/coupon','AdminCouponController');
+	//rating
+	
 });
 
  Route::get('cron/system/generate-income', 'GenerateIncomeController@generate');
@@ -213,7 +215,7 @@ Route::get('contributor/aktivasi/{token}', 'Contributors\AuthController@aktivasi
 Route::get('contribauth/activate','Contributors\ContribAuth\ActivationController@active')->name('auth.activate');
 
 
-Route::get('contributor/logout', 'Contributors\AuthController@logout');
+Route::get('contributor/logout', 'Contributors\ContribAuth\LoginController@logout');
 
 // Home
 Route::get('contributor/home', 'Contributors\DashboardController@home');
@@ -295,3 +297,5 @@ Route::post('contributor/account/informasi/{id}/edit', 'Contributors\AccountCont
 Route::get('contributor/account/profile', 'Contributors\AccountController@halaman');
 Route::get('contributor/account/profile/{id}/edit', 'Contributors\AccountController@edit_halaman');
 Route::post('contributor/account/profile/{id}/edit', 'Contributors\AccountController@update_halaman');
+//rating
+Route::post('system/rate','RateController@store');
