@@ -47,9 +47,51 @@ class PackageController extends Controller
 
           $packages_id    = Input::get('packages_id');
           $packages       = Package::where('id','=',$packages_id)->first();
+          if(Auth::guard('members')->user()){
+            $member_id      = Auth::guard('members')->user()->id;
+          }else{
+            $member_id      = null;
+          }
+          $member = Member::where('id', '=', $member_id)->first();
+          // dd($packages);
+          Session::set('price', $packages->price);
+          if($member_id == null){
+            session()->put('package', [
+            'paket' => $packages->title,
+            'harga' => $packages->price,
+            'expired' => $packages->expired,
+            ]);
+            Session::set('package_id', $packages->id);
+                // dd(Session::get('invoiceCODE'));
+                return redirect('member/signup');
+                
+          } else{
+            session()->put('package', [
+            'paket' => $packages->title,
+            'harga' => $packages->price,
+            'expired' => $packages->expired,
+            ]);
+            Session::set('email', $member->email);
+            Session::set('package_id', $packages->id);
+            # code...
+            return view('web.payment.summary', compact('packages', 'member')
+              
+            );
+          }
+          
+          
+          
+      }
+    }
+    public function summary(){
 
-
-          $member_id      = Session::get('memberID');
+          $packages_id    = Session::get('package_id');
+          $packages       = Package::where('id','=',$packages_id)->first();
+          if(Auth::guard('members')->user()){
+            $member_id      = Auth::guard('members')->user()->id;
+          }else{
+            $member_id      = null;
+          }
           $now            = new DateTime();
           // var_dump($packages_id);
 
@@ -60,13 +102,18 @@ class PackageController extends Controller
           $invoice->code         = $code;
           $invoice->members_id   = $member_id;
           $invoice->packages_id  = $packages_id;
-          $invoice->price        = $packages->price;
+          if(session()->get('coupon')['discount']){
+          $invoice->price        = session()->get('coupon')['discount'];
+          }else{
+          $invoice->price        = $packages->price;            
+          }
           $invoice->created_at   = $now;
           $invoice->save();
           // store
           $invoice = Invoice::where('code','=',$code)->first();
 
-          Session::put('invoiceCODE',$invoice->code);
+          Session::set('invoiceCODE',$invoice->code);
+          Session::set('price', $invoice->price);
           if($member_id == null){
                 // dd(Session::get('invoiceCODE'));
                 return redirect('member/signup');
@@ -75,11 +122,7 @@ class PackageController extends Controller
             # code...
             return redirect('checkout');
           }
-          
-          
-          
-      }
-    }
+  }
     private function generateCode()
     {
       $randomCode     = 'INV'.rand(000000,999999);

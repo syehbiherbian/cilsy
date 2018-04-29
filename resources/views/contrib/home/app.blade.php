@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8; IE=edge"" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8; IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no" />
     <title>Cilsy Fiolution | Contributor</title>
     <link rel="shortcut icon" type="image/png" href="{{asset('template/home_contributor/img/logo-only.png')}}"/>
@@ -31,7 +31,7 @@
         <div class="container">
             <div class="logo-container">
                 <a href="#">
-                    <img class="logo" src="{{asset('template/home_contributor/img/logo.png')}}"></img>
+                    <img class="logo" src="{{asset('template/web/img/logo.png')}}"></img>
                 </a>
             </div>
             <div class="header-right pull-right">

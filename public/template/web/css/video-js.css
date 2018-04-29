@@ -1069,7 +1069,7 @@ video::-webkit-media-text-track-display {
 
 .vjs-error .vjs-error-display:before {
     color: #fff;
-    content: 'DAFTAR';
+    /* content: 'DAFTAR'; */
     /* font-size: 18px; */
     /* left: 0; */
     line-height: 1;

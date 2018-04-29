@@ -4,18 +4,19 @@ namespace App\Http\Controllers\Web\Members;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\lessons;
-use App\Viewers;
-use App\videos;
-use App\members;
-use App\services;
-use App\categories;
-use App\files;
-use App\lessons_detail;
-use App\lessons_detail_view;
+use App\Models\Lesson;
+use App\Models\Viewer;
+use App\Models\Video;
+use App\Models\Member;
+use App\Models\Service;
+use App\Models\Category;
+use App\Models\File;
+use App\Models\LessonDetail;
+use App\Models\LessonDetailView;
 use DateTime;
 use Session;
 use DB;
+use Auth;
 
 class LessonsMemberController extends Controller
 {
@@ -26,18 +27,18 @@ class LessonsMemberController extends Controller
      */
     public function index()
     {
-        $mem_id = Session::get('memberID');
+        $mem_id = Auth::guard('members')->user()->id;
           if (!$mem_id) {
             return redirect('/member/signin');
             exit;
           }
-        $last_videos = viewers::leftJoin('videos', 'videos.id', '=', 'viewers.video_id')
+        $last_videos = Viewer::leftJoin('videos', 'videos.id', '=', 'viewers.video_id')
                      ->select('videos.*', 'viewers.*')
-                     ->where('viewers.member_id', '=', $mem_id)->orderBy('viewers.created_at', 'desc')->first();
+                     ->where('viewers.member_id', '=', $mem_id)->orderBy('viewers.updated_at', 'desc')->first();
         
-        $last_lessons = lessons::where('lessons.id', '=', $last_videos->lessons_id)->first();
+        $last_lessons = Lesson::where('lessons.id', '=', $last_videos->lessons_id)->first();
 
-        $watched_video = lessons::join('videos', 'lessons.id', '=', 'videos.lessons_id')
+        $watched_video = Lesson::join('videos', 'lessons.id', '=', 'videos.lessons_id')
                        ->join('viewers', 'viewers.video_id', '=', 'videos.id')
                        ->select('viewers.member_id', 'lessons.title', 'videos.lessons_id', DB::raw(count('DISTINCT viewers.video_id')))
                        // ->count()
@@ -46,15 +47,15 @@ class LessonsMemberController extends Controller
                        ->orderBy('viewers.created_at', 'asc')
                        ->get();
 
-        $get_lessons = lessons::join('videos', 'lessons.id', '=', 'videos.lessons_id')
+        $get_lessons = Lesson::join('videos', 'lessons.id', '=', 'videos.lessons_id')
                      ->join('viewers', 'videos.id', '=', 'viewers.video_id')
                      ->where('viewers.member_id', '=', $mem_id)
                      ->orderBy('viewers.member_id', 'viewers.updated_at', 'asc')
                      ->distinct()
                      ->get(['viewers.member_id', 'lessons.*']);           
 
-        $get_videos = viewers::leftJoin('videos', 'videos.id', '=', 'viewers.video_id')
-                    ->where('videos.lessons_id', '=', $last_videos->lessons_id)->get();
+        $get_videos = Video::where('videos.lessons_id', '=', $last_videos->lessons_id)->get();
+        
 
         $progress = count($watched_video)*100/count($get_videos);
         // dd($progress);
@@ -69,17 +70,17 @@ class LessonsMemberController extends Controller
 
 
         $now = new DateTime();
-        $mem_id = Session::get('memberID');
+        $mem_id = Auth::guard('members')->user()->id;
 
-        $services = services::where('status', '=', 1)->where('download', '=', 1)->where('members_id', '=', $mem_id)->where('expired', '>', $now)->first();
-        $lessons = lessons::where('enable', '=', 1)->where('status', '=', 1)->where('slug', '=', $slug)->first();
-        $last_videos = viewers::leftJoin('videos', 'videos.id', '=', 'viewers.video_id')
+        $services = Service::where('status', '=', 1)->where('download', '=', 1)->where('members_id', '=', $mem_id)->where('expired', '>', $now)->first();
+        $lessons = Lesson::where('enable', '=', 1)->where('status', '=', 1)->where('slug', '=', $slug)->first();
+        $last_videos = Viewer::leftJoin('videos', 'videos.id', '=', 'viewers.video_id')
                      ->select('videos.*', 'viewers.*')
-                     ->where('viewers.member_id', '=', $mem_id)->orderBy('viewers.created_at', 'desc')->first();
+                     ->where('viewers.member_id', '=', $mem_id)->orderBy('viewers.updated_at', 'desc')->first();
         
-        $last_lessons = lessons::where('lessons.id', '=', $last_videos->lessons_id)->first();
+        $last_lessons = Lesson::where('lessons.id', '=', $last_videos->lessons_id)->first();
 
-        $watched_video = lessons::join('videos', 'lessons.id', '=', 'videos.lessons_id')
+        $watched_video = Lesson::join('videos', 'lessons.id', '=', 'videos.lessons_id')
                        ->join('viewers', 'viewers.video_id', '=', 'videos.id')
                        ->select('viewers.member_id', 'lessons.title', 'videos.lessons_id', DB::raw(count('DISTINCT viewers.video_id')))
                        // ->count()
@@ -88,32 +89,35 @@ class LessonsMemberController extends Controller
                        ->orderBy('viewers.created_at', 'asc')
                        ->get();
 
-        $get_lessons = lessons::join('videos', 'lessons.id', '=', 'videos.lessons_id')
+        $get_lessons = Lesson::join('videos', 'lessons.id', '=', 'videos.lessons_id')
                      ->join('viewers', 'videos.id', '=', 'viewers.video_id')
                      ->where('viewers.member_id', '=', $mem_id)
                      ->orderBy('viewers.member_id', 'viewers.updated_at', 'asc')
                      ->distinct()
                      ->get(['viewers.member_id', 'lessons.*']);           
 
-        $get_videos = viewers::leftJoin('videos', 'videos.id', '=', 'viewers.video_id')
-                    ->where('videos.lessons_id', '=', $last_videos->lessons_id)->get();
+        $get_videos = Video::where('videos.lessons_id', '=', $last_videos->lessons_id)->get();
 
+        $get_hist = Viewer::select('hits')
+                    ->where('member_id', '=', $mem_id)
+                    ->where('video_id', '=',$last_videos)->get();
+        dd($get_hist);
         $progress = count($watched_video)*100/count($get_videos);
 
       if (count($lessons) > 0) {
-                $main_videos = videos::where('enable', '=', 1)->where('lessons_id', '=', $lessons->id)->orderBy('id', 'asc')->get();
-                $files = files::where('enable', '=', 1)->where('lesson_id', '=', $lessons->id)->orderBy('id', 'asc')->get();
+                $main_videos = Video::where('enable', '=', 1)->where('lessons_id', '=', $lessons->id)->orderBy('id', 'asc')->get();
+                $files = File::where('enable', '=', 1)->where('lesson_id', '=', $lessons->id)->orderBy('id', 'asc')->get();
             // Contributor
             $contributors = DB::table('contributors')->where('id',$lessons->contributor_id)->first();
-            $contributors_total_lessons = lessons::where('enable', '=', 1)->where('contributor_id', '=', $lessons->contributor_id)->get();
+            $contributors_total_lessons = Lesson::where('enable', '=', 1)->where('contributor_id', '=', $lessons->contributor_id)->get();
             $contributors_total_view        = 0;
       //
       //
             foreach ($contributors_total_lessons as $key => $lesson) {
-                $videos = videos::where('lessons_id',$lesson->id)->get();
+                $videos = Video::where('lessons_id',$lesson->id)->get();
                 if ($videos) {
                     foreach ($videos as $key => $video) {
-                        $viewers = Viewers::where('video_id', '=', $video->id)->first();
+                        $viewers = Viewer::where('video_id', '=', $video->id)->first();
                         if ($viewers) {
                             $contributors_total_view = $contributors_total_view + 1;
                         }
@@ -131,6 +135,8 @@ class LessonsMemberController extends Controller
                 'contributors_total_view' => $contributors_total_view,
                 'progress' => $progress,
                 'last' => $last_lessons,
+                'get' =>$get_videos,
+                'hits' => $get_hist,
             ]);
         }else {
             abort(404);

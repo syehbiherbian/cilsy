@@ -169,7 +169,7 @@ class LessonsController extends Controller {
 		}
 
 		if ($total_viewing >= count($total_videos) ) {
-			$point = new Points;
+			$point = new Point;
 			$point->status 		= 0;
 			$point->member_id	= $mem_id;
 			$point->type 			= 'COMPLETE';
@@ -261,7 +261,7 @@ class LessonsController extends Controller {
 
 				// Create Point
 				if ($parent_id == 0) { // Berkomentar
-					$point = new Points;
+					$point = new Point;
 					$point->status 		= 0;
 					$point->member_id	= $uid;
 					$point->type 			= 'QUESTION';
@@ -269,7 +269,7 @@ class LessonsController extends Controller {
 					$point->created_at= $now;
 					$point->updated_at= $now;
 				}else { // Membalas Komentar
-					$point = new Points;
+					$point = new Point;
 					$point->status 		= 0;
 					$point->member_id	= $uid;
 					$point->type 			= 'REPLY';
@@ -322,7 +322,7 @@ class LessonsController extends Controller {
 				                    <div class="panel-body">
 				                      '.$comment->body.'
 				                    </div>';
-														if (!empty(Session::get('memberID'))) {
+														if (!empty(Auth::guard('members')->user()->id)) {
 				                    $html .= '<div class="panel-footer reply-btn-area text-right">
 									                        <button type="button" name="button" class="btn btn-primary" data-toggle="collapse" data-target="#reply'.$comment->id.'"><i class="glyphicon glyphicon-share-alt"></i> Balas</button>
 									                    </div>
@@ -422,11 +422,11 @@ class LessonsController extends Controller {
 	}
 
 	public function doComment_bak(){
-		if (empty(Session::get('memberID'))) {
+		if (empty(Auth::guard('members')->user()->id)) {
 			return 0;
 			exit();
 		}
-		$uid = Session::get('memberID');
+		$uid = Auth::guard('members')->user()->id;
 
 		$member			= DB::table('members')->where('id',$uid)->first();
 		$comment  	= Input::get('comment');

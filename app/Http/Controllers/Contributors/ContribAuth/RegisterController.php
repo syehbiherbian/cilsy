@@ -14,6 +14,8 @@ use Session;
 use Illuminate\Auth\Events\Registered;
 use Auth;
 use App\Events\ContributorRegistered;
+use App\Mail\Auth\ActivationMail;
+use Mail;
 
 
 class RegisterController extends Controller
@@ -120,7 +122,7 @@ class RegisterController extends Controller
     protected function registered(Request $request, $contributor)
     {
         //sending mail
-        event(new ContributorRegistered($contributor));
+        Mail::to($contributor->email)->send(new ActivationMail($contributor));
 
          $this->guard()->logout();
         return redirect('contributor/login')->withSuccess('Registered. Please check your email to activate your account.');

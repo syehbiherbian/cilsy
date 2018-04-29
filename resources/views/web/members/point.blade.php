@@ -60,7 +60,7 @@
                                     <img src="{{ asset('assets/source/avatar/1.png') }}" alt="" class="img-circle">
                                 </div>
                                 <div class="text-center">
-                                    <h3 class="name">Muhammad</h3>
+                                    <h3 class="name">{{ Auth::guard('members')->user()->username }}</h3>
                                     <p class="total-point"><?= $point_question + $point_reply + $point_complete; ?> pts</p>
                                 </div>
                             </div>

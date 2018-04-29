@@ -16,6 +16,8 @@ use Session;
 // use Hash;
 use DateTime;
 // use DB;
+use Auth;
+
 class PasswordController extends Controller
 {
     /**
@@ -26,7 +28,7 @@ class PasswordController extends Controller
     public function index()
     {
       // Authentication
-      $mem_id = Session::get('memberID');
+      $mem_id = Auth::guard('members')->user()->id;
       if (!$mem_id) {
         return redirect('/member/signin');
         exit;
@@ -39,7 +41,7 @@ class PasswordController extends Controller
     public function doSubmit()
     {
       // Authentication
-      $mem_id = Session::get('memberID');
+      $mem_id = Auth::guard('members')->user()->id;
       if (!$mem_id) {
         return redirect('/member/signin');
         exit;
