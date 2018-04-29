@@ -41,7 +41,6 @@ class IncomeController extends Controller
         if(count($row) ==0){
         $row = IncomeDetail::where('contributor_id',$contribID)->orderBy('created_at','desc')->first();
         }
-
       $rekening=ContributorAccount::where('contributor_id',$contribID)->get();
       return view('contrib.income.index', [
         'row'=>$row,
