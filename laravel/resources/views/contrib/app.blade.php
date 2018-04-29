@@ -34,7 +34,7 @@
 <body>
     <div id="header">
         <div class="container">
-            <img src="{{asset('template/kontributor/img/logo.png')}}" class="logo" alt="">
+            <img src="{{asset('template/web/img/logo.png')}}" class="logo" alt="">
 
             <div class="header-menu">
                 <ul>

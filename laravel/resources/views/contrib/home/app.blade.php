@@ -31,7 +31,7 @@
         <div class="container">
             <div class="logo-container">
                 <a href="#">
-                    <img class="logo" src="{{asset('template/home_contributor/img/logo.png')}}"></img>
+                    <img class="logo" src="{{asset('template/web/img/logo.png')}}"></img>
                 </a>
             </div>
             <div class="header-right pull-right">
