@@ -13,7 +13,6 @@ use App\Models\Member;
 use App\Models\Package;
 use App\Models\Invoice;
 use App\Models\Service;
-use Hash;
 
 class MembersController extends Controller
 {
@@ -79,7 +78,7 @@ class MembersController extends Controller
           $members->status       = 1;
           $members->username     = $username;
           $members->email        = $email;
-          $members->password     = Hash::make($password);
+          $members->password     = bcrypt($password);
           $members->created_at   = $now;
           $members->save();
             
@@ -503,7 +502,7 @@ class MembersController extends Controller
           $store->status       = 1;
           $store->username     = $username;
           $store->email        = $email;
-          $store->password     = Hash::make($password);
+          $store->password     = bcrypt($password);
           $store->updated_at   = new DateTime();
           $store->save();
           // dd($store);
