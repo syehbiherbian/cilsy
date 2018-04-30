@@ -108,7 +108,7 @@ class LoginController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect('/contributor/dashboard');
+        return redirect('/contributor/login')->with('success', 'Logout berhasil!');
     }
 
     /**

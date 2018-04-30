@@ -374,21 +374,34 @@
       ),
     ),
   ),
-  'view' => 
+  'broadcasting' => 
   array (
-    'paths' => 
+    'default' => 'log',
+    'connections' => 
     array (
-      0 => '/opt/lampp/htdocs/cilsy/laravel/resources/views',
-    ),
-    'compiled' => '/opt/lampp/htdocs/cilsy/laravel/storage/framework/views',
-  ),
-  'compile' => 
-  array (
-    'files' => 
-    array (
-    ),
-    'providers' => 
-    array (
+      'pusher' => 
+      array (
+        'driver' => 'pusher',
+        'key' => '',
+        'secret' => '',
+        'app_id' => '',
+        'options' => 
+        array (
+        ),
+      ),
+      'redis' => 
+      array (
+        'driver' => 'redis',
+        'connection' => 'default',
+      ),
+      'log' => 
+      array (
+        'driver' => 'log',
+      ),
+      'null' => 
+      array (
+        'driver' => 'null',
+      ),
     ),
   ),
   'cache' => 
@@ -445,6 +458,108 @@
     ),
     'prefix' => 'laravel',
   ),
+  'compile' => 
+  array (
+    'files' => 
+    array (
+    ),
+    'providers' => 
+    array (
+    ),
+  ),
+  'database' => 
+  array (
+    'fetch' => 5,
+    'default' => 'mysql',
+    'connections' => 
+    array (
+      'sqlite' => 
+      array (
+        'driver' => 'sqlite',
+        'database' => 'dev_cilsy',
+        'prefix' => '',
+      ),
+      'mysql' => 
+      array (
+        'driver' => 'mysql',
+        'host' => 'localhost',
+        'port' => '20020',
+        'database' => 'dev_cilsy',
+        'username' => 'cilsyuser',
+        'password' => 'ZqfpLRGJytVkmWKFp9GR',
+        'charset' => 'utf8',
+        'collation' => 'utf8_unicode_ci',
+        'prefix' => '',
+        'strict' => true,
+        'engine' => NULL,
+      ),
+      'pgsql' => 
+      array (
+        'driver' => 'pgsql',
+        'host' => 'localhost',
+        'port' => '20020',
+        'database' => 'dev_cilsy',
+        'username' => 'cilsyuser',
+        'password' => 'ZqfpLRGJytVkmWKFp9GR',
+        'charset' => 'utf8',
+        'prefix' => '',
+        'schema' => 'public',
+        'sslmode' => 'prefer',
+      ),
+    ),
+    'migrations' => 'migrations',
+    'redis' => 
+    array (
+      'cluster' => false,
+      'default' => 
+      array (
+        'host' => '127.0.0.1',
+        'password' => NULL,
+        'port' => '6379',
+        'database' => 0,
+      ),
+    ),
+  ),
+  'filesystems' => 
+  array (
+    'default' => 'local',
+    'cloud' => 's3',
+    'disks' => 
+    array (
+      'local' => 
+      array (
+        'driver' => 'local',
+        'root' => '/var/www/html/dev/laravel/storage/app',
+      ),
+      'public' => 
+      array (
+        'driver' => 'local',
+        'root' => '/var/www/html/dev/laravel/storage/app/public',
+        'visibility' => 'public',
+      ),
+      'local_public' => 
+      array (
+        'driver' => 'local',
+        'root' => '/var/www/html/dev/laravel/public',
+      ),
+      's3' => 
+      array (
+        'driver' => 's3',
+        'key' => 'your-key',
+        'secret' => 'your-secret',
+        'region' => 'your-region',
+        'bucket' => 'your-bucket',
+      ),
+    ),
+  ),
+  'laravel-ffmpeg' => 
+  array (
+    'default_disk' => 'local',
+    'ffmpeg.binaries' => '/usr/bin/ffmpeg',
+    'ffmpeg.threads' => 12,
+    'ffprobe.binaries' => '/usr/bin/ffprobe',
+    'timeout' => 3600,
+  ),
   'mail' => 
   array (
     'stream' => 
@@ -459,14 +574,128 @@
     'driver' => 'smtp',
     'host' => 'smtp.mailtrap.io',
     'port' => '2525',
+    'host' => 'smtp.gmail.com',
+    'port' => '587',
     'from' => 
     array (
       'address' => 'hello@example.com',
       'name' => 'Example',
     ),
-    'encryption' => NULL,
-    'username' => '1c40ad4ae2ff01',
-    'password' => '943e684f67dbba',
+    'encryption' => 'tls',
+    'username' => 'noreplycilsy@gmail.com',
+    'password' => '41Q66TRRr1QON7KKUkOW',
     'sendmail' => '/usr/sbin/sendmail -bs',
+  ),
+  'queue' => 
+  array (
+    'default' => 'sync',
+    'connections' => 
+    array (
+      'sync' => 
+      array (
+        'driver' => 'sync',
+      ),
+      'database' => 
+      array (
+        'driver' => 'database',
+        'table' => 'jobs',
+        'queue' => 'default',
+        'retry_after' => 90,
+      ),
+      'beanstalkd' => 
+      array (
+        'driver' => 'beanstalkd',
+        'host' => 'localhost',
+        'queue' => 'default',
+        'retry_after' => 90,
+      ),
+      'sqs' => 
+      array (
+        'driver' => 'sqs',
+        'key' => 'your-public-key',
+        'secret' => 'your-secret-key',
+        'prefix' => 'https://sqs.us-east-1.amazonaws.com/your-account-id',
+        'queue' => 'your-queue-name',
+        'region' => 'us-east-1',
+      ),
+      'redis' => 
+      array (
+        'driver' => 'redis',
+        'connection' => 'default',
+        'queue' => 'default',
+        'retry_after' => 90,
+      ),
+    ),
+    'failed' => 
+    array (
+      'database' => 'mysql',
+      'table' => 'failed_jobs',
+    ),
+  ),
+  'services' => 
+  array (
+    'mailgun' => 
+    array (
+      'domain' => NULL,
+      'secret' => NULL,
+    ),
+    'ses' => 
+    array (
+      'key' => NULL,
+      'secret' => NULL,
+      'region' => 'us-east-1',
+    ),
+    'sparkpost' => 
+    array (
+      'secret' => NULL,
+    ),
+    'stripe' => 
+    array (
+      'model' => 'App\\Models\\User',
+      'key' => NULL,
+      'secret' => NULL,
+    ),
+  ),
+  'session' => 
+  array (
+    'driver' => 'file',
+    'lifetime' => 120,
+    'expire_on_close' => false,
+    'encrypt' => false,
+    'files' => '/var/www/html/dev/laravel/storage/framework/sessions',
+    'connection' => NULL,
+    'table' => 'sessions',
+    'store' => NULL,
+    'lottery' => 
+    array (
+      0 => 2,
+      1 => 100,
+    ),
+    'cookie' => 'laravel_session',
+    'path' => '/',
+    'domain' => NULL,
+    'secure' => false,
+    'http_only' => true,
+  ),
+  'sitemap' => 
+  array (
+    'guzzle_options' => 
+    array (
+      'cookies' => true,
+      'connect_timeout' => 10,
+      'timeout' => 10,
+      'allow_redirects' => false,
+    ),
+    'execute_javascript' => false,
+    'chrome_binary_path' => NULL,
+    'crawl_profile' => 'Spatie\\Sitemap\\Crawler\\Profile',
+  ),
+  'view' => 
+  array (
+    'paths' => 
+    array (
+      0 => '/var/www/html/dev/laravel/resources/views',
+    ),
+    'compiled' => '/var/www/html/dev/laravel/storage/framework/views',
   ),
 );

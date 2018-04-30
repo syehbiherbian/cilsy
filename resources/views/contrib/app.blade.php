@@ -64,7 +64,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#">
+                                    <a href="">
                                         Panduan Kontributor
                                     </a>
                                 </li>
@@ -118,7 +118,7 @@
             </li>
             <li>
                 <a href="{{ url('contributor/coments') }}">
-                    <img src="{{asset('template/kontributor/img/icon/Kelola_Tutorial.png')}}" alt="" />
+                    <img src="{{asset('template/kontributor/img/icon/KelolaPertanyaan.png')}}" alt="" />
                     <span>Kelola Pertanyaan</span>
                 </a>
             </li>
@@ -145,14 +145,10 @@
                         Copyright Cilsy Fiolution 2016-2017
                     </p>
                 </div>
-                <div class="col-md-2 col-xs-4">
-                    <ul class="nav-footer">
-                        <li>Cilsy</li>
-                        <li><a href="#">Tentang</a></li>
-                        <li><a href="#">Blog</a></li>
-                        <li><a href="#">Karir</a></li>
-                        <li><a href="#">FAQ</a></li>
-                    </ul>
+                <div class="col-md-2">
+
+                  <?=Helper::pageMenu();?>
+
                 </div>
                 <div class="col-md-2 col-xs-4">
                     <ul class="nav-footer">

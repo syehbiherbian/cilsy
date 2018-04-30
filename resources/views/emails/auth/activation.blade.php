@@ -160,20 +160,3 @@
             </tbody>
         </table>
         </center>
-        
-        @component('mail::message')
-        # Activate your account
-        
-        Thanks for signing up, please activate your account.
-        
-        @component('mail::button', ['url' => route('auth.activate', [
-                    'token' => $contributor->activation_token,
-                    'email' => $contributor->email
-                ])
-            ])
-            Activate
-        @endcomponent
-        
-        Thanks,<br>
-        {{ config('app.name') }}
-        @endcomponent
