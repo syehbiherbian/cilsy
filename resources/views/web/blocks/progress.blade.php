@@ -57,6 +57,68 @@
     left: 20;
     bottom: 0;
 }
+
+.progressbar li{
+  float: left;
+  width: 20%;
+  position: relative;
+  text-align: center;
+}
+.progressbar li:before{
+  content:"1";
+  width: 30px;
+  height: 30px;
+}
+.progressbar li:before{
+  content:"1";
+  width: 30px;
+  height: 30px;
+  border: 2px solid #bebebe;
+  display: block;
+  margin: 0 auto 10px auto;
+  border-radius: 50%;
+  line-height: 27px;
+  background: white;
+  color: #bebebe;
+  text-align: center;
+  font-weight: bold;
+}
+.progressbar{
+  counter-reset: step;
+}
+.progressbar li:before{
+  content:counter(step);
+  counter-increment: step;
+  width: 30px;
+  height: 30px;
+  border: 2px solid #bebebe;
+  display: block;
+  margin: 0 auto 10px auto;
+  border-radius: 50%;
+  line-height: 27px;
+  background: white;
+  color: #bebebe;
+  text-align: center;
+  font-weight: bold;
+}
+.progressbar li:after{
+  content: '';
+  position: absolute;
+  width:100%;
+  height: 3px;
+  background: #979797;
+  top: 15px;
+  left: -50%;
+  z-index: -1;
+}
+.progressbar li.active + li:after{
+ background: #3aac5d;
+}
+.progressbar li.active + li:before{
+border-color: #3aac5d;
+background: #3aac5d;
+color: white
+}
 </style>
 <div class="container section-content">
   <div class="col-sm-12">
@@ -69,13 +131,21 @@
               </div>
               <div class="col-sm-8">
                 <p><strong><h3>{{ $last->title }}</h3></strong></p>
-                <div class="progress">
-                  <div class="progress-bar" role="progressbar" aria-valuenow="{{number_format($progress)}}"
-                  aria-valuemin="0" aria-valuemax="100" style="width:{{number_format($progress)}}%; background-color: #3CA3E0;">
-                    {{number_format($progress)}}%
-                  </div>
-                </div>
-                <p><a href="{{ url('dashboard/'.$last->slug) }}" class="btn btn-primary btn-lg pull-right" style="color :white; background-color: #3CA3E0; border-color: #3CA3E0; margin-top: 100px;">Lanjutkan Tutorial</a></p>
+                
+                
+                <ul class="progressbar">
+                  <?php
+                  $i = 1;
+                  foreach ($get as $video => $videos): ?>
+                  <?php if ($i <= $hits) {?>
+                  <li class="active"></li>
+                  <?php }else {?>
+                    <li></li>
+                  <?php } ?>
+                  <?php endforeach; ?>
+                </ul>
+                
+                <p><a href="{{ url('lessons/'.$last->slug) }}" class="btn btn-primary btn-lg pull-right" style="color :white; background-color: #3CA3E0; border-color: #3CA3E0; margin-top: 100px;">Lanjutkan Tutorial</a></p>
                 </p>
               </div>
             </div>

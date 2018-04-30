@@ -14,6 +14,7 @@ use App\Models\Point;
 use Session;
 // use Hash;
 use DateTime;
+use Auth;
 
 // use DB;
 class PointController extends Controller {
@@ -25,7 +26,7 @@ class PointController extends Controller {
      */
     public function index() {
         // Authentication
-        $mem_id = Session::get('memberID');
+        $mem_id = Auth::guard('members')->user()->id;
         if (!$mem_id) {
             return redirect('/member/signin');
             exit;
@@ -33,9 +34,9 @@ class PointController extends Controller {
         $members = Member::where('status', 1)->where('id', $mem_id)->first();
         if ($members) {
 
-            $point_question = Point::where('status', 0)->where('type', 'QUESTION')->where('member_id', $mem_id)->sum('value');
-            $point_reply = Point::where('status', 0)->where('type', 'REPLY')->where('member_id', $mem_id)->sum('value');
-            $point_complete = Point::where('status', 0)->where('type', 'COMPLETE')->where('member_id', $mem_id)->sum('value');
+            $point_question = Point::where('type', 'QUESTION')->where('member_id', $mem_id)->sum('value');
+            $point_reply = Point::where('type', 'REPLY')->where('member_id', $mem_id)->sum('value');
+            $point_complete = Point::where('type', 'COMPLETE')->where('member_id', $mem_id)->sum('value');
             return view('web.members.point', [
                 'members' => $members,
                 'point_question' => $point_question,

@@ -3,8 +3,8 @@
 @section('description', $lessons->meta_desc)
 @section('content')
 {{--  <link href="{{ asset('node_modules/video.js/dist/video-js.css') }}" rel="stylesheet">  --}}
-<link href="{{ asset('node_modules/videojs-playlist-ui/dist/videojs-playlist-ui.vertical.css') }}" rel="stylesheet">
-<link href="{{ asset('node_modules/videojs-errors/dist/videojs-errors.css') }}" rel="stylesheet">
+<link href="{{ asset('template/web/css/videojs-playlist-ui.vertical.css') }}" rel="stylesheet">
+<link href="{{ asset('template/web/css/videojs-errors.css') }}" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet"/>
 {{-- <link href="https://vjs.zencdn.net/5.16.0/video-js.min.css" rel="stylesheet"/> --}}
 <script src="https://vjs.zencdn.net/5.16.0/video.min.js"></script>
@@ -584,15 +584,10 @@
           <div class="col-md-12">
             <div class="player-container">
               <!-- Main Video -->
-              <video
-                id="video"
-                class="video-js vjs-default-skin vjs-big-play-centered"
-                height="500"
-                width="70%"
-                controls>
-                <?php if (count($main_videos) > 0) {?>
-                    <source src="<?php if (!empty($main_videos[0]->video)) {echo $main_videos[0]->video;}?>" type="<?php if (!empty($main_videos[0]->type_video)) {echo $main_videos[0]->type_video;}?>">
-                <?php }?>
+              <video id="video" class="video-js vjs-default-skin vjs-big-play-centered" height="500" width="70%" controls>
+                @if (count($main_videos) > 0) 
+                    <source src="{{ !empty($main_videos[0]->video) ? $main_videos[0]->video : '' }}" type="{{ (!empty($main_videos[0]->type_video)) ? $main_videos[0]->type_video : '' }}">
+                @endif
               </video>
 
               <!-- Playlist Video -->
@@ -617,39 +612,39 @@
                 <li><a data-toggle="tab" href="#tab4">Komentar</a></li>
               </ul>
 
-              <div class="tab-content">
+              <div class="tab-content" style="margin-top:0px;">
                 <div id="tab1" class="tab-pane fade in active">
-                  <?= $lessons->description ?></p>
+                  {!! $lessons->description !!}
                 </div>
                 <div id="tab2" class="tab-pane fade">
                   <ul class="materi_list">
-                    <?php foreach ($main_videos as $row) {?>
+                    @foreach ($main_videos as $row)
                     <li>
-                      <strong><?= $row->title ?></strong>
-                      <?php if ($services) {?>
+                      <strong>{{ $row->title }}</strong>
+                      @if ($services)
                       <span class="pull-right"><a href="{{ $row->video }}" class="btn btn-info btn-md" download><i class="fa fa-download"></i> Download Video</a></span>
-                      <?php }?>
-                      <p><?=nl2br($row->description);?></p>
+                      @endif
+                      {!! nl2br($row->description) !!}
                     </li>
-                    <?php }?>
+                    @endforeach
                   </ul>
                 </div>
                 <div id="tab3" class="tab-pane fade">
-                  <?php if ($services) {?>
+                  @if ($services)
                       @foreach($file as $key => $files)
                           <a href="{{ $files->source }}" class="btn btn-info btn-md" download><i class="fa fa-download"></i> Download {{ $files->title}}</a><br><br>
                       @endforeach
-                  <?php } else {?>
+                  @else
                       <button type="button" name="button"  class="btn btn-info btn-md disabled"><i class="fa fa-download"></i> Download </button>
-                  <?php }?>
+                  @endif
                 </div>
                 <div id="tab4" class="tab-pane fade">
 
-                  <?php if (empty(Session::get('memberID'))) { ?>
+                  @if (empty(Auth::guard('members')->user()->id))
                     <div class="text-center mb-25">
                       Silahkan <a href="{{ url('member/signin') }}" class="btn btn-primary"> Masuk</a> untuk memberikan komentar
                     </div>
-                  <?php	}else { ?>
+                  @else
 
                   <!-- Comment Form -->
                   <div class="comments-form mb-25">
@@ -665,7 +660,7 @@
                     <!-- </form><!--./ Comment Form -->
                   </div>
 
-                  <?php } ?>
+                  @endif
 
                   <!-- Comments Lists -->
                   <div id="comments-lists">
@@ -680,7 +675,7 @@
 
             </div>
           </div>
-          <?php if ($contributors): ?>
+          @if ($contributors)
 
           <div class="row contributor mb-25">
             <div class="col-md-12">
@@ -690,11 +685,11 @@
                 <div class="panel-body">
                   <div class="row">
                     <div class="col-md-3">
-                      <?php if ($contributors->avatar): ?>
+                      @if ($contributors->avatar)
                         <img src="{{ asset($contributors->avatar) }}" alt="" class="img-responsive img-center">
-                      <?php else: ?>
+                      @else
                         <img src="{{ asset('template/kontributor/img/icon/avatar.png') }}" alt="" class="img-responsive img-center">
-                      <?php endif; ?>
+                      @endif
                       <div class="text-center mt-15">
                         <div class="btn-group">
                           <button type="button" class="btn btn-primary">{{ count($contributors_total_lessons) }} Tutorial</button>
@@ -707,7 +702,7 @@
                       <p class="help-block">{{ $contributors->pekerjaan }}</p>
                       <a href="{{ url('contributor/profile/'.$contributors->username) }}" class="btn btn-warning mb-15">Lihat Profile</a>
                       <div class="about-text">
-                        <?= $contributors->deskripsi ?>
+                        {{!! $contributors->deskripsi !!}}
                       </div>
                       <a href="#">Lebih Banyak</a>
                     </div>
@@ -718,7 +713,7 @@
             </div>
           </div>
 
-          <?php endif; ?>
+          @endif
         </div>
       </section><!-- ./VIDEO INFORMATION -->
 
@@ -726,33 +721,70 @@
 
 </div>
 
+<script src="{{ asset('template/web/js/video.js') }}"></script>
+<script src="{{ asset('template/web/js/videojs-playlist.js') }}"></script>
+<script src="{{ asset('template/web/js/videojs-playlist-ui.js') }}"></script><script src="{{ asset('template/web/js/videojs-errors.js') }}"></script>
+<script type="text/javascript">
 
-  <script src="{{ asset('node_modules/video.js/dist/video.js') }}"></script>
-  <script src="{{ asset('node_modules/videojs-playlist/dist/videojs-playlist.js') }}"></script>
-  <script src="{{ asset('node_modules/videojs-playlist-ui/dist/videojs-playlist-ui.js') }}"></script>
-  <script src="{{ asset('template/web/js/videojs-errors.js') }}"></script>
-  <script type="text/javascript">
+  function dokirim(){
+      var isi_kirim = $('#input_kirim').val();
+      var lesson_id = '{{ $lessons->id }}';
+      // alert(comment_id+' = '+isi_balas);
+      var datapost = {
+          '_token'    : '{{ csrf_token() }}',
+          'isi_kirim' : isi_kirim,
+          'lesson_id' : lesson_id
+      }
 
-    function dokirim(){
-        var isi_kirim = $('#input_kirim').val();
+      $.ajax({
+          type    :'POST',
+          url     :'{{ url("lessons/coments/kirimcomment") }}',
+          data    :datapost,
+          success:function(data){
+          if(data==0){
+                  window.location.href = '{{url("member/signin")}}';
+          } else if (data !== 'null') {
+                  // $("#row"+comment_id).load(window.location.href + " #row"+comment_id);
+                  $('.content-reload').prepend(data);
+              }else {
+                  alert('Koneksi Bermasalah, Silahkan Ulangi');
+                  location.reload();
+              }
+          }
+      })
+  }
+</script>
+<script type="text/javascript">
+    function formbalas(comment_id){
+
+        $('#balas'+comment_id).html('<label class="col-md-1" style="padding-left:0px;">Anda</label>'+
+                                '<div class="col-md-11" style="padding-right:0px;">'+
+                                '   <input type="text" class="form-control" id="input_balas'+comment_id+'" name="balasan" placeholder="tambahkan komentar/balasan" value="">'+
+                                '</div>'+
+                                '<a href="javascript:void(0)" class="btn btn-info pull-right" onclick="dobalas('+comment_id+')" style="float:right;margin-top:10px;">Kirim</a>');
+    }
+
+    function dobalas(comment_id){
+        var isi_balas = $('#input_balas'+comment_id).val();
         var lesson_id = '{{ $lessons->id }}';
         // alert(comment_id+' = '+isi_balas);
         var datapost = {
             '_token'    : '{{ csrf_token() }}',
-            'isi_kirim' : isi_kirim,
+            'isi_balas' : isi_balas,
+            'comment_id': comment_id,
             'lesson_id' : lesson_id
         }
 
         $.ajax({
             type    :'POST',
-            url     :'{{ url("lessons/coments/kirimcomment") }}',
+            url     :'{{ url("lessons/coments/postcomment") }}',
             data    :datapost,
             success:function(data){
-            if(data==0){
-                    window.location.href = '{{url("member/signin")}}';
-            } else if (data !== 'null') {
-                    // $("#row"+comment_id).load(window.location.href + " #row"+comment_id);
-                    $('.content-reload').prepend(data);
+                if (data == 1) {
+                    $("#row"+comment_id).load(window.location.href + " #row"+comment_id);
+                }
+                else if(data==0){
+                        window.location.href = '{{url("member/signin")}}';
                 }else {
                     alert('Koneksi Bermasalah, Silahkan Ulangi');
                     location.reload();
@@ -760,186 +792,19 @@
             }
         })
     }
+
+    function loadcontent(){
+        $(".content-reload").load(window.location.href + " .content-reload");
+        console.log('reload');
+    }
+
+    // setInterval(function(){
+    //     loadcontent()
+    // }, 5000);
 </script>
-  <script type="text/javascript">
-      function formbalas(comment_id){
-
-          $('#balas'+comment_id).html('<label class="col-md-1" style="padding-left:0px;">Anda</label>'+
-                                  '<div class="col-md-11" style="padding-right:0px;">'+
-                                  '   <input type="text" class="form-control" id="input_balas'+comment_id+'" name="balasan" placeholder="tambahkan komentar/balasan" value="">'+
-                                  '</div>'+
-                                  '<a href="javascript:void(0)" class="btn btn-info pull-right" onclick="dobalas('+comment_id+')" style="float:right;margin-top:10px;">Kirim</a>');
-      }
-
-      function dobalas(comment_id){
-          var isi_balas = $('#input_balas'+comment_id).val();
-          var lesson_id = '{{ $lessons->id }}';
-          // alert(comment_id+' = '+isi_balas);
-          var datapost = {
-              '_token'    : '{{ csrf_token() }}',
-              'isi_balas' : isi_balas,
-              'comment_id': comment_id,
-              'lesson_id' : lesson_id
-          }
-
-          $.ajax({
-              type    :'POST',
-              url     :'{{ url("lessons/coments/postcomment") }}',
-              data    :datapost,
-              success:function(data){
-                  if (data == 1) {
-                      $("#row"+comment_id).load(window.location.href + " #row"+comment_id);
-                  }
-                  else if(data==0){
-                          window.location.href = '{{url("member/signin")}}';
-                  }else {
-                      alert('Koneksi Bermasalah, Silahkan Ulangi');
-                      location.reload();
-                  }
-              }
-          })
-      }
-
-      function loadcontent(){
-          $(".content-reload").load(window.location.href + " .content-reload");
-          console.log('reload');
-      }
-
-      // setInterval(function(){
-      //     loadcontent()
-      // }, 5000);
-  </script>
-  <script>
-    fbq('track', 'ViewContent');
-  </script>
-  <script>
-    var lessons_id = "{{ $lessons->id }}";
-
-    var postData =
-                {
-                    "_token":"{{ csrf_token() }}",
-                    "lessons_id": lessons_id
-                }
-    var player = videojs(document.querySelector('video'), {
-      inactivityTimeout: 0
-    });
-    try {
-      // try on ios
-      player.volume(1);
-      // player.play();
-    } catch (e) {}
-    //player.playlist(videoList, 4);/// play video 5
-    player.playlist(postData);
-    document.querySelector('.previous').addEventListener('click', function() {
-      player.playlist.previous();
-    });
-    document.querySelector('.next').addEventListener('click', function() {
-      player.playlist.next();
-    });
-    document.querySelector('.jump').addEventListener('click', function() {
-      player.playlist.currentItem(2); // play third
-    });
-
-    player.playlist.autoadvance(0); // play all
-
-    Array.prototype.forEach.call(document.querySelectorAll('[name=autoadvance]'), function(el) {
-      el.addEventListener('click', function() {
-        var value = document.querySelector('[name=autoadvance]:checked').value;
-        //alert(value);
-        player.playlist.autoadvance(JSON.parse(value));
-      });
-    });
-
-    /* ADD PREVIOUS */
-    var Button = videojs.getComponent('Button');
-
-    // Extend default
-    var PrevButton = videojs.extend(Button, {
-      //constructor: function(player, options) {
-      constructor: function() {
-        Button.apply(this, arguments);
-        //this.addClass('vjs-chapters-button');
-        this.addClass('icon-angle-left');
-        this.controlText("Previous");
-      },
-
-      // constructor: function() {
-      //   Button.apply(this, arguments);
-      //   this.addClass('vjs-play-control vjs-control vjs-button vjs-paused');
-      // },
-
-      // createEl: function() {
-      //   return Button.prototype.createEl('button', {
-      //     //className: 'vjs-next-button vjs-control vjs-button',
-      //     //innerHTML: 'Next >'
-      //   });
-      // },
-
-      handleClick: function() {
-        console.log('click');
-        player.playlist.previous();
-      }
-    });
-
-    /* ADD BUTTON */
-    //var Button = videojs.getComponent('Button');
-
-    // Extend default
-    var NextButton = videojs.extend(Button, {
-      //constructor: function(player, options) {
-      constructor: function() {
-        Button.apply(this, arguments);
-        //this.addClass('vjs-chapters-button');
-        this.addClass('icon-angle-right');
-        this.controlText("Next");
-      },
-
-      handleClick: function() {
-        console.log('click');
-        player.playlist.next();
-      }
-    });
-
-    // Register the new component
-    videojs.registerComponent('NextButton', NextButton);
-    videojs.registerComponent('PrevButton', PrevButton);
-    //player.getChild('controlBar').addChild('SharingButton', {});
-    player.getChild('controlBar').addChild('PrevButton', {}, 0);
-    player.getChild('controlBar').addChild('NextButton', {}, 2);
-    $.ajax({
-      type: "POST",
-      url: "{{ url('lessons/getplaylist')}}",
-      data: postData,
-      dataType: "json",
-      beforeSend: function() {
-        // $('#hasil').html('<tr><td colspan="6">Loading...</td></tr>');
-      },
-      success: function (data){
-        // Adding Playlist
-        var player = videojs('video');
-        player.playlist(data);
-        player.playlistUi();
-        player.DurationDisplay( player,[options] )
-          }
-    });
-      player.errors({
-      errors: {
-        4: {
-          message: 'Dengan support trainer, anda akan dipandu belajar sampai bisa. Kapanpun Anda Mau.'
-        }
-      }
-    });
-  player.on('Invalid', function() {
-    // Modals are temporary by default. They dispose themselves when they are
-    // closed; so, we can create a new one each time the player is paused and
-    // not worry about leaving extra nodes hanging around.
-    var modal = player.createModal('This is a modal!');
-  });
-  </script>
-
-<script src="{{ asset('template/web/js/video.js') }}"></script>
-<script src="{{ asset('template/web/js/videojs-playlist.js') }}"></script>
-<script src="{{ asset('template/web/js/videojs-playlist-ui.js') }}"></script>
+<script>
+  fbq('track', 'ViewContent');
+</script>
 <script type="text/javascript">
 
 $(document).ready(function() {
@@ -957,6 +822,59 @@ function getPlayList() {
   var player = videojs(document.querySelector('video'), {
       inactivityTimeout: 0
     });
+    {{--  var resetDelay, inactivityTimeout;
+    player.on('fullscreenchange', function(e) {
+    if (player.isFullscreen()) {
+      if (player.userActive(false)){
+          player.removeAttr('controls');
+      }
+    }
+    });  --}}
+
+    resetDelay = function(){
+        clearTimeout(inactivityTimeout);
+        inactivityTimeout = setTimeout(function(){
+            player.userActive(false);
+        }, 20);
+    };
+
+    player.on('mousemove', function(){
+        resetDelay();
+    })
+    var userActivity, activityCheck;
+
+    player.on('mousemove', function(){
+        userActivity = true;
+    });
+
+    activityCheck = setInterval(function() {
+
+      // Check to see if the mouse has been moved
+      if (userActivity) {
+
+        // Reset the activity tracker
+        userActivity = false;
+
+        // If the user state was inactive, set the state to active
+        if (player.userActive() === false) {
+          player.userActive(true);
+        }
+
+        // Clear any existing inactivity timeout to start the timer over
+        clearTimeout(inactivityTimeout);
+
+        // In X seconds, if no more activity has occurred 
+        // the user will be considered inactive
+        inactivityTimeout = setTimeout(function() {
+          // Protect against the case where the inactivity timeout can trigger
+          // before the next user activity is picked up  by the 
+          // activityCheck loop.
+          if (!userActivity) {
+            this.userActive(false);
+          }
+        }, 2000);
+      }
+    }, 250);
     try {
       // try on ios
       player.volume(1);

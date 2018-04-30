@@ -169,7 +169,7 @@ class LessonsController extends Controller {
 		}
 
 		if ($total_viewing >= count($total_videos) ) {
-			$point = new Points;
+			$point = new Point;
 			$point->status 		= 0;
 			$point->member_id	= $mem_id;
 			$point->type 			= 'COMPLETE';
@@ -261,7 +261,7 @@ class LessonsController extends Controller {
 
 				// Create Point
 				if ($parent_id == 0) { // Berkomentar
-					$point = new Points;
+					$point = new Point;
 					$point->status 		= 0;
 					$point->member_id	= $uid;
 					$point->type 			= 'QUESTION';
@@ -269,7 +269,7 @@ class LessonsController extends Controller {
 					$point->created_at= $now;
 					$point->updated_at= $now;
 				}else { // Membalas Komentar
-					$point = new Points;
+					$point = new Point;
 					$point->status 		= 0;
 					$point->member_id	= $uid;
 					$point->type 			= 'REPLY';
@@ -322,7 +322,7 @@ class LessonsController extends Controller {
 				                    <div class="panel-body">
 				                      '.$comment->body.'
 				                    </div>';
-														if (!empty(Session::get('memberID'))) {
+														if (!empty(Auth::guard('members')->user()->id)) {
 				                    $html .= '<div class="panel-footer reply-btn-area text-right">
 									                        <button type="button" name="button" class="btn btn-primary" data-toggle="collapse" data-target="#reply'.$comment->id.'"><i class="glyphicon glyphicon-share-alt"></i> Balas</button>
 									                    </div>
@@ -422,11 +422,11 @@ class LessonsController extends Controller {
 	}
 
 	public function doComment_bak(){
-		if (empty(Session::get('memberID'))) {
+		if (empty(Auth::guard('members')->user()->id)) {
 			return 0;
 			exit();
 		}
-		$uid = Session::get('memberID');
+		$uid = Auth::guard('members')->user()->id;
 
 		$member			= DB::table('members')->where('id',$uid)->first();
 		$comment  	= Input::get('comment');
@@ -605,14 +605,11 @@ class LessonsController extends Controller {
 		$members = Member::where('id', '=', $memberID)->first();
 		$services = Service::where('status', '=', 1)->where('members_id', '=', $memberID)->where('expired', '>=', $now)->first();
 
+		$access = 0;
 		if (count($services) > 0) {
 			if ($services->access == 1) {
 				$access = 1;
-			} else {
-				$access = 0;
-			}
-		} else {
-			$access = 0;
+			} 
 		}
 
 		$play = array();
@@ -626,14 +623,14 @@ class LessonsController extends Controller {
 					'description' => strip_tags($video->description),
 					'duration' => 'duration',
 					'sources' => 'Invalid',
-					'poster' => 'https://www.cilsy.id/template/web/img/video-lock.png',
+					'poster' => url('/template/web/img/video-lock.png'),
 					'thumbnail' => array([
-						'srcset' => 'https://www.cilsy.id/template/web/img/video-lock.png',
+						'srcset' => url('/template/web/img/video-lock.png'),
 						'type' => 'image/png',
 						'media' => '(min-width: 400px;)',
 					],
 						[
-							'src' => 'https://www.cilsy.id/template/web/img/video-lock.png',
+							'src' => url('/template/web/img/video-lock.png'),
 						]),
 				);
 
@@ -642,12 +639,12 @@ class LessonsController extends Controller {
 				$item = array(
 					'name' => $video->title,
 					'description' => strip_tags($video->description),
-					'duration' => 'duration',
+					'duration' => $video->durasi,
 					'sources' => array([
 						'src' => $video->video,
 						'type' => $video->type_video,
 					]),
-					'poster' => null,
+					'poster' => $video->image,
 					'thumbnail' => array([
 						'srcset' => $video->image,
 						'type' => 'image/png',

@@ -8,4 +8,5 @@ vendor/
 .phpintel/index
 assets/filemanager/.htaccess
 error_log
+public/assets/source/lessons/*
 

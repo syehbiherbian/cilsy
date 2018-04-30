@@ -71,13 +71,19 @@ class VideosController extends Controller
             $i = $count_video + 1;
             foreach ($title as $key => $titles) {
                 $type_video = $lessons_video[$key]->getMimeType();
-                if (!is_dir("assets/source/lessons/lessons-" . $lessonsid . "/video-" . $i)) {
-                    $newforder = mkdir("assets/source/lessons/lessons-" . $lessonsid . "/video-" . $i);
+                $DestinationPath = "assets/source/lessons/lessons-" . $lessonsid . "/video-" . $i;
+                if (!is_dir($DestinationPath)) {
+                    $newforder = mkdir($DestinationPath);
                 }
-                $DestinationPath = 'assets/source/lessons/lessons-' . $lessonsid . '/video-' . $i;
                 // dd($DestinationPath);
+                //insert video
+                $lessonsfilename = '';
+                if (!empty($lessons_video[$key])) {
+                    $lessonsfilename = $lessons_video[$key]->getClientOriginalName();
+                    $lessons_video[$key]->move($DestinationPath, $lessonsfilename);
+                }
                 //insert image
-                if (!empty($image_video[$key])) {
+                /* if (!empty($image_video[$key])) {
                     $imagefilename = $image_video[$key]->getClientOriginalName();
                     $image_video[$key]->move($DestinationPath, $imagefilename);
                 } else {
@@ -86,8 +92,7 @@ class VideosController extends Controller
                 if ($imagefilename == '') {
                     $url_image = $imagefilename;
                 } else {
-                    $urls = url('');
-                    $url_image = $urls . '/assets/source/lessons/lessons-' . $lessonsid . '/video-' . $i . '/' . $imagefilename;
+                    $url_image = $DestinationPath . '/' . $imagefilename;
                 }
                 //insert video
                 if (!empty($lessons_video[$key])) {
@@ -99,9 +104,8 @@ class VideosController extends Controller
                 if ($lessonsfilename == '') {
                     $url_video = $lessonsfilename;
                 } else {
-                    $urls = url('');
-                    $url_video = $urls . '/assets/source/lessons/lessons-' . $lessonsid . '/video-' . $i . '/' . $lessonsfilename;
-                }
+                    $url_video = $DestinationPath . '/' . $lessonsfilename;
+                } */
 
                 /* siapin video */
                 $media = FFMpeg::fromDisk('local_public')->open($DestinationPath . '/' . $lessonsfilename);
@@ -117,8 +121,8 @@ class VideosController extends Controller
                 $store = new Video;
                 $store->lessons_id = $lessonsid;
                 $store->title = $titles;
-                $store->image = $thumbnailname;
-                $store->video = $url_video;
+                $store->image = '/' . $DestinationPath . '/' . $thumbnailname;
+                $store->video = '/' . $DestinationPath . '/' . $lessonsfilename;
                 $store->description = $description[$key];
                 $store->type_video = $type_video;
                 $store->durasi = $duration;

@@ -21,17 +21,25 @@
     <script type="text/javascript" src="{{asset('template/kontributor/js/jquery.min.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.2.1/owl.carousel.js"></script>
 
+    <style>
+        .num {
+        position: absolute;
+        right: 11px;
+        top: 6px;
+        color: #fff;
+        }
+    </style>
 </head>
 
 <body>
     <div id="header">
         <div class="container">
-            <img src="{{asset('template/kontributor/img/logo.png')}}" class="logo" alt="">
+            <img src="{{asset('template/web/img/logo.png')}}" class="logo" alt="">
 
             <div class="header-menu">
                 <ul>
                     <li>
-                        <span class="hello-user">Halo Syehbi</span>
+                        <span class="hello-user">Halo, {{ Auth::guard('contributors')->user()->first_name }} </span>
                     </li>
                     <li class="has-dropdown">
                         <img src="{{asset('template/kontributor/img/icon/Notifikasi.png')}}" alt="">
@@ -51,7 +59,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#">
+                                    <a href="contributor/reward">
                                         {{points()}} Pts
                                     </a>
                                 </li>
@@ -61,7 +69,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#">
+                                    <a href="{{url('contributor/logout')}}">
                                         Logout
                                     </a>
                                 </li>
@@ -149,8 +157,8 @@
                 <div class="col-md-2 col-xs-4">
                     <ul class="nav-footer">
                         <li>Ikuti Kami</li>
-                        <li><a href="#">Facebook</a></li>
-                        <li><a href="#">Instagram</a></li>
+                        <li><a href="https://www.facebook.com/cilsyfiolution/">Facebook</a></li>
+                        <li><a href="https://www.instagram.com/cilsyfiolution/">Instagram</a></li>
                         <li><a href="#">Line</a></li>
                         <li><a href="#">Google+</a></li>
                     </ul>
@@ -158,8 +166,13 @@
                 <div class="col-md-2 col-xs-4">
                     <ul class="nav-footer">
                         <li>Bantuan</li>
-                        <li><a href="#">Kontak</a></li>
-                        <li><a href="#">Kebijakan Layanan</a></li>
+                        <li><a href="{{ url('/kontak') }}">Kontak</a></li>
+                        <li><a href="{{ url('/kebijakan') }}">Kebijakan Layanan</a></li>
+                        <li><a href="{{ url('/carapesan') }}">Cara Pesan & Berlangganan</a></li>
+                        <li><a href="{{ url('member/package') }}">Harga & Perbandingan Paket</a></li>
+                        <li><a href="{{ url('/petunjuk') }}">Petunjuk Pembayaran</a></li>
+                        <li><a href="{{ url('/faq') }}">FAQ</a></li>
+                        <li><a href="{{ url('https://blog.cilsy.id') }}">Blog</a></li>
                     </ul>
                 </div>
                 <div class="col-md-3 col-xs-12">

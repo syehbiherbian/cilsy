@@ -112,11 +112,8 @@ class RegisterController extends Controller
 
        //Redirects sellers
         
-        if(Session::get('invoiceCODE')){
-            DB::table('invoice')->where('code', '=', Session::get('invoiceCODE'))->update([
-            'members_id' => $members->id,
-        ]);
-        return redirect('checkout');
+        if(session()->get('package')){
+            return view('web.payment.summary', compact('packages', 'member'));
         } else{
             return redirect($this->redirectTo);
         }

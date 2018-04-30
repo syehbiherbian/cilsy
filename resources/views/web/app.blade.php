@@ -13,6 +13,9 @@
     <link href="{{asset('template/web/css/video-js.css')}}" rel="stylesheet">
     <link href="{{asset('template/web/css/navbar.css')}}" rel="stylesheet">
     <link href="{{asset('template/web/css/pace.css')}}" rel="stylesheet">
+    <!-- rating -->
+    <link rel="stylesheet" href="{{ asset('template/web/css/star-rating.min.css') }}" />
+    <!-- rating -->
     <link rel="stylesheet" href="{{ asset('template/web/css/owl.carousel.min.css') }}">
     <link rel="stylesheet" href="{{ asset('template/web/css/owl.theme.default.min.css') }}">
     <link rel="stylesheet" href="{{ asset('template/web/css/owl.theme.green.min.css') }}">
@@ -20,6 +23,7 @@
     <link rel="stylesheet" href="{{ asset('template/web/plugins/ionicons-2.0.1/css/ionicons.min.css') }}">
     <link rel="stylesheet" href="{{ asset('template/web/plugins/OwlCarousel2-2.2.1/dist/assets/owl.carousel.css')}}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- Jquery UI   -->
 
@@ -167,6 +171,8 @@
       @media (min-width:768px) {
         #bs-example-navbar-collapse-search{
           display: none !important;
+          animation: slideInLeft 1s;
+          left: 0px;
         }
       }
       #bs-example-navbar-collapse-search p{
@@ -228,6 +234,96 @@
 .input-group-btn:first-child>.btn, .input-group-btn:first-child>.btn-group {
     margin-right: 70px;
 }
+  #btn {
+  position: fixed;
+  z-index: 5;
+  top: 15px;
+  left: 15px;
+  cursor: pointer;
+  transition: left 500ms cubic-bezier(0.6, 0.05, 0.28, 0.91);
+}
+#btn div {
+  width: 35px;
+  height: 2px;
+  margin-bottom: 8px;
+  background-color: #fff;
+  transition: opacity 500ms, background-color 250ms, -webkit-transform 500ms cubic-bezier(0.6, 0.05, 0.28, 0.91);
+  transition: transform 500ms cubic-bezier(0.6, 0.05, 0.28, 0.91), opacity 500ms, background-color 250ms;
+  transition: transform 500ms cubic-bezier(0.6, 0.05, 0.28, 0.91), opacity 500ms, background-color 250ms, -webkit-transform 500ms cubic-bezier(0.6, 0.05, 0.28, 0.91);
+}
+
+#btn.active {
+  left: 310px;
+}
+#btn.active div {
+  background-color: #fff;
+}
+#btn.active #top {
+  -webkit-transform: translateY(10px) rotate(-135deg);
+          transform: translateY(10px) rotate(-135deg);
+}
+#btn.active #middle {
+  opacity: 0;
+  -webkit-transform: rotate(135deg);
+          transform: rotate(135deg);
+}
+#btn.active #bottom {
+  -webkit-transform: translateY(-10px) rotate(-45deg);
+          transform: translateY(-10px) rotate(-45deg);
+}
+
+#box {
+  position: fixed;
+  z-index: 4;
+  overflow: auto;
+  top: 0px;
+  left: -275px;
+  width: 300px;
+  opacity: 0;
+  padding: 20px 0px;
+  height: 100%;
+  background-color: #f6f6f6;
+  color: #343838;
+  transition: all 350ms cubic-bezier(0.6, 0.05, 0.28, 0.91);
+}
+
+#box.active {
+  left: 0px;
+  opacity: 1;
+}
+
+#items {
+  position: relative;
+  top: 25%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+}
+
+#items .item {
+  position: relative;
+  cursor: pointer;
+  font-size: 18px;
+  padding: 20px 20px;
+  transition: all 250ms;
+}
+a #items .item {
+  color: #343838;
+  text-decoration: none;
+}
+#items .item:hover {
+  padding: 15px 45px;
+  background-color: rgba(52, 56, 56, 0.2);
+}
+
+#btn, #btn * {
+  will-change: transform;
+}
+
+#box {
+  will-change: transform, opacity;
+}
+
+
     </style>
 
 
@@ -265,14 +361,40 @@
     </div>  --}}
     <?php } ?>
       <div class="container">
-        
         <div class="navbar-header navbar-fixed-side navbar-fixed-side-left">
-          <button type="button" class="navbar-toggle collapsed navbar-left " data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+          {{--  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
-          </button>
+          </button>  --}}
+          <div id="btn" class="hidden-lg hidden-md">
+              <div id='top'></div>
+              <div id='middle'></div>
+              <div id='bottom'></div>
+          </div>
+          <div id="box">
+            @if (Auth::guard("members")->user())
+              <div id="items" style="top:38%">
+                  <div class="item" style="background-color:white">Halo, {{ Auth::guard('members')->user()->username }}</div>
+                  <a href="{{ url('lessons/browse/all') }}" class="hidden-lg hidden-md" style="color: #fff;"><div class="item browse" style="background-color:#2BA8E2;">Browse Tutorial</div></a>                  
+                  <div class="item">Status Paket : <?=Helper::package('title');?></div>
+                  <div class="item">Masa Aktif : <?=Helper::package('expired');?> hari</div>
+                  <a href="{{ url('member/package') }}"><div class="item">Perpanjang</div></a>
+                  <a href="{{ url('member/change') }}" ><div class="item">Ganti Password</div></a>
+                  <a href="{{ url('member/signout') }}"><div class="item">Logout</div></a>
+              </div>
+              @else
+              <div id="items">
+                  <a href="{{ url('lessons/browse/all') }}" class="hidden-lg hidden-md" style="color: #fff;"><div class="item browse" style="background-color:#2BA8E2;">Browse Tutorial</div></a>
+                  <a href="{{ url('/carapesan') }}"><div class="item">Cara Pesan</div></a>
+                  <a href="{{ url('/member/package') }}"><div class="item">Harga</div></a>
+                  <a href="{{ url('member/signin') }}"><div class="item">Masuk</div></a>
+                  <a href="{{ url('member/signup') }}"><div class="item">Daftar</div></a>
+              </div>
+              @endif
+          </div>
+         
           <button type="button" class="navbar-toggle collapsed search-toogle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-search" aria-expanded="false">
             <!-- <span class="sr-only">Toggle navigation</span> -->
             <i class="ion ion-ios-search-strong"></i>
@@ -331,31 +453,58 @@
             </div>
           </form>
           @if (Auth::guard("members")->user())
-            <ul class="nav navbar-nav navbar-right">
-            <li><a href="{{ url('lessons/browse/all') }}" class="hidden-lg hidden-md">Browse Tutorial</a></li>
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Halo, {{ Auth::guard('members')->user()->username }} <span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li style="padding: 15px; background: #fff;">
-                  <table cellpadding="15">
-                    <tr>
-                      <td>Status Paket</td>
-                      <td>: <?=Helper::package('title');?></td>
-                    </tr>
-                    <tr>
-                      <td>Masa Aktif</td>
-                      <td>: <?=Helper::package('expired');?> hari</td>
-                    </tr>
-                    <tr>
-                      <td><a href="{{ url('member/package') }}" class="btn btn-danger btn-package">Perpanjang</a></td>
-                      <td><a href="{{ url('member/change') }}" class="btn btn-success">Ganti Password</a></td>
-                      <td><a href="{{ url('member/signout') }}" class="btn btn-primary btn-signout">Logout</a></td>
-                    </tr>
-                  </table>
-                </li>
-              </ul>
-            </li>
-          </ul>
+          <div class="header-menu">
+                <ul>
+                    <li>
+                      <a href="{{ url('member/dashboard')}}" class="hello-user" style=".hello-user:hover{ text-decoration:none;}">
+                        Tutorial Saya
+                      </a>
+                    </li>
+                    <li class="has-dropdown">
+                        <img src="{{asset('template/kontributor/img/icon/Notifikasi.png')}}" alt="">
+                        <div class="dropdown-container">
+                            <ul>
+                              
+                            </ul>
+                        </div>
+                    </li>
+                     <li>
+                        <span class="hello-user">Halo, {{ Auth::guard('members')->user()->username }}</span>
+                    </li>
+                    <li class="has-dropdown">
+                        <img src="{{asset('template/kontributor/img/icon/Akun.png')}}" alt="">
+                        <div class="dropdown-container">
+                            <ul>
+                                <li>
+                                    <a href="{{ url('member/profile')}}">
+                                        Profile
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        Pengaturan Akun
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ url('member/point')}}">
+                                        Point
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ url('member/subscriptions')}}">
+                                        Riwayat dan Status Langganan
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ url('member/signout')}}">
+                                        Logout
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+          </div>
           @else
               <ul class="nav navbar-nav navbar-right">
               <li><a href="{{ url('lessons/browse/all') }}" class="hidden-lg hidden-md">Browse Tutorial</a></li>
@@ -367,19 +516,19 @@
           @endif
         </div><!-- /.navbar-collapse -->
 
-        <div class="collapse navbar-collapse hidden-sm hidden-md hidden-lg" id="bs-example-navbar-collapse-search">
+        <div class="collapse navbar-collapse hidden-sm hidden-md hidden-lg" id="bs-example-navbar-collapse-search" style="overflow-y: visible;">
           <form class="navbar-form navbar-left form-search " action="{{ url('search') }}" method="get">
             <input type="hidden" name="category" value="" class="searchcategory">
 
             <div class="input-group">
 
               <div class="input-group-btn btn-category">
-                <button type="button" class="btn btn-secondary dropdown-toggle " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <button type="button" class="btn btn-secondary dropdown-toggle " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
                   <span class="cate_title">
                     <i class="fa fa-th" aria-hidden="true"></i>
                   </span> <i class="ion-android-arrow-dropdown"></i>
                 </button>
-                <div class="dropdown-menu dropdown-menu-right">
+                <div class="dropdown-menu dropdown-menu-right" >
                   <a class="dropdown-item" href="javascript:void(0)" onclick="changeCategory('Linux')">Linux</a>
                   <a class="dropdown-item" href="javascript:void(0)" onclick="changeCategory('Mikrotik')">Mikrotik</a>
                   <a class="dropdown-item" href="javascript:void(0)" onclick="changeCategory('Cisco')">Cisco</a>
@@ -475,6 +624,7 @@
                         <li><a href="{{ url('member/package') }}">Harga & Perbandingan Paket</a></li>
                         <li><a href="{{ url('/petunjuk') }}">Petunjuk Pembayaran</a></li>
                         <li><a href="{{ url('/faq') }}">FAQ</a></li>
+                        <li><a href="{{ url('https://blog.cilsy.id') }}">Blog</a></li>
                     </ul>
                 </div>
                 <div class="col-md-3">
@@ -485,36 +635,32 @@
             </div>
         </div>
     </div>
-    <script>
-$(document).ready(function () {
-  var trigger = $('.hamburger'),
-      overlay = $('.overlay'),
-     isClosed = false;
+   <script>
+            var sidebarBox = document.querySelector('#box'),
+                sidebarBtn = document.querySelector('#btn'),
+                pageWrapper = document.querySelector('#page-wrapper');
 
-    trigger.click(function () {
-      hamburger_cross();      
-    });
+            sidebarBtn.addEventListener('click', function (event) {
+                sidebarBtn.classList.toggle('active');
+                sidebarBox.classList.toggle('active');
+            });
 
-    function hamburger_cross() {
+            pageWrapper.addEventListener('click', function (event) {
 
-      if (isClosed == true) {          
-        overlay.hide();
-        trigger.removeClass('is-open');
-        trigger.addClass('is-closed');
-        isClosed = false;
-      } else {   
-        overlay.show();
-        trigger.removeClass('is-closed');
-        trigger.addClass('is-open');
-        isClosed = true;
-      }
-  }
-  
-  $('[data-toggle="offcanvas"]').click(function () {
-        $('#wrapper').toggleClass('toggled');
-  });  
-});
-</script>
+                if (sidebarBox.classList.contains('active')) {
+                    sidebarBtn.classList.remove('active');
+                    sidebarBox.classList.remove('active');
+                }
+            });
+
+            window.addEventListener('keydown', function (event) {
+
+                if (sidebarBox.classList.contains('active') && event.keyCode === 27) {
+                    sidebarBtn.classList.remove('active');
+                    sidebarBox.classList.remove('active');
+                }
+            });
+          </script>
  <script type="text/javascript">
     // $("#close").ready(function(){
     //   $("#top-section").css("margin-top", "76px")
@@ -633,6 +779,9 @@ $(document).ready(function () {
     <script type="text/javascript" src="{{asset('template/web/js/bootstrap.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('template/web/js/pace.js') }}"></script>
 
+    <!-- rating -->
+    <script src="{{ asset('template/web/js/star-rating.min.js') }}"></script>
+    <!-- rating -->
     <!-- Custom Js -->
     <script type="text/javascript" src="{{asset('template/web/js/custom.js') }}"></script>
     @stack('js')

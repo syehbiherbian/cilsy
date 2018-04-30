@@ -12,8 +12,8 @@ use Redirect;
 use DateTime;
 use Helper;
 use Auth;
-use App\RewardCategory;
-use App\Reward;
+use App\Models\RewardCategory;
+use App\Models\Reward;
 
 class rewardController extends Controller
 {

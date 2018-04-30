@@ -12,7 +12,7 @@ use Redirect;
 use DateTime;
 use Helper;
 use Auth;
-use App\RewardCategory;
+use App\Models\RewardCategory;
 
 class RewardCategoryController extends Controller
 {

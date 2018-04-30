@@ -60,7 +60,13 @@ Route::get('pages/{pages}', 'Web\PagesController@index');
 Route::get('checkout', 'Veritrans\VtwebController@vtweb');
 Route::post('notification/handling', 'Veritrans\VtwebController@notification');
 // PAYMENT
+Route::get('summary', 'Web\SummaryController@summary')->name('summary');
+Route::post('member/checkout', 'Web\Members\PackageController@summary');
 Route::get('payment/{response}', 'Web\PaymentController@index');
+Route::post('coupon', 'Web\CouponsController@store')->name('coupon.store');
+Route::delete('coupon/delete', 'Web\CouponsController@destroy')->name('coupon.destroy');
+Route::delete('coupon/ganti', 'Web\CouponsController@ganti')->name('coupon.destroy');
+
 //page
 // Route::get('/harga', 'HargaController@index');
 Route::get('/kontak', function () {
@@ -110,8 +116,8 @@ Route::get('cron/mail/user/reminder/payment', 'Cron\ReminderController@index');
 // Route::get('member/signin', 'Web\Members\AuthController@signin');
 // Route::post('member/signin', 'Web\Members\AuthController@dosignin');
 // Route::get('member/signout', 'Web\Members\AuthController@signout');
-Route::post('member/change', 'Web\Members\AuthController@doreset');
-Route::get('member/change', 'Web\Members\AuthController@resetpassword');
+Route::post('member/change-password', 'Web\Members\PasswordController@doSubmit');
+Route::get('member/change-password', 'Web\Members\PasswordController@index');
 // Route::get('member/reset', 'Web\Members\AuthController@forgetpassword');
 // Route::post('member/reset', 'Web\Members\AuthController@doforgetpassword');
 // Route::post('member/reset/update', 'Web\Members\AuthController@doupdate');
@@ -126,7 +132,12 @@ Route::post('member/email', 'Web\Members\MemberAuth\ForgotPasswordController@sen
 Route::get('member/reset', 'Web\Members\MemberAuth\ForgotPasswordController@showLinkRequestForm');
 Route::post('member/reset', 'Web\Members\MemberAuth\ResetPasswordController@reset');
 Route::get('member/reset/{token}', 'Web\Members\MemberAuth\ResetPasswordController@showResetForm');
-
+Route::get('member/profile', 'Web\Members\ProfileController@index');
+Route::post('member/profile', 'Web\Members\ProfileController@doSubmit');
+Route::get('member/subscriptions', 'Web\Members\SubscriptionsController@index');
+Route::get('member/subscriptions/unsubscribe/{id}', 'Web\Members\SubscriptionsController@doUnsubscribe');
+Route::get('member/point', 'Web\Members\PointController@index');
+Route::get('member/dashboard', 'Web\Members\LessonsMemberController@index');
 Route::get('member/package', 'Web\Members\PackageController@index');
 Route::post('member/package', 'Web\Members\PackageController@dopackage');
 
@@ -166,6 +177,9 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::resource('system/files', 'FilesController');
 	Route::resource('system/videos', 'VideosController');
 	Route::resource('system/income','IncomeController');
+	Route::resource('system/coupon','AdminCouponController');
+	//rating
+	
 });
 
  Route::get('cron/system/generate-income', 'GenerateIncomeController@generate');
@@ -201,7 +215,7 @@ Route::get('contributor/aktivasi/{token}', 'Contributors\AuthController@aktivasi
 Route::get('contribauth/activate','Contributors\ContribAuth\ActivationController@active')->name('auth.activate');
 
 
-Route::get('contributor/logout', 'Contributors\AuthController@logout');
+Route::get('contributor/logout', 'Contributors\ContribAuth\LoginController@logout');
 
 // Home
 Route::get('contributor/home', 'Contributors\DashboardController@home');
@@ -283,3 +297,5 @@ Route::post('contributor/account/informasi/{id}/edit', 'Contributors\AccountCont
 Route::get('contributor/account/profile', 'Contributors\AccountController@halaman');
 Route::get('contributor/account/profile/{id}/edit', 'Contributors\AccountController@edit_halaman');
 Route::post('contributor/account/profile/{id}/edit', 'Contributors\AccountController@update_halaman');
+//rating
+Route::post('system/rate','RateController@store');
