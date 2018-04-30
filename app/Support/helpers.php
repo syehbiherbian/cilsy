@@ -110,10 +110,9 @@ function notif(){
 
     $contribID = Auth::guard('contributors')->user()->id;
     $notif =ContributorNotif::where('contributor_id',$contribID)->where('status',0)->get();
-    $url = 'http://localhost/cilsy';
     $html='';
     foreach ($notif as  $value) {
-        $html .='<li><a href="'.$url.'/contributor/notif" onclick="notifview('.$value->id.')">'.$value->title.'</a></li>';
+        $html .='<li><a href="contributor/notif" onclick="notifview('.$value->id.')">'.$value->title.'</a></li>';
 
     }
     return $html;

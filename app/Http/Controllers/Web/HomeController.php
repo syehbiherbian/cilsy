@@ -17,7 +17,11 @@ class HomeController extends Controller {
 	public function index() {
 		# code...
 		$now = new DateTime();
-		$mem_id = Auth::guard("members")->user()->id;
+		if(Auth::guard('members')->user()){
+            $mem_id      = Auth::guard('members')->user()->id;
+          }else{
+            $mem_id      = 0;
+        }
 		$categories = Category::where('enable', '=', 1)->get();
 		$newlessons = Lesson::where('enable', '=', 1)->orderBy('id','DESC')->get();
 		$lessons = Lesson::where('enable', '=', 1)->orderBy('id','ASC')->get();

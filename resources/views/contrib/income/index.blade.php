@@ -225,7 +225,7 @@
 						<input type="hidden" name="_method" value="DELETE">
 						<button type="button"  title="Hapus Rekening" data-toggle="tooltip" class="btn btn-danger pull-right"style="margin-top:15px;" data-toggle="tooltip" onclick="checkdelete({{$row->id}})">Hapus</button>
 				  </form>
-				   @endforeach
+				  @endforeach
 			  </div>
           </div>
       </div>
