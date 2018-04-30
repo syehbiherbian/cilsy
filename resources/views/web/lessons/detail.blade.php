@@ -847,6 +847,48 @@ function getPlayList() {
         userActivity = true;
     });
 
+  /* player.on('playing', function() {
+    // console.log('started', player.playlist.currentItem());
+  });
+
+  player.on('canplay', function(){
+    console.log('asdasda');
+  });
+
+player.on('loadstart', function() {
+  console.log('loadstart', player.currentSrc());
+  // console.log('loadstart2', player.canplay());
+  console.log('loadstart1', player.playlist.currentItem());
+});
+
+player.on('loadedmetadata', function() {
+  console.log('metadata1', player.playlist.currentItem());
+  console.log('metadata', player.currentType());
+});
+player.errors();
+player.on('error', function(e) {
+  // e.stopImmediatePropagation();
+  var error = this.player().error();
+  var errors = player.errors.getAll();
+  console.log('errors', this.player().errors());
+  console.log('errors1', errors);
+  console.log(error);
+  console.log(error.code);
+  console.log(player.playlist.currentItem());
+  console.log(this.player());
+});
+
+player.on('tap', function() {
+  console.log('tap');
+}) */
+
+  player.on('ended', function() {
+    // console.log('end', player.playlist.currentItem());
+    var videosrc = player.currentSrc();
+    videoTracking(videosrc);
+    lessonsQuiz(videosrc);
+  });
+
     activityCheck = setInterval(function() {
 
       // Check to see if the mouse has been moved
@@ -969,7 +1011,7 @@ function getPlayList() {
     success: function (data){
 
       // Adding Playlist
-      var player = videojs('video');
+      // var player = videojs('video');
       player.playlist(data);
       player.playlistUi();
 
@@ -980,15 +1022,20 @@ function getPlayList() {
 }
 
 // Video ended
-var video = videojs('video').ready(function(){
+/* var video = videojs('video').ready(function(){
   var player = this;
 
+  player.on('play', function() {
+    console.log('started', player.playlist.currentItem());
+  });
+
   player.on('ended', function() {
+    console.log('end', player.playlist.currentItem());
     var videosrc = player.currentSrc();
     videoTracking(videosrc);
     lessonsQuiz(videosrc);
   });
-});
+}); */
 
 
 function videoTracking(videosrc) {
