@@ -220,7 +220,7 @@ function lessons_publish(){
 
 function search_video_index($videos, $id) {
   foreach ($videos as $key => $video) {
-    if ($video->id == $id) {
+    if ($video['id'] == $id) {
       return $key;
     }
   }
@@ -256,11 +256,13 @@ function insert_array( $array, $search_key, $insert_key, $insert_value, $insert_
 }
 
 function join_video_quiz($videos, $quiz) {
+  $video = $videos->toArray();
+  
   foreach ($quiz as $key=> $q) {
     $after_vid = $q->video_id;
     $idx = search_video_index($videos, $after_vid);
-    $merge = insert_array($videos->toArray(), $idx, 'kuis'.$key, $q->toArray());
+    $videos = insert_array($videos, $idx, 'kuis'.$key, $q->toArray());
   }
-  
-  return array_values($merge);
+
+  return array_values($videos);
 }
