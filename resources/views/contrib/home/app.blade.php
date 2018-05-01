@@ -56,20 +56,16 @@
                         Copyright Cilsy Fiolution 2016-2017
                     </p>
                 </div>
-                <div class="col-md-2 col-xs-4">
-                    <ul class="nav-footer">
-                        <li>Cilsy</li>
-                        <li><a href="#">Tentang</a></li>
-                        <li><a href="#">Blog</a></li>
-                        <li><a href="#">Karir</a></li>
-                        <li><a href="#">FAQ</a></li>
-                    </ul>
+                <div class="col-md-2">
+
+                  <?=Helper::pageMenu();?>
+
                 </div>
                 <div class="col-md-2 col-xs-4">
                     <ul class="nav-footer">
                         <li>Ikuti Kami</li>
-                        <li><a href="#">Facebook</a></li>
-                        <li><a href="#">Instagram</a></li>
+                        <li><a href="https://www.facebook.com/cilsyfiolution/">Facebook</a></li>
+                        <li><a href="https://www.instagram.com/cilsyfiolution/">Instagram</a></li>
                         <li><a href="#">Line</a></li>
                         <li><a href="#">Google+</a></li>
                     </ul>
@@ -77,8 +73,13 @@
                 <div class="col-md-2 col-xs-4">
                     <ul class="nav-footer">
                         <li>Bantuan</li>
-                        <li><a href="#">Kontak</a></li>
-                        <li><a href="#">Kebijakan Layanan</a></li>
+                        <li><a href="{{ url('/kontak') }}">Kontak</a></li>
+                        <li><a href="{{ url('/kebijakan') }}">Kebijakan Layanan</a></li>
+                        <li><a href="{{ url('/carapesan') }}">Cara Pesan & Berlangganan</a></li>
+                        <li><a href="{{ url('member/package') }}">Harga & Perbandingan Paket</a></li>
+                        <li><a href="{{ url('/petunjuk') }}">Petunjuk Pembayaran</a></li>
+                        <li><a href="{{ url('/faq') }}">FAQ</a></li>
+                        <li><a href="{{ url('https://blog.cilsy.id') }}">Blog</a></li>
                     </ul>
                 </div>
                 <div class="col-md-3 col-xs-12">

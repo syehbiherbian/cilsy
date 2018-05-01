@@ -6,11 +6,7 @@ use Auth;
 
 class DashboardController extends Controller {
 	public function home() {
-		if (empty(Auth::guard("contributors")->user())) {
-		  return redirect('contributor/login')->with('errors','Kamu Harus Login terlebih dahulu');
-		} else{
 			return view('contrib.home.home');
-		}
 		
 
 	}

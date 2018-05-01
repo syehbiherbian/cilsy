@@ -21,6 +21,7 @@ use App\Models\Service;
 use App\Models\LessonDetail;
 use App\Models\LessonDetailView;
 use App\Models\Point;
+use App\Models\Quiz;
 
 class LessonsController extends Controller {
 	public function index($by, $keyword) {
@@ -181,6 +182,7 @@ class LessonsController extends Controller {
 			}
 		}
 	}
+
 	public function LessonsQuiz(){
 		if(Auth::guard('members')->user()){
             $mem_id      = Auth::guard('members')->user()->id;
@@ -595,15 +597,17 @@ class LessonsController extends Controller {
 	public function getplaylist() {
 
 		$now = date('Y-m-d');
-		$lessons_id = Input::get('lessons_id');
-		$videos = Video::where('enable', '=', 1)->where('lessons_id', '=', $lessons_id)->orderBy('id', 'asc')->get();
-		if(Auth::guard('members')->user()){
+		$memberID      = 0;
+		if (Auth::guard('members')->user()) {
             $memberID      = Auth::guard('members')->user()->id;
-          }else{
-            $memberID      = 0;
         }
-		$members = Member::where('id', '=', $memberID)->first();
-		$services = Service::where('status', '=', 1)->where('members_id', '=', $memberID)->where('expired', '>=', $now)->first();
+		$lessons_id = Input::get('lessons_id');
+		$videos = Video::where('enable', 1)->where('lessons_id', $lessons_id)->orderBy('id', 'asc')->get();
+		$services = Service::where('status', 1)->where('members_id', $memberID)->where('expired', '>=', $now)->first();
+		$quiz = Quiz::where('lesson_id', $lessons_id)->get();
+		// dd($videos->toArray(), $quiz->toArray());
+		$vidquiz = join_video_quiz($videos, $quiz);
+		// dd($vidquiz);
 
 		$access = 0;
 		if (count($services) > 0) {
@@ -613,16 +617,15 @@ class LessonsController extends Controller {
 		}
 
 		$play = array();
-		$i = 1;
-		foreach ($videos as $key => $video) {
-			if ($i >= 4 && $access == 0) {
+		foreach ($vidquiz as $key => $video) {
+			if ($key >= 3 && $access == 0) {
 				// Guest
 
 				$item = array(
-					'name' => $video->title,
-					'description' => strip_tags($video->description),
+					'name' => $video['title'],
+					'description' => strip_tags($video['description']),
 					'duration' => 'duration',
-					'sources' => 'Invalid',
+					'sources' => 'invalid',
 					'poster' => url('/template/web/img/video-lock.png'),
 					'thumbnail' => array([
 						'srcset' => url('/template/web/img/video-lock.png'),
@@ -636,28 +639,48 @@ class LessonsController extends Controller {
 
 			} else {
 
-				$item = array(
-					'name' => $video->title,
-					'description' => strip_tags($video->description),
-					'duration' => $video->durasi,
-					'sources' => array([
-						'src' => $video->video,
-						'type' => $video->type_video,
-					]),
-					'poster' => $video->image,
-					'thumbnail' => array([
-						'srcset' => $video->image,
-						'type' => 'image/png',
-						'media' => '(min-width: 400px;)',
-					],
-						[
-							'src' => $video->image,
+				if (isset($video['video'])) {
+					$item = array(
+						'name' => $video['title'],
+						'description' => strip_tags($video['description']),
+						'duration' => $video['durasi'],
+						'sources' => array([
+							'src' => url($video['video']),
+							'type' => $video['type_video'],
 						]),
-				);
+						'poster' => url($video['image']),
+						'thumbnail' => array([
+							'srcset' => url($video['image']),
+							'type' => 'image/png',
+							'media' => '(min-width: 400px;)',
+						],
+							[
+								'src' => url($video['image']),
+							]),
+					);
+				} else {
+					$item = array(
+						'name' => $video['title'],
+						'description' => strip_tags($video['description']),
+						// 'duration' => $video->durasi,
+						'sources' => array([
+							'src' => url('/lessons/'),
+							'type' => 'quiz',
+						]),
+						// 'poster' => url($video->image),
+						/* 'thumbnail' => array([
+							'srcset' => url($video->image),
+							'type' => 'image/png',
+							'media' => '(min-width: 400px;)',
+						],
+							[
+								'src' => url($video->image),
+							]), */
+					);
+				}
 
 			}
 			array_push($play, $item);
-			$i++;
 		}
 		return json_encode($play, JSON_UNESCAPED_SLASHES) . "\n";
 		exit;
