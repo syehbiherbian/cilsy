@@ -203,7 +203,7 @@ class LessonsController extends Controller {
 		 //  	$ip_address = $this->getUserIP();
 			$videosrc 	= Input::get('videosrc');
 
-			$video 		= videos::where('video','like','%'.$videosrc.'%')->first();
+			$video 		= Video::where('video','like','%'.$videosrc.'%')->first();
 			$check = Quiz::where('video_id', '=', $video->id)->first();
 
 			if ($check) {
