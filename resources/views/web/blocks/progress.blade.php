@@ -60,7 +60,7 @@
 
 .progressbar li{
   float: left;
-  width: 20%;
+  width: 10%;
   position: relative;
   text-align: center;
 }
@@ -112,7 +112,7 @@
   z-index: -1;
 }
 .progressbar li.active + li:after{
- background: #3aac5d;
+ background: pink;
 }
 .progressbar li.active + li:before{
 border-color: #3aac5d;
@@ -135,12 +135,14 @@ color: white
                 
                 <ul class="progressbar">
                   <?php
-                  $i = 1;
+                  $i = 2;
                   foreach ($get as $video => $videos): ?>
-                  <?php if ($i <= $hits) {?>
-                  <li class="active"></li>
+                  <?php if ($i <= $hits->sum()) {?>
+                     <li class="active"></li>
+                     ::before
                   <?php }else {?>
-                    <li></li>
+                      <li class="active"></li>
+                      ::after
                   <?php } ?>
                   <?php endforeach; ?>
                 </ul>

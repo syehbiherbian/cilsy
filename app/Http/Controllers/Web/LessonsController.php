@@ -136,7 +136,7 @@ class LessonsController extends Controller {
 					}
 				}else { // Create new Viewers
 
-					$store = new Viewers;
+					$store = new Viewer;
 					$store->video_id 		= $video->id;
 					$store->ip_address 	= $ip_address;
 					$store->hits				= 1;
