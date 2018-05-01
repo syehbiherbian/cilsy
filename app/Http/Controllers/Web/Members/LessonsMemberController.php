@@ -32,10 +32,15 @@ class LessonsMemberController extends Controller
             return redirect('/member/signin');
             exit;
           }
+
+
         $last_videos = Viewer::leftJoin('videos', 'videos.id', '=', 'viewers.video_id')
                      ->select('videos.*', 'viewers.*')
                      ->where('viewers.member_id', '=', $mem_id)->orderBy('viewers.updated_at', 'desc')->first();
-        
+    
+        if($last_videos != null){
+
+
         $last_lessons = Lesson::where('lessons.id', '=', $last_videos->lessons_id)->first();
 
         $watched_video = Lesson::join('videos', 'lessons.id', '=', 'videos.lessons_id')
@@ -59,11 +64,14 @@ class LessonsMemberController extends Controller
 
         $progress = count($watched_video)*100/count($get_videos);
         // dd($progress);
+        }else{
+          return redirect('/')->with('message', 'Belum Punya Video'); 
+        }
         return view('web.members.dashboard_tutorial', [
             'progress' => $progress,
             'last' => $last_lessons,
             'lessons' => $get_lessons,
-            // 'videos' => $last_videos,
+             'videos' => $last_videos,
         ]);
     }
     public function detail($slug) {
@@ -101,7 +109,7 @@ class LessonsMemberController extends Controller
         $get_hist = Viewer::select('hits')
                     ->where('member_id', '=', $mem_id)
                     ->where('video_id', '=',$last_videos)->get();
-        dd($get_hist);
+                    
         $progress = count($watched_video)*100/count($get_videos);
 
       if (count($lessons) > 0) {
