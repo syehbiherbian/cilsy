@@ -91,7 +91,7 @@ class ComentsController extends Controller
         DB::table('comments')->insert([
             'lesson_id'     => $lesson_id,
             'contributor_id'=> $uid,
-            'description'   => $isi_balas,
+            'body'   => $isi_balas,
             'parent'        => $comment_id,
             'status'        => 0,
             'created_at'    => new DateTime()
