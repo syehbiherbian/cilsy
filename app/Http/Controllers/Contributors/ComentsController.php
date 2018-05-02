@@ -13,7 +13,7 @@ use DB;
 use App\Models\Contributor;
 use Auth;
 
-class ComentsController extends Controller
+class commentsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -25,26 +25,26 @@ class ComentsController extends Controller
           return redirect('contributor/login');
         }
         $uid = Auth::guard('contributors')->user()->id;
-        $getcomment = DB::table('coments')
-            ->leftJoin('lessons','lessons.id','=','coments.lesson_id')
-            ->where('coments.parent',0)
-            // ->where('coments.status',0)
+        $getcomment = DB::table('comments')
+            ->leftJoin('lessons','lessons.id','=','comments.lesson_id')
+            ->where('comments.parent',0)
+            // ->where('comments.status',0)
             // ->where('member_id','!=',null)
             ->where('lessons.contributor_id',$uid)
-            ->orderBy('coments.created_at','DESC')
-            ->select('coments.*')
+            ->orderBy('comments.created_at','DESC')
+            ->select('comments.*')
             ->get();
 
-        $getabaikan = DB::table('coments')
-            ->leftJoin('lessons','lessons.id','=','coments.lesson_id')
-            ->where('coments.parent',0)
-            // ->where('coments.status',0)
+        $getabaikan = DB::table('comments')
+            ->leftJoin('lessons','lessons.id','=','comments.lesson_id')
+            ->where('comments.parent',0)
+            // ->where('comments.status',0)
             // ->where('member_id','!=',null)
             ->where('lessons.contributor_id',$uid)
-            ->orderBy('coments.created_at','DESC')
-            ->select('coments.*')
+            ->orderBy('comments.created_at','DESC')
+            ->select('comments.*')
             ->get();
-        return view('contrib.coments.index', [
+        return view('contrib.comments.index', [
             'data' => $getcomment,
             'abaikan'=>$getabaikan
         ]);
@@ -56,19 +56,19 @@ class ComentsController extends Controller
         }
         $uid = Auth::guard('contributors')->user()->id;
 
-        $detailcomment  = DB::table('coments')->where('id',$id)->first();
+        $detailcomment  = DB::table('comments')->where('id',$id)->first();
         $getlesson      = DB::table('lessons')->where('id',$detailcomment->lesson_id)->first();
-        $getcomment     = DB::table('coments')
-            ->leftJoin('members','members.id','=','coments.member_id')
-            ->where('coments.lesson_id',$getlesson->id)
-            ->where('coments.parent',0)
-            ->where('coments.status',0)
-            ->orderBy('coments.created_at','DESC')
-            ->select('coments.*','members.username as username')
+        $getcomment     = DB::table('comments')
+            ->leftJoin('members','members.id','=','comments.member_id')
+            ->where('comments.lesson_id',$getlesson->id)
+            ->where('comments.parent',0)
+            ->where('comments.status',0)
+            ->orderBy('comments.created_at','DESC')
+            ->select('comments.*','members.username as username')
             ->get();
 
         if ($getlesson->contributor_id == $uid) {
-            return view('contrib.coments.detail',[
+            return view('contrib.comments.detail',[
                 'datalesson'    => $getlesson,
                 'datacomment'   => $getcomment
             ]);
@@ -88,7 +88,7 @@ class ComentsController extends Controller
         $lesson_id  = Input::get('lesson_id');
         $lessons = DB::table('lessons')->where('id',$lesson_id)->first();
 
-        DB::table('coments')->insert([
+        DB::table('comments')->insert([
             'lesson_id'     => $lesson_id,
             'contributor_id'=> $uid,
             'description'   => $isi_balas,
@@ -96,7 +96,7 @@ class ComentsController extends Controller
             'status'        => 0,
             'created_at'    => new DateTime()
         ]);
-        $check=DB::table('coments')->where('parent',$comment_id)->get();
+        $check=DB::table('comments')->where('parent',$comment_id)->get();
         if(count($check)==1){
             $check_contri=Contributor::where('id',$uid)->first();
             if(count($check_contri)>0){
@@ -119,7 +119,7 @@ class ComentsController extends Controller
 
         DB::table('contributor_notif')->insert([
             'contributor_id'=> $uid,
-            'category'=>'coments',
+            'category'=>'comments',
             'title'   => 'Anda berhasil mereply komentar',
             'notif'        => 'Anda berhasil mereply komentar pada '.$lessons->title,
             'status'        => 0,
@@ -134,11 +134,11 @@ class ComentsController extends Controller
           return redirect('contributor/login');
         }
         $uid = Auth::guard('contributors')->user()->id;
-        $detailcomment  = DB::table('coments')->where('id',$id)->first();
+        $detailcomment  = DB::table('comments')->where('id',$id)->first();
         $getlesson      = DB::table('lessons')->where('id',$detailcomment->lesson_id)->first();
 
         if ($getlesson->contributor_id == $uid) {
-            DB::table('coments')->where('id',$id)->update([
+            DB::table('comments')->where('id',$id)->update([
                 'status' => 1
             ]);
 
