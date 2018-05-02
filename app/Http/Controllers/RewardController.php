@@ -56,7 +56,6 @@ class rewardController extends Controller
 
         $rules = array(
           'code'      => 'required|unique:reward',
-          'slug'      => 'required|unique:reward',
           'name'      => 'required',
           'value'     => 'required',
           'poin'      => 'required',
@@ -88,7 +87,6 @@ class rewardController extends Controller
             $cat        = Input::get('cat');
             $desc       = Input::get('desc');
             $type       = Input::get('type');
-            $slug       = Input::get('slug');
             $image       = Input::get('image');
             $url        = Input::get('url');
             $content       = Input::get('content');
@@ -111,7 +109,6 @@ class rewardController extends Controller
             $store->description  = $desc;
             $store->created_at  = $now;
             $store->type        = $type;
-            $store->slug        = $slug;
             $store->image       = $image;
             $store->content      = $content;
             $store->url         =$url;
@@ -161,7 +158,6 @@ class rewardController extends Controller
         $rules = array(
             'code'       => 'required|unique:reward,code,'.$id,
             'name' => 'required',
-            'slug'       => 'required|unique:reward,slug,'.$id,
             'value'     => 'required',
             'poin'   => 'required',
             'start'      => 'required',
@@ -192,7 +188,6 @@ class rewardController extends Controller
             $cat        = Input::get('cat');
             $desc       = Input::get('desc');
             $type       = Input::get('type');
-            $slug       = Input::get('slug');
             $image      =Input::get('image');
             $content    = Input::get('content');
             $url        =Input::get('url');
@@ -215,7 +210,6 @@ class rewardController extends Controller
             $store->category_id =$cat;
             $store->description =$desc;
             $store->type       = $type;
-            $store->slug       = $slug;
             $store->image =$image;
             $store->content =$content;
             $store->url        = $url;

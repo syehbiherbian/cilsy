@@ -59,7 +59,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="contributor/reward">
+                                    <a href="{{url('contributor/reward')}}">
                                         {{points()}} Pts
                                     </a>
                                 </li>
