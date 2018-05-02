@@ -103,7 +103,7 @@
 
 
 			<?php
-				$cekanswer = DB::table('comments')->where('parent_id_id',$dat->id)->where('status',0)->orderBy('created_at','DESC')->first();
+				$cekanswer = DB::table('comments')->where('parent_id',$dat->id)->where('status',0)->orderBy('created_at','DESC')->first();
 				if(count($cekanswer)>0){
 
 				if(empty($cekanswer->contributor_id)){
@@ -154,7 +154,7 @@
   			@foreach($data as $dat)
 			 @if($dat->status==0)
 			 <?php
-			 	$cek = DB::table('comments')->where('parent_id_id',$dat->id)->where('status',0)->count();
+			 	$cek = DB::table('comments')->where('parent_id',$dat->id)->where('status',0)->count();
 				?>
 				@if($cek >0)
 				<tr>
