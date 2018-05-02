@@ -103,7 +103,7 @@
 
 
 			<?php
-				$cekanswer = DB::table('coments')->where('parent',$dat->id)->where('status',0)->orderBy('created_at','DESC')->first();
+				$cekanswer = DB::table('comments')->where('parent_id',$dat->id)->where('status',0)->orderBy('created_at','DESC')->first();
 				if(count($cekanswer)>0){
 
 				if(empty($cekanswer->contributor_id)){
@@ -112,7 +112,7 @@
 
               <tr>
                 <td><?= date('d/m/Y',strtotime($cekanswer->created_at)) ?></td>
-                <td>{{ $cekanswer->description }}</td>
+                <td>{{ $cekanswer->body }}</td>
                 <td>
                    <a href="{{ url('contributor/coments/detail/'.$dat->id) }}" class="btn blue">Lihat</a>
                  	<a href="javascript:void(0)" class="btn red" onclick="$('#un{{ $dat->id }}').submit();">Abaikan</a>
@@ -126,7 +126,7 @@
 			  @if($dat->status==0)
 				<tr>
 				  <td><?= date('d/m/Y',strtotime($dat->created_at)) ?></td>
-				  <td>{{ $dat->description }}</td>
+				  <td>{{ $dat->body }}</td>
 				  <td>
 					 <a href="{{ url('contributor/coments/detail/'.$dat->id) }}" class="btn blue">Lihat</a>
 					 <a href="javascript:void(0)" class="btn red" onclick="$('#un{{ $dat->id }}').submit();">Abaikan</a>
@@ -154,12 +154,12 @@
   			@foreach($data as $dat)
 			 @if($dat->status==0)
 			 <?php
-			 	$cek = DB::table('coments')->where('parent',$dat->id)->where('status',0)->count();
+			 	$cek = DB::table('comments')->where('parent_id',$dat->id)->where('status',0)->count();
 				?>
 				@if($cek >0)
 				<tr>
 				  <td><?= date('d/m/Y',strtotime($dat->created_at)) ?></td>
-				  <td>{{ $dat->description }}</td>
+				  <td>{{ $dat->body }}</td>
 				  <td>
 					 <a href="{{ url('contributor/coments/detail/'.$dat->id) }}" class="btn blue">Lihat</a>
 					 <a href="javascript:void(0)" class="btn red" onclick="$('#var{{ $dat->id }}').submit();">Abaikan</a>
@@ -172,7 +172,7 @@
 				@elseif($dat->status==1)
 				<tr>
 				  <td><?= date('d/m/Y',strtotime($dat->created_at)) ?></td>
-				  <td>{{ $dat->description }}</td>
+				  <td>{{ $dat->body }}</td>
 				  <td>
 					 <a href="{{ url('contributor/coments/detail/'.$dat->id) }}" class="btn blue">Lihat</a>
 					 <a href="javascript:void(0)" class="btn red" onclick="$('#var{{ $dat->id }}').submit();">Abaikan</a>
@@ -193,7 +193,7 @@
 						if (!empty($cekanswer->member_id)) { ?>
 							<!-- <tr>
 							 <td><?= date('d/m/Y',strtotime($cekanswer->created_at)) ?></td>
-							 <td>{{ $cekanswer->description }}</td>
+							 <td>{{ $cekanswer->body }}</td>
 							 <td>
 								<a href="{{ url('contributor/coments/detail/'.$dat->id) }}" class="btn blue">Lihat</a>
 								<a href="javascript:void(0)" class="btn red" onclick="$('#cek{{ $dat->id }}').submit();">Abaikan</a>
@@ -209,7 +209,7 @@
   				?>
 		                <tr>
 		                  <td><?= date('d/m/Y',strtotime($cekanswer->created_at)) ?></td>
-		                  <td>{{ $cekanswer->description }}</td>
+		                  <td>{{ $cekanswer->body }}</td>
 		                  <td>
 		                     <a href="{{ url('contributor/coments/detail/'.$dat->id) }}" class="btn blue">Lihat</a>
 		                     <a href="javascript:void(0)" class="btn red" onclick="$('#cek{{ $dat->id }}').submit();">Abaikan</a>
@@ -247,7 +247,7 @@
 				  @if($dat->status==0)
 	  				<tr>
 	  				  <td><?= date('d/m/Y',strtotime($dat->created_at)) ?></td>
-	  				  <td>{{ $dat->description }}</td>
+	  				  <td>{{ $dat->body }}</td>
 	  				  <td>
 	  					 <a href="{{ url('contributor/coments/detail/'.$dat->id) }}" class="btn blue">Lihat</a>
 	  					 <a href="javascript:void(0)" class="btn red" onclick="$('#all1{{ $dat->id }}').submit();">Abaikan</a>
@@ -268,7 +268,7 @@
   							if (!empty($cekanswer->member_id)) { ?>
   								<tr>
   								 <td><?= date('d/m/Y',strtotime($cekanswer->created_at)) ?></td>
-  								 <td>{{ $cekanswer->description }}</td>
+  								 <td>{{ $cekanswer->body }}</td>
   								 <td>
   									<a href="{{ url('contributor/coments/detail/'.$dat->id) }}" class="btn blue">Lihat</a>
   									<a href="javascript:void(0)" class="btn red" onclick="$('#all2{{ $dat->id }}').submit();">Abaikan</a>
@@ -284,7 +284,7 @@
   	  				?>
   			                <tr>
   			                  <td><?= date('d/m/Y',strtotime($cekanswer->created_at)) ?></td>
-  			                  <td>{{ $cekanswer->description }}</td>
+  			                  <td>{{ $cekanswer->body }}</td>
   			                  <td>
   			                     <a href="{{ url('contributor/coments/detail/'.$dat->id) }}" class="btn blue">Lihat</a>
   			                     <a href="javascript:void(0)" class="btn red" onclick="$('#all3{{ $dat->id }}').submit();">Abaikan</a>
