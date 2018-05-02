@@ -44,7 +44,7 @@ class ComentsController extends Controller
             ->orderBy('comments.created_at','DESC')
             ->select('comments.*')
             ->get();
-        return view('contrib.comments.index', [
+        return view('contrib.coments.index', [
             'data' => $getcomment,
             'abaikan'=>$getabaikan
         ]);
@@ -61,14 +61,14 @@ class ComentsController extends Controller
         $getcomment     = DB::table('comments')
             ->leftJoin('members','members.id','=','comments.member_id')
             ->where('comments.lesson_id',$getlesson->id)
-            ->where('comments.parent',0)
+            ->where('comments.parent_id',0)
             ->where('comments.status',0)
             ->orderBy('comments.created_at','DESC')
             ->select('comments.*','members.username as username')
             ->get();
 
         if ($getlesson->contributor_id == $uid) {
-            return view('contrib.comments.detail',[
+            return view('contrib.coments.detail',[
                 'datalesson'    => $getlesson,
                 'datacomment'   => $getcomment
             ]);
