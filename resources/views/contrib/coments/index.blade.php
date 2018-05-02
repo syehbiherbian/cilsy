@@ -103,7 +103,7 @@
 
 
 			<?php
-				$cekanswer = DB::table('comments')->where('parent_id',$dat->id)->where('status',0)->orderBy('created_at','DESC')->first();
+				$cekanswer = DB::table('comments')->where('parent_id_id',$dat->id)->where('status',0)->orderBy('created_at','DESC')->first();
 				if(count($cekanswer)>0){
 
 				if(empty($cekanswer->contributor_id)){
@@ -114,9 +114,9 @@
                 <td><?= date('d/m/Y',strtotime($cekanswer->created_at)) ?></td>
                 <td>{{ $cekanswer->body }}</td>
                 <td>
-                   <a href="{{ url('contributor/coments/detail/'.$dat->id) }}" class="btn blue">Lihat</a>
+                   <a href="{{ url('contributor/comments/detail/'.$dat->id) }}" class="btn blue">Lihat</a>
                  	<a href="javascript:void(0)" class="btn red" onclick="$('#un{{ $dat->id }}').submit();">Abaikan</a>
-					<form id="un{{ $dat->id }}" class="" action="{{ url('contributor/coments/deletecomment/'.$cekanswer->id) }}" method="post">
+					<form id="un{{ $dat->id }}" class="" action="{{ url('contributor/comments/deletecomment/'.$cekanswer->id) }}" method="post">
 						{{ csrf_field() }}
 					</form>
                 </td>
@@ -128,9 +128,9 @@
 				  <td><?= date('d/m/Y',strtotime($dat->created_at)) ?></td>
 				  <td>{{ $dat->body }}</td>
 				  <td>
-					 <a href="{{ url('contributor/coments/detail/'.$dat->id) }}" class="btn blue">Lihat</a>
+					 <a href="{{ url('contributor/comments/detail/'.$dat->id) }}" class="btn blue">Lihat</a>
 					 <a href="javascript:void(0)" class="btn red" onclick="$('#un{{ $dat->id }}').submit();">Abaikan</a>
-					 <form id="un{{ $dat->id }}" class="" action="{{ url('contributor/coments/deletecomment/'.$dat->id) }}" method="post">
+					 <form id="un{{ $dat->id }}" class="" action="{{ url('contributor/comments/deletecomment/'.$dat->id) }}" method="post">
 						 {{ csrf_field() }}
 					 </form>
 				  </td>
@@ -154,16 +154,16 @@
   			@foreach($data as $dat)
 			 @if($dat->status==0)
 			 <?php
-			 	$cek = DB::table('comments')->where('parent_id',$dat->id)->where('status',0)->count();
+			 	$cek = DB::table('comments')->where('parent_id_id',$dat->id)->where('status',0)->count();
 				?>
 				@if($cek >0)
 				<tr>
 				  <td><?= date('d/m/Y',strtotime($dat->created_at)) ?></td>
 				  <td>{{ $dat->body }}</td>
 				  <td>
-					 <a href="{{ url('contributor/coments/detail/'.$dat->id) }}" class="btn blue">Lihat</a>
+					 <a href="{{ url('contributor/comments/detail/'.$dat->id) }}" class="btn blue">Lihat</a>
 					 <a href="javascript:void(0)" class="btn red" onclick="$('#var{{ $dat->id }}').submit();">Abaikan</a>
-					 <form id="var{{ $dat->id }}" class="" action="{{ url('contributor/coments/deletecomment/'.$dat->id) }}" method="post">
+					 <form id="var{{ $dat->id }}" class="" action="{{ url('contributor/comments/deletecomment/'.$dat->id) }}" method="post">
 						 {{ csrf_field() }}
 					 </form>
 				  </td>
@@ -174,9 +174,9 @@
 				  <td><?= date('d/m/Y',strtotime($dat->created_at)) ?></td>
 				  <td>{{ $dat->body }}</td>
 				  <td>
-					 <a href="{{ url('contributor/coments/detail/'.$dat->id) }}" class="btn blue">Lihat</a>
+					 <a href="{{ url('contributor/comments/detail/'.$dat->id) }}" class="btn blue">Lihat</a>
 					 <a href="javascript:void(0)" class="btn red" onclick="$('#var{{ $dat->id }}').submit();">Abaikan</a>
-					 <form id="var{{ $dat->id }}" class="" action="{{ url('contributor/coments/deletecomment/'.$dat->id) }}" method="post">
+					 <form id="var{{ $dat->id }}" class="" action="{{ url('contributor/comments/deletecomment/'.$dat->id) }}" method="post">
 						 {{ csrf_field() }}
 					 </form>
 				  </td>
@@ -185,7 +185,7 @@
 
   			<?php
 
-  				$cekanswers = DB::table('coments')->where('parent',$dat->id)->where('status',0)->orderBy('created_at','ASC')->get();
+  				$cekanswers = DB::table('comments')->where('parent_id',$dat->id)->where('status',0)->orderBy('created_at','ASC')->get();
 
 				$i= 0;
 				foreach ($cekanswers as  $cekanswer) {
@@ -195,9 +195,9 @@
 							 <td><?= date('d/m/Y',strtotime($cekanswer->created_at)) ?></td>
 							 <td>{{ $cekanswer->body }}</td>
 							 <td>
-								<a href="{{ url('contributor/coments/detail/'.$dat->id) }}" class="btn blue">Lihat</a>
+								<a href="{{ url('contributor/comments/detail/'.$dat->id) }}" class="btn blue">Lihat</a>
 								<a href="javascript:void(0)" class="btn red" onclick="$('#cek{{ $dat->id }}').submit();">Abaikan</a>
-								<form id="cek{{ $dat->id }}" class="" action="{{ url('contributor/coments/deletecomment/'.$cekanswer->id) }}" method="post">
+								<form id="cek{{ $dat->id }}" class="" action="{{ url('contributor/comments/deletecomment/'.$cekanswer->id) }}" method="post">
 									{{ csrf_field() }}
 								</form>
 							 </td>
@@ -211,9 +211,9 @@
 		                  <td><?= date('d/m/Y',strtotime($cekanswer->created_at)) ?></td>
 		                  <td>{{ $cekanswer->body }}</td>
 		                  <td>
-		                     <a href="{{ url('contributor/coments/detail/'.$dat->id) }}" class="btn blue">Lihat</a>
+		                     <a href="{{ url('contributor/comments/detail/'.$dat->id) }}" class="btn blue">Lihat</a>
 		                     <a href="javascript:void(0)" class="btn red" onclick="$('#cek{{ $dat->id }}').submit();">Abaikan</a>
-							 <form id="cek{{ $dat->id }}" class="" action="{{ url('contributor/coments/deletecomment/'.$cekanswer->id) }}" method="post">
+							 <form id="cek{{ $dat->id }}" class="" action="{{ url('contributor/comments/deletecomment/'.$cekanswer->id) }}" method="post">
 								 {{ csrf_field() }}
 							 </form>
 		                  </td>
@@ -249,9 +249,9 @@
 	  				  <td><?= date('d/m/Y',strtotime($dat->created_at)) ?></td>
 	  				  <td>{{ $dat->body }}</td>
 	  				  <td>
-	  					 <a href="{{ url('contributor/coments/detail/'.$dat->id) }}" class="btn blue">Lihat</a>
+	  					 <a href="{{ url('contributor/comments/detail/'.$dat->id) }}" class="btn blue">Lihat</a>
 	  					 <a href="javascript:void(0)" class="btn red" onclick="$('#all1{{ $dat->id }}').submit();">Abaikan</a>
-	  					 <form id="all1{{ $dat->id }}" class="" action="{{ url('contributor/coments/deletecomment/'.$dat->id) }}" method="post">
+	  					 <form id="all1{{ $dat->id }}" class="" action="{{ url('contributor/comments/deletecomment/'.$dat->id) }}" method="post">
 	  						 {{ csrf_field() }}
 	  					 </form>
 	  				  </td>
@@ -260,7 +260,7 @@
 
   	  			<?php
 
-  	  				$cekanswers = DB::table('coments')->where('parent',$dat->id)->where('status',0)->orderBy('created_at','ASC')->get();
+  	  				$cekanswers = DB::table('comments')->where('parent_id',$dat->id)->where('status',0)->orderBy('created_at','ASC')->get();
 
   					$i= 0;
   					foreach ($cekanswers as  $cekanswer) {
@@ -270,9 +270,9 @@
   								 <td><?= date('d/m/Y',strtotime($cekanswer->created_at)) ?></td>
   								 <td>{{ $cekanswer->body }}</td>
   								 <td>
-  									<a href="{{ url('contributor/coments/detail/'.$dat->id) }}" class="btn blue">Lihat</a>
+  									<a href="{{ url('contributor/comments/detail/'.$dat->id) }}" class="btn blue">Lihat</a>
   									<a href="javascript:void(0)" class="btn red" onclick="$('#all2{{ $dat->id }}').submit();">Abaikan</a>
-  									<form id="all2{{ $dat->id }}" class="" action="{{ url('contributor/coments/deletecomment/'.$cekanswer->id) }}" method="post">
+  									<form id="all2{{ $dat->id }}" class="" action="{{ url('contributor/comments/deletecomment/'.$cekanswer->id) }}" method="post">
   										{{ csrf_field() }}
   									</form>
   								 </td>
@@ -286,9 +286,9 @@
   			                  <td><?= date('d/m/Y',strtotime($cekanswer->created_at)) ?></td>
   			                  <td>{{ $cekanswer->body }}</td>
   			                  <td>
-  			                     <a href="{{ url('contributor/coments/detail/'.$dat->id) }}" class="btn blue">Lihat</a>
+  			                     <a href="{{ url('contributor/comments/detail/'.$dat->id) }}" class="btn blue">Lihat</a>
   			                     <a href="javascript:void(0)" class="btn red" onclick="$('#all3{{ $dat->id }}').submit();">Abaikan</a>
-  								 <form id="all3{{ $dat->id }}" class="" action="{{ url('contributor/coments/deletecomment/'.$cekanswer->id) }}" method="post">
+  								 <form id="all3{{ $dat->id }}" class="" action="{{ url('contributor/comments/deletecomment/'.$cekanswer->id) }}" method="post">
   									 {{ csrf_field() }}
   								 </form>
   			                  </td>
