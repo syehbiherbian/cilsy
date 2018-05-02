@@ -13,7 +13,7 @@ use DB;
 use App\Models\Contributor;
 use Auth;
 
-class commentsController extends Controller
+class ComentsController extends Controller
 {
     /**
      * Display a listing of the resource.
