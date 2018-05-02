@@ -92,7 +92,7 @@ class ComentsController extends Controller
             'lesson_id'     => $lesson_id,
             'contributor_id'=> $uid,
             'body'   => $isi_balas,
-            'parent'        => $comment_id,
+            'parent_id'        => $comment_id,
             'status'        => 0,
             'created_at'    => new DateTime()
         ]);
