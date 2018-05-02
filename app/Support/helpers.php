@@ -112,7 +112,7 @@ function notif(){
     $notif =ContributorNotif::where('contributor_id',$contribID)->where('status',0)->get();
     $html='';
     foreach ($notif as  $value) {
-        $html .='<li><a href="/notif" onclick="notifview('.$value->id.')">'.$value->title.'</a></li>';
+        $html .='<li><a href="notif" onclick="notifview('.$value->id.')">'.$value->title.'</a></li>';
 
     }
     return $html;
