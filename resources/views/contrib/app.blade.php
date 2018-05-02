@@ -117,7 +117,7 @@
                 </a>
             </li>
             <li>
-                <a href="{{ url('contributor/coments') }}">
+                <a href="{{ url('contributor/comments') }}">
                     <img src="{{asset('template/kontributor/img/icon/KelolaPertanyaan.png')}}" alt="" />
                     <span>Kelola Pertanyaan</span>
                 </a>

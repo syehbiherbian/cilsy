@@ -91,15 +91,15 @@
                     <strong>{{ $comment->username }}</strong> pada <strong><?= date('d/m/Y',strtotime($comment->created_at)) ?></strong>
 					<strong style="color:#ff5e10;">@if($comment->member_id !==null)  User @endif @if($comment->contributor_id  !==null)  Contributor @endif</strong>
 					<div class="col-md-12" style="margin-top:10px;padding-left:5%;">
-							{{ $comment->description }}
+							{{ $comment->body }}
 					</div>
 						<br><br>
 						<?php
-						$getchild = DB::table('coments')
+						$getchild = DB::table('comments')
 							->leftJoin('members','members.id','=','coments.member_id')
 							->leftJoin('contributors','contributors.id','=','coments.contributor_id')
 							->where('coments.lesson_id',$datalesson->id)
-							->where('parent',$comment->id)
+							->where('parent_id',$comment->id)
 							->orderBy('coments.created_at','ASC')
 							->select('coments.*','members.username as username','contributors.username as contriname')
 							->get();
