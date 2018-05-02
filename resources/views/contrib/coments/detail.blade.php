@@ -97,7 +97,7 @@
 						<?php
 						$getchild = DB::table('comments')
 							->leftJoin('members','members.id','=','comments.member_id')
-							->leftJoin('contributors','contributors.id','=','coments.contributor_id')
+							->leftJoin('contributors','contributors.id','=','comments.contributor_id')
 							->where('comments.lesson_id',$datalesson->id)
 							->where('parent_id',$comment->id)
 							->orderBy('comments.created_at','ASC')
