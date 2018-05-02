@@ -27,7 +27,7 @@ class ComentsController extends Controller
         $uid = Auth::guard('contributors')->user()->id;
         $getcomment = DB::table('comments')
             ->leftJoin('lessons','lessons.id','=','comments.lesson_id')
-            ->where('comments.parent',0)
+            ->where('comments.parent_id',0)
             // ->where('comments.status',0)
             // ->where('member_id','!=',null)
             ->where('lessons.contributor_id',$uid)
@@ -37,7 +37,7 @@ class ComentsController extends Controller
 
         $getabaikan = DB::table('comments')
             ->leftJoin('lessons','lessons.id','=','comments.lesson_id')
-            ->where('comments.parent',0)
+            ->where('comments.parent_id',0)
             // ->where('comments.status',0)
             // ->where('member_id','!=',null)
             ->where('lessons.contributor_id',$uid)
