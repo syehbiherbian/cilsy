@@ -160,7 +160,7 @@
 
         $.ajax({
             type    :'POST',
-            url     :'{{ url("contributor/coments/postcomment") }}',
+            url     :'{{ url("contributor/comments/postcomment") }}',
             data    :datapost,
             success:function(data){
                 if (data == 1) {
