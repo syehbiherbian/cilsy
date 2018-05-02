@@ -285,10 +285,10 @@ Route::get('ajax/notif/view','Contributors\NotifController@view');
 Route::get('ajax/notif/read','Contributors\NotifController@read');
 Route::post('contributor/notif/delete/{id}','Contributors\NotifController@delete');
 // Coments
-Route::get('contributor/coments','Contributors\ComentsController@index');
-Route::get('contributor/coments/detail/{coment_id}','Contributors\ComentsController@detail');
-Route::post('contributor/coments/postcomment','Contributors\ComentsController@postcomment');
-Route::post('contributor/coments/deletecomment/{coment_id}','Contributors\ComentsController@deletecomment');
+Route::get('contributor/comments','Contributors\ComentsController@index');
+Route::get('contributor/comments/detail/{coment_id}','Contributors\ComentsController@detail');
+Route::post('contributor/comments/postcomment','Contributors\ComentsController@postcomment');
+Route::post('contributor/comments/deletecomment/{coment_id}','Contributors\ComentsController@deletecomment');
 
 //Akun Contributor dan Halaman Contributor
 Route::get('contributor/account/informasi', 'Contributors\AccountController@informasi');
