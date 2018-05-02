@@ -96,12 +96,12 @@
 						<br><br>
 						<?php
 						$getchild = DB::table('comments')
-							->leftJoin('members','members.id','=','coments.member_id')
+							->leftJoin('members','members.id','=','comments.member_id')
 							->leftJoin('contributors','contributors.id','=','coments.contributor_id')
-							->where('coments.lesson_id',$datalesson->id)
+							->where('comments.lesson_id',$datalesson->id)
 							->where('parent_id',$comment->id)
-							->orderBy('coments.created_at','ASC')
-							->select('coments.*','members.username as username','contributors.username as contriname')
+							->orderBy('comments.created_at','ASC')
+							->select('comments.*','members.username as username','contributors.username as contriname')
 							->get();
 
 						if (count($getchild) > 0) {
@@ -118,7 +118,7 @@
 								</strong> pada <strong><?= date('d/m/Y',strtotime($child->created_at)) ?></strong>
 								<strong style="color:#ff5e10;">@if($child->member_id !==null)  User @endif @if($child->contributor_id  !==null)  Contributor @endif</strong>
 								<div class="col-md-12" style="margin-top:10px;margin-bottom:10px;padding-left:5%;">
-									{{ $child->description }}
+									{{ $child->body }}
 								</div>
 								<div class="clearfix"></div>
 						</div>
