@@ -96,7 +96,7 @@ class ComentsController extends Controller
             'status'        => 0,
             'created_at'    => new DateTime()
         ]);
-        $check=DB::table('comments')->where('parent',$comment_id)->get();
+        $check=DB::table('comments')->where('parent_id',$comment_id)->get();
         if(count($check)==1){
             $check_contri=Contributor::where('id',$uid)->first();
             if(count($check_contri)>0){
