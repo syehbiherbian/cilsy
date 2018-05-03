@@ -43,15 +43,6 @@ class LessonsMemberController extends Controller
 
         $last_lessons = Lesson::where('lessons.id', '=', $last_videos->lessons_id)->first();
 
-        $watched_video = Lesson::join('videos', 'lessons.id', '=', 'videos.lessons_id')
-                       ->join('viewers', 'viewers.video_id', '=', 'videos.id')
-                       ->select('viewers.member_id', 'lessons.title', 'videos.lessons_id', DB::raw(count('DISTINCT viewers.video_id')))
-                       // ->count()
-                       ->where('viewers.member_id', '=', $mem_id)
-                       ->groupBy('viewers.member_id', 'lessons.title', 'videos.lessons_id')
-                       ->orderBy('viewers.created_at', 'asc')
-                       ->get();
-
         $get_lessons = Lesson::join('videos', 'lessons.id', '=', 'videos.lessons_id')
                      ->join('viewers', 'videos.id', '=', 'viewers.video_id')
                      ->where('viewers.member_id', '=', $mem_id)
@@ -60,10 +51,12 @@ class LessonsMemberController extends Controller
                      ->get(['viewers.member_id', 'lessons.*']);           
 
         $get_videos = Video::where('videos.lessons_id', '=', $last_videos->lessons_id)->get();
-        
+        // dd( count($watched_video));
+        $get_hist = Viewer::join('videos', 'viewers.video_id', '=', 'videos.id')
+        ->where('viewers.member_id', '=', $mem_id)
+        ->where('videos.lessons_id', '=', $last_videos->lessons_id)->get();
 
-        $progress = count($watched_video)*100/count($get_videos);
-        // dd($progress);
+        $progress = count($get_hist)*100/count($get_videos);
         }else{
           return redirect('/')->with('message', 'Belum Punya Video'); 
         }
@@ -88,14 +81,14 @@ class LessonsMemberController extends Controller
         
         $last_lessons = Lesson::where('lessons.id', '=', $last_videos->lessons_id)->first();
 
-        $watched_video = Lesson::join('videos', 'lessons.id', '=', 'videos.lessons_id')
-                       ->join('viewers', 'viewers.video_id', '=', 'videos.id')
-                       ->select('viewers.member_id', 'lessons.title', 'videos.lessons_id', DB::raw(count('DISTINCT viewers.video_id')))
-                       // ->count()
-                       ->where('viewers.member_id', '=', $mem_id)
-                       ->groupBy('viewers.member_id', 'lessons.title', 'videos.lessons_id')
-                       ->orderBy('viewers.created_at', 'asc')
-                       ->get();
+        // $watched_video = Lesson::join('videos', 'lessons.id', '=', 'videos.lessons_id')
+        //                ->join('viewers', 'viewers.video_id', '=', 'videos.id')
+        //                ->select('viewers.member_id', 'lessons.title', 'videos.lessons_id', DB::raw(count('DISTINCT viewers.video_id')))
+        //                // ->count()
+        //                ->where('viewers.member_id', '=', $mem_id)
+        //                ->groupBy('viewers.member_id', 'lessons.title', 'videos.lessons_id')
+        //                ->orderBy('viewers.created_at', 'asc')
+        //                ->get();
 
         $get_lessons = Lesson::join('videos', 'lessons.id', '=', 'videos.lessons_id')
                      ->join('viewers', 'videos.id', '=', 'viewers.video_id')
@@ -106,12 +99,14 @@ class LessonsMemberController extends Controller
 
         $get_videos = Video::where('videos.lessons_id', '=', $last_videos->lessons_id)->get();
 
-        $get_hist = Viewer::select('hits')
-                    ->where('member_id', '=', $mem_id)
-                    ->where('video_id', '=',$last_videos)->get();
-                    
-        $progress = count($watched_video)*100/count($get_videos);
+        // $get_hist = Viewer::select('hits')
+        //             ->where('member_id', '=', $mem_id)->get();  
 
+        $get_hist = Viewer::join('videos', 'viewers.video_id', '=', 'videos.id')
+                    ->where('viewers.member_id', '=', $mem_id)
+                    ->where('videos.lessons_id', '=', $last_videos->lessons_id)->get();
+                    
+        $progress = count($get_hist)*100/count($get_videos);
       if (count($lessons) > 0) {
                 $main_videos = Video::where('enable', '=', 1)->where('lessons_id', '=', $lessons->id)->orderBy('id', 'asc')->get();
                 $files = File::where('enable', '=', 1)->where('lesson_id', '=', $lessons->id)->orderBy('id', 'asc')->get();

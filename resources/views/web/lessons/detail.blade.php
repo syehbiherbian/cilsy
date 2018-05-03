@@ -559,6 +559,38 @@
     -ms-flex: none;
     flex: none;
 }
+.vjs-fade-out {
+  display: block;
+  visibility: hidden;
+  opacity: 0;
+
+  -webkit-transition: visibility 1.5s, opacity 1.5s;
+     -moz-transition: visibility 1.5s, opacity 1.5s;
+      -ms-transition: visibility 1.5s, opacity 1.5s;
+       -o-transition: visibility 1.5s, opacity 1.5s;
+          transition: visibility 1.5s, opacity 1.5s;
+
+  /* Wait a moment before fading out the control bar */
+  -webkit-transition-delay: 2s;
+     -moz-transition-delay: 2s;
+      -ms-transition-delay: 2s;
+       -o-transition-delay: 2s;
+          transition-delay: 2s;
+}
+.vjs-default-skin.vjs-user-inactive .vjs-control-bar {
+  display: block;
+  visibility: hidden;
+  opacity: 0;
+
+  -webkit-transition: visibility 1.5s, opacity 1.5s;
+     -moz-transition: visibility 1.5s, opacity 1.5s;
+      -ms-transition: visibility 1.5s, opacity 1.5s;
+       -o-transition: visibility 1.5s, opacity 1.5s;
+          transition: visibility 1.5s, opacity 1.5s;
+}
+.vjs-fullscreen.vjs-user-inactive {
+  cursor: none;
+}
 </style>
 
 <div id="content-section">
@@ -821,30 +853,6 @@ function getPlayList() {
               }
   var player = videojs(document.querySelector('video'), {
       inactivityTimeout: 0
-    });
-    {{--  var resetDelay, inactivityTimeout;
-    player.on('fullscreenchange', function(e) {
-    if (player.isFullscreen()) {
-      if (player.userActive(false)){
-          player.removeAttr('controls');
-      }
-    }
-    });  --}}
-
-    resetDelay = function(){
-        clearTimeout(inactivityTimeout);
-        inactivityTimeout = setTimeout(function(){
-            player.userActive(false);
-        }, 20);
-    };
-
-    player.on('mousemove', function(){
-        resetDelay();
-    })
-    var userActivity, activityCheck;
-
-    player.on('mousemove', function(){
-        userActivity = true;
     });
 
   /* player.on('playing', function() {
