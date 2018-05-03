@@ -28,6 +28,7 @@
         top: 6px;
         color: #fff;
         }
+        .grayscale { filter: grayscale(100%); }
     </style>
 </head>
 
@@ -41,6 +42,7 @@
                     <li>
                         <span class="hello-user">Halo, {{ Auth::guard('contributors')->user()->first_name }} </span>
                     </li>
+                    <?php if(!empty(notif())){ ?>
                     <li class="has-dropdown">
                         <img src="{{asset('template/kontributor/img/icon/Notifikasi.png')}}" alt="">
                         <div class="dropdown-container">
@@ -49,6 +51,16 @@
                             </ul>
                         </div>
                     </li>
+                    <?php } else { ?>
+                        <li class="has-dropdown">
+                        <img src="{{asset('template/kontributor/img/icon/Notifikasi.png')}}" alt="">
+                        <div class="dropdown-container">
+                            <ul>
+                              Tidak Ada Pemberitahuan
+                            </ul>
+                        </div>
+                    </li>
+                    <?php } ?>
                     <li class="has-dropdown">
                         <img src="{{asset('template/kontributor/img/icon/Akun.png')}}" alt="">
                         <div class="dropdown-container">

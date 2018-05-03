@@ -120,4 +120,82 @@
         </div>
       </section><!-- ./VIDEO INFORMATION -->
 
+<script type="text/javascript">
+
+  function dokirim(){
+      var isi_kirim = $('#input_kirim').val();
+      var lesson_id = '{{ $lessons->id }}';
+      // alert(comment_id+' = '+isi_balas);
+      var datapost = {
+          '_token'    : '{{ csrf_token() }}',
+          'isi_kirim' : isi_kirim,
+          'lesson_id' : lesson_id
+      }
+
+      $.ajax({
+          type    :'POST',
+          url     :'{{ url("lessons/coments/kirimcomment") }}',
+          data    :datapost,
+          success:function(data){
+          if(data==0){
+                  window.location.href = '{{url("member/signin")}}';
+          } else if (data !== 'null') {
+                  // $("#row"+comment_id).load(window.location.href + " #row"+comment_id);
+                  $('.content-reload').prepend(data);
+              }else {
+                  alert('Koneksi Bermasalah, Silahkan Ulangi');
+                  location.reload();
+              }
+          }
+      })
+  }
+</script>
+<script type="text/javascript">
+    function formbalas(comment_id){
+
+        $('#balas'+comment_id).html('<label class="col-md-1" style="padding-left:0px;">Anda</label>'+
+                                '<div class="col-md-11" style="padding-right:0px;">'+
+                                '   <input type="text" class="form-control" id="input_balas'+comment_id+'" name="balasan" placeholder="tambahkan komentar/balasan" value="">'+
+                                '</div>'+
+                                '<a href="javascript:void(0)" class="btn btn-info pull-right" onclick="dobalas('+comment_id+')" style="float:right;margin-top:10px;">Kirim</a>');
+    }
+
+    function dobalas(comment_id){
+        var isi_balas = $('#input_balas'+comment_id).val();
+        var lesson_id = '{{ $lessons->id }}';
+        // alert(comment_id+' = '+isi_balas);
+        var datapost = {
+            '_token'    : '{{ csrf_token() }}',
+            'isi_balas' : isi_balas,
+            'comment_id': comment_id,
+            'lesson_id' : lesson_id
+        }
+
+        $.ajax({
+            type    :'POST',
+            url     :'{{ url("lessons/coments/postcomment") }}',
+            data    :datapost,
+            success:function(data){
+                if (data == 1) {
+                    $("#row"+comment_id).load(window.location.href + " #row"+comment_id);
+                }
+                else if(data==0){
+                        window.location.href = '{{url("member/signin")}}';
+                }else {
+                    alert('Koneksi Bermasalah, Silahkan Ulangi');
+                    location.reload();
+                }
+            }
+        })
+    }
+
+    function loadcontent(){
+        $(".content-reload").load(window.location.href + " .content-reload");
+        console.log('reload');
+    }
+
+    // setInterval(function(){
+    //     loadcontent()
+    // }, 5000);
+</script>
 @endsection
