@@ -131,7 +131,7 @@ class PointController extends Controller
 		$store->save();
 
 		$poin_update = Contributor::find($contribID);
-		$poin_update->points = $contrib->points - $store->poin;
+		$poin_update->points = $contrib->points - $reward->poin;
 		// $poin_update->updated_at  = $now;
 		$poin_update->save();
 

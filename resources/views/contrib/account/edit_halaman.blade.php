@@ -51,7 +51,7 @@
 
         <div class="tab-content" >
 
-        <!-- left column -->
+      <!-- left column -->
       <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
       {{ csrf_field() }}
       <div class="col-md-3">

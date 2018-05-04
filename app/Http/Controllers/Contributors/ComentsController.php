@@ -56,7 +56,7 @@ class ComentsController extends Controller
         }
         $uid = Auth::guard('contributors')->user()->id;
 
-        $detailcomment  = DB::table('comments')->where('id',$id)->first();
+        $detailcomment  = DB::table('comments')->where('id',$uid)->first();
         $getlesson      = DB::table('lessons')->where('id',$detailcomment->lesson_id)->first();
         $getcomment     = DB::table('comments')
             ->leftJoin('members','members.id','=','comments.member_id')

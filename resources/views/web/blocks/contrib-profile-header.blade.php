@@ -14,7 +14,7 @@
         <!-- <div class=""> -->
           <div class="inner">
             <strong>{{ $contributors->username }}</strong>
-            <p class="help-block">{{ $contributors->job }}</p>
+            <p class="help-block">{{ $contributors->pekerjaan }}</p>
           </div>
         <!-- </div> -->
       </div>
