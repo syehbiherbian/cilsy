@@ -202,11 +202,11 @@ class LessonsController extends Controller
             $vsrc = str_replace(url(''), '', $videosrc);
 
             $video = Video::where('video', 'like', '%' . $vsrc . '%')->first();
-            $check = Quiz::where('video_id', $video->id)->first();
-
+			$check = Quiz::where('video_id', $video->id)->first();
+			
             if ($check) {
-
-                return $check;
+				$lesson = Lesson::find($check->lesson_id);
+                return '/lessons/'.$lesson->slug.'/'.$check->slug;
             }
         }
 

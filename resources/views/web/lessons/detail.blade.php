@@ -1059,7 +1059,7 @@ function lessonsQuiz(videosrc, player) {
         allowOutsideClick: false,
       });
       
-      window.location = data.slug;
+      window.location = data;
       // player.start();
       if (data == true) {
         console.log('Viewers has been updated');
