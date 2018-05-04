@@ -32,6 +32,6 @@ class CreatePackagesDetailTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExist('packages_detail');
+        Schema::dropIfExists('packages_detail');
     }
 }

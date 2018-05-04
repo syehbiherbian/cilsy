@@ -33,6 +33,6 @@ class Members extends Migration
      */
     public function down()
     {
-        Schema::dropIfExist('members');
+        Schema::dropIfExists('members');
     }
 }

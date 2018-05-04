@@ -36,6 +36,7 @@ Route::get('/', 'Web\HomeController@index');
 // LESSONS PAGE
 Route::get('lessons/{by}/{keyword}', 'Web\LessonsController@index');
 Route::get('lessons/{lessons}', 'Web\LessonsController@detail');
+Route::get('lessons/{lessons}/{quiz}', 'Web\LessonsController@quiz');
 Route::get('dashboard/{lessons}', 'Web\Members\LessonsMemberController@detail');
 Route::post('lessons/getplaylist', 'Web\LessonsController@getplaylist');
 Route::get('lessons/coments/getComments/{lesson_id}','Web\LessonsController@getComments');

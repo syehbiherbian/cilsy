@@ -30,6 +30,6 @@ class Categories extends Migration
      */
     public function down()
     {
-        Schema::dropIfExist('categories');
+        Schema::dropIfExists('categories');
     }
 }

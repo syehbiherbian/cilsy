@@ -606,7 +606,7 @@ class LessonsController extends Controller {
 		$services = Service::where('status', 1)->where('members_id', $memberID)->where('expired', '>=', $now)->first();
 		$quiz = Quiz::where('lesson_id', $lessons_id)->get();
 		// dd($videos->toArray(), $quiz->toArray());
-		$vidquiz = join_video_quiz($videos, $quiz);
+		// $vidquiz = join_video_quiz($videos, $quiz);
 		// dd($vidquiz);
 
 		$access = 0;
@@ -617,7 +617,7 @@ class LessonsController extends Controller {
 		}
 
 		$play = array();
-		foreach ($vidquiz as $key => $video) {
+		foreach ($videos as $key => $video) {
 			if ($key >= 3 && $access == 0) {
 				// Guest
 

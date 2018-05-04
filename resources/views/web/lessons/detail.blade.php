@@ -886,8 +886,16 @@ player.on('tap', function() {
     // console.log('end', player.playlist.currentItem());
     var videosrc = player.currentSrc();
     videoTracking(videosrc);
-    lessonsQuiz(videosrc);
+    // lessonsQuiz(videosrc);
   });
+
+  player.on('loadstart', function() {
+    player.pause();
+    lessonsQuiz(videosrc);
+  /* console.log('loadstart', player.currentSrc());
+  // console.log('loadstart2', player.canplay());
+  console.log('loadstart1', player.playlist.currentItem()); */
+});
 
     activityCheck = setInterval(function() {
 
@@ -1061,7 +1069,7 @@ function videoTracking(videosrc) {
     }
   });
 }
-function lessonsQuiz(videosrc) {
+function lessonsQuiz(videosrc, player) {
   var postData =
               {
                   "_token":"{{ csrf_token() }}",
@@ -1086,14 +1094,13 @@ function lessonsQuiz(videosrc) {
         allowEscapeKey: false,
         allowOutsideClick: false,
       });
-      var video = videojs('video').ready(function(){
-        var player = this;
-        player.pause();
-      });
+      console.log(data);
+      console.log(data.title);
+      window.location = data.title;
+      // player.start();
       if (data == true) {
         console.log('Viewers has been updated');
       }
-
     }
   });
 }

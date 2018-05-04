@@ -23,6 +23,8 @@ class CreateContributorsTable extends Migration
             $table->integer('packages_id')->nullable();
             $table->rememberToken();
             $table->timestamps();
+            $table->boolean('active')->default(false);
+            $table->string('activation_token')->nullable();
         });
     }
 

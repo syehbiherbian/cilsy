@@ -30,6 +30,6 @@ class Attachments extends Migration
      */
     public function down()
     {
-        Schema::dropIfExist('attachments');
+        Schema::dropIfExists('attachments');
     }
 }
