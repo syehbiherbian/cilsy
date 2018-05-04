@@ -205,8 +205,8 @@ class LessonsController extends Controller
 			$check = Quiz::where('video_id', $video->id)->first();
 			
             if ($check) {
-				$lesson = Lesson::find($check->lesson_id);
-                return '/lessons/'.$lesson->slug.'/'.$check->slug;
+				// $lesson = Lesson::find($check->lesson_id);
+                return '/quiz/'.$check->slug;
             }
         }
 
@@ -661,6 +661,6 @@ class LessonsController extends Controller
         }
         return json_encode($play, JSON_UNESCAPED_SLASHES) . "\n";
         exit;
-    }
+	}
 
 }

@@ -36,7 +36,6 @@ Route::get('/', 'Web\HomeController@index');
 // LESSONS PAGE
 Route::get('lessons/{by}/{keyword}', 'Web\LessonsController@index');
 Route::get('lessons/{lessons}', 'Web\LessonsController@detail');
-Route::get('lessons/{lessons}/{quiz}', 'Web\LessonsController@quiz');
 Route::get('dashboard/{lessons}', 'Web\Members\LessonsMemberController@detail');
 Route::post('lessons/getplaylist', 'Web\LessonsController@getplaylist');
 Route::post('lessons/getquizlist', 'Web\LessonsController@getquizlist');
@@ -44,6 +43,9 @@ Route::get('lessons/coments/getComments/{lesson_id}','Web\LessonsController@getC
 Route::post('lessons/coments/doComment','Web\LessonsController@doComment');
 Route::post('lessons/videoTracking','Web\LessonsController@videoTracking');
 Route::post('lessons/LessonsQuiz','Web\LessonsController@LessonsQuiz');
+
+// Quiz
+Route::get('quiz/{slug}', 'Web\QuizController@index');
 
 // Search
 Route::get('search', 'Web\SearchController@index');
