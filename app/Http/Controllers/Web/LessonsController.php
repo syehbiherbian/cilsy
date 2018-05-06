@@ -122,8 +122,9 @@ class LessonsController extends Controller {
 
 			$video 			= Video::where('video','like','%'.$videosrc.'%')->first();
 			if ($video) {
-
-				$viewers  = Viewer::where('video_id',$video->id)->where('ip_address',$ip_address)->where('member_id',$mem_id)->first();
+				$nilai =  Viewer::where('video_id',$video->id)->where('member_id',$mem_id)->first();
+				if (count($nilai)== 0 ){
+					$viewers  = Viewer::where('video_id',$video->id)->where('ip_address',$ip_address)->where('member_id',$mem_id)->first();
 
 				if ($viewers) { // Viewers exist
 
@@ -137,9 +138,9 @@ class LessonsController extends Controller {
 				}else { // Create new Viewers
 
 					$store = new Viewer;
-					$store->video_id 		= $video->id;
+					$store->video_id 	= $video->id;
 					$store->ip_address 	= $ip_address;
-					$store->hits				= 1;
+					$store->hits		= 1;
 					$store->member_id 	= $mem_id;
 					$store->created_at 	= $now;
 					$store->updated_at 	= $now;
@@ -149,6 +150,8 @@ class LessonsController extends Controller {
 						}
 					}
 				}
+				}
+				
 
 
 
@@ -173,7 +176,7 @@ class LessonsController extends Controller {
 			$point = new Point;
 			$point->status 		= 0;
 			$point->member_id	= $mem_id;
-			$point->type 			= 'COMPLETE';
+			$point->type 		= 'COMPLETE';
 			$point->value 		= 10;
 			$point->created_at= $now;
 			$point->updated_at= $now;

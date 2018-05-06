@@ -34,7 +34,7 @@ class ComentsController extends Controller
             ->orderBy('comments.created_at','DESC')
             ->select('comments.*')
             ->get();
-
+        // dd($getcomment);
         $getabaikan = DB::table('comments')
             ->leftJoin('lessons','lessons.id','=','comments.lesson_id')
             ->where('comments.parent_id',0)
@@ -44,6 +44,7 @@ class ComentsController extends Controller
             ->orderBy('comments.created_at','DESC')
             ->select('comments.*')
             ->get();
+        // dd($getcomment);
         return view('contrib.coments.index', [
             'data' => $getcomment,
             'abaikan'=>$getabaikan
@@ -56,7 +57,7 @@ class ComentsController extends Controller
         }
         $uid = Auth::guard('contributors')->user()->id;
 
-        $detailcomment  = DB::table('comments')->where('id',$uid)->first();
+        $detailcomment  = DB::table('comments')->where('lesson_id',$id)->first();
         $getlesson      = DB::table('lessons')->where('id',$detailcomment->lesson_id)->first();
         $getcomment     = DB::table('comments')
             ->leftJoin('members','members.id','=','comments.member_id')
@@ -66,7 +67,7 @@ class ComentsController extends Controller
             ->orderBy('comments.created_at','DESC')
             ->select('comments.*','members.username as username')
             ->get();
-
+        // dd($detailcomment);
         if ($getlesson->contributor_id == $uid) {
             return view('contrib.coments.detail',[
                 'datalesson'    => $getlesson,

@@ -27,11 +27,10 @@ class LessonsMemberController extends Controller
      */
     public function index()
     {
+        if (empty(Auth::guard('members')->user()->id)) {
+          return redirect('member/signin')->with('error', 'Anda Harus Login terlebih dahulu!');
+        }
         $mem_id = Auth::guard('members')->user()->id;
-          if (!$mem_id) {
-            return redirect('/member/signin');
-            exit;
-          }
 
 
         $last_videos = Viewer::leftJoin('videos', 'videos.id', '=', 'viewers.video_id')
@@ -64,12 +63,14 @@ class LessonsMemberController extends Controller
             'progress' => $progress,
             'last' => $last_lessons,
             'lessons' => $get_lessons,
-             'videos' => $last_videos,
+            'videos' => $last_videos,
         ]);
     }
     public function detail($slug) {
 
-
+        if (empty(Auth::guard('members')->user()->id)) {
+          return redirect('member/signin')->with('error', 'Anda Harus Login terlebih dahulu!');
+        }
         $now = new DateTime();
         $mem_id = Auth::guard('members')->user()->id;
 
