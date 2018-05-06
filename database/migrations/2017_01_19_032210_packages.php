@@ -27,6 +27,6 @@ class Packages extends Migration
      */
     public function down()
     {
-        Schema::dropIfExist('packages');
+        Schema::dropIfExists('packages');
     }
 }

@@ -63,6 +63,7 @@ class QuizController extends Controller
            $store = new Quiz();
            $store->lesson_id =$lessons_id;
            $store->title =$title;
+           $store->slug =str_slug($title);
            $store->video_id =$video;
            $store->description =$desc;
            $store->created_at =$now;

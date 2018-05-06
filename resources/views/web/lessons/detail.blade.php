@@ -859,7 +859,6 @@ function getPlayList() {
     });
 
   player.on('ended', function() {
-    // console.log('end', player.playlist.currentItem());
     var videosrc = player.currentSrc();
     videoTracking(videosrc);
     lessonsQuiz(videosrc);
@@ -1047,7 +1046,7 @@ function videoTracking(videosrc) {
     }
   });
 }
-function lessonsQuiz(videosrc) {
+function lessonsQuiz(videosrc, player) {
   var postData =
               {
                   "_token":"{{ csrf_token() }}",
@@ -1072,14 +1071,12 @@ function lessonsQuiz(videosrc) {
         allowEscapeKey: false,
         allowOutsideClick: false,
       });
-      var video = videojs('video').ready(function(){
-        var player = this;
-        player.pause();
-      });
+      
+      window.location = data;
+      // player.start();
       if (data == true) {
         console.log('Viewers has been updated');
       }
-
     }
   });
 }

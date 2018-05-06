@@ -10,4 +10,5 @@ vendor/
 assets/filemanager/.htaccess
 error_log
 public/assets/source/lessons/*
+public/assets/source/avatar/*
 

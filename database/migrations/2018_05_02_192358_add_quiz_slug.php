@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddActivationColumnsToContributors extends Migration
+class AddQuizSlug extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,8 @@ class AddActivationColumnsToContributors extends Migration
      */
     public function up()
     {
-        Schema::table('contributors', function (Blueprint $table) {
-            $table->boolean('active')->default(false);
-            $table->string('activation_token')->nullable();
+        Schema::table('quiz', function (Blueprint $table) {
+            $table->string('slug');
         });
     }
 
@@ -26,8 +25,8 @@ class AddActivationColumnsToContributors extends Migration
      */
     public function down()
     {
-        Schema::table('contributors', function (Blueprint $table) {
-            $table->dropColumns('active','activation_token');
+        Schema::table('quiz', function (Blueprint $table) {
+            $table->dropColumn('slug');
         });
     }
 }
