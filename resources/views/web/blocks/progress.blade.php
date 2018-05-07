@@ -137,7 +137,7 @@
                 <p><strong><h3>{{ $last->title }}</h3></strong></p>
                 
                 <ul class="list-unstyled multi-steps">
-                  <?php $no=1; ?>
+                  <?php $no=0; ?>
                   <?php foreach ($get as $video => $videos): ?>
                   <li class="<?=$no >= Count($hits) ? "is-active" :"";?>"></li>
                   <?php $no++;
