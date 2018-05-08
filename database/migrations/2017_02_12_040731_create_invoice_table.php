@@ -33,6 +33,6 @@ class CreateInvoiceTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExist('invoice');
+        Schema::dropIfExists('invoice');
     }
 }

@@ -11,3 +11,5 @@ assets/filemanager/.htaccess
 error_log
 public/assets/source/lessons/*
 laravel/
+public/assets/source/avatar/*
+

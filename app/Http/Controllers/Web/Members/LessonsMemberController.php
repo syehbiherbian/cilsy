@@ -27,11 +27,10 @@ class LessonsMemberController extends Controller
      */
     public function index()
     {
+        if (empty(Auth::guard('members')->user()->id)) {
+          return redirect('member/signin')->with('error', 'Anda Harus Login terlebih dahulu!');
+        }
         $mem_id = Auth::guard('members')->user()->id;
-          if (!$mem_id) {
-            return redirect('/member/signin');
-            exit;
-          }
 
 
         $last_videos = Viewer::leftJoin('videos', 'videos.id', '=', 'viewers.video_id')
@@ -57,19 +56,30 @@ class LessonsMemberController extends Controller
         ->where('videos.lessons_id', '=', $last_videos->lessons_id)->get();
 
         $progress = count($get_hist)*100/count($get_videos);
+        $get_full = Lesson::join('videos', 'lessons.id', '=', 'videos.lessons_id')
+                     ->leftjoin('viewers', 'videos.id', '=', 'viewers.video_id', 'and', '`viewers`.`member_id`', '=', $mem_id)
+                     ->select('lessons.title', 'lessons.image')
+                     ->select(DB::raw('count(distinct viewers.video_id) as id_count, count(distinct videos.id) as vid_id, lessons.title, lessons.image, lessons.id, lessons.slug'))
+                    //  ->where('viewers.member_id', '=', $mem_id)
+                     ->groupby('lessons.title', 'lessons.image', 'lessons.id', 'lessons.slug')
+                     ->having(DB::raw('count(distinct viewers.video_id)'), '=', DB::raw('count(distinct videos.id)'))                   
+                     ->get(['lessons.title', 'lessons.image', 'lessons.id', 'lessons.slug']);
         }else{
           return redirect('/')->with('message', 'Belum Punya Video'); 
         }
         return view('web.members.dashboard_tutorial', [
-            'progress' => $progress,
+             'progress' => $progress,
             'last' => $last_lessons,
             'lessons' => $get_lessons,
+            'full' => $get_full,
              'videos' => $last_videos,
         ]);
     }
     public function detail($slug) {
 
-
+        if (empty(Auth::guard('members')->user()->id)) {
+          return redirect('member/signin')->with('error', 'Anda Harus Login terlebih dahulu!');
+        }
         $now = new DateTime();
         $mem_id = Auth::guard('members')->user()->id;
 

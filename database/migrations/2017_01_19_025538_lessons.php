@@ -31,6 +31,6 @@ class Lessons extends Migration
      */
     public function down()
     {
-        Schema::dropIfExist('lessons');
+        Schema::dropIfExists('lessons');
     }
 }

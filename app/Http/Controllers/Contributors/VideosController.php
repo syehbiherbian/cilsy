@@ -79,7 +79,7 @@ class VideosController extends Controller
                 //insert video
                 $lessonsfilename = '';
                 if (!empty($lessons_video[$key])) {
-                    $lessonsfilename = $lessons_video[$key]->getClientOriginalName();
+                    $lessonsfilename = str_slug($lessons_video[$key]->getClientOriginalName());
                     $lessons_video[$key]->move($DestinationPath, $lessonsfilename);
                 }
                 //insert image

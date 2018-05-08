@@ -9,22 +9,22 @@
       <div class="col-md-6">
         <div class="middle-wrap">
           <div class="inner">
-            <?php if (Session::get('memberID')): ?>
+            @if (Auth::guard('members')->user()->id)
               <h2 style="margin-top: 4px;">Perpanjang Paket Sekarang</h2>
-            <?php else: ?>
+            @else
                 <h2 style="margin-top: 4px;">Akses ke semua tutorial sekarang!</h2>
-            <?php endif;?>
+            @endif
           </div>
         </div>
       </div>
       <div class="col-md-6">
         <div class="middle-wrap">
           <div class="inner text-center">
-            <?php if (Session::get('memberID')): ?>
+            @if (Auth::guard('members')->user()->id)
               <a href="{{ url('member/package')}}" class="btn btn-default btn-lg">Pilih Paket</a>
-            <?php else: ?>
+            @else
               <a href="{{ url('member/signup')}}" class="btn btn-default btn-lg">Buat Akun</a>
-            <?php endif;?>
+            @endif
           </div>
         </div>
       </div>
