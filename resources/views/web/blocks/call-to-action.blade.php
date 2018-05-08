@@ -9,7 +9,7 @@
       <div class="col-md-6">
         <div class="middle-wrap">
           <div class="inner">
-            @if (Auth::guard('members')->user()->id)
+            @if (!empty(Auth::guard('members')->user()->id))
               <h2 style="margin-top: 4px;">Perpanjang Paket Sekarang</h2>
             @else
                 <h2 style="margin-top: 4px;">Akses ke semua tutorial sekarang!</h2>
@@ -20,7 +20,7 @@
       <div class="col-md-6">
         <div class="middle-wrap">
           <div class="inner text-center">
-            @if (Auth::guard('members')->user()->id)
+            @if (!empty(Auth::guard('members')->user()->id))
               <a href="{{ url('member/package')}}" class="btn btn-default btn-lg">Pilih Paket</a>
             @else
               <a href="{{ url('member/signup')}}" class="btn btn-default btn-lg">Buat Akun</a>
