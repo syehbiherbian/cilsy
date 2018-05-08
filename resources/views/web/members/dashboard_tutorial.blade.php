@@ -118,7 +118,7 @@
      
         <?php
          if(!empty($full)){
-                $i = 0;
+                $i = 1;
                 foreach ($full as $key => $full): ?>
                     <?php if ($i <= 4) {?>
                       <div class="col-md-3">

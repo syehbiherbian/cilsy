@@ -102,15 +102,30 @@
                 </div>
             </div>
             <div class="col-md-6">
-                <h1>Rewards</h1>
-                <div class="owl-carousel owl-theme rewards-carousel">
-                    <div class="item">
-                        <img src="{{ asset('assets/source/rewards/1.png') }}" alt="">
-                        <div class="caption">
-                            <p>Zalora</p>
-                        </div>
+            <div class="col-md-12">
+                <h3>Reward</h3>
+            </div>
+              <?php foreach ($category as $key => $cat): ?>
+                <div class="col-md-12">
+                    <div class="owl-carousel owl-theme category-sliders" id="category-sliders" style="text-align:center;">
+                        <?php foreach ($reward as $key => $value): ?>
+                          <?php if ($cat->id == $value->category_id): ?>
+                          <div class="item">
+                             <a title="Image 1" href="#"><img class="thumbnail img-responsive" src="{{$value->image}}"></a>
+                             <div class="description">
+                                 <div class="col-md-12">
+                                     <h4  style="padding-bottom:10px;">{{$value->name}}</h4>
+                                     <p  style="padding-bottom:10px;"><?php echo nl2br($value->description); ?></p>
+                                     <h4  style="padding-bottom:10px;">{{$value->poin}} Pts</h4>
+                                     <a class="btn blue" href="{{url('contributor/reward/'.$value->slug.'/change')}}">Tukar</a>
+                                 </div>
+                             </div>
+                          </div>
+                          <?php endif; ?>
+                        <?php endforeach; ?>
                     </div>
                 </div>
+              <?php endforeach; ?>
             </div>
         </div>
     </div>

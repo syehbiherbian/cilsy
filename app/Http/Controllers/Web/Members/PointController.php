@@ -15,6 +15,8 @@ use Session;
 // use Hash;
 use DateTime;
 use Auth;
+use App\Models\RewardCategory;
+use App\Models\Reward;
 
 // use DB;
 class PointController extends Controller {
@@ -33,15 +35,20 @@ class PointController extends Controller {
         }
         $members = Member::where('status', 1)->where('id', $mem_id)->first();
         if ($members) {
-
+            $now = new DateTime;
+            $date = date_format($now,'Y-m-d');
             $point_question = Point::where('type', 'QUESTION')->where('member_id', $mem_id)->sum('value');
             $point_reply = Point::where('type', 'REPLY')->where('member_id', $mem_id)->sum('value');
+		    $reward = Reward::where('enable',1)->where('end','>=',$date )->where('limit','>',0)->get();
+		    $category =RewardCategory::where('enable',1)->get();
             $point_complete = Point::where('type', 'COMPLETE')->where('member_id', $mem_id)->sum('value');
             return view('web.members.point', [
                 'members' => $members,
                 'point_question' => $point_question,
                 'point_reply' => $point_reply,
-                'point_complete' => $point_complete
+                'point_complete' => $point_complete,
+                'reward'	=>$reward,
+                'category'=>$category,
             ]);
         } else {
             return redirect('/member/signin');
