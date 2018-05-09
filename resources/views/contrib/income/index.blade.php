@@ -220,10 +220,10 @@
 			  <div class="col-sm-1">
 				<div class="title" style="color:#fff;">.</div>
 				 @foreach($rekening as $reg)
-				  <form id="{{ $row->id }}" action="{{url('contributor/income/account/'.$reg->id.'/delete')}}" method="get">
+				  <form id="{{ $srow->id }}" action="{{url('contributor/income/account/'.$reg->id.'/delete')}}" method="get">
 						<input type="hidden" name="_token" value="{{ csrf_token() }}">
 						<input type="hidden" name="_method" value="DELETE">
-						<button type="button"  title="Hapus Rekening" data-toggle="tooltip" class="btn btn-danger pull-right"style="margin-top:15px;" data-toggle="tooltip" onclick="checkdelete({{$row->id}})">Hapus</button>
+						<button type="button"  title="Hapus Rekening" data-toggle="tooltip" class="btn btn-danger pull-right"style="margin-top:15px;" data-toggle="tooltip" onclick="checkdelete({{$srow->id}})">Hapus</button>
 				  </form>
 				  @endforeach
 			  </div>
