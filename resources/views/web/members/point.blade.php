@@ -53,7 +53,7 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="point-information">
-                    <div class="cover p-25 pb-0 mb-25" style="background:url('{{ asset('template/web/img/point/point-cover.png') }}') no-repeat;">
+                    <div class="cover p-25 pb-0 mb-25" style="background:url('https://d2r2jvvtffo57h.cloudfront.net/assets/img/strains/snow-dome-live-v1_6898d272e815dcba960cda6033ec139f4c287fa3c133f4a0fb967af577830e07.jpg') no-repeat;">
                         <div class="row member">
                             <div class="col-md-12">
                                 <div class="avatar text-center">
@@ -112,12 +112,12 @@
                           <?php if ($cat->id == $value->category_id): ?>
                           <div class="item">
                              <a title="Image 1" href="#"><img class="thumbnail img-responsive" src="{{$value->image}}"></a>
-                             <div class="description">
+                             <div class="description text-center">
                                  <div class="col-md-12">
                                      <h4  style="padding-bottom:10px;">{{$value->name}}</h4>
                                      <p  style="padding-bottom:10px;"><?php echo nl2br($value->description); ?></p>
                                      <h4  style="padding-bottom:10px;">{{$value->poin}} Pts</h4>
-                                     <a class="btn blue" href="{{url('contributor/reward/'.$value->slug.'/change')}}">Tukar</a>
+                                     <a class="btn btn-primary" href="{{url('member/reward/'.$value->slug.'/change')}}">Tukar</a>
                                  </div>
                              </div>
                           </div>

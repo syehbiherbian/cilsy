@@ -142,7 +142,12 @@ Route::get('member/point', 'Web\Members\PointController@index');
 Route::get('member/dashboard', 'Web\Members\LessonsMemberController@index');
 Route::get('member/package', 'Web\Members\PackageController@index');
 Route::post('member/package', 'Web\Members\PackageController@dopackage');
-
+//reward user 
+//reward
+Route::get('member/reward','Contributors\PointController@index');
+Route::get('member/reward/{id}/change', 'Contributors\PointController@change');
+Route::post('member/reward/{id}/change', 'Contributors\PointController@doChange');
+Route::get('member/reward/{id}/detail','Contributors\PointController@detail');
 /*
 |--------------------------------------------------------------------------
 | Admin Routes
