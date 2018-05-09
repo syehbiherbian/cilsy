@@ -44,7 +44,7 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        // $this->middleware('RedirectIfContributor', ['except' => 'logout']);
+        $this->middleware('RedirectIfContrib', ['except' => 'logout']);
         
     }
 
