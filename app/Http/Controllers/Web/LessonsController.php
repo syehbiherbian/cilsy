@@ -216,21 +216,39 @@ class LessonsController extends Controller
         if (empty(Auth::guard('members')->user()->id)) {
             $response['success'] = false;
         } else {
+          
             $now = new DateTime();
             $uid = Auth::guard('members')->user()->id;
             $body = Input::get('body');
             $lesson_id = Input::get('lesson_id');
+            $member = DB::table('members')->where('id', $uid)->first();
+            $lessons = DB::table('lessons')->where('id', $lesson_id)->first();
             $parent_id = Input::get('parent_id');
+            $contri = Lesson::where('id',$lesson_id)
+                      ->select('contributor_id')
+                      ->first();
+
             $store = DB::table('comments')->insertGetId([
                 'lesson_id' => $lesson_id,
                 'member_id' => $uid,
                 'body' => $body,
                 'parent_id' => $parent_id,
                 'status' => 0,
+                'contributor_id' => str_replace('}','',str_replace('{"contributor_id":', '',$contri)),
                 'created_at' => $now,
                 'updated_at' => $now,
             ]);
             if ($store) {
+
+
+                    DB::table('contributor_notif')->insert([
+                        'contributor_id' => $lessons->contributor_id,
+                        'category' => 'coments',
+                        'title' => 'Anda mendapat pertanyaan dari ' . $member->username,
+                        'notif' => 'Anda mendapatkan pertanyaan dari ' . $member->username . ' pada ' . $lessons->title,
+                        'status' => 0,
+                        'created_at' => $now,
+                    ]);
                 // Create Point
                 if ($parent_id == 0) { // Berkomentar
                     $point = new Point;
