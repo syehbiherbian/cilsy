@@ -182,7 +182,7 @@
 </div>
 
 @endif
-<div class="row" style="margin-top:20px;">
+<div class="row" style="margin-top:20px; margin-bottom:20px;">
   <div id ="exTab1"class="col-md-12">
       <div class="tab-content clearfix">
 
