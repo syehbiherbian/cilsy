@@ -158,6 +158,38 @@ Route::get('member/reward/{id}/detail','Contributors\PointController@detail');
 | contains the "web" middleware group. Now create something great!
 |
  */
+Route::group(['middleware' => ['RedirectIfMember']], function () {
+	Route::post('member/change-password', 'Web\Members\PasswordController@doSubmit');
+	Route::get('member/change-password', 'Web\Members\PasswordController@index');
+	// Route::get('member/reset', 'Web\Members\AuthController@forgetpassword');
+	// Route::post('member/reset', 'Web\Members\AuthController@doforgetpassword');
+	// Route::post('member/reset/update', 'Web\Members\AuthController@doupdate');
+	// Route::get('member/reset/update/{token}', 'Web\Members\AuthController@updatereset');
+
+	Route::get('member/signup', 'Web\Members\MemberAuth\RegisterController@showRegistrationForm');
+	Route::post('member/signup', 'Web\Members\MemberAuth\RegisterController@register');
+	Route::get('member/signin', 'Web\Members\MemberAuth\LoginController@showLoginForm');
+	Route::post('member/signin', 'Web\Members\MemberAuth\LoginController@login');
+	Route::get('member/signout', 'Web\Members\MemberAuth\LoginController@logout');
+	Route::post('member/email', 'Web\Members\MemberAuth\ForgotPasswordController@sendResetLinkEmail');
+	Route::get('member/reset', 'Web\Members\MemberAuth\ForgotPasswordController@showLinkRequestForm');
+	Route::post('member/reset', 'Web\Members\MemberAuth\ResetPasswordController@reset');
+	Route::get('member/reset/{token}', 'Web\Members\MemberAuth\ResetPasswordController@showResetForm');
+	Route::get('member/profile', 'Web\Members\ProfileController@index');
+	Route::post('member/profile', 'Web\Members\ProfileController@doSubmit');
+	Route::get('member/subscriptions', 'Web\Members\SubscriptionsController@index');
+	Route::get('member/subscriptions/unsubscribe/{id}', 'Web\Members\SubscriptionsController@doUnsubscribe');
+	Route::get('member/point', 'Web\Members\PointController@index');
+	Route::get('member/dashboard', 'Web\Members\LessonsMemberController@index');
+	Route::get('member/package', 'Web\Members\PackageController@index');
+	Route::post('member/package', 'Web\Members\PackageController@dopackage');
+	//reward user 
+	//reward
+	Route::get('member/reward','Contributors\PointController@index');
+	Route::get('member/reward/{id}/change', 'Contributors\PointController@change');
+	Route::post('member/reward/{id}/change', 'Contributors\PointController@doChange');
+	Route::get('member/reward/{id}/detail','Contributors\PointController@detail');
+});
 
 Auth::routes();
 
