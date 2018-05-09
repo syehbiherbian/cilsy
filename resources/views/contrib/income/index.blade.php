@@ -59,7 +59,7 @@
   color: #e74c3c;
 }
 #content {
-    padding: 160px 25px 25px 0px;
+    padding: 160px 0px 0px 0px;
     min-height: calc(100vh - 235px);
 }
 </style>
