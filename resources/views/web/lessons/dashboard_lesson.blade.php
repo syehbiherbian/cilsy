@@ -6,6 +6,19 @@
 <section class="video-information mb-50">
         <div class="container">
           <div class="row video mb-25">
+           <?php if($full != null) {?>
+            <div class="col-md-12">
+              <div class="tab-content" style="margin-top:0px;">
+                <div id="tab1" class="tab-pane fade in active">
+                  <img src="http://www.rewardle.com/Common/Images/ribbon_rewards.png" alt="medal" style="height:105px; width:175px; text-align:center;">
+                  <h4>Selamat anda telah menyelesaikan tutorial, anda berhak mendapatkan sertifikat kompetensi keahlian</h4>
+                  <a href="{{ url('member/generatepdf/'. Auth::guard('members')->user()->id) }}" class="btn btn-primary btn-lg " style="color :white; background-color: #3CA3E0; border-color: #3CA3E0;">Lihat Sertifikat</a>
+                </div>
+              </div>
+              
+
+            </div>
+            <?php }else{ ?>
             <div class="col-md-12">
               <!-- Tabs -->
               <ul class="nav nav-tabs">
@@ -29,9 +42,10 @@
                       <?php }?>
                       <p><?=nl2br($row->description);?></p>
                     </li>
-                    <?php }?>
                   </ul>
                 </div>
+
+                <?php } ?>
                 <div id="tab3" class="tab-pane fade">
                   <?php if ($services) {?>
                       @foreach($file as $key => $files)
@@ -77,6 +91,7 @@
               </div><!--./ Tabs -->
 
             </div>
+            <?php } ?>
           </div>
           <?php if ($contributors): ?>
 

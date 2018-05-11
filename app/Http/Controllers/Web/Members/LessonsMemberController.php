@@ -17,6 +17,7 @@ use DateTime;
 use Session;
 use DB;
 use Auth;
+use PDF;
 
 class LessonsMemberController extends Controller
 {
@@ -101,8 +102,14 @@ class LessonsMemberController extends Controller
 
         $get_videos = Video::where('videos.lessons_id', '=', $last_videos->lessons_id)->get();
 
-        // $get_hist = Viewer::select('hits')
-        //             ->where('member_id', '=', $mem_id)->get();  
+        $get_full = Lesson::join('videos', 'lessons.id', '=', 'videos.lessons_id')
+                    ->leftjoin('viewers', 'videos.id', '=', 'viewers.video_id', 'and', '`viewers`.`member_id`', '=', $mem_id)
+                    ->select('lessons.title', 'lessons.image')
+                    ->select(DB::raw('count(distinct viewers.video_id) as id_count, count(distinct videos.id) as vid_id, lessons.title, lessons.image, lessons.id, lessons.slug'))
+                //  ->where('viewers.member_id', '=', $mem_id)
+                    ->groupby('lessons.title', 'lessons.image', 'lessons.id', 'lessons.slug')
+                    ->having(DB::raw('count(distinct viewers.video_id)'), '=', DB::raw('count(distinct videos.id)'))                   
+                    ->get(['lessons.title', 'lessons.image', 'lessons.id', 'lessons.slug']);
 
         $get_hist = Viewer::join('videos', 'viewers.video_id', '=', 'videos.id')
                     ->where('viewers.member_id', '=', $mem_id)
@@ -140,12 +147,22 @@ class LessonsMemberController extends Controller
                 'contributors_total_view' => $contributors_total_view,
                 'progress' => $progress,
                 'last' => $last_lessons,
+                'full' => $get_full,
                 'get' =>$get_videos,
                 'hits' => $get_hist,
             ]);
         }else {
             abort(404);
         }
+    }
+    //Create sertifikat
+    public function download($id){
+      $user = Member::find($id);
+
+      $pdf = PDF::loadView('web.members.sertifikat.sertifikat', compact('user'));
+      $pdf->setPaper('A4', 'landscape');
+      return $pdf->stream('sertifikat.pdf');
+
     }
 
     /**
