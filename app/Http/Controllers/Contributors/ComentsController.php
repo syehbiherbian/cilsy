@@ -11,6 +11,7 @@ use Hash;
 use DateTime;
 use DB;
 use App\Models\Contributor;
+use App\Models\usernotif;
 use Auth;
 
 class ComentsController extends Controller
@@ -57,7 +58,7 @@ class ComentsController extends Controller
         }
         $uid = Auth::guard('contributors')->user()->id;
 
-        $detailcomment  = DB::table('comments')->where('lesson_id',$id)->first();
+        $detailcomment  = DB::table('comments')->where('id',$id)->first();
         $getlesson      = DB::table('lessons')->where('id',$detailcomment->lesson_id)->first();
         $getcomment     = DB::table('comments')
             ->leftJoin('members','members.id','=','comments.member_id')
@@ -67,7 +68,6 @@ class ComentsController extends Controller
             ->orderBy('comments.created_at','DESC')
             ->select('comments.*','members.username as username')
             ->get();
-        // dd($detailcomment);
         if ($getlesson->contributor_id == $uid) {
             return view('contrib.coments.detail',[
                 'datalesson'    => $getlesson,
@@ -87,17 +87,32 @@ class ComentsController extends Controller
         $isi_balas  = Input::get('isi_balas');
         $comment_id = Input::get('comment_id');
         $lesson_id  = Input::get('lesson_id');
+        $member_id  = Input::get('member_id');
+
         $lessons = DB::table('lessons')->where('id',$lesson_id)->first();
+        $notify = DB::table('comments')->where('id', $comment_id)->first();
 
         DB::table('comments')->insert([
             'lesson_id'     => $lesson_id,
+            'member_id'     => $member_id,
             'contributor_id'=> $uid,
-            'body'   => $isi_balas,
-            'parent_id'        => $comment_id,
+            'body'          => $isi_balas,
+            'parent_id'     => $comment_id,
             'status'        => 0,
             'created_at'    => new DateTime()
         ]);
+
+        $notif_user =   DB::table('user_notif')->insertGetId([
+                        'id_user'=> $member_id,
+                        'category'=>'comments',
+                        'title'   => 'Anda mendapatkan balasan dari pertanyaan anda',
+                        'notif'        => 'Anda mendapatkan balasan dari pertanyaan anda di' ,
+                        'status'        => 0,
+                        'created_at'    => new DateTime()
+                        ]);
+
         $check=DB::table('comments')->where('parent_id',$comment_id)->get();
+
         if(count($check)==1){
             $check_contri=Contributor::where('id',$uid)->first();
             if(count($check_contri)>0){

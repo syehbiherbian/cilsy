@@ -7,6 +7,7 @@ use App\Models\IncomeDetail;
 use App\Models\Lesson;
 use App\Models\ContributorNotif;
 use App\Models\Video;
+use App\Models\usernotif;
 /**
  *
  */
@@ -116,6 +117,19 @@ function notif(){
 
     }
     return $html;
+}
+function notifuser(){
+  
+  
+
+  $mem_id =  Auth::guard('members')->user()->id;
+  $notif =usernotif::where('id_usert',$mem_id)->where('status',0)->get();
+  $html='';
+  foreach ($notif as  $value) {
+      $html .='<li><a href="notif" onclick="notifview('.$value->id.')">'.$value->title.'</a></li>';
+
+  }
+  return $html;
 }
 function coments(){
   $contribID = Auth::guard('contributors')->user()->id;
