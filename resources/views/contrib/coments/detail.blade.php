@@ -150,12 +150,14 @@
     function dobalas(comment_id){
         var isi_balas = $('#input_balas'+comment_id).val();
         var lesson_id = '{{ $datalesson->id }}';
+        var member_id = '{{ $comment->member_id }}';
         // alert(comment_id+' = '+isi_balas);
         var datapost = {
             '_token'    : '{{ csrf_token() }}',
             'isi_balas' : isi_balas,
             'comment_id': comment_id,
-            'lesson_id' : lesson_id
+            'lesson_id' : lesson_id,
+            'member_id' : member_id
         }
 
         $.ajax({
