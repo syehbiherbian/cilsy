@@ -58,67 +58,6 @@
     bottom: 0;
 }
 
-.progressbar li{
-  float: left;
-  width: 10%;
-  position: relative;
-  text-align: center;
-}
-.progressbar li:before{
-  content:"1";
-  width: 30px;
-  height: 30px;
-}
-.progressbar li:before{
-  content:"1";
-  width: 30px;
-  height: 30px;
-  border: 2px solid #bebebe;
-  display: block;
-  margin: 0 auto 10px auto;
-  border-radius: 50%;
-  line-height: 27px;
-  background: white;
-  color: #bebebe;
-  text-align: center;
-  font-weight: bold;
-}
-.progressbar{
-  counter-reset: step;
-}
-.progressbar li:before{
-  content:counter(step);
-  counter-increment: step;
-  width: 30px;
-  height: 30px;
-  border: 2px solid #bebebe;
-  display: block;
-  margin: 0 auto 10px auto;
-  border-radius: 50%;
-  line-height: 27px;
-  background: white;
-  color: #bebebe;
-  text-align: center;
-  font-weight: bold;
-}
-.progressbar li:after{
-  content: '';
-  position: absolute;
-  width:100%;
-  height: 3px;
-  background: green;
-  top: 15px;
-  left: -50%;
-  z-index: -1;
-}
-.progressbar li.active + li:after{
- background: pink;
-}
-.progressbar li.active + li:before{
-border-color: #3aac5d;
-background: #3aac5d;
-color: white
-}
 .multi-steps > li.is-active:before, .multi-steps > li.is-active ~ li:before {
   content: counter(stepNum);
   font-family: inherit;
@@ -198,7 +137,7 @@ color: white
                 <p><strong><h3>{{ $last->title }}</h3></strong></p>
                 
                 <ul class="list-unstyled multi-steps">
-                  <?php $no=1; ?>
+                  <?php $no=0; ?>
                   <?php foreach ($get as $video => $videos): ?>
                   <li class="<?=$no >= Count($hits) ? "is-active" :"";?>"></li>
                   <?php $no++;

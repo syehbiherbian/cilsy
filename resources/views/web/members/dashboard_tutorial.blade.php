@@ -115,6 +115,37 @@
     </div>
     <div class="col-sm-12" style="margin-top: 50px;">
       <h4>Tutorial Terselesaikan</h4>
+     
+        <?php
+         if(!empty($full)){
+                $i = 1;
+                foreach ($full as $key => $full): ?>
+                    <?php if ($i <= 4) {?>
+                      <div class="col-md-3">
+                        <a href="{{ url('lessons/'.$full->slug)}}" style="text-decoration: none;">
+                          <div class="card">
+                            <?php if (!empty($full->image)) {?>
+                              <img src="{{ asset($full->image) }}" alt="" class="img-responsive">
+                            <?php } else {?>
+                              <img src="{{ asset('template/web/img/no-image-available.png') }}" alt="" class="img-responsive">
+                            <?php }?>
+                            <div class="caption">
+                              <p>{{ $full->title }}</p>
+                            </div>
+                            <div class="footer">
+                              <p>Total <?php echo Helper::getTotalVideo($full->id);?> Video</p>
+                            </div>
+                          </div>
+                        </a>
+                      </div>
+                  <?php } ?>
+                  <?php $i++;?>
+              <?php endforeach; ?>
+      <?php }else{ ?>
+      <div class="col-md-12">
+        <h2>Anda belum menyelesaikan tutorial</h2>
+      </div>
+      <?php } ?>
     </div>
 </div>
 

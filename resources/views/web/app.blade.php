@@ -460,14 +460,25 @@ a #items .item {
                         Tutorial Saya
                       </a>
                     </li>
+                    <?php if(!empty(notifuser())){ ?>
                     <li class="has-dropdown">
                         <img src="{{asset('template/kontributor/img/icon/Notifikasi.png')}}" alt="">
                         <div class="dropdown-container">
                             <ul>
-                              
+                              <?php echo notifuser();?>
                             </ul>
                         </div>
                     </li>
+                    <?php } else { ?>
+                        <li class="has-dropdown">
+                        <img src="{{asset('template/kontributor/img/icon/Notifikasi.png')}}" alt="">
+                        <div class="dropdown-container">
+                            <ul>
+                              Tidak Ada Pemberitahuan
+                            </ul>
+                        </div>
+                    </li>
+                    <?php } ?>
                      <li>
                         <span class="hello-user">Halo, {{ Auth::guard('members')->user()->username }}</span>
                     </li>
@@ -768,6 +779,20 @@ a #items .item {
         }
     }, 1000);
     </script>
+
+    <!-- <script type="text/javascript">
+      function notifview(id){
+        var token   = "{{csrf_token()}}";
+        var dataString= '_token='+ token + '&id=' + id ;
+         $.ajax({
+          type:"GET",
+          url:"{{url('ajax/notif/view')}}",
+          data:dataString,
+          success:function(data){
+          }
+        });
+      }
+    </script> -->
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),

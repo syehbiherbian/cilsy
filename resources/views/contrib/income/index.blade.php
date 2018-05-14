@@ -58,6 +58,10 @@
   border-color: #e74c3c;
   color: #e74c3c;
 }
+#content {
+    padding: 160px 0px 0px 0px;
+    min-height: calc(100vh - 235px);
+}
 </style>
 <div class="row">
 	<div class="col-sm-12">
@@ -178,7 +182,7 @@
 </div>
 
 @endif
-<div class="row" style="margin-top:20px;">
+<div class="row" style="margin-top:20px; margin-bottom:20px;">
   <div id ="exTab1"class="col-md-12">
       <div class="tab-content clearfix">
 
@@ -220,10 +224,10 @@
 			  <div class="col-sm-1">
 				<div class="title" style="color:#fff;">.</div>
 				 @foreach($rekening as $reg)
-				  <form id="{{ $row->id }}" action="{{url('contributor/income/account/'.$reg->id.'/delete')}}" method="get">
+				  <form id="{{ $srow->id }}" action="{{url('contributor/income/account/'.$reg->id.'/delete')}}" method="get">
 						<input type="hidden" name="_token" value="{{ csrf_token() }}">
 						<input type="hidden" name="_method" value="DELETE">
-						<button type="button"  title="Hapus Rekening" data-toggle="tooltip" class="btn btn-danger pull-right"style="margin-top:15px;" data-toggle="tooltip" onclick="checkdelete({{$row->id}})">Hapus</button>
+						<button type="button"  title="Hapus Rekening" data-toggle="tooltip" class="btn btn-danger pull-right"style="margin-top:15px;" data-toggle="tooltip" onclick="checkdelete({{$srow->id}})">Hapus</button>
 				  </form>
 				  @endforeach
 			  </div>

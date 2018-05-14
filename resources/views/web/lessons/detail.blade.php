@@ -9,6 +9,8 @@
 {{-- <link href="https://vjs.zencdn.net/5.16.0/video-js.min.css" rel="stylesheet"/> --}}
 <script src="https://vjs.zencdn.net/5.16.0/video.min.js"></script>
 <script src="https://rawgit.com/atlance01/vrapp-ionic/master/www/js/lib/videojs-playlist.js"></script>
+<script src="{{ asset('template/web/js/component.js') }}"></script>
+<script src="{{ asset('template/web/js/control-bar/control-bar.js') }}"></script>
 <style>
   body {
     /*font-family: Arial, sans-serif;*/
@@ -654,9 +656,9 @@
                     <li>
                       <strong>{{ $row->title }}</strong>
                       @if ($services)
-                      <span class="pull-right"><a href="{{ $row->video }}" class="btn btn-info btn-md" download><i class="fa fa-download"></i> Download Video</a></span>
+                      <span class="pull-right"><a hrefvideo.jsvideo }}" class="btn btn-info btn-md" download><i class="fa fa-download"></i> Download Video</a></span>
                       @endif
-                      {!! nl2br($row->description) !!}
+                      {!! nl2br($row->description) !!}video.js
                     </li>
                     @endforeach
                   </ul>
@@ -734,7 +736,7 @@
                       <p class="help-block">{{ $contributors->pekerjaan }}</p>
                       <a href="{{ url('contributor/profile/'.$contributors->username) }}" class="btn btn-warning mb-15">Lihat Profile</a>
                       <div class="about-text">
-                        {{!! $contributors->deskripsi !!}}
+                        {{ $contributors->deskripsi }}
                       </div>
                       <a href="#">Lebih Banyak</a>
                     </div>
@@ -755,7 +757,8 @@
 
 <script src="{{ asset('template/web/js/video.js') }}"></script>
 <script src="{{ asset('template/web/js/videojs-playlist.js') }}"></script>
-<script src="{{ asset('template/web/js/videojs-playlist-ui.js') }}"></script><script src="{{ asset('template/web/js/videojs-errors.js') }}"></script>
+<script src="{{ asset('template/web/js/videojs-playlist-ui.js') }}"></script>
+<script src="{{ asset('template/web/js/videojs-errors.js') }}"></script>
 <script type="text/javascript">
 
   function dokirim(){
@@ -766,6 +769,7 @@
           '_token'    : '{{ csrf_token() }}',
           'isi_kirim' : isi_kirim,
           'lesson_id' : lesson_id
+
       }
 
       $.ajax({
@@ -972,6 +976,33 @@ function getPlayList() {
     //player.getChild('controlBar').addChild('SharingButton', {});
     player.getChild('controlBar').addChild('PrevButton', {}, 0);
     player.getChild('controlBar').addChild('NextButton', {}, 2);
+
+    player.on('mouseout', function(){ 
+      controlBar.addClass('vjs-fade-out'); 
+    });
+
+    player.on('mouseover', function(){ 
+      controlBar.removeClass('vjs-fade-out'); 
+    });
+
+    var resetDelay, inactivityTimeout;
+
+    resetDelay = function(){
+        clearTimeout(inactivityTimeout);
+        inactivityTimeout = setTimeout(function(){
+            player.userActive(false);
+        }, 2000);
+    };
+
+    player.on('mousemove', function(){
+        resetDelay();
+    })
+    var userActivity, activityCheck;
+
+    player.on('mousemove', function(){
+        userActivity = true;
+    });
+    
   $.ajax({
     type: "POST",
     url: "{{ url('lessons/getplaylist')}}",
@@ -992,23 +1023,6 @@ function getPlayList() {
     }
   });
 }
-
-// Video ended
-/* var video = videojs('video').ready(function(){
-  var player = this;
-
-  player.on('play', function() {
-    console.log('started', player.playlist.currentItem());
-  });
-
-  player.on('ended', function() {
-    console.log('end', player.playlist.currentItem());
-    var videosrc = player.currentSrc();
-    videoTracking(videosrc);
-    lessonsQuiz(videosrc);
-  });
-}); */
-
 
 function videoTracking(videosrc) {
   var postData =
@@ -1070,34 +1084,9 @@ function lessonsQuiz(videosrc, player) {
 
 </script>
 <script type="text/javascript">
-$(document).on('ready',function () {
-  getComments();
-});
-  //
-  // $('#form-comment').on('submit',function(e) {
-  //   e.preventDefault();
-  //
-  //   var body = $('[name=body]').val();
-  //   if (body == '') {
-  //     alert('Harap Isi Komentar !')
-  //   }else {
-  //       $.ajax({
-  //           type    :'POST',
-  //           url     :'{{ url("lessons/coments/doComment") }}',
-  //           dataType: 'json',
-  //           data    : $(this).serialize(),
-  //           success:function(data){
-  //             if (data.success == false) {
-  //                window.location.href = '{{ url("member/signin") }}';
-  //             }else if (data.success == true) {
-  //               document.getElementById('form-comment').reset();
-  //               getComments();
-  //             }
-  //           }
-  //       });
-  //   }
-  //
-  // });
+  $(document).on('ready',function () {
+    getComments();
+  });
 
   function getComments() {
     $.ajax({

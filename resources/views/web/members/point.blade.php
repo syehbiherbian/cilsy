@@ -53,7 +53,7 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="point-information">
-                    <div class="cover p-25 pb-0 mb-25" style="background:url('{{ asset('template/web/img/point/point-cover.png') }}') no-repeat;">
+                    <div class="cover p-25 pb-0 mb-25" style="background:url('https://d2r2jvvtffo57h.cloudfront.net/assets/img/strains/snow-dome-live-v1_6898d272e815dcba960cda6033ec139f4c287fa3c133f4a0fb967af577830e07.jpg') no-repeat;">
                         <div class="row member">
                             <div class="col-md-12">
                                 <div class="avatar text-center">
@@ -102,15 +102,30 @@
                 </div>
             </div>
             <div class="col-md-6">
-                <h1>Rewards</h1>
-                <div class="owl-carousel owl-theme rewards-carousel">
-                    <div class="item">
-                        <img src="{{ asset('assets/source/rewards/1.png') }}" alt="">
-                        <div class="caption">
-                            <p>Zalora</p>
-                        </div>
+            <div class="col-md-12">
+                <h3>Reward</h3>
+            </div>
+              <?php foreach ($category as $key => $cat): ?>
+                <div class="col-md-12">
+                    <div class="owl-carousel owl-theme category-sliders" id="category-sliders" style="text-align:center;">
+                        <?php foreach ($reward as $key => $value): ?>
+                          <?php if ($cat->id == $value->category_id): ?>
+                          <div class="item">
+                             <a title="Image 1" href="#"><img class="thumbnail img-responsive" src="{{$value->image}}"></a>
+                             <div class="description text-center">
+                                 <div class="col-md-12">
+                                     <h4  style="padding-bottom:10px;">{{$value->name}}</h4>
+                                     <p  style="padding-bottom:10px;"><?php echo nl2br($value->description); ?></p>
+                                     <h4  style="padding-bottom:10px;">{{$value->poin}} Pts</h4>
+                                     <a class="btn btn-primary" href="{{url('member/reward/'.$value->slug.'/change')}}">Tukar</a>
+                                 </div>
+                             </div>
+                          </div>
+                          <?php endif; ?>
+                        <?php endforeach; ?>
                     </div>
                 </div>
+              <?php endforeach; ?>
             </div>
         </div>
     </div>
@@ -118,16 +133,22 @@
 @endsection
 @push('js')
 <script type="text/javascript">
-    $(document).on('ready', function () {
-        rewardCarousel();
-    });
-    function rewardCarousel() {
-        $('.rewards-carousel').owlCarousel({
-            loop: true,
-            margin: 10,
-            nav: true,
-            items: 1
-        });
+    $('.category-sliders').owlCarousel({
+    loop:true,
+    margin:10,
+    // nav:true,
+    // navText: ["<i class='fa fa-chevron-left' aria-hidden='true'></i>","<i class='fa fa-chevron-right' aria-hidden='true'></i>"],
+    responsive:{
+        0:{
+            items:1
+        },
+        600:{
+            items:1
+        },
+        1000:{
+            items:1
+        }
     }
+    })
 </script>
 @endpush

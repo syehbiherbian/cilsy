@@ -38,14 +38,12 @@ class IncomeController extends Controller
 
         $contribID = Auth::guard('contributors')->user()->id;
         $row = IncomeDetail::where('contributor_id',$contribID)->where('moth',$moth)->where('year',$year)->first();
-        if(count($row) ==0){
-        $row = IncomeDetail::where('contributor_id',$contribID)->orderBy('created_at','desc')->first();
-        }
-
-      $rekening=ContributorAccount::where('contributor_id',$contribID)->get();
+        $srow= ContributorAccount::where('contributor_id',$contribID)->first();
+        $rekening=ContributorAccount::where('contributor_id',$contribID)->get();
       return view('contrib.income.index', [
         'row'=>$row,
         'rekening'=>$rekening,
+        'srow' =>$srow
       ]);
     }
     public function create(){

@@ -103,7 +103,7 @@
 
 
 			<?php
-				$cekanswer = DB::table('comments')->where('parent_id',$dat->id)->where('status',0)->orderBy('created_at','DESC')->first();
+				$cekanswer = DB::table('comments')->where('id',$dat->id)->where('status',0)->orderBy('created_at','DESC')->first();
 				if(count($cekanswer)>0){
 
 				if(empty($cekanswer->contributor_id)){
@@ -114,7 +114,7 @@
                 <td><?= date('d/m/Y',strtotime($cekanswer->created_at)) ?></td>
                 <td>{{ $cekanswer->body }}</td>
                 <td>
-                   <a href="{{ url('contributor/comments/detail/'.$dat->id) }}" class="btn blue">Lihat</a>
+                   <a href="{{ url('contributor/comments/detail/'.$dat->lesson_id) }}" class="btn blue">Lihat</a>
                  	<a href="javascript:void(0)" class="btn red" onclick="$('#un{{ $dat->id }}').submit();">Abaikan</a>
 					<form id="un{{ $dat->id }}" class="" action="{{ url('contributor/comments/deletecomment/'.$cekanswer->id) }}" method="post">
 						{{ csrf_field() }}

@@ -54,14 +54,14 @@ class PackageController extends Controller
           }
           $member = Member::where('id', '=', $member_id)->first();
           // dd($packages);
-          Session::set('price', $packages->price);
+          Session::put('price', $packages->price);
           if($member_id == null){
             session()->put('package', [
             'paket' => $packages->title,
             'harga' => $packages->price,
             'expired' => $packages->expired,
             ]);
-            Session::set('package_id', $packages->id);
+            Session::put('package_id', $packages->id);
                 // dd(Session::get('invoiceCODE'));
                 return redirect('member/signup');
                 
@@ -71,8 +71,8 @@ class PackageController extends Controller
             'harga' => $packages->price,
             'expired' => $packages->expired,
             ]);
-            Session::set('email', $member->email);
-            Session::set('package_id', $packages->id);
+            Session::put('email', $member->email);
+            Session::put('package_id', $packages->id);
             # code...
             return view('web.payment.summary', compact('packages', 'member')
               
@@ -112,8 +112,8 @@ class PackageController extends Controller
           // store
           $invoice = Invoice::where('code','=',$code)->first();
 
-          Session::set('invoiceCODE',$invoice->code);
-          Session::set('price', $invoice->price);
+          Session::put('invoiceCODE',$invoice->code);
+          Session::put('price', $invoice->price);
           if($member_id == null){
                 // dd(Session::get('invoiceCODE'));
                 return redirect('member/signup');
