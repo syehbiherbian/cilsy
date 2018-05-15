@@ -7,7 +7,7 @@ use App\Models\IncomeDetail;
 use App\Models\Lesson;
 use App\Models\ContributorNotif;
 use App\Models\Video;
-use App\Models\usernotif;
+use App\Models\UserNotif;
 /**
  *
  */
@@ -120,10 +120,8 @@ function notif(){
 }
 function notifuser(){
   
-  
-
   $mem_id =  Auth::guard('members')->user()->id;
-  $notif =usernotif::where('id_usert',$mem_id)->where('status',0)->get();
+  $notif = UserNotif::where('id_user',$mem_id)->where('status',0)->get();
   $html='';
   foreach ($notif as  $value) {
       $html .='<li><a href="notif" onclick="notifview('.$value->id.')">'.$value->title.'</a></li>';
@@ -269,14 +267,14 @@ function insert_array( $array, $search_key, $insert_key, $insert_value, $insert_
 
 }
 
-function join_video_quiz($videos, $quiz) {
-  $video = $videos->toArray();
+// function join_video_quiz($videos, $quiz) {
+//   $video = $videos->toArray();
   
-  foreach ($quiz as $key=> $q) {
-    $after_vid = $q->video_id;
-    $idx = search_video_index($videos, $after_vid);
-    $videos = insert_array($videos, $idx, 'kuis'.$key, $q->toArray());
-  }
+//   foreach ($quiz as $key=> $q) {
+//     $after_vid = $q->video_id;
+//     $idx = search_video_index($videos, $after_vid);
+//     $videos = insert_array($videos, $idx, 'kuis'.$key, $q->toArray());
+//   }
 
-  return array_values($videos);
-}
+//   return array_values($videos);
+// }
