@@ -15,12 +15,13 @@ class Members extends Migration
     {
         Schema::create('members', function (Blueprint $table) {
             $table->increments('id');
-            $table->boolean('status')->default(0);
-            $table->string('username');
-            $table->string('email');
+            $table->boolean('status')->unsigned()->default(0);
+            $table->string('username')->unique();
+            $table->string('email')->unique();
             $table->string('password');
-            $table->boolean('packages_status')->default(0);
-            $table->integer('packages_id')->nullable();
+            $table->string('avatar');
+            // $table->boolean('packages_status')->default(0);
+            // $table->integer('packages_id')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

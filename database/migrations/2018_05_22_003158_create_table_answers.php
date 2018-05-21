@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class Attachments extends Migration
+class CreateTableAnswers extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class Attachments extends Migration
      */
     public function up()
     {
-        Schema::create('attachments', function (Blueprint $table) {
+        Schema::table('answers', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->integer('lesson_id')->unsigned();
-            $table->string('file');
-            $table->text('description');
+            $table->integer('question_id')->unsigned();
+            $table->boolean('type');
+            $table->string('answer');
+            $table->string('answer_key');
             $table->timestamps();
         });
     }
@@ -30,6 +30,8 @@ class Attachments extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('attachments');
+        Schema::table('answers', function (Blueprint $table) {
+            //
+        });
     }
 }

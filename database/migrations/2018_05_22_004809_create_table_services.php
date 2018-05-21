@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class Packages extends Migration
+class CreateTableServices extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,19 @@ class Packages extends Migration
      */
     public function up()
     {
-        Schema::create('packages', function (Blueprint $table) {
+        Schema::table('services', function (Blueprint $table) {
             $table->increments('id');
+            $table->boolean('status')->unsigned();
+            $table->integer('member_id')->unsigned();
+            $table->integer('invoice_id')->unsigned();
             $table->string('title');
             $table->decimal('price', 10, 2);
-            $table->boolean('expired')->unsigned();
+            $table->date('start');
+            $table->date('expired');
             $table->boolean('access')->unsigned();
             $table->boolean('update')->unsigned();
             $table->boolean('chat')->unsigned();
             $table->boolean('download')->unsigned();
-            $table->boolean('remote')->unsigned();
             $table->timestamps();
         });
     }
@@ -34,6 +37,8 @@ class Packages extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('packages');
+        Schema::table('services', function (Blueprint $table) {
+            //
+        });
     }
 }

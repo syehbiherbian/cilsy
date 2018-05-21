@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddPriceToLessonsTable extends Migration
+class CreateTablePoints extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,12 @@ class AddPriceToLessonsTable extends Migration
      */
     public function up()
     {
-        Schema::table('lessons', function (Blueprint $table) {
-            $table->string('price');
+        Schema::table('points', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('member_id')->unsigned();
+            $table->string('tyoe');
+            $table->integer('value')->unsigned();
+            $table->timestamps();
         });
     }
 
@@ -25,7 +29,7 @@ class AddPriceToLessonsTable extends Migration
      */
     public function down()
     {
-        Schema::table('lessons', function (Blueprint $table) {
+        Schema::table('points', function (Blueprint $table) {
             //
         });
     }

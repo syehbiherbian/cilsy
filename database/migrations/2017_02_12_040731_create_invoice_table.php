@@ -15,13 +15,15 @@ class CreateInvoiceTable extends Migration
     {
       Schema::create('invoice', function (Blueprint $table) {
           $table->increments('id');
-          $table->boolean('status')->default(0);
+          $table->boolean('status')->unsigned()->default(0);
           $table->string('code');
-          $table->integer('members_id');
-          $table->integer('packages_id');
-          $table->string('price');
+          $table->integer('members_id')->unsigned();
+          $table->integer('packages_id')->unsigned();
+          $table->decimal('price', 10, 2);
           $table->string('type')->nullable();
-          $table->string('description')->nullable();
+          $table->string('notes')->nullable();
+          $table->boolean('promo')->unsigned()->nullable();
+        //   $table->string('description')->nullable();
           $table->timestamps();
       });
     }

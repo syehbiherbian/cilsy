@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class Attachments extends Migration
+class CreateTableQuiz extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,14 @@ class Attachments extends Migration
      */
     public function up()
     {
-        Schema::create('attachments', function (Blueprint $table) {
+        Schema::table('quiz', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
             $table->integer('lesson_id')->unsigned();
-            $table->string('file');
+            $table->integer('video_id')->unsigned();
+            $table->string('title');
+            $table->string('slug');
             $table->text('description');
+            $table->boolean('enable')->unsigned();
             $table->timestamps();
         });
     }
@@ -30,6 +32,8 @@ class Attachments extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('attachments');
+        Schema::table('quiz', function (Blueprint $table) {
+            //
+        });
     }
 }

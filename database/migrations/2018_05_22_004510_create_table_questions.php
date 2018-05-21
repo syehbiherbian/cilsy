@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateWatchedVideosTable extends Migration
+class CreateTableQuestions extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,11 @@ class CreateWatchedVideosTable extends Migration
      */
     public function up()
     {
-        Schema::create('watched_video', function (Blueprint $table) {
+        Schema::table('questions', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('quiz_id')->unsigned();
+            $table->integer('question_no')->unsigned();
+            $table->text('question')->unsigned();
             $table->timestamps();
         });
     }
@@ -26,6 +29,8 @@ class CreateWatchedVideosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('watched_video');
+        Schema::table('questions', function (Blueprint $table) {
+            //
+        });
     }
 }

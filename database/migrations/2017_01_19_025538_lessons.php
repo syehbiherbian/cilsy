@@ -15,11 +15,17 @@ class Lessons extends Migration
     {
         Schema::create('lessons', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('contributor_id');
             $table->boolean('enable')->default(0);
             $table->string('title');
-            $table->integer('category_id');
+            $table->integer('category_id')->unsigned();
             $table->string('image');
-            $table->string('description');
+            $table->text('description');
+            $table->string('slug');
+            $table->string('meta_desc');
+            $table->boolean('status')->unsigned()->default(0);
+            $table->tinyInteger('revisi_ke')->unsigned()->default(0);
+            $table->decimal('price', 10, 2);
             $table->timestamps();
         });
     }

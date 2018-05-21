@@ -15,8 +15,8 @@ class CreateTutorialMemberTable extends Migration
     {
         Schema::create('tutorial_member', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('member_id');
-            $table->integer('lesson_id');
+            $table->integer('member_id')->unsigned();
+            $table->integer('lesson_id')->unsigned();
             $table->timestamps();
         });
     }

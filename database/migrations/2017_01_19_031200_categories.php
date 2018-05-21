@@ -15,10 +15,11 @@ class Categories extends Migration
     {
         Schema::create('categories', function (Blueprint $table) {
             $table->increments('id');
-            $table->boolean('enable')->default(0);
+            $table->boolean('enable')->unsigned()->default(0);
             $table->string('title');
             $table->string('image');
             $table->text('description');
+            $table->string('meta_desc');
             $table->timestamps();
         });
     }
