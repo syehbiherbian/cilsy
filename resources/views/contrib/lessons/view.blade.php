@@ -162,60 +162,7 @@
   </div>
 </div>
 <!-- END VIDEO -->
-<!-- BEGIN QUIZ -->
-<div class="row">
-  <div class="col-md-12">
-    <div class="box-white">
-      <div class="box-header">
-        <div class="row">
-          <div class="col-md-6">
-            <div class="box-title">
-              <h4>Daftar Kuis</h4>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="box-option text-right">
-              <a href="{{url('contributor/lessons/'.$row->id.'/create/quiz')}}" class="btn btn-info">Tambah Kuis</a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="box-content">
-        <div class="table-responsive">
-          <table class="table table-striped table-hover">
-            <thead>
-              <tr>
-                <th>No</th>
-                <th>Judul</th>
-              </tr>
-            </thead>
-            <tbody>
 
-                @if(count($quiz) == 0 )
-                <tr>
-                    <td colspan="2">Tidak Ada data</td>
-                </tr>
-                @endif
-                 <?php $i=1;?>
-                  @foreach($quiz as $value)
-                     @if($value->lesson_id==$row->id)
-                   <tr>
-                     <td width="25">{{ $i }}</td>
-                     <td>{{$value->title}}</td>
-                     <td width=100><a href="{{url('contributor/lessons/quiz/'.$value->id.'/view')}}" class="btn btn-danger">View</a></td>
-                   </tr>
-                   <?php $i++;?>
-                   @endif
-                   @endforeach
-
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- END QUIZ -->
 <!-- BEGIN ATTCHMENT -->
 <div class="row">
   <div class="col-md-12">
@@ -335,13 +282,7 @@
 </div>
 <!-- END revisi -->
 @endif
-<div class="row">
-  <div class="col-md-12" style="text-align:center;">
-    <div class="box-white">
-        <a href="{{ url('contributor/lessons/'.$row->id.'/submit')}}" class="btn btn-lg btn-success">Submit Tutorial <br> untuk di Verifikasi</a>
-    </div>
-</div>
-</div>
+
 
 <script>
  function checkdelete(id){

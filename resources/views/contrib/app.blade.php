@@ -66,16 +66,6 @@
                         <div class="dropdown-container">
                             <ul>
                                 <li>
-                                    <a href="#">
-                                        <?php echo badge();?>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="{{url('contributor/reward')}}">
-                                        {{points()}} Pts
-                                    </a>
-                                </li>
-                                <li>
                                     <a href="">
                                         Panduan Kontributor
                                     </a>

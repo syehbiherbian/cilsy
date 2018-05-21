@@ -9,20 +9,7 @@
 @endsection
 @section('content')
 <div class="row">
-    <div class="col-md-4">
-        <div class="card bg-1">
-            <img src="{{asset('template/kontributor/img/icon/5.png')}}" alt="" />
-            <p class="card-title">{{badge()}}</p>
-            <p class="card-desc">Kredibilitas Anda</p>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="card bg-2">
-            <img src="{{asset('template/kontributor/img/icon/3.png')}}" alt="" />
-            <p class="card-title">{{points()}}</p>
-            <p class="card-desc">Poin Anda</p>
-        </div>
-    </div>
+    
     <div class="col-md-4">
         <div class="card bg-3">
             <img src="{{asset('template/kontributor/img/icon/2.png')}}" alt="" />

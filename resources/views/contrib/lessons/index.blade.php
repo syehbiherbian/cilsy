@@ -47,13 +47,6 @@
           </div>
         @endif
 
-        <ul class="nav nav-tabs">
-          <li class="<?php if($filter == "pending"){ echo "active";} ?>"><a href="{{ url('contributor/lessons/pending/list') }}">Draft</a></li>
-          <li class="<?php if($filter == "processing"){ echo "active";} ?>"><a href="{{ url('contributor/lessons/processing/list') }}">Sedang Diverifikasi</a></li>
-          <li class="<?php if($filter == "publish"){ echo "active";} ?>"><a href="{{ url('contributor/lessons/publish/list') }}">Sudah dipublish</a></li>
-          <li class="<?php if($filter == "revision"){ echo "active";} ?>"><a href="{{ url('contributor/lessons/revision/list') }}">Perlu Revisi</a></li>
-          <li class="<?php if($filter == "all"){ echo "active";} ?>"><a href="{{ url('contributor/lessons/all/list') }}">Semua</a></li>
-        </ul>
 
         <div class="tab-content">
           <div class="table-responsive">
@@ -63,10 +56,7 @@
                   <th>No</th>
                   <th>Judul Tutorial</th>
                   <th>Kategori</th>
-                  <th>Status</th>
-                  <th>Revisi ke</th>
                   <th>Jumlah murid bulan ini</th>
-                  <th>Jumlah view bulan ini</th>
                   <th>Lebih lanjut</th>
                 </tr>
               </thead>
@@ -83,18 +73,6 @@
                   <td>{{ $row->title }}</td>
                   <td>{{ $row->category_title }}</td>
                   <td>
-                    <?php if ($row->status == 0): ?>
-                      <div class="label label-warning">Draft</div>
-                    <?php elseif($row->status == 1): ?>
-                        <div class="label label-success">Publish</div>
-                    <?php elseif($row->status == 2): ?>
-                        <div class="label label-info">Proses</div>
-                    <?php elseif($row->status == 3): ?>
-                        <div class="label label-warning">Revisi</div>
-                    <?php endif; ?>
-                  </td>
-                  <td>{{$row->revisi_ke}}</td>
-                  <td>
                       <?php $student=0; ?>
                       @foreach ($students as $details)
                         @if($details->lesson_id==$row->id)
@@ -104,18 +82,6 @@
                       @endforeach
 
                      {{$student}}
-                  </td>
-                  <td>
-                      <?php $view=0; ?>
-                      @foreach ($views as $details)
-                        @if($details->lesson_id==$row->id)
-                         <?php $view=$details->view; ?>
-                        @elseif($details->lesson_id !==$row->id)
-                        @endif
-                      @endforeach
-
-                     {{$view}}
-
                   </td>
                   <td><a href="{{ url('contributor/lessons/'.$row->id.'/view')}}" class="btn btn-warning">View</a></td>
                 </tr>

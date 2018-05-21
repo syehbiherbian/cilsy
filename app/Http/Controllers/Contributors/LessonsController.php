@@ -83,8 +83,8 @@ class LessonsController extends Controller
     return view('contrib.lessons.index',[
       'filter'  => $filter,
       'data'    => $data,
-      'views'=>$views,
-      'students'=>$students,
+      'views'   => $views,
+      'students'=> $students,
     ]);
 
   }
@@ -148,7 +148,7 @@ class LessonsController extends Controller
         $str = strtolower($title);
         $store                  = new Lesson();
         $store->contributor_id  = $cid;
-        $store->status          = 0;
+        $store->status          = 1;
         $store->enable          = 1;
         $store->title           = $title;
         $store->slug            = preg_replace('/\s+/', '-', $str);
@@ -180,11 +180,11 @@ class LessonsController extends Controller
     if($check ==null){
         return redirect('not-found');
     }
-    $row = Lesson::where('contributor_id',$contribID)
-        ->where('id',$id)->where('status',0)->first();
-        if($row ==null){
-            return redirect()->back()->with('no-delete','Tutorial sedang / dalam verifikasi!');
-        }
+    // $row = Lesson::where('contributor_id',$contribID)
+    //     ->where('id',$id)->where('status',0)->first();
+    //     if($row ==null){
+    //         return redirect()->back()->with('no-delete','Tutorial sedang / dalam verifikasi!');
+    //     }
 
         // $checkvideo = Video::where('lessons_id',$id)->get();
         // if(count($checkvideo) < 5){
