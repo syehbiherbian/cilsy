@@ -45,7 +45,8 @@ class LessonsController extends Controller
       $data = Lesson::where('contributor_id',$contribID)
       ->leftJoin('categories', 'lessons.category_id', '=', 'categories.id')
       ->select('lessons.*','categories.title as category_title')
-      ->where('lessons.status',0)
+      ->where('lessons.status',1)
+      ->orderby('created_at', 'desc')
       ->get();
     }elseif ($filter == 'processing') {
       $data = Lesson::where('contributor_id',$contribID)
@@ -111,6 +112,7 @@ class LessonsController extends Controller
     // read more on validation at http://laravel.com/docs/validation
     $rules = array(
       'title'          => 'required|min:3',
+      'price'          => 'required|min:3',
       'category_id'    => 'required',
       'image'          => 'required',
       'description'    => 'required|min:3',
@@ -125,6 +127,7 @@ class LessonsController extends Controller
         $now          = new DateTime();
         $cid          = Auth::guard('contributors')->user()->id;
         $title        = Input::get('title');
+        $price        = Input::get('price');
         $category_id  = Input::get('category_id');
         $lessons_image = Input::file('image');
         $description  = Input::get('description');
@@ -151,6 +154,7 @@ class LessonsController extends Controller
         $store->status          = 1;
         $store->enable          = 1;
         $store->title           = $title;
+        $store->price           = $price;
         $store->slug            = preg_replace('/\s+/', '-', $str);
         $store->category_id     = $category_id;
         $store->image           = $url_image;
@@ -298,6 +302,7 @@ class LessonsController extends Controller
         'title'          => 'required|min:3',
         'category_id'    => 'required',
         'description'    => 'required|min:3',
+        'price'          => 'required|min:3',
       );
       $validator = Validator::make(Input::all(), $rules);
 
@@ -310,6 +315,7 @@ class LessonsController extends Controller
           $cid          = Auth::guard('contributors')->user()->id;
           $title        = Input::get('title');
           $category_id  = Input::get('category_id');
+          $price        = Input::get('price');
           $lessons_image = Input::file('image');
           $image_text =  Input::get('image_text');
           $description  = Input::get('description');
@@ -334,6 +340,7 @@ class LessonsController extends Controller
           // $store->status          = 0;
           $store->enable          = 1;
           $store->title           = $title;
+          $store->price           = $price;
           $store->slug            = preg_replace('/\s+/', '-', $str);
           $store->category_id     = $category_id;
           $store->image           = $url_image;

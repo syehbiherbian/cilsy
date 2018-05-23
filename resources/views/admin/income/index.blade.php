@@ -3,7 +3,7 @@
 
 <title>Pages - Cilsy</title>
 
-
+ 
 <!-- JQuery DataTable Css -->
 <link href="{{ asset('template/admin/plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css') }}" rel="stylesheet">
 
@@ -57,15 +57,10 @@
                         <table class="table table-bordered table-striped table-hover dataTable js-exportable">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
                                     <th>Status</th>
-                                    <th>Month</th>
-                                    <th>Year</th>
+                                    <th>Status</th>
                                     <th>Contributor</th>
                                     <th>Total</th>
-                                  
-                                    <th>Crated At</th>
-                                    <th>Updated At</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -80,41 +75,8 @@
                                             <div class="label label-success">Paid</div>
                                         <?php } ?>
                                     </td>
-                                    <td>
-                                        @if($row->moth=='01')
-                                        Januari
-                                        @elseif($row->moth=='02')
-                                        Februari
-                                        @elseif($row->moth=='03')
-                                        Maret
-                                        @elseif($row->moth=='04')
-                                        April
-                                        @elseif($row->moth=='05')
-                                        Mei
-                                        @elseif($row->moth=='06')
-                                        Juni
-                                        @elseif($row->moth=='07')
-                                        Juli
-                                        @elseif($row->moth=='08')
-                                        Agustus
-                                        @elseif($row->moth=='09')
-                                        September
-                                        @elseif($row->moth=='10')
-                                        Oktober
-                                        @elseif($row->moth=='11')
-                                        November
-                                        @elseif($row->moth=='12')
-                                        Desember
-                                        @else
-                                        -
-                                        @endif
-                                    </td>
-                                    <td>{{ $row->year }}</td>
                                     <td>{{ $row->name }}</td>
-                                    <td>Rp. <?php echo number_format($row->total_income,0,",",".") ;?></td>
-
-                                    <td>{{ $row->created_at }}</td>
-                                    <td>{{ $row->updated_at }}</td>
+                                    <td>Rp. <?php echo number_format($row->price,0,",",".") ;?></td>
                                     <td>
                                         <form id="{{ $row->id }}" action="{{ url('system/income/'.$row->id) }}" method="post">
                                             {{ csrf_field() }}
@@ -127,6 +89,7 @@
                                     </td>
                                 </tr>
                                 @endforeach
+                                
                             </tbody>
                         </table>
                     </div>
@@ -180,11 +143,29 @@
                       <select class="form-control show-tick" name="bankid{{$row->id}}">
                           <option value="">--Select Bank--</option>
                           @foreach($bank as $value)
-                            @if($value->contributor_id == $row->contributor_id)
+                            @if($value->contributor_id == $row->id)
                                 <option value="{{$value->id}}"<?php if($row->bank==$value->id){echo "selected";}?>>Bank: {{$value->bank}}  - Holder: {{$value->holder}} - No: {{$value->account_no}} </option>
                             @endif
                           @endforeach
                       </select>
+                  </div>
+              </div>
+                <br> <br> <br>
+              <div class="col-md-3">
+                      <label class="form-label">Value</label>
+              </div>
+              <div class="col-md-9">
+                  <div class="form-line">
+                      <input type="text" name="nilaiid{{$row->id}}" class="form-control" id="title" value="{{ $row->price }}">
+                  </div>
+              </div>
+                  <br> <br> <br>
+              <div class="col-md-3">
+                      <label class="form-label">NOTE</label>
+              </div>
+              <div class="col-md-9">
+                  <div class="form-line">
+                      <input type="text" name="noted{{$row->id}}" class="form-control" id="title" value="">
                   </div>
               </div>
                   <br> <br> <br>
@@ -203,6 +184,7 @@
     <div class="modal-footer" style="border: none;">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             <button type="submit" class="btn btn-primary">Submit</button>
+
     </div>
   </form>
   </div>

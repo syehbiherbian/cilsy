@@ -69,6 +69,12 @@
 	          </select>
 	        </div>
 	      </div>
+				<div class="form-group">
+	        <label class="col-sm-2 control-label">Harga</label>
+	        <div class="col-sm-10">
+	          <input type="text"  required class="form-control" placeholder="minimum : 10000" name="price" value="{{ old('title') }}">
+	        </div>
+	      </div>
 	      <div class="form-group">
 	        <label class="col-sm-2 control-label">Upload gambar</label>
 	        <div class="col-sm-10">

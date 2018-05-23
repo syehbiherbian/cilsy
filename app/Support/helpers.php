@@ -8,6 +8,7 @@ use App\Models\Lesson;
 use App\Models\ContributorNotif;
 use App\Models\Video;
 use App\Models\UserNotif;
+use App\Models\Income;
 /**
  *
  */
@@ -189,20 +190,23 @@ function income(){
     if (empty(Auth::guard('contributors')->user()->id)) {
       return redirect('contributor/login');
     }
-    $date= new DateTime();
-    $moth= $date->format('m');
-    $year= $date->format('Y');
 
     $contribID = Auth::guard('contributors')->user()->id;
     $html='';
     if($contribID !==null){
-        $row = IncomeDetail::where('contributor_id',$contribID)->where('moth',$moth)->where('year',$year)->first();
+      
+        $row = Income::where('contributor_id',$contribID)
+        ->where('flag', '0')
+        ->where('invoice_id','<>' ,'0')->sum('price');
+
         if(count($row) ==0){
-        $row = IncomeDetail::where('contributor_id',$contribID)->orderBy('created_at','desc')->first();
+        $row = Income::where('contributor_id',$contribID)
+        ->where('flag', '0')
+        ->where('invoice_id','<>' ,'0');
         }
 
         if(count($row)>0){
-            $html.=''.number_format($row->total_income,0,",",".").'';
+            $html.=''.number_format($row*70/100,0,",",".").'';
         }else{
             $html.='0';
         }
