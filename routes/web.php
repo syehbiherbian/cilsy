@@ -52,6 +52,9 @@ Route::get('search/autocomplete', 'Web\SearchController@autocomplete');
 // Point
 Route::get('point', 'Web\PointController@index');
 
+// Cart
+Route::get('cart', 'Web\CartController@index');
+
 // Conributor Profile
 Route::get('contributor/profile/{username}', 'Web\ContributorsController@getProfile');
 
