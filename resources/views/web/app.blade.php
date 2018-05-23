@@ -362,12 +362,6 @@ a #items .item {
     <?php } ?>
       <div class="container">
         <div class="navbar-header navbar-fixed-side navbar-fixed-side-left">
-          {{--  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>  --}}
           <div id="btn" class="hidden-lg hidden-md">
               <div id='top'></div>
               <div id='middle'></div>
@@ -378,17 +372,12 @@ a #items .item {
               <div id="items" style="top:38%">
                   <div class="item" style="background-color:white">Halo, {{ Auth::guard('members')->user()->username }}</div>
                   <a href="{{ url('lessons/browse/all') }}" class="hidden-lg hidden-md" style="color: #fff;"><div class="item browse" style="background-color:#2BA8E2;">Browse Tutorial</div></a>                  
-                  <div class="item">Status Paket : <?=Helper::package('title');?></div>
-                  <div class="item">Masa Aktif : <?=Helper::package('expired');?> hari</div>
-                  <a href="{{ url('member/package') }}"><div class="item">Perpanjang</div></a>
                   <a href="{{ url('member/change') }}" ><div class="item">Ganti Password</div></a>
                   <a href="{{ url('member/signout') }}"><div class="item">Logout</div></a>
               </div>
               @else
               <div id="items">
                   <a href="{{ url('lessons/browse/all') }}" class="hidden-lg hidden-md" style="color: #fff;"><div class="item browse" style="background-color:#2BA8E2;">Browse Tutorial</div></a>
-                  <a href="{{ url('/carapesan') }}"><div class="item">Cara Pesan</div></a>
-                  <a href="{{ url('/member/package') }}"><div class="item">Harga</div></a>
                   <a href="{{ url('member/signin') }}"><div class="item">Masuk</div></a>
                   <a href="{{ url('member/signup') }}"><div class="item">Daftar</div></a>
               </div>
@@ -405,22 +394,6 @@ a #items .item {
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          <!-- <ul class="nav">
-            <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
-            <li><a href="#">Link</a></li>
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><a href="#">Action</a></li>
-                <li><a href="#">Another action</a></li>
-                <li><a href="#">Something else here</a></li>
-                <li role="separator" class="divider"></li>
-                <li><a href="#">Separated link</a></li>
-                <li role="separator" class="divider"></li>
-                <li><a href="#">One more separated link</a></li>
-              </ul>
-            </li>
-          </ul> -->
           <!-- <form class="navbar-form navbar-left">
             <div class="form-group">
               <input type="text" class="form-control" placeholder="Search">
@@ -460,50 +433,22 @@ a #items .item {
                         Tutorial Saya
                       </a>
                     </li>
-                    <?php if(!empty(notifuser())){ ?>
-                    <li class="has-dropdown">
-                        <img src="{{asset('template/kontributor/img/icon/Notifikasi.png')}}" alt="">
+                    <li class="class">
+                        <img src="{{asset('template/web/img/CART.png')}}" alt="">
                         <div class="dropdown-container">
-                            <ul>
-                              <?php echo notifuser();?>
-                            </ul>
-                        </div>
+                          
+                        </div>                      
                     </li>
-                    <?php } else { ?>
-                        <li class="has-dropdown">
-                        <img src="{{asset('template/kontributor/img/icon/Notifikasi.png')}}" alt="">
-                        <div class="dropdown-container">
-                            <ul>
-                              Tidak Ada Pemberitahuan
-                            </ul>
-                        </div>
-                    </li>
-                    <?php } ?>
-                     <li>
+                    <li>
                         <span class="hello-user">Halo, {{ Auth::guard('members')->user()->username }}</span>
                     </li>
                     <li class="has-dropdown">
-                        <img src="{{asset('template/kontributor/img/icon/Akun.png')}}" alt="">
+                        <img src="{{asset('template/web/img/drop-down-round-button.png')}}" alt="">
                         <div class="dropdown-container">
                             <ul>
                                 <li>
                                     <a href="{{ url('member/profile')}}">
                                         Profile
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        Pengaturan Akun
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="{{ url('member/point')}}">
-                                        Point
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="{{ url('member/subscriptions')}}">
-                                        Riwayat dan Status Langganan
                                     </a>
                                 </li>
                                 <li>
@@ -519,8 +464,12 @@ a #items .item {
           @else
               <ul class="nav navbar-nav navbar-right">
               <li><a href="{{ url('lessons/browse/all') }}" class="hidden-lg hidden-md">Browse Tutorial</a></li>
-              <li><a href="{{ url('/carapesan') }}">Cara Pesan</a></li>
-              <li><a href="{{ url('/member/package') }}">Harga</a></li>
+              <li class="has-dropdown">
+                <img src="{{asset('template/web/img/CART.png')}}" alt="">
+                <div class="dropdown-container">
+                  
+                </div>                      
+              </li>
               <li><a href="{{ url('member/signin') }}">Masuk</a></li>
               <li><a href="{{ url('member/signup') }}">Daftar</a></li>
             </ul>
@@ -573,15 +522,6 @@ a #items .item {
                   <div class="drop-down-content">
                     <table cellpadding="15">
                       <tr>
-                        <td>Status Paket</td>
-                        <td>: <?=Helper::package('title');?></td>
-                      </tr>
-                      <tr>
-                        <td>Masa Aktif</td>
-                        <td>: <?=Helper::package('expired');?> hari</td>
-                      </tr>
-                      <tr>
-                        <td><a href="{{ url('member/package') }}" class="btn btn-danger btn-package">Perpanjang</a></td>
                         <td><a href="{{ url('member/change') }}" class="btn btn-success">Ganti Password</a></td>
                         <td><a href="{{ url('member/signout') }}" class="btn btn-primary btn-signout">Logout</a></td>
                       </tr>

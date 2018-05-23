@@ -30,6 +30,13 @@
 
                             <div class="form-group form-float">
                                 <div class="form-line">
+                                   <input type="text" name="price" class="form-control" id="price">
+                                    <label class="form-label">Price</label>
+                                </div>
+                            </div>
+
+                            <div class="form-group form-float">
+                                <div class="form-line">
                                     <select class="form-control show-tick" name="cat">
                                         <option value="">-- Please select --</option>
                                         @foreach($cat as $cats)

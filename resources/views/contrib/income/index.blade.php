@@ -98,7 +98,7 @@
 		@endif
 	</div>
 
-@if(count($row) ==0)
+@if(count($inc) ==0)
     <div class="col-md-4 col-md-offset-4">
         <div class="card bg-3">
             <img src="{{asset('template/kontributor/img/icon/2.png')}}" alt="" />
@@ -112,7 +112,7 @@
 <div class="col-md-4 col-md-offset-4">
 	<div class="card bg-3">
 		<img src="{{asset('template/kontributor/img/icon/2.png')}}" alt="" />
-		<p class="card-title">Rp. <?php echo number_format($row->total_income,0,",",".") ;?></p>
+		<p class="card-title">Rp.  {{income()}}</p>
 		<p class="card-desc">Pendapatan Bulan ini</p>
 	</div>
 </div>
@@ -121,39 +121,6 @@
       <div class="tab-content clearfix">
           <h3>Pendapatan</h3>
           <div class="row">
-              <div class="col-sm-3">
-                 <div class="title"><h4>Pendapatan Bulan<h4></div>
-                 <div class="value" style="margin-top:18px;">
-
-                     @if($row->moth=='01')
-                     Januari
-                     @elseif($row->moth=='02')
-                     Februari
-                     @elseif($row->moth=='03')
-                     Maret
-                     @elseif($row->moth=='04')
-                     April
-                     @elseif($row->moth=='05')
-                     Mei
-                     @elseif($row->moth=='06')
-                     Juni
-                     @elseif($row->moth=='07')
-                     Juli
-                     @elseif($row->moth=='08')
-                     Agustus
-                     @elseif($row->moth=='09')
-                     September
-                     @elseif($row->moth=='10')
-                     Oktober
-                     @elseif($row->moth=='11')
-                     November
-                     @elseif($row->moth=='12')
-                     Desember
-                     @else
-                     -
-                     @endif
-                 </div>
-              </div>
               <div class="col-sm-3">
                  <div class="title"><h4>Jumlah<h4></div>
                  <div class="value" style="margin-top:18px;">Rp. <?php echo number_format($row->total_income,0,",",".") ;?></div>

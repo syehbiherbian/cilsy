@@ -17,7 +17,7 @@ class Videos extends Migration
             $table->increments('id');
             $table->string('title');
             $table->text('description');
-            $table->string('enable')->unsigned()->default(0);
+            $table->integer('enable')->unsigned()->default(0);
             $table->integer('lessons_id');
             $table->string('image');
             $table->string('video');

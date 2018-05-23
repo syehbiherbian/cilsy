@@ -21,7 +21,7 @@
                     <li><a href="{{ url('system/dashboard') }}">Dashboard</a></li>
                     <li class="active">Lessons</li>
                 </ol>
-                <!-- <small>Taken from <a href="https://datatables.net/" target="_blank">datatables.net</a></small> -->
+                
             </h2>
 
         </div>

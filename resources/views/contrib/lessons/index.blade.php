@@ -56,6 +56,7 @@
                   <th>No</th>
                   <th>Judul Tutorial</th>
                   <th>Kategori</th>
+                  <th>price</th>
                   <th>Jumlah murid bulan ini</th>
                   <th>Lebih lanjut</th>
                 </tr>
@@ -72,6 +73,7 @@
                   <td>{{ $i }}</td>
                   <td>{{ $row->title }}</td>
                   <td>{{ $row->category_title }}</td>
+                  <td>{{ $row->price }}</td>
                   <td>
                       <?php $student=0; ?>
                       @foreach ($students as $details)

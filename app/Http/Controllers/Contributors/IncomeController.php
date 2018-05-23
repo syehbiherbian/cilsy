@@ -17,6 +17,7 @@ use App\Models\Contributor;
 use App\Models\Lesson;
 use App\Models\Lesson_detail;
 use App\Models\IncomeDetail;
+use App\Models\Income;
 use App\Models\ContributorAccount;
 use Auth;
 
@@ -37,11 +38,16 @@ class IncomeController extends Controller
         $year= $date->format('Y');
 
         $contribID = Auth::guard('contributors')->user()->id;
-        $row = IncomeDetail::where('contributor_id',$contribID)->where('moth',$moth)->where('year',$year)->first();
+        $row = IncomeDetail::where('contributor_id',$contribID)->first();
+        $inc = Income::where('contributor_id',$contribID)
+                ->where('flag', '0')
+                ->where('invoice_id','<>' ,'0')->sum('price');
+
         $srow= ContributorAccount::where('contributor_id',$contribID)->first();
         $rekening=ContributorAccount::where('contributor_id',$contribID)->get();
       return view('contrib.income.index', [
         'row'=>$row,
+        'inc'=>$row,
         'rekening'=>$rekening,
         'srow' =>$srow
       ]);

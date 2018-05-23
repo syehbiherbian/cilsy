@@ -10,6 +10,7 @@ use Session;
 use Hash;
 use DateTime;
 use DB;
+use App\Models\Income;
 // use App\Models\Service;
 // use App\Models\Invoice;
 // use App\Models\Member;
@@ -28,17 +29,14 @@ class IncomeController extends Controller
      */
     public function index()
     {
-        $date= new DateTime();
-        $moth= $date->format('m');
-        $year= $date->format('Y');
-        $data= IncomeDetail::join('contributors','income_details.contributor_id','=','contributors.id')
-                ->select('income_details.*','income_details.status as status_paid','contributors.username as name')
-            //    ->where('moth',$moth)->where('year',$year)
-               ->orderby('income_details.id','=','desc')->get();
+        $data= Income::join('contributors','cart.contributor_id','=','contributors.id')
+                ->select('cart.contributor_id as id',DB::raw('SUM(cart.price)*70/100 as price'),'cart.flag as status_paid','contributors.username as name')
+                ->groupby('cart.contributor_id','cart.flag','contributors.username')
+                ->get();
         $bank= ContributorAccount::all();
         return view('admin.income.index',[
             'data' => $data,
-            'bank' =>$bank
+            'bank' => $bank
         ]);
     }
 
@@ -55,21 +53,24 @@ class IncomeController extends Controller
         } else {
 
             $now          = new DateTime();
-            $status         = Input::get('status_paid'.$id);
+            $statusy         = Input::get('status_paid'.$id);
             $bankid         = Input::get('bankid'.$id);
             $date_transfer  = Input::get('date'.$id);
-            // update
-            $updates = IncomeDetail::find($id);
-            $updates->status      = $status;
-            if(!empty($date_transfer)){
-              $updates->transfer_date =$date_transfer;
-            }
-            if(!empty($bankid)){
-              $updates->bank =$bankid;
-            }
+            $nilai          = Input::get('nilaiid'.$id);
+            $noted          = Input::get('noted'.$id);
 
-            $updates->updated_at= $now;
-            $updates->save();
+           
+            $update = Income::where('contributor_id',$id)->where('flag', '0')->update(['flag'=> 1, 'updated_at'=> $now]);
+
+                $updates = new IncomeDetail;
+                $updates->contributor_id= $id;
+                $updates->status=$statusy;
+                $updates->transfer_date =$date_transfer;
+                $updates->total_income= $nilai;
+                $updates->bank =$bankid;
+                $updates->created_at= $now;
+                $updates->updated_at= $now;
+                $updates->save();
 
             if(!empty($bankid)){
                 $bank= ContributorAccount::where('id',$bankid)->first();
@@ -78,45 +79,20 @@ class IncomeController extends Controller
                 $store->bank_transfer=$bank->id;
                 $store->transfer_date =$date_transfer;
                 $store->created_at= $now;
+                $store->total_transfer = $nilai;
+                $store->note = $noted;
                 $store->save();
 
-                if($updates->status==1){
-                  if($updates->moth=='01'){
-                    $bulan='Januari';
-                  }
-                  elseif($updates->moth=='02'){
-                    $bulan='Februari';
-                  }elseif($updates->moth=='03'){
-                    $bulan='Maret';
-                  }elseif($updates->moth=='04'){
-                    $bulan="April";
-                  }elseif($updates->moth=='05'){
-                      $bulan="Mei";
-                  }elseif($updates->moth=='06'){
-                      $bulan="Juni";
-                  }elseif($updates->moth=='07'){
-                      $bulan="Juli";
-                  }elseif($updates->moth=='08'){
-                      $bulan="Agustus";
-                  }elseif($updates->moth=='09'){
-                    $bulan="September";
-                  }elseif($updates->moth=='10'){
-                    $bulan="Oktober";
-                  }elseif($updates->moth=='11'){
-                    $bulan="November";
-                  }elseif($updates->moth=='12'){
-                    $bulan="Desember";
-                  }else{
-                    $bulan="-";
-                  }
-
+               
+                if($updates->statusy==1){
+                 
                   DB::table('contributor_notif')->insert([
                       'contributor_id'=> $updates->contributor_id,
-                      'category'=>'transfer',
-                      'title'   => 'fee sudah ditransfer oleh admin',
+                      'category'     =>'transfer',
+                      'title'        => 'fee sudah ditransfer oleh admin',
                       'notif'        => 'fee '.$bulan.' '.$updates->year.' telah ditransfer oleh admin ke rekening '.$bank->bank.' anda',
-                      'status'        => 0,
-                      'created_at'    => new DateTime()
+                      'status'       => 0,
+                      'created_at'   => new DateTime()
                   ]);
                 }
             }

@@ -98,7 +98,16 @@
               </div>
             </div>
             <!-- End Title -->
-
+            <!-- price -->
+            <div class="row">
+              <div class="col-md-3">
+                <p>Price</p>
+              </div>
+              <div class="col-md-9">
+                <p>: {{ $row->price }}</p>
+              </div>
+            </div>
+            <!-- End price -->
           </div>
         </div>
       </div>

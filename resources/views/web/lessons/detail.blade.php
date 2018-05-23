@@ -609,7 +609,7 @@
             <p class="lesson-title">{{ $lessons->title }}</p>
           </div>
           <div class="col-xs-12 col-md-2">
-            <div class="lesson-video-count">Total {{ count($main_videos) }} Video</div>
+            <div class="lesson-video-count">Rp. {{ $lessons->price }}</div>
           </div>
         </div><!--./ Title -->
 
