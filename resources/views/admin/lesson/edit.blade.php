@@ -29,6 +29,12 @@
                                     <label class="form-label">Title</label>
                                 </div>
                             </div>
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                   <input type="text" name="price" class="form-control" id="price" value="{{ $lessons->price }}">
+                                    <label class="form-label">Harga</label>
+                                </div>
+                            </div>
 
                             <div class="form-group form-float">
                                 <div class="form-line">
@@ -84,19 +90,6 @@
                                 <div class="form-line">
                                    <input type="text" name="slug" class="form-control" id="change" value="{{ $lessons->slug }}">
 
-                                </div>
-                            </div>
-                            <div class="form-group form-float">
-                              <label class="form-label">Status</label>
-                                <div class="form-line">
-                                    <select class="form-control show-tick" id="status" name="status" onchange="chageRevisi()">
-                                        <option value="">-- Please select --</option>
-                                        <option value="0" <?php if($lessons->status==0){echo "selected";} ?>>Pending</option>
-                                        <option value="2"<?php if($lessons->status==2){echo "selected";} ?>>Verification</option>
-                                        <option value="1"<?php if($lessons->status==1){echo "selected";} ?>>Publish</option>
-                                        <option value="3"<?php if($lessons->status==3){echo "selected";} ?>>Revision</option>
-                                    </select>
-                                    <label class="form-label">Icon</label>
                                 </div>
                             </div>
 

@@ -82,9 +82,24 @@
 
 .tutorial .tutorial-row .card{
   background-color: #fff;
-
+  max-height: 340px;
+  min-width: 100%;
 }
-
+.tutorial .tutorial-row .card .harga{
+  position: absolute;
+  top:0px;
+  left: 0;
+  background: #FFF;
+  padding: 10px 15px;
+  color: #09121a;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius:5px;
+}
+.img-card{
+  max-height: 165px;
+  min-width: 100%;
+}
 .tutorial .tutorial-row .card .caption{
   padding: 25px 15px;
 
@@ -98,7 +113,7 @@
 .tutorial .tutorial-row .btn-more{
   background-color: #fff;
   border-color: #f3f3f3;
-  border-radius: 15px;
+  border-radius: 5px;
   color: #09121a;
 }
 

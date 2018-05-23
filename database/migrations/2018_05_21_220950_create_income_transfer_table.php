@@ -15,11 +15,11 @@ class CreateIncomeTransferTable extends Migration
     {
         Schema::create('income_transfer', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('detail_income_id')->unsigned();
-            $table->integer('bank_transfer')->unsigned();
+            $table->integer('detail_income_id');
+            $table->integer('bank_transfer');
             $table->dateTime('transfer_date');
-            $table->decimal('total_transfer', 10, 2);
-            $table->string('note');
+            $table->string('total_transfer');
+            $table->text('note');
             $table->string('file');
             $table->timestamps();
         });

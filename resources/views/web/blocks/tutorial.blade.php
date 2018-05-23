@@ -29,10 +29,11 @@
                       <a href="{{ url('lessons/'.$lesson->slug)}}">
                         <div class="card">
                           <?php if (!empty($lesson->image)) {?>
-                            <img src="{{ asset($lesson->image) }}" alt="" class="img-responsive">
+                            <img src="{{ asset($lesson->image) }}" alt="" class="img-responsive img-card">
                           <?php } else {?>
                             <img src="{{ asset('template/web/img/no-image-available.png') }}" alt="" class="img-responsive">
                           <?php }?>
+                          <div class="harga">Rp. {{ $lesson->price}}</div>
                           <div class="caption">
                             <p>{{ $lesson->title }}</p>
                           </div>
@@ -49,7 +50,7 @@
           </div>
           <div class="row">
             <div class="col-md-12">
-              <a href="{{ url('lessons/browse/all') }}" class="btn btn-default btn-more pull-right">Selengkapnya <i class="ion-arrow-right-c"></i></a>
+              <a href="{{ url('lessons/browse/all') }}" class="btn btn-default btn-more pull-right">Selengkapnya <img src="{{ asset('template/web/img/selengkapnya.png') }}" alt="" height="10px" width="10px"/></a>
             </div>
           </div>
         </div>
@@ -80,10 +81,11 @@
                         <a href="{{ url('lessons/'.$lesson->slug)}}">
                           <div class="card">
                             <?php if (!empty($lesson->image)) {?>
-                              <img src="{{ asset($lesson->image) }}" alt="" class="img-responsive">
+                              <img src="{{ asset($lesson->image) }}" alt="" class="img-responsive img-card">
                             <?php } else {?>
                               <img src="{{ asset('template/web/img/no-image-available.png') }}" alt="" class="img-responsive">
                             <?php }?>
+                            <div class="harga">Rp.{{ $lesson->price }}</div>
                             <div class="caption">
                               <p>{{ $lesson->title }}</p>
                             </div>
@@ -121,10 +123,11 @@
                         <a href="{{ url('lessons/'.$lesson->slug)}}">
                           <div class="card">
                             <?php if (!empty($lesson->image)) {?>
-                              <img src="{{ asset($lesson->image) }}" alt="" class="img-responsive">
+                              <img src="{{ asset($lesson->image) }}" alt="" class="img-responsive img-card">
                             <?php } else {?>
                               <img src="{{ asset('template/web/img/no-image-available.png') }}" alt="" class="img-responsive">
                             <?php }?>
+                            <div class="harga">Rp. {{ $lesson->price}}</div>
                             <div class="caption">
                               <p>{{ $lesson->title }}</p>
                             </div>

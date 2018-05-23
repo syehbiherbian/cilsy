@@ -58,6 +58,7 @@ class LessonController extends Controller
 
         $rules = array(
           'title'   => 'required|unique:lessons',
+          'price'   => 'required',
           'cat'     => 'required',
           'desc'    => 'required',
           'slug'    => 'required',
@@ -72,6 +73,7 @@ class LessonController extends Controller
 
             $now          = new DateTime();
             $title        = Input::get('title');
+            $price        = Input::get('price');
             $categori_id  = Input::get('cat');
             $desc         = Input::get('desc');
             $slug         = Input::get('slug');
@@ -94,6 +96,7 @@ class LessonController extends Controller
             $insert = DB::table('lessons')->insert([
               'enable'      => 1,
               'title'       => $title,
+              'price'       => $price,
               'category_id' => $categori_id,
               'image'       => $image,
               'description' => $desc,
@@ -205,6 +208,7 @@ class LessonController extends Controller
             $store = Lesson::find($id);
             $store->enable      = Input::get('enable');
             $store->title       = Input::get('title');
+            $store->price       = Input::get('price');
             $store->category_id = Input::get('category_id');
             $store->image       = Input::get('image');
             $store->description = Input::get('description');
@@ -214,68 +218,68 @@ class LessonController extends Controller
             $store->updated_at  = new DateTime();
             $store->save();
 
-            if($check->status !== 1){
-              if($store->status==1){
-                $check_contri=Contributor::where('id',$store->contributor_id)->first();
+            // if($check->status !== 1){
+            //   if($store->status==1){
+            //     $check_contri=Contributor::where('id',$store->contributor_id)->first();
 
-                if(count($check_contri)>0){
-                  $contri = Contributor::find($store->contributor_id);
-                  $contri->points      = $check_contri->points + 10;
-                  $contri->updated_at  = new DateTime();
-                  $contri->save();
+            //     if(count($check_contri)>0){
+            //       $contri = Contributor::find($store->contributor_id);
+            //       $contri->points      = $check_contri->points + 10;
+            //       $contri->updated_at  = new DateTime();
+            //       $contri->save();
 
-                  DB::table('contributor_notif')->insert([
-                      'contributor_id'=> $check_contri->id,
-                      'category'=>'point',
-                      'title'   => 'Anda mendapatkan pemambahan 10 point',
-                      'notif'        => 'Anda mendapatkan pemambahan sebanyak 10 point karena '.$title.' berhasil dipublish',
-                      'status'        => 0,
-                      'created_at'    => new DateTime()
-                  ]);
-                  DB::table('contributor_notif')->insert([
-                      'contributor_id'=> $check_contri->id,
-                      'category'=>'publish',
-                      'title'   => 'Tutorial berhasil dipublish',
-                      'notif'        => $title.' berhasil dipublish/acc oleh admin',
-                      'status'        => 0,
-                      'created_at'    => new DateTime()
-                  ]);
-                }
+            //       DB::table('contributor_notif')->insert([
+            //           'contributor_id'=> $check_contri->id,
+            //           'category'=>'point',
+            //           'title'   => 'Anda mendapatkan pemambahan 10 point',
+            //           'notif'        => 'Anda mendapatkan pemambahan sebanyak 10 point karena '.$title.' berhasil dipublish',
+            //           'status'        => 0,
+            //           'created_at'    => new DateTime()
+            //       ]);
+            //       DB::table('contributor_notif')->insert([
+            //           'contributor_id'=> $check_contri->id,
+            //           'category'=>'publish',
+            //           'title'   => 'Tutorial berhasil dipublish',
+            //           'notif'        => $title.' berhasil dipublish/acc oleh admin',
+            //           'status'        => 0,
+            //           'created_at'    => new DateTime()
+            //       ]);
+            //     }
 
-              }
-            }
-            if(Input::get('status')==3 and input::get('notes') !== ''){
-              $store_revision= new Revision;
-              $store_revision->lession_id =$id;
-              $store_revision->notes=input::get('notes');
-              $store_revision->status=0;
-              $store->created_at  = new DateTime();
-              $store_revision->save();
+            //   }
+            // }
+            // if(Input::get('status')==3 and input::get('notes') !== ''){
+            //   $store_revision= new Revision;
+            //   $store_revision->lession_id =$id;
+            //   $store_revision->notes=input::get('notes');
+            //   $store_revision->status=0;
+            //   $store->created_at  = new DateTime();
+            //   $store_revision->save();
 
-              DB::table('contributor_notif')->insert([
-                  'contributor_id'=> $store->contributor_id,
-                  'category'=>'rivisi',
-                  'title'   => 'Tutorial perlu rivisi',
-                  'notif'        => $title.' perlu direvisi agar dapat dipublish oleh admin.',
-                  'status'        => 0,
-                  'created_at'    => new DateTime()
-              ]);
-            }
-            $revisi = Revision::where('lession_id',$id)->get();
+            //   DB::table('contributor_notif')->insert([
+            //       'contributor_id'=> $store->contributor_id,
+            //       'category'=>'rivisi',
+            //       'title'   => 'Tutorial perlu rivisi',
+            //       'notif'        => $title.' perlu direvisi agar dapat dipublish oleh admin.',
+            //       'status'        => 0,
+            //       'created_at'    => new DateTime()
+            //   ]);
+            // }
+            // $revisi = Revision::where('lession_id',$id)->get();
 
-            if(count($revisi) > 0 ){
-              $revisi_id= Input::get('revisi_id');
-              $revisi_status= Input::get('revisi_status');
+            // if(count($revisi) > 0 ){
+            //   $revisi_id= Input::get('revisi_id');
+            //   $revisi_status= Input::get('revisi_status');
 
-              if($revisi_id !==null){
-                foreach ($revisi_id as $key => $revisiid) {
-                  $update_revision= Revision::find($revisiid);
-                  $update_revision->status=$revisi_status[$key];
-                  $update_revision->updated_at  = new DateTime();
-                  $update_revision->save();
-                }
-              }
-            }
+            //   if($revisi_id !==null){
+            //     foreach ($revisi_id as $key => $revisiid) {
+            //       $update_revision= Revision::find($revisiid);
+            //       $update_revision->status=$revisi_status[$key];
+            //       $update_revision->updated_at  = new DateTime();
+            //       $update_revision->save();
+            //     }
+            //   }
+            // }
             // redirect
             return redirect('system/lessons')->with('success','Data successfully updated');
         }
