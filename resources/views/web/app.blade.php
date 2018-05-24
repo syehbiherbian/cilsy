@@ -464,11 +464,10 @@ a #items .item {
           @else
               <ul class="nav navbar-nav navbar-right">
               <li><a href="{{ url('lessons/browse/all') }}" class="hidden-lg hidden-md">Browse Tutorial</a></li>
-              <li class="has-dropdown">
-                <img src="{{asset('template/web/img/CART.png')}}" alt="">
-                <div class="dropdown-container">
-                  
-                </div>                      
+              <li class="class">
+                  <img src="http://127.0.0.1:8000/template/web/img/CART.png" alt="">
+                  <div class="dropdown-container" style="display: none;">
+                  </div>                      
               </li>
               <li><a href="{{ url('member/signin') }}">Masuk</a></li>
               <li><a href="{{ url('member/signup') }}">Daftar</a></li>
