@@ -609,7 +609,10 @@
             <p class="lesson-title">{{ $lessons->title }}</p>
           </div>
           <div class="col-xs-12 col-md-2">
+            
             <div class="lesson-video-count">Rp. {{ $lessons->price }}</div>
+            
+            <button type="submit" class="lesson-video-count"><i class="fa fa-shopping-cart"></i> Beli</button>
           </div>
         </div><!--./ Title -->
 

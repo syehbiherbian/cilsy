@@ -30,7 +30,7 @@
 <div class="container section-content">
   <div class="row">
     <div class="col-sm-12">
-      <h4>Category</h4>
+      <h4 style="text-align:center;">Kategori</h4>
       <div id="category_carousel" class="owl-carousel owl-theme">
         <?php foreach ($categories as $key => $category): ?>
           <div class="item cat-img-container">
@@ -76,7 +76,7 @@
         <div class="item">
           <a href="{{ url('lessons/'.$result->slug) }}">
             <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-2">
                 <img src="{{ $result->image }}" alt="" class="img-responsive">
               </div>
               <div class="col-sm-8">
@@ -85,6 +85,9 @@
                 <p><div class="badge badge-default">{{ $result->category_title }}</div>
                   <?=date('d M Y H:i', strtotime($result->created_at));?>
                 </p>
+              </div>
+              <div class="col-md-2">
+                <p>{{ $result->price }}</p>
               </div>
             </div>
           </a>

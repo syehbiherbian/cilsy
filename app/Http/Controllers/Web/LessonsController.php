@@ -11,6 +11,7 @@ use App\Models\Quiz;
 use App\Models\Service;
 use App\Models\Video;
 use App\Models\Viewer;
+use App\Models\TutorialMember;
 use Auth;
 use DateTime;
 use DB;
@@ -559,17 +560,15 @@ class LessonsController extends Controller
 		$lesson = Lesson::find($lessons_id);
         $videos = Video::where('enable', 1)->where('lessons_id', $lessons_id)->orderBy('id', 'asc')->get();
         $services = Service::where('status', 1)->where('members_id', $memberID)->where('expired', '>=', $now)->first();
-		$quiz = Quiz::where('lesson_id', $lessons_id)->get();
-        // dd($videos->toArray(), $quiz->toArray());
-		// $vidquiz = join_video_quiz($videos, $quiz);
-		// dd($vidquiz);
+        $tutorial = TutorialMember::where('member_id', $memberID)->where('lesson_id', $lessons_id)->first();
+        // dd($tutorial);
         $access = 0;
         if (isset($services) && $services->access == 1) {
             $access = 1;
         }
         $play = array();
         foreach ($videos as $key => $video) {
-            if ($key >= 3 && $access == 0 && isset($video['video'])) {
+            if ($key >= 3 && $tutorial == null && isset($video['video'])) {
                 // Guest
                 $play[] = array(
                     'name' => $video['title'],

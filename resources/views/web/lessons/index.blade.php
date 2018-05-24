@@ -34,7 +34,7 @@
 <div class="container section-content">
   <div class="row">
     <div class="col-sm-12">
-      <h4>Category</h4>
+      <h4 style="text-align: center;">Kategori</h4>
       <div id="category_carousel" class="owl-carousel owl-theme">
         <?php foreach ($categories as $key => $category): ?>
           <div class="item cat-img-container">
@@ -45,7 +45,7 @@
           </div>
         <?php endforeach; ?>
         <div class="item cat-img-container">
-          <a href="{{ url('lessons/browse/all') }}">
+          <a href="{{ url('lessons/browse/all') }}" style="text-decoration:none;">
             <img src="https://www.cilsy.id/assets/source/category/tutorial.png" alt=""></img>
             <p>Semua Tutorial</p>
           </a>
@@ -78,17 +78,20 @@
       <?php if(count($results) == 0){ echo "No Data Available";}?>
       <?php foreach ($results as $key => $result): ?>
         <div class="item">
-          <a href="{{ url('lessons/'.$result->slug) }}">
+          <a href="{{ url('lessons/'.$result->slug) }}" style="text-decoration:none;">
             <div class="row">
-              <div class="col-md-4">
+            <div class="col-md-2">
                 <img src="{{ $result->image }}" alt="" class="img-responsive">
               </div>
               <div class="col-sm-8">
                 <p><strong>{{ $result->title }}</strong></p>
-                <p><small><?php echo nl2br($result->description);?></small></p>
+                <p><small><?php echo nl2br($result->description); ?></small></p>
                 <p><div class="badge badge-default">{{ $result->category_title }}</div>
-                  <?= date('d M Y H:i',strtotime($result->created_at));?>
+                  <?=date('d M Y H:i', strtotime($result->created_at));?>
                 </p>
+              </div>
+              <div class="col-md-2">
+                <p style="font-weight:bold;">Rp. {{ $result->price }}</p>
               </div>
             </div>
           </a>

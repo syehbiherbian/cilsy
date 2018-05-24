@@ -434,7 +434,7 @@ a #items .item {
                       </a>
                     </li>
                     <li class="class">
-                        <img src="{{asset('template/web/img/CART.png')}}" alt="">
+                        <a href="{{ url('/cart') }}"><img src="{{asset('template/web/img/CART.png')}}" alt=""></a>
                         <div class="dropdown-container">
                           
                         </div>                      
@@ -462,16 +462,18 @@ a #items .item {
                 </ul>
           </div>
           @else
-              <ul class="nav navbar-nav navbar-right">
-              <li><a href="{{ url('lessons/browse/all') }}" class="hidden-lg hidden-md">Browse Tutorial</a></li>
-              <li class="class">
-                  <img src="http://127.0.0.1:8000/template/web/img/CART.png" alt="">
-                  <div class="dropdown-container" style="display: none;">
-                  </div>                      
-              </li>
-              <li><a href="{{ url('member/signin') }}">Masuk</a></li>
-              <li><a href="{{ url('member/signup') }}">Daftar</a></li>
+          <div class="header-menu">
+            <ul class="navbar-nav navbar-right">
+                <li class="class">
+                  <a href="{{ url('/cart') }}"><img src="{{asset('template/web/img/CART.png')}}" alt=""></a>
+                    <div class="dropdown-container">
+                      
+                    </div>                      
+                </li>
+                <li><a href="{{ url('member/signin') }}">Masuk</a></li>
+                <li><a href="{{ url('member/signup') }}">Daftar</a></li>
             </ul>
+      </div>
           @endif
         </div><!-- /.navbar-collapse -->
 
