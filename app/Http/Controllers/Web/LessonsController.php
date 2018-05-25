@@ -68,24 +68,13 @@ class LessonsController extends Controller
             $contributors_total_lessons = Lesson::where('enable', 1)->where('contributor_id', $lessons->contributor_id)->with('videos.views')->get();
             
             $contributors_total_view = 0;
-            foreach ($contributors_total_lessons as $lessons) {
-                foreach ($lessons->videos as $videos) {
+            foreach ($contributors_total_lessons as $lessonss) {
+                foreach ($lessonss->videos as $videos) {
                     if ($videos->views) {
                         $contributors_total_view += 1;
                     }
                 }
             }
-            /* foreach ($contributors_total_lessons as $key => $lesson) {
-                $videos = Video::where('lessons_id', $lesson->id)->get();
-                if ($videos) {
-                    foreach ($videos as $key => $video) {
-                        $viewers = Viewer::where('video_id', $video->id)->first();
-                        if ($viewers) {
-                            $contributors_total_view = $contributors_total_view + 1;
-                        }
-                    }
-                }
-            } */
 
             return view('web.lessons.detail', [
                 'lessons' => $lessons,
