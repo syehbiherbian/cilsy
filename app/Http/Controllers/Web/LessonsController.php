@@ -50,23 +50,17 @@ class LessonsController extends Controller
     public function detail($slug)
     {
         $now = new DateTime();
-        if (Auth::guard('members')->user()) {
-            $mem_id = Auth::guard('members')->user()->id;
-        } else {
-            $mem_id = 0;
-        }
+        $mem_id = isset(Auth::guard('members')->user()->id) ? Auth::guard('members')->user()->id : 0;
         $services = Service::where('status', 1)->where('status', 2)->where('download', 1)->where('members_id', $mem_id)->where('expired', '>', $now)->first();
+
         $lessons = Lesson::where('enable', 1)->where('slug', $slug)->first();
-        // $main_videos = Video::where('enable', 1)->where('lessons_id', $lessons->id)->orderBy('id', 'asc')->get();
-        // $files = File::where('enable', 1)->where('lesson_id', $lessons->id)->orderBy('id', 'asc')->get();
-        // dd($main_videos);
         if (count($lessons) > 0) {
             $main_videos = Video::where('enable', 1)->where('lessons_id', $lessons->id)->orderBy('id', 'asc')->get();
             $files = File::where('enable', 1)->where('lesson_id', $lessons->id)->orderBy('id', 'asc')->get();
+            
             // Contributor
             $contributors = Contributor::find($lessons->contributor_id);
             $contributors_total_lessons = Lesson::where('enable', 1)->where('contributor_id', $lessons->contributor_id)->with('videos.views')->get();
-            
             $contributors_total_view = 0;
             foreach ($contributors_total_lessons as $lessonss) {
                 foreach ($lessonss->videos as $videos) {
