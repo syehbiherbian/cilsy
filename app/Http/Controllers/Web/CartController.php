@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web;
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use Auth;
+use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
@@ -16,5 +17,13 @@ class CartController extends Controller
 
         $cart = Cart::all();
         return $cart;
+    }
+
+    public function store(Request $r)
+    {
+        if (!Auth::user()) {
+            return 0;
+        }
+        dd($r->input());
     }
 }

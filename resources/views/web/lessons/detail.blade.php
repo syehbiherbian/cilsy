@@ -612,7 +612,7 @@
             
             <div class="lesson-video-count">Rp. {{ $lessons->price }}</div>
             
-            <button type="submit" class="lesson-video-count"><i class="fa fa-shopping-cart"></i> Beli</button>
+            <button type="button" class="lesson-video-count" onclick="addToCart({{ $lessons->id }})"><i class="fa fa-shopping-cart"></i> Beli</button>
           </div>
         </div><!--./ Title -->
 
@@ -658,10 +658,10 @@
                     @foreach ($main_videos as $row)
                     <li>
                       <strong>{{ $row->title }}</strong>
+                      {!! nl2br($row->description) !!}
                       @if ($services)
-                      <span class="pull-right"><a hrefvideo.jsvideo }}" class="btn btn-info btn-md" download><i class="fa fa-download"></i> Download Video</a></span>
+                    <span class="pull-right"><a href="{{ $row->video }}" class="btn btn-info btn-md" download><i class="fa fa-download"></i> Download Video</a></span>
                       @endif
-                      {!! nl2br($row->description) !!}video.js
                     </li>
                     @endforeach
                   </ul>
@@ -763,6 +763,29 @@
 <script src="{{ asset('template/web/js/videojs-playlist-ui.js') }}"></script>
 <script src="{{ asset('template/web/js/videojs-errors.js') }}"></script>
 <script type="text/javascript">
+
+  function addToCart(id) {
+      var datapost = {
+        '_token'    : '{{ csrf_token() }}',
+        'id': id
+      };
+      $.ajax({
+          type    :'POST',
+          url     :'{{ url("/cart/add") }}',
+          data    :datapost,
+          success:function(data){
+          if(data==0){
+                  window.location.href = '{{url("member/signin")}}';
+          } else if (data !== 'null') {
+                  // $("#row"+comment_id).load(window.location.href + " #row"+comment_id);
+                  $('.content-reload').prepend(data);
+              }else {
+                  alert('Koneksi Bermasalah, Silahkan Ulangi');
+                  location.reload();
+              }
+          }
+      })
+  }
 
   function dokirim(){
       var isi_kirim = $('#input_kirim').val();
