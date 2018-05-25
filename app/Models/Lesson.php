@@ -12,4 +12,9 @@ class Lesson extends Model
 	{
 	    return 'slug';
 	}
+
+	public function videos()
+	{
+		return $this->hasMany('\App\Models\Video', 'lessons_id');
+	}
 }

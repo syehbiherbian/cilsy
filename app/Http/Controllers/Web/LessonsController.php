@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Contributor;
 use App\Models\File;
 use App\Models\Lesson;
 use App\Models\Point;
@@ -50,34 +51,26 @@ class LessonsController extends Controller
     public function detail($slug)
     {
         $now = new DateTime();
-        if (Auth::guard('members')->user()) {
-            $mem_id = Auth::guard('members')->user()->id;
-        } else {
-            $mem_id = 0;
-        }
+        $mem_id = isset(Auth::guard('members')->user()->id) ? Auth::guard('members')->user()->id : 0;
         $services = Service::where('status', 1)->where('status', 2)->where('download', 1)->where('members_id', $mem_id)->where('expired', '>', $now)->first();
+
         $lessons = Lesson::where('enable', 1)->where('slug', $slug)->first();
-        $main_videos = Video::where('enable', 1)->where('lessons_id', $lessons->id)->orderBy('id', 'asc')->get();
-        $files = File::where('enable', 1)->where('lesson_id', $lessons->id)->orderBy('id', 'asc')->get();
-        // dd($main_videos);
         if (count($lessons) > 0) {
             $main_videos = Video::where('enable', 1)->where('lessons_id', $lessons->id)->orderBy('id', 'asc')->get();
             $files = File::where('enable', 1)->where('lesson_id', $lessons->id)->orderBy('id', 'asc')->get();
+            
             // Contributor
-            $contributors = DB::table('contributors')->where('id', $lessons->contributor_id)->first();
-            $contributors_total_lessons = Lesson::where('enable', 1)->where('contributor_id', $lessons->contributor_id)->get();
+            $contributors = Contributor::find($lessons->contributor_id);
+            $contributors_total_lessons = Lesson::where('enable', 1)->where('contributor_id', $lessons->contributor_id)->with('videos.views')->get();
             $contributors_total_view = 0;
-            foreach ($contributors_total_lessons as $key => $lesson) {
-                $videos = Video::where('lessons_id', $lesson->id)->get();
-                if ($videos) {
-                    foreach ($videos as $key => $video) {
-                        $viewers = Viewer::where('video_id', $video->id)->first();
-                        if ($viewers) {
-                            $contributors_total_view = $contributors_total_view + 1;
-                        }
+            foreach ($contributors_total_lessons as $lessonss) {
+                foreach ($lessonss->videos as $videos) {
+                    if ($videos->views) {
+                        $contributors_total_view += 1;
                     }
                 }
             }
+
             return view('web.lessons.detail', [
                 'lessons' => $lessons,
                 'main_videos' => $main_videos,

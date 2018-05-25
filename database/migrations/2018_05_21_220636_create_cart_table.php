@@ -18,9 +18,9 @@ class CreateCartTable extends Migration
             $table->integer('member_id')->unsigned()->nullable();
             $table->integer('contributor_id')->unsigned()->nullable();
             $table->integer('lesson_id')->unsigned()->nullable();
-            $table->decimal('price', 10, 2);
-            $table->boolean('flag')->unsigned();
-            $table->integer('invoice_id')->unsigned();
+            // $table->decimal('price', 10, 2);
+            // $table->boolean('flag')->unsigned();
+            // $table->integer('invoice_id')->unsigned();
             $table->timestamps();
         });
     }
