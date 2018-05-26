@@ -11,6 +11,7 @@ use Validator;
 use Redirect;
 use App\Models\Member;
 use App\Models\Invoice;
+use App\Models\InvoiceDetail;
 use App\Models\Package;
 use App\Models\Cart;
 use Session;
@@ -101,20 +102,22 @@ class PackageController extends Controller
 
           $code           = $this->generateCode();
           // store
-          $invoice = new Invoice;
-          $invoice->status       = 0;
-          $invoice->code         = $code;
-          $invoice->members_id   = $member_id;
-          $invoice->packages_id  = $cart->lesson->id;
-          if(session()->get('coupon')['discount']){
-            $invoice->price        = session()->get('coupon')['discount'];
-          }else{
-            $invoice->price        = $price;            
+          $invoice = Invoice::updateOrCreate([
+            'code' => $code
+          ], [
+            'status' => 0,
+            'members_id' => $member_id,
+            'price' => $price
+          ]);
+          // store invoice detail
+          if ($invoice) {
+            foreach ($carts as $cart) {
+              InvoiceDetail::updateOrCreate([
+                'invoice_id' => $invoice->id,
+                'lesson_id' => $cart->lesson->id
+              ]);
+            }
           }
-          $invoice->created_at   = $now;
-          $invoice->save();
-          // store
-          $invoice = Invoice::where('code', $code)->first();
 
           Session::put('invoiceCODE', $invoice->code);
           Session::put('price', $invoice->price);
