@@ -18,7 +18,7 @@ class CreateInvoiceTable extends Migration
           $table->boolean('status')->unsigned()->default(0);
           $table->string('code');
           $table->integer('member_id')->unsigned();
-          $table->integer('lesson_id')->unsigned();
+        //   $table->integer('lesson_id')->unsigned();
           $table->decimal('price', 10, 2);
           $table->string('type')->nullable();
           $table->string('notes')->nullable();

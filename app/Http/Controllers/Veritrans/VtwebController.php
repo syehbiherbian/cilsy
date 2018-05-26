@@ -25,11 +25,11 @@ class VtwebController extends Controller {
     }
 
     public function vtweb() {
-        $members = Member::where('id', '=', Auth::guard('members')->user()->id)->first();
-        $packages = Package::where('id', '=', Session::get('packageID'))->first();
-        $invoice = Invoice::where('code', '=', Session::get('invoiceCODE'))->first();
+        $members = Member::where('id', Auth::guard('members')->user()->id)->first();
+        // $packages = Package::where('id', Session::get('packageID'))->first();
+        $invoice = Invoice::where('code', Session::get('invoiceCODE'))->first();
 
-        if ($members == null || $members == null || $invoice == null) {
+        if ($members == null || $invoice == null) {
             die('Anda belum memilih paket langganan Cilsy !');
         }
 
@@ -46,7 +46,7 @@ class VtwebController extends Controller {
                 'id' => $invoice->code,
                 'price' => $invoice->price,
                 'quantity' => 1,
-                'name' => "Pembayaran Paket Cilsy",
+                'name' => "Pembayaran keranjang belanja Cilsy",
             ),
         ];
 

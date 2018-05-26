@@ -770,19 +770,32 @@
         'id': id
       };
       $.ajax({
-          type    :'POST',
-          url     :'{{ url("/cart/add") }}',
-          data    :datapost,
-          success:function(data){
-          if(data==0){
-                  window.location.href = '{{url("member/signin")}}';
-          } else if (data !== 'null') {
-                  // $("#row"+comment_id).load(window.location.href + " #row"+comment_id);
-                  $('.content-reload').prepend(data);
-              }else {
-                  alert('Koneksi Bermasalah, Silahkan Ulangi');
-                  location.reload();
-              }
+          type    : 'POST',
+          url     : '{{ url("/cart/add") }}',
+          data    : datapost,
+          success: function(data){
+            if (data == 0) {
+              window.location.href = '{{ url("member/signin") }}';
+            } else if (data !== 'null') {
+              swal({
+                  title: "Menambahkan ke keranjang",
+                  text: data.title,
+                  type: "success",
+                  showCancelButton: true,
+                  cancelButtonText: 'Lihat keranjang',
+                  cancelButtonColor: '#3085d6',
+                  confirmButtonText: "Tutorial lainnya"
+              }).then(function(isConfirm) {
+                  if (isConfirm.value) {
+                      window.location.href = '{{ url("lessons/browse/all") }}';
+                  } else {
+                      window.location.href = '{{ url("cart") }}';
+                  }
+              });
+            } else {
+                alert('Koneksi Bermasalah, Silahkan Ulangi');
+                location.reload();
+            }
           }
       })
   }

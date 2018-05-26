@@ -12,6 +12,7 @@ use Redirect;
 use App\Models\Member;
 use App\Models\Invoice;
 use App\Models\Package;
+use App\Models\Cart;
 use Session;
 use Hash;
 use DateTime;
@@ -84,16 +85,19 @@ class PackageController extends Controller
       }
     }
     public function summary(){
-
-          $packages_id    = Session::get('package_id');
-          $packages       = Package::where('id','=',$packages_id)->first();
+          $now            = new DateTime();
           if(Auth::guard('members')->user()){
             $member_id      = Auth::guard('members')->user()->id;
           }else{
             $member_id      = null;
           }
-          $now            = new DateTime();
-          // var_dump($packages_id);
+
+          /* ambil data cart */
+          $price = 0;
+          $carts = Cart::where('member_id', Auth::guard('members')->user()->id)->with('lesson')->get();
+          foreach ($carts as $cart) {
+            $price += $cart->lesson->price;
+          }
 
           $code           = $this->generateCode();
           // store
@@ -101,25 +105,22 @@ class PackageController extends Controller
           $invoice->status       = 0;
           $invoice->code         = $code;
           $invoice->members_id   = $member_id;
-          $invoice->packages_id  = $packages_id;
+          $invoice->packages_id  = $cart->lesson->id;
           if(session()->get('coupon')['discount']){
-          $invoice->price        = session()->get('coupon')['discount'];
+            $invoice->price        = session()->get('coupon')['discount'];
           }else{
-          $invoice->price        = $packages->price;            
+            $invoice->price        = $price;            
           }
           $invoice->created_at   = $now;
           $invoice->save();
           // store
-          $invoice = Invoice::where('code','=',$code)->first();
+          $invoice = Invoice::where('code', $code)->first();
 
-          Session::put('invoiceCODE',$invoice->code);
+          Session::put('invoiceCODE', $invoice->code);
           Session::put('price', $invoice->price);
           if($member_id == null){
-                // dd(Session::get('invoiceCODE'));
-                return redirect('member/signup');
-                
+            return redirect('member/signup');
           } else{
-            # code...
             return redirect('checkout');
           }
   }
