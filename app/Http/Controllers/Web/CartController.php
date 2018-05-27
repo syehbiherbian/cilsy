@@ -12,8 +12,9 @@ class CartController extends Controller
 {
     public function index()
     {
+        $member_id = Auth::guard('members')->user()->id ?? null;
         $data = [
-            'carts' => Cart::where('member_id', Auth::guard('members')->user()->id)->with('member', 'contributor', 'lesson')->get()
+            'carts' => Cart::where('member_id', $member_id)->with('member', 'contributor', 'lesson')->get()
         ];
         
         return view('web.cart', $data);

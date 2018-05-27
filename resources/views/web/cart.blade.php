@@ -87,120 +87,80 @@ $mobile-width		: 640px;
         height: 15px;
         width: 15px;        
     }
+    .content-section {
+        margin-bottom: 30px;
+    }
+    .cart-list {
+        margin: 20px 0;
+        font-size: 20px;
+    }
+    .cart-price {
+        font-weight: bold;
+        text-align: right
+    }
+    .cart-total {
+        font-size: 22px;
+        font-weight: bolder;
+        margin-bottom: 20px;
+    }
+    .cart-total .row {
+        border-top: 2px solid #e8e8e8;
+        border-bottom: 2px solid #e8e8e8;
+        padding: 20px 0;
+    }
 </style>
 <div class="content-section">
     <div class="container">
-  	<div class="shadow">
-      <div class="row shadow">
-          <div class="col-sm-12 col-xs-12 kanan col-md-6 hidden-xs hidden-sm">
-            <div class="col-md-12">
-                <h2>Keranjang Belanja</h2>     
+        <div class="row">
+            <div class="col-sm-12">
+                <h3>Total <span id="span-total">{{ count($carts) }}</span> tutorial dalam Keranjang Belanja</h3>  
             </div>
-            <div class="col-md-12">   
-                <div class="row">
-                    <div class="col-md-9">Tutorial</div>
-                    <div class="col-md-3">Harga (Rp)</div>
-                </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 well">
                 @php
                 $total = 0;
                 @endphp
                 @foreach ($carts as $cart)
-                    <div class="row">
-                        <div class="col-md-9">{{ $cart->lesson->title }} <br> pemateri <b>{{ $cart->contributor->first_name . ' ' . $cart->contributor->last_name }}</b></div>
-                        <div class="col-md-3" style="text-align: right">{{ number_format($cart->lesson->price, 0, ",", ".") }}
-                        @php $total += $cart->lesson->price; @endphp
+                    <div class="row cart-list">
+                        <div class="col-md-3">
+                            <img src="{{ url($cart->lesson->image) }}" width="100%">
+                        </div>
+                        <div class="col-md-6 cart-title">
+                            {{ $cart->lesson->title }}
+                        </div>
+                        <div class="col-md-2 cart-price">
+                            Rp{{ number_format($cart->lesson->price, 0, ",", ".") }}
+                        </div>
+                        <div class="col-md-1">
+                            <i class="fa fa-trash"></i>
                         </div>
                     </div>
+                    @php $total += $cart->lesson->price; @endphp
                 @endforeach
             </div>
-          </div>
-          <div class="col-sm-12 col-xs-12 col-md-6 kiri">
-            <div class="col-md-12 col-sm-6">
-             <h3>Order Summary</h3>
-            </div>   
-            <hr>
-            <div class="col-md-6 bawah">
-            @if (session()->has('coupon'))
-            Discount ({{ session()->get('coupon')['name'] }})
-            <form action="{{ url('coupon/delete') }}" method="POST" style="display:inline">
-                {{ csrf_field() }}
-                {{ method_field('delete') }}
-                <button type="submit" style="font-size:14px" class="btn-link">Remove</button>
-            </form>
+        </div>
+        <div class="row cart-total">
+            <div class="col-md-offset-9 col-md-3">
+                <div class="row">
+                    <div class="col-md-6">
+                        Total
+                    </div>
+                    <div class="col-md-6">
+                        Rp{{ number_format($total, 0, ",", ".") }}
+                    </div>
+                </div>
             </div>
-            <div class="col-md-6 bawah">
-                @if(session()->get('coupon')['type'] == 'fixed')
-                Rp. {{ session()->get('coupon')['value'] }}
-                @elseif(session()->get('coupon')['type'] == 'percent')
-                Diskon {{ session()->get('coupon')['percent_off'] }} %
-                @endif
-            @endif
-            </div>
-            @if(session()->has('coupon'))
-            <div class="col-md-6 bawah">
-            </div>
-            @endif
-            <div class="col-md-6 bawah">
-            
-            </div>
-            <div class="col-md-6 bawah">
-                Jumlah Pembayaran 
-            </div>
-            <div class="col-md-6 bawah">
-                @if(session()->has('coupon'))
-                <b>Rp. {{ session()->get('coupon')['discount'] }}</b>
-                @else
-                <b>Rp. {{ $total }}</b>
-                @endif
-            </div>
-            <div class="col-md-12 bawah">
-            @if (! session()->has('coupon'))
-            <a href="#" class="have-code" id="hide" style="display:block">Gunakan Kode Promo</a>
-            <form action="{{ url('coupon') }}" method="POST" id="form" style="display:none;">
-                {{ csrf_field() }}
-                <div class="input-group">
-                <input type="text" class="form-control" placeholder="Promo Code" name="coupon_code">
-                <span class="input-group-btn">
-                    <button class="btn btn-primary" type="submit" style="background-color: #3CA3E0;">Gunakan</button>
-                </span>
-               
-                </div><!-- /input-group -->
-             </form>
-                @if (session()->has('success_message'))
-                            <div class="spacer"></div>
-                            <div class="alert alert-success">
-                                {{ session()->get('success_message') }}
-                            </div>
-                        @endif
-
-                        @if(count($errors) > 0)
-                            <div class="spacer"></div>
-                            <div class="alert alert-danger">
-                                <ul>
-                                    @foreach ($errors->all() as $error)
-                                        <li>{!! $error !!}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                @endif
-            @endif
-            </div>
-            <hr>
-            <div class="col-md-6 bawah">
-                Email
-            </div>
-            <div class="col-md-6 bawah">
-                {{ session()->get('email') }}
-            </div>
-            <div class="col-md-12">
+        </div>
+        <div class="row">
+            <div class="col-md-offset-9 col-md-3">
                 <form action="{{ url('member/checkout')}}" method="post">
-                {{ csrf_field() }} 
-                <button class="btn btn-primary" style="width:100%; background-color: #3CA3E0; border-radius:0px;">Lanjutkan Pembayaran</button>
+                    {{ csrf_field() }} 
+                    <button class="btn btn-primary btn-lg" style="background-color: #3CA3E0; border:0;">Pilih Metode Pembayaran</button>
                 </form>
             </div>
-          </div>
-      </div>
-  	</div>
+        </div>
+    </div>
 </div>
 <script>
 $(document).ready(function(){

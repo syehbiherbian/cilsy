@@ -18,10 +18,10 @@ use Auth;
 class VtwebController extends Controller {
 
     public function __construct() {
-        Veritrans::$serverKey = 'VT-server-_cXc9tYjPxt4JEX7B7qDSQP_';
+        Veritrans::$serverKey = env('VT_SECRET_'.strtoupper(env('APP_ENV')));
 
         //set Veritrans::$isProduction  value to true for production mode
-        Veritrans::$isProduction = true;
+        Veritrans::$isProduction = (env('APP_ENV') == 'production');
     }
 
     public function vtweb() {

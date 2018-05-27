@@ -86,21 +86,20 @@ class PackageController extends Controller
       }
     }
     public function summary(){
-          $now            = new DateTime();
-          if(Auth::guard('members')->user()){
-            $member_id      = Auth::guard('members')->user()->id;
-          }else{
-            $member_id      = null;
+          $now = new DateTime();
+          $member_id = Auth::guard('members')->user()->id ?? null;
+          if ($member_id === null) {
+            return redirect('member/signup');
           }
 
           /* ambil data cart */
           $price = 0;
-          $carts = Cart::where('member_id', Auth::guard('members')->user()->id)->with('lesson')->get();
+          $carts = Cart::where('member_id', $member_id)->with('lesson')->get();
           foreach ($carts as $cart) {
             $price += $cart->lesson->price;
           }
 
-          $code           = $this->generateCode();
+          $code = $this->generateCode();
           // store
           $invoice = Invoice::updateOrCreate([
             'code' => $code
@@ -121,11 +120,8 @@ class PackageController extends Controller
 
           Session::put('invoiceCODE', $invoice->code);
           Session::put('price', $invoice->price);
-          if($member_id == null){
-            return redirect('member/signup');
-          } else{
-            return redirect('checkout');
-          }
+
+          return redirect('checkout');
   }
     private function generateCode()
     {
