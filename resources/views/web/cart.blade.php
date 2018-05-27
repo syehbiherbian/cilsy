@@ -123,10 +123,10 @@ $mobile-width		: 640px;
                 @endphp
                 @foreach ($carts as $cart)
                     <div class="row cart-list">
-                        <div class="col-md-3">
-                            <img src="{{ url($cart->lesson->image) }}" width="100%">
+                        <div class="col-md-2">
+                            <center><img src="{{ url($cart->lesson->image) }}" style="max-width:100%;max-height:100px;"></center>
                         </div>
-                        <div class="col-md-6 cart-title">
+                        <div class="col-md-7 cart-title">
                             {{ $cart->lesson->title }}
                         </div>
                         <div class="col-md-2 cart-price">
