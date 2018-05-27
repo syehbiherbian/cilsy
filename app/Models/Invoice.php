@@ -8,4 +8,9 @@ class Invoice extends Model
 {
     protected $table = 'invoice';
     protected $fillable = ['code', 'status', 'price', 'promo', 'type', 'notes', 'members_id'];
+
+    public function details()
+    {
+        return $this->hasMany('App\Models\InvoiceDetail');
+    }
 }

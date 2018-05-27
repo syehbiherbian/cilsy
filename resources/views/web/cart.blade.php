@@ -99,7 +99,7 @@ $mobile-width		: 640px;
         text-align: right
     }
     .cart-total {
-        font-size: 22px;
+        font-size: 26px;
         font-weight: bolder;
         margin-bottom: 20px;
     }
@@ -141,22 +141,22 @@ $mobile-width		: 640px;
             </div>
         </div>
         <div class="row cart-total">
-            <div class="col-md-offset-9 col-md-3">
+            <div class="col-md-offset-8 col-md-4">
                 <div class="row">
                     <div class="col-md-6">
                         Total
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-6" style="text-align:right">
                         Rp{{ number_format($total, 0, ",", ".") }}
                     </div>
                 </div>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-offset-9 col-md-3">
+            <div class="col-md-offset-8 col-md-4" style="padding:0">
                 <form action="{{ url('member/checkout')}}" method="post">
                     {{ csrf_field() }} 
-                    <button class="btn btn-primary btn-lg" style="background-color: #3CA3E0; border:0;">Pilih Metode Pembayaran</button>
+                    <button class="btn btn-primary btn-lg btn-block" style="background-color: #3CA3E0; border:0; padding-top:20px;padding-bottom:20px">Pilih Metode Pembayaran</button>
                 </form>
             </div>
         </div>

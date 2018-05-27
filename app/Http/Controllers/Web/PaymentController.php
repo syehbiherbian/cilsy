@@ -12,7 +12,6 @@ class PaymentController extends Controller
   public function index($response)
   {
     if($response == 'finish'){
-      var_dump($response);
       return view('web.payment.finish');
     }else if($response == 'unfinish'){
       return view('web.payment.unfinish');

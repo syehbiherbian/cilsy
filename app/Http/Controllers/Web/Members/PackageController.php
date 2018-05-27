@@ -102,11 +102,11 @@ class PackageController extends Controller
           $code = $this->generateCode();
           // store
           $invoice = Invoice::updateOrCreate([
-            'code' => $code
-          ], [
-            'status' => 0,
             'members_id' => $member_id,
-            'price' => $price
+            'status' => 0,
+          ], [
+            'price' => $price,
+            'code' => $code
           ]);
           // store invoice detail
           if ($invoice) {

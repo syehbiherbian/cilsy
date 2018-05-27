@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Invoice;
 use App\Models\Member;
 use App\Models\Package;
+use App\Models\TutorialMember;
 use App\Veritrans\Veritrans;
 use DateTime;
 use DB;
@@ -18,10 +19,13 @@ use Auth;
 class VtwebController extends Controller {
 
     public function __construct() {
-        Veritrans::$serverKey = env('VT_SECRET_'.strtoupper(env('APP_ENV')));
+        $secret = env('VT_SECRET_'.strtoupper(config('app.env')));
+        $is_production = (config('app.env') == 'production');
+
+        Veritrans::$serverKey = $secret;
 
         //set Veritrans::$isProduction  value to true for production mode
-        Veritrans::$isProduction = (env('APP_ENV') == 'production');
+        Veritrans::$isProduction = $is_production;
     }
 
     public function vtweb() {
@@ -112,7 +116,7 @@ class VtwebController extends Controller {
                             'notes' => "Transaction order_id: " . $order_id . " successfully captured using " . $type,
                         ]);
                         // Create New Services
-                        $this->create_services($order_id);
+                        $this->create_tutorial_member($order_id);
                     }
                 }
             } else if ($transaction == 'settlement') {
@@ -123,7 +127,7 @@ class VtwebController extends Controller {
                     'notes' => "Transaction order_id: " . $order_id . " successfully transfered using " . $type,
                 ]);
                 // Create New Services
-                $this->create_services($order_id);
+                $this->create_tutorial_member($order_id);
             } else if ($transaction == 'pending') {
                 // TODO set payment status in merchant's database to 'Pending'
                 DB::table('invoice')->where('code', '=', $order_id)->update([
@@ -159,73 +163,16 @@ class VtwebController extends Controller {
         Mail::to($members->email)->send(new SuksesMail($send));
     }
 
-    private function create_services($order_id) {
-        // echo "create new Service";
-        # If invoice status completed
-
-        $now = new DateTime();
-
-        // Getting Invoice & package
-        $invoice = DB::table('invoice')->where('code', '=', $order_id)->first();
-        $packages = DB::table('packages')->where('id', '=', $invoice->packages_id)->first();
-
-        // $packages = DB::table('packages')->where('$invoice','=',$invoice)
-        if (count($invoice) > 0 && count($packages) > 0) {
-
-            // Check services if exist
-            $check = DB::table('services')
-                    ->leftJoin('invoice', 'services.members_id', '=', 'invoice.members_id')
-                    ->where('services.members_id', '=', $invoice->members_id)
-                    ->where('services.status', '=', 1)
-                    ->first();
-            if (count($check) > 0) {
-
-                DB::table('services')
-                        ->where('members_id', '=', $invoice->members_id)
-                        ->update([
-                            'status' => 2, //Expired
+    public function create_tutorial_member($order_id)
+    {
+        $invoice = Invoice::where('code', $order_id)->with('details')->first();
+        if ($invoice) {
+            foreach ($invoice->details as $detail) {
+                $tm = TutorialMember::firstOrCreate([
+                    'member_id' => $invoice->members_id,
+                    'lesson_id' => $detail->lesson_id
                 ]);
-
-                echo $invoice->packages_id;
-                echo $check->packages_id;
-
-                if ($invoice->packages_id == $check->packages_id) {
-                    $datetime1 = $now;
-                    $datetime2 = new DateTime($check->expired);
-                    $difference = $datetime1->diff($datetime2);
-                    $day = $difference->days + $packages->expired;
-
-                    $start = date('Y-m-d');
-                    $expired = date('Y-m-d', strtotime(' + ' . $day . ' days'));
-                    echo "Ready Package";
-                } else {
-                    $start = date('Y-m-d');
-                    $expired = date('Y-m-d', strtotime(' + ' . $packages->expired . ' days'));
-                    echo "New Package";
-                }
-            } else {
-                $start = date('Y-m-d');
-                $expired = date('Y-m-d', strtotime(' + ' . $packages->expired . ' days'));
             }
-
-            // Create new Services
-            DB::table('services')->insert([
-                'status' => 1, // 1 = Active
-                'members_id' => $invoice->members_id,
-                'invoice_id' => $invoice->code,
-                'title' => $packages->title,
-                'price' => $packages->price,
-                'start' => $start,
-                'expired' => $expired,
-                'access' => $packages->access,
-                'update' => $packages->update,
-                'chat' => $packages->chat,
-                'download' => $packages->download,
-                'created_at' => $now,
-                'updated_at' => $now,
-            ]);
-
-            echo "Services successfully added";
         }
     }
 
