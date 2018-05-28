@@ -55,6 +55,7 @@ Route::get('point', 'Web\PointController@index');
 // Cart
 Route::get('cart', 'Web\CartController@index');
 Route::post('cart/add', 'Web\CartController@store');
+Route::delete('cart/delete/{cart}', 'Web\CartController@destroy');
 
 // Conributor Profile
 Route::get('contributor/profile/{username}', 'Web\ContributorsController@getProfile');

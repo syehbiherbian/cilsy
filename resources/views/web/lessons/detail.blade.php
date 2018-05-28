@@ -610,7 +610,7 @@
           </div>
           <div class="col-xs-12 col-md-2">
             
-            <div class="lesson-video-count">Rp. {{ $lessons->price }}</div>
+            <div class="lesson-video-count">Rp{{ number_format($lessons->price, 0, ",", ".") }}</div>
             
             <button type="button" class="lesson-video-count" onclick="addToCart({{ $lessons->id }})"><i class="fa fa-shopping-cart"></i> Beli</button>
           </div>
@@ -774,9 +774,43 @@
           url     : '{{ url("/cart/add") }}',
           data    : datapost,
           success: function(data){
-            if (data == 0) {
-              window.location.href = '{{ url("member/signin") }}';
-            } else if (data !== 'null') {
+            if (typeof data !== 'null') {
+              @if (!Auth::guard('members')->user())
+              console.log('data',data);
+                // window.location.href = '{{ url("member/signin") }}';
+                var cek = localStorage.getItem('cart');
+                if (cek == null) {
+                  var cart = [];
+                  cart.push({
+                    'id': data.id,
+                    'image': data.image,
+                    'title': data.title,
+                    'price': data.price,
+                  });
+                  console.log('cartA', cart);
+                } else {
+                  var exist = false;
+                  var cart = JSON.parse(cek);
+                  console.log('cartB', cart);
+                  $.each(cart, function(k,v) {
+                    if (v.id == data.id) {
+                      exist = true;
+                    }
+                  })
+                  // console.log('eksis', exist);
+                  if (!exist) {
+                    cart.push({
+                      'id': data.id,
+                      'image': data.image,
+                      'title': data.title,
+                      'price': data.price,
+                    });
+                  }
+                }
+                
+                localStorage.setItem('cart', JSON.stringify(cart));
+              @endif
+
               swal({
                   title: "Menambahkan ke keranjang",
                   text: data.title,

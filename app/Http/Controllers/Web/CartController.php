@@ -22,14 +22,19 @@ class CartController extends Controller
 
     public function store(Request $r)
     {
-        if (!Auth::guard('members')->user()) {
-            return 0;
-        }
-
         /* cek lesson */
         $lesson = Lesson::find($r->input('id'));
         if (!$lesson) {
             throw new \Exception('Tutorial tidak ditemukan');
+        }
+
+        if (!Auth::guard('members')->user()) {
+            return response()->json([
+                'id' => $lesson->id,
+                'image' => url($lesson->image),
+                'title' => $lesson->title,
+                'price' => $lesson->price
+            ]);
         }
 
         /* simpan ke cart */
@@ -43,5 +48,17 @@ class CartController extends Controller
             'id' => $lesson->id,
             'title' => $lesson->title
         ]);
+    }
+
+    public function destroy(Request $r, Cart $cart)
+    {
+        if (!Auth::guard('members')->user()) {
+            return 0;
+        }
+
+        /* delete */
+        $cart->delete();
+
+        return redirect('/cart');
     }
 }
