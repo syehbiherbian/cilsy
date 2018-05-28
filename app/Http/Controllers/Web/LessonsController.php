@@ -55,6 +55,8 @@ class LessonsController extends Controller
         $services = Service::where('status', 1)->where('status', 2)->where('download', 1)->where('members_id', $mem_id)->where('expired', '>', $now)->first();
 
         $lessons = Lesson::where('enable', 1)->where('slug', $slug)->first();
+        $tutorial = TutorialMember::where('member_id', $mem_id)->where('lesson_id', $lessons->id)->first();
+        
         if (count($lessons) > 0) {
             $main_videos = Video::where('enable', 1)->where('lessons_id', $lessons->id)->orderBy('id', 'asc')->get();
             $files = File::where('enable', 1)->where('lesson_id', $lessons->id)->orderBy('id', 'asc')->get();
@@ -75,6 +77,7 @@ class LessonsController extends Controller
                 'lessons' => $lessons,
                 'main_videos' => $main_videos,
                 'file' => $files,
+                'tutor' => $tutorial,
                 'services' => $services,
                 'contributors' => $contributors,
                 'contributors_total_lessons' => $contributors_total_lessons,
