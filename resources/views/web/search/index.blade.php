@@ -1,7 +1,11 @@
 @extends('web.app')
-@section('title','Pencarian | ')
+@foreach($categories as $object)
+@section('title', 'Kategori | ')
+@section('description', $object->meta_desc)
+@endforeach
 @section('content')
 <style>
+
 @media (max-width:768px) {
     .section-content{
       min-height: 300px;
@@ -30,7 +34,7 @@
 <div class="container section-content">
   <div class="row">
     <div class="col-sm-12">
-      <h4 style="text-align:center;">Kategori</h4>
+      <h4 style="text-align: center;">Kategori</h4>
       <div id="category_carousel" class="owl-carousel owl-theme">
         <?php foreach ($categories as $key => $category): ?>
           <div class="item cat-img-container">
@@ -39,9 +43,9 @@
               <p>{{ $category->title }}</p>
             </a>
           </div>
-        <?php endforeach;?>
+        <?php endforeach; ?>
         <div class="item cat-img-container">
-          <a href="{{ url('lessons/browse/all') }}">
+          <a href="{{ url('lessons/browse/all') }}" style="text-decoration:none;">
             <img src="https://www.cilsy.id/assets/source/category/tutorial.png" alt=""></img>
             <p>Semua Tutorial</p>
           </a>
@@ -71,28 +75,31 @@
     </div>
     <div class="col-sm-12">
       <h4>Result</h4>
-      <?php if (count($results) == 0) {echo "No Data Available";}?>
+      <?php if(count($results) == 0){ echo "No Data Available";}?>
       <?php foreach ($results as $key => $result): ?>
         <div class="item">
-          <a href="{{ url('lessons/'.$result->slug) }}">
+          {{--  --}}
             <div class="row">
             <div class="col-md-2">
                 <img src="{{ $result->image }}" alt="" class="img-responsive">
               </div>
               <div class="col-sm-8">
-                <p><strong>{{ $result->title }}</strong></p>
+                <p><a href="{{ url('lessons/'.$result->slug) }}" style="text-decoration:none;"><strong>{{ $result->title }}</strong></a></p>
                 <p><small><?php echo nl2br($result->description); ?></small></p>
                 <p><div class="badge badge-default">{{ $result->category_title }}</div>
                   <?=date('d M Y H:i', strtotime($result->created_at));?>
                 </p>
               </div>
               <div class="col-md-2">
-                <p>{{ $result->price }}</p>
+                <p style="font-weight:bold;">Rp. {{ $result->price }}</p>
+                <p>
+                <button type="button" class="btn btn-info" onclick="addToCart({{ $result->id }})"><i class="fa fa-shopping-cart"></i> Beli</button>
+                </p>
               </div>
             </div>
-          </a>
+          {{-- </a> --}}
         </div>
-      <?php endforeach;?>
+      <?php endforeach; ?>
       <div class="row">
           <div class="col-md-12 text-center">
               {{ $results->links() }}
@@ -103,5 +110,42 @@
 </div>
 <script>
 fbq('track', 'Search');
+</script>
+<script>
+  function addToCart(id) {
+      var datapost = {
+        '_token'    : '{{ csrf_token() }}',
+        'id': id
+      };
+      $.ajax({
+          type    : 'POST',
+          url     : '{{ url("/cart/add") }}',
+          data    : datapost,
+          success: function(data){
+            if (data == 0) {
+              window.location.href = '{{ url("member/signin") }}';
+            } else if (data !== 'null') {
+              swal({
+                  title: "Menambahkan ke keranjang",
+                  text: data.title,
+                  type: "success",
+                  showCancelButton: true,
+                  cancelButtonText: 'Lihat keranjang',
+                  cancelButtonColor: '#3085d6',
+                  confirmButtonText: "Tutorial lainnya"
+              }).then(function(isConfirm) {
+                  if (isConfirm.value) {
+                      window.location.href = '{{ url("lessons/browse/all") }}';
+                  } else {
+                      window.location.href = '{{ url("cart") }}';
+                  }
+              });
+            } else {
+                alert('Koneksi Bermasalah, Silahkan Ulangi');
+                location.reload();
+            }
+          }
+      })
+  }
 </script>
 @endsection
