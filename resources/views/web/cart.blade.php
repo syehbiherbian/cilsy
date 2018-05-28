@@ -113,7 +113,7 @@ $mobile-width		: 640px;
     <div class="container">
         <div class="row">
             <div class="col-sm-12">
-                <h3>Total <span id="span-total">{{ count($carts) }}</span> tutorial dalam Keranjang Belanja</h3>  
+                <h3>Keranjang Belanja (<span id="span-total">{{ count($carts) }}</span> tutorial)</h3>  
             </div>
         </div>
         <div class="row">
@@ -121,45 +121,51 @@ $mobile-width		: 640px;
                 @php
                 $total = 0;
                 @endphp
-                @foreach ($carts as $cart)
-                    <div class="row cart-list">
-                        <div class="col-md-2">
-                            <center><img src="{{ url($cart->lesson->image) }}" style="max-width:100%;max-height:100px;"></center>
+                @if (count($carts) > 0)
+                    @foreach ($carts as $cart)
+                        <div class="row cart-list">
+                            <div class="col-md-2">
+                                <center><img src="{{ url($cart->lesson->image) }}" style="max-width:100%;max-height:100px;"></center>
+                            </div>
+                            <div class="col-md-7 cart-title">
+                                {{ $cart->lesson->title }}
+                            </div>
+                            <div class="col-md-2 cart-price">
+                                Rp{{ number_format($cart->lesson->price, 0, ",", ".") }}
+                            </div>
+                            <div class="col-md-1">
+                                <i class="fa fa-trash"></i>
+                            </div>
                         </div>
-                        <div class="col-md-7 cart-title">
-                            {{ $cart->lesson->title }}
-                        </div>
-                        <div class="col-md-2 cart-price">
-                            Rp{{ number_format($cart->lesson->price, 0, ",", ".") }}
-                        </div>
-                        <div class="col-md-1">
-                            <i class="fa fa-trash"></i>
-                        </div>
-                    </div>
-                    @php $total += $cart->lesson->price; @endphp
-                @endforeach
+                        @php $total += $cart->lesson->price; @endphp
+                    @endforeach
+                @else
+                <h4><center>Belum ada tutorial yang dimasukkan ke keranjang</center></h4>
+                @endif
             </div>
         </div>
-        <div class="row cart-total">
-            <div class="col-md-offset-8 col-md-4">
-                <div class="row">
-                    <div class="col-md-6">
-                        Total
-                    </div>
-                    <div class="col-md-6" style="text-align:right">
-                        Rp{{ number_format($total, 0, ",", ".") }}
+        @if (count($carts) > 0)
+            <div class="row cart-total">
+                <div class="col-md-offset-8 col-md-4">
+                    <div class="row">
+                        <div class="col-md-6">
+                            Total
+                        </div>
+                        <div class="col-md-6" style="text-align:right">
+                            Rp{{ number_format($total, 0, ",", ".") }}
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-offset-8 col-md-4" style="padding:0">
-                <form action="{{ url('member/checkout')}}" method="post">
-                    {{ csrf_field() }} 
-                    <button class="btn btn-primary btn-lg btn-block" style="background-color: #3CA3E0; border:0; padding-top:20px;padding-bottom:20px">Pilih Metode Pembayaran</button>
-                </form>
+            <div class="row">
+                <div class="col-md-offset-8 col-md-4" style="padding:0">
+                    <form action="{{ url('member/checkout')}}" method="post">
+                        {{ csrf_field() }} 
+                        <button class="btn btn-primary btn-lg btn-block" style="background-color: #3CA3E0; border:0; padding-top:20px;padding-bottom:20px">Pilih Metode Pembayaran</button>
+                    </form>
+                </div>
             </div>
-        </div>
+        @endif
     </div>
 </div>
 <script>
