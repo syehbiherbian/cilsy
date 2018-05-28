@@ -116,6 +116,9 @@ class PackageController extends Controller
                 'lesson_id' => $cart->lesson->id
               ]);
             }
+
+            /* hapus cart */
+            Cart::where('member_id', $member_id)->delete();
           }
 
           Session::put('invoiceCODE', $invoice->code);
