@@ -107,35 +107,37 @@
 <script>
     $('document').ready(function(){
         var cart = localStorage.getItem('cart');
-        if (cart) {
+        if (cart != null) {
             var carts = JSON.parse(cart);
-            var html = '';
-            var total = 0;
-            $.each(carts, function(k,v) {
-                html += '<div class="col-sm-12 well shadow">';
-                html += '<div class="row cart-list">';
-                html += '<div class="col-md-2">'
-                html += '<center><img src="'+v.image+'" style="max-width:100%;max-height:100px;"></center>';
-                html += '</div>';
-                html += '<div class="col-md-7 cart-title">';
-                html += v.title;
-                html += '</div>'
-                html += '<div class="col-md-2 cart-price">';
-                html += 'Rp'+v.price.toLocaleString('id', 'idr');
-                html += '</div>';
-                html += '<div class="col-md-1">';
-                html += '<button type="button" class="btn btn-default btn-lg"><i class="fa fa-trash"></i></button>';
-                html += '</div>';
-                html += '</div>';
-                html += '</div>';
+            if (carts.length > 0){
+                var html = '';
+                var total = 0;
+                $.each(carts, function(k,v) {
+                    html += '<div id="cart-'+v.id+'" class="col-sm-12 well shadow">';
+                    html += '<div class="row cart-list">';
+                    html += '<div class="col-md-2">'
+                    html += '<center><img src="'+v.image+'" style="max-width:100%;max-height:100px;"></center>';
+                    html += '</div>';
+                    html += '<div class="col-md-7 cart-title">';
+                    html += v.title;
+                    html += '</div>'
+                    html += '<div class="col-md-2 cart-price">';
+                    html += 'Rp'+v.price.toLocaleString('id', 'idr');
+                    html += '</div>';
+                    html += '<div class="col-md-1">';
+                    html += '<button type="button" onclick="deleteCart('+v.id+')" class="btn btn-default btn-lg"><i class="fa fa-trash"></i></button>';
+                    html += '</div>';
+                    html += '</div>';
+                    html += '</div>';
 
-                total += parseInt(v.price);
-            });
+                    total += parseInt(v.price);
+                });
 
-            $('#tutorial-total').html(carts.length);
-            $('#cart').html(html);
-            $('#cart-total, #cart-pay').removeClass('hide');
-            $('#total-price').html('Rp'+total.toLocaleString('id', 'idr'));
+                $('#tutorial-total').html(carts.length);
+                $('#cart').html(html);
+                $('#cart-total, #cart-pay').removeClass('hide');
+                $('#total-price').html('Rp'+total.toLocaleString('id', 'idr'));
+            }
         }
     });
 </script>

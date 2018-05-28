@@ -43,6 +43,20 @@ $(document).ready(function() {
 	});
 });
 
+function deleteCart(id) {
+	var carts = JSON.parse(localStorage.getItem('cart'));
+	if (carts) {
+		$.each(carts, function(k,v) {
+			if (id == v.id) {
+				carts.splice(k, 1);
+				localStorage.setItem('cart', JSON.stringify(carts));
+				// $('#cart-'+id).remove();
+				window.location.href = '/cart';
+			}
+		});
+	}
+}
+
 function formatMoney(c, d, t) {
     var n = this, 
     c = isNaN(c = Math.abs(c)) ? 2 : c, 
