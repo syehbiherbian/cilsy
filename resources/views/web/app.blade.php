@@ -481,7 +481,6 @@ a #items .item {
               </div>
               @endif
           </div>
-          <a href="#" id="cart" class="navbar-toggle"><img src="{{asset('template/web/img/CART.png')}}" alt="" style="max-height:35px; max-width:32px;"><span class="badge-cart"><?php echo GetTotalCart();?></span></a>                   
           <button type="button" class="navbar-toggle collapsed search-toogle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-search" aria-expanded="false">
             <!-- <span class="sr-only">Toggle navigation</span> -->
             <i class="ion ion-ios-search-strong"></i>

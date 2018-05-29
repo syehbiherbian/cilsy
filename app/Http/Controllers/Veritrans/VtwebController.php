@@ -112,6 +112,7 @@ class VtwebController extends Controller {
                         // Update status Invoices
                         DB::table('invoice')->where('code', '=', $order_id)->update([
                             'status' => 1,
+                            'flag' => 0,
                             'type' => $type,
                             'notes' => "Transaction order_id: " . $order_id . " successfully captured using " . $type,
                         ]);
@@ -123,6 +124,7 @@ class VtwebController extends Controller {
                 // TODO set payment status in merchant's database to 'Settlement'
                 $invoice = DB::table('invoice')->where('code', '=', $order_id)->update([
                     'status' => 1,
+                    'flag' => 0,
                     'type' => $type,
                     'notes' => "Transaction order_id: " . $order_id . " successfully transfered using " . $type,
                 ]);
@@ -168,7 +170,7 @@ class VtwebController extends Controller {
         $invoice = Invoice::where('code', $order_id)->with('details')->first();
         if ($invoice) {
             foreach ($invoice->details as $detail) {
-                $tm = TutorialMember::firstOrCreate([
+                $tm = TutorialMember::create([
                     'member_id' => $invoice->members_id,
                     'lesson_id' => $detail->lesson_id
                 ]);
