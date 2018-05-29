@@ -22,7 +22,7 @@ class VtwebController extends Controller {
         $secret = env('VT_SECRET_'.strtoupper(config('app.env')));
         $is_production = (config('app.env') == 'production');
 
-        Veritrans::$serverKey = $secret;
+        Veritrans::$serverKey = 'VT-server-4O7hlRyievnwHHB5b0J-z-xf';
 
         //set Veritrans::$isProduction  value to true for production mode
         Veritrans::$isProduction = $is_production;
