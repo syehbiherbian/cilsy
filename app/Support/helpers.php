@@ -9,6 +9,7 @@ use App\Models\ContributorNotif;
 use App\Models\Video;
 use App\Models\UserNotif;
 use App\Models\Income;
+use App\Models\Cart;
 /**
  *
  */
@@ -107,7 +108,24 @@ class Helper
 
   }
 }
-
+function cart(){
+  $member_id = Auth::guard('members')->user()->id ?? null;
+  $data = Cart::where('member_id', $member_id)->with('member', 'contributor', 'lesson')->get();
+  $html='';
+  foreach ($data as $cart) {
+        $html .='<li class="clearfix">
+                <img style="max-width:70px;max-height:70px;" src="'.$cart->lesson->image.'" alt="item1">
+                <span class="item-name">'.$cart->lesson->title.'</span>
+                <span class="item-price">Rp '.number_format($cart->lesson->price, 0, ",", ".") .'</span>
+                </li>';
+  }
+  return $html;
+}
+function getTotalCart(){
+  $member_id = Auth::guard('members')->user()->id ?? null;
+  $data =Cart::where('member_id', $member_id)->with('member', 'contributor', 'lesson')->count();
+  return $data;
+}
 function notif(){
 
     $contribID = Auth::guard('contributors')->user()->id;

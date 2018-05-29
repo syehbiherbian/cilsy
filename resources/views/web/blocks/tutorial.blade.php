@@ -33,7 +33,7 @@
                           <?php } else {?>
                             <img src="{{ asset('template/web/img/no-image-available.png') }}" alt="" class="img-responsive">
                           <?php }?>
-                          <div class="harga">Rp. {{ $lesson->price}}</div>
+                          <div class="harga">Rp. {{ number_format($lesson->price, 0, ",", ".") }}</div>
                           <div class="caption">
                             <p>{{ $lesson->title }}</p>
                           </div>
@@ -85,7 +85,7 @@
                             <?php } else {?>
                               <img src="{{ asset('template/web/img/no-image-available.png') }}" alt="" class="img-responsive">
                             <?php }?>
-                            <div class="harga">Rp.{{ $lesson->price }}</div>
+                            <div class="harga">Rp.{{ number_format($lesson->price, 0, ",", ".") }}</div>
                             <div class="caption">
                               <p>{{ $lesson->title }}</p>
                             </div>
@@ -127,7 +127,7 @@
                             <?php } else {?>
                               <img src="{{ asset('template/web/img/no-image-available.png') }}" alt="" class="img-responsive">
                             <?php }?>
-                            <div class="harga">Rp. {{ $lesson->price}}</div>
+                            <div class="harga">Rp. {{ number_format($lesson->price, 0, ",", ".") }}</div>
                             <div class="caption">
                               <p>{{ $lesson->title }}</p>
                             </div>

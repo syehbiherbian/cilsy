@@ -16,7 +16,7 @@ class CartController extends Controller
         $data = [
             'carts' => Cart::where('member_id', $member_id)->with('member', 'contributor', 'lesson')->get()
         ];
-        
+        // dd($data);
         return view('web.cart', $data);
     }
 

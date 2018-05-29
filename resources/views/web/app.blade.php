@@ -322,6 +322,104 @@ a #items .item {
 #box {
   will-change: transform, opacity;
 }
+.badge-cart {
+  background-color: red;
+  border-radius: 10px;
+  color: white;
+  display: inline-block;
+  font-size: 12px;
+  line-height: 1;
+  padding: 3px 7px;
+  text-align: center;
+  vertical-align: middle;
+  white-space: nowrap;
+  margin-left: 30px;
+  margin-top: -75px;
+}
+
+
+.shopping-cart {
+  margin: 75px 632px;
+  float: right;
+  background: white;
+  width: 320px;
+  position: absolute;
+  border-radius: 3px;
+  padding: 20px;
+}
+.shopping-cart .shopping-cart-header {
+  border-bottom: 1px solid #E8E8E8;
+  padding-bottom: 15px;
+}
+.shopping-cart .shopping-cart-header .shopping-cart-total {
+  float: right;
+}
+.shopping-cart .shopping-cart-items {
+  padding-top: 20px;
+  list-style: none;
+  margin-left: -45px;
+}
+.shopping-cart .shopping-cart-items li {
+  margin-bottom: 18px;
+}
+.shopping-cart .shopping-cart-items img {
+  float: left;
+  margin-right: 12px;
+}
+.shopping-cart .shopping-cart-items .item-name {
+  display: block;
+  padding-top: 10px;
+  font-size: 16px;
+}
+.shopping-cart .shopping-cart-items .item-price {
+  color: #6394F8;
+  margin-right: 8px;
+}
+.shopping-cart .shopping-cart-items .item-quantity {
+  color: #ABB0BE;
+}
+
+.shopping-cart:after {
+  bottom: 100%;
+  left: 89%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+  border-bottom-color: white;
+  border-width: 8px;
+  margin-left: -8px;
+}
+
+.cart-icon {
+  color: #515783;
+  font-size: 24px;
+  margin-right: 7px;
+  float: left;
+}
+
+.button {
+  background: #6394F8;
+  color: white;
+  text-align: center;
+  padding: 12px;
+  text-decoration: none;
+  display: block;
+  border-radius: 3px;
+  font-size: 16px;
+  margin: 25px 0 15px 0;
+}
+.button:hover {
+  background: #729ef9;
+}
+
+.clearfix:after {
+  content: "";
+  display: table;
+  clear: both;
+}
 
 
     </style>
@@ -383,7 +481,7 @@ a #items .item {
               </div>
               @endif
           </div>
-         
+          <a href="#" id="cart" class="navbar-toggle"><img src="{{asset('template/web/img/CART.png')}}" alt="" style="max-height:35px; max-width:32px;"><span class="badge-cart"><?php echo GetTotalCart();?></span></a>                   
           <button type="button" class="navbar-toggle collapsed search-toogle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-search" aria-expanded="false">
             <!-- <span class="sr-only">Toggle navigation</span> -->
             <i class="ion ion-ios-search-strong"></i>
@@ -434,10 +532,7 @@ a #items .item {
                       </a>
                     </li>
                     <li class="class">
-                        <a href="{{ url('/cart') }}"><img src="{{asset('template/web/img/CART.png')}}" alt=""></a>
-                        <div class="dropdown-container">
-                          
-                        </div>                      
+                        <a href="#" id="cart"><img src="{{asset('template/web/img/CART.png')}}" alt=""><span class="badge-cart"><?php echo GetTotalCart();?></span></a>                   
                     </li>
                     <li>
                         <span class="hello-user">Halo, {{ Auth::guard('members')->user()->username }}</span>
@@ -460,6 +555,14 @@ a #items .item {
                         </div>
                     </li>
                 </ul>
+          </div>
+          <div class="shopping-cart" style="display: none;">
+
+            <ul class="shopping-cart-items">
+              <?php echo cart();?>
+            </ul>
+
+            <a href="{{ url('/cart') }}" class="button">Lihat Keranjang</a>
           </div>
           @else
           <div class="header-menu">
@@ -510,6 +613,7 @@ a #items .item {
 
     <div id="header" class="hidden">
         <div class="container">
+          
             <a href="{{ url('/') }}">
                 <img class="logo" src="{{asset('template/web/img/logo.png')}}"></img>
             </a>
@@ -661,6 +765,13 @@ a #items .item {
     e.stopPropagation();
   });
 });
+(function(){
+ 
+  $("#cart").on("click", function() {
+    $(".shopping-cart").fadeToggle( "fast");
+  });
+  
+})();
     </script>
     <!-- Search Form Auto complete -->
     <script type="text/javascript">

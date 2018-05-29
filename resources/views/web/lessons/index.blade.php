@@ -91,7 +91,7 @@
                 </p>
               </div>
               <div class="col-md-2">
-                <p style="font-weight:bold;">Rp. {{ $result->price }}</p>
+                <p style="font-weight:bold;">Rp. {{ number_format($result->price, 0, ",", ".") }}</p>
                 <p>
                 <button type="button" class="btn btn-info" onclick="addToCart({{ $result->id }})"><i class="fa fa-shopping-cart"></i> Beli</button>
                 </p>
