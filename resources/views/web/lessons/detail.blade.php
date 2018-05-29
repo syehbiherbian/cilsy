@@ -609,8 +609,8 @@
             <p class="lesson-title">{{ $lessons->title }}</p>
           </div>
           <div class="col-xs-12 col-md-2">
-            <div class="lesson-video-count">Rp{{ number_format($lessons->price, 0, ",", ".") }}</div>
             @if($tutor == null)
+            <div class="lesson-video-count">Rp{{ number_format($lessons->price, 0, ",", ".") }}</div>
             <button type="button" class="lesson-video-count" onclick="addToCart({{ $lessons->id }})"><i class="fa fa-shopping-cart"></i> Beli</button>
             @endif
           </div>

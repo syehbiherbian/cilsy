@@ -163,7 +163,7 @@ class VtwebController extends Controller {
         Mail::to($members->email)->send(new SuksesMail($send));
     }
 
-    public function create_tutorial_member($order_id)
+    private function create_tutorial_member($order_id)
     {
         $invoice = Invoice::where('code', $order_id)->with('details')->first();
         if ($invoice) {
