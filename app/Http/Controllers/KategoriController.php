@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Redirect;
 use Validator;
-use App\categories;
+use App\Models\Category;
 
 class KategoriController extends Controller {
 	/**
@@ -134,8 +134,8 @@ class KategoriController extends Controller {
             $title=Input::get('title');
             $pre = preg_replace('/<p[^>]*>(.*)<\/p[^>]*>/i', '$1', Input::get('description'));
             // store
-            $check= categories::where('id',$id)->first();
-            $store = categories::find($id);
+            $check= Category::where('id',$id)->first();
+            $store = Category::find($id);
             $store->enable      = Input::get('enable');
             $store->title       = Input::get('title');
             $store->image       = Input::get('image');
