@@ -29,9 +29,10 @@ class IncomeController extends Controller
      */
     public function index()
     {
-        $data= Income::join('contributors','cart.contributor_id','=','contributors.id')
-                ->select('cart.contributor_id as id',DB::raw('SUM(cart.price)*70/100 as price'),'cart.flag as status_paid','contributors.username as name')
-                ->groupby('cart.contributor_id','cart.flag','contributors.username')
+        $data= Income::join('lessons', 'lessons.id', '=', 'invoice_details.lesson_id')
+                ->join('contributors','lessons.contributor_id','=','contributors.id')
+                ->select('lessons.contributor_id as id',DB::raw('SUM(lessons.price)*70/100 as price'),'invoice_details.flag as status_paid','contributors.username as name')
+                ->groupby('lessons.contributor_id','invoice_details.flag','contributors.username')
                 ->get();
         $bank= ContributorAccount::all();
         return view('admin.income.index',[

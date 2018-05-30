@@ -83,48 +83,22 @@
           <table class="table">
             <thead>
               <tr>
-                <th>Pendapatan Bulan</th>
-                <th >Jumlah</th>
-                <th>Status</th>
-                <th>Tanggal dibayar</th>
+                <th>Jumlah</th>
+                <th>Terjual<th/>
+                 <th>Status<th/>
+                   <th>Tgl Bayar<th/>
               </tr>
             </thead>
             <tbody>
                 @foreach($row as $value)
               <tr>
-                <td>
-                    @if($value->moth=='01')
-                    Januari
-                    @elseif($value->moth=='02')
-                    Februari
-                    @elseif($value->moth=='03')
-                    Maret
-                    @elseif($value->moth=='04')
-                    April
-                    @elseif($value->moth=='05')
-                    Mei
-                    @elseif($value->moth=='06')
-                    Juni
-                    @elseif($value->moth=='07')
-                    Juli
-                    @elseif($value->moth=='08')
-                    Agustus
-                    @elseif($value->moth=='09')
-                    September
-                    @elseif($value->moth=='10')
-                    Oktober
-                    @elseif($value->moth=='11')
-                    November
-                    @elseif($value->moth=='12')
-                    Desember
-                    @else
-                    -
-                    @endif
-                </td>
-                <td>Rp. <?php echo number_format($value->total_income,0,",",".") ;?></td>
-                <td>@if($value->status=='1')Paid @else Unpaid @endif</td>
-                <td>
-																	 <?php if($value->transfer_date ==null || $value->transfer_date=='0000-00-00'){echo "-"; }else{echo date('d F Y',strtotime($value->transfer_date));}?></td>
+                <td>Rp. <?php echo number_format($value->price,0,",",".") ;?></td>
+                <td><?php echo $value->title ;?></td>
+                <td></td>
+                <td>@if($value->flag=='1')Paid @else Unpaid @endif</td>
+                <td></td>
+                <td><?php if($value->updated_at ==null || $value->updated_at=='0000-00-00'){echo "-"; }else{echo date('d F Y',strtotime($value->updated_at));}?></td>
+
               </tr>
               @endforeach
             </tbody>

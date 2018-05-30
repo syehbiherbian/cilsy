@@ -123,17 +123,17 @@
           <div class="row">
               <div class="col-sm-3">
                  <div class="title"><h4>Jumlah<h4></div>
-                 <div class="value" style="margin-top:18px;">Rp. <?php echo number_format($row->total_income,0,",",".") ;?></div>
+                 <div class="value" style="margin-top:18px;">Rp. <?php echo number_format($row->price,0,",",".") ;?></div>
               </div>
               <div class="col-sm-3">
                  <div class="title"><h4>Status<h4></div>
-                 <div class="value" style="margin-top:18px;">@if($row->status=='1')Paid @else Unpaid @endif</div>
+                 <div class="value" style="margin-top:18px;">@if($row->flag=='1')Paid @else Unpaid @endif</div>
               </div>
               <div class="col-sm-3">
                  <div class="title"><h4>Tanggal Dibayar<h4></div>
                  <div class="value" style="margin-top:18px;">
 
-									 <?php if($row->transfer_date ==null || $row->transfer_date=='0000-00-00'){echo "-"; }else{echo date('d F Y',strtotime($row->transfer_date));}?>
+									 <?php if($row->updated_at ==null || $row->updated_at=='0000-00-00'){echo "-"; }else{echo date('d F Y',strtotime($row->updated_at));}?>
 
 								 </div>
               </div>

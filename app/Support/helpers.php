@@ -213,14 +213,14 @@ function income(){
     $html='';
     if($contribID !==null){
       
-        $row = Income::where('contributor_id',$contribID)
-        ->where('flag', '0')
-        ->where('invoice_id','<>' ,'0')->sum('price');
+        $row = Income::join('lessons', 'lessons.id', '=', 'invoice_details.lesson_id')
+        ->where('contributor_id',$contribID)
+        ->where('flag', '0')->sum('lessons.price');
 
         if(count($row) ==0){
-        $row = Income::where('contributor_id',$contribID)
-        ->where('flag', '0')
-        ->where('invoice_id','<>' ,'0');
+        $row = Income::join('lessons', 'lessons.id', '=', 'invoice_details.lesson_id')
+        ->where('contributor_id',$contribID)
+        ->where('flag', '0');
         }
 
         if(count($row)>0){

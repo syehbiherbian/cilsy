@@ -38,10 +38,15 @@ class IncomeController extends Controller
         $year= $date->format('Y');
 
         $contribID = Auth::guard('contributors')->user()->id;
-        $row = IncomeDetail::where('contributor_id',$contribID)->first();
-        $inc = Income::where('contributor_id',$contribID)
-                ->where('flag', '0')
-                ->where('invoice_id','<>' ,'0')->sum('price');
+        $row = Income::join('lessons', 'lessons.id', '=', 'invoice_details.lesson_id')
+               ->select(DB::raw('SUM(price)*70/100 as price'), 'flag','invoice_details.updated_at')
+               ->where('contributor_id',$contribID)
+               ->where('flag', '1')
+               ->groupby('flag','invoice_details.updated_at')
+               ->first();
+        $inc = Income::join('lessons', 'lessons.id', '=', 'invoice_details.lesson_id')
+                ->where('contributor_id',$contribID)
+                ->where('flag', '0')->sum('price');
 
         $srow= ContributorAccount::where('contributor_id',$contribID)->first();
         $rekening=ContributorAccount::where('contributor_id',$contribID)->get();
@@ -160,7 +165,13 @@ class IncomeController extends Controller
         $year= $date->format('Y');
 
         $contribID = Auth::guard('contributors')->user()->id;
-        $row = IncomeDetail::where('contributor_id',$contribID)->get();
+        $row = Income::join('lessons', 'lessons.id', '=', 'invoice_details.lesson_id')
+               ->select(DB::raw('SUM(price)*70/100 as price'), 'flag', 'lessons.title', 'invoice_details.updated_at')
+               ->where('contributor_id',$contribID)
+               ->where('flag', '1')
+               ->groupby('flag', 'lessons.title' , 'updated_at')
+               ->get();
+
       return view('contrib.income.view', [
         'row'=>$row,
       ]);
