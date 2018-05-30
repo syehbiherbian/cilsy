@@ -99,38 +99,15 @@ class PackageController extends Controller
             $price += $cart->lesson->price;
           }
 
-          $code           = $this->generateCode();
+          $code = $this->generateCode();
           // store
-          $invoice = new Invoice;
-          $invoice->status       = 0;
-          $invoice->code         = $code;
-          $invoice->members_id   = $member_id;
-          if(session()->get('coupon')['discount']){
-          $invoice->price        = session()->get('coupon')['discount'];
-          }else{
-          $invoice->price        = $price;            
-          }
-          $invoice->created_at   = $now;
-          $invoice->save();
-          // store
-          $invoice = Invoice::where('code', $code)->first();
-          Session::put('invoiceCODE',$invoice->code);
-          Session::put('price', $invoice->price);
-          if($member_id == null){
-                // dd(Session::get('invoiceCODE'));
-                return redirect('member/signup');
-                
-          } else{
-            # code...
-            return redirect('checkout');
-          }
-          // $invoice = Invoice::updateOrCreate([
-          //   'members_id' => $member_id,
-          //   'status' => 0,
-          // ], [
-          //   'price' => $price,
-          //   'code' => $code
-          // ]);
+          $invoice = Invoice::updateOrCreate([
+            'members_id' => $member_id,
+            'status' => 0,
+          ], [
+            'price' => $price,
+            'code' => $code
+          ]);
           // store invoice detail
           if ($invoice) {
             foreach ($carts as $cart) {
