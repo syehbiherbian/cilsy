@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddFlagToInvoiceTable extends Migration
+class AddFlagToInvoiceDetailsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class AddFlagToInvoiceTable extends Migration
      */
     public function up()
     {
-        Schema::table('invoice', function (Blueprint $table) {
+        Schema::table('invoice_details', function (Blueprint $table) {
             $table->integer('flag')->nullable();
         });
     }
@@ -25,7 +25,7 @@ class AddFlagToInvoiceTable extends Migration
      */
     public function down()
     {
-        Schema::table('invoice', function (Blueprint $table) {
+        Schema::table('invoice_details', function (Blueprint $table) {
             //
         });
     }
