@@ -413,6 +413,7 @@ a #items .item {
 }
 .button:hover {
   background: #729ef9;
+  text-decoration: none;
 }
 
 .clearfix:after {
@@ -481,6 +482,8 @@ a #items .item {
               </div>
               @endif
           </div>
+          <a href="{{ url('cart')}}" class="navbar-brand pull-right hidden-lg hidden-md" style="z-index: 1023; position: absolute; right: 0px;">
+          <i style="height: 32px; width: 32px; color: white; margin-right: 38px; position:relative;" class="fa fa-shopping-cart"></i></a>
           <button type="button" class="navbar-toggle collapsed search-toogle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-search" aria-expanded="false">
             <!-- <span class="sr-only">Toggle navigation</span> -->
             <i class="ion ion-ios-search-strong"></i>
@@ -531,7 +534,11 @@ a #items .item {
                       </a>
                     </li>
                     <li class="class">
-                        <a href="#" id="cart"><img src="{{asset('template/web/img/CART.png')}}" alt=""><span class="badge-cart"><?php echo GetTotalCart();?></span></a>                   
+                        <a href="#" id="cart"><img src="{{asset('template/web/img/CART.png')}}" alt="cart">
+                        <?php if(GetTotalCart() != null){ ?>
+                        <span class="badge-cart"><?php echo GetTotalCart();?></span>
+                        <?php } ?>
+                        </a>                   
                     </li>
                     <li>
                         <span class="hello-user">Halo, {{ Auth::guard('members')->user()->username }}</span>
@@ -567,10 +574,11 @@ a #items .item {
           <div class="header-menu">
             <ul class="navbar-nav navbar-right">
                 <li class="class">
-                  <a href="{{ url('/cart') }}"><img src="{{asset('template/web/img/CART.png')}}" alt=""></a>
-                    <div class="dropdown-container">
-                      
-                    </div>                      
+                  <a href="#" id="cart"><img src="{{asset('template/web/img/CART.png')}}" alt="cart">
+                        <?php if(GetTotalCart() != null){ ?>
+                        <span class="badge-cart"><?php echo GetTotalCart();?></span>
+                        <?php } ?>
+                  </a>                   
                 </li>
                 <li><a href="{{ url('member/signin') }}">Masuk</a></li>
                 <li><a href="{{ url('member/signup') }}">Daftar</a></li>
@@ -612,7 +620,6 @@ a #items .item {
 
     <div id="header" class="hidden">
         <div class="container">
-          
             <a href="{{ url('/') }}">
                 <img class="logo" src="{{asset('template/web/img/logo.png')}}"></img>
             </a>
