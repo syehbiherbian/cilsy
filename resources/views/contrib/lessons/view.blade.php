@@ -104,7 +104,7 @@
                 <p>Price</p>
               </div>
               <div class="col-md-9">
-                <p>: {{ $row->price }}</p>
+                <p>: Rp. {{ number_format($row->price, 0, ",", ".") }} </p>
               </div>
             </div>
             <!-- End price -->

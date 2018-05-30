@@ -152,13 +152,13 @@ function coments(){
   $contribID = Auth::guard('contributors')->user()->id;
   $html='';
   if($contribID !==null){
-      $cotrib= DB::table('coments')
-              ->join('lessons','lessons.id','=','coments.lesson_id')
-              ->where('lessons.contributor_id',$contribID)->where('coments.parent','0')
-              ->select('coments.*')->get();
+      $cotrib= DB::table('comments')
+              ->join('lessons','lessons.id','=','comments.lesson_id')
+              ->where('lessons.contributor_id',$contribID)->where('comments.parent_id','0')
+              ->select('comments.*')->get();
           $total=0;
           foreach ($cotrib as $value) {
-            	$cekanswer = DB::table('coments')->where('parent',$value->id)->get();
+            	$cekanswer = DB::table('comments')->where('parent_id',$value->id)->get();
               if(count($cekanswer)==0){
                 $total=$total+1;
               }
