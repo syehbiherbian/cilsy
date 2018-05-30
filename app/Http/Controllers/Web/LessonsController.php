@@ -46,6 +46,7 @@ class LessonsController extends Controller
         return view('web.lessons.index', [
             'categories' => $categories,
             'results' => $results,
+            
         ]);
     }
     public function detail($slug)
