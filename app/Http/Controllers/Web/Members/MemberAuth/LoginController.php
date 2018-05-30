@@ -65,8 +65,8 @@ class LoginController extends Controller
      */
     protected function authenticated(Request $request, $user)
     {
-        if(session()->get('package')){
-            return view('web.payment.summary', compact('packages', 'member'));
+        if(session()->get('invoiceCode')){
+            return redirect('checkout');
         } else{
             return redirect($this->redirectTo);
         }

@@ -101,7 +101,7 @@ class PackageController extends Controller
 
           $code = $this->generateCode();
           // store
-          $invoice = Invoice::updateOrCreate([
+          $invoice = Invoice::create([
             'members_id' => $member_id,
             'status' => 0,
           ], [
@@ -111,7 +111,7 @@ class PackageController extends Controller
           // store invoice detail
           if ($invoice) {
             foreach ($carts as $cart) {
-              InvoiceDetail::updateOrCreate([
+              InvoiceDetail::create([
                 'invoice_id' => $invoice->id,
                 'lesson_id' => $cart->lesson->id
               ]);
