@@ -276,7 +276,7 @@
   position: fixed;
   z-index: 4;
   overflow: auto;
-  top: 0px;
+  top: -57px;
   left: -275px;
   width: 300px;
   opacity: 0;
@@ -482,8 +482,9 @@ a #items .item {
               </div>
               @endif
           </div>
-          <a href="{{ url('cart')}}" class="navbar-brand pull-right hidden-lg hidden-md" style="z-index: 1023; position: absolute; right: 0px;">
-          <i style="height: 32px; width: 32px; color: white; margin-right: 38px; position:relative;" class="fa fa-shopping-cart"></i></a>
+          <a href="{{ url('cart')}}" class="navbar-brand pull-right hidden-lg hidden-md" >
+          <i style="height: 32px; width: 32px; color: white;" class="fa fa-shopping-cart"></i>
+          </a>
           <button type="button" class="navbar-toggle collapsed search-toogle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-search" aria-expanded="false">
             <!-- <span class="sr-only">Toggle navigation</span> -->
             <i class="ion ion-ios-search-strong"></i>
@@ -633,7 +634,7 @@ a #items .item {
                   <div class="drop-down-content">
                     <table cellpadding="15">
                       <tr>
-                        <td><a href="{{ url('member/change') }}" class="btn btn-success">Ganti Password</a></td>
+                        <td><a href="{{ url('member/profile') }}" class="btn btn-success">Profil</a></td>
                         <td><a href="{{ url('member/signout') }}" class="btn btn-primary btn-signout">Logout</a></td>
                       </tr>
                     </table>
