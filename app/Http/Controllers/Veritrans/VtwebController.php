@@ -168,12 +168,11 @@ class VtwebController extends Controller {
         $invoice = Invoice::where('code', $order_id)->with('details')->first();
         if ($invoice) {
             foreach ($invoice->details as $detail) {
-                $tm = TutorialMember::create([
-                    'member_id' => $invoice->members_id,
-                    'lesson_id' => $detail->lesson_id,
+                $tm = TutorialMember::firstOrCreate([
+                    'member_id' => 146,
+                    'lesson_id' => 13,
                     'flag' => 0,
                 ]);
-                dd($tm);
             }
         }
     }
