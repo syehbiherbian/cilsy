@@ -40,12 +40,12 @@ class IncomeController extends Controller
         $contribID = Auth::guard('contributors')->user()->id;
         $row = Income::join('lessons', 'lessons.id', '=', 'invoice_details.lesson_id')
                ->select(DB::raw('SUM(price)*70/100 as price'), 'flag','invoice_details.updated_at')
-               ->where('contributor_id',$contribID)
+               ->where('lessons.contributor_id',$contribID)
                ->where('flag', '1')
                ->groupby('flag','invoice_details.updated_at')
                ->first();
         $inc = Income::join('lessons', 'lessons.id', '=', 'invoice_details.lesson_id')
-                ->where('contributor_id',$contribID)
+                ->where('lessons.contributor_id',$contribID)
                 ->where('flag', '0')->sum('price');
 
         $srow= ContributorAccount::where('contributor_id',$contribID)->first();
@@ -167,7 +167,7 @@ class IncomeController extends Controller
         $contribID = Auth::guard('contributors')->user()->id;
         $row = Income::join('lessons', 'lessons.id', '=', 'invoice_details.lesson_id')
                ->select(DB::raw('SUM(price)*70/100 as price'), 'flag', 'lessons.title', 'invoice_details.updated_at')
-               ->where('contributor_id',$contribID)
+               ->where('lessons.contributor_id',$contribID)
                ->where('flag', '1')
                ->groupby('flag', 'lessons.title' , 'updated_at')
                ->get();
