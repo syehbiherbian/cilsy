@@ -607,6 +607,7 @@
         <div class="row pt-25 pb-15">
           <div class="col-xs-12 col-md-10">
             <p class="lesson-title">{{ $lessons->title }}</p>
+            <p><img src="{{asset('template/web/img/video.png')}}" alt="" style="height:25px; width:25px;"> <b>{{ count($main_videos) }}</b> Video</p>
           </div>
           <div class="col-xs-12 col-md-2">
             @if($tutor == null)
@@ -659,7 +660,7 @@
                     <li>
                       <strong>{{ $row->title }}</strong>
                       {!! nl2br($row->description) !!}
-                      @if ($services)
+                      @if ($tutor)
                     <span class="pull-right"><a href="{{ $row->video }}" class="btn btn-info btn-md" download><i class="fa fa-download"></i> Download Video</a></span>
                       @endif
                     </li>
@@ -667,7 +668,7 @@
                   </ul>
                 </div>
                 <div id="tab3" class="tab-pane fade">
-                  @if ($services)
+                  @if ($tutor)
                       @foreach($file as $key => $files)
                           <a href="{{ $files->source }}" class="btn btn-info btn-md" download><i class="fa fa-download"></i> Download {{ $files->title}}</a><br><br>
                       @endforeach

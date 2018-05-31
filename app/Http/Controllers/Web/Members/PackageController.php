@@ -113,7 +113,8 @@ class PackageController extends Controller
             foreach ($carts as $cart) {
               InvoiceDetail::updateOrCreate([
                 'invoice_id' => $invoice->id,
-                'lesson_id' => $cart->lesson->id
+                'lesson_id' => $cart->lesson->id,
+                'contributor_id' => $cart->lesson->contributor_id
               ]);
             }
 

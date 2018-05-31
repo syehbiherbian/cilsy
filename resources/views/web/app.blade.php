@@ -575,7 +575,7 @@ a #items .item {
           <div class="header-menu">
             <ul class="navbar-nav navbar-right">
                 <li class="class">
-                  <a href="#" id="cart"><img src="{{asset('template/web/img/CART.png')}}" alt="cart">
+                  <a href="{{ ('/cart') }}" ><img src="{{asset('template/web/img/CART.png')}}" alt="cart">
                         <?php if(GetTotalCart() != null){ ?>
                         <span class="badge-cart"><?php echo GetTotalCart();?></span>
                         <?php } ?>
@@ -584,7 +584,7 @@ a #items .item {
                 <li><a href="{{ url('member/signin') }}">Masuk</a></li>
                 <li><a href="{{ url('member/signup') }}">Daftar</a></li>
             </ul>
-      </div>
+           </div>
           @endif
         </div><!-- /.navbar-collapse -->
 

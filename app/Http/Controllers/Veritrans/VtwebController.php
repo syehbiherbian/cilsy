@@ -169,8 +169,8 @@ class VtwebController extends Controller {
         if ($invoice) {
             foreach ($invoice->details as $detail) {
                 $tm = TutorialMember::firstOrCreate([
-                    'member_id' => 146,
-                    'lesson_id' => 13,
+                    'member_id' => $invoice->members_id,
+                    'lesson_id' => $detail->lesson_id,
                     'flag' => 0,
                 ]);
             }
