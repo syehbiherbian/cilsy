@@ -54,24 +54,22 @@ class IncomeController extends Controller
         } else {
 
             $now          = new DateTime();
-            $statusy         = Input::get('status_paid'.$id);
+            $statusy        = Input::get('status_paid'.$id);
             $bankid         = Input::get('bankid'.$id);
             $date_transfer  = Input::get('date'.$id);
             $nilai          = Input::get('nilaiid'.$id);
             $noted          = Input::get('noted'.$id);
 
-           
-            $update = Income::where('contributor_id',$id)->where('flag', '0')->update(['flag'=> 1, 'updated_at'=> $now]);
+          
 
-                $updates = new IncomeDetail;
-                $updates->contributor_id= $id;
-                $updates->status=$statusy;
-                $updates->transfer_date =$date_transfer;
-                $updates->total_income= $nilai;
-                $updates->bank =$bankid;
-                $updates->created_at= $now;
-                $updates->updated_at= $now;
-                $updates->save();
+            $update = Income::where('contributor_id',$id)
+                      ->where('flag', '0')->update(['flag'=> 1, 'updated_at' => $date_transfer]);
+
+            $updates = DB::table('income_details')->insert([
+                        ['contributor_id' =>  $id, 'status' => $statusy ,'transfer_date' => $date_transfer, 'total_income' => $nilai,
+                        'bank' => $bankid, 'created_at' => $now,'updated_at' => $now]
+                        ]);
+            
 
             if(!empty($bankid)){
                 $bank= ContributorAccount::where('id',$bankid)->first();
@@ -85,21 +83,20 @@ class IncomeController extends Controller
                 $store->save();
 
                
-                if($updates->statusy==1){
+                // if($updates->statusy==1){
                  
-                  DB::table('contributor_notif')->insert([
-                      'contributor_id'=> $updates->contributor_id,
-                      'category'     =>'transfer',
-                      'title'        => 'fee sudah ditransfer oleh admin',
-                      'notif'        => 'fee '.$bulan.' '.$updates->year.' telah ditransfer oleh admin ke rekening '.$bank->bank.' anda',
-                      'status'       => 0,
-                      'created_at'   => new DateTime()
-                  ]);
-                }
+                //   DB::table('contributor_notif')->insert([
+                //       'contributor_id'=> $updates->contributor_id,
+                //       'category'     =>'transfer',
+                //       'title'        => 'fee sudah ditransfer oleh admin',
+                //       'notif'        => 'fee '.$bulan.' '.$updates->year.' telah ditransfer oleh admin ke rekening '.$bank->bank.' anda',
+                //       'status'       => 0,
+                //       'created_at'   => new DateTime()
+                //   ]);
+                // }
             }
 
 
-            // redirect
             return redirect()->back()->with('success','Data successfully updated');
         }
     }
