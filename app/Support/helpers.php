@@ -217,18 +217,19 @@ function income(){
       ->where('lessons.contributor_id',$contribID)
       ->where('flag', '0')->sum('lessons.price');
 
-      if(count($row) ==0){
-        $row = Income::join('lessons', 'lessons.id', '=', 'invoice_details.lesson_id')
-         ->where('contributor_id',$contribID)
-         ->where('flag', '0');
-         }
-      if(count($row)>0){
-          $html.=''.number_format($row*70/100,0,",",".").'';
-      }else{
-          $html.='0';
-      }
-  }
-  return $html;
+        if(count($row) ==0){
+                $row = Income::join('lessons', 'lessons.id', '=', 'invoice_details.lesson_id')
+                 ->where('contributor_id',$contribID)
+                 ->where('flag', '0');
+                 }
+
+        if(count($row)>0){
+            $html.=''.number_format($row*70/100,0,",",".").'';
+        }else{
+            $html.='0';
+        }
+    }
+    return $html;
 }
 function lessons_pending(){
       $contribID = Auth::guard('contributors')->user()->id;

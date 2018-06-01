@@ -98,7 +98,7 @@
 		@endif
 	</div>
 
-@if(count($income) == null)
+@if(count($income) == 0)
     <div class="col-md-4 col-md-offset-4">
         <div class="card bg-3">
             <img src="{{asset('template/kontributor/img/icon/2.png')}}" alt="" />
