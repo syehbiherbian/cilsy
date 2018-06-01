@@ -88,70 +88,76 @@ class VtwebController extends Controller {
     public function notification(Request $r) {
         $input = $r->order_id.$r->status_code.$r->gross_amount.$this->sk;
         $signature = openssl_digest($input, 'sha512');
+
+        /* cek request signature */
+        if ($signature != $r->signature_key) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Transaction failed'
+            ], 500);
+        }
         
         $vt = new Veritrans;
-        if ($r) {
-            $notif = $vt->status($r->order_id);
-            $status = $r->status_code;
+        $notif = $vt->status($r->order_id);
+        $status = $r->status_code;
 
-            $transaction = $notif->transaction_status;
-            $type = $notif->payment_type;
-            $order_id = $notif->order_id;
-            $fraud = $notif->fraud_status;
+        $transaction = $notif->transaction_status;
+        $type = $notif->payment_type;
+        $order_id = $notif->order_id;
+        $fraud = $notif->fraud_status;
 
-            if ($transaction == 'capture') {
-                // For credit card transaction, we need to check whether transaction is challenge by FDS or not
-                if ($type == 'credit_card') {
-                    if ($fraud == 'challenge') {
-                        // TODO set payment status in merchant's database to 'Challenge by FDS'
-                        // TODO merchant should decide whether this transaction is authorized or not in MAP
-                        Invoice::where('code', $order_id)->update([
-                            'status' => 3,
-                            'type' => $type,
-                            'notes' => "Transaction order_id: " . $order_id . " is challenged by FDS",
-                        ]);
-                    } else {
-                        // TODO set payment status in merchant's database to 'Success'
-                        // Update status Invoices
-                        Invoice::where('code', $order_id)->update([
-                            'status' => 1,
-                            'type' => $type,
-                            'notes' => "Transaction order_id: " . $order_id . " successfully captured using " . $type,
-                        ]);
-                        // Create New Services
-                        $this->create_tutorial_member($order_id);
-                        echo "INPUT: " . $input."<br/>";
-                        echo "SIGNATURE: " . $signature;
-                    }
+        if ($transaction == 'capture') {
+            // For credit card transaction, we need to check whether transaction is challenge by FDS or not
+            if ($type == 'credit_card') {
+                if ($fraud == 'challenge') {
+                    // TODO set payment status in merchant's database to 'Challenge by FDS'
+                    // TODO merchant should decide whether this transaction is authorized or not in MAP
+                    Invoice::where('code', $order_id)->update([
+                        'status' => 3,
+                        'type' => $type,
+                        'notes' => "Transaction order_id: " . $order_id . " is challenged by FDS",
+                    ]);
+                } else {
+                    // TODO set payment status in merchant's database to 'Success'
+                    // Update status Invoices
+                    Invoice::where('code', $order_id)->update([
+                        'status' => 1,
+                        'type' => $type,
+                        'notes' => "Transaction order_id: " . $order_id . " successfully captured using " . $type,
+                    ]);
+                    // Create New Services
+                    $this->create_tutorial_member($order_id);
+                    echo "INPUT: " . $input."<br/>";
+                    echo "SIGNATURE: " . $signature;
                 }
-            } else if ($transaction == 'settlement') {
-                // TODO set payment status in merchant's database to 'Settlement'
-                $invoice = Invoice::where('code', $order_id)->update([
-                    'status' => 1,
-                    'type' => $type,
-                    'notes' => "Transaction order_id: " . $order_id . " successfully transfered using " . $type,
-                ]);
-                // Create New Services
-                $this->create_tutorial_member($order_id);
-                echo "INPUT: " . $input."<br/>";
-                echo "SIGNATURE: " . $signature;
-            } else if ($transaction == 'pending') {
-                // TODO set payment status in merchant's database to 'Pending'
-                Invoice::where('code', $order_id)->update([
-                    'status' => 2,
-                    'type' => $type,
-                    'notes' => "Waiting customer to finish transaction order_id: " . $order_id . " using " . $type,
-                ]);
-                //send mail invoice pending
-                $this->send_mail($order_id);
-            } else if ($transaction == 'deny') {
-                // TODO set payment status in merchant's database to 'Denied'
-                Invoice::where('code', $order_id)->update([
-                    'status' => 4,
-                    'type' => $type,
-                    'notes' => "Payment using " . $type . " for transaction order_id: " . $order_id . " is denied.",
-                ]);
             }
+        } else if ($transaction == 'settlement') {
+            // TODO set payment status in merchant's database to 'Settlement'
+            $invoice = Invoice::where('code', $order_id)->update([
+                'status' => 1,
+                'type' => $type,
+                'notes' => "Transaction order_id: " . $order_id . " successfully transfered using " . $type,
+            ]);
+            // Create New Services
+            $this->create_tutorial_member($order_id);
+            echo "INPUT: " . $input."<br/>";
+            echo "SIGNATURE: " . $signature;
+        } else if ($transaction == 'pending') {
+            // TODO set payment status in merchant's database to 'Pending'
+            Invoice::where('code', $order_id)->update([
+                'status' => 2,
+                'type' => $type,
+                'notes' => "Waiting customer to finish transaction order_id: " . $order_id . " using " . $type,
+            ]);
+            //send mail invoice pending
+            $this->send_mail($order_id);
+        } else if ($transaction == 'deny') {
+            // TODO set payment status in merchant's database to 'Denied'
+            Invoice::where('code', $order_id)->update([
+                'status' => 4,
+                'type' => $type,
+                'notes' => "Payment using " . $type . " for transaction order_id: " . $order_id . " is denied.",
+            ]);
         }
         error_log(print_r($r, TRUE));
     }
