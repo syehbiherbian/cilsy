@@ -83,19 +83,16 @@ class VtwebController extends Controller {
     }
 
     public function notification() {
-
         $vt = new Veritrans;
         echo 'test notification handler';
         $json_result = file_get_contents('php://input');
         $result = json_decode($json_result);
         if ($result) {
             $notif = $vt->status($result->order_id);
-
             $transaction = $notif->transaction_status;
             $type = $notif->payment_type;
             $order_id = $notif->order_id;
             $fraud = $notif->fraud_status;
-
             if ($transaction == 'capture') {
                 // For credit card transaction, we need to check whether transaction is challenge by FDS or not
                 if ($type == 'credit_card') {
@@ -163,15 +160,14 @@ class VtwebController extends Controller {
         Mail::to($members->email)->send(new SuksesMail($send));
     }
 
-    private function create_tutorial_member($order_id)
+    public function create_tutorial_member($order_id)
     {
         $invoice = Invoice::where('code', $order_id)->with('details')->first();
         if ($invoice) {
             foreach ($invoice->details as $detail) {
                 $tm = TutorialMember::firstOrCreate([
                     'member_id' => $invoice->members_id,
-                    'lesson_id' => $detail->lesson_id,
-                    'flag' => 0,
+                    'lesson_id' => $detail->lesson_id
                 ]);
             }
         }
