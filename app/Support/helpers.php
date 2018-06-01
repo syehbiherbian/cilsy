@@ -205,25 +205,30 @@ function points(){
      return $html;
 }
 function income(){
-    if (empty(Auth::guard('contributors')->user()->id)) {
-      return redirect('contributor/login');
-    }
+  if (empty(Auth::guard('contributors')->user()->id)) {
+    return redirect('contributor/login');
+  }
 
-    $contribID = Auth::guard('contributors')->user()->id;
-    $html='';
-    if($contribID !==null){
-      
+  $contribID = Auth::guard('contributors')->user()->id;
+  $html='';
+  if($contribID !==null){
+    
+      $row = Income::join('lessons', 'lessons.id', '=', 'invoice_details.lesson_id')
+      ->where('lessons.contributor_id',$contribID)
+      ->where('flag', '0')->sum('lessons.price');
+
+      if(count($row) ==0){
         $row = Income::join('lessons', 'lessons.id', '=', 'invoice_details.lesson_id')
-        ->where('lessons.contributor_id',$contribID)
-        ->where('flag', '0')->sum('lessons.price');
-
-        if(count($row)>0){
-            $html.=''.number_format($row*70/100,0,",",".").'';
-        }else{
-            $html.='0';
-        }
-    }
-    return $html;
+         ->where('contributor_id',$contribID)
+         ->where('flag', '0');
+         }
+      if(count($row)>0){
+          $html.=''.number_format($row*70/100,0,",",".").'';
+      }else{
+          $html.='0';
+      }
+  }
+  return $html;
 }
 function lessons_pending(){
       $contribID = Auth::guard('contributors')->user()->id;

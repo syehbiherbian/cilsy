@@ -32,6 +32,7 @@ class IncomeController extends Controller
         $data= Income::join('lessons', 'lessons.id', '=', 'invoice_details.lesson_id')
                 ->join('contributors','lessons.contributor_id','=','contributors.id')
                 ->select('lessons.contributor_id as id',DB::raw('SUM(lessons.price)*70/100 as price'),'invoice_details.flag as status_paid','contributors.username as name')
+                ->where('invoice_details.flag', '0') 
                 ->groupby('lessons.contributor_id','invoice_details.flag','contributors.username')
                 ->get();
         $bank= ContributorAccount::all();
