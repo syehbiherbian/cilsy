@@ -116,14 +116,14 @@ function cart(){
         $html .='<li class="clearfix">
                 <img style="max-width:70px;max-height:70px;" src="'.$cart->lesson->image.'" alt="item1">
                 <span class="item-name">'.$cart->lesson->title.'</span>
-                <span class="item-price">Rp '.number_format($cart->lesson->price, 0, ",", ".") .'</span>
+                <span class="item-price">Rp'.number_format($cart->lesson->price, 0, ",", ".") .'</span>
                 </li>';
   }
   return $html;
 }
 function getTotalCart(){
-  $member_id =  null;
-  $data =Cart::where('member_id', $member_id)->with('member', 'contributor', 'lesson')->count();
+  $member_id =  Auth::guard('members')->user()->id ?? null;
+  $data = Cart::where('member_id', $member_id)->count();
   return $data;
 }
 function notif(){
