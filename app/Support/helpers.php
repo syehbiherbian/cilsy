@@ -122,7 +122,7 @@ function cart(){
   return $html;
 }
 function getTotalCart(){
-  $member_id = Auth::guard('members')->user()->id ?? null;
+  $member_id =  null;
   $data =Cart::where('member_id', $member_id)->with('member', 'contributor', 'lesson')->count();
   return $data;
 }

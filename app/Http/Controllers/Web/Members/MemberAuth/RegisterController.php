@@ -111,7 +111,7 @@ class RegisterController extends Controller
 
        //Redirects sellers
         
-        if(session()->get('package')){
+        if(session()->get('invoiceCode')){
             return view('web.payment.summary', compact('packages', 'member'));
         } else{
             return redirect($this->redirectTo);

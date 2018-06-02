@@ -33,7 +33,7 @@ class ProfileController extends Controller
         return redirect('/member/signin');
         exit;
       }
-      $members = Member::where('status',1)->where('id',$mem_id)->first();
+      $members = Member::where('id',$mem_id)->first();
       if ($members) {
         return view('web.members.profile', [
           'members' => $members
