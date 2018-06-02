@@ -65,7 +65,7 @@
   <div class="col-sm-12" style="margin-top: 20px;">
       <h4>Tutorial yang sudah di miliki</h4>
       <?php
-           if(!$last == null) {
+           if(!count($last) == 0) {
                 $i = 1;
                 foreach ($last as $key => $last): ?>
                     <?php if ($i <= 4) {?>
@@ -85,7 +85,8 @@
                   <?php } ?>
                   <?php $i++;?>
 
-              <?php endforeach; }else{ ?>
+              <?php endforeach; 
+              }else{ ?>
                <div class="alert alert-danger" role="alert">
                Belum ada tutorial yang anda beli 
                </div>

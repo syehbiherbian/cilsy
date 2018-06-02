@@ -258,7 +258,7 @@ Route::get('contribauth/activate','Contributors\ContribAuth\ActivationController
 Route::get('contributor/logout', 'Contributors\ContribAuth\LoginController@logout');
 
 // Home
-Route::get('contributor/home', 'Contributors\DashboardController@home');
+Route::get('contributor', 'Contributors\DashboardController@home');
 Route::get('contributor/dashboard', 'Contributors\DashboardController@index');
 // Lessons
 Route::get('contributor/lessons', 'Contributors\LessonsController@redirect');

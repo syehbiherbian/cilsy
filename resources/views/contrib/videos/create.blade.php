@@ -89,20 +89,6 @@
 						</div>
 					</div>
 					<div class="form-group">
-					 <label class="col-sm-2 control-label">Pilih Image</label>
-					 <div class="col-sm-10" id="tampilimage0">
-						 <div class="select-file" id="ambilimage0">
-							<a href="#" class="btnfile" id="btnimage0" onclick="getfileimage(0)">Choose File</a>
-						 	<input type="file" class="form-control fileinput" name="image[]" id="image0" required onchange="getfileimg(0)">
-							<!-- <input type="text" name="imagetext[]" id="imagetext0" > -->
-							<label id="textimage0"></label>
-					  	 </div>
-					 </div>
-					 <!-- <div class="col-sm-10">
-						 <input type="file" class="form-control" name="image[]" id="image0" required>
-					 </div> -->
-					</div>
-					<div class="form-group">
 					 <label class="col-sm-2 control-label">Pilih Video</label>
 					 <div class="col-sm-10" id="tampilvideo0">
 						 <div class="select-file" id="ambilvideo0">
