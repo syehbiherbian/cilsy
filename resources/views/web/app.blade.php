@@ -867,7 +867,13 @@ a #items .item {
     <script src="{{ asset('template/web/js/star-rating.min.js') }}"></script>
     <!-- rating -->
     <!-- Custom Js -->
-    <script type="text/javascript" src="{{asset('template/web/js/custom.js') }}"></script>
+    <script>
+      var TOKEN = '{{ csrf_token() }}';
+      var MEMBER = {{ Auth::guard('members')->user()->id ?? 'null' }};
+      var SITE_URL = '{{ url('/') }}';
+    </script>
+    <?php $mtime = file_exists(public_path('template/web/js/custom.js')) ? filemtime(public_path('template/web/js/custom.js')) : '' ?>
+    <script type="text/javascript" src="{{ asset('template/web/js/custom.js?'.$mtime) }}"></script>
     @stack('js')
 </body>
 
