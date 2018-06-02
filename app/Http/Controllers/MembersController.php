@@ -484,7 +484,7 @@ class MembersController extends Controller
           if (!empty('password') && !empty('retype_password')) {
             $password = $members->password;
           }else{
-            $password = md5(Input::get('password'));
+            $password = bcrypt(Input::get('password'));
           }
 
           // if (!empty(Input::get('password')) && !empty(Input::get('password_confirmation'))) {
