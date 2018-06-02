@@ -110,8 +110,8 @@
 						<div class="select-file" id="ambilvideo{{$i}}">
 						   <a href="#" class="btnfile" id="btnvideo{{$i}}" onclick="getfilevideo({{$i}})">Choose File {{$i}}</a>
 						   <input type="file" class="form-control fileinput" name="video[]" id="video{{$i}}"  onchange="getfilename({{$i}})">
-						   <input type="hidden" name="video_text[]" id="video_text{{$i}}" value="{{$value->video}}" class="form-control">
-						   <input type="hidden" name="type_video[]" id="type_video{{$i}}" value="{{$value->type_video}}" class="form-control">
+						   <input type="text" name="video_text[]" id="video_text{{$i}}" value="{{$value->video}}" class="form-control">
+						   <input type="text" name="type_video[]" id="type_video{{$i}}" value="{{$value->type_video}}" class="form-control">
 
 						   <label id="textvideo{{$i}}"></label>
 						</div>
