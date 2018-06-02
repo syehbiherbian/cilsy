@@ -777,8 +777,6 @@
           success: function(data){
             if (typeof data !== 'null') {
               @if (!Auth::guard('members')->user())
-              // console.log('data',data);
-                // window.location.href = '{{ url("member/signin") }}';
                 var cek = localStorage.getItem('cart');
                 if (cek == null) {
                   var cart = [];
@@ -788,17 +786,26 @@
                     'title': data.title,
                     'price': data.price,
                   });
-                  // console.log('cartA', cart);
                 } else {
                   var exist = false;
                   var cart = JSON.parse(cek);
-                  // console.log('cartB', cart);
+                  if (cart.length >= 1) {
+                    return swal({
+                        title: "Tidak bisa menambahkan keranjang",
+                        text: 'Silakan daftar/login terlebih dahulu untuk melanjutkan',
+                        type: "error",
+                        confirmButtonText: "Login"
+                    }).then(function(isConfirm) {
+                        if (isConfirm.value) {
+                            window.location.href = '{{ url("member/signin") }}';
+                        }
+                    });
+                  }
                   $.each(cart, function(k,v) {
                     if (v.id == data.id) {
                       exist = true;
                     }
                   })
-                  // console.log('eksis', exist);
                   if (!exist) {
                     cart.push({
                       'id': data.id,
