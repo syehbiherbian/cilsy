@@ -40,12 +40,10 @@ class LoginController extends Controller
      *
      * @return void
      */
-    public function __construct(Request $r)
+    public function __construct()
     {
         $this->middleware('RedirectIfMember', ['except' => 'logout']);
-        if ($r->input('next')) {
-            $this->redirectTo = url($r->input('next'));
-        }
+        
     }
 
     /**
@@ -61,32 +59,15 @@ class LoginController extends Controller
     /**
      * The user has been authenticated.
      *
-     * @param  \Illuminate\Http\Request  $r
+     * @param  \Illuminate\Http\Request  $request
      * @param  mixed  $user
      * @return mixed
      */
-    protected function authenticated(Request $r, $user)
+    protected function authenticated(Request $request, $user)
     {
-        /* sync cart */
-        if ($r->input('next')) {
-            $ids = explode(",", $r->input('lessons'));
-            foreach ($ids as $id) {
-                /* cek lesson */
-                $lesson = \App\Models\Lesson::find($id);
-                if ($lesson) {
-                    /* simpan ke cart */
-                    $cart = \App\Models\Cart::firstOrCreate([
-                        'member_id' => Auth::guard('members')->user()->id,
-                        'contributor_id' => $lesson->contributor_id,
-                        'lesson_id' => $lesson->id
-                    ]);
-                }
-            }
-        }
-
-        if (session()->get('invoiceCode')) {
+        if(session()->get('invoiceCode')){
             return view('web.payment.summary', compact('member'));
-        } else {
+        } else{
             return redirect($this->redirectTo);
         }
     }

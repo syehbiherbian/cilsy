@@ -48,12 +48,9 @@ class RegisterController extends Controller
      *
      * @return void
      */
-    public function __construct(Request $r)
+    public function __construct()
     {
         $this->middleware('RedirectIfMember', ['except' => 'logout']);
-        if ($r->input('next')) {
-            $this->redirectTo = url($r->input('next'));
-        }
     }
 
     /**
@@ -98,42 +95,25 @@ class RegisterController extends Controller
     /**
      * Handle a registration request for the application.
      *
-     * @param  \Illuminate\Http\Request  $r
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function register(Request $r)
+    public function register(Request $request)
     {
         
-        $this->validator($r->all())->validate();
+        $this->validator($request->all())->validate();
 
        //Create members
-        $members = $this->create($r->all());
+        $members = $this->create($request->all());
 
         //Authenticates seller
         $this->guard()->login($members);
 
-        /* sync cart */
-        if ($r->input('next')) {
-            $ids = explode(",", $r->input('lessons'));
-            foreach ($ids as $id) {
-                /* cek lesson */
-                $lesson = \App\Models\Lesson::find($r->input('id'));
-                if ($lesson) {
-                    /* simpan ke cart */
-                    $cart = \App\Models\Cart::firstOrCreate([
-                        'member_id' => Auth::guard('members')->user()->id,
-                        'contributor_id' => $lesson->contributor_id,
-                        'lesson_id' => $lesson->id
-                    ]);
-                }
-            }
-        }
-
        //Redirects sellers
         
-        if (session()->get('invoiceCode')) {
+        if(session()->get('invoiceCode')){
             return view('web.payment.summary', compact('packages', 'member'));
-        } else {
+        } else{
             return redirect($this->redirectTo);
         }
     }

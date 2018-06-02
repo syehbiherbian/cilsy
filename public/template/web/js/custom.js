@@ -1,15 +1,4 @@
 $(document).ready(function() {
-	/* cek cart */
-	if (!MEMBER) {
-		var cek = localStorage.getItem('cart');
-		if (cek != null) {
-			var cart = JSON.parse(cek);
-			if (cart.length > 0) {
-				$('.badge-cart').removeClass('hide').html(cart.length);
-			}
-		}
-	}
-
 	$('.tab-btn-container a').click(function(a) {
 		var tab = $(this).attr('id'); 
 		$('.tab-btn-container a').css({
@@ -54,83 +43,6 @@ $(document).ready(function() {
 	});
 });
 
-function addToCart(id) {
-	var datapost = {
-	  '_token'    : TOKEN,
-	  'id': id
-	};
-	$.ajax({
-		type    : 'POST',
-		url     : SITE_URL+'/cart/add',
-		data    : datapost,
-		success: function(data){
-		  if (typeof data !== 'null') {
-			if (!MEMBER) {
-			  var cek = localStorage.getItem('cart');
-			  if (cek == null) {
-				var cart = [];
-				cart.push({
-				  'id': data.id,
-				  'image': data.image,
-				  'title': data.title,
-				  'price': data.price,
-				});
-			  } else {
-				var exist = false;
-				var cart = JSON.parse(cek);
-				if (cart.length >= 1) {
-				  return swal({
-					  title: "Tidak bisa menambahkan keranjang",
-					  text: 'Silakan daftar/login terlebih dahulu untuk melanjutkan',
-					  type: "error",
-					  confirmButtonText: "Login"
-				  }).then(function(isConfirm) {
-					  if (isConfirm.value) {
-						  window.location.href = SITE_URL+'/member/signin?next=/cart';
-					  }
-				  });
-				}
-				$.each(cart, function(k,v) {
-				  if (v.id == data.id) {
-					exist = true;
-				  }
-				})
-				if (!exist) {
-				  cart.push({
-					'id': data.id,
-					'image': data.image,
-					'title': data.title,
-					'price': data.price,
-				  });
-				}
-			  }
-			  
-			  localStorage.setItem('cart', JSON.stringify(cart));
-			}
-
-			swal({
-				title: "Menambahkan ke keranjang",
-				text: data.title,
-				type: "success",
-				showCancelButton: true,
-				cancelButtonText: 'Lihat keranjang',
-				cancelButtonColor: '#3085d6',
-				confirmButtonText: "Tutorial lainnya"
-			}).then(function(isConfirm) {
-				if (isConfirm.value) {
-					window.location.href = SITE_URL+'/lessons/browse/all';
-				} else {
-					window.location.href = SITE_URL+'/cart';
-				}
-			});
-		  } else {
-			  alert('Koneksi Bermasalah, Silahkan Ulangi');
-			  location.reload();
-		  }
-		}
-	})
-}
-
 function deleteCart(id) {
 	var carts = JSON.parse(localStorage.getItem('cart'));
 	if (carts) {
@@ -139,7 +51,7 @@ function deleteCart(id) {
 				carts.splice(k, 1);
 				localStorage.setItem('cart', JSON.stringify(carts));
 				// $('#cart-'+id).remove();
-				window.location.href = SITE_URL+'/cart';
+				window.location.href = '/cart';
 			}
 		});
 	}

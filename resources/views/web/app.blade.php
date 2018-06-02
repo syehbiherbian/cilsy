@@ -536,8 +536,8 @@ a #items .item {
                     </li>
                     <li class="class">
                         <a href="#" id="cart"><img src="{{asset('template/web/img/CART.png')}}" alt="cart">
-                        <?php if(getTotalCart() != null){ ?>
-                        <span class="badge-cart"><?php echo getTotalCart();?></span>
+                        <?php if(GetTotalCart() != null){ ?>
+                        <span class="badge-cart"><?php echo GetTotalCart();?></span>
                         <?php } ?>
                         </a>                   
                     </li>
@@ -576,7 +576,9 @@ a #items .item {
             <ul class="navbar-nav navbar-right">
                 <li class="class">
                   <a href="{{ ('/cart') }}" ><img src="{{asset('template/web/img/CART.png')}}" alt="cart">
-                    <span class="badge-cart hide"></span>
+                        <?php if(GetTotalCart() != null){ ?>
+                        <span class="badge-cart"><?php echo GetTotalCart();?></span>
+                        <?php } ?>
                   </a>                   
                 </li>
                 <li><a href="{{ url('member/signin') }}">Masuk</a></li>
@@ -867,13 +869,7 @@ a #items .item {
     <script src="{{ asset('template/web/js/star-rating.min.js') }}"></script>
     <!-- rating -->
     <!-- Custom Js -->
-    <script>
-      var TOKEN = '{{ csrf_token() }}';
-      var MEMBER = {{ Auth::guard('members')->user()->id ?? 'null' }};
-      var SITE_URL = '{{ url('/') }}';
-    </script>
-    <?php $mtime = file_exists(public_path('template/web/js/custom.js')) ? filemtime(public_path('template/web/js/custom.js')) : '' ?>
-    <script type="text/javascript" src="{{ asset('template/web/js/custom.js?'.$mtime) }}"></script>
+    <script type="text/javascript" src="{{asset('template/web/js/custom.js') }}"></script>
     @stack('js')
 </body>
 

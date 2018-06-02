@@ -114,4 +114,76 @@
 <script>
 fbq('track', 'Search');
 </script>
+<script type="text/javascript">
+
+  function addToCart(id) {
+      var datapost = {
+        '_token'    : '{{ csrf_token() }}',
+        'id': id
+      };
+      $.ajax({
+          type    : 'POST',
+          url     : '{{ url("/cart/add") }}',
+          data    : datapost,
+          success: function(data){
+            if (typeof data !== 'null') {
+              @if (!Auth::guard('members')->user())
+              console.log('data',data);
+                // window.location.href = '{{ url("member/signin") }}';
+                var cek = localStorage.getItem('cart');
+                if (cek == null) {
+                  var cart = [];
+                  cart.push({
+                    'id': data.id,
+                    'image': data.image,
+                    'title': data.title,
+                    'price': data.price,
+                  });
+                  console.log('cartA', cart);
+                } else {
+                  var exist = false;
+                  var cart = JSON.parse(cek);
+                  console.log('cartB', cart);
+                  $.each(cart, function(k,v) {
+                    if (v.id == data.id) {
+                      exist = true;
+                    }
+                  })
+                  // console.log('eksis', exist);
+                  if (!exist) {
+                    cart.push({
+                      'id': data.id,
+                      'image': data.image,
+                      'title': data.title,
+                      'price': data.price,
+                    });
+                  }
+                }
+                
+                localStorage.setItem('cart', JSON.stringify(cart));
+              @endif
+
+              swal({
+                  title: "Menambahkan ke keranjang",
+                  text: data.title,
+                  type: "success",
+                  showCancelButton: true,
+                  cancelButtonText: 'Lihat keranjang',
+                  cancelButtonColor: '#3085d6',
+                  confirmButtonText: "Tutorial lainnya"
+              }).then(function(isConfirm) {
+                  if (isConfirm.value) {
+                      window.location.href = '{{ url("lessons/browse/all") }}';
+                  } else {
+                      window.location.href = '{{ url("cart") }}';
+                  }
+              });
+            } else {
+                alert('Koneksi Bermasalah, Silahkan Ulangi');
+                location.reload();
+            }
+          }
+      })
+  }
+</script>
 @endsection
