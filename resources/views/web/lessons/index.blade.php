@@ -86,7 +86,7 @@
               </div>
               <div class="col-sm-8">
                 <p><a href="{{ url('lessons/'.$result->slug) }}" style="text-decoration:none;"><strong>{{ $result->title }}</strong></a></p>
-                <a href="{{ url('lessons/'.$result->slug) }}" >
+                <a href="{{ url('lessons/'.$result->slug) }}" style="text-decoration:none;">
                 <p><small><?php echo nl2br($result->description); ?></small></p>
                 </a>
                 <p><div class="badge badge-default">{{ $result->category_title }}</div>
