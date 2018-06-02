@@ -66,9 +66,8 @@
       <h4>Tutorial yang sudah di miliki</h4>
       <?php
            if(!count($last) == 0) {
-                $i = 1;
                 foreach ($last as $key => $last): ?>
-                    <?php if ($i <= 4) {?>
+                    
                       <div class="col-md-3">
                         <a href="{{ url('lessons/'.$last->slug)}}" style="text-decoration: none;">
                           <div class="card" >
@@ -82,8 +81,6 @@
                           </div>
                         </a>
                       </div>
-                  <?php } ?>
-                  <?php $i++;?>
 
               <?php endforeach; 
               }else{ ?>

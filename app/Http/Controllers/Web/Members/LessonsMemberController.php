@@ -44,27 +44,6 @@ class LessonsMemberController extends Controller
         $last_lessons = TutorialMember::join('lessons','lessons.id', '=', 'tutorial_member.lesson_id')
                         ->where('member_id', '=',  $mem_id)->get();
 
-        // $get_lessons = Lesson::join('videos', 'lessons.id', '=', 'videos.lessons_id')
-        //              ->join('viewers', 'videos.id', '=', 'viewers.video_id')
-        //              ->where('viewers.member_id', '=', $mem_id)
-        //              ->orderBy('viewers.member_id', 'viewers.updated_at', 'asc')
-        //              ->distinct()
-        //              ->get(['viewers.member_id', 'lessons.*']);           
-
-        // $get_videos = Video::where('videos.lessons_id', '=', $last_videos->lessons_id)->get();
-        // // dd( count($watched_video));
-        // $get_hist = Viewer::join('videos', 'viewers.video_id', '=', 'videos.id')
-        // ->where('viewers.member_id', '=', $mem_id)
-        // ->where('videos.lessons_id', '=', $last_videos->lessons_id)->get();
-
-        // $progress = count($get_hist)*100/count($get_videos);
-        // $get_full = Lesson::join('videos', 'lessons.id', '=', 'videos.lessons_id')
-        //              ->leftjoin('viewers', 'videos.id', '=', 'viewers.video_id', 'and', '`viewers`.`member_id`', '=', $mem_id)
-        //              ->select('lessons.title', 'lessons.image')
-        //              ->select(DB::raw('count(distinct viewers.video_id) as id_count, count(distinct videos.id) as vid_id, lessons.title, lessons.image, lessons.id, lessons.slug'))
-        //              ->groupby('lessons.title', 'lessons.image', 'lessons.id', 'lessons.slug')
-        //              ->having(DB::raw('count(distinct viewers.video_id)'), '=', DB::raw('count(distinct videos.id)'))                   
-        //              ->get(['lessons.title', 'lessons.image', 'lessons.id', 'lessons.slug']);
         return view('web.members.dashboard_tutorial', [
             //  'progress' => $progress,
             'last' => $last_lessons,
