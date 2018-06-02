@@ -78,7 +78,6 @@
       <?php if(count($results) == 0){ echo "No Data Available";}?>
       <?php foreach ($results as $key => $result): ?>
         <div class="item">
-          {{--  --}}
             <div class="row">
             <div class="col-md-2">
                 <a href="{{ url('lessons/'.$result->slug) }}" >
@@ -115,7 +114,8 @@
 <script>
 fbq('track', 'Search');
 </script>
-<script>
+<script type="text/javascript">
+
   function addToCart(id) {
       var datapost = {
         '_token'    : '{{ csrf_token() }}',
@@ -126,9 +126,43 @@ fbq('track', 'Search');
           url     : '{{ url("/cart/add") }}',
           data    : datapost,
           success: function(data){
-            if (data == 0) {
-              window.location.href = '{{ url("member/signin") }}';
-            } else if (data !== 'null') {
+            if (typeof data !== 'null') {
+              @if (!Auth::guard('members')->user())
+              console.log('data',data);
+                // window.location.href = '{{ url("member/signin") }}';
+                var cek = localStorage.getItem('cart');
+                if (cek == null) {
+                  var cart = [];
+                  cart.push({
+                    'id': data.id,
+                    'image': data.image,
+                    'title': data.title,
+                    'price': data.price,
+                  });
+                  console.log('cartA', cart);
+                } else {
+                  var exist = false;
+                  var cart = JSON.parse(cek);
+                  console.log('cartB', cart);
+                  $.each(cart, function(k,v) {
+                    if (v.id == data.id) {
+                      exist = true;
+                    }
+                  })
+                  // console.log('eksis', exist);
+                  if (!exist) {
+                    cart.push({
+                      'id': data.id,
+                      'image': data.image,
+                      'title': data.title,
+                      'price': data.price,
+                    });
+                  }
+                }
+                
+                localStorage.setItem('cart', JSON.stringify(cart));
+              @endif
+
               swal({
                   title: "Menambahkan ke keranjang",
                   text: data.title,
