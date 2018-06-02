@@ -44,15 +44,16 @@ class IncomeController extends Controller
                ->where('flag', '1')
                ->groupby('flag','invoice_details.updated_at')
                ->first();
-        $inc = Income::join('lessons', 'lessons.id', '=', 'invoice_details.lesson_id')
+
+        $income = Income::join('lessons', 'lessons.id', '=', 'invoice_details.lesson_id')
                 ->where('lessons.contributor_id',$contribID)
-                ->where('flag', '0')->sum('price');
+                ->where('flag', '0')->get();
 
         $srow= ContributorAccount::where('contributor_id',$contribID)->first();
         $rekening=ContributorAccount::where('contributor_id',$contribID)->get();
       return view('contrib.income.index', [
         'row'=>$row,
-        'inc'=>$row,
+        'income'=>$income,
         'rekening'=>$rekening,
         'srow' =>$srow
       ]);

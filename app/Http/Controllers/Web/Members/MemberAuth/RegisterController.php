@@ -40,9 +40,8 @@ class RegisterController extends Controller
     //     ]);
     //     protected $redirectTo = '/checkout';
     // }else{
-        protected $redirectTo = '/member/package';
-    // }
-    
+        protected $redirectTo = '/';
+    // } 
 
     /**
      * Create a new controller instance.

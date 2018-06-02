@@ -15,21 +15,24 @@ use Mail;
 use App\Mail\InvoiceMail;
 use App\Mail\SuksesMail;
 use Auth;
+use Illuminate\Http\Request;
 
 class VtwebController extends Controller {
+
+    public $sk = 'VT-server-4O7hlRyievnwHHB5b0J-z-xf';
 
     public function __construct() {
         $secret = env('VT_SECRET_'.strtoupper(config('app.env')));
         $is_production = (config('app.env') == 'production');
 
-        Veritrans::$serverKey = 'VT-server-4O7hlRyievnwHHB5b0J-z-xf';
+        Veritrans::$serverKey = $this->sk;
 
         //set Veritrans::$isProduction  value to true for production mode
         Veritrans::$isProduction = $is_production;
     }
 
     public function vtweb() {
-        $members = Member::where('id', Auth::guard('members')->user()->id)->first();
+        $members = Auth::guard('members')->user();
         // $packages = Package::where('id', Session::get('packageID'))->first();
         $invoice = Invoice::where('code', Session::get('invoiceCODE'))->first();
 
@@ -82,83 +85,99 @@ class VtwebController extends Controller {
         }
     }
 
-    public function notification() {
+    public function notification(Request $r) {
+        $input = $r->order_id.$r->status_code.$r->gross_amount.$this->sk;
+        $signature = openssl_digest($input, 'sha512');
 
-        $vt = new Veritrans;
-        echo 'test notification handler';
-        $json_result = file_get_contents('php://input');
-        $result = json_decode($json_result);
-        if ($result) {
-            $notif = $vt->status($result->order_id);
-
-            $transaction = $notif->transaction_status;
-            $type = $notif->payment_type;
-            $order_id = $notif->order_id;
-            $fraud = $notif->fraud_status;
-
-            if ($transaction == 'capture') {
-                // For credit card transaction, we need to check whether transaction is challenge by FDS or not
-                if ($type == 'credit_card') {
-                    if ($fraud == 'challenge') {
-                        // TODO set payment status in merchant's database to 'Challenge by FDS'
-                        // TODO merchant should decide whether this transaction is authorized or not in MAP
-                        DB::table('invoice')->where('code', '=', $order_id)->update([
-                            'status' => 3,
-                            'type' => $type,
-                            'notes' => "Transaction order_id: " . $order_id . " is challenged by FDS",
-                        ]);
-                    } else {
-                        // TODO set payment status in merchant's database to 'Success'
-                        // Update status Invoices
-                        DB::table('invoice')->where('code', '=', $order_id)->update([
-                            'status' => 1,
-                            'type' => $type,
-                            'notes' => "Transaction order_id: " . $order_id . " successfully captured using " . $type,
-                        ]);
-                        // Create New Services
-                        $this->create_tutorial_member($order_id);
-                    }
-                }
-            } else if ($transaction == 'settlement') {
-                // TODO set payment status in merchant's database to 'Settlement'
-                $invoice = DB::table('invoice')->where('code', '=', $order_id)->update([
-                    'status' => 1,
-                    'type' => $type,
-                    'notes' => "Transaction order_id: " . $order_id . " successfully transfered using " . $type,
-                ]);
-                // Create New Services
-                $this->create_tutorial_member($order_id);
-            } else if ($transaction == 'pending') {
-                // TODO set payment status in merchant's database to 'Pending'
-                DB::table('invoice')->where('code', '=', $order_id)->update([
-                    'status' => 2,
-                    'type' => $type,
-                    'notes' => "Waiting customer to finish transaction order_id: " . $order_id . " using " . $type,
-                ]);
-                //send mail invoice pending
-                $this->send_mail($order_id);
-            } else if ($transaction == 'deny') {
-                // TODO set payment status in merchant's database to 'Denied'
-                DB::table('invoice')->where('code', '=', $order_id)->update([
-                    'status' => 4,
-                    'type' => $type,
-                    'notes' => "Payment using " . $type . " for transaction order_id: " . $order_id . " is denied.",
-                ]);
-            }
+        /* cek request signature */
+        if ($signature != $r->signature_key) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Transaction failed'
+            ], 500);
         }
-        error_log(print_r($result, TRUE));
+        
+        $vt = new Veritrans;
+        $notif = $vt->status($r->order_id);
+        $status = $r->status_code;
+
+        $transaction = $notif->transaction_status;
+        $type = $notif->payment_type;
+        $order_id = $notif->order_id;
+        $fraud = $notif->fraud_status;
+
+        if ($transaction == 'capture') {
+            // For credit card transaction, we need to check whether transaction is challenge by FDS or not
+            if ($type == 'credit_card') {
+                if ($fraud == 'challenge') {
+                    // TODO set payment status in merchant's database to 'Challenge by FDS'
+                    // TODO merchant should decide whether this transaction is authorized or not in MAP
+                    Invoice::where('code', $order_id)->update([
+                        'status' => 3,
+                        'type' => $type,
+                        'notes' => "Transaction order_id: " . $order_id . " is challenged by FDS",
+                    ]);
+                } else {
+                    // TODO set payment status in merchant's database to 'Success'
+                    // Update status Invoices
+                    Invoice::where('code', $order_id)->update([
+                        'status' => 1,
+                        'type' => $type,
+                        'notes' => "Transaction order_id: " . $order_id . " successfully captured using " . $type,
+                    ]);
+                    // Create New Services
+                    $this->create_tutorial_member($order_id);
+                    // echo "INPUT: " . $input."<br/>";
+                    // echo "SIGNATURE: " . $signature;
+                    return response()->json([
+                        'status' => true
+                    ], 200);
+                }
+            }
+        } else if ($transaction == 'settlement') {
+            // TODO set payment status in merchant's database to 'Settlement'
+            $invoice = Invoice::where('code', $order_id)->update([
+                'status' => 1,
+                'type' => $type,
+                'notes' => "Transaction order_id: " . $order_id . " successfully transfered using " . $type,
+            ]);
+            // Create New Services
+            $this->create_tutorial_member($order_id);
+            // echo "INPUT: " . $input."<br/>";
+            // echo "SIGNATURE: " . $signature;
+            return response()->json([
+                'status' => true
+            ], 200);
+        } else if ($transaction == 'pending') {
+            // TODO set payment status in merchant's database to 'Pending'
+            Invoice::where('code', $order_id)->update([
+                'status' => 2,
+                'type' => $type,
+                'notes' => "Waiting customer to finish transaction order_id: " . $order_id . " using " . $type,
+            ]);
+            //send mail invoice pending
+            $this->send_mail($order_id);
+        } else if ($transaction == 'deny') {
+            // TODO set payment status in merchant's database to 'Denied'
+            Invoice::where('code', $order_id)->update([
+                'status' => 4,
+                'type' => $type,
+                'notes' => "Payment using " . $type . " for transaction order_id: " . $order_id . " is denied.",
+            ]);
+        }
+        error_log(print_r($r, TRUE));
     }
 
     private function send_mail($order_id) {
-        $invoice = DB::table('invoice')->where('code', '=', $order_id)->first();
-        $members = DB::table('members')->where('id', '=', $invoice->members_id)->first();
+        $invoice = Invoice::where('code', $order_id)->first();
+        $members = Member::where('id', $invoice->members_id)->first();
         $send = Member::findOrFail($members->id);
         Mail::to($members->email)->send(new InvoiceMail($send));
     }
 
     private function sukses_mail($order_id) {
-        $invoice = DB::table('invoice')->where('code', '=', $order_id)->first();
-        $members = DB::table('members')->where('id', '=', $invoice->members_id)->first();
+        $invoice = Invoice::where('code', $order_id)->first();
+        $members = Member::where('id', $invoice->members_id)->first();
         $send = Member::findOrFail($members->id);
         Mail::to($members->email)->send(new SuksesMail($send));
     }

@@ -98,7 +98,7 @@
 		@endif
 	</div>
 
-@if(count($inc) ==0)
+@if(count($income) == 0)
     <div class="col-md-4 col-md-offset-4">
         <div class="card bg-3">
             <img src="{{asset('template/kontributor/img/icon/2.png')}}" alt="" />
@@ -108,7 +108,7 @@
     </div>
 
 @else
-</div>
+
 <div class="col-md-4 col-md-offset-4">
 	<div class="card bg-3">
 		<img src="{{asset('template/kontributor/img/icon/2.png')}}" alt="" />
@@ -116,18 +116,26 @@
 		<p class="card-desc">Pendapatan Bulan ini</p>
 	</div>
 </div>
+
+@endif
 <div class="row">
   <div id ="exTab1"class="col-md-12">
       <div class="tab-content clearfix">
           <h3>Pendapatan</h3>
-          <div class="row">
+          @if(count($row) == 0)
+          <div class="alert alert-danger" role="alert">
+               Belum ada history pendapatan yang di transfer
+          </div>
+          @else
+          
+           <div class="row">
               <div class="col-sm-3">
                  <div class="title"><h4>Jumlah<h4></div>
-                 <div class="value" style="margin-top:18px;">Rp. <?php echo number_format($row->price,0,",",".") ;?></div>
+                 <div class="value" style="margin-top:18px;">Rp. <?php if($row->price ==null){echo "0";}else{ echo number_format($row->price,0,",",".") ;}?></div>
               </div>
               <div class="col-sm-3">
                  <div class="title"><h4>Status<h4></div>
-                 <div class="value" style="margin-top:18px;">@if($row->flag=='1')Paid @else Unpaid @endif</div>
+                 <div class="value" style="margin-top:18px;"><?php if($row->flag == null){echo "-";}else{?> @if($row->flag=='1')Paid @else Unpaid @endif <?php }?> </div>
               </div>
               <div class="col-sm-3">
                  <div class="title"><h4>Tanggal Dibayar<h4></div>
@@ -144,11 +152,10 @@
                 <a href="{{url('contributor/income/view-all')}}" class="btn btn-info pull-right">Selengkapnya</a>
               </div>
           </div>
+          @endif
       </div>
   </div>
 </div>
-
-@endif
 <div class="row" style="margin-top:20px; margin-bottom:20px;">
   <div id ="exTab1"class="col-md-12">
       <div class="tab-content clearfix">
@@ -191,10 +198,10 @@
 			  <div class="col-sm-1">
 				<div class="title" style="color:#fff;">.</div>
 				 @foreach($rekening as $reg)
-				  <form id="{{ $srow->id }}" action="{{url('contributor/income/account/'.$reg->id.'/delete')}}" method="get">
+				  <form id="{{ $reg->id }}" action="{{url('contributor/income/account/'.$reg->id.'/delete')}}" method="get">
 						<input type="hidden" name="_token" value="{{ csrf_token() }}">
 						<input type="hidden" name="_method" value="DELETE">
-						<button type="button"  title="Hapus Rekening" data-toggle="tooltip" class="btn btn-danger pull-right"style="margin-top:15px;" data-toggle="tooltip" onclick="checkdelete({{$srow->id}})">Hapus</button>
+						<button type="button"  title="Hapus Rekening" data-toggle="tooltip" class="btn btn-danger pull-right"style="margin-top:15px;" data-toggle="tooltip" onclick="checkdelete({{$reg->id}})">Hapus</button>
 				  </form>
 				  @endforeach
 			  </div>
