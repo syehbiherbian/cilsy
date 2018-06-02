@@ -148,7 +148,7 @@ fbq('track', 'Search');
                         confirmButtonText: "Login"
                     }).then(function(isConfirm) {
                         if (isConfirm.value) {
-                            window.location.href = '{{ url("member/signin") }}';
+                            window.location.href = '{{ url("member/signin?next=/cart") }}';
                         }
                     });
                   }

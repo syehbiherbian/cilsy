@@ -536,8 +536,8 @@ a #items .item {
                     </li>
                     <li class="class">
                         <a href="#" id="cart"><img src="{{asset('template/web/img/CART.png')}}" alt="cart">
-                        <?php if(GetTotalCart() != null){ ?>
-                        <span class="badge-cart"><?php echo GetTotalCart();?></span>
+                        <?php if(getTotalCart() != null){ ?>
+                        <span class="badge-cart"><?php echo getTotalCart();?></span>
                         <?php } ?>
                         </a>                   
                     </li>
