@@ -81,11 +81,15 @@
           {{--  --}}
             <div class="row">
             <div class="col-md-2">
+                <a href="{{ url('lessons/'.$result->slug) }}" >
                 <img src="{{ $result->image }}" alt="" class="img-responsive">
+                 </a>
               </div>
               <div class="col-sm-8">
                 <p><a href="{{ url('lessons/'.$result->slug) }}" style="text-decoration:none;"><strong>{{ $result->title }}</strong></a></p>
+                <a href="{{ url('lessons/'.$result->slug) }}" >
                 <p><small><?php echo nl2br($result->description); ?></small></p>
+                </a>
                 <p><div class="badge badge-default">{{ $result->category_title }}</div>
                   <?=date('d M Y H:i', strtotime($result->created_at));?>
                 </p>
