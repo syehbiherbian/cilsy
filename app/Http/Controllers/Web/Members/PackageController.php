@@ -116,7 +116,6 @@ class PackageController extends Controller
                 'lesson_id' => $cart->lesson->id,
                 'flag' => 0,
                 'contributor_id' => $cart->lesson->contributor_id,
-                'created_at' => $now,
               ]);
             }
 
