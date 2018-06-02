@@ -576,9 +576,7 @@ a #items .item {
             <ul class="navbar-nav navbar-right">
                 <li class="class">
                   <a href="{{ ('/cart') }}" ><img src="{{asset('template/web/img/CART.png')}}" alt="cart">
-                        <?php if(GetTotalCart() != null){ ?>
-                        <span class="badge-cart"><?php echo GetTotalCart();?></span>
-                        <?php } ?>
+                    <span class="badge-cart hide"></span>
                   </a>                   
                 </li>
                 <li><a href="{{ url('member/signin') }}">Masuk</a></li>

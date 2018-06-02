@@ -777,7 +777,7 @@
           success: function(data){
             if (typeof data !== 'null') {
               @if (!Auth::guard('members')->user())
-              console.log('data',data);
+              // console.log('data',data);
                 // window.location.href = '{{ url("member/signin") }}';
                 var cek = localStorage.getItem('cart');
                 if (cek == null) {
@@ -788,11 +788,11 @@
                     'title': data.title,
                     'price': data.price,
                   });
-                  console.log('cartA', cart);
+                  // console.log('cartA', cart);
                 } else {
                   var exist = false;
                   var cart = JSON.parse(cek);
-                  console.log('cartB', cart);
+                  // console.log('cartB', cart);
                   $.each(cart, function(k,v) {
                     if (v.id == data.id) {
                       exist = true;

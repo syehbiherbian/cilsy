@@ -1,4 +1,13 @@
 $(document).ready(function() {
+	/* cek cart */
+	var cek = localStorage.getItem('cart');
+	if (cek != null) {
+		var cart = JSON.parse(cek);
+		if (cart.length > 0) {
+			$('.badge-cart').removeClass('hide').html(cart.length);
+		}
+	}
+
 	$('.tab-btn-container a').click(function(a) {
 		var tab = $(this).attr('id'); 
 		$('.tab-btn-container a').css({
