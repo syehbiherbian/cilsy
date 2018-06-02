@@ -69,7 +69,10 @@
 					    <a href="#" class="btnfile" id="btnfiles{{$i}}" onclick="getfilefiles({{$i}})">Choose File {{$i}}</a>
 					    <input type="file" class="form-control fileinput" name="files[]" id="files{{$i}}"  onchange="getfilename({{$i}})">
 					    <input type="hidden" name="files_text[]" id="files_text{{$i}}" value="{{$value->source}}" class="form-control">
-					    <label id="textfiles{{$i}}"></label>
+					    @if($value->source != null )
+						<input type="text" name="test" id="files_text{{$i}}" value="Sudah ada data" disabled class="form-control">
+						@endif
+						<label id="textfiles{{$i}}"></label>
 					   </div>
 					 </div>
 				 	</div>
@@ -259,9 +262,9 @@
 					'<label class="col-sm-2 control-label">Pilih lampiran</label>'+
 					'<div class="col-sm-10" id="tampilfiles'+ n +'">'+
 					'<div class="select-file" id="ambilfiles'+ n +'">'+
-					'<a href="#" class="btnfile" id="btnfiles'+ n +'" onclick="getfilefiles('+ n +')">Choose File '+ n +'</a>'+
-					'<input type="file" class="form-control fileinput" name="files[]" id="files'+ n +'"  onchange="getfilename('+ n +')">'+
-					'<input type="hidden" name="files_text[]" id="files_text'+n+'" value="" class="form-control">'+
+					'<a href="#" class="btnfile" id="btnfiles'+ n +'"  onclick="getfilefiles('+ n +')">Choose File '+ n +'</a>'+
+					'<input type="file" class="form-control fileinput"  name="files[]" id="files'+ n +'"  onchange="getfilename('+ n +')">'+
+					'<input  name="files_text[]" id="files_text'+n+'" value="tes" class="form-control">'+
 
 					  '<label id="textfiles'+ n +'"></label>'+
 					'</div>'+
