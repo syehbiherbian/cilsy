@@ -55,5 +55,8 @@ currency: 'IDR'
 </script>-->
 <script>
 fbq('track', 'Purchase');
+
+/* hapus cart*/
+localStorage.removeItem('cart')
 </script>
 @endsection
