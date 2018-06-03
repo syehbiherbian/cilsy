@@ -88,8 +88,8 @@ class PackageController extends Controller
     public function summary(){
           $now = new DateTime();
           $member_id = Auth::guard('members')->user()->id ?? null;
-          if ($member_id === null) {
-            return redirect('member/signup');
+          if (!$member_id) {
+            return redirect('member/signin?next=/cart');
           }
 
           /* ambil data cart */
