@@ -117,11 +117,11 @@ class RegisterController extends Controller
             $ids = explode(",", $r->input('lessons'));
             foreach ($ids as $id) {
                 /* cek lesson */
-                $lesson = \App\Models\Lesson::find($r->input('id'));
+                $lesson = \App\Models\Lesson::find($id);
                 if ($lesson) {
                     /* simpan ke cart */
                     $cart = \App\Models\Cart::firstOrCreate([
-                        'member_id' => Auth::guard('members')->user()->id,
+                        'member_id' => $members->id,
                         'contributor_id' => $lesson->contributor_id,
                         'lesson_id' => $lesson->id
                     ]);
