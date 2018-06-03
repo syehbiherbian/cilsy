@@ -65,44 +65,44 @@ function addToCart(id) {
 		data    : datapost,
 		success: function(data){
 		  if (typeof data !== 'null') {
-			if (!MEMBER) {
-			  var cek = localStorage.getItem('cart');
-			  if (cek == null) {
-				var cart = [];
-				cart.push({
-				  'id': data.id,
-				  'image': data.image,
-				  'title': data.title,
-				  'price': data.price,
-				});
-			  } else {
-				var exist = false;
-				var cart = JSON.parse(cek);
-				if (cart.length >= 1) {
-				  return swal({
-					  title: "Tidak bisa menambahkan keranjang",
-					  text: 'Silakan daftar/login terlebih dahulu untuk melanjutkan',
-					  type: "error",
-					  confirmButtonText: "Login"
-				  }).then(function(isConfirm) {
-					  if (isConfirm.value) {
-						  window.location.href = SITE_URL+'/member/signin?next=/cart';
-					  }
-				  });
-				}
-				$.each(cart, function(k,v) {
-				  if (v.id == data.id) {
-					exist = true;
-				  }
-				})
-				if (!exist) {
-				  cart.push({
-					'id': data.id,
-					'image': data.image,
-					'title': data.title,
-					'price': data.price,
-				  });
-				}
+				if (!MEMBER) {
+					var cek = localStorage.getItem('cart');
+					if (cek == null) {
+					var cart = [];
+					cart.push({
+						'id': data.id,
+						'image': data.image,
+						'title': data.title,
+						'price': data.price,
+					});
+					} else {
+					var exist = false;
+					var cart = JSON.parse(cek);
+					/* if (cart.length >= 1) {
+						return swal({
+							title: "Tidak bisa menambahkan keranjang",
+							text: 'Silakan daftar/login terlebih dahulu untuk melanjutkan',
+							type: "error",
+							confirmButtonText: "Login"
+						}).then(function(isConfirm) {
+							if (isConfirm.value) {
+								window.location.href = SITE_URL+'/member/signin?next=/cart';
+							}
+						});
+					} */
+					$.each(cart, function(k,v) {
+						if (v.id == data.id) {
+							exist = true;
+						}
+					})
+					if (!exist) {
+						cart.push({
+						'id': data.id,
+						'image': data.image,
+						'title': data.title,
+						'price': data.price,
+						});
+					}
 			  }
 			  
 			  localStorage.setItem('cart', JSON.stringify(cart));
