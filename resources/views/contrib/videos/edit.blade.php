@@ -101,7 +101,7 @@
 						   <input type="file" class="form-control fileinput" name="video[]" id="video{{$i}}"  onchange="getfilename({{$i}})">
 						   <input type="text" name="video_text[]" id="video_text{{$i}}" value="{{$value->video}}" class="form-control">
 						   <input type="text" name="type_video[]" id="type_video{{$i}}" value="{{$value->type_video}}" class="form-control">
- 						@if($value->source != null )
+ 						@if($value->video != null )
 						<input type="text" name="test" id="type_video{{$i}}" value="Sudah ada data" disabled class="form-control">
 						@endif
 						   <label id="textvideo{{$i}}"></label>
