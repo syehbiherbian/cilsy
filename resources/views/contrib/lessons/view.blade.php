@@ -129,7 +129,6 @@
           </div>
           <div class="col-md-6">
             <div class="box-option text-right">
-              <a href="{{url('contributor/lessons/'.$row->id.'/edit/videos')}}" class="btn btn-danger"><span class="fa fa-pencil-o"></span> Edit</a>
               <a href="{{url('contributor/lessons/'.$row->id.'/create/videos')}}" class="btn btn-info">Tambah Video</a>
             </div>
           </div>
@@ -157,7 +156,9 @@
               <tr>
                 <td width="25">{{ $i }}</td>
                 <td>{{$value->title}}</td>
-
+                <td>
+                    
+                </td>
 
               </tr>
               <?php $i++;?>
@@ -199,6 +200,7 @@
               <tr>
                 <th>No</th>
                 <th>Judul</th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
@@ -213,6 +215,11 @@
                <tr>
                  <td width="25">{{ $i }}</td>
                  <td>{{$value->title}}</td>
+                 <td>   
+                  <div class="btn-group" role="group" aria-label="Default button group">
+                  <a href="{{ url('contributor/lessons/'.$row->id.'/delete/attachments/'.$value->id) }}" class="btn bg-pink waves-effect"><i class="fa fa-trash"></i></button>
+                  </div>
+                </td>
                </tr>
                <?php $i++;?>
                @endif
@@ -319,7 +326,7 @@
      }
      });
  }
- function hapusvideo(id){
+ function hapusfile(id){
 
    swal({
      title: "Apakah kamu yakin mau menghapus video ini?",
