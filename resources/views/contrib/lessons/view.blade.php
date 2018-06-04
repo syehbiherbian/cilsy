@@ -129,6 +129,7 @@
           </div>
           <div class="col-md-6">
             <div class="box-option text-right">
+               <a href="{{url('contributor/lessons/'.$row->id.'/edit/videos')}}" class="btn btn-danger">Edit</a>
               <a href="{{url('contributor/lessons/'.$row->id.'/create/videos')}}" class="btn btn-info">Tambah Video</a>
             </div>
           </div>
