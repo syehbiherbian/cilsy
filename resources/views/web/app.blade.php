@@ -575,7 +575,7 @@ a #items .item {
           <div class="header-menu">
             <ul class="navbar-nav navbar-right">
                 <li class="class">
-                  <a href="{{ ('/cart') }}" ><img src="{{asset('template/web/img/CART.png')}}" alt="cart">
+                  <a href="{{ url('/cart') }}" ><img src="{{asset('template/web/img/CART.png')}}" alt="cart">
                     <span class="badge-cart hide"></span>
                   </a>                   
                 </li>

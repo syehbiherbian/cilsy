@@ -256,24 +256,24 @@ class VideosController extends Controller
                     $url_video = $urls . '/assets/source/lessons/video-' . $i . '/' . $lessonsfilename;
                 }
                 /* siapin video */
-                $media = FFMpeg::fromDisk('local_public')->open($DestinationPath . '/' . $lessonsfilename);
-                /* ambil durasi */
-                $duration = $media->getDurationInSeconds();
-                // dd($duration);
-                /* generate thumbnail */
-                $filename = pathinfo($lessonsfilename, PATHINFO_FILENAME);
-                $thumbnailname = 'thumbnail-' . $filename . '.jpg';
-                $thumnail = $media->getFrameFromSeconds(0)->export()->save($DestinationPath . '/' . $thumbnailname);
+                // $media = FFMpeg::fromDisk('local_public')->open($DestinationPath . '/' . $lessonsfilename);
+                // /* ambil durasi */
+                // $duration = $media->getDurationInSeconds();
+                // // dd($duration);
+                // /* generate thumbnail */
+                // $filename = pathinfo($lessonsfilename, PATHINFO_FILENAME);
+                // $thumbnailname = 'thumbnail-' . $filename . '.jpg';
+                // $thumnail = $media->getFrameFromSeconds(0)->export()->save($DestinationPath . '/' . $thumbnailname);
                 // dd($thumnail);
 
                 $store = new Video;
                 $store->lessons_id = $lessonsid;
                 $store->title = $titles;
-                $store->image = $thumbnailname;
+                // $store->image = $thumbnailname;
                 $store->video = $url_video;
                 $store->description = $description[$key];
                 $store->type_video = $type_video;
-                $store->durasi = $duration;
+                // $store->durasi = $duration;
                 $store->created_at = $now;
                 $store->enable = 1;
                 $store->save();
@@ -289,5 +289,9 @@ class VideosController extends Controller
 
         }
     }
+    public function destroy($id) {
+		$delete = Video::where('id', $id)->delete();
 
+		return redirect()->back()->with('success', 'Data successfully deleted');
+	}
 }

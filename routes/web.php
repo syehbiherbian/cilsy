@@ -280,7 +280,7 @@ Route::get('contributor/lessons/{lesson_id}/create/videos', 'Contributors\Videos
 Route::post('contributor/lessons/{lesson_id}/create/videos', 'Contributors\VideosController@doCreate');
 Route::get('contributor/lessons/{lesson_id}/edit/videos', 'Contributors\VideosController@edit');
 Route::post('contributor/lessons/{lesson_id}/edit/videos', 'Contributors\VideosController@doEdit');
-
+Route::delete('contributor/lessons/delete/videos/{id}', 'Contributors\VideosController@destroy');
 
 // Attachment
 Route::get('contributor/lessons/{lesson_id}/create/attachments', 'Contributors\AttachmentsController@create');

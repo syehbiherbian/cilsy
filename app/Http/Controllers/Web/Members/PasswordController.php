@@ -49,7 +49,7 @@ class PasswordController extends Controller
       // validate
       // read more on validation at http://laravel.com/docs/validation
       $rules = array(
-        'old_password'    => 'required|min:8|max:255',
+        'old_password'    => 'required|min:8|max:255|current_password_match',
         'password'        => 'required|min:8|max:255',
         'retype_password' => 'required|min:8|max:255|same:password',
       );
@@ -61,8 +61,8 @@ class PasswordController extends Controller
       } else {
 
         $now = new DateTime();
-        $old_password = md5(Input::get('old_password'));
-        $password = md5(Input::get('password'));
+        $old_password = bcrypt(Input::get('old_password'));
+        $password = bcrypt(Input::get('password'));
         $check_password = Member::where('status',1)->where('id',$mem_id)->where('password',$old_password)->first();
         if ($check_password) {
           $update = Member::find($mem_id);
