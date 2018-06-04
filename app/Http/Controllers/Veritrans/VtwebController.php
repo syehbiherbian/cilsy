@@ -191,10 +191,10 @@ class VtwebController extends Controller {
                     'member_id' => $invoice->members_id,
                     'lesson_id' => $detail->lesson_id,
                 ]);
-                $ud = detail::updateOrCreate([
+            }
+            $ud = InvoiceDetail::updateOrCreate([
                     'flag' => 0, 
                 ]);
-            }
         }
     }
 
