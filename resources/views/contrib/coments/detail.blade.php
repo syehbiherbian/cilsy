@@ -110,7 +110,7 @@
 						<div class="col-md-12" style="margin-top:10px;padding-left:5%;">
 							<img class="user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png"height="40px" width="40px" style="object-fit:scale-down;border-radius: 100%;margin-bottom:10px;">
 								<strong>
-									<?php if(!empty($child->username)){ ?>
+									<?php if($child->desc == 0){ ?>
 										{{ $child->username }}
 									<?php }else{ ?>
 										{{ $child->contriname }}

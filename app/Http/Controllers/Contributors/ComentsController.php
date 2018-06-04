@@ -28,17 +28,15 @@ class ComentsController extends Controller
         $uid = Auth::guard('contributors')->user()->id;
         $getcomment = DB::table('comments')
             ->leftJoin('lessons','lessons.id','=','comments.lesson_id')
-            ->where('comments.parent_id',0)
             // ->where('comments.status',0)
             // ->where('member_id','!=',null)
             ->where('lessons.contributor_id',$uid)
             ->orderBy('comments.created_at','DESC')
             ->select('comments.*')
             ->get();
-        // dd($getcomment);
         $getabaikan = DB::table('comments')
             ->leftJoin('lessons','lessons.id','=','comments.lesson_id')
-            ->where('comments.parent_id',0)
+            // ->where('comments.parent_id',0)
             // ->where('comments.status',0)
             // ->where('member_id','!=',null)
             ->where('lessons.contributor_id',$uid)
@@ -48,7 +46,8 @@ class ComentsController extends Controller
         // dd($getcomment);
         return view('contrib.coments.index', [
             'data' => $getcomment,
-            'abaikan'=>$getabaikan
+            'abaikan'=>$getabaikan,
+            'id'=>$uid,
         ]);
     }
 
@@ -64,10 +63,16 @@ class ComentsController extends Controller
             ->leftJoin('members','members.id','=','comments.member_id')
             ->where('comments.lesson_id',$getlesson->id)
             ->where('comments.parent_id',0)
-            ->where('comments.status',0)
+            ->where('comments.status',1)
             ->orderBy('comments.created_at','DESC')
             ->select('comments.*','members.username as username')
             ->get();
+
+            DB::table('comments')
+            ->where('comments.lesson_id',$getlesson->id)
+            ->where('comments.status',0)
+            ->update(['status' => 1]);
+
         if ($getlesson->contributor_id == $uid) {
             return view('contrib.coments.detail',[
                 'datalesson'    => $getlesson,
@@ -99,6 +104,7 @@ class ComentsController extends Controller
             'body'          => $isi_balas,
             'parent_id'     => $comment_id,
             'status'        => 0,
+            'desc'        => 1,
             'created_at'    => new DateTime()
         ]);
 
