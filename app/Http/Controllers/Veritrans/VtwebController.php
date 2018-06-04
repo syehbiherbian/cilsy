@@ -127,7 +127,7 @@ class VtwebController extends Controller {
                     ]);
                     // Create New Services
                     $this->create_tutorial_member($order_id);
-                    $ud = InvoiceDetail::where('invoice_id', $invoice->id)->update([
+                    $ud = InvoiceDetail::where('invoice_id', $order_id)->update([
                     'flag' => 0, 
                     ]);
                     // echo "INPUT: " . $input."<br/>";
@@ -146,7 +146,7 @@ class VtwebController extends Controller {
             ]);
             // Create New Services
             $this->create_tutorial_member($order_id);
-            $ud = InvoiceDetail::where('invoice_id', $invoice->id)->update([
+            $ud = InvoiceDetail::where('invoice_id', $order_id)->update([
                     'flag' => 0, 
                     ]);
             // echo "INPUT: " . $input."<br/>";
