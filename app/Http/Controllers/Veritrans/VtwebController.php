@@ -128,6 +128,7 @@ class VtwebController extends Controller {
                     ]);
                     // Create New Services
                     $this->create_tutorial_member($order_id);
+                    $this->update_flag($order_id);
                     // echo "INPUT: " . $input."<br/>";
                     // echo "SIGNATURE: " . $signature;
                     return response()->json([
@@ -144,6 +145,7 @@ class VtwebController extends Controller {
             ]);
             // Create New Services
             $this->create_tutorial_member($order_id);
+            $this->update_flag($order_id);
             // echo "INPUT: " . $input."<br/>";
             // echo "SIGNATURE: " . $signature;
             return response()->json([
@@ -194,14 +196,16 @@ class VtwebController extends Controller {
                 ]);
                 
             }
-            foreach ($invoice->details as $detail) {
-                $flag = $invoice->details::update([
-                    'flag' => 0,
-                ]);
-                
-            }
             
         }
+    }
+    private function update_flag($order_id){
+        $invoice = Invoice::where('code', $order_id)->first();
+        $ud = InvoiceDetail::where('invoice_id', $invoice->id)->update(
+            [
+                'flag' => 0,
+            ]
+        )
     }
 
 }
