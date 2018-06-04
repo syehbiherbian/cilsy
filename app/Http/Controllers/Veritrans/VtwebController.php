@@ -195,7 +195,7 @@ class VtwebController extends Controller {
                 
             }
             foreach ($invoice->details as $detail) {
-                $flag = InvoiceDetail::updateOrCreate([
+                $flag = $invoice->details::update([
                     'flag' => 0,
                 ]);
                 
