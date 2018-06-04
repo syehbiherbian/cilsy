@@ -127,6 +127,9 @@ class VtwebController extends Controller {
                     ]);
                     // Create New Services
                     $this->create_tutorial_member($order_id);
+                    $ud = InvoiceDetail::where('invoice_id', $detail->invoice_id)->update([
+                    'flag' => 0, 
+                    ]);
                     // echo "INPUT: " . $input."<br/>";
                     // echo "SIGNATURE: " . $signature;
                     return response()->json([
@@ -191,9 +194,7 @@ class VtwebController extends Controller {
                     'member_id' => $invoice->members_id,
                     'lesson_id' => $detail->lesson_id,
                 ]);
-                $ud = InvoiceDetail::where('invoice_id', $detail->invoice_id)->update([
-                    'flag' => 0, 
-                ]);
+                
             }
             
         }
