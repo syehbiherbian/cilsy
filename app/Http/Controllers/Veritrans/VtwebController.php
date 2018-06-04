@@ -205,7 +205,7 @@ class VtwebController extends Controller {
             [
                 'flag' => 0,
             ]
-        )
+            );
     }
 
 }
