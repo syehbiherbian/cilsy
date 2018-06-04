@@ -232,6 +232,7 @@ class LessonsController extends Controller
                 'body' => $body,
                 'parent_id' => $parent_id,
                 'status' => 0,
+                'desc'   => 0,
                 'contributor_id' => str_replace('}','',str_replace('{"contributor_id":', '',$contri)),
                 'created_at' => $now,
                 'updated_at' => $now,
@@ -275,29 +276,38 @@ class LessonsController extends Controller
     public function getComments($lesson_id)
     {
         $comments = DB::table('comments')
-            ->leftJoin('members', 'members.id', '=', 'comments.member_id')
-            ->select('comments.*', 'members.username as username', 'members.avatar as avatar')
-            ->where('comments.parent_id', '=', 0)
-            ->where('comments.lesson_id', '=', $lesson_id)
-            ->orderBy('comments.id', 'DESC')
-            ->get();
+        ->leftJoin('members', 'members.id', '=', 'comments.member_id')
+        ->leftJoin('contributors','contributors.id','=','comments.contributor_id')
+        ->select('comments.*', 'members.username as username', 'members.avatar as avatar', 'contributors.username as contriname', 'contributors.avatar as avatarc')
+        ->where('comments.parent_id', '=', 0)
+        ->where('comments.lesson_id', '=', $lesson_id)
+        ->orderBy('comments.id', 'DESC')
+        ->get();
         $html = '';
         $i = 1;
         foreach ($comments as $key => $comment) {
             $html .= '<div class="row">
 				                <div class="col-sm-1">
-													<div class="thumbnail">';
-            if ($comment->avatar) {
+                                                    <div class="thumbnail">';
+            if($comment->desc == 0)     {
+                $ava = $comment->avatar;
+                $usernam =  $comment->username;
+            }else{
+                $ava = $comment->avatarc;
+                $usernam =  $comment->contriname;
+            }        
+            if ($ava != null) {
                 $html .= '<img class="img-responsive user-photo" src="' . asset($comment->avatar) . '">';
             } else {
                 $html .= '<img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">';
             }
+            
             $html .= '</div><!-- /thumbnail -->
 				                </div>
 				                <div class="col-sm-11">
 				                  <div class="panel panel-default">
 				                    <div class="panel-heading">
-				                      <strong>' . $comment->username . '</strong> <span class="text-muted">commented ' . $this->time_elapsed_string($comment->created_at) . '</span>
+				                      <strong>' . $usernam . '</strong> <span class="text-muted">commented ' . $this->time_elapsed_string($comment->created_at) . '</span>
 				                    </div>
 				                    <div class="panel-body">
 				                      ' . $comment->body . '
@@ -323,7 +333,8 @@ class LessonsController extends Controller
             $html .= '</div><!-- /panel panel-default -->';
             $childcomments = DB::table('comments')
                 ->leftJoin('members', 'members.id', '=', 'comments.member_id')
-                ->select('comments.*', 'members.username as username', 'members.avatar as avatar')
+                ->leftJoin('contributors','contributors.id','=','comments.contributor_id')
+                ->select('comments.*', 'members.username as username', 'members.avatar as avatar', 'contributors.username as contriname', 'contributors.avatar as avatarc')
                 ->where('comments.parent_id', '=', $comment->id)
                 ->where('comments.lesson_id', '=', $lesson_id)
                 ->orderBy('comments.id', 'DESC')
@@ -332,9 +343,17 @@ class LessonsController extends Controller
                 $html .= '<!-- Comments Child -->
 				                  <div class="row">
 				                    <div class="col-sm-1">
-				                      <div class="thumbnail">';
-                if ($child->avatar) {
-                    $html .= '<img class="img-responsive user-photo" src="' . asset($child->avatar) . '">';
+                                      <div class="thumbnail">';
+                if($child->desc == 0){
+                   $ava = $child->avatar;
+                   $userna = $child->username;
+                }else{
+                    $ava = $child->avatarc;
+                    $userna = $child->contriname;
+
+                }                                     
+                if ($ava) {
+                    $html .= '<img class="img-responsive user-photo" src="' . asset($ava) . '">';
                 } else {
                     $html .= '<img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">';
                 }
@@ -343,7 +362,7 @@ class LessonsController extends Controller
 				                    <div class="col-sm-11">
 				                      <div class="panel panel-default">
 				                        <div class="panel-heading">
-				                          <strong>' . $child->username . '</strong> <span class="text-muted">commented ' . $this->time_elapsed_string($child->created_at) . '</span>
+				                          <strong>' . $userna . '</strong> <span class="text-muted">commented ' . $this->time_elapsed_string($child->created_at) . '</span>
 				                        </div>
 				                        <div class="panel-body">
 				                          ' . $child->body . '
@@ -398,12 +417,13 @@ class LessonsController extends Controller
         $comment = Input::get('comment');
         $lesson_id = Input::get('lesson_id');
         $lessons = DB::table('lessons')->where('id', $lesson_id)->first();
-        $store = DB::table('coments')->insertGetId([
+        $store = DB::table('comments')->insertGetId([
             'lesson_id' => $lesson_id,
             'member_id' => $uid,
             'description' => $comment,
             'parent' => 0,
             'status' => 0,
+            'desc'   => 0,
             'created_at' => new DateTime(),
         ]);
         // if(count($check)==1){
@@ -428,19 +448,19 @@ class LessonsController extends Controller
         if ($store) {
             DB::table('contributor_notif')->insert([
                 'contributor_id' => $lessons->contributor_id,
-                'category' => 'coments',
+                'category' => 'comments',
                 'title' => 'Anda mendapat pertanyaan dari ' . $member->username,
                 'notif' => 'Anda mendapatkan pertanyaan dari ' . $member->username . ' pada ' . $lessons->title,
                 'status' => 0,
                 'created_at' => new DateTime(),
             ]);
-            $comment = DB::table('coments')
-                ->leftJoin('members', 'members.id', '=', 'coments.member_id')
-                ->select('coments.*', 'members.username as username')
-                ->where('coments.id', $store)
-                ->where('coments.parent', 0)
-                ->where('coments.status', 0)
-                ->orderBy('coments.created_at', 'DESC')
+            $comment = DB::table('comments')
+                ->leftJoin('members', 'members.id', '=', 'comments.member_id')
+                ->select('comments.*', 'members.username as username')
+                ->where('comments.id', $store)
+                ->where('comments.parent', 0)
+                ->where('comments.status', 0)
+                ->orderBy('comments.created_at', 'DESC')
                 ->first();
             echo '<div class="col-md-12" style="margin-bottom:30px;" id="row' . $comment->id . '">';
             echo '<img class="user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png"height="40px" width="40px" style="object-fit:scale-down;border-radius: 100%;margin-bottom:10px;">';
@@ -501,12 +521,13 @@ class LessonsController extends Controller
         $comment_id = Input::get('comment_id');
         $lesson_id = Input::get('lesson_id');
         $lessons = DB::table('lessons')->where('id', $lesson_id)->first();
-        DB::table('coments')->insert([
+        DB::table('comments')->insert([
             'lesson_id' => $lesson_id,
             'member_id' => $uid,
             'description' => $isi_balas,
             'parent' => $comment_id,
             'status' => 0,
+            'desc'   => 0,
             'created_at' => new DateTime(),
         ]);
         $check = DB::table('coments')->where('parent', $comment_id)->get();
