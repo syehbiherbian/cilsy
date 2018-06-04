@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Veritrans;
 
 use App\Http\Controllers\Controller;
 use App\Models\Invoice;
+use App\Models\InvoiceDetail;
 use App\Models\Member;
 use App\Models\Package;
 use App\Models\TutorialMember;
@@ -127,6 +128,7 @@ class VtwebController extends Controller {
                     ]);
                     // Create New Services
                     $this->create_tutorial_member($order_id);
+                    $this->update_flag($order_id);
                     // echo "INPUT: " . $input."<br/>";
                     // echo "SIGNATURE: " . $signature;
                     return response()->json([
@@ -143,6 +145,7 @@ class VtwebController extends Controller {
             ]);
             // Create New Services
             $this->create_tutorial_member($order_id);
+            $this->update_flag($order_id);
             // echo "INPUT: " . $input."<br/>";
             // echo "SIGNATURE: " . $signature;
             return response()->json([
@@ -191,11 +194,18 @@ class VtwebController extends Controller {
                     'member_id' => $invoice->members_id,
                     'lesson_id' => $detail->lesson_id,
                 ]);
-                $ud = InvoiceDetail::update([
-                    'flag' => 0, 
-                ]);
+                
             }
+            
         }
+    }
+    private function update_flag($order_id){
+        $invoice = Invoice::where('code', $order_id)->first();
+        $ud = InvoiceDetail::where('invoice_id', $invoice->id)->update(
+            [
+                'flag' => 0,
+            ]
+            );
     }
 
 }
