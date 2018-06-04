@@ -190,7 +190,9 @@ class VtwebController extends Controller {
                 $tm = TutorialMember::firstOrCreate([
                     'member_id' => $invoice->members_id,
                     'lesson_id' => $detail->lesson_id,
-                    'flag' => 0,
+                ]);
+                $ud = InvoiceDetail::update([
+                    'flag' => 0, 
                 ]);
             }
         }
