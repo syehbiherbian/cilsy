@@ -39,7 +39,7 @@ class AccountController extends Controller
     {
     	$rules = array(
     		'email' => 'required|email',
-    		// 'password' => 'required|min:8', // password can only be alphanumeric and has to be greater than 3 characters
+    		'password' => 'required|min:8|confirmed', // password can only be alphanumeric and has to be greater than 3 characters
     	);
     	$validator = Validator::make(Input::all(), $rules);
 
@@ -49,7 +49,7 @@ class AccountController extends Controller
 				->withInput(Input::except('password')); // sen d back the input (not the password) so that we can repopulate the form
 		}else{
 			$email = Input::get('email');
-			$passwordbaru = (Input::get('new_password'));
+			$passwordbaru = bcrypt(Input::get('new_password'));
 			$retypepassword = (Input::get('new_confirm'));
 			$checkid = DB::table('contributors')->where('email', '=', $email)->first();
 			$check = DB::table('contributors')->where('email', '=', $email)->count();
