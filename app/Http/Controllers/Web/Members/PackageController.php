@@ -114,7 +114,7 @@ class PackageController extends Controller
               InvoiceDetail::updateOrCreate([
                 'invoice_id' => $invoice->id,
                 'lesson_id' => $cart->lesson->id,
-                'flag' => 0,
+                'flag' => null,
                 'contributor_id' => $cart->lesson->contributor_id,
               ]);
             }
