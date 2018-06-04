@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Veritrans;
 
 use App\Http\Controllers\Controller;
 use App\Models\Invoice;
+use App\Models\InvoiceDetail;
 use App\Models\Member;
 use App\Models\Package;
 use App\Models\TutorialMember;
