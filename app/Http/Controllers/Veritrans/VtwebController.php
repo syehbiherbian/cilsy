@@ -189,7 +189,14 @@ class VtwebController extends Controller {
             foreach ($invoice->details as $detail) {
                 $tm = TutorialMember::firstOrCreate([
                     'member_id' => $invoice->members_id,
+<<<<<<< HEAD
                     'lesson_id' => $detail->lesson_id
+=======
+                    'lesson_id' => $detail->lesson_id,
+                ]);
+                $ud = InvoiceDetail::update([
+                    'flag' => 0, 
+>>>>>>> 2b30264b7ba10a611b5c082dcdd1223f097f479a
                 ]);
             }
         }
