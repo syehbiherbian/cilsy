@@ -287,6 +287,7 @@ Route::get('contributor/lessons/{lesson_id}/create/attachments', 'Contributors\A
 Route::post('contributor/lessons/{lesson_id}/create/attachments', 'Contributors\AttachmentsController@doCreate');
 Route::get('contributor/lessons/{lesson_id}/edit/attachments', 'Contributors\AttachmentsController@edit');
 Route::post('contributor/lessons/{lesson_id}/edit/attachments', 'Contributors\AttachmentsController@doEdit');
+Route::get('contributor/lessons/{lesson_id}/delete/attachments/{id}', 'Contributors\AttachmentsController@delete');
 
 // Quiz
 Route::get('contributor/lessons/{id}/create/quiz', 'Contributors\QuizController@create');

@@ -213,5 +213,8 @@ class AttachmentsController extends Controller
 
     }
   }
-
+  public function delete($lessonsid, $id){
+      $delete= File::where('lesson_id',$lessonsid)->where('id', $id)->delete();
+      return redirect()->back()->with('success', 'Data successfully deleted');
+  }
 }
