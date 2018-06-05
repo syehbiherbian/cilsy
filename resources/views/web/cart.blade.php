@@ -97,12 +97,28 @@
             <div class="col-md-offset-8 col-md-4" style="padding:0">
                 <form action="{{ url('member/checkout')}}" method="post">
                     {{ csrf_field() }} 
-                    <button class="btn btn-primary btn-lg btn-block" style="background-color: #3CA3E0; border:0; padding-top:20px;padding-bottom:20px">Pilih Metode Pembayaran</button>
+                    <button class="btn btn-primary btn-lg btn-block" id="inicheckout" style="background-color: #3CA3E0; border:0; padding-top:20px;padding-bottom:20px">Pilih Metode Pembayaran</button>
                 </form>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+fbq('track', 'AddToCart');
+</script>
+
+<script type="text/javascript">
+  var button = document.getElementById('inicheckout');
+  button.addEventListener(
+    'click',
+    function() {
+      fbq('track', 'InitiateCheckout');
+    },
+    false
+  );
+</script>
+
 @if (!Auth::guard('members')->user()) 
 <script>
     $('document').ready(function(){
@@ -141,5 +157,6 @@
         }
     });
 </script>
+
 @endif
 @endsection

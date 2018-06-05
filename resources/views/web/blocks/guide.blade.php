@@ -8,7 +8,7 @@
   <div class="container">
     <div class="row ">
       <div class="col-md-12 text-center">
-        <h3>Langkah mudah mendaftar di cilsy.id</h3>
+        <h3>Langkah mudah Kursus Online di cilsy.id</h3>
       </div>
     </div>
     <div class="row text-center">

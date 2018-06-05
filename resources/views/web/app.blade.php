@@ -681,11 +681,12 @@ a #items .item {
                         <li>Bantuan</li>
                         <li><a href="{{ url('/kontak') }}">Kontak</a></li>
                         <li><a href="{{ url('/kebijakan') }}">Kebijakan Layanan</a></li>
-                        <li><a href="{{ url('/carapesan') }}">Cara Pesan & Berlangganan</a></li>
-                        <li><a href="{{ url('member/package') }}">Harga & Perbandingan Paket</a></li>
+                        <li><a href="{{ url('/carapesan') }}">Cara Pesan</a></li>
                         <li><a href="{{ url('/petunjuk') }}">Petunjuk Pembayaran</a></li>
                         <li><a href="{{ url('/faq') }}">FAQ</a></li>
+                        <li><a href="{{ url('https://linuxsupports.com') }}">Official Company</a></li>
                         <li><a href="{{ url('https://blog.cilsy.id') }}">Blog</a></li>
+                        <li><a href="{{ url('https://devops.cilsy.id') }}">Sekolah DevOps Cilsy</a></li>
                     </ul>
                 </div>
                 <div class="col-md-3">

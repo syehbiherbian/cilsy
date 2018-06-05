@@ -97,7 +97,7 @@ html, body {
     box-sizing: content-box;
     -o-text-overflow: clip;
     text-overflow: clip;
-    background-image: url('../img/header-bg.png');
+    background-image: url('../img/header-bg.jpg');
 }
 #top-section p {
     padding: 30px 11%;
