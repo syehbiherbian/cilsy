@@ -27,7 +27,7 @@
           </div>
           <div id="collapse1" class="panel-collapse collapse">
             <div class="panel-body">
-              Harganya ada di kisaran Rp. 119.000 - Rp. 499.000 tergantung paket langganan yang anda pilih. Untuk melihat perbedaan antar paket bisa lihat link ini : <a href="{{ url('member/package')}}" target="_blank">Lihat Perbedaan antar paket</a>
+              Harganya ada di kisaran Rp. 10.000 - Rp. 2.000.000 tergantung materi tutorial yang anda pilih. Untuk melihat materi apa saja yang terdapat di cilsy Anda dapat lihat link ini : <a href="{{ url('lessons/browse/all')}}" target="_blank">Browse Tutorial</a>
             </div>
           </div>
         </div>
@@ -49,7 +49,7 @@
           </div>
           <div id="collapse2" class="panel-collapse collapse">
             <div class="panel-body">
-              Sangat cocok. Karena materi-materi disini dibuat bertahap mulai dari dasar sampai mahir. 
+              Sangat cocok. Karena materi-materi disini banyak yang dibuat bertahap mulai dari dasar sampai mahir. Anda tinggal pilih dan sesuaikan judul tutorial yang sesuai dengan kebutuhan Anda.
             </div>
           </div>
         </div>
@@ -65,13 +65,13 @@
               <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse3">
 
                 <span class="number">3</span>
-                Apa perbedaan paket Pro, Premium dan Platinum?
+                Apakah Saya sekali bayar bisa dapat semua tutorial?
               </a>
             </h4>
           </div>
           <div id="collapse3" class="panel-collapse collapse">
             <div class="panel-body">
-              Perbedaan utama dari 3 paket tersebut adalah dari segi durasi dan fasilitas yang didapatkan. Paket yang paling lengkap fasilitasnya dan paling hemat adalah paket PLATINUM dengan masa aktif 6 bulan, bisa download video, ebook, serta dapat support remote teamviewer. Untuk melihat perbedaan antar paket lebih jelas bisa lihat link ini : <a href="{{ url('member/package')}}"target="_blank">Lihat Perbedaan antar paket</a>
+              Tidak. Kursus online di Cilsy sistemnya adalah membeli per judul tutorial. Hal ini agar membuat Anda dapat lebih fokus dalam mempelajari materi yang Anda beli.
             </div>
           </div>
         </div>
@@ -88,13 +88,13 @@
               <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse4">
                 <span class="number">4</span>
 
-                <span class="title">Apakah semua video disini bisa didownload?</span>
+                <span class="title">Apakah Tutorial disini bisa didownload?</span>
               </a>
             </h4>
           </div>
           <div id="collapse4" class="panel-collapse collapse">
             <div class="panel-body">
-              Bisa, apabila anda berlangganan paket PREMIUM atau PLATINUM. Untuk melihat lebih jelas perbedaan antar paket bisa lihat di link berikut : <a href="{{ url('member/package')}}"target="_blank">Lihat Perbedaan antar paket</a>
+              Bisa, Anda bisa mendownload seluruh isi video maupun modul dari tutorial yang sudah Anda beli.
             </div>
           </div>
         </div>

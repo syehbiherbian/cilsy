@@ -103,25 +103,13 @@
 
 
 			<?php
-				$cekanswer = DB::table('comments')->where('id',$dat->id)->where('status',0)->orderBy('created_at','DESC')->first();
-				if(count($cekanswer)>0){
-
-				if(empty($cekanswer->contributor_id)){
-
+				$cekanswer = DB::table('comments')->where('desc', '<>', 1)->where('status',0)->where('contributor_id',Auth::guard('contributors')->user()->id)->orderBy('created_at','DESC')->first();
+				if(count($cekanswer)==0){
 				?>
 
               <tr>
-                <td><?= date('d/m/Y',strtotime($cekanswer->created_at)) ?></td>
-                <td>{{ $cekanswer->body }}</td>
-                <td>
-                   <a href="{{ url('contributor/comments/detail/'.$dat->lesson_id) }}" class="btn blue">Lihat</a>
-                 	<a href="javascript:void(0)" class="btn red" onclick="$('#un{{ $dat->id }}').submit();">Abaikan</a>
-					<form id="un{{ $dat->id }}" class="" action="{{ url('contributor/comments/deletecomment/'.$cekanswer->id) }}" method="post">
-						{{ csrf_field() }}
-					</form>
-                </td>
               </tr>
-			<?php }
+			<?php 
 		 	}  else { ?>
 			  @if($dat->status==0)
 				<tr>
@@ -152,80 +140,32 @@
               </thead>
               <tbody>
   			@foreach($data as $dat)
-			 @if($dat->status==0)
-			 <?php
-			 	$cek = DB::table('comments')->where('parent_id',$dat->id)->where('status',0)->count();
+
+
+			<?php
+				$cekanswer = DB::table('comments')->where('desc', '<>', 1)->where('status',1)->where('contributor_id',Auth::guard('contributors')->user()->id)->orderBy('created_at','DESC')->first();
+				if(count($cekanswer)==0){
 				?>
-				@if($cek >0)
+
+              <tr>
+              </tr>
+			<?php 
+		 	}  else { ?>
+			  @if($dat->status==1)
 				<tr>
 				  <td><?= date('d/m/Y',strtotime($dat->created_at)) ?></td>
 				  <td>{{ $dat->body }}</td>
 				  <td>
 					 <a href="{{ url('contributor/comments/detail/'.$dat->id) }}" class="btn blue">Lihat</a>
-					 <a href="javascript:void(0)" class="btn red" onclick="$('#var{{ $dat->id }}').submit();">Abaikan</a>
-					 <form id="var{{ $dat->id }}" class="" action="{{ url('contributor/comments/deletecomment/'.$dat->id) }}" method="post">
+					 <a href="javascript:void(0)" class="btn red" onclick="$('#un{{ $dat->id }}').submit();">Abaikan</a>
+					 <form id="un{{ $dat->id }}" class="" action="{{ url('contributor/comments/deletecomment/'.$dat->id) }}" method="post">
 						 {{ csrf_field() }}
 					 </form>
 				  </td>
 				</tr>
 				@endif
-				@elseif($dat->status==1)
-				<tr>
-				  <td><?= date('d/m/Y',strtotime($dat->created_at)) ?></td>
-				  <td>{{ $dat->body }}</td>
-				  <td>
-					 <a href="{{ url('contributor/comments/detail/'.$dat->id) }}" class="btn blue">Lihat</a>
-					 <a href="javascript:void(0)" class="btn red" onclick="$('#var{{ $dat->id }}').submit();">Abaikan</a>
-					 <form id="var{{ $dat->id }}" class="" action="{{ url('contributor/comments/deletecomment/'.$dat->id) }}" method="post">
-						 {{ csrf_field() }}
-					 </form>
-				  </td>
-				</tr>
-			@endif
-
-  			<?php
-
-  				$cekanswers = DB::table('comments')->where('parent_id',$dat->id)->where('status',0)->orderBy('created_at','ASC')->get();
-
-				$i= 0;
-				foreach ($cekanswers as  $cekanswer) {
-					if (count($cekanswers)-1 == $i) {
-						if (!empty($cekanswer->member_id)) { ?>
-							<!-- <tr>
-							 <td><?= date('d/m/Y',strtotime($cekanswer->created_at)) ?></td>
-							 <td>{{ $cekanswer->body }}</td>
-							 <td>
-								<a href="{{ url('contributor/comments/detail/'.$dat->id) }}" class="btn blue">Lihat</a>
-								<a href="javascript:void(0)" class="btn red" onclick="$('#cek{{ $dat->id }}').submit();">Abaikan</a>
-								<form id="cek{{ $dat->id }}" class="" action="{{ url('contributor/comments/deletecomment/'.$cekanswer->id) }}" method="post">
-									{{ csrf_field() }}
-								</form>
-							 </td>
-						   </tr> -->
-						<?php }
-					}else{
-						if(!empty($cekanswer->member_id)){
-
-  				?>
-		                <tr>
-		                  <td><?= date('d/m/Y',strtotime($cekanswer->created_at)) ?></td>
-		                  <td>{{ $cekanswer->body }}</td>
-		                  <td>
-		                     <a href="{{ url('contributor/comments/detail/'.$dat->id) }}" class="btn blue">Lihat</a>
-		                     <a href="javascript:void(0)" class="btn red" onclick="$('#cek{{ $dat->id }}').submit();">Abaikan</a>
-							 <form id="cek{{ $dat->id }}" class="" action="{{ url('contributor/comments/deletecomment/'.$cekanswer->id) }}" method="post">
-								 {{ csrf_field() }}
-							 </form>
-		                  </td>
-		                </tr>
-				<?php
-						}
-					}
-
-					$i++;
-					}
-				?>
-  			@endforeach
+		 <?php	}?>
+			@endforeach
 
 
               </tbody>
@@ -243,64 +183,33 @@
                 </tr>
               </thead>
               <tbody>
-				  @foreach($data as $dat)
-				  @if($dat->status==0)
-	  				<tr>
-	  				  <td><?= date('d/m/Y',strtotime($dat->created_at)) ?></td>
-	  				  <td>{{ $dat->body }}</td>
-	  				  <td>
-	  					 <a href="{{ url('contributor/comments/detail/'.$dat->id) }}" class="btn blue">Lihat</a>
-	  					 <a href="javascript:void(0)" class="btn red" onclick="$('#all1{{ $dat->id }}').submit();">Abaikan</a>
-	  					 <form id="all1{{ $dat->id }}" class="" action="{{ url('contributor/comments/deletecomment/'.$dat->id) }}" method="post">
-	  						 {{ csrf_field() }}
-	  					 </form>
-	  				  </td>
-	  				</tr>
-					@endif
+				 		@foreach($data as $dat)
 
-  	  			<?php
 
-  	  				$cekanswers = DB::table('comments')->where('parent_id',$dat->id)->where('status',0)->orderBy('created_at','ASC')->get();
+			<?php
+				$cekanswer = DB::table('comments')->where('desc', '<>', 1)->where('contributor_id',Auth::guard('contributors')->user()->id)->orderBy('created_at','DESC')->first();
+				if(count($cekanswer)==0){
+				?>
 
-  					$i= 0;
-  					foreach ($cekanswers as  $cekanswer) {
-  						if (count($cekanswers)-1 == $i) {
-  							if (!empty($cekanswer->member_id)) { ?>
-  								<tr>
-  								 <td><?= date('d/m/Y',strtotime($cekanswer->created_at)) ?></td>
-  								 <td>{{ $cekanswer->body }}</td>
-  								 <td>
-  									<a href="{{ url('contributor/comments/detail/'.$dat->id) }}" class="btn blue">Lihat</a>
-  									<a href="javascript:void(0)" class="btn red" onclick="$('#all2{{ $dat->id }}').submit();">Abaikan</a>
-  									<form id="all2{{ $dat->id }}" class="" action="{{ url('contributor/comments/deletecomment/'.$cekanswer->id) }}" method="post">
-  										{{ csrf_field() }}
-  									</form>
-  								 </td>
-  							   </tr>
-  							<?php }
-  						}else{
-  							if(!empty($cekanswer->member_id)){
+              <tr>
+              </tr>
+			<?php 
+		 	}  else { ?>
+				<tr>
+				  <td><?= date('d/m/Y',strtotime($dat->created_at)) ?></td>
+				  <td>{{ $dat->body }}</td>
+				  <td>
+					 <a href="{{ url('contributor/comments/detail/'.$dat->id) }}" class="btn blue">Lihat</a>
+					 <a href="javascript:void(0)" class="btn red" onclick="$('#un{{ $dat->id }}').submit();">Abaikan</a>
+					 <form id="un{{ $dat->id }}" class="" action="{{ url('contributor/comments/deletecomment/'.$dat->id) }}" method="post">
+						 {{ csrf_field() }}
+					 </form>
+				  </td>
+				</tr>
+		 <?php	}?>
+			@endforeach
 
-  	  				?>
-  			                <tr>
-  			                  <td><?= date('d/m/Y',strtotime($cekanswer->created_at)) ?></td>
-  			                  <td>{{ $cekanswer->body }}</td>
-  			                  <td>
-  			                     <a href="{{ url('contributor/comments/detail/'.$dat->id) }}" class="btn blue">Lihat</a>
-  			                     <a href="javascript:void(0)" class="btn red" onclick="$('#all3{{ $dat->id }}').submit();">Abaikan</a>
-  								 <form id="all3{{ $dat->id }}" class="" action="{{ url('contributor/comments/deletecomment/'.$cekanswer->id) }}" method="post">
-  									 {{ csrf_field() }}
-  								 </form>
-  			                  </td>
-  			                </tr>
-  					<?php
-  							}
-  						}
 
-  						$i++;
-  						}
-  					?>
-  	  			@endforeach
               </tbody>
             </table>
         </div>

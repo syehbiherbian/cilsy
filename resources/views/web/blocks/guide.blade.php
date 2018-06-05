@@ -21,7 +21,7 @@
       <div class="col-sm-6 col-md-3">
         <div class="card p-25">
           <img src="{{ asset('template/web/img/guide/paket.png') }}" alt="">
-          <p>Pilih Paket Langganan</p>
+          <p>Pilih Tutorial</p>
         </div>
       </div>
       <div class="col-sm-6 col-md-3">

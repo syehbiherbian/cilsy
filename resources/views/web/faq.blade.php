@@ -30,8 +30,8 @@
           </div>
           <div id="collapse1" class="panel-collapse collapse">
             <div class="panel-body">
-              Harganya ada di kisaran Rp. 119.000 - Rp. 499.000 tergantung paket langganan yang anda pilih. Untuk melihat perbedaan antar paket bisa lihat link ini : <a href="{{ url('member/package')}}" target="_blank">Lihat Perbedaan antar paket</a>
-            </div>
+            Harganya ada di kisaran Rp. 10.000 - Rp. 2.000.000 tergantung materi tutorial yang anda pilih. Untuk melihat materi apa saja yang terdapat di cilsy Anda dapat lihat link ini : <a href="{{ url('lessons/browse/all')}}"target="_blank">Browse Tutorial</a>
+	    </div>
           </div>
         </div>
         <!-- ./ Panel -->
@@ -52,7 +52,7 @@
           </div>
           <div id="collapse2" class="panel-collapse collapse">
             <div class="panel-body">
-              Sangat cocok. Karena materi-materi disini dibuat bertahap mulai dari dasar sampai mahir. 
+              Sangat cocok. Karena materi-materi disini banyak yang dibuat bertahap mulai dari dasar sampai mahir. Anda tinggal pilih dan sesuaikan judul tutorial yang sesuai dengan kebutuhan Anda.
             </div>
           </div>
         </div>
@@ -68,14 +68,14 @@
               <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse3">
 
                 <span class="number">3</span>
-                Apa perbedaan paket Pro, Premium dan Platinum?
+                Apa Saya sekali bayar bisa dapat semua tutorial??
               </a>
             </h4>
           </div>
           <div id="collapse3" class="panel-collapse collapse">
             <div class="panel-body">
-              Perbedaan utama dari 3 paket tersebut adalah dari segi durasi dan fasilitas yang didapatkan. Paket yang paling lengkap fasilitasnya dan paling hemat adalah paket PLATINUM dengan masa aktif 6 bulan, bisa download video, ebook, serta dapat support remote teamviewer. Untuk melihat perbedaan antar paket lebih jelas bisa lihat link ini : <a href="{{ url('member/package')}}"target="_blank">Lihat Perbedaan antar paket</a>
-            </div>
+	   Tidak. Kursus online di Cilsy sistemnya adalah membeli per judul tutorial. Hal ini agar membuat Anda dapat lebih fokus dalam mempelajari materi yang Anda beli.
+	   </div>
           </div>
         </div>
         <!-- ./ Panel -->
@@ -91,14 +91,14 @@
               <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse4">
                 <span class="number">4</span>
 
-                <span class="title">Apakah semua video disini bisa didownload?</span>
+                <span class="title">Apakah semua Tutorial disini bisa didownload?</span>
               </a>
             </h4>
           </div>
           <div id="collapse4" class="panel-collapse collapse">
             <div class="panel-body">
-              Bisa, apabila anda berlangganan paket PREMIUM atau PLATINUM. Untuk melihat lebih jelas perbedaan antar paket bisa lihat di link berikut : <a href="{{ url('member/package')}}"target="_blank">Lihat Perbedaan antar paket</a>
-            </div>
+           Bisa, Anda bisa mendownload seluruh isi video maupun modul dari tutorial yang sudah Anda beli. 
+	   </div>
           </div>
         </div>
         <!-- ./ Panel -->
@@ -119,7 +119,7 @@
           </div>
           <div id="collapse5" class="panel-collapse collapse">
             <div class="panel-body">
-              Betul. Di Cilsy sistemnya bukan beli per judul/materi tutorial. Tapi cukup 1x bayar berlangganan itu sudah dapat semua materi tutorial.
+              Tidak. Di Cilsy sistemnya adalah beli per judul/materi tutorial. Bukan 1x bayar dapat semua materi tutorial.
             </div>
           </div>
         </div>
@@ -140,7 +140,7 @@
           </div>
           <div id="collapse6" class="panel-collapse collapse">
             <div class="panel-body">
-              Belajar di Cilsy sangat mudah. Anda tinggal pilih judul materi yang anda mau -> tonton dan praktekkan materi dari video tutorial yang kami sediakan -> kalau kesulitan/bingung bisa nanya ke trainer Cilsy via chat di web cilsy langsung/whatsapp.
+              Belajar di Cilsy sangat mudah. Anda tinggal pilih judul materi yang sudah anda beli -> tonton dan praktekkan materi dari video tutorial yang kami sediakan -> kalau kesulitan/bingung bisa bertanya ke trainer Cilsy via fitur komentar di halaman tutorial yang Anda beli.
             </div>
           </div>
         </div>
@@ -182,7 +182,7 @@
           </div>
           <div id="collapse8" class="panel-collapse collapse">
             <div class="panel-body">
-              Saat ini sekitar 40% materi yang ada di Cilsy sudah tersedia bentuk ebooknya. Dan kami akan terus tambahkan hingga 100%. Untuk yang bisa mendownload materi ebook hanya member paket PREMIUM dan PLATINUM.
+              Saat ini sekitar 40% materi yang ada di Cilsy sudah tersedia bentuk ebooknya. Dan kami akan terus tambahkan hingga 100%.
             </div>
           </div>
         </div>
@@ -239,7 +239,7 @@
 <span class="border">&nbsp;</span>
               <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse11">
                 <span class="number">11</span>
-                Bagaimana cara saya pesan semua materi tutorialnya/daftar kursus onlinenya?
+                Bagaimana cara saya beli materi tutorial yang saya inginkan/daftar kursus onlinenya?
               </a>
             </h4>
           </div>
@@ -260,13 +260,13 @@
 <span class="border">&nbsp;</span>
               <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse12">
                 <span class="number">12</span>
-                Metode apa saja yang digunakan untuk pembayaran paket langganan?
+                Metode apa saja yang digunakan untuk pembayaran?
               </a>
             </h4>
           </div>
           <div id="collapse12" class="panel-collapse collapse">
             <div class="panel-body">
-              Saat ini Anda bisa membayar via kartu kredit dan bank transfer. Untuk bayar via bank transfer, saat ini nomor rekening kami hanya tersedia untuk Bank Permata dan Bank Mandiri. Sehingga apabila anda menggunakan bank selain itu maka akan ada tambahan biaya transfer beda bank.
+              Saat ini Anda bisa membayar via kartu kredit dan bank transfer. Untuk bayar via bank transfer, saat ini nomor rekening kami hanya tersedia untuk Bank Permata dan Bank Mandiri. Sehingga apabila anda menggunakan bank selain itu maka akan ada tambahan biaya transfer beda bank. Silahkan lihat petunjuk pembayaran disini : <a href="{{ url('petunjuk')}}"target="_blank">Petunjuk Pembayaran</a>
             </div>
           </div>
         </div>
@@ -287,7 +287,7 @@
           </div>
           <div id="collapse13" class="panel-collapse collapse">
             <div class="panel-body">
-              Tidak perlu. Sistem kami bisa mendeteksi secara otomatis pembayaran anda.
+              Tidak perlu. Sistem kami bisa mendeteksi secara otomatis pembayaran anda berdasarkan nomor invoice yang Anda dapatkan.
             </div>
           </div>
         </div>
@@ -308,7 +308,7 @@
           </div>
           <div id="collapse14" class="panel-collapse collapse">
             <div class="panel-body">
-              Bisa melalui chat yang ada di web cilsy, via email ke support@cilsy.id, maupun via whatsapp ke 089630713487.
+              Bisa melalui fitur komentar di halaman tutorial yang sudah Anda beli.
             </div>
           </div>
         </div>
@@ -329,7 +329,7 @@
           </div>
           <div id="collapse15" class="panel-collapse collapse">
             <div class="panel-body">
-              Anda bisa langsung minta ke tim trainer kami via chat/whatsapp/email dengan menyebutkan kebutuhan anda dan kapan tanggal serta jam anda mau minta di remote. Fasilitas ini hanya untuk member paket PLATINUM.
+              Saat ini Kami sudah tidak menyediakan support remote teamviewer. Fasilitas ini hanya berlaku untuk member lama Cilsy di old.cilsy.id selama masa aktif mereka masih berlaku.
             </div>
           </div>
         </div>
@@ -344,17 +344,13 @@
               <span class="border">&nbsp;</span>
               <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse16">
 		<span class="number">16</span>
-		Bagaimana cara saya memperpanjang paket langganan?
+		Apakah tutorial yang saya beli ada masa berlakunya?
               </a>
             </h4>
           </div>
           <div id="collapse16" class="panel-collapse collapse">
             <div class="panel-body">
-              Anda cukup melakukan 4 tahap berikut :
-<br>1. Login ke cilsy.id, klik nama anda di pojok kanan atas, lalu klik Perpanjang.
-<br>2. Pilih paket langganan yang anda mau
-<br>3. Pilih metode pembayaran & bayar sesuai petunjuk
-<br>4. Login akun dan mulai akses semua tutorial
+              Tidak ada. Tutorial yang sudah Anda beli sudah menjadi milik Anda selamanya.
             </div>
           </div>
         </div>
