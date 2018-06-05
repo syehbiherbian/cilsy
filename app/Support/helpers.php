@@ -208,7 +208,7 @@ function income(){
     
       $row = Income::join('lessons', 'lessons.id', '=', 'invoice_details.lesson_id')
       ->where('lessons.contributor_id',$contribID)
-      ->where('flag', '0')->sum('lessons.price');
+      ->where('flag', '0')->sum('invoice_details.harga_lesson');
 
         if(count($row) ==0){
                 $row = Income::join('lessons', 'lessons.id', '=', 'invoice_details.lesson_id')
