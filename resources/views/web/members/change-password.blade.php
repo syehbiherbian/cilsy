@@ -6,11 +6,11 @@
 @include('web.include.alerts')
 <form class="form-horizontal" action="{{ url('member/change-password') }}" method="post">
   {{ csrf_field() }}
-  <div class="form-group @if ($errors->has('old_password')) has-error @endif">
+  <div class="form-group @if ($errors->has('current_password')) has-error @endif">
     <label class="col-sm-3 control-label">Password Lama</label>
     <div class="col-sm-9">
-      <input type="password" class="form-control" name="old_password">
-      @if ($errors->has('old_password')) <p class="help-block">{{ $errors->first('old_password') }}</p> @endif
+      <input type="password" class="form-control" name="current_password">
+      @if ($errors->has('current_password')) <p class="help-block">{{ $errors->first('current_password') }}</p> @endif
     </div>
   </div>
   <div class="form-group  @if ($errors->has('password')) has-error @endif">
@@ -20,11 +20,11 @@
       @if ($errors->has('password')) <p class="help-block">{{ $errors->first('password') }}</p> @endif
     </div>
   </div>
-  <div class="form-group  @if ($errors->has('retype_password')) has-error @endif">
+  <div class="form-group  @if ($errors->has('password_confirmation')) has-error @endif">
     <label class="col-sm-3 control-label">Konfirmasi Password</label>
     <div class="col-sm-9">
-      <input type="password" class="form-control"  name="retype_password">
-      @if ($errors->has('retype_password')) <p class="help-block">{{ $errors->first('retype_password') }}</p> @endif
+      <input type="password" class="form-control"  name="password_confirmation">
+      @if ($errors->has('password_confirmation')) <p class="help-block">{{ $errors->first('password_confirmation') }}</p> @endif
     </div>
   </div>
 

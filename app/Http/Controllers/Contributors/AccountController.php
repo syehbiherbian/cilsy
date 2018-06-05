@@ -49,21 +49,25 @@ class AccountController extends Controller
 				->withInput(Input::except('password')); // sen d back the input (not the password) so that we can repopulate the form
 		}else{
 			$email = Input::get('email');
-			$passwordbaru = bcrypt(Input::get('new_password'));
-			$retypepassword = (Input::get('new_confirm'));
+			$passwordbaru = bcrypt(Input::get('password'));
 			$checkid = DB::table('contributors')->where('email', '=', $email)->first();
-			$check = DB::table('contributors')->where('email', '=', $email)->count();
+            $check = DB::table('contributors')->where('email', '=', $email)->count();
+            if (!(Hash::check($request->get('current_password'), Auth::guard('members')->user()->password))) {
+                // The passwords matches
+                return redirect()->back()->with("error","Your current password does not matches with the password you provided. Please try again.");
+            }
 
+            if(strcmp($request->get('current_password'), $request->get('new-password')) == 0){
+                //Current password and new password are same
+                return redirect()->back()->with("error","New Password cannot be same as your current password. Please choose a different password.");
+            }
 			if ($check > 0) {
-				// $checkid =DB::table('members')->where('email','=',$email)->first();
-				if ($retypepassword !== $passwordbaru) {
-					return Redirect()->back()->with('geterror', 'Password Tidak sama!');
-				} else {
 
 					$update = DB::table('contributors')
 						->where('email', $checkid->email)
 						->update([
-							'password' => md5($passwordbaru),
+                            'email' => $email,
+							'password' => $passwordbaru,
 						]);
 					if ($update) {
 						return Redirect()->to('/contributor/account/informasi')->with('success', 'Sukses Perbaharui Informasi Akun');
@@ -71,8 +75,6 @@ class AccountController extends Controller
 					} else {
 						return Redirect()->back()->with('error', 'Maaf Ada yang Error');
 					}
-
-				}
 			} else {
 				return Redirect()->back()->with('geterror', 'Sorry email is not valid !');
 			}
