@@ -39,7 +39,7 @@ class IncomeController extends Controller
 
         $contribID = Auth::guard('contributors')->user()->id;
         $row = Income::join('lessons', 'lessons.id', '=', 'invoice_details.lesson_id')
-               ->select(DB::raw('SUM(price)*70/100 as price'), 'flag','invoice_details.updated_at')
+               ->select(DB::raw('SUM(harga_lesson)*70/100 as price'), 'flag','invoice_details.updated_at')
                ->where('lessons.contributor_id',$contribID)
                ->where('flag', '1')
                ->groupby('flag','invoice_details.updated_at')
@@ -167,7 +167,7 @@ class IncomeController extends Controller
 
         $contribID = Auth::guard('contributors')->user()->id;
         $row = Income::join('lessons', 'lessons.id', '=', 'invoice_details.lesson_id')
-               ->select(DB::raw('SUM(price)*70/100 as price'), 'flag', 'lessons.title', 'invoice_details.updated_at')
+               ->select(DB::raw('SUM(harga_lesson)*70/100 as price'), 'flag', 'lessons.title', 'invoice_details.updated_at')
                ->where('lessons.contributor_id',$contribID)
                ->where('flag', '1')
                ->groupby('flag', 'lessons.title' , 'updated_at')
