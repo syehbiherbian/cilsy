@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Input;
 use DB;
 use DateTime;
 use Auth;
+use Hash;
 
 class AccountController extends Controller
 {
