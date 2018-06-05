@@ -55,7 +55,7 @@
 <section class="intro">
   <div class="container">
     <h1 style="text-align:center">CARA PESAN</h1>
-    <h4 style="text-align:center">Ikuti 5 langkah mudah dibawah ini untuk pesan paket langganan di Cilsy</h4>
+    <h4 style="text-align:center">Ikuti 5 langkah mudah dibawah ini untuk membeli tutorial di Cilsy</h4>
   </div>
 </section>
 
@@ -68,12 +68,12 @@
     </li>
     <li>
       <div>
-        <time>Pilih Paket Langganan</time> <a href="{{ url('member/package')}}" target="_blank">Pilih Paket</a> sesuai budget dan kebutuhan anda
+        <time>Pilih Tutorial</time> <a href="{{ url('lessons/browse/all')}}" target="_blank">Pilih Judul-judul Tutorial</a> yang Anda inginkan. Klik Beli untuk menambahkan tutorial tersebut ke keranjang pembelian.
       </div>
     </li>
     <li>
       <div>
-        <time>Pilih Metode Pembayaran</time> Tentukan metode pembayaran yang anda inginkan, bisa melalui kartu kredit atau bank transfer
+        <time>Pilih Metode Pembayaran</time> Lihat <a href="{{ url('cart')}}" target="_blank">Keranjang Belanja</a> Anda, lalu Tentukan metode pembayaran yang anda inginkan. Bisa melalui kartu kredit atau bank transfer.
       </div>
     </li>
     <li>
@@ -83,7 +83,7 @@
     </li>
     <li>
       <div>
-        <time>Akses Video Tutorial</time> Berhasil, Silahkan Login kembali dan <a href="{{ url('lessons/browse/all')}}" target="_blank">akses semua tutorial</a>.
+        <time>Akses Video Tutorial</time> Berhasil, Silahkan Login kembali dan <a href="{{ url('member/dashboard')}}" target="_blank">akses tutorial yang Anda beli</a>.
       </div>
     </li>
   </ul>

@@ -659,7 +659,7 @@ a #items .item {
                         Satu-satunya kursus online jaringan dan server yang dipandu sampai bisa. Terdapat ratusan video tutorial eksklusif serta trainer profesional yang siap membantu proses belajar anda.
                     </p>
                     <p class="copyrigth-text">
-                        Copyright Cilsy Fiolution 2016-2017
+                        Copyright Cilsy Fiolution 2016-2018
                     </p>
                 </div>
                 <div class="col-md-2">

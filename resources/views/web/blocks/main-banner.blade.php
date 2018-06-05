@@ -59,7 +59,7 @@
           <div class="col-md-4">
             <div class="card">
               <strong class="title ">Interaktif</strong>
-              <p class="mt-15">Bisa konsultasi dengan Trainer Profesional via chat dan remote teamviewer</p>
+              <p class="mt-15">Bisa konsultasi dengan Trainer Profesional jika mengalami kesulitan saat praktek.</p>
             </div>
           </div>
 

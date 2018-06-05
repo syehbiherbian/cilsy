@@ -17,6 +17,7 @@ use Session;
 use DateTime;
 // use DB;
 use Auth;
+use Hash;
 
 class PasswordController extends Controller
 {
@@ -38,43 +39,31 @@ class PasswordController extends Controller
         // 'packages' => $packages
       ]);
     }
-    public function doSubmit()
+    public function doSubmit(Request $request)
     {
-      // Authentication
       $mem_id = Auth::guard('members')->user()->id;
-      if (!$mem_id) {
-        return redirect('/member/signin');
-        exit;
+
+      if (!(Hash::check($request->get('current_password'), Auth::guard('members')->user()->password))) {
+        // The passwords matches
+        return redirect()->back()->with("error","Your current password does not matches with the password you provided. Please try again.");
       }
-      // validate
-      // read more on validation at http://laravel.com/docs/validation
-      $rules = array(
-        'old_password'    => 'required|min:8|max:255|current_password_match',
-        'password'        => 'required|min:8|max:255',
-        'retype_password' => 'required|min:8|max:255|same:password',
-      );
-      $validator = Validator::make(Input::all(), $rules);
 
-      // process the login
-      if ($validator->fails()) {
-        return redirect()->back()->withErrors($validator)->withInput();
-      } else {
-
-        $now = new DateTime();
-        $old_password = bcrypt(Input::get('old_password'));
-        $password = bcrypt(Input::get('password'));
-        $check_password = Member::where('status',1)->where('id',$mem_id)->where('password',$old_password)->first();
-        if ($check_password) {
-          $update = Member::find($mem_id);
-          $update->password = $password;
-          $update->updated_at = $now;
-          $update->save();
-          return redirect()->back()->with('success','Password Anda telah di ubah');
-        }else {
-          return redirect()->back()->with('error','Password Lama Salah !');
-        }
-
+      if(strcmp($request->get('current_password'), $request->get('new-password')) == 0){
+          //Current password and new password are same
+          return redirect()->back()->with("error","New Password cannot be same as your current password. Please choose a different password.");
       }
+
+      $validatedData = $request->validate([
+          'current_password' => 'required',
+          'password' => 'required|string|min:8|confirmed',
+      ]);
+
+      //Change Password
+      $user = Auth::guard('members')->user();
+      $user->password = bcrypt($request->get('password'));
+      $user->save();
+
+      return redirect()->back()->with("success","Password changed successfully !");
     }
 
 }

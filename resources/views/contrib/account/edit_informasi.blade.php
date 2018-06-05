@@ -60,22 +60,25 @@
           </div>
         </div>
         <hr>
-        <div class="form-group">
-          <label class="col-sm-2 control-label">Password Lama</label>
-          <div class="col-sm-10">
-            <input type="password" class="form-control" name="old_password" >
+        <div class="form-group @if ($errors->has('current_password')) has-error @endif">
+          <label class="col-sm-3 control-label">Password Lama</label>
+          <div class="col-sm-9">
+            <input type="password" class="form-control" name="current_password">
+            @if ($errors->has('current_password')) <p class="help-block">{{ $errors->first('current_password') }}</p> @endif
           </div>
         </div>
-        <div class="form-group">
-          <label class="col-sm-2 control-label">Password Baru</label>
-          <div class="col-sm-10">
-            <input type="password" class="form-control" name="new_password" > 
+        <div class="form-group  @if ($errors->has('password')) has-error @endif">
+          <label class="col-sm-3 control-label">Password Baru</label>
+          <div class="col-sm-9">
+            <input type="password" class="form-control" name="password">
+            @if ($errors->has('password')) <p class="help-block">{{ $errors->first('password') }}</p> @endif
           </div>
         </div>
-        <div class="form-group">
-          <label class="col-sm-2 control-label">Konfirmasi Password Baru</label>
-          <div class="col-sm-10">
-            <input type="password" class="form-control" name="new_confirm" >
+        <div class="form-group  @if ($errors->has('password_confirmation')) has-error @endif">
+          <label class="col-sm-3 control-label">Konfirmasi Password</label>
+          <div class="col-sm-9">
+            <input type="password" class="form-control"  name="password_confirmation">
+            @if ($errors->has('password_confirmation')) <p class="help-block">{{ $errors->first('password_confirmation') }}</p> @endif
           </div>
         </div>
         <div class="form-group">
