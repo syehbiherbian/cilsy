@@ -77,6 +77,7 @@
       <h4>Result</h4>
       <?php if(count($results) == 0){ echo "No Data Available";}?>
       <?php foreach ($results as $key => $result): ?>
+
         <div class="item">
             <div class="row">
             <div class="col-md-2">
@@ -94,14 +95,23 @@
                 </p>
               </div>
               <div class="col-md-2">
+
+               @if($result->id != $result->tutor)
                 <p style="font-weight:bold;">Rp. {{ number_format($result->price, 0, ",", ".") }}</p>
                 <p>
                 <button type="button" class="btn btn-info" onclick="addToCart({{ $result->id }})"><i class="fa fa-shopping-cart"></i> Beli</button>
                 </p>
-              </div>
+                @else
+                
+                @endif
+
+                </div>
+                
             </div>
           {{-- </a> --}}
         </div>
+             
+
       <?php endforeach; ?>
       <div class="row">
           <div class="col-md-12 text-center">

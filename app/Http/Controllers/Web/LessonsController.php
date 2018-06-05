@@ -25,11 +25,14 @@ class LessonsController extends Controller
 
     public function index($by, $keyword)
     {
+        $mem_id = isset(Auth::guard('members')->user()->id) ? Auth::guard('members')->user()->id : 0;
+
         $categories = Category::where('enable', 1)->get();
         if ($by == 'category') {
             $category = Category::where('enable', 1)->where('title', 'like', '%' . $keyword . '%')->first();
             $results = Lesson::leftJoin('categories', 'lessons.category_id', 'categories.id')
-                ->select('lessons.*', 'categories.title as category_title')
+                ->leftJoin('tutorial_member', 'lessons.id', 'tutorial_member.lesson_id', 'and', 'tutorial_member.member_id', $mem_id)
+                ->select('lessons.*', 'categories.title as category_title', 'tutorial_member.lesson_id as tutor')
                 ->where('lessons.enable', 1)
                 ->where('lessons.status', 1)
                 ->where('lessons.category_id', $category->id)
@@ -37,17 +40,27 @@ class LessonsController extends Controller
             // dd($results);
         } else {
             $results = Lesson::leftJoin('categories', 'lessons.category_id', 'categories.id')
-                ->select('lessons.*', 'categories.title as category_title')
-                ->where('lessons.status', 1)
+            ->leftJoin('tutorial_member', 'lessons.id', 'tutorial_member.lesson_id', 'and', 'tutorial_member.member_id', $mem_id)
+            ->select('lessons.*', 'categories.title as category_title', 'tutorial_member.lesson_id as tutor')
+            ->where('lessons.status', 1)
                 ->where('lessons.enable', 1)
                 ->paginate(10);
         }
         # code...
+        $tutorial = TutorialMember::Join('lessons', 'lessons.id', 'tutorial_member.lesson_id')
+        ->select('tutorial_member.lesson_id')
+        ->where('lessons.status', 1)
+        ->where('lessons.enable', 1)
+        ->where('tutorial_member.member_id' , $mem_id)
+        ->get();
+
+        // dd($tutorial);
         return view('web.lessons.index', [
             'categories' => $categories,
-            'results' => $results,
-            
+            'results' => $results,            
+            'tutorial'=>$tutorial
         ]);
+
     }
     public function detail($slug)
     {
