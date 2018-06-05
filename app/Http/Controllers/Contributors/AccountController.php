@@ -53,7 +53,7 @@ class AccountController extends Controller
 			$passwordbaru = bcrypt(Input::get('password'));
 			$checkid = DB::table('contributors')->where('email', '=', $email)->first();
             $check = DB::table('contributors')->where('email', '=', $email)->count();
-            if (!(Hash::check($request->get('current_password'), Auth::guard('members')->user()->password))) {
+            if (!(Hash::check($request->get('current_password'), Auth::guard('contributors')->user()->password))) {
                 // The passwords matches
                 return redirect()->back()->with("error","Your current password does not matches with the password you provided. Please try again.");
             }
