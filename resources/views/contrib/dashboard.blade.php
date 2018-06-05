@@ -35,7 +35,7 @@
         <div class="card bg-4">
             <img src="{{asset('template/kontributor/img/icon/1.png')}}" alt="" />
             <p class="card-title"><?php echo coments();?></p>
-            <p class="card-desc">Pertanyaan belum terjawab</p>
+            <p class="card-desc">Pertanyaan belum dibaca</p>
         </div>
     </div>
 </div>

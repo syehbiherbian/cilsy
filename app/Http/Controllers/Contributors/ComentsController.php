@@ -30,7 +30,8 @@ class ComentsController extends Controller
             ->leftJoin('lessons','lessons.id','=','comments.lesson_id')
             // ->where('comments.status',0)
             // ->where('member_id','!=',null)
-            ->where('lessons.contributor_id',$uid)
+            ->where('comments.contributor_id',$uid)
+            ->where('desc', '<>', 1)
             ->orderBy('comments.created_at','DESC')
             ->select('comments.*')
             ->get();
@@ -39,7 +40,7 @@ class ComentsController extends Controller
             // ->where('comments.parent_id',0)
             // ->where('comments.status',0)
             // ->where('member_id','!=',null)
-            ->where('lessons.contributor_id',$uid)
+            ->where('comments.contributor_id',$uid)
             ->orderBy('comments.created_at','DESC')
             ->select('comments.*')
             ->get();

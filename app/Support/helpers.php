@@ -153,19 +153,12 @@ function coments(){
   $html='';
   if($contribID !==null){
       $cotrib= DB::table('comments')
-              ->join('lessons','lessons.id','=','comments.lesson_id')
-              ->where('lessons.contributor_id',$contribID)->where('comments.parent_id','0')
+              ->leftjoin('lessons','lessons.id','=','comments.lesson_id')
+              ->where('comments.contributor_id',$contribID)->where('comments.status','0')
+              ->where('desc', '<>', 1)
               ->select('comments.*')->get();
-          $total=0;
-          foreach ($cotrib as $value) {
-            	$cekanswer = DB::table('comments')->where('parent_id',$value->id)->get();
-              if(count($cekanswer)==0){
-                $total=$total+1;
-              }
-          }
-
-
-      $html.=''.$total.'';
+       
+      $html.=''.count($cotrib).'';
 
   }
  return $html;
