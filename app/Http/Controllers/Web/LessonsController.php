@@ -26,6 +26,7 @@ class LessonsController extends Controller
     public function index($by, $keyword)
     {
         $categories = Category::where('enable', 1)->get();
+        $mem = Auth::guard('members')->user()->id;
         if ($by == 'category') {
             $category = Category::where('enable', 1)->where('title', 'like', '%' . $keyword . '%')->first();
             $results = Lesson::leftJoin('categories', 'lessons.category_id', 'categories.id')
