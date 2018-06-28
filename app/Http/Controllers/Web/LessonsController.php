@@ -31,8 +31,7 @@ class LessonsController extends Controller
         if ($by == 'category') {
             $category = Category::where('enable', 1)->where('title', 'like', '%' . $keyword . '%')->first();
             $results = Lesson::leftJoin('categories', 'lessons.category_id', 'categories.id')
-                ->leftJoin('tutorial_member', 'lessons.id', 'tutorial_member.lesson_id', 'and', 'tutorial_member.member_id', $mem_id)
-                ->select('lessons.*', 'categories.title as category_title', 'tutorial_member.lesson_id as tutor')
+                ->select('lessons.*', 'categories.title as category_title')
                 ->where('lessons.enable', 1)
                 ->where('lessons.status', 1)
                 ->where('lessons.category_id', $category->id)
@@ -40,8 +39,7 @@ class LessonsController extends Controller
             // dd($results);
         } else {
             $results = Lesson::leftJoin('categories', 'lessons.category_id', 'categories.id')
-            ->leftJoin('tutorial_member', 'lessons.id', 'tutorial_member.lesson_id', 'and', 'tutorial_member.member_id', $mem_id)
-            ->select('lessons.*', 'categories.title as category_title', 'tutorial_member.lesson_id as tutor')
+            ->select('lessons.*', 'categories.title as category_title')
             ->where('lessons.status', 1)
                 ->where('lessons.enable', 1)
                 ->paginate(10);
