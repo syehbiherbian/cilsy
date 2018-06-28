@@ -142,4 +142,12 @@
     });
 </script>
 @endif
+<script>
+$(document).ready(function(){
+    $("#hide").click(function(){
+        document.getElementById('form').style.display = 'block';
+        document.getElementById('hide').style.display = 'none';
+    });
+});
+</script>
 @endsection
