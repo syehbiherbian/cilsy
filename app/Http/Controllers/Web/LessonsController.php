@@ -14,6 +14,7 @@ use App\Models\Video;
 use App\Models\Viewer;
 use App\Models\TutorialMember;
 use App\Models\Member;
+use App\Models\Comment;
 use App\Notifications\UserCommentNotification;
 use Auth;
 use DateTime;
@@ -255,7 +256,7 @@ class LessonsController extends Controller
             
             if ($store) {
 
-
+                // dd($store);
                     DB::table('contributor_notif')->insert([
                         'contributor_id' => $lessons->contributor_id,
                         'category' => 'coments',
@@ -265,9 +266,10 @@ class LessonsController extends Controller
                         'created_at' => $now,
                     ]);
                     $member = Member::Find($uid);
-                    $lesson = Lesson::Find($lesson_id);
+                    $comment = Comment::Find($store);
+                    $lesson = Lesson::find($lesson_id);
                     $contrib = Contributor::find($lessons->contributor_id);
-                    $contrib->notify(new UserCommentNotification($member, $lesson, $contrib));
+                    $contrib->notify(new UserCommentNotification($member, $comment, $contrib, $lesson));
                     // dd($contrib);
                 // Create Point
                 // if ($parent_id == 0) { // Berkomentar

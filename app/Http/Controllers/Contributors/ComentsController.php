@@ -56,11 +56,11 @@ class ComentsController extends Controller
     }
 
     public function detail($id){
-        if (empty(Auth::guard('contributors')->user()->id)) {
-          return redirect('contributor/login');
+        
+        $uid = Auth::guard('contributors')->user()->id ?? null;
+        if (!$uid) {
+        return redirect('contributor/login?next=/contributor/comments/detail/'.$id);
         }
-        $uid = Auth::guard('contributors')->user()->id;
-
         $detailcomment  = DB::table('comments')->where('id',$id)->first();
         $getlesson      = DB::table('lessons')->where('id',$detailcomment->lesson_id)->first();
         $getcomment     = DB::table('comments')
