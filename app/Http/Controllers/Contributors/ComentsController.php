@@ -11,7 +11,10 @@ use Hash;
 use DateTime;
 use DB;
 use App\Models\Contributor;
-use App\Models\usernotif;
+use App\Models\UserNotif;
+use App\Models\Member;
+use App\Models\Lesson;
+use App\Notifications\ContribReplyNotification;
 use Auth;
 
 class ComentsController extends Controller
@@ -117,6 +120,10 @@ class ComentsController extends Controller
                         'status'        => 0,
                         'created_at'    => new DateTime()
                         ]);
+        $member = Member::Find($member_id);
+        $lesson = Lesson::Find($lesson_id);
+        $contrib = Contributor::find($uid);
+        $member->notify(new ContribReplyNotification($member, $lesson, $contrib));
 
         $check=DB::table('comments')->where('parent_id',$comment_id)->get();
 

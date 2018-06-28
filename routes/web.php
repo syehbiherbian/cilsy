@@ -53,13 +53,13 @@ Route::get('search/autocomplete', 'Web\SearchController@autocomplete');
 Route::get('point', 'Web\PointController@index');
 
 // Cart
-Route::get('cart', 'Web\CartController@index');
+Route::get('cart', 'Web\CartController@index')->name('cart');
 Route::post('cart/add', 'Web\CartController@store');
 Route::delete('cart/delete/{cart}', 'Web\CartController@destroy');
 
 // Conributor Profile
 Route::get('contributor/profile/{username}', 'Web\ContributorsController@getProfile');
-
+ 
 // PAGES
 Route::get('pages/{pages}', 'Web\PagesController@index');
 

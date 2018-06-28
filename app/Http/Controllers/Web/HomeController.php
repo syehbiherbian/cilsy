@@ -23,8 +23,10 @@ class HomeController extends Controller {
             $mem_id      = 0;
         }
 		$categories = Category::where('enable', '=', 1)->get();
-		$newlessons = Lesson::where('enable', '=', 1)->orderBy('id','DESC')->get();
-		$lessons = Lesson::where('enable', '=', 1)->orderBy('id','ASC')->get();
+		$newlessons = Lesson::where('enable', '=', 1)->where('status', 1)->orderBy('id','DESC')->get();
+		$lessons = Lesson::where('enable', '=', 1)
+				   ->where('status', 1)
+				   ->orderBy('id','ASC')->get();
 		$invoice = Invoice::where('status', '=', 1)->where('members_id', '=', $mem_id)->first();
 		$mem_id= Auth::guard("members")->user();
 
@@ -39,8 +41,10 @@ class HomeController extends Controller {
 		}
     	$now = new DateTime();
 		$categories = Category::where('enable', '=', 1)->get();
-		$newlessons = Lesson::where('enable', '=', 1)->orderBy('id','DESC')->get();
-		$lessons = Lesson::where('enable', '=', 1)->orderBy('id','ASC')->get();
+		$newlessons = Lesson::where('enable', '=', 1)->where('status', 1)->orderBy('id','DESC')->get();
+		$lessons = Lesson::where('enable', '=', 1)
+					->where('status', 1)
+					->orderBy('id','ASC')->get();
 		$invoice = Invoice::where('status', '=', 1)->where('members_id', '=', $mem_id)->first();
 		return view('web.home', [
 			'categories' => $categories,
