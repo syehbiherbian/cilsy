@@ -7,6 +7,7 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use App\Models\Contributor;
+use App\Models\Comment;
 use App\Models\Lesson;
 use App\Models\Member;
 
@@ -19,11 +20,12 @@ class UserCommentNotification extends Notification
      *
      * @return void
      */
-    public function __construct(Member $member, Lesson $lesson, Contributor $contrib)
+    public function __construct(Member $member, Comment $comment, Contributor $contrib, Lesson $lesson)
     {
         $this->member = $member;
-        $this->lesson = $lesson;
+        $this->comment = $comment;
         $this->contrib = $contrib;
+        $this->lesson = $lesson;
     }
 
     /**
@@ -45,7 +47,7 @@ class UserCommentNotification extends Notification
      */
     public function toMail($notifiable)
     {
-        $url = url('/lessons/'.$this->lesson->slug);
+        $url = url('/contributor/comments/detail/'.$this->comment->id);
         return (new MailMessage)
                     ->subject('Notification From Cilsy Fiolution')
                     ->greeting(sprintf('Hello %s', $this->contrib->first_name))

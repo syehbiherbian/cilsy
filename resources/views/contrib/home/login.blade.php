@@ -55,6 +55,9 @@
 
             <form action="{{ url('contributor/login') }}" method="post">
               {{ csrf_field() }}
+                @if (isset($_GET['next']))
+                <input type="hidden" name="next" value="{{ $_GET['next'] }}">
+                @endif
                 <div class="form-group @if ($errors->has('email')) has-error @endif">
                     <label for="exampleInputPassword1">Email :</label>
                     <input type="email" class="form-control" name="email">
