@@ -59,7 +59,7 @@ Route::delete('cart/delete/{cart}', 'Web\CartController@destroy');
 
 // Conributor Profile
 Route::get('contributor/profile/{username}', 'Web\ContributorsController@getProfile');
-
+ 
 // PAGES
 Route::get('pages/{pages}', 'Web\PagesController@index');
 

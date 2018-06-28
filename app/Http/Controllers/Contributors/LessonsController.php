@@ -45,7 +45,6 @@ class LessonsController extends Controller
       $data = Lesson::where('contributor_id',$contribID)
       ->leftJoin('categories', 'lessons.category_id', '=', 'categories.id')
       ->select('lessons.*','categories.title as category_title')
-      ->where('lessons.status',1)
       ->orderby('created_at', 'desc')
       ->get();
     }elseif ($filter == 'processing') {
@@ -151,7 +150,7 @@ class LessonsController extends Controller
         $str = strtolower($title);
         $store                  = new Lesson();
         $store->contributor_id  = $cid;
-        $store->status          = 1;
+        $store->status          = 0;
         $store->enable          = 1;
         $store->title           = $title;
         $store->price           = $price;
@@ -224,10 +223,10 @@ class LessonsController extends Controller
       $now                    = new DateTime();;
       $cid                    = Auth::guard('contributors')->user()->id;
       $store                  = Lesson::find($id);
-      $store->status          = 2;
+      $store->status          = 1;
       $store->updated_at      = $now;
       $store->save();
-      return redirect('contributor/lessons/'.$id.'/view')->with('success','Tutorial berhasil di submit!');
+      return redirect('contributor/lessons/pending/list')->with('success','Tutorial berhasil di Publish!');
 
 
   }
@@ -391,7 +390,7 @@ class LessonsController extends Controller
         $now          = new DateTime();
         $cid          = Auth::guard('contributors')->user()->id;
         $update = Revision::find($id);
-        $update->status = 2;
+        $update->status = 1;
         $update->updated_at=$now;
         $update->save();
 
