@@ -43,6 +43,7 @@ class CartController extends Controller
             'contributor_id' => $lesson->contributor_id,
             'lesson_id' => $lesson->id
         ]);
+        // Session::put('cart', $cart);
 
         return response()->json([
             'id' => $lesson->id,

@@ -14,7 +14,7 @@ use App\Models\Contributor;
 use App\Models\UserNotif;
 use App\Models\Member;
 use App\Models\Lesson;
-use App\Notification\ContribReplyNotification;
+use App\Notifications\ContribReplyNotification;
 use Auth;
 
 class ComentsController extends Controller

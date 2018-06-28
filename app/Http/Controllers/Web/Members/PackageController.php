@@ -98,6 +98,9 @@ class PackageController extends Controller
           foreach ($carts as $cart) {
             $price += $cart->lesson->price;
           }
+          if(Session::get('coupon')){
+            $price = session()->get('coupon')['discount'];
+          }
 
           $code = $this->generateCode();
           // store
@@ -121,6 +124,7 @@ class PackageController extends Controller
 
             /* hapus cart */
             Cart::where('member_id', $member_id)->delete();
+            session()->forget('coupon');
           }
 
           Session::put('invoiceCODE', $invoice->code);

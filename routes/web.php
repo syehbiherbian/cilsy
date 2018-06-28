@@ -59,7 +59,7 @@ Route::delete('cart/delete/{cart}', 'Web\CartController@destroy');
 
 // Conributor Profile
 Route::get('contributor/profile/{username}', 'Web\ContributorsController@getProfile');
-
+ 
 // PAGES
 Route::get('pages/{pages}', 'Web\PagesController@index');
 
@@ -145,8 +145,7 @@ Route::get('member/subscriptions', 'Web\Members\SubscriptionsController@index');
 Route::get('member/subscriptions/unsubscribe/{id}', 'Web\Members\SubscriptionsController@doUnsubscribe');
 Route::get('member/point', 'Web\Members\PointController@index');
 Route::get('member/dashboard', 'Web\Members\LessonsMemberController@index');
-Route::get('member/package', 'Web\Members\PackageController@index');
-Route::post('member/package', 'Web\Members\PackageController@dopackage');
+
 //reward user 
 //reward
 Route::get('member/reward','Contributors\PointController@index');
@@ -181,8 +180,6 @@ Route::get('member/subscriptions', 'Web\Members\SubscriptionsController@index');
 Route::get('member/subscriptions/unsubscribe/{id}', 'Web\Members\SubscriptionsController@doUnsubscribe');
 Route::get('member/point', 'Web\Members\PointController@index');
 Route::get('member/dashboard', 'Web\Members\LessonsMemberController@index');
-Route::get('member/package', 'Web\Members\PackageController@index');
-Route::post('member/package', 'Web\Members\PackageController@dopackage');
 Route::get('member/generatepdf/{id}', 'Web\Members\LessonsMemberController@download');
 
 
