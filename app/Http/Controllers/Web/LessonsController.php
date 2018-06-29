@@ -13,6 +13,9 @@ use App\Models\Service;
 use App\Models\Video;
 use App\Models\Viewer;
 use App\Models\TutorialMember;
+use App\Models\Member;
+use App\Models\Comment;
+use App\Notifications\UserCommentNotification;
 use Auth;
 use DateTime;
 use DB;
@@ -250,9 +253,10 @@ class LessonsController extends Controller
                 'created_at' => $now,
                 'updated_at' => $now,
             ]);
+            
             if ($store) {
 
-
+                // dd($store);
                     DB::table('contributor_notif')->insert([
                         'contributor_id' => $lessons->contributor_id,
                         'category' => 'coments',
@@ -261,27 +265,33 @@ class LessonsController extends Controller
                         'status' => 0,
                         'created_at' => $now,
                     ]);
+                    $member = Member::Find($uid);
+                    $comment = Comment::Find($store);
+                    $lesson = Lesson::find($lesson_id);
+                    $contrib = Contributor::find($lessons->contributor_id);
+                    $contrib->notify(new UserCommentNotification($member, $comment, $contrib, $lesson));
+                    // dd($contrib);
                 // Create Point
-                if ($parent_id == 0) { // Berkomentar
-                    $point = new Point;
-                    $point->status = 0;
-                    $point->member_id = $uid;
-                    $point->type = 'QUESTION';
-                    $point->value = 2;
-                    $point->created_at = $now;
-                    $point->updated_at = $now;
-                } else { // Membalas Komentar
-                    $point = new Point;
-                    $point->status = 0;
-                    $point->member_id = $uid;
-                    $point->type = 'REPLY';
-                    $point->value = 3;
-                    $point->created_at = $now;
-                    $point->updated_at = $now;
-                }
-                if ($point->save()) {
-                    $response['success'] = true;
-                }
+                // if ($parent_id == 0) { // Berkomentar
+                //     $point = new Point;
+                //     $point->status = 0;
+                //     $point->member_id = $uid;
+                //     $point->type = 'QUESTION';
+                //     $point->value = 2;
+                //     $point->created_at = $now;
+                //     $point->updated_at = $now;
+                // } else { // Membalas Komentar
+                //     $point = new Point;
+                //     $point->status = 0;
+                //     $point->member_id = $uid;
+                //     $point->type = 'REPLY';
+                //     $point->value = 3;
+                //     $point->created_at = $now;
+                //     $point->updated_at = $now;
+                // }
+                // if ($point->save()) {
+                //     $response['success'] = true;
+                // }
             }
         }
         echo json_encode($response);

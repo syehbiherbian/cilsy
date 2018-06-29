@@ -9,6 +9,9 @@ use App\invoice;
 use DB;
 use Session;
 use DateTime;
+use Illuminate\Support\Facades\Input;
+use App\Models\Cart;
+use Auth;
 
 class CouponsController extends Controller
 {
@@ -41,12 +44,18 @@ class CouponsController extends Controller
     public function store(Request $request)
     {
         $now = new DateTime;
+        $member_id = Auth::guard('members')->user()->id ?? null;
+          if (!$member_id) {
+            return redirect('member/signin?next=/cart');
+          }
+        $total = $request->input('total');
+        // dd($total);
         $coupon = Coupon::where('code', $request->coupon_code)->first();
         if (!$coupon || $coupon->limit_coupon <= 0) {
-            return redirect()->route('summary')->withErrors('Kode Promo yang anda masukkan tidak valid!');
+            return redirect()->route('cart')->withErrors('Kode Promo yang anda masukkan tidak valid!');
         }
-        if($coupon->minimum_checkout > Session::get('price')){
-            return redirect()->route('summary')->withErrors('Kode Promo tidak berlaku untuk paket yang anda pilih!');
+        if($coupon->minimum_checkout > $total){
+            return redirect()->route('cart')->withErrors('Kode Promo tidak berlaku untuk paket yang anda pilih!');
         }
         if($coupon){
             $cut=$coupon->limit_coupon - 1;
@@ -61,12 +70,12 @@ class CouponsController extends Controller
         session()->put('coupon', [
             'name' => $coupon->code,
             'value' => $coupon->value,
-            'discount' => $coupon->discount(Session::get('price')),
+            'discount' => $coupon->discount($total),
             'type' => $coupon->type,
             'percent_off' => $coupon->percent_off,
         ]);
 
-        return redirect()->route('summary')->with('success_message', 'Selamat! Kode Promo berhasil ditambahkan');
+        return redirect()->route('cart')->with('success_message', 'Selamat! Kode Promo berhasil ditambahkan');
     }
 
     /**
@@ -112,7 +121,7 @@ class CouponsController extends Controller
     public function destroy()
     {
         session()->forget('coupon');
-        return redirect()->route('summary')->with('success_message', 'Coupon has been removed.');
+        return redirect()->route('cart')->with('success_message', 'Kode Promo Berhasil Dihapus!');
     }
     public function ganti()
     {
