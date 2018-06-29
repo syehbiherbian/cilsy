@@ -116,7 +116,7 @@ class ComentsController extends Controller
                         'id_user'=> $member_id,
                         'category'=>'comments',
                         'title'   => 'Anda mendapatkan balasan dari pertanyaan anda',
-                        'notif'        => 'Anda mendapatkan balasan dari pertanyaan anda di' ,
+                        'notif'        => 'Anda mendapatkan balasan dari pertanyaan anda dari '+Auth::guard('contributors')->user()->username,
                         'status'        => 0,
                         'created_at'    => new DateTime()
                         ]);
@@ -135,26 +135,26 @@ class ComentsController extends Controller
               $contri->updated_at  = new DateTime();
               $contri->save();
 
-              DB::table('contributor_notif')->insert([
-                  'contributor_id'=> $uid,
-                  'category'=>'point',
-                  'title'   => 'Anda mendapatkan penambahan 3 point',
-                  'notif'        => 'Anda mendapatkan penambahan sebanyak 3 point karena  mereply komentar dari '.$lessons->title.' ',
-                  'status'        => 0,
-                  'created_at'    => new DateTime()
-              ]);
+            //   DB::table('contributor_notif')->insert([
+            //       'contributor_id'=> $uid,
+            //       'category'=>'point',
+            //       'title'   => 'Anda mendapatkan penambahan 3 point',
+            //       'notif'        => 'Anda mendapatkan penambahan sebanyak 3 point karena  mereply komentar dari '.$lessons->title.' ',
+            //       'status'        => 0,
+            //       'created_at'    => new DateTime()
+            //   ]);
             }
 
         }
 
-        DB::table('contributor_notif')->insert([
-            'contributor_id'=> $uid,
-            'category'=>'comments',
-            'title'   => 'Anda berhasil mereply komentar',
-            'notif'        => 'Anda berhasil mereply komentar pada '.$lessons->title,
-            'status'        => 0,
-            'created_at'    => new DateTime()
-        ]);
+        // DB::table('contributor_notif')->insert([
+        //     'contributor_id'=> $uid,
+        //     'category'=>'comments',
+        //     'title'   => 'Anda berhasil mereply komentar',
+        //     'notif'        => 'Anda berhasil mereply komentar pada '.$lessons->title,
+        //     'status'        => 0,
+        //     'created_at'    => new DateTime()
+        // ]);
         return 1;
 
     }

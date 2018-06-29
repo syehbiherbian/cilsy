@@ -3,7 +3,7 @@
 @section('breadcumbs')
 <div id="navigation">
 		<ul class="breadcrumb">
-				<li><a href="{{ url('contributor/dashboard') }}">Dashboard</a></li>
+				<li><a href="{{ url('notif') }}">Dashboard</a></li>
                 <li>Komentar</li>
 		</ul>
 </div>

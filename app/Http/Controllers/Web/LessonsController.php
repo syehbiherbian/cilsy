@@ -358,7 +358,7 @@ class LessonsController extends Controller
                 ->select('comments.*', 'members.username as username', 'members.avatar as avatar', 'contributors.username as contriname', 'contributors.avatar as avatarc')
                 ->where('comments.parent_id', '=', $comment->id)
                 ->where('comments.lesson_id', '=', $lesson_id)
-                ->orderBy('comments.id', 'DESC')
+                ->orderBy('comments.id', 'asc')
                 ->get();
             foreach ($childcomments as $key => $child) {
                 $html .= '<!-- Comments Child -->

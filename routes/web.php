@@ -337,3 +337,7 @@ Route::get('contributor/account/profile/{id}/edit', 'Contributors\AccountControl
 Route::post('contributor/account/profile/{id}/edit', 'Contributors\AccountController@update_halaman');
 //rating
 Route::post('system/rate','RateController@store');
+//notifuser
+Route::get('user/notif/view','Web\NotifController@view');
+Route::get('user/notif/read','Web\NotifController@read');
+Route::post('user/notif/delete/{id}','Web\NotifController@delete');

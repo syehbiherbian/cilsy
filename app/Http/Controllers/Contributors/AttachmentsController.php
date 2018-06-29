@@ -88,7 +88,7 @@ class AttachmentsController extends Controller
                     $url_files= $lessonsfilename;
                 }else{
                     $urls=url('');
-                    $url_files= $urls.'/assets/source/lessons/files-'.$i.'/'.$lessonsfilename;
+                    $url_files= $urls.'/assets/source/lessons/lessons-'.$lessonsid.'/files-'.$i.'/'.$lessonsfilename;
                 }
 
 
@@ -190,7 +190,7 @@ class AttachmentsController extends Controller
                     $url_files= $files_text[$key];
                 }else{
                     $urls=url('');
-                    $url_files= $urls.'/assets/source/lessons/files-'.$i.'/'.$lessonsfilename;
+                    $url_files= $urls.'/assets/source/lessons/lessons-'.$lessonsid.'/files-'.$i.'/'.$lessonsfilename;
                 }
 
                 $store                  = new File();
