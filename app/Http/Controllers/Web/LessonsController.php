@@ -265,7 +265,7 @@ class LessonsController extends Controller
                     ]);
                     $member = Member::Find($uid);
                     $comment = Comment::Find($store);
-                    $lesson = Lesson::find($lesson_id);
+                    $lesson = Lesson::find($lessons->id);
                     $contrib = Contributor::find($lessons->contributor_id);
                     $contrib->notify(new UserCommentNotification($member, $comment, $contrib, $lesson));
                     // dd($contrib);
@@ -288,7 +288,7 @@ class LessonsController extends Controller
                 //     $point->updated_at = $now;
                 // }
                 // if ($point->save()) {
-                //     $response['success'] = true;
+                    $response['success'] = true;
                 // }
             }
         }
