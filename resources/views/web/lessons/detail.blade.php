@@ -652,14 +652,14 @@
 
               <div class="tab-content" style="margin-top:0px;">
                 <div id="tab1" class="tab-pane fade in active">
-                  {!! $lessons->description !!}
+                <p>  {!! $lessons->description !!} </p>
                 </div>
                 <div id="tab2" class="tab-pane fade">
                   <ul class="materi_list">
                     @foreach ($main_videos as $row)
                     <li>
                       <strong>{{ $row->title }}</strong>
-                      {!! nl2br($row->description) !!}
+                      <p>{!! nl2br($row->description) !!}</p>
                       @if ($tutor)
                     <span class="pull-right"><a href="{{ $row->video }}" class="btn btn-info btn-md" download><i class="fa fa-download"></i> Download Video</a></span>
                       @endif
