@@ -62,7 +62,11 @@
                       Silahkan <a href="{{ url('member/signin') }}" class="btn btn-primary"> Masuk</a> untuk memberikan komentar
                     </div>
                   <?php	}else { ?>
-
+                 @if ($lessons->id != $tutor)
+                    <div class="text-center mb-25">
+                      Fitur Komentar hanya bisa di gunakan jika sudah melakukan pembelian
+                    </div>
+                  @else
                   <!-- Comment Form -->
                   <div class="comments-form mb-25">
                     <!-- <form id="form-comment" class="mb-25">
@@ -76,7 +80,7 @@
                       <button type="button" class="btn btn-primary" onClick="doComment({{ $lessons->id }},0)" >Kirim</button>
                     <!-- </form><!--./ Comment Form -->
                   </div>
-
+                  @endif
                   <?php } ?>
 
                   <!-- Comments Lists -->

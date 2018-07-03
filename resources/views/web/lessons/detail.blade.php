@@ -688,23 +688,23 @@
                       Fitur Komentar hanya bisa di gunakan jika sudah melakukan pembelian
                     </div>
                     @else
-                      <!-- Comment Form -->
-                      <div class="comments-form mb-25">
-                        <!-- <form id="form-comment" class="mb-25">
-                          {{-- csrf_field() --}}
-                          <input type="hidden" name="lesson_id" value="{{-- $lessons->id --}}">
-                          <input type="hidden" name="parent_id" value="0"> -->
-                          <div class="form-group">
-                            <label>Komentar</label>
-                            <textarea rows="8" cols="80" class="form-control" name="body" id="textbody0"></textarea>
-                          </div>
-                          <button type="button" class="btn btn-primary" onClick="doComment({{ $lessons->id }},0)" >Kirim</button>
-                        <!-- </form><!--./ Comment Form -->
-                      </div>
+                    <!-- Comment Form -->
+                    <div class="comments-form mb-25">
+                      <!-- <form id="form-comment" class="mb-25">
+                        {{-- csrf_field() --}}
+                        <input type="hidden" name="lesson_id" value="{{-- $lessons->id --}}">
+                        <input type="hidden" name="parent_id" value="0"> -->
+                        <div class="form-group">
+                          <label>Komentar</label>
+                          <textarea rows="8" cols="80" class="form-control" name="body" id="textbody0"></textarea>
+                        </div>
+                        <button type="button" class="btn btn-primary" onClick="doComment({{ $lessons->id }},0)" >Kirim</button>
+                      <!-- </form><!--./ Comment Form -->
+                    </div>
                     @endif
 
                   @endif
-
+        
                   <!-- Comments Lists -->
                   <div id="comments-lists">
                     <p>Memuat Komentar . . .</p>
