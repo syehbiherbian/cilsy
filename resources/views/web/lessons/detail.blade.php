@@ -683,7 +683,7 @@
                       Silahkan <a href="{{ url('member/signin') }}" class="btn btn-primary"> Masuk</a> untuk memberikan komentar
                     </div>
                   @else
-                    @if ($lessons->id != $tutor)
+                    @if (empty($tutor))
                      <div class="text-center mb-25">
                       Fitur Komentar hanya bisa di gunakan jika sudah melakukan pembelian
                     </div>
