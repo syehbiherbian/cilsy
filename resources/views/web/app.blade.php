@@ -809,7 +809,7 @@ a #items .item {
       });
     });
     </script>
-    @if (env('APP_ENV') == 'production')
+    <!--Start of Tawk.to Script-->
     <script type="text/javascript">
     var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
     (function(){
@@ -821,7 +821,7 @@ a #items .item {
     s0.parentNode.insertBefore(s1,s0);
     })();
     </script>
-    @endif
+    <!--End of Tawk.to Script-->
     <script>
 // Set the date we're counting down to
     var countDownDate = new Date("Feb 10, 2018 23:59:59").getTime();
