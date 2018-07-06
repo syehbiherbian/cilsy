@@ -127,8 +127,8 @@
                         }
                         ?>
 
-                    <div class="col-md-12" id="balas{{ $comment->id }}" style="padding-top:10px;padding-left:5%;">
-                        <a href="javascript:void(0)" class="btn btn-info pull-right" onclick="formbalas({{ $comment->id }})">Balas</a>
+                    <div class="col-md-12" id="balas{{ $comment->id }}" style="padding-top:10px;padding-left:5%; ">
+                        <a href="javascript:void(0)" class="btn btn-info pull-right" onclick="formbalas({{ $comment->id }})" style="border-radius:3px;">Balas</a>
                     </div>
                 </div>
                 @endforeach
@@ -144,7 +144,7 @@
                                 '<div class="col-md-11" style="padding-right:0px;">'+
                                 '   <input type="text" class="form-control" id="input_balas'+comment_id+'" name="balasan" placeholder="tambahkan komentar/balasan" value="">'+
                                 '</div>'+
-                                '<a href="javascript:void(0)" class="btn btn-info pull-right" onclick="dobalas('+comment_id+')" style="float:right;margin-top:10px;">Kirim</a>');
+                                '<a href="javascript:void(0)" class="btn btn-info pull-right" onclick="dobalas('+comment_id+')" style="float:right;margin-top:10px; border-radius:3px;">Kirim</a>');
     }
 
     function dobalas(comment_id){
@@ -164,8 +164,25 @@
             type    :'POST',
             url     :'{{ url("contributor/comments/postcomment") }}',
             data    :datapost,
+            beforeSend: function(){
+            // Show image container
+            swal({
+                title: "Sedang mengirim Komentar",
+                text: "Mohon Tunggu sebentar",
+                imageUrl: "{{ asset('template/web/img/loading.gif') }}",
+                showConfirmButton: false,
+                allowOutsideClick: false
+              });
+              {{--  $("#loader").show();  --}}
+          },
             success:function(data){
                 if (data == 1) {
+                    swal({
+                        title: "Anda Berhasil Membalas Komentar",
+                        showConfirmButton: true,
+                        icon: "success",
+                        timer: 3000
+                    });
                     $("#row"+comment_id).load(window.location.href + " #row"+comment_id);
                 }
 				else if(data==0){

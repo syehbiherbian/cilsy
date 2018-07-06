@@ -42,25 +42,16 @@
                     <li>
                         <span class="hello-user">Halo, {{ Auth::guard('contributors')->user()->first_name }} </span>
                     </li>
-                    <?php if(!empty(notif())){ ?>
                     <li class="has-dropdown">
-                        <img src="{{asset('template/kontributor/img/icon/Notifikasi.png')}}" alt="">
+                        <a class="dropdown-toggle" id="notifications" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            <span class=""><img src="{{asset('template/kontributor/img/icon/Notifikasi.png')}}" alt=""></span>
+                        </a>
                         <div class="dropdown-container">
-                            <ul>
-                              <?php echo notif();?>
+                            <ul aria-labelledby="notificationsMenu" id="notificationsMenu">
+                            <li> No notifications</li>
                             </ul>
                         </div>
                     </li>
-                    <?php } else { ?>
-                        <li class="has-dropdown">
-                        <img src="{{asset('template/kontributor/img/icon/Notifikasi.png')}}" alt="">
-                        <div class="dropdown-container">
-                            <ul>
-                              Tidak Ada Pemberitahuan
-                            </ul>
-                        </div>
-                    </li>
-                    <?php } ?>
                     <li class="has-dropdown">
                         <img src="{{asset('template/kontributor/img/icon/Akun.png')}}" alt="">
                         <div class="dropdown-container">

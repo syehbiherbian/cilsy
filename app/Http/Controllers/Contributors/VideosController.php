@@ -79,7 +79,7 @@ class VideosController extends Controller
                 //insert video
                 $lessonsfilename = '';
                 if (!empty($lessons_video[$key])) {
-                    $lessonsfilename = str_slug($lessons_video[$key]->getClientOriginalName());
+                    $lessonsfilename = $lessons_video[$key]->getClientOriginalName();
                     $lessons_video[$key]->move($DestinationPath, $lessonsfilename);
                 }
                 //insert image
@@ -101,7 +101,7 @@ class VideosController extends Controller
                 } else {
                     $lessonsfilename = '';
                 }
-                if ($lessonsfilename == '') {
+                if ($lessonsfilename == '') { 
                     $url_video = $lessonsfilename;
                 } else {
                     $url_video = $DestinationPath . '/' . $lessonsfilename;
@@ -129,8 +129,9 @@ class VideosController extends Controller
                 $store->created_at = $now;
                 $store->enable = 1;
                 $store->save();
+                // dd($store->video);
                 /*if($store){
-                // dd($url_video);
+                dd($url_video);
                 $media = FFMpeg::open($url_video);
                 // $frame = FFMpeg::open($link)
                 //         ->getFrameFromSeconds(10)

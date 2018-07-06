@@ -695,6 +695,9 @@
                         <textarea rows="8" cols="80" class="form-control" name="body" id="textbody0"></textarea>
                       </div>
                       <button type="button" class="btn btn-primary" onClick="doComment({{ $lessons->id }},0)" >Kirim</button>
+                      <div id='loader' style='display: none;'>
+                        <img src='https://meltwater.org/wp-content/themes/meltwater/images/ajax-loader.gif' width='32px' height='32px'>
+                      </div>
                     <!-- </form><!--./ Comment Form -->
                   </div>
 
@@ -763,6 +766,8 @@
 <script src="{{ asset('template/web/js/videojs-playlist.js') }}"></script>
 <script src="{{ asset('template/web/js/videojs-playlist-ui.js') }}"></script>
 <script src="{{ asset('template/web/js/videojs-errors.js') }}"></script>
+<script type="text/javascript" src="https://unpkg.com/sweetalert2@7.9.2/dist/sweetalert2.all.js"></script>
+
 <script type="text/javascript">
   function dokirim(){
       var isi_kirim = $('#input_kirim').val();
@@ -773,12 +778,22 @@
           'isi_kirim' : isi_kirim,
           'lesson_id' : lesson_id
 
-      }
-
+      },
+      {{--  swal({
+              title: "Sedang Mengirim Komentar..",
+              text: "Mohon Tunggu",
+              imageUrl: "https://demos.laraget.com/images/loading2.gif",
+              showConfirmButton: false,
+              allowOutsideClick: false
+      },
+      function(){  --}}
       $.ajax({
           type    :'POST',
           url     :'{{ url("lessons/coments/kirimcomment") }}',
           data    :datapost,
+          beforeSend: function(){
+            // Show image container
+          },
           success:function(data){
           if(data==0){
                   window.location.href = '{{url("member/signin")}}';
@@ -790,7 +805,8 @@
                   location.reload();
               }
           }
-      })
+      });
+    {{--  });  --}}
   }
 </script>
 <script type="text/javascript">
@@ -1126,11 +1142,28 @@ function lessonsQuiz(videosrc, player) {
           url     :'{{ url("lessons/coments/doComment") }}',
           dataType: 'json',
           data    : postData,
+          beforeSend: function(){
+            // Show image container
+            swal({
+                title: "Sedang mengirim Komentar",
+                text: "Mohon Tunggu sebentar",
+                imageUrl: "{{ asset('template/web/img/loading.gif') }}",
+                showConfirmButton: false,
+                allowOutsideClick: false
+              });
+              {{--  $("#loader").show();  --}}
+          },
           success:function(data){
             if (data.success == false) {
                window.location.href = '{{ url("member/signin") }}';
             }else if (data.success == true) {
               $('#textbody'+parent_id).val('');
+              swal({
+                title: "Komentar anda sudah terkirim!",
+                showConfirmButton: true,
+                timer: 3000
+              });
+              
               getComments();
             }
           }
