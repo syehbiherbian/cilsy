@@ -120,7 +120,6 @@
                       <div class="text-center mt-15">
                         <div class="btn-group">
                           <button type="button" class="btn btn-primary">{{ count($contributors_total_lessons) }} Tutorial</button>
-                          <button type="button" class="btn btn-primary">{{ $contributors_total_view }} View</button>
                         </div>
                       </div>
                     </div>
