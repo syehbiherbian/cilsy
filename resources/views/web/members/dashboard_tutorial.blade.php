@@ -68,7 +68,7 @@
            if(!count($last) == 0) {
                 foreach ($last as $key => $last): ?>
                     
-                      <div class="col-md-3">
+                      <div class="col-md-4">
                         <a href="{{ url('lessons/'.$last->slug)}}" style="text-decoration: none;">
                           <div class="card" >
                             <?php if (!empty($last->image)) {?>

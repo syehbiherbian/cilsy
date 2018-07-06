@@ -45,6 +45,8 @@ Route::post('lessons/coments/doComment','Web\LessonsController@doComment');
 Route::post('lessons/videoTracking','Web\LessonsController@videoTracking');
 Route::post('lessons/LessonsQuiz','Web\LessonsController@LessonsQuiz');
 
+//attachment
+Route::post('attachment', 'AttachmentController@upload');
 // Search
 Route::get('search', 'Web\SearchController@index');
 Route::get('search/autocomplete', 'Web\SearchController@autocomplete');

@@ -593,6 +593,24 @@
 .vjs-fullscreen.vjs-user-inactive {
   cursor: none;
 }
+table{
+  width: 100%;
+}
+td{
+  padding:5px;
+}
+@media screen and (max-width: 600px) {
+	table td {
+		display: block;
+		text-align: justify;
+	}
+	table td:before {
+		content: attr(data-label);
+		float: left;
+		font-weight: bold;
+		text-transform: uppercase;
+	}
+}
 </style>
 
 <div id="content-section">
@@ -657,12 +675,19 @@
                 <div id="tab2" class="tab-pane fade">
                   <ul class="materi_list">
                     @foreach ($main_videos as $row)
-                    <li>
-                      <strong>{{ $row->title }}</strong>
-                      <p>{!! nl2br($row->description) !!}</p>
-                      @if ($tutor)
-                    <span class="pull-right"><a href="{{ $row->video }}" class="btn btn-info btn-md" download><i class="fa fa-download"></i> Download Video</a></span>
-                      @endif
+                   <li>
+                    <table>
+                        <tr>
+                          <td><strong>{{ $row->title }}</strong>
+                              {!! nl2br($row->description) !!}
+                          </td>
+                          <td>
+                          @if ($tutor)
+                          <span class="pull-right"><a href="{{ $row->video }}" class="btn btn-info btn-md" download><i class="fa fa-download"></i> Download Video</a></span>
+                          @endif
+                          </td>
+                        </tr>
+                    </table>
                     </li>
                     @endforeach
                   </ul>
@@ -683,26 +708,35 @@
                       Silahkan <a href="{{ url('member/signin') }}" class="btn btn-primary"> Masuk</a> untuk memberikan komentar
                     </div>
                   @else
-
-                  <!-- Comment Form -->
-                  <div class="comments-form mb-25">
-                    <!-- <form id="form-comment" class="mb-25">
-                      {{-- csrf_field() --}}
-                      <input type="hidden" name="lesson_id" value="{{-- $lessons->id --}}">
-                      <input type="hidden" name="parent_id" value="0"> -->
-                      <div class="form-group">
-                        <label>Komentar</label>
-                        <textarea rows="8" cols="80" class="form-control" name="body" id="textbody0"></textarea>
-                      </div>
-                      <button type="button" class="btn btn-primary" onClick="doComment({{ $lessons->id }},0)" >Kirim</button>
-                      <div id='loader' style='display: none;'>
-                        <img src='https://meltwater.org/wp-content/themes/meltwater/images/ajax-loader.gif' width='32px' height='32px'>
-                      </div>
-                    <!-- </form><!--./ Comment Form -->
-                  </div>
+                    @if (empty($tutor))
+                     <div class="text-center mb-25">
+                      Fitur Komentar hanya bisa di gunakan jika sudah melakukan pembelian
+                    </div>
+                    @else
+                    <!-- Comment Form -->
+                    <div class="comments-form mb-25">
+                      <!-- <form id="form-comment" class="mb-25">
+                        {{-- csrf_field() --}}
+                        <input type="hidden" name="lesson_id" value="{{-- $lessons->id --}}">
+                        <input type="hidden" name="parent_id" value="0"> -->
+                        <div class="form-group">
+                          <label>Komentar</label>
+                          <textarea rows="8" cols="80" class="form-control" name="body" id="textbody0"></textarea>
+                        </div>
+                        {{--  <ul class="left">
+                        <meta name="csrf-token" content="{{ csrf_token() }}">
+                        <a id="browse" href="javascript:;" style="float:right" class="uploader"  url="{{ url('attachment')}}" >
+                        <button  type="button"  class="btn btn-warning"> <i class="fa fa-paperclip"> </i> Upload gambar</button></a>
+                       </ul>  --}}
+                       <ul class="right"> 
+                      <button type="button" class="btn btn-primary" onClick="doComment({{ $lessons->id }},0)" >Kirim</button> 
+                      </ul>
+                      <!-- </form><!--./ Comment Form -->
+                    </div>
+                    @endif
 
                   @endif
-
+        
                   <!-- Comments Lists -->
                   <div id="comments-lists">
                     <p>Memuat Komentar . . .</p>
@@ -734,7 +768,6 @@
                       <div class="text-center mt-15">
                         <div class="btn-group">
                           <button type="button" class="btn btn-primary">{{ count($contributors_total_lessons) }} Tutorial</button>
-                          <button type="button" class="btn btn-primary">{{ $contributors_total_view }} View</button>
                         </div>
                       </div>
                     </div>

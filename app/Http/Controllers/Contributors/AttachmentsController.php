@@ -27,6 +27,7 @@ class AttachmentsController extends Controller
     if($lesson->status==2){
         return redirect('contributor/lessons/'.$lessonsid.'/view')->with('no-delete','Tutorial sedang / dalam verifikasi!');
     }
+   
     $files=File::where('lesson_id',$lessonsid)->get();
     $count_files=count($files);
 

@@ -15,11 +15,11 @@
         <?php endif; ?>
         <div class="text-center mt-15">
           <div class="btn-group">
-            <button type="button" class="btn btn-primary">{{ count($contributors_lessons) }} Tutorial</button>
-            <button type="button" class="btn btn-primary">{{ $contributors_total_view }} View</button>
+            <button type="button" class="btn btn-primary">{{ count($contributors_total_lessons) }} Tutorial</button>
           </div>
         </div>
       </div>
+      
       <div class="col-md-9 pt-25 ">
           <div class="about-text">
             <?= $contributors->about ?>
@@ -29,7 +29,7 @@
               $i = 1;
               foreach ($contributors_lessons as $key => $lesson): ?>
                   <?php if ($i <= 12) {?>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                       <a href="{{ url('lessons/'.$lesson->slug)}}">
                         <div class="card">
                           <?php if (!empty($lesson->image)) {?>

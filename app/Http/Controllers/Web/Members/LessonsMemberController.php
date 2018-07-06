@@ -98,20 +98,20 @@ class LessonsMemberController extends Controller
             // Contributor
             $contributors = DB::table('contributors')->where('id',$lessons->contributor_id)->first();
             $contributors_total_lessons = Lesson::where('enable', '=', 1)->where('contributor_id', '=', $lessons->contributor_id)->get();
-            $contributors_total_view        = 0;
+            $contributors_total_view        = 2545;
       //
       //
-            foreach ($contributors_total_lessons as $key => $lesson) {
-                $videos = Video::where('lessons_id',$lesson->id)->get();
-                if ($videos) {
-                    foreach ($videos as $key => $video) {
-                        $viewers = Viewer::where('video_id', '=', $video->id)->first();
-                        if ($viewers) {
-                            $contributors_total_view = $contributors_total_view + 1;
-                        }
-                    }
-                }
-            }
+            // foreach ($contributors_total_lessons as $key => $lesson) {
+            //     $videos = Video::where('lessons_id',$lesson->id)->get();
+            //     if ($videos) {
+            //         foreach ($videos as $key => $video) {
+            //             $viewers = Viewer::where('video_id', '=', $video->id)->first();
+            //             if ($viewers) {
+            //                 $contributors_total_view = $contributors_total_view + 1;
+            //             }
+            //         }
+            //     }
+            // }
 
             return view('web.lessons.dashboard_lesson', [
                 'lessons' => $lessons,
