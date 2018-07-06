@@ -353,6 +353,14 @@ class LessonsController extends Controller
         ->where('comments.lesson_id', '=', $lesson_id)
         ->orderBy('comments.id', 'DESC')
         ->get();
+
+        $tutorial = TutorialMember::Join('lessons', 'lessons.id', 'tutorial_member.lesson_id')
+        ->select('tutorial_member.lesson_id')
+        ->where('lessons.status', 1)
+        ->where('lessons.enable', 1)
+        ->where('tutorial_member.member_id' , Auth::guard('members')->user()->id)
+        ->where('tutorial_member.lesson_id', $lesson_id)
+        ->first();
         $html = '';
         $i = 1;
         foreach ($comments as $key => $comment) {
@@ -383,6 +391,7 @@ class LessonsController extends Controller
 				                      ' . $comment->body . '
 				                    </div>';
             if (!empty(Auth::guard('members')->user()->id)) {
+                if(count($tutorial) >0 ){
                 $html .= '<div class="panel-footer reply-btn-area text-right">
 									                        <button type="button" name="button" class="btn btn-primary" data-toggle="collapse" data-target="#reply' . $comment->id . '"><i class="glyphicon glyphicon-share-alt"></i> Balas</button>
 									                    </div>
@@ -398,7 +407,8 @@ class LessonsController extends Controller
 									                          </div>
 									                        </div>
 									                      </div>
-									                    </div>';
+                                                        </div>';
+                }
             }
             $html .= '</div><!-- /panel panel-default -->';
             $childcomments = DB::table('comments')
@@ -571,6 +581,7 @@ class LessonsController extends Controller
                     echo '</div>';
                 }
             }
+               
             echo '<div class="col-md-12" id="balas' . $comment->id . '" style="padding-top:10px; padding-left:0px; padding-right:0px;">';
             echo '<a href="javascript:void(0)" class="btn btn-info pull-right" onclick="formbalas(' . $comment->id . ')">Balas</a>';
             echo '	</div>';
