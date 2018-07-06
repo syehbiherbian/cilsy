@@ -100,6 +100,7 @@ class ComentsController extends Controller
 
         $lessons = DB::table('lessons')->where('id',$lesson_id)->first();
         $notify = DB::table('comments')->where('id', $comment_id)->first();
+        $contrib = Contributor::find($uid);
 
         DB::table('comments')->insert([
             'lesson_id'     => $lesson_id,
@@ -115,8 +116,8 @@ class ComentsController extends Controller
         $notif_user =   DB::table('user_notif')->insertGetId([
                         'id_user'=> $member_id,
                         'category'=>'comments',
-                        'title'   => 'Anda mendapatkan balasan dari pertanyaan anda',
-                        'notif'        => 'Anda mendapatkan balasan dari pertanyaan anda dari '+Auth::guard('contributors')->user()->username,
+                        'title'   => 'Anda mendapatkan balasan dari pertanyaan anda di tutorial ' . $lessons->title,
+                        'notif'        => 'Anda mendapatkan balasan dari pertanyaan anda dari ' . Auth::guard('contributors')->user()->username,
                         'status'        => 0,
                         'created_at'    => new DateTime()
                         ]);

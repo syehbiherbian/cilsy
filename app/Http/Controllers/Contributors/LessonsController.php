@@ -154,7 +154,7 @@ class LessonsController extends Controller
         $store->enable          = 1;
         $store->title           = $title;
         $store->price           = $price;
-        $store->slug            = preg_replace('/\s+/', '-', $str);
+        $store->slug            = str_replace("/","-",preg_replace('/\s+/', '-', $str));
         $store->category_id     = $category_id;
         $store->image           = $url_image;
         $store->description     = $description;
@@ -340,7 +340,7 @@ class LessonsController extends Controller
           $store->enable          = 1;
           $store->title           = $title;
           $store->price           = $price;
-          $store->slug            = preg_replace('/\s+/', '-', $str);
+          $store->slug            = str_replace("/","-",preg_replace('/\s+/', '-', $str));
           $store->category_id     = $category_id;
           $store->image           = $url_image;
           $store->description     = $description;

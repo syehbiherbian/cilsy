@@ -115,6 +115,10 @@
 fbq('track', 'Search');
 </script>
 <script type="text/javascript">
+<div class="modal-header bg-info">
+        <button type="button" class="close" data-dismiss="modal" onclick="closer()">&times;</button>
+        <h4 class="modal-title">Seberapa puas anda dengan Pelayanan kami ? </h4>
+ </div>
 
   function addToCart(id) {
       var datapost = {
@@ -164,6 +168,7 @@ fbq('track', 'Search');
               @endif
 
               swal({
+                  inputPlaceholder:tes,
                   title: "Menambahkan ke keranjang",
                   text: data.title,
                   type: "success",

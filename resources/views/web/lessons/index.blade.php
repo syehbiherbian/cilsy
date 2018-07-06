@@ -88,7 +88,10 @@
               <div class="col-sm-8">
                 <p><a href="{{ url('lessons/'.$result->slug) }}" style="text-decoration:none;"><strong>{{ $result->title }}</strong></a></p>
                 <a href="{{ url('lessons/'.$result->slug) }}" style="text-decoration:none;">
-                <p><small><?php echo nl2br($result->description); ?></small></p>
+                 <p><small><?php $sentence= $result->description;
+                    $numberofcharacters=500;
+                    $print = substr($sentence, 0, $numberofcharacters);
+                    echo $print; ?></small></p>
                 </a>
                 <p><div class="badge badge-default">{{ $result->category_title }}</div>
                   <?=date('d M Y H:i', strtotime($result->created_at));?>
@@ -96,11 +99,21 @@
               </div>
               <div class="col-md-2">
 
+<<<<<<< HEAD
                
+=======
+               {{--  @if($result->id != $result->tutor)  --}}
+>>>>>>> 7602aa1a5db68b6a00c53802bfbe5fe58e64e83f
                 <p style="font-weight:bold;">Rp. {{ number_format($result->price, 0, ",", ".") }}</p>
                 <p>
                 <button type="button" class="btn btn-info" onclick="addToCart({{ $result->id }})"><i class="fa fa-shopping-cart"></i> Beli</button>
                 </p>
+<<<<<<< HEAD
+=======
+                {{--  @else
+                
+                @endif  --}}
+>>>>>>> 7602aa1a5db68b6a00c53802bfbe5fe58e64e83f
 
                 </div>
                 

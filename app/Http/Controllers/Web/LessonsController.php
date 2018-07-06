@@ -16,6 +16,7 @@ use App\Models\TutorialMember;
 use App\Models\Member;
 use App\Models\Comment;
 use App\Notifications\UserCommentNotification;
+use App\Notifications\UserReplyNotification;
 use Auth;
 use DateTime;
 use DB;
@@ -251,13 +252,57 @@ class LessonsController extends Controller
                 'created_at' => $now,
                 'updated_at' => $now,
             ]);
-            
+
+            $getmembercomment = DB::table('comments')
+            ->Join('members','members.id','=','comments.member_id')
+            ->where('comments.lesson_id',$lesson_id)
+            ->where('comments.parent_id',0)
+            ->where('comments.status',1)
+            ->select('comments.*','members.username as username')
+            ->first();
+            // dd($getmembercomment);
+            // $getchild = DB::table('comments')
+			// 				->leftJoin('members','members.id','=','comments.member_id')
+			// 				->leftJoin('contributors','contributors.id','=','comments.contributor_id')
+			// 				->where('comments.lesson_id',$lesson_id)
+			// 				->where('parent_id',$parent_id)
+			// 				->orderBy('comments.created_at','ASC')
+			// 				->select('comments.*','members.username as username','contributors.username as contriname')
+            //                 ->first();
+                            
+            // dd($getchild);
+
+            $getemailchild = DB::table('comments')
+                             ->Join('comments as B', 'comments.id', 'B.parent_id')
+                             ->Where('B.parent_id', $parent_id)
+                             ->where('comments.member_id', '<>', 'B.member_id')
+                             ->select('comments.member_id as tanya', 'B.member_id as jawab')->distinct()
+                             ->get();
+
+        
+
+            // dd($getemailchild);
+            if($parent_id != 0){
+                foreach ($getemailchild as $mails) {
+                //  Check type
+                if (is_array($mails)){
+                    //  Scan through inner loop
+                    foreach ($mails as $value) {
+                        $member = Member::Find($value);
+                        $lesson = Lesson::Find($lesson_id);
+                        $contrib = Contributor::find($lessons->contributor_id);
+                        $member->notify(new UserReplyNotification($member, $lesson, $contrib));
+                    }
+                }
+            }
+                        
+            }
             if ($store) {
 
                 // dd($store);
                     DB::table('contributor_notif')->insert([
                         'contributor_id' => $lessons->contributor_id,
-                        'category' => 'coments',
+                        'category' => 'Komentar',
                         'title' => 'Anda mendapat pertanyaan dari ' . $member->username,
                         'notif' => 'Anda mendapatkan pertanyaan dari ' . $member->username . ' pada ' . $lessons->title,
                         'status' => 0,
@@ -268,6 +313,7 @@ class LessonsController extends Controller
                     $lesson = Lesson::find($lessons->id);
                     $contrib = Contributor::find($lessons->contributor_id);
                     $contrib->notify(new UserCommentNotification($member, $comment, $contrib, $lesson));
+                    
                     // dd($contrib);
                 // Create Point
                 // if ($parent_id == 0) { // Berkomentar
@@ -288,6 +334,7 @@ class LessonsController extends Controller
                 //     $point->updated_at = $now;
                 // }
                 // if ($point->save()) {
+                        // dd($getemailchild);
                     $response['success'] = true;
                 // }
             }
@@ -304,6 +351,14 @@ class LessonsController extends Controller
         ->where('comments.lesson_id', '=', $lesson_id)
         ->orderBy('comments.id', 'DESC')
         ->get();
+
+        $tutorial = TutorialMember::Join('lessons', 'lessons.id', 'tutorial_member.lesson_id')
+        ->select('tutorial_member.lesson_id')
+        ->where('lessons.status', 1)
+        ->where('lessons.enable', 1)
+        ->where('tutorial_member.member_id' , Auth::guard('members')->user()->id)
+        ->where('tutorial_member.lesson_id', $lesson_id)
+        ->first();
         $html = '';
         $i = 1;
         foreach ($comments as $key => $comment) {
@@ -334,6 +389,7 @@ class LessonsController extends Controller
 				                      ' . $comment->body . '
 				                    </div>';
             if (!empty(Auth::guard('members')->user()->id)) {
+                if(count($tutorial) >0 ){
                 $html .= '<div class="panel-footer reply-btn-area text-right">
 									                        <button type="button" name="button" class="btn btn-primary" data-toggle="collapse" data-target="#reply' . $comment->id . '"><i class="glyphicon glyphicon-share-alt"></i> Balas</button>
 									                    </div>
@@ -349,7 +405,8 @@ class LessonsController extends Controller
 									                          </div>
 									                        </div>
 									                      </div>
-									                    </div>';
+                                                        </div>';
+                }
             }
             $html .= '</div><!-- /panel panel-default -->';
             $childcomments = DB::table('comments')
@@ -522,6 +579,7 @@ class LessonsController extends Controller
                     echo '</div>';
                 }
             }
+               
             echo '<div class="col-md-12" id="balas' . $comment->id . '" style="padding-top:10px; padding-left:0px; padding-right:0px;">';
             echo '<a href="javascript:void(0)" class="btn btn-info pull-right" onclick="formbalas(' . $comment->id . ')">Balas</a>';
             echo '	</div>';

@@ -6,7 +6,7 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use App\Notifications\ContributorResetPassword;
-
+use Auth;
 class Contributor extends User
 {
     //tablename
@@ -18,6 +18,11 @@ class Contributor extends User
 
     public function sendPasswordResetNotification($token){
         $this->notify(new ContributorResetPassword($token));
+    }
+
+    public function notifications()
+    {
+        return Auth::guard('contributors')->user()->unreadNotifications()->limit(5)->get()->toArray();
     }
    
 }

@@ -7,25 +7,23 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use App\Models\Contributor;
-use App\Models\Comment;
 use App\Models\Lesson;
 use App\Models\Member;
 
-class UserCommentNotification extends Notification implements ShouldQueue
+class UserReplyNotification extends Notification
 {
     use Queueable;
-    public $member, $comment, $contrib, $lesson;
+
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct(Member $member, Comment $comment, Contributor $contrib, Lesson $lesson)
+    public function __construct(Member $member, Lesson $lesson, Contributor $contrib)
     {
         $this->member = $member;
-        $this->comment = $comment;
-        $this->contrib = $contrib;
         $this->lesson = $lesson;
+        $this->contrib = $contrib;
     }
 
     /**
@@ -39,14 +37,6 @@ class UserCommentNotification extends Notification implements ShouldQueue
         return ['mail'];
     }
 
-    public function toDatabase($notifiable)
-    {
-        return [
-            'username' => $this->member->username,
-            'title' => $this->lesson->title,
-            'comment_id' => $this->comment->id,
-        ];
-    }
     /**
      * Get the mail representation of the notification.
      *
@@ -55,11 +45,11 @@ class UserCommentNotification extends Notification implements ShouldQueue
      */
     public function toMail($notifiable)
     {
-        $url = url('/contributor/comments/detail/'.$this->comment->id);
+        $url = url('/lessons/'.$this->lesson->slug);
         return (new MailMessage)
                     ->subject('Notification From Cilsy Fiolution')
-                    ->greeting(sprintf('Hello %s', $this->contrib->first_name))
-                    ->line(sprintf('Halo, User dengan nama %s telah berkomentar pada tutorial %s, silahkan Balas komentar user tersebut', $this->member->username, $this->lesson->title))
+                    ->greeting(sprintf('Hello %s', $this->member->username))
+                    ->line(sprintf('Halo, %s telah membalas komentar pada tutorial %s,', $this->contrib->first_name, $this->lesson->title))
                     ->action('Balas Komentar', $url)
                     ->line('Terima Kasih telah menggunakan aplikasi kami!');
     }
@@ -73,14 +63,7 @@ class UserCommentNotification extends Notification implements ShouldQueue
     public function toArray($notifiable)
     {
         return [
-            'id' => $this->id,
-            'read_at' => null,
-            'data' => [
-                'username' => $this->member->username,
-                'title' => $this->lesson->title,
-                'comment_id' => $this->comment->id,
-            ],
+            //
         ];
-
     }
 }

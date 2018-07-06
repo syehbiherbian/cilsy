@@ -44,11 +44,11 @@
               Satu-satunya Kursus Online Jaringan & Server yang dipandu sampai bisa.</br>
               Bergabung sekarang dengan 2000++ pendaftar lainnya.</br>
             </p>
-            <?php if (Session::get('memberID')): ?>
-	      <a href="{{ url('lessons/browse/all')}}" class="daftar-btn">Browse</a>
-            <?php else: ?>
+          @if (Auth::guard("members")->user())
+	            <a href="{{ url('lessons/browse/all')}}" class="daftar-btn">Browse</a>
+            @else
               <a href="{{ url('member/signup')}}" class="daftar-btn">Daftar</a>
-            <?php endif;?>
+            @endif
           </div>
         </div>
       </div>
