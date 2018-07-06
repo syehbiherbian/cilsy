@@ -28,8 +28,8 @@ class ContributorsController extends Controller
     $contributors = Contributor::where('username',$username)->first();
 
     if ($contributors) {
-      $contributors_total_lessons = Lesson::where('enable', '=', 1)->where('contributor_id', '=', $contributors->id)->get();
-      $contributors_lessons = Lesson::where('enable', '=', 1)->where('contributor_id', '=', $contributors->id)->paginate(12);
+      $contributors_total_lessons = Lesson::where('enable', '=', 1)->where('status', 1)->where('contributor_id', '=', $contributors->id)->get();
+      $contributors_lessons = Lesson::where('enable', '=', 1)->where('status', 1)->where('contributor_id', '=', $contributors->id)->paginate(12);
       $contributors_total_view 		= 0;
       foreach ($contributors_lessons as $key => $lesson) {
 				$videos = Video::where('lessons_id',$lesson->id)->get();
