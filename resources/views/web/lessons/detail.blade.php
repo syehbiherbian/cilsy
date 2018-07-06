@@ -698,7 +698,14 @@
                           <label>Komentar</label>
                           <textarea rows="8" cols="80" class="form-control" name="body" id="textbody0"></textarea>
                         </div>
-                        <button type="button" class="btn btn-primary" onClick="doComment({{ $lessons->id }},0)" >Kirim</button>
+                        <ul class="left">
+                        <meta name="csrf-token" content="{{ csrf_token() }}">
+                        <a id="browse" href="javascript:;" style="float:right" class="uploader"  url="{{ url('attachment')}}" >
+                        <button  type="button"  class="btn btn-warning"> <i class="fa fa-paperclip"> </i> Upload gambar</button></a>
+                       </ul>
+                       <ul class="right"> 
+                      <button type="button" class="btn btn-primary" onClick="doComment({{ $lessons->id }},0)" >Kirim</button> 
+                      </ul>
                       <!-- </form><!--./ Comment Form -->
                     </div>
                     @endif
