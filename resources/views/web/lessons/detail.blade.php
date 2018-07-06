@@ -593,6 +593,24 @@
 .vjs-fullscreen.vjs-user-inactive {
   cursor: none;
 }
+table{
+  width: 100%;
+}
+td{
+  padding:5px;
+}
+@media screen and (max-width: 600px) {
+	table td {
+		display: block;
+		text-align: justify;
+	}
+	table td:before {
+		content: attr(data-label);
+		float: left;
+		font-weight: bold;
+		text-transform: uppercase;
+	}
+}
 </style>
 
 <div id="content-section">
