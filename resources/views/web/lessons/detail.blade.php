@@ -657,12 +657,19 @@
                 <div id="tab2" class="tab-pane fade">
                   <ul class="materi_list">
                     @foreach ($main_videos as $row)
-                    <li>
-                      <strong>{{ $row->title }}</strong>
-                      <p>{!! nl2br($row->description) !!}</p>
-                      @if ($tutor)
-                    <span class="pull-right"><a href="{{ $row->video }}" class="btn btn-info btn-md" download><i class="fa fa-download"></i> Download Video</a></span>
-                      @endif
+                   <li>
+                    <table>
+                        <tr>
+                          <td><strong>{{ $row->title }}</strong>
+                              {!! nl2br($row->description) !!}
+                          </td>
+                          <td>
+                          @if ($tutor)
+                          <span class="pull-right"><a href="{{ $row->video }}" class="btn btn-info btn-md" download><i class="fa fa-download"></i> Download Video</a></span>
+                          @endif
+                          </td>
+                        </tr>
+                    </table>
                     </li>
                     @endforeach
                   </ul>
