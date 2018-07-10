@@ -99,22 +99,11 @@
               </div>
               <div class="col-md-2">
 
-<<<<<<< HEAD
                
-=======
-               {{--  @if($result->id != $result->tutor)  --}}
->>>>>>> 7602aa1a5db68b6a00c53802bfbe5fe58e64e83f
                 <p style="font-weight:bold;">Rp. {{ number_format($result->price, 0, ",", ".") }}</p>
                 <p>
                 <button type="button" class="btn btn-info" onclick="addToCart({{ $result->id }})"><i class="fa fa-shopping-cart"></i> Beli</button>
                 </p>
-<<<<<<< HEAD
-=======
-                {{--  @else
-                
-                @endif  --}}
->>>>>>> 7602aa1a5db68b6a00c53802bfbe5fe58e64e83f
-
                 </div>
                 
             </div>
