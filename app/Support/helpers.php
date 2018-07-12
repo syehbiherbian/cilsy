@@ -126,6 +126,12 @@ function getTotalCart(){
   $data = Cart::where('member_id', $member_id)->count();
   return $data;
 }
+
+function namemember(){
+  $member_name =  substr(Auth::guard('members')->user()->username, '0', 8);
+  return $member_name;
+}
+
 function notif(){
 
     $contribID = Auth::guard('contributors')->user()->id;

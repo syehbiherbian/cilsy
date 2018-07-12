@@ -544,9 +544,7 @@ a #items .item {
                         </a>                   
                     </li>
                       
-                    <li>
-                        <span class="hello-user">Halo, {{ Auth::guard('members')->user()->username }}</span>
-                    </li>
+                    
                     <li class="has-dropdown">
                         <img src="{{asset('template/kontributor/img/icon/Notifikasi.png')}}" alt="">
                         <?php if(totalnotifuser() != null){ ?>
@@ -557,6 +555,9 @@ a #items .item {
                               <?php echo notifuser();?>
                             </ul>
                         </div>
+                    </li>
+                    <li>
+                        <span class="hello-user">Halo, {{namemember()}}..</span>
                     </li>
                     <li class="has-dropdown">
                         <img src="{{asset('template/web/img/drop-down-round-button.png')}}" alt="">
