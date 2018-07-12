@@ -549,6 +549,9 @@ a #items .item {
                     </li>
                     <li class="has-dropdown">
                         <img src="{{asset('template/kontributor/img/icon/Notifikasi.png')}}" alt="">
+                        <?php if(totalnotifuser() != null){ ?>
+                        <span class="badge-cart"><?php echo totalnotifuser();?></span>
+                        <?php } ?>
                         <div class="dropdown-container">
                             <ul>
                               <?php echo notifuser();?>
@@ -823,7 +826,7 @@ a #items .item {
     })();
     </script>
     <!--End of Tawk.to Script-->
-    <script>
+    {{--  <script>
 // Set the date we're counting down to
     var countDownDate = new Date("Feb 10, 2018 23:59:59").getTime();
     // Update the count down every 1 second
@@ -849,7 +852,7 @@ a #items .item {
             document.getElementById("demo").innerHTML = "EXPIRED";
         }
     }, 1000);
-    </script>
+    </script>  --}}
 
     <script type="text/javascript">
       function notifview(id){

@@ -240,6 +240,23 @@ class LessonsController extends Controller
             $contri = Lesson::where('id',$lesson_id)
                       ->select('contributor_id')
                       ->first();
+            $image = Input::get('image');
+            // dd($image);
+            
+            $lessonsDestinationPath= 'assets/source/komentar';
+
+            if(!empty($image)){
+                $imagename    = $image->getClientOriginalExtension();
+                $image->move($lessonsDestinationPath, $imagename);
+            }else{
+                $imagename    = '';
+            }
+            if($imagename ==''){
+                $url_image= $imagename;
+            }else{
+                $urls=url('');
+                $url_image= $urls.'/assets/source/komentar/'.$imagename;
+            }
 
             $store = DB::table('comments')->insertGetId([
                 'lesson_id' => $lesson_id,
@@ -248,6 +265,7 @@ class LessonsController extends Controller
                 'parent_id' => $parent_id,
                 'status' => 0,
                 'desc'   => 0,
+                'images' => $url_image,
                 'contributor_id' => str_replace('}','',str_replace('{"contributor_id":', '',$contri)),
                 'created_at' => $now,
                 'updated_at' => $now,
@@ -260,17 +278,6 @@ class LessonsController extends Controller
             ->where('comments.status',1)
             ->select('comments.*','members.username as username')
             ->first();
-            // dd($getmembercomment);
-            // $getchild = DB::table('comments')
-			// 				->leftJoin('members','members.id','=','comments.member_id')
-			// 				->leftJoin('contributors','contributors.id','=','comments.contributor_id')
-			// 				->where('comments.lesson_id',$lesson_id)
-			// 				->where('parent_id',$parent_id)
-			// 				->orderBy('comments.created_at','ASC')
-			// 				->select('comments.*','members.username as username','contributors.username as contriname')
-            //                 ->first();
-                            
-            // dd($getchild);
 
             $getemailchild = DB::table('comments')
                              ->Join('comments as B', 'comments.id', 'B.parent_id')
@@ -278,7 +285,6 @@ class LessonsController extends Controller
                              ->where('comments.member_id', '<>', 'B.member_id')
                              ->select('comments.member_id as tanya', 'B.member_id as jawab')->distinct()
                              ->get();
-
         
 
             // dd($getemailchild);

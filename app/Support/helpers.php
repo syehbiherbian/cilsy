@@ -140,7 +140,7 @@ function notif(){
 function notifuser(){
   
   $mem_id =  Auth::guard('members')->user()->id;
-  $notif = UserNotif::where('id_user',$mem_id)->where('status',0)->get();
+  $notif = UserNotif::where('id_user',$mem_id)->where('status',0)->take(5)->get();
   $html='';
   foreach ($notif as  $value) {
       $html .='<li><a href="notif" onclick="notifview('.$value->id.')">'.$value->title.'</a></li>';
@@ -148,6 +148,13 @@ function notifuser(){
   }
   return $html;
 }
+
+function totalnotifuser(){
+  $mem_id =  Auth::guard('members')->user()->id;
+  $notif = UserNotif::where('id_user',$mem_id)->where('status',0)->count();
+  return $notif;
+}
+
 function coments(){
   $contribID = Auth::guard('contributors')->user()->id;
   $html='';

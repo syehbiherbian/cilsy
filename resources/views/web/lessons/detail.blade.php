@@ -728,7 +728,12 @@ td{
                         <a id="browse" href="javascript:;" style="float:right" class="uploader"  url="{{ url('attachment')}}" >
                         <button  type="button"  class="btn btn-warning"> <i class="fa fa-paperclip"> </i> Upload gambar</button></a>
                        </ul>  --}}
-                       <ul class="right"> 
+                       <ul class="right">
+                      {{--  <form enctype="multipart/form-data">  --}}
+                        <input type='file' name="image" id="image" />
+                      <img id="myImg" src="#" />
+                      {{--  </form>  --}}
+                      
                       <button type="button" class="btn btn-primary" onClick="doComment({{ $lessons->id }},0)" >Kirim</button> 
                       </ul>
                       <!-- </form><!--./ Comment Form -->
@@ -800,47 +805,20 @@ td{
 <script src="{{ asset('template/web/js/videojs-playlist-ui.js') }}"></script>
 <script src="{{ asset('template/web/js/videojs-errors.js') }}"></script>
 <script type="text/javascript" src="https://unpkg.com/sweetalert2@7.9.2/dist/sweetalert2.all.js"></script>
+<script>
+  $(function () {
+    $(":file").change(function () {
+        if (this.files && this.files[0]) {
+            var reader = new FileReader();
+            reader.onload = imageIsLoaded;
+            reader.readAsDataURL(this.files[0]);
+        }
+    });
+});
 
-<script type="text/javascript">
-  function dokirim(){
-      var isi_kirim = $('#input_kirim').val();
-      var lesson_id = '{{ $lessons->id }}';
-      // alert(comment_id+' = '+isi_balas);
-      var datapost = {
-          '_token'    : '{{ csrf_token() }}',
-          'isi_kirim' : isi_kirim,
-          'lesson_id' : lesson_id
-
-      },
-      {{--  swal({
-              title: "Sedang Mengirim Komentar..",
-              text: "Mohon Tunggu",
-              imageUrl: "https://demos.laraget.com/images/loading2.gif",
-              showConfirmButton: false,
-              allowOutsideClick: false
-      },
-      function(){  --}}
-      $.ajax({
-          type    :'POST',
-          url     :'{{ url("lessons/coments/kirimcomment") }}',
-          data    :datapost,
-          beforeSend: function(){
-            // Show image container
-          },
-          success:function(data){
-          if(data==0){
-                  window.location.href = '{{url("member/signin")}}';
-          } else if (data !== 'null') {
-                  // $("#row"+comment_id).load(window.location.href + " #row"+comment_id);
-                  $('.content-reload').prepend(data);
-              }else {
-                  alert('Koneksi Bermasalah, Silahkan Ulangi');
-                  location.reload();
-              }
-          }
-      });
-    {{--  });  --}}
-  }
+function imageIsLoaded(e) {
+    $('#myImg').attr('src', e.target.result);
+};
 </script>
 <script type="text/javascript">
     function formbalas(comment_id){
@@ -1157,16 +1135,19 @@ function lessonsQuiz(videosrc, player) {
   function doComment(lesson_id, parent_id) {
 
     var body = $('#textbody'+parent_id).val();
+    var image = $('#image')[0].files[0];
+
     if (body == '') {
       alert('Harap Isi Komentar !')
     }else {
-
+          
 
       var postData =
                   {
                       "_token":"{{ csrf_token() }}",
                       "lesson_id": lesson_id,
                       "parent_id": parent_id,
+                      "image": image,
                       "body": body
                   }
 
