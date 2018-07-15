@@ -117,8 +117,9 @@ class ComentsController extends Controller
                         'id_user'=> $member_id,
                         'category'=>'comments',
                         'title'   => 'Anda mendapatkan balasan dari pertanyaan anda di tutorial ' . $lessons->title,
-                        'notif'        => 'Anda mendapatkan balasan dari pertanyaan anda dari ' . Auth::guard('contributors')->user()->username,
-                        'status'        => 0,
+                        'notif'   => 'Anda mendapatkan balasan dari pertanyaan anda dari ' . Auth::guard('contributors')->user()->username,
+                        'status'  => 0,
+                        'slug'    => $lessons->slug,
                         'created_at'    => new DateTime()
                         ]);
         $member = Member::Find($member_id);

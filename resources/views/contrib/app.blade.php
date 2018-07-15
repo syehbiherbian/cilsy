@@ -29,6 +29,20 @@
         color: #fff;
         }
         .grayscale { filter: grayscale(100%); }
+        .badge-cart {
+  background-color: red;
+  border-radius: 10px;
+  color: white;
+  display: inline-block;
+  font-size: 12px;
+  line-height: 1;
+  padding: 3px 7px;
+  text-align: center;
+  vertical-align: middle;
+  white-space: nowrap;
+  margin-left: 30px;
+  margin-top: -75px;
+}
     </style>
 </head>
 
@@ -43,12 +57,15 @@
                         <span class="hello-user">Halo, {{ Auth::guard('contributors')->user()->first_name }} </span>
                     </li>
                     <li class="has-dropdown">
-                        <a class="dropdown-toggle" id="notifications" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                            <span class=""><img src="{{asset('template/kontributor/img/icon/Notifikasi.png')}}" alt=""></span>
-                        </a>
+                        <img src="{{asset('template/kontributor/img/icon/Notifikasi.png')}}" alt="">
+                        <?php if(totalnotif() != null){ ?>
+                        <span class="badge-cart"><?php echo totalnotif();?></span>
+                        <?php } ?>
                         <div class="dropdown-container">
-                            <ul aria-labelledby="notificationsMenu" id="notificationsMenu">
-                            <li> No notifications</li>
+                            <ul>
+                              <?php echo notif();?>
+                              <li role="separator" class="divider"></li>
+                              <li><a href="{{ url('/contributor/notif')}}">Lihat Semua Pemberitahuan</a></li>
                             </ul>
                         </div>
                     </li>

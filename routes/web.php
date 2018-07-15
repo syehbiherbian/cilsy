@@ -340,6 +340,7 @@ Route::post('contributor/account/profile/{id}/edit', 'Contributors\AccountContro
 //rating
 Route::post('system/rate','RateController@store');
 //notifuser
+Route::get('user/notif', 'Web\NotifController@index');
 Route::get('user/notif/view','Web\NotifController@view');
 Route::get('user/notif/read','Web\NotifController@read');
 Route::post('user/notif/delete/{id}','Web\NotifController@delete');

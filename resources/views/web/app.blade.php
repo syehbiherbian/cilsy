@@ -13,6 +13,7 @@
     <link href="{{asset('template/web/css/video-js.css')}}" rel="stylesheet">
     <link href="{{asset('template/web/css/navbar.css')}}" rel="stylesheet">
     <link href="{{asset('template/web/css/pace.css')}}" rel="stylesheet">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- rating -->
     <link rel="stylesheet" href="{{ asset('template/web/css/star-rating.min.css') }}" />
     <!-- rating -->
@@ -340,7 +341,7 @@ a #items .item {
 
 
 .shopping-cart {
-  margin: 75px 632px;
+  margin: 75px 544px;
   float: right;
   background: white;
   width: 320px;
@@ -422,8 +423,18 @@ a #items .item {
   display: table;
   clear: both;
 }
-
-
+.dropdown-container{
+    display: none;
+    position: absolute;
+    top: 53px;
+    right: 15px;
+    width: 250px;
+    padding: 10px 0;
+    border: 1px solid #DBDEDE;
+    border-radius: 6px;
+    background-color: #FFF;
+    z-index: 99;
+}
     </style>
 
 
@@ -553,6 +564,8 @@ a #items .item {
                         <div class="dropdown-container">
                             <ul>
                               <?php echo notifuser();?>
+                              <li role="separator" class="divider"></li>
+                              <li><a href="{{ url('/user/notif')}}">Lihat Semua Pemberitahuan</a></li>
                             </ul>
                         </div>
                     </li>
@@ -561,7 +574,7 @@ a #items .item {
                     </li>
                     <li class="has-dropdown">
                         <img src="{{asset('template/web/img/drop-down-round-button.png')}}" alt="">
-                        <div class="dropdown-container">
+                        <div class="dropdown-container" style="right: 0px;">
                             <ul>
                                 <li>
                                     <a href="{{ url('member/profile')}}">

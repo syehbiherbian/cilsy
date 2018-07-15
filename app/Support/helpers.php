@@ -135,13 +135,18 @@ function namemember(){
 function notif(){
 
     $contribID = Auth::guard('contributors')->user()->id;
-    $notif =ContributorNotif::where('contributor_id',$contribID)->where('status',0)->get();
+    $notif =ContributorNotif::where('contributor_id',$contribID)->where('status',0)->take(5)->get();
     $html='';
     foreach ($notif as  $value) {
-        $html .='<li><a href="notif" onclick="notifview('.$value->id.')">'.$value->title.'</a></li>';
+        $html .='<li><a href="comments/detail/'.$value->id.'" onclick="notifview('.$value->id.')">'.$value->title.'</a></li>';
 
     }
     return $html;
+}
+function totalnotif(){
+  $mem_id =  Auth::guard('contributors')->user()->id;
+  $notif = ContributorNotif::where('contributor_id',$mem_id)->where('status',0)->count();
+  return $notif;
 }
 function notifuser(){
   
@@ -149,7 +154,7 @@ function notifuser(){
   $notif = UserNotif::where('id_user',$mem_id)->where('status',0)->take(5)->get();
   $html='';
   foreach ($notif as  $value) {
-      $html .='<li><a href="notif" onclick="notifview('.$value->id.')">'.$value->title.'</a></li>';
+      $html .='<li><a href="'.$value->slug.'" onclick="notifview('.$value->id.')">'.$value->title.'</a></li>';
 
   }
   return $html;

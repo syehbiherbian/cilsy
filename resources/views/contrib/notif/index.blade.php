@@ -122,7 +122,7 @@
               </tr>
 
 			<?php } ?>
-			@endforeach
+      @endforeach
             </tbody>
           </table>
         </div>
@@ -160,7 +160,8 @@
                   </td>
                 </tr>
 			<?php } ?>
-  			@endforeach
+        @endforeach
+                      
               </tbody>
             </table>
         </div>
@@ -194,12 +195,18 @@
       				 </form>
               </td>
             </tr>
-  			@endforeach
+        @endforeach
               </tbody>
             </table>
+        
         </div>
       </div>
     </div>
+    <div class="row">
+          <div class="col-md-12 text-center">
+              {{ $data->links() }}
+          </div>
+      </div>
   </div>
 </div>
 <script type="text/javascript">

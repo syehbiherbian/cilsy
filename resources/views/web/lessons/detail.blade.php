@@ -715,10 +715,11 @@ td{
                     @else
                     <!-- Comment Form -->
                     <div class="comments-form mb-25">
-                      <!-- <form id="form-comment" class="mb-25">
+                      {{--  <!-- <form id="form-comment" class="mb-25">  --}}
                         {{-- csrf_field() --}}
+                        @csrf
                         <input type="hidden" name="lesson_id" value="{{-- $lessons->id --}}">
-                        <input type="hidden" name="parent_id" value="0"> -->
+                        <input type="hidden" name="parent_id" value="0"> 
                         <div class="form-group">
                           <label>Komentar</label>
                           <textarea rows="8" cols="80" class="form-control" name="body" id="textbody0"></textarea>
@@ -730,13 +731,13 @@ td{
                        </ul>  --}}
                        <ul class="right">
                       {{--  <form enctype="multipart/form-data">  --}}
-                        <input type='file' name="image" id="image" />
+                      <input type="file" name="image" id="image" />
                       <img id="myImg" src="#" />
                       {{--  </form>  --}}
                       
                       <button type="button" class="btn btn-primary" onClick="doComment({{ $lessons->id }},0)" >Kirim</button> 
                       </ul>
-                      <!-- </form><!--./ Comment Form -->
+                      {{--  <!-- </form><!--./ Comment Form -->  --}}
                     </div>
                     @endif
 
@@ -1077,40 +1078,6 @@ function videoTracking(videosrc) {
     }
   });
 }
-function lessonsQuiz(videosrc, player) {
-  var postData =
-              {
-                  "_token":"{{ csrf_token() }}",
-                  "videosrc": videosrc
-              }
-  $.ajax({
-    type: "POST",
-    url: "{{ url('lessons/LessonsQuiz')}}",
-    data: postData,
-    // dataType: "json",
-    beforeSend: function() {
-      
-    },
-    success: function (data){
-      swal({
-        title: 'Selamat!',
-        text: "Anda harus menyelesaikan quiz berupa pertanyaan pilihan ganda untuk melanjutkan ke video tutorial selanjutnya. Silahkan klik mulai untuk memulai quiz",
-        type: 'success',
-        confirmButtonColor: '#ad0d0d',
-        confirmButtonText: 'MULAI',
-        allowEnterKey: false,
-        allowEscapeKey: false,
-        allowOutsideClick: false,
-      });
-      
-      window.location = data;
-      // player.start();
-      if (data == true) {
-        console.log('Viewers has been updated');
-      }
-    }
-  });
-}
 
 </script>
 <script type="text/javascript">
@@ -1133,30 +1100,31 @@ function lessonsQuiz(videosrc, player) {
   }
 
   function doComment(lesson_id, parent_id) {
-
     var body = $('#textbody'+parent_id).val();
-    var image = $('#image')[0].files[0];
-
+    var file_data = $('#image').prop("files")[0]; 
     if (body == '') {
       alert('Harap Isi Komentar !')
     }else {
-          
-
       var postData =
                   {
-                      "_token":"{{ csrf_token() }}",
+                      "_token":$('meta[name="csrf-token"]').attr('content'),
                       "lesson_id": lesson_id,
                       "parent_id": parent_id,
-                      "image": image,
+                      {{--  "image" : image,  --}}
                       "body": body
                   }
-
+      $.ajaxSetup({
+          headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          }
+      });
       $.ajax({
           type    :'POST',
           url     :'{{ url("lessons/coments/doComment") }}',
           dataType: 'json',
           data    : postData,
           beforeSend: function(){
+            {{--  console.log(postData);  --}}
             // Show image container
             swal({
                 title: "Sedang mengirim Komentar",
@@ -1164,8 +1132,7 @@ function lessonsQuiz(videosrc, player) {
                 imageUrl: "{{ asset('template/web/img/loading.gif') }}",
                 showConfirmButton: false,
                 allowOutsideClick: false
-              });
-              {{--  $("#loader").show();  --}}
+            });
           },
           success:function(data){
             if (data.success == false) {

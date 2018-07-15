@@ -240,7 +240,8 @@ class LessonsController extends Controller
             $contri = Lesson::where('id',$lesson_id)
                       ->select('contributor_id')
                       ->first();
-            $image = Input::get('image');
+            // dd($lesson_id);
+            $image = Input::file('image');
             // dd($image);
             
             $lessonsDestinationPath= 'assets/source/komentar';
