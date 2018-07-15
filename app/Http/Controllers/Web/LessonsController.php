@@ -392,7 +392,7 @@ class LessonsController extends Controller
 				                    <div class="panel-heading">
 				                      <strong>' . $usernam . '</strong> <span class="text-muted">commented ' . $this->time_elapsed_string($comment->created_at) . '</span>
 				                    </div>
-				                    <div class="panel-body">
+				                    <div class="panel-body" style="white-space:pre-line;">
 				                      ' . $comment->body . '
 				                    </div>';
             if (!empty(Auth::guard('members')->user()->id)) {

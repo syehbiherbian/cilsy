@@ -722,7 +722,7 @@ td{
                         <input type="hidden" name="parent_id" value="0"> 
                         <div class="form-group">
                           <label>Komentar</label>
-                          <textarea rows="8" cols="80" class="form-control" name="body" id="textbody0"></textarea>
+                          <textarea style="white-space: pre-line" rows="8" cols="80" class="form-control" name="body" id="textbody0"></textarea>
                         </div>
                         {{--  <ul class="left">
                         <meta name="csrf-token" content="{{ csrf_token() }}">
