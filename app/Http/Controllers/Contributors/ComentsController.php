@@ -97,6 +97,7 @@ class ComentsController extends Controller
         $comment_id = Input::get('comment_id');
         $lesson_id  = Input::get('lesson_id');
         $member_id  = Input::get('member_id');
+        dd($member_id);
 
         $lessons = DB::table('lessons')->where('id',$lesson_id)->first();
         $notify = DB::table('comments')->where('id', $comment_id)->first();

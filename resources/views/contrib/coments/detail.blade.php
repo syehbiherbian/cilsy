@@ -90,7 +90,7 @@
                 <div class="col-md-12" style="margin-bottom:30px;" id="row{{ $comment->id }}">
                     <strong>{{ $comment->username }}</strong> pada <strong><?= date('d/m/Y',strtotime($comment->created_at)) ?></strong>
 					<strong style="color:#ff5e10;">@if($comment->member_id !==null)  User @endif @if($comment->contributor_id  !==null)  Contributor @endif</strong>
-					<div class="col-md-12" style="margin-top:10px;padding-left:5%;">
+					<div class="col-md-12" style="margin-top:10px;padding-left:5%; white-space:pre-line;">
 							{{ $comment->body }}
 					</div>
 						<br><br>
