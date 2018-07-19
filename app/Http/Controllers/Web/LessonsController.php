@@ -15,6 +15,7 @@ use App\Models\Viewer;
 use App\Models\TutorialMember;
 use App\Models\Member;
 use App\Models\Comment;
+use App\Models\Cart;
 use App\Notifications\UserCommentNotification;
 use App\Notifications\UserReplyNotification;
 use Auth;
@@ -89,7 +90,8 @@ class LessonsController extends Controller
 
         $lessons = Lesson::where('enable', 1)->where('status', 1)->where('slug', $slug)->first();
         $tutorial = TutorialMember::where('member_id', $mem_id)->where('lesson_id', $lessons->id)->first();
-        
+        $cart = Cart::where('member_id', $mem_id)->where('lesson_id', $lessons->id)->first();
+
         if (count($lessons) > 0) {
             $main_videos = Video::where('enable', 1)->where('lessons_id', $lessons->id)->orderBy('id', 'asc')->get();
             $files = File::where('enable', 1)->where('lesson_id', $lessons->id)->orderBy('id', 'asc')->get();
@@ -111,6 +113,7 @@ class LessonsController extends Controller
                 'main_videos' => $main_videos,
                 'file' => $files,
                 'tutor' => $tutorial,
+                'cart' => $cart,
                 'services' => $services,
                 'contributors' => $contributors,
                 'contributors_total_lessons' => $contributors_total_lessons,

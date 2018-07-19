@@ -622,16 +622,23 @@ td{
       <section class="video-player mb-50">
       <div class="container">
         <!-- Title -->
-        <div class="row pt-25 pb-15">
+        <div class="row pt-25 pb-15"> 
           <div class="col-xs-12 col-md-10">
             <p class="lesson-title">{{ $lessons->title }}</p>
             <p><img src="{{asset('template/web/img/video.png')}}" alt="" style="height:25px; width:25px;"> <b>{{ count($main_videos) }}</b> Video</p>
           </div>
           <div class="col-xs-12 col-md-2">
+          <ul style="right">
             @if($tutor == null)
+              @if($cart == null)
             <div class="lesson-video-count">Rp{{ number_format($lessons->price, 0, ",", ".") }}</div>
             <button type="button" class="lesson-video-count" onclick="addToCart({{ $lessons->id }})"><i class="fa fa-shopping-cart"></i> Beli</button>
-            @endif
+              @else
+            <div class="lesson-video-count">Rp{{ number_format($lessons->price, 0, ",", ".") }}</div>
+            <a href="{{ url('cart') }}" class="btn" style="background-color:#fff; color:#5bc0de; border-color:#46b8da;">Lihat Keranjang</a>
+              @endif
+            @endif  
+          </ul>  
           </div>
         </div><!--./ Title -->
 
