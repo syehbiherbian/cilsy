@@ -13,9 +13,12 @@
     <link href="{{asset('template/web/css/video-js.css')}}" rel="stylesheet">
     <link href="{{asset('template/web/css/navbar.css')}}" rel="stylesheet">
     <link href="{{asset('template/web/css/pace.css')}}" rel="stylesheet">
+    <link href="{{ asset('template/web/css/venobox.css') }}" rel="stylesheet">
+
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- rating -->
     <link rel="stylesheet" href="{{ asset('template/web/css/star-rating.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('template/web/css/imageviewer.css') }}" />
     <!-- rating -->
     <link rel="stylesheet" href="{{ asset('template/web/css/owl.carousel.min.css') }}">
     <link rel="stylesheet" href="{{ asset('template/web/css/owl.theme.default.min.css') }}">
@@ -31,6 +34,8 @@
 
     <link rel="stylesheet" href="{{ asset('template/web/plugins/jquery-ui-1.12.1.custom/jquery-ui.css') }}">
     <script type="text/javascript" src="{{asset('template/web/js/jquery.min.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('template/web/js/venobox.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('template/web/js/imageviewer.min.js') }}"></script>
     <script type="text/javascript" src="https://unpkg.com/sweetalert2@7.9.2/dist/sweetalert2.all.js"></script>
     <!-- Jquery UI   -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/plupload/3.1.2/plupload.full.min.js"></script>
@@ -903,6 +908,7 @@ a #items .item {
     </script>
     <?php $mtime = file_exists(public_path('template/web/js/custom.js')) ? filemtime(public_path('template/web/js/custom.js')) : '' ?>
     <script type="text/javascript" src="{{ asset('template/web/js/custom.js?'.$mtime) }}"></script>
+
     @stack('js')
 </body>
 

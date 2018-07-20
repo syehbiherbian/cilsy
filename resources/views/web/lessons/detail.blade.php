@@ -611,6 +611,28 @@ td{
 		text-transform: uppercase;
 	}
 }
+.upload-btn-wrapper {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.btn-upload{
+  border: 2px solid gray;
+  color: gray;
+  background-color: white;
+  padding: 8px 20px;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+.upload-btn-wrapper input[type=file] {
+  font-size: 100px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+}
 </style>
 
 <div id="content-section">
@@ -715,29 +737,28 @@ td{
                     @else
                     <!-- Comment Form -->
                     <div class="comments-form mb-25">
-                      {{--  <!-- <form id="form-comment" class="mb-25">  --}}
-                        {{-- csrf_field() --}}
+                     <form id="form-comment" class="mb-25" enctype="multipart/form-data" method="POST">
                         @csrf
-                        <input type="hidden" name="lesson_id" value="{{-- $lessons->id --}}">
+                        {{ method_field('POST') }}
+                        <input type="hidden" name="lesson_id" value="{{ $lessons->id }}">
                         <input type="hidden" name="parent_id" value="0"> 
                         <div class="form-group">
                           <label>Komentar</label>
                           <textarea style="white-space: pre-line" rows="8" cols="80" class="form-control" name="body" id="textbody0"></textarea>
                         </div>
-                        {{--  <ul class="left">
-                        <meta name="csrf-token" content="{{ csrf_token() }}">
-                        <a id="browse" href="javascript:;" style="float:right" class="uploader"  url="{{ url('attachment')}}" >
-                        <button  type="button"  class="btn btn-warning"> <i class="fa fa-paperclip"> </i> Upload gambar</button></a>
-                       </ul>  --}}
+                       <ul class="left">
+                         <div class="upload-btn-wrapper">
+                          <button class="btn-upload btn-info">Upload a file</button>
+                          <input type="file"  name="image" id="image"/>
+                        </div>
+                       </ul>
                        <ul class="right">
-                      {{--  <form enctype="multipart/form-data">  --}}
-                      <input type="file" name="image" id="image" />
-                      <img id="myImg" src="#" />
-                      {{--  </form>  --}}
                       
-                      <button type="button" class="btn btn-primary" onClick="doComment({{ $lessons->id }},0)" >Kirim</button> 
+                      {{--  <img id="myImg" src="#" />  --}}
+                      
+                      <button type="button" class="btn btn-primary upload-image" onclick="doComment({{ $lessons->id}}, 0)">Kirim</button> 
                       </ul>
-                      {{--  <!-- </form><!--./ Comment Form -->  --}}
+                      </form><!--./ Comment Form -->
                     </div>
                     @endif
 
@@ -800,7 +821,6 @@ td{
     </div>
 
 </div>
-
 <script src="{{ asset('template/web/js/video.js') }}"></script>
 <script src="{{ asset('template/web/js/videojs-playlist.js') }}"></script>
 <script src="{{ asset('template/web/js/videojs-playlist-ui.js') }}"></script>
@@ -821,6 +841,12 @@ function imageIsLoaded(e) {
     $('#myImg').attr('src', e.target.result);
 };
 </script>
+<script>
+$(document).ready(function(){
+    $('.venobox').venobox(); 
+});
+</script>
+
 <script type="text/javascript">
     function formbalas(comment_id){
 
@@ -1080,7 +1106,9 @@ function videoTracking(videosrc) {
 }
 
 </script>
+
 <script type="text/javascript">
+  
   $(document).on('ready',function () {
     getComments();
   });
@@ -1101,7 +1129,13 @@ function videoTracking(videosrc) {
 
   function doComment(lesson_id, parent_id) {
     var body = $('#textbody'+parent_id).val();
-    var file_data = $('#image').prop("files")[0]; 
+    var file_data = $('#image').prop("files")[0];
+    dataform = new FormData();
+    dataform.append( 'image', file_data);
+    dataform.append( 'body', body);
+    dataform.append( 'lesson_id', lesson_id);
+    dataform.append( 'parent_id', parent_id);
+
     if (body == '') {
       alert('Harap Isi Komentar !')
     }else {
@@ -1110,7 +1144,7 @@ function videoTracking(videosrc) {
                       "_token":$('meta[name="csrf-token"]').attr('content'),
                       "lesson_id": lesson_id,
                       "parent_id": parent_id,
-                      {{--  "image" : image,  --}}
+                      "image" : file_data,
                       "body": body
                   }
       $.ajaxSetup({
@@ -1119,26 +1153,29 @@ function videoTracking(videosrc) {
           }
       });
       $.ajax({
-          type    :'POST',
-          url     :'{{ url("lessons/coments/doComment") }}',
-          dataType: 'json',
-          data    : postData,
+          type    :"POST",
+          url     :'{{ url("/lessons/coments/doComment") }}',
+          data    : dataform,
+          dataType : 'json',
+          contentType: false,
+          processData: false,
           beforeSend: function(){
-            {{--  console.log(postData);  --}}
-            // Show image container
-            swal({
+               swal({
                 title: "Sedang mengirim Komentar",
                 text: "Mohon Tunggu sebentar",
                 imageUrl: "{{ asset('template/web/img/loading.gif') }}",
                 showConfirmButton: false,
                 allowOutsideClick: false
             });
+            // Show image container
+            
           },
           success:function(data){
             if (data.success == false) {
                window.location.href = '{{ url("member/signin") }}';
             }else if (data.success == true) {
               $('#textbody'+parent_id).val('');
+              $("#form-comment").find('[type=file]').val('');
               swal({
                 title: "Komentar anda sudah terkirim!",
                 showConfirmButton: true,
