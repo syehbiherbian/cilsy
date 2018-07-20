@@ -10,6 +10,7 @@ use App\Models\Video;
 use App\Models\UserNotif;
 use App\Models\Income;
 use App\Models\Cart;
+use App\Models\Category;
 /**
  *
  */
@@ -29,6 +30,7 @@ class Helper
         return $result;
       }
   }
+
   static function package($field)
   {
       $now = new DateTime();
@@ -119,6 +121,14 @@ function cart(){
                 <span class="item-price">Rp'.number_format($cart->lesson->price, 0, ",", ".") .'</span>
                 </li>';
   }
+  return $html;
+}
+function getCategory(){
+  $categories = Category::all();
+  $html='';
+  
+  foreach ($categories as $key => $category)
+      $html .=' <a id="'.$category->id.'" class="dropdown-item" href="javascript:void(0)"  onclick="changeCategory(&apos;'.$category->title.'&apos;)">'. $category->title.'</a>';
   return $html;
 }
 function getTotalCart(){

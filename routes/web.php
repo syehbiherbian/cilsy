@@ -48,6 +48,7 @@ Route::post('lessons/LessonsQuiz','Web\LessonsController@LessonsQuiz');
 // Search
 Route::get('search', 'Web\SearchController@index');
 Route::get('search/autocomplete', 'Web\SearchController@autocomplete');
+Route::get('category/{id}','Web\LessonController@getSearchcategory');
 
 // Point
 Route::get('point', 'Web\PointController@index');

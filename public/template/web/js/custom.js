@@ -107,20 +107,22 @@ function addToCart(id) {
 			  
 			  localStorage.setItem('cart', JSON.stringify(cart));
 			}
-
 			swal({
 				title: "Menambahkan ke keranjang",
 				text: data.title,
 				type: "success",
+				showCloseButton: true,
 				showCancelButton: true,
-				cancelButtonText: 'Lihat keranjang',
+				cancelButtonText: 'Tutorial lainnya',
 				cancelButtonColor: '#3085d6',
-				confirmButtonText: "Tutorial lainnya"
+				confirmButtonText: "Lihat keranjang"
 			}).then(function(isConfirm) {
 				if (isConfirm.value) {
-					window.location.href = SITE_URL+'/lessons/browse/all';
-				} else {
 					window.location.href = SITE_URL+'/cart';
+				}else if(swal.cancelButton){
+					window.location.href = SITE_URL+'/lessons/browse/all';
+				}else {
+					window.location.href = SITE_URL+'/lessons/browse/all';
 				}
 			});
 		  } else {

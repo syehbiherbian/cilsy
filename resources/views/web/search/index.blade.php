@@ -162,21 +162,23 @@ fbq('track', 'Search');
                 
                 localStorage.setItem('cart', JSON.stringify(cart));
               @endif
-
               swal({
                   title: "Menambahkan ke keranjang",
                   text: data.title,
                   type: "success",
+                  closeModal: true,
                   showCancelButton: true,
+                  focusConfirm: false,
                   cancelButtonText: 'Lihat keranjang',
-                  cancelButtonColor: '#3085d6',
                   confirmButtonText: "Tutorial lainnya"
               }).then(function(isConfirm) {
-                  if (isConfirm.value) {
-                      window.location.href = '{{ url("lessons/browse/all") }}';
-                  } else {
-                      window.location.href = '{{ url("cart") }}';
-                  }
+                if (isConfirm.value) {
+					        window.location.href = SITE_URL+'/cart';
+				        }else if(swal.cancelButton){
+					        window.location.href = SITE_URL+'/lessons/browse/all';
+				        }else {
+					        window.location.href = SITE_URL+'/lessons/browse/all';
+              }
               });
             } else {
                 alert('Koneksi Bermasalah, Silahkan Ulangi');
