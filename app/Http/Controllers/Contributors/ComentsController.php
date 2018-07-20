@@ -64,19 +64,18 @@ class ComentsController extends Controller
         $detailcomment  = DB::table('comments')->where('id',$id)->first();
         $getlesson      = DB::table('lessons')->where('id',$detailcomment->lesson_id)->first();
         $getcomment     = DB::table('comments')
-            ->leftJoin('members','members.id','=','comments.member_id')
-            ->where('comments.lesson_id',$getlesson->id)
-            ->where('comments.parent_id',0)
-            ->where('comments.status',1)
-            ->orderBy('comments.created_at','DESC')
-            ->select('comments.*','members.username as username')
-            ->get();
+                    ->leftJoin('members','members.id','=','comments.member_id')
+                    ->where('comments.lesson_id',$getlesson->id)
+                    ->where('comments.parent_id',0)
+                    ->where('comments.status',1)
+                    ->orderBy('comments.created_at','DESC')
+                    ->select('comments.*','members.username as username')
+                    ->get();
 
             DB::table('comments')
             ->where('comments.lesson_id',$getlesson->id)
             ->where('comments.status',0)
             ->update(['status' => 1]);
-
         if ($getlesson->contributor_id == $uid) {
             return view('contrib.coments.detail',[
                 'datalesson'    => $getlesson,
@@ -97,7 +96,7 @@ class ComentsController extends Controller
         $comment_id = Input::get('comment_id');
         $lesson_id  = Input::get('lesson_id');
         $member_id  = Input::get('member_id');
-        dd($member_id);
+        
 
         $lessons = DB::table('lessons')->where('id',$lesson_id)->first();
         $notify = DB::table('comments')->where('id', $comment_id)->first();
@@ -114,19 +113,44 @@ class ComentsController extends Controller
             'created_at'    => new DateTime()
         ]);
 
+        
+
         $notif_user =   DB::table('user_notif')->insertGetId([
-                        'id_user'=> $member_id,
+                        'id_user'=> $notify->member_id,
                         'category'=>'comments',
                         'title'   => 'Anda mendapatkan balasan dari pertanyaan anda di tutorial ' . $lessons->title,
                         'notif'   => 'Anda mendapatkan balasan dari pertanyaan anda dari ' . Auth::guard('contributors')->user()->username,
                         'status'  => 0,
                         'slug'    => $lessons->slug,
-                        'created_at'    => new DateTime()
+                        'created_at'    => new DateTime(),
                         ]);
-        $member = Member::Find($member_id);
+        
+        $mem = DB::table('comments')->where('parent_id', $comment_id)
+        ->where('comments.parent_id', '<>', `comments.id`)
+        ->where('comments.member_id', '<>',$uid)
+        ->select('comments.member_id')
+        ->orderby('comments.created_at', 'DESC')
+        ->first();
+
+        
+        $notif_nimbrung =   DB::table('user_notif')->insertGetId([
+            'id_user'=> $mem->member_id,
+            'category'=>'comments',
+            'title'   => 'Anda mendapatkan balasan dari pertanyaan anda di tutorial ' . $lessons->title,
+            'notif'   => 'Anda mendapatkan balasan dari pertanyaan anda dari ' . Auth::guard('contributors')->user()->username,
+            'status'  => 0,
+            'slug'    => $lessons->slug,
+            'created_at'    => new DateTime(),
+        ]);
+
+
+        $member = Member::Find($notify->member_id);
+        $nimbrung = Member::Find($mem->member_id);
+
         $lesson = Lesson::Find($lesson_id);
         $contrib = Contributor::find($uid);
-        $member->notify(new ContribReplyNotification($member, $lesson, $contrib));
+        $member->notify(new ContribReplyNotification([$member, $lesson, $contrib]));
+        $nimbrung->notify(new ContribReplyNotification([$nimbrung, $lesson, $contrib]));
 
         $check=DB::table('comments')->where('parent_id',$comment_id)->get();
 

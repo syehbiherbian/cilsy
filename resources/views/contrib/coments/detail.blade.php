@@ -96,6 +96,8 @@
                             <a id="firstlink" data-gall="myGallery" class="venobox" data-vbtype="iframe" href="{{ asset($comment->images) }}"><img src="{{ asset($comment->images) }}" alt="image alt" style="height:50px; width:50px; margin-left: 15px; margin-bottom: 20px;"/></a>
                     <?php } ?>
 					</div>
+
+                    
 						<br><br>
 						<?php
 						$getchild = DB::table('comments')
@@ -106,7 +108,6 @@
 							->orderBy('comments.created_at','ASC')
 							->select('comments.*','members.username as username','contributors.username as contriname')
 							->get();
-
 						if (count($getchild) > 0) {
 							foreach ($getchild as $child) {
 						?>
@@ -153,7 +154,7 @@
     function dobalas(comment_id){
         var isi_balas = $('#input_balas'+comment_id).val();
         var lesson_id = '{{ $datalesson->id }}';
-        var member_id = '{{ $comment->member_id }}';
+        var member_id = '{{ $child->contributor_id }}';
         // alert(comment_id+' = '+isi_balas);
         var datapost = {
             '_token'    : '{{ csrf_token() }}',

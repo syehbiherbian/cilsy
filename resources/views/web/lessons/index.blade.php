@@ -77,7 +77,6 @@
       <h4>Result</h4>
       <?php if(count($results) == 0){ echo "No Data Available";}?>
       <?php foreach ($results as $key => $result): ?>
-
         <div class="item">
             <div class="row">
             <div class="col-md-2">
@@ -98,19 +97,29 @@
                 </p>
               </div>
               <div class="col-md-2">
-
-               
-                <p style="font-weight:bold;">Rp. {{ number_format($result->price, 0, ",", ".") }}</p>
-                <p>
-                <button type="button" class="btn btn-info" onclick="addToCart({{ $result->id }})"><i class="fa fa-shopping-cart"></i> Beli</button>
-                </p>
-                </div>
                 
+                <?php if(!empty($result->nilai)){ ?>
+                <p style="font-weight:bold color:green;">
+                <a href="{{ url('lessons/'.$result->slug) }}" class="btn" style="background-color:#f1c40f; color:white; padding: 6px 22px;">Lihat Tutorial</a>
+                </p>
+                
+                <?php }else{?>
+                <p style="font-weight:bold;">Rp. {{ number_format($result->price, 0, ",", ".") }}</p>
+                <?php if(empty($result->hasil)){ ?>
+                <p>
+                <button type="button" class="btn btn-info" style="padding: 6px 48px"  onclick="addToCart({{ $result->id }})"><i class="fa fa-shopping-cart"></i>Beli </button>
+                </p>
+                <?php }else{ ?>
+                <p>
+                <a href="{{ url('cart') }}" class="btn" style="background-color:#fff; color:#5bc0de; border-color:#46b8da;">Lihat Keranjang</a>
+                </p>
+                <?php } ?>
+                <?php }?>
+                </div>
             </div>
           {{-- </a> --}}
         </div>
              
-
       <?php endforeach; ?>
       <div class="row">
           <div class="col-md-12 text-center">

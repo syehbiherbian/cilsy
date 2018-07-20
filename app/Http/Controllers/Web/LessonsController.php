@@ -15,6 +15,7 @@ use App\Models\Viewer;
 use App\Models\TutorialMember;
 use App\Models\Member;
 use App\Models\Comment;
+use App\Models\Cart;
 use App\Notifications\UserCommentNotification;
 use App\Notifications\UserReplyNotification;
 use Auth;
@@ -34,33 +35,50 @@ class LessonsController extends Controller
         $categories = Category::where('enable', 1)->get();
         if ($by == 'category') {
             $category = Category::where('enable', 1)->where('title', 'like', '%' . $keyword . '%')->first();
-            $results = Lesson::leftJoin('categories', 'lessons.category_id', 'categories.id')
+            $results = Lesson::Join('categories', 'lessons.category_id', 'categories.id')
                 ->select('lessons.*', 'categories.title as category_title')
+                ->leftjoin('tutorial_member as C', 'lessons.id' ,'=', 'C.lesson_id', 'C.member_id', '=', $mem_id)
                 ->where('lessons.enable', 1)
                 ->where('lessons.status', 1)
                 ->where('lessons.category_id', $category->id)
                 ->paginate(10);
             // dd($results);
         } else {
-            $results = Lesson::leftJoin('categories', 'lessons.category_id', 'categories.id')
-            ->select('lessons.*', 'categories.title as category_title')
-            ->where('lessons.status', 1)
+            if(!empty($mem_id)){
+            $results = Lesson::Join('categories', 'lessons.category_id', 'categories.id')
+                ->leftjoin('tutorial_member', function($join){
+                    $join->on('lessons.id', '=', 'tutorial_member.lesson_id')
+                    ->where('tutorial_member.member_id','=', Auth::guard('members')->user()->id);})
+                ->leftjoin('cart', function($join){
+                    $join->on('lessons.id', '=', 'cart.lesson_id')
+                    ->where('cart.member_id','=', Auth::guard('members')->user()->id);})
+                ->select('lessons.*', 'categories.title as category_title', 'tutorial_member.member_id as nilai', 'cart.member_id as hasil')
                 ->where('lessons.enable', 1)
+                ->where('lessons.status', 1)
                 ->paginate(10);
+
+           
+            }else{
+                $results = Lesson::Join('categories', 'lessons.category_id', 'categories.id')
+                ->select('lessons.*', 'categories.title as category_title')
+                ->where('lessons.enable', 1)
+                ->where('lessons.status', 1)
+                ->paginate(10);
+            }
         }
         # code...
-        $tutorial = TutorialMember::Join('lessons', 'lessons.id', 'tutorial_member.lesson_id')
-        ->select('tutorial_member.lesson_id')
-        ->where('lessons.status', 1)
-        ->where('lessons.enable', 1)
-        ->where('tutorial_member.member_id' , $mem_id)
-        ->get();
+        // $tutorial = TutorialMember::Join('lessons', 'lessons.id', 'tutorial_member.lesson_id')
+        // ->select('tutorial_member.lesson_id')
+        // ->where('lessons.status', 1)
+        // ->where('lessons.enable', 1)
+        // ->where('tutorial_member.member_id' , $mem_id)
+        // ->get();
 
         // dd($tutorial);
         return view('web.lessons.index', [
             'categories' => $categories,
-            'results' => $results,            
-            'tutorial'=>$tutorial
+            'results' => $results,    
+            // 'tutorial'=>$tutorial
         ]);
 
     }
@@ -72,7 +90,8 @@ class LessonsController extends Controller
 
         $lessons = Lesson::where('enable', 1)->where('status', 1)->where('slug', $slug)->first();
         $tutorial = TutorialMember::where('member_id', $mem_id)->where('lesson_id', $lessons->id)->first();
-        
+        $cart = Cart::where('member_id', $mem_id)->where('lesson_id', $lessons->id)->first();
+
         if (count($lessons) > 0) {
             $main_videos = Video::where('enable', 1)->where('lessons_id', $lessons->id)->orderBy('id', 'asc')->get();
             $files = File::where('enable', 1)->where('lesson_id', $lessons->id)->orderBy('id', 'asc')->get();
@@ -94,6 +113,7 @@ class LessonsController extends Controller
                 'main_videos' => $main_videos,
                 'file' => $files,
                 'tutor' => $tutorial,
+                'cart' => $cart,
                 'services' => $services,
                 'contributors' => $contributors,
                 'contributors_total_lessons' => $contributors_total_lessons,
