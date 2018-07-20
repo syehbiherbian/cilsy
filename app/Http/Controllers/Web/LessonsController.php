@@ -36,12 +36,21 @@ class LessonsController extends Controller
         if ($by == 'category') {
             $category = Category::where('enable', 1)->where('title', 'like', '%' . $keyword . '%')->first();
             $results = Lesson::Join('categories', 'lessons.category_id', 'categories.id')
-                ->select('lessons.*', 'categories.title as category_title')
-                ->leftjoin('tutorial_member as C', 'lessons.id' ,'=', 'C.lesson_id', 'C.member_id', '=', $mem_id)
-                ->where('lessons.enable', 1)
-                ->where('lessons.status', 1)
-                ->where('lessons.category_id', $category->id)
-                ->paginate(10);
+            ->leftjoin('tutorial_member', function($join){
+                $join->on('lessons.id', '=', 'tutorial_member.lesson_id')
+                ->where('tutorial_member.member_id','=', Auth::guard('members')->user()->id);})
+            ->leftjoin('cart', function($join){
+                $join->on('lessons.id', '=', 'cart.lesson_id')
+                ->where('cart.member_id','=', Auth::guard('members')->user()->id);})
+            ->select('lessons.*', 'categories.title as category_title', 'tutorial_member.member_id as nilai', 'cart.member_id as hasil')
+            ->where('lessons.enable', 1)
+            ->where('lessons.status', 1)
+            ->where('lessons.category_id', $category->id)
+            ->paginate(10);
+
+
+
+
             // dd($results);
         } else {
             if(!empty($mem_id)){

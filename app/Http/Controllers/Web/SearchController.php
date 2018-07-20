@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Input;
 use Validator;
-
+use App\Models\Cart;
+use Auth;
 // use App\Models\Member;
 use App\Models\Lesson;
 use App\Models\Category;
@@ -34,9 +35,14 @@ class SearchController extends Controller
             $cateid = 0;
           }
 
-          $results  = Lesson::leftJoin('categories', 'lessons.category_id', '=', 'categories.id')
-                      ->select('lessons.*','categories.title as category_title')
-                      ->where('lessons.enable','=',1)
+                    $results = Lesson::Join('categories', 'lessons.category_id', 'categories.id')
+                    ->leftjoin('tutorial_member', function($join){
+                        $join->on('lessons.id', '=', 'tutorial_member.lesson_id')
+                        ->where('tutorial_member.member_id','=', Auth::guard('members')->user()->id);})
+                    ->leftjoin('cart', function($join){
+                        $join->on('lessons.id', '=', 'cart.lesson_id')
+                        ->where('cart.member_id','=', Auth::guard('members')->user()->id);})
+                    ->select('lessons.*', 'categories.title as category_title', 'tutorial_member.member_id as nilai', 'cart.member_id as hasil')
                       ->where('lessons.title','like','%'.$q.'%')
                       ->where('lessons.category_id','=',$cateid)
                       ->paginate(10);
@@ -45,8 +51,14 @@ class SearchController extends Controller
 
     }else { //Without Category
 
-          $results  = Lesson::leftJoin('categories', 'lessons.category_id', '=', 'categories.id')
-                      ->select('lessons.*','categories.title as category_title')
+                      $results = Lesson::Join('categories', 'lessons.category_id', 'categories.id')
+                      ->leftjoin('tutorial_member', function($join){
+                          $join->on('lessons.id', '=', 'tutorial_member.lesson_id')
+                          ->where('tutorial_member.member_id','=', Auth::guard('members')->user()->id);})
+                      ->leftjoin('cart', function($join){
+                          $join->on('lessons.id', '=', 'cart.lesson_id')
+                          ->where('cart.member_id','=', Auth::guard('members')->user()->id);})
+                      ->select('lessons.*', 'categories.title as category_title', 'tutorial_member.member_id as nilai', 'cart.member_id as hasil')
                       ->where('lessons.enable','=',1)
                       ->where('lessons.title','like','%'.$q.'%')
                       ->paginate(10);
