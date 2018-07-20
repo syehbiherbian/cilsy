@@ -675,12 +675,13 @@ td{
                   {!! nl2br($lessons->description) !!}
                 </div>
                 <div id="tab2" class="tab-pane fade">
-                  <ol class="materi_list">
+                <?php $number=1; ?>
+                  <ul class="materi_list">
                     @foreach ($main_videos as $row)
                     <li>
                     <table>
                         <tr>
-                          <td><strong>{{ $row->title }}</strong>
+                          <td><strong><?php echo $number ?> {{ $row->title }}</strong>
                               <p>{!! nl2br($row->description) !!}</p>
                           </td>
                           <td>
@@ -691,8 +692,9 @@ td{
                         </tr>
                     </table>
                     </li>
+                    <?php $number++;?>
                     @endforeach
-                  </ol>
+                  </ul>
                 </div>
                 <div id="tab3" class="tab-pane fade">
                   @if ($tutor)
