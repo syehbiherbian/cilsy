@@ -46,7 +46,7 @@ Route::post('lessons/videoTracking','Web\LessonsController@videoTracking');
 Route::post('lessons/LessonsQuiz','Web\LessonsController@LessonsQuiz');
 
 //attachment
-Route::post('attachment', 'AttachmentController@upload');
+// Route::post('attachment', 'AttachmentController@upload');
 // Search
 Route::get('search', 'Web\SearchController@index');
 Route::get('search/autocomplete', 'Web\SearchController@autocomplete');
@@ -221,7 +221,7 @@ Route::group(['middleware' => ['auth']], function () {
 	
 });
 
- Route::get('cron/system/generate-income', 'GenerateIncomeController@generate');
+//  Route::get('cron/system/generate-income', 'GenerateIncomeController@generate');
 /*
 |--------------------------------------------------------------------------
 | Contributor Routes
@@ -237,7 +237,7 @@ Route::group(['middleware' => ['auth']], function () {
 
 Route::get('contributor/login', 'Contributors\ContribAuth\LoginController@showLoginForm');
 Route::post('contributor/login', 'Contributors\ContribAuth\LoginController@Login');
-Route::post('contributor/logout', 'Contributors\ContribAuth\LogoutController@Logout');
+// Route::post('contributor/logout', 'Contributors\ContribAuth\LogoutController@Logout');
 Route::post('contributor/password/email', 'Contributors\ContribAuth\ForgotPasswordController@sendResetLinkEmail');
 Route::get('contributor/password/reset', 'Contributors\ContribAuth\ForgotPasswordController@showLinkRequestForm');
 Route::post('contributor/password/reset', 'Contributors\ContribAuth\ResetPasswordController@reset');

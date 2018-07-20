@@ -91,7 +91,10 @@
                     <strong>{{ $comment->username }}</strong> pada <strong><?= date('d/m/Y',strtotime($comment->created_at)) ?></strong>
 					<strong style="color:#ff5e10;">@if($comment->member_id !==null)  User @endif @if($comment->contributor_id  !==null)  Contributor @endif</strong>
 					<div class="col-md-12" style="margin-top:10px;padding-left:5%; white-space:pre-line;">
-							{{ $comment->body }}
+                            {{ $comment->body }}
+                    <?php if($comment->images) { ?>
+                            <a id="firstlink" data-gall="myGallery" class="venobox" data-vbtype="iframe" href="{{ asset($comment->images) }}"><img src="{{ asset($comment->images) }}" alt="image alt" style="height:50px; width:50px; margin-left: 15px; margin-bottom: 20px;"/></a>
+                    <?php } ?>
 					</div>
 
                     
@@ -119,7 +122,7 @@
 								</strong> pada <strong><?= date('d/m/Y',strtotime($child->created_at)) ?></strong>
 								<strong style="color:#ff5e10;">@if($child->member_id !==null)  User @endif @if($child->contributor_id  !==null)  Contributor @endif</strong>
 								<div class="col-md-12" style="margin-top:10px;margin-bottom:10px;padding-left:5%;">
-									{{ $child->body }}
+                                    {{ $child->body }}
 								</div>
 								<div class="clearfix"></div>
 						</div>

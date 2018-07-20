@@ -252,58 +252,49 @@ class LessonsController extends Controller
         }
         return $ip;
     }
-    public function doComment()
+    
+    public function doComment(Request $request)
     {
         $response = array();
         if (empty(Auth::guard('members')->user()->id)) {
             $response['success'] = false;
         } else {
-          
+            
             $now = new DateTime();
             $uid = Auth::guard('members')->user()->id;
-            $body = Input::get('body');
-            $lesson_id = Input::get('lesson_id');
+            // $body = Input::get('body');
+            // $lesson_id = Input::get('lesson_id');
             $member = DB::table('members')->where('id', $uid)->first();
-            $lessons = DB::table('lessons')->where('id', $lesson_id)->first();
+            
+            // // dd($lesson_id);
+            // $image = Input::file('image');
+            // // dd($image);
+            
+            // $lessonsDestinationPath= 'assets/source/komentar';
+
+            $input = $request->all();
+            $lessons = DB::table('lessons')->where('id', $input['lesson_id'])->first();
             $parent_id = Input::get('parent_id');
-            $contri = Lesson::where('id',$lesson_id)
+            $contri = Lesson::where('id',$input['lesson_id'])
                       ->select('contributor_id')
                       ->first();
-            // dd($lesson_id);
-            $image = Input::file('image');
-            // dd($image);
-            
-            $lessonsDestinationPath= 'assets/source/komentar';
+            $input['images'] = null;
+            $input['member_id'] = $member->id;
+            $input['contributor_id'] = str_replace('}','',str_replace('{"contributor_id":', '',$contri));
+            $input['status'] = 1;
+            // dd($input);
 
-            if(!empty($image)){
-                $imagename    = $image->getClientOriginalExtension();
-                $image->move($lessonsDestinationPath, $imagename);
-            }else{
-                $imagename    = '';
+            if ($request->hasFile('image')){
+                $input['images'] = 'assets/source/komentar/komentar-'.$request->image->getClientOriginalName().'.'.$request->image->getClientOriginalExtension();
+                $request->image->move(public_path('/assets/source/komentar'), $input['images']);
             }
-            if($imagename ==''){
-                $url_image= $imagename;
-            }else{
-                $urls=url('');
-                $url_image= $urls.'/assets/source/komentar/'.$imagename;
-            }
-
-            $store = DB::table('comments')->insertGetId([
-                'lesson_id' => $lesson_id,
-                'member_id' => $uid,
-                'body' => $body,
-                'parent_id' => $parent_id,
-                'status' => 0,
-                'desc'   => 0,
-                'images' => $url_image,
-                'contributor_id' => str_replace('}','',str_replace('{"contributor_id":', '',$contri)),
-                'created_at' => $now,
-                'updated_at' => $now,
-            ]);
-
-            $getmembercomment = DB::table('comments')
+            // dd($input);
+            $store = Comment::create($input);
+            // dd($store);
+            if ($store) {
+             $getmembercomment = DB::table('comments')
             ->Join('members','members.id','=','comments.member_id')
-            ->where('comments.lesson_id',$lesson_id)
+            ->where('comments.lesson_id',$input['lesson_id'])
             ->where('comments.parent_id',0)
             ->where('comments.status',1)
             ->select('comments.*','members.username as username')
@@ -311,7 +302,7 @@ class LessonsController extends Controller
 
             $getemailchild = DB::table('comments')
                              ->Join('comments as B', 'comments.id', 'B.parent_id')
-                             ->Where('B.parent_id', $parent_id)
+                             ->Where('B.parent_id', $input['parent_id'])
                              ->where('comments.member_id', '<>', 'B.member_id')
                              ->select('comments.member_id as tanya', 'B.member_id as jawab')->distinct()
                              ->get();
@@ -328,12 +319,10 @@ class LessonsController extends Controller
                         $lesson = Lesson::Find($lesson_id);
                         $contrib = Contributor::find($lessons->contributor_id);
                         $member->notify(new UserReplyNotification($member, $lesson, $contrib));
+                        }
                     }
                 }
             }
-                        
-            }
-            if ($store) {
 
                 // dd($store);
                     DB::table('contributor_notif')->insert([
@@ -345,7 +334,7 @@ class LessonsController extends Controller
                         'created_at' => $now,
                     ]);
                     $member = Member::Find($uid);
-                    $comment = Comment::Find($store);
+                    $comment = Comment::Find($store->id);
                     $lesson = Lesson::find($lessons->id);
                     $contrib = Contributor::find($lessons->contributor_id);
                     $contrib->notify(new UserCommentNotification($member, $comment, $contrib, $lesson));
@@ -423,10 +412,13 @@ class LessonsController extends Controller
 				                    </div>
 				                    <div class="panel-body" style="white-space:pre-line;">
 				                      ' . $comment->body . '
-				                    </div>';
-            if (!empty(Auth::guard('members')->user()->id)) {
-                if(count($tutorial) >0 ){
-                $html .= '<div class="panel-footer reply-btn-area text-right">
+                                    </div>';
+                                    if($comment->images != null){
+                                    $html .= '<a id="firstlink" data-gall="myGallery" class="venobox vbox-item" data-vbtype="iframe" href="'. asset($comment->images) .'"><img src="'. asset($comment->images) .'" alt="image alt" style="height:50px; width:50px; margin-left: 15px; margin-bottom: 20px;"/></a>';
+                                    }
+                                    if (!empty(Auth::guard('members')->user()->id)) {
+                                        if(count($tutorial) >0 ){
+                                        $html .= '<div class="panel-footer reply-btn-area text-right">
 									                        <button type="button" name="button" class="btn btn-primary" data-toggle="collapse" data-target="#reply' . $comment->id . '"><i class="glyphicon glyphicon-share-alt"></i> Balas</button>
 									                    </div>
 									                    <div class="collapse" id="reply' . $comment->id . '">
