@@ -287,6 +287,7 @@
 .video-js.vjs-fullscreen,.video-js.vjs-fullscreen .vjs-tech {
     width: 100%!important;
     height: 100%!important
+    
 }
 
 .video-js {
@@ -296,6 +297,7 @@
 
 .video-js .vjs-control {
     color: inherit
+    
 }
 
 .video-js .vjs-menu-button-inline:hover,.video-js.vjs-no-flex .vjs-menu-button-inline {
@@ -672,7 +674,7 @@ td{
               <video id="video" class="video-js vjs-default-skin vjs-big-play-centered" height="500" width="70%" controls>
                 @if (count($main_videos) > 0) 
                     <source src="{{ !empty($main_videos[0]->video) ? $main_videos[0]->video : '' }}" type="{{ (!empty($main_videos[0]->type_video)) ? $main_videos[0]->type_video : '' }}">
-                @endif
+                @endif 
               </video>
 
               <!-- Playlist Video -->
@@ -699,16 +701,16 @@ td{
 
               <div class="tab-content" style="margin-top:0px;">
                 <div id="tab1" class="tab-pane fade in active">
-                <p>  {!! $lessons->description !!} </p>
+                  {!! nl2br($lessons->description) !!}
                 </div>
                 <div id="tab2" class="tab-pane fade">
-                  <ul class="materi_list">
+                  <ol class="materi_list">
                     @foreach ($main_videos as $row)
-                   <li>
+                    <li>
                     <table>
                         <tr>
                           <td><strong>{{ $row->title }}</strong>
-                              {!! nl2br($row->description) !!}
+                              <p>{!! nl2br($row->description) !!}</p>
                           </td>
                           <td>
                           @if ($tutor)
@@ -719,7 +721,7 @@ td{
                     </table>
                     </li>
                     @endforeach
-                  </ul>
+                  </ol>
                 </div>
                 <div id="tab3" class="tab-pane fade">
                   @if ($tutor)
@@ -901,6 +903,34 @@ $(document).ready(function(){
     // setInterval(function(){
     //     loadcontent()
     // }, 5000);
+</script>
+<script type="text/javascript">
+    var video = document.getElementById("video");
+
+    $('#video').hover(function toggleControls() {
+        if (video.hasAttribute!=("controls")) {
+          video.setAttribute("controls", "controls")
+            
+        } else {
+          video.removeAttribute("controls")
+        }
+    })
+    // var el = document.getElementById("nextButton");
+    // if (el.addEventListener) {
+    //     el.addEventListener("click", yourNextFunction, false);
+    // } else {
+    //     el.attachEvent('onclick', yourNextFunction);
+    // }  
+    // var video_count =1,
+    // videoPlayer = document.getElementById("homevideo");
+
+    // function yourNextFunction (){
+    //   video_count++;
+    //   if (video_count == 16) video_count = 1;
+    //   var nextVideo = "video"+video_count+".mp4";
+    //   videoPlayer.src = nextVideo;
+    //   videoPlayer.play();
+    // }
 </script>
 <script>
   fbq('track', 'ViewContent');

@@ -82,6 +82,9 @@ class LessonsController extends Controller
         ]);
 
     }
+    public function getSearchcategory(Category $category){
+        return $category->lesson()->select('id', 'title')->get();
+    }
     public function detail($slug)
     {
         $now = new DateTime();
@@ -91,7 +94,8 @@ class LessonsController extends Controller
         $lessons = Lesson::where('enable', 1)->where('status', 1)->where('slug', $slug)->first();
         $tutorial = TutorialMember::where('member_id', $mem_id)->where('lesson_id', $lessons->id)->first();
         $cart = Cart::where('member_id', $mem_id)->where('lesson_id', $lessons->id)->first();
-
+        $categories = Category::where('enable', 1)->get();
+        
         if (count($lessons) > 0) {
             $main_videos = Video::where('enable', 1)->where('lessons_id', $lessons->id)->orderBy('id', 'asc')->get();
             $files = File::where('enable', 1)->where('lesson_id', $lessons->id)->orderBy('id', 'asc')->get();
@@ -109,6 +113,7 @@ class LessonsController extends Controller
             }
 
             return view('web.lessons.detail', [
+                'categories' => $categories,
                 'lessons' => $lessons,
                 'main_videos' => $main_videos,
                 'file' => $files,

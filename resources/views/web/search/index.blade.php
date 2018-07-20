@@ -166,7 +166,6 @@ fbq('track', 'Search');
                 
                 localStorage.setItem('cart', JSON.stringify(cart));
               @endif
-
               swal({
                   title: "Menambahkan ke keranjang",
                   text: data.title,
