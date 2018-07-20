@@ -428,7 +428,13 @@ class LessonsController extends Controller
 									                            <div class="form-group">
 									                              <label>Komentar</label>
 									                              <textarea name="name" rows="8" cols="80" class="form-control" name="body" id="textbody' . $comment->id . '"></textarea>
-									                            </div>
+                                                                </div>
+                                                                <div class="upload-btn-wrapper">
+                                                                <button class="btn-upload btn-info"><i class="fa fa-upload"></i> Tambahkan Gambar/File</button>
+                                                                <input type="file"  name="image" id="image"/>
+                                                                
+                                                                </div>
+                                                                <img id="myImg" src="#" style="height :50px; width:50px; margin-bottom:42px;" />
 									                            <button type="submit" class="btn btn-primary pull-right" onClick="doComment(' . $lesson_id . ',' . $comment->id . ')" >Kirim</button>
 									                          </div>
 									                        </div>
@@ -471,7 +477,7 @@ class LessonsController extends Controller
 				                          <strong>' . $userna . '</strong> <span class="text-muted">commented ' . $this->time_elapsed_string($child->created_at) . '</span>
 				                        </div>
 				                        <div class="panel-body">
-				                          ' . $child->body . '
+                                          ' . $child->body . '
 				                        </div><!-- /panel-body -->
 				                      </div><!-- /panel panel-default -->
 				                    </div><!-- /col-sm-5 -->
