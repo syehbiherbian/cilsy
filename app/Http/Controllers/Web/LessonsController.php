@@ -424,18 +424,12 @@ class LessonsController extends Controller
 									                    <div class="collapse" id="reply' . $comment->id . '">
 									                      <div class="panel-footer ">
 									                        <div class="row reply">
-									                          <div class="col-md-12">
-									                            <div class="form-group">
+                                                              <div class="col-md-12">
+    									                        <div class="form-group">
 									                              <label>Komentar</label>
 									                              <textarea name="name" rows="8" cols="80" class="form-control" name="body" id="textbody' . $comment->id . '"></textarea>
                                                                 </div>
-                                                                <div class="upload-btn-wrapper">
-                                                                <button class="btn-upload btn-info"><i class="fa fa-upload"></i> Tambahkan Gambar/File</button>
-                                                                <input type="file"  name="image" id="image"/>
-                                                                
-                                                                </div>
-                                                                <img id="myImg" src="#" style="height :50px; width:50px; margin-bottom:42px;" />
-									                            <button type="submit" class="btn btn-primary pull-right" onClick="doComment(' . $lesson_id . ',' . $comment->id . ')" >Kirim</button>
+                                                                <button type="submit" class="btn btn-primary pull-right" onClick="doComment(' . $lesson_id . ',' . $comment->id . ')" >Kirim</button>
 									                          </div>
 									                        </div>
 									                      </div>
@@ -478,8 +472,11 @@ class LessonsController extends Controller
 				                        </div>
 				                        <div class="panel-body">
                                           ' . $child->body . '
-				                        </div><!-- /panel-body -->
-				                      </div><!-- /panel panel-default -->
+                                        </div><!-- /panel-body -->';
+                                        if($child->images != null){
+                                    $html .= '<a id="firstlink" data-gall="myGallery" class="venobox vbox-item" data-vbtype="iframe" href="'. asset($child->images) .'"><img src="'. asset($child->images) .'" alt="image alt" style="height:50px; width:50px; margin-left: 15px; margin-bottom: 20px;"/></a>';
+                                        }
+				                      $html .= '</div><!-- /panel panel-default -->
 				                    </div><!-- /col-sm-5 -->
 				                  </div><!-- ./row -->
 				                  <!-- ./Comments Childs -->';
