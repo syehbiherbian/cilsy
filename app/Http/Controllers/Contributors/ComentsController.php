@@ -130,11 +130,11 @@ class ComentsController extends Controller
                         'created_at'    => new DateTime(),
                         ]);
         
-        $mem = DB::table('comments')->where('parent_id','<>', $comment_id)
-        ->where('comments.member_id', '<>',$uid)
-        ->select('comments.member_id')
-        ->orderby('comments.created_at', 'DESC')
-        ->first();
+        // $mem = DB::table('comments')->where('parent_id','<>', $comment_id)
+        // ->where('comments.member_id', '<>',$uid)
+        // ->select('comments.member_id')
+        // ->orderby('comments.created_at', 'DESC')
+        // ->first();
         // if(!empty($mem)){
           
         // $notif_nimbrung =   DB::table('user_notif')->insertGetId([
