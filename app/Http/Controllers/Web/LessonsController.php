@@ -348,7 +348,7 @@ class LessonsController extends Controller
                     $comment = Comment::Find($store->id);
                     $lesson = Lesson::find($lessons->id);
                     $contrib = Contributor::find($lessons->contributor_id);
-                    $contrib->notify(new UserCommentNotification($member, $comment, $contrib, $lesson));
+                    // $contrib->notify(new UserCommentNotification($member, $comment, $contrib, $lesson));
                     
                     // dd($contrib);
                 // Create Point
