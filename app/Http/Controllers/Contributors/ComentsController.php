@@ -121,7 +121,7 @@ class ComentsController extends Controller
         
 
         $notif_user =   DB::table('user_notif')->insertGetId([
-                        'id_user'=> $notify->member_id,
+                        'id_user'=>$member_id,
                         'category'=>'comments',
                         'title'   => 'Anda mendapatkan balasan dari pertanyaan anda di tutorial ' . $lessons->title,
                         'notif'   => 'Anda mendapatkan balasan dari pertanyaan anda dari ' . Auth::guard('contributors')->user()->username,
