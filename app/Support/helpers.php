@@ -128,7 +128,7 @@ function getTotalCart(){
 }
 
 function namemember(){
-  $member_name =  substr(Auth::guard('members')->user()->username, '0', 8);
+  $member_name =  substr(Auth::guard('members')->user()->username, '0', 5);
   return $member_name;
 }
 

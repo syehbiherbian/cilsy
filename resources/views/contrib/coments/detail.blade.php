@@ -89,7 +89,7 @@
                 @foreach($datacomment as $comment)
                 <div class="col-md-12" style="margin-bottom:30px;" id="row{{ $comment->id }}">
                     <strong>{{ $comment->username }}</strong> pada <strong><?= date('d/m/Y',strtotime($comment->created_at)) ?></strong>
-					<strong style="color:#ff5e10;">@if($comment->member_id !==null)  User @endif @if($comment->contributor_id  !==null)  Contributor @endif</strong>
+					<strong style="color:#ff5e10;">@if($comment->member_id !==null)  User @else ($comment->contributor_id  !==null)  Contributor @endif</strong>
 					<div class="col-md-12" style="margin-top:10px;padding-left:5%; white-space:pre-line;">
                             {{ $comment->body }}
                     <?php if($comment->images) { ?>
@@ -120,7 +120,7 @@
 										{{ $child->contriname }}
 									<?php } ?>
 								</strong> pada <strong><?= date('d/m/Y',strtotime($child->created_at)) ?></strong>
-								<strong style="color:#ff5e10;">@if($child->member_id !==null)  User @endif @if($child->contributor_id  !==null)  Contributor @endif</strong>
+								<strong style="color:#ff5e10;">@if($child->member_id !==null)  User @else ($child->contributor_id  !==null)  Contributor @endif</strong>
 								<div class="col-md-12" style="margin-top:10px;margin-bottom:10px;padding-left:5%;">
                                     {{ $child->body }}
 								</div>
@@ -154,7 +154,7 @@
     function dobalas(comment_id){
         var isi_balas = $('#input_balas'+comment_id).val();
         var lesson_id = '{{ $datalesson->id }}';
-        var member_id = '{{ $comment->contributor_id }}';
+        var member_id = '{{ $comment->member_id}}';
         // alert(comment_id+' = '+isi_balas);
         var datapost = {
             '_token'    : '{{ csrf_token() }}',

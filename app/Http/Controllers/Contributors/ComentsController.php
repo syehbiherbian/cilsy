@@ -101,7 +101,7 @@ class ComentsController extends Controller
         $comment_id = Input::get('comment_id');
         $lesson_id  = Input::get('lesson_id');
         $member_id  = Input::get('member_id');
-        
+         
 
         $lessons = DB::table('lessons')->where('id',$lesson_id)->first();
         $notify = DB::table('comments')->where('id', $comment_id)->first();
@@ -109,12 +109,12 @@ class ComentsController extends Controller
 
         DB::table('comments')->insert([
             'lesson_id'     => $lesson_id,
-            'member_id'     => $member_id,
+            'member_id'     => null,
             'contributor_id'=> $uid,
             'body'          => $isi_balas,
             'parent_id'     => $comment_id,
             'status'        => '0',
-            'desc'        => '0',
+            'desc'        => '1',
             'created_at'    => new DateTime()
         ]);
 
@@ -131,7 +131,7 @@ class ComentsController extends Controller
                         ]);
         
         $mem = DB::table('comments')->where('parent_id', $comment_id)
-        ->where('comments.parent_id', '<>', `comments.id`)
+        ->where('comments.parent_id', '0')
         ->where('comments.member_id', '<>',$uid)
         ->select('comments.member_id')
         ->orderby('comments.created_at', 'DESC')
@@ -154,6 +154,7 @@ class ComentsController extends Controller
 
         $lesson = Lesson::Find($lesson_id);
         $contrib = Contributor::find($uid);
+        
         $member->notify(new ContribReplyNotification([$member, $lesson, $contrib]));
         $nimbrung->notify(new ContribReplyNotification([$nimbrung, $lesson, $contrib]));
 
