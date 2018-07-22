@@ -328,7 +328,7 @@ class LessonsController extends Controller
                         $member = Member::Find($value);
                         $lesson = Lesson::Find($lesson_id);
                         $contrib = Contributor::find($lessons->contributor_id);
-                        $member->notify(new UserReplyNotification($member, $lesson, $contrib));
+                        // $member->notify(new UserReplyNotification($member, $lesson, $contrib));
                         }
                     }
                 }
