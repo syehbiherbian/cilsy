@@ -622,6 +622,7 @@ td{
   color: gray;
   background-color: white;
   padding: 8px 20px;
+  height:50px;
   border-radius: 5px;
   font-weight: bold;
 }
@@ -702,12 +703,13 @@ td{
                 <p>  {!! $lessons->description !!} </p>
                 </div>
                 <div id="tab2" class="tab-pane fade">
+                  <?php $number=1 ?>
                   <ul class="materi_list">
                     @foreach ($main_videos as $row)
                    <li>
                     <table>
                         <tr>
-                          <td><strong>{{ $row->title }}</strong>
+                          <td><strong> <?php echo $number?> {{ $row->title }}</strong>
                               {!! nl2br($row->description) !!}
                           </td>
                           <td>
@@ -718,6 +720,7 @@ td{
                         </tr>
                     </table>
                     </li>
+                    <?php $number++; ?>
                     @endforeach
                   </ul>
                 </div>
@@ -755,14 +758,14 @@ td{
                         </div>
                        <ul class="left">
                          <div class="upload-btn-wrapper">
-                          <button class="btn-upload btn-info">Upload a file</button>
+                          <button class="btn-upload btn-info"><i class="fa fa-upload"></i> Tambahkan Gambar/File</button>
                           <input type="file"  name="image" id="image"/>
+                          
                         </div>
+                        <img id="myImg" src="#" style="height :50px; width:50px; margin-bottom:42px;" />
                        </ul>
+                       
                        <ul class="right">
-                      
-                      {{--  <img id="myImg" src="#" />  --}}
-                      
                       <button type="button" class="btn btn-primary upload-image" onclick="doComment({{ $lessons->id}}, 0)">Kirim</button> 
                       </ul>
                       </form><!--./ Comment Form -->

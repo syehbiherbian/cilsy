@@ -433,12 +433,12 @@ class LessonsController extends Controller
 									                    <div class="collapse" id="reply' . $comment->id . '">
 									                      <div class="panel-footer ">
 									                        <div class="row reply">
-									                          <div class="col-md-12">
-									                            <div class="form-group">
+                                                              <div class="col-md-12">
+    									                        <div class="form-group">
 									                              <label>Komentar</label>
 									                              <textarea name="name" rows="8" cols="80" class="form-control" name="body" id="textbody' . $comment->id . '"></textarea>
-									                            </div>
-									                            <button type="submit" class="btn btn-primary pull-right" onClick="doComment(' . $lesson_id . ',' . $comment->id . ')" >Kirim</button>
+                                                                </div>
+                                                                <button type="submit" class="btn btn-primary pull-right" onClick="doComment(' . $lesson_id . ',' . $comment->id . ')" >Kirim</button>
 									                          </div>
 									                        </div>
 									                      </div>
@@ -480,9 +480,12 @@ class LessonsController extends Controller
 				                          <strong>' . $userna . '</strong> <span class="text-muted">commented ' . $this->time_elapsed_string($child->created_at) . '</span>
 				                        </div>
 				                        <div class="panel-body">
-				                          ' . $child->body . '
-				                        </div><!-- /panel-body -->
-				                      </div><!-- /panel panel-default -->
+                                          ' . $child->body . '
+                                        </div><!-- /panel-body -->';
+                                        if($child->images != null){
+                                    $html .= '<a id="firstlink" data-gall="myGallery" class="venobox vbox-item" data-vbtype="iframe" href="'. asset($child->images) .'"><img src="'. asset($child->images) .'" alt="image alt" style="height:50px; width:50px; margin-left: 15px; margin-bottom: 20px;"/></a>';
+                                        }
+				                      $html .= '</div><!-- /panel panel-default -->
 				                    </div><!-- /col-sm-5 -->
 				                  </div><!-- ./row -->
 				                  <!-- ./Comments Childs -->';
