@@ -319,20 +319,20 @@ class LessonsController extends Controller
         
 
             // dd($getemailchild);
-            if($parent_id != 0){
-                foreach ($getemailchild as $mails) {
-                //  Check type
-                if (is_array($mails)){
-                    //  Scan through inner loop
-                    foreach ($mails as $value) {
-                        $member = Member::Find($value);
-                        $lesson = Lesson::Find($lesson_id);
-                        $contrib = Contributor::find($lessons->contributor_id);
-                        $member->notify(new UserReplyNotification($member, $lesson, $contrib));
-                        }
-                    }
-                }
-            }
+            // if($parent_id != null){
+            //     // foreach ($getemailchild as $mails) {
+            //     // //  Check type
+            //     // if (is_array($mails)){
+            //         // //  Scan through inner loop
+            //         // foreach ($mails as $value) {
+            //             $member = Member::Find($value);
+            //             $lesson = Lesson::Find($lesson_id);
+            //             $contrib = Contributor::find($lessons->contributor_id);
+            //             $member->notify(new UserReplyNotification($member, $lesson, $contrib));
+            //             // }
+            //     //     }
+            //     // }
+            // }
 
                 // dd($store);
                     DB::table('contributor_notif')->insert([
@@ -348,7 +348,7 @@ class LessonsController extends Controller
                     $comment = Comment::Find($store->id);
                     $lesson = Lesson::find($lessons->id);
                     $contrib = Contributor::find($lessons->contributor_id);
-                    // $contrib->notify(new UserCommentNotification($member, $comment, $contrib, $lesson));
+                    $contrib->notify(new UserCommentNotification($member, $comment, $contrib, $lesson));
                     
                     // dd($contrib);
                 // Create Point
