@@ -35,6 +35,8 @@ class LessonsController extends Controller
         $categories = Category::where('enable', 1)->get();
         if ($by == 'category') {
             $category = Category::where('enable', 1)->where('title', 'like', '%' . $keyword . '%')->first();
+
+            if(!empty($mem_id)){
             $results = Lesson::Join('categories', 'lessons.category_id', 'categories.id')
             ->leftjoin('tutorial_member', function($join){
                 $join->on('lessons.id', '=', 'tutorial_member.lesson_id')
@@ -47,7 +49,14 @@ class LessonsController extends Controller
             ->where('lessons.status', 1)
             ->where('lessons.category_id', $category->id)
             ->paginate(10);
-
+            }else{
+                $results = Lesson::Join('categories', 'lessons.category_id', 'categories.id')
+                ->select('lessons.*', 'categories.title as category_title')
+                ->where('lessons.enable', 1)
+                ->where('lessons.status', 1)
+                ->where('lessons.category_id', $category->id)
+                ->paginate(10); 
+            }
 
 
 
