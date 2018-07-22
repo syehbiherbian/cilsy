@@ -121,7 +121,7 @@ class ComentsController extends Controller
         
 
         $notif_user =   DB::table('user_notif')->insertGetId([
-                        'id_user'=>$member_id,
+                        'id_user'=> $notify->member_id,
                         'category'=>'comments',
                         'title'   => 'Anda mendapatkan balasan dari pertanyaan anda di tutorial ' . $lessons->title,
                         'notif'   => 'Anda mendapatkan balasan dari pertanyaan anda dari ' . Auth::guard('contributors')->user()->username,
@@ -152,7 +152,7 @@ class ComentsController extends Controller
         // }
 
 
-        $member = Member::Find($notify->member_id);
+        $member = Member::Find($member_id);
 
         $lesson = Lesson::Find($lesson_id);
         $contrib = Contributor::find($uid);
