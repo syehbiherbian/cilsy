@@ -154,7 +154,7 @@
     function dobalas(comment_id){
         var isi_balas = $('#input_balas'+comment_id).val();
         var lesson_id = '{{ $datalesson->id }}';
-        var member_id = '{{ $child->contributor_id }}';
+        var member_id = '{{ $comment->contributor_id }}';
         // alert(comment_id+' = '+isi_balas);
         var datapost = {
             '_token'    : '{{ csrf_token() }}',

@@ -47,7 +47,6 @@ class ComentsController extends Controller
             ->orderBy('comments.created_at','DESC')
             ->select('comments.*')
             ->get();
-        // dd($getcomment);
         return view('contrib.coments.index', [
             'data' => $getcomment,
             'abaikan'=>$getabaikan,
@@ -76,6 +75,12 @@ class ComentsController extends Controller
             ->where('comments.lesson_id',$getlesson->id)
             ->where('comments.status',0)
             ->update(['status' => 1]);
+
+            DB::table('contributor_notif')
+            ->where('contributor_notif.slug',$id)
+            ->where('contributor_notif.status',0)
+            ->update(['status' => 1]);
+
         if ($getlesson->contributor_id == $uid) {
             return view('contrib.coments.detail',[
                 'datalesson'    => $getlesson,
@@ -108,8 +113,8 @@ class ComentsController extends Controller
             'contributor_id'=> $uid,
             'body'          => $isi_balas,
             'parent_id'     => $comment_id,
-            'status'        => 0,
-            'desc'        => 1,
+            'status'        => '0',
+            'desc'        => '0',
             'created_at'    => new DateTime()
         ]);
 

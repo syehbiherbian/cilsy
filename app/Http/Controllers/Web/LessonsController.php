@@ -102,6 +102,7 @@ class LessonsController extends Controller
     }
     public function detail($slug)
     {
+        
         $now = new DateTime();
         $mem_id = isset(Auth::guard('members')->user()->id) ? Auth::guard('members')->user()->id : 0;
         $services = Service::where('status', 1)->where('status', 2)->where('download', 1)->where('members_id', $mem_id)->where('expired', '>', $now)->first();
@@ -290,7 +291,7 @@ class LessonsController extends Controller
             $input['images'] = null;
             $input['member_id'] = $member->id;
             $input['contributor_id'] = str_replace('}','',str_replace('{"contributor_id":', '',$contri));
-            $input['status'] = 1;
+            $input['status'] = 0;
             // dd($input);
 
             if ($request->hasFile('image')){
@@ -305,10 +306,10 @@ class LessonsController extends Controller
             ->Join('members','members.id','=','comments.member_id')
             ->where('comments.lesson_id',$input['lesson_id'])
             ->where('comments.parent_id',0)
-            ->where('comments.status',1)
+            ->where('comments.status',0)
             ->select('comments.*','members.username as username')
             ->first();
-
+        
             $getemailchild = DB::table('comments')
                              ->Join('comments as B', 'comments.id', 'B.parent_id')
                              ->Where('B.parent_id', $input['parent_id'])
@@ -340,6 +341,7 @@ class LessonsController extends Controller
                         'title' => 'Anda mendapat pertanyaan dari ' . $member->username,
                         'notif' => 'Anda mendapatkan pertanyaan dari ' . $member->username . ' pada ' . $lessons->title,
                         'status' => 0,
+                        'slug' => $getmembercomment->id,
                         'created_at' => $now,
                     ]);
                     $member = Member::Find($uid);
