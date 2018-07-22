@@ -698,19 +698,19 @@ td{
                 <li><a data-toggle="tab" href="#tab4">Komentar</a></li>
               </ul>
 
-             <div class="tab-content" style="margin-top:0px;">
+              <div class="tab-content" style="margin-top:0px;">
                 <div id="tab1" class="tab-pane fade in active">
-                  {!! nl2br($lessons->description) !!}
+                <p>  {!! $lessons->description !!} </p>
                 </div>
                 <div id="tab2" class="tab-pane fade">
-                <?php $number=1; ?>
+                  <?php $number=1 ?>
                   <ul class="materi_list">
                     @foreach ($main_videos as $row)
-                    <li>
+                   <li>
                     <table>
                         <tr>
-                          <td><strong><?php echo $number ?> {{ $row->title }}</strong>
-                              <p>{!! nl2br($row->description) !!}</p>
+                          <td><strong> <?php echo $number?> {{ $row->title }}</strong>
+                              {!! nl2br($row->description) !!}
                           </td>
                           <td>
                           @if ($tutor)
@@ -720,7 +720,7 @@ td{
                         </tr>
                     </table>
                     </li>
-                    <?php $number++;?>
+                    <?php $number++; ?>
                     @endforeach
                   </ul>
                 </div>
@@ -740,23 +740,40 @@ td{
                       Silahkan <a href="{{ url('member/signin') }}" class="btn btn-primary"> Masuk</a> untuk memberikan komentar
                     </div>
                   @else
-
-                  <!-- Comment Form -->
-                  <div class="comments-form mb-25">
-                    <!-- <form id="form-comment" class="mb-25">
-                      {{-- csrf_field() --}}
-                      <input type="hidden" name="lesson_id" value="{{-- $lessons->id --}}">
-                      <input type="hidden" name="parent_id" value="0"> -->
-                      <div class="form-group">
-                        <label>Komentar</label>
-                        <textarea rows="8" cols="80" class="form-control" name="body" id="textbody0"></textarea>
-                      </div>
-                      <button type="button" class="btn btn-primary" onClick="doComment({{ $lessons->id }},0)" >Kirim</button>
-                    <!-- </form><!--./ Comment Form -->
-                  </div>
+                    @if (empty($tutor))
+                     <div class="text-center mb-25">
+                      Fitur Komentar hanya bisa di gunakan jika sudah melakukan pembelian
+                    </div>
+                    @else
+                    <!-- Comment Form -->
+                    <div class="comments-form mb-25">
+                     <form id="form-comment" class="mb-25" enctype="multipart/form-data" method="POST">
+                        @csrf
+                        {{ method_field('POST') }}
+                        <input type="hidden" name="lesson_id" value="{{ $lessons->id }}">
+                        <input type="hidden" name="parent_id" value="0"> 
+                        <div class="form-group">
+                          <label>Komentar</label>
+                          <textarea style="white-space: pre-line" rows="8" cols="80" class="form-control" name="body" id="textbody0"></textarea>
+                        </div>
+                       <ul class="left">
+                         <div class="upload-btn-wrapper">
+                          <button class="btn-upload btn-info"><i class="fa fa-upload"></i> Tambahkan Gambar/File</button>
+                          <input type="file"  name="image" id="image"/>
+                          
+                        </div>
+                        <img id="myImg" src="#" style="height :50px; width:50px; margin-bottom:42px;" />
+                       </ul>
+                       
+                       <ul class="right">
+                      <button type="button" class="btn btn-primary upload-image" onclick="doComment({{ $lessons->id}}, 0)">Kirim</button> 
+                      </ul>
+                      </form><!--./ Comment Form -->
+                    </div>
+                    @endif
 
                   @endif
-
+        
                   <!-- Comments Lists -->
                   <div id="comments-lists">
                     <p>Memuat Komentar . . .</p>
