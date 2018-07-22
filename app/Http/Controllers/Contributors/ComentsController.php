@@ -155,7 +155,7 @@ class ComentsController extends Controller
         $lesson = Lesson::Find($lesson_id);
         $contrib = Contributor::find($uid);
 
-        $member->notify(new ContribReplyNotification([$member, $lesson, $contrib]));
+        // $member->notify(new ContribReplyNotification([$member, $lesson, $contrib]));
         // $nimbrung->notify(new ContribReplyNotification([$nimbrung, $lesson, $contrib]));
 
         $check=DB::table('comments')->where('parent_id',$comment_id)->get();
