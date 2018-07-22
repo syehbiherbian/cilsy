@@ -130,14 +130,13 @@ class ComentsController extends Controller
                         'created_at'    => new DateTime(),
                         ]);
         
-        $mem = DB::table('comments')->where('parent_id', $comment_id)
-        ->where('comments.parent_id', '0')
+        $mem = DB::table('comments')->where('parent_id','<>', $comment_id)
         ->where('comments.member_id', '<>',$uid)
         ->select('comments.member_id')
         ->orderby('comments.created_at', 'DESC')
         ->first();
-
-        
+        if(!empty($mem)){
+          
         $notif_nimbrung =   DB::table('user_notif')->insertGetId([
             'id_user'=> $mem->member_id,
             'category'=>'comments',
@@ -146,39 +145,41 @@ class ComentsController extends Controller
             'status'  => 0,
             'slug'    => $lessons->slug,
             'created_at'    => new DateTime(),
-        ]);
+        ]);  
+        $nimbrung = Member::Find($mem->member_id);
+        $nimbrung->notify(new ContribReplyNotification([$nimbrung, $lesson, $contrib]));
+
+        }
 
 
         $member = Member::Find($notify->member_id);
-        $nimbrung = Member::Find($mem->member_id);
 
         $lesson = Lesson::Find($lesson_id);
         $contrib = Contributor::find($uid);
 
-        // $member->notify(new ContribReplyNotification([$member, $lesson, $contrib]));
-        // $nimbrung->notify(new ContribReplyNotification([$nimbrung, $lesson, $contrib]));
+        $member->notify(new ContribReplyNotification([$member, $lesson, $contrib]));
 
-        $check=DB::table('comments')->where('parent_id',$comment_id)->get();
+        // $check=DB::table('comments')->where('parent_id',$comment_id)->get();
 
-        if(count($check)==1){
-            $check_contri=Contributor::where('id',$uid)->first();
-            if(count($check_contri)>0){
-              $contri = Contributor::find($uid);
-              $contri->points      = $check_contri->points + 3;
-              $contri->updated_at  = new DateTime();
-              $contri->save();
+        // if(count($check)==1){
+        //     $check_contri=Contributor::where('id',$uid)->first();
+        //     if(count($check_contri)>0){
+        //       $contri = Contributor::find($uid);
+        //       $contri->points      = $check_contri->points + 3;
+        //       $contri->updated_at  = new DateTime();
+        //       $contri->save();
 
-            //   DB::table('contributor_notif')->insert([
-            //       'contributor_id'=> $uid,
-            //       'category'=>'point',
-            //       'title'   => 'Anda mendapatkan penambahan 3 point',
-            //       'notif'        => 'Anda mendapatkan penambahan sebanyak 3 point karena  mereply komentar dari '.$lessons->title.' ',
-            //       'status'        => 0,
-            //       'created_at'    => new DateTime()
-            //   ]);
-            }
+        //     //   DB::table('contributor_notif')->insert([
+        //     //       'contributor_id'=> $uid,
+        //     //       'category'=>'point',
+        //     //       'title'   => 'Anda mendapatkan penambahan 3 point',
+        //     //       'notif'        => 'Anda mendapatkan penambahan sebanyak 3 point karena  mereply komentar dari '.$lessons->title.' ',
+        //     //       'status'        => 0,
+        //     //       'created_at'    => new DateTime()
+        //     //   ]);
+        //     }
 
-        }
+        // }
 
         // DB::table('contributor_notif')->insert([
         //     'contributor_id'=> $uid,
