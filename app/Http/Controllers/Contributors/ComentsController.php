@@ -135,21 +135,21 @@ class ComentsController extends Controller
         ->select('comments.member_id')
         ->orderby('comments.created_at', 'DESC')
         ->first();
-        // if(!empty($mem)){
+        if(!empty($mem)){
           
-        // $notif_nimbrung =   DB::table('user_notif')->insertGetId([
-        //     'id_user'=> $mem->member_id,
-        //     'category'=>'comments',
-        //     'title'   => 'Anda mendapatkan balasan dari pertanyaan anda di tutorial ' . $lessons->title,
-        //     'notif'   => 'Anda mendapatkan balasan dari pertanyaan anda dari ' . Auth::guard('contributors')->user()->username,
-        //     'status'  => 0,
-        //     'slug'    => $lessons->slug,
-        //     'created_at'    => new DateTime(),
-        // ]);  
-        // $nimbrung = Member::Find($mem->member_id);
-        // $nimbrung->notify(new ContribReplyNotification([$nimbrung, $lesson, $contrib]));
+        $notif_nimbrung =   DB::table('user_notif')->insertGetId([
+            'id_user'=> $mem->member_id,
+            'category'=>'comments',
+            'title'   => 'Anda mendapatkan balasan dari pertanyaan anda di tutorial ' . $lessons->title,
+            'notif'   => 'Anda mendapatkan balasan dari pertanyaan anda dari ' . Auth::guard('contributors')->user()->username,
+            'status'  => 0,
+            'slug'    => $lessons->slug,
+            'created_at'    => new DateTime(),
+        ]);  
+        $nimbrung = Member::Find($mem->member_id);
+        $nimbrung->notify(new ContribReplyNotification([$nimbrung, $lesson, $contrib]));
 
-        // }
+        }
 
 
         $member = Member::Find($notify->member_id);
