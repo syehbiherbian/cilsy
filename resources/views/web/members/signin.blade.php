@@ -51,7 +51,7 @@
                     <span title="Click here to show/hide password" toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
                     @if ($errors->has('password')) <p class="help-block">{{ $errors->first('password') }}</p> @endif
                 </div>
-                <button type="submit" class="btn btn-primary">MASUK</button>
+                <button type="submit" class="btn btn-primary" style="margin: auto;">MASUK</button>
                 <div>
                     <a href="{{ url('member/reset') }}"><p style="text-align: center;margin-top: 15px;">Lupa Password ?</p></a>
                 </div>
