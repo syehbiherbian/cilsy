@@ -120,16 +120,19 @@ class ComentsController extends Controller
 
         
 
-    $notif_user =   DB::table('user_notif')->insertGetId([
-                    'id_user'=> $notify->member_id,
-                    'category'=>'comments',
-                    'title'   => 'Anda mendapatkan balasan dari pertanyaan anda di tutorial ' . $lessons->title,
-                    'notif'   => 'Anda mendapatkan balasan dari pertanyaan anda dari ' . Auth::guard('contributors')->user()->username,
-                    'status'  => 0,
-                    'slug'    => $lessons->slug,
-                    'created_at'    => new DateTime(),
-                    ]);
-        
+        $notif_user =   DB::table('user_notif')->insertGetId([
+                        'id_user'=> $notify->member_id,
+                        'category'=>'comments',
+                        'title'   => 'Anda mendapatkan balasan dari pertanyaan anda di tutorial ' . $lessons->title,
+                        'notif'   => 'Anda mendapatkan balasan dari pertanyaan anda dari ' . Auth::guard('contributors')->user()->username,
+                        'status'  => 0,
+                        'slug'    => $lessons->slug,
+                        'created_at'    => new DateTime(),
+                        ]);
+        $member = Member::Find($notify->member_id);
+        $lessonn = Lesson::find($lessons->id);
+        $contrib = Contributor::find($lessons->contributor_id);
+        $member->notify(new ContribReplyNotification($member, $lessonn, $contrib));
         // $mem = DB::table('comments')->where('parent_id','<>', $comment_id)
         // ->where('comments.member_id', '<>',$uid)
         // ->select('comments.member_id')
@@ -146,17 +149,16 @@ class ComentsController extends Controller
         //     'slug'    => $lessons->slug,
         //     'created_at'    => new DateTime(),
         // ]);  
-        // $nimbrung = Member::Find($mem->member_id);
-        // $nimbrung->notify(new ContribReplyNotification([$nimbrung, $lesson, $contrib]));
+        
 
         // }
  
 
-        $member = Member::Find($member_id);
-        $lesson = Lesson::Find($lesson_id);
-        $contrib = Contributor::find($uid);
+        // $member = Member::Find($member_id);
+        // $lesson = Lesson::Find($lesson_id);
+        // $contrib = Contributor::find($uid);
 
-         $member->notify(new ContribReplyNotification([$member, $lesson, $contrib]));
+        // $member->notify(new ContribReplyNotification([$member, $lesson, $contrib]));
 
         $check=DB::table('comments')->where('parent_id',$comment_id)->get();
 
