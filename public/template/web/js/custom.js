@@ -78,18 +78,7 @@ function addToCart(id) {
                     } else {
                         var exist = false;
                         var cart = JSON.parse(cek);
-                        /* if (cart.length >= 1) {
-                        	return swal({
-                        		title: "Tidak bisa menambahkan keranjang",
-                        		text: 'Silakan daftar/login terlebih dahulu untuk melanjutkan',
-                        		type: "error",
-                        		confirmButtonText: "Login"
-                        	}).then(function(isConfirm) {
-                        		if (isConfirm.value) {
-                        			window.location.href = SITE_URL+'/member/signin?next=/cart';
-                        		}
-                        	});
-                        } */
+                        
                         $.each(cart, function(k, v) {
                             if (v.id == data.id) {
                                 exist = true;
