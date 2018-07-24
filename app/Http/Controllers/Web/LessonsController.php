@@ -314,15 +314,13 @@ class LessonsController extends Controller
                                 ->where('comments.status',0)
                                 ->select('comments.*','members.username as username')
                                 ->first();
-        
-
             DB::table('contributor_notif')->insert([
                 'contributor_id' => $lessons->contributor_id,
                 'category' => 'Komentar',
                 'title' => 'Anda mendapat pertanyaan dari ' . $member->username,
                 'notif' => 'Anda mendapatkan pertanyaan dari ' . $member->username . ' pada ' . $lessons->title,
                 'status' => 0,
-                'slug' => $getmembercomment->id,
+                'slug' => 0,
                 'created_at' => $now,
             ]);
             $getemailchild = DB::table('comments')

@@ -148,7 +148,8 @@ function notif(){
     $notif =ContributorNotif::where('contributor_id',$contribID)->where('status',0)->take(5)->get();
     $html='';
     foreach ($notif as  $value) {
-        $html .='<li><a href="/contributor/comments/detail/'.$value->slug.'" onclick="notifview('.$value->id.')">'.$value->title.'</a></li>';
+        $url = url('/contributor/comments/detail', $parameters = [$value->slug], $secure = null);
+        $html .='<li><a href="'.$url.'" onclick="notifview('.$value->id.')">'.$value->title.'</a></li>';
         
     }
     return $html;
@@ -163,8 +164,10 @@ function notifuser(){
   $mem_id =  Auth::guard('members')->user()->id;
   $notif = UserNotif::where('id_user',$mem_id)->where('status',0)->take(5)->get();
   $html='';
+  
   foreach ($notif as  $value) {
-      $html .='<li><a href="'.$value->slug.'" onclick="notifview('.$value->id.')">'.$value->title.'</a></li>';
+      $url = url('lessons', $parameters = [$value->slug], $secure = null);
+      $html .='<li><a href="'.$url.'" onclick="notifview('.$value->id.')">'.$value->title.'</a></li>';
 
   }
   return $html;

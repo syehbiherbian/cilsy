@@ -105,7 +105,8 @@
                 <p style="font-weight:bold;">Rp. {{ number_format($result->price, 0, ",", ".") }}</p>
                 <?php if(empty($result->hasil)){ ?>
                 <p>
-                <button type="button" class="btn btn-info" style="padding: 6px 48px"  onclick="addToCart({{ $result->id }})"><i class="fa fa-shopping-cart"></i>Beli </button>
+                <button id="beli-{{ $result->id }}" type="button" class="btn btn-info" style="padding: 6px 48px"  onclick="addToCart({{ $result->id }})"><i class="fa fa-shopping-cart"></i>Beli </button>
+                <a id="guest-{{ $result->id }}" href="{{ url('cart') }}" class="btn" style="background-color:#fff; color:#5bc0de; border-color:#46b8da; display:none" >Lihat Keranjang</a>
                 </p>
                 <?php }else{ ?>
                 <p>
@@ -128,6 +129,18 @@
 </div>
 <script>
 fbq('track', 'Search');
+</script>
+<script>
+  var cek = localStorage.getItem('cart');
+  if(cek != null){
+    var results = JSON.parse(cek);
+    if (results.length > 0){
+      $.each(results, function(k,v) {
+            $('#beli-'+v['id']).hide();
+            $('#guest-'+v['id']).show();
+      });
+    }
+  }
 </script>
 <script type="text/javascript">
 <div class="modal-header bg-info">
