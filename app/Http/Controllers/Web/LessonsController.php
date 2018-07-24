@@ -303,12 +303,12 @@ class LessonsController extends Controller
             // dd($store);
             if ($store) {
              $getmembercomment = DB::table('comments')
-            ->Join('members','members.id','=','comments.member_id')
-            ->where('comments.lesson_id',$input['lesson_id'])
-            ->where('comments.parent_id',0)
-            ->where('comments.status',0)
-            ->select('comments.*','members.username as username')
-            ->first();
+                                ->Join('members','members.id','=','comments.member_id')
+                                ->where('comments.lesson_id',$input['lesson_id'])
+                                ->where('comments.parent_id',0)
+                                ->where('comments.status',0)
+                                ->select('comments.*','members.username as username')
+                                ->first();
         
             $getemailchild = DB::table('comments')
                              ->Join('comments as B', 'comments.id', 'B.parent_id')
@@ -316,25 +316,7 @@ class LessonsController extends Controller
                              ->where('comments.member_id', '<>', 'B.member_id')
                              ->select('comments.member_id as tanya', 'B.member_id as jawab')->distinct()
                              ->get();
-        
 
-            // dd($getemailchild);
-            // if($parent_id != null){
-            //     // foreach ($getemailchild as $mails) {
-            //     // //  Check type
-            //     // if (is_array($mails)){
-            //         // //  Scan through inner loop
-            //         // foreach ($mails as $value) {
-            //             $member = Member::Find($value);
-            //             $lesson = Lesson::Find($lesson_id);
-            //             $contrib = Contributor::find($lessons->contributor_id);
-            //             $member->notify(new UserReplyNotification($member, $lesson, $contrib));
-            //             // }
-            //     //     }
-            //     // }
-            // }
-
-                // dd($store);
                     DB::table('contributor_notif')->insert([
                         'contributor_id' => $lessons->contributor_id,
                         'category' => 'Komentar',
@@ -344,7 +326,27 @@ class LessonsController extends Controller
                         'slug' => $getmembercomment->id,
                         'created_at' => $now,
                     ]);
-                    $member = Member::Find($uid);
+        
+
+            // dd($getemailchild);
+            if($parent_id != null){
+                foreach ($getemailchild as $mails) {
+                //  Check type
+                if (is_array($mails)){
+                    //  Scan through inner loop
+                    foreach ($mails as $value) {
+                        $member = Member::Find($value);
+                        $lesson = Lesson::Find($lesson_id);
+                        $contrib = Contributor::find($lessons->contributor_id);
+                        $member->notify(new UserReplyNotification($member, $lesson, $contrib));
+                        }
+                    }
+                }
+            }
+            // dd($getmembercomment);
+                // dd($uid);
+            
+                    $member = Member::Find($member->id);
                     $comment = Comment::Find($store->id);
                     $lesson = Lesson::find($lessons->id);
                     $contrib = Contributor::find($lessons->contributor_id);
