@@ -310,25 +310,22 @@ class LessonsController extends Controller
                                 ->select('comments.*','members.username as username')
                                 ->first();
         
+
+            DB::table('contributor_notif')->insert([
+                'contributor_id' => $lessons->contributor_id,
+                'category' => 'Komentar',
+                'title' => 'Anda mendapat pertanyaan dari ' . $member->username,
+                'notif' => 'Anda mendapatkan pertanyaan dari ' . $member->username . ' pada ' . $lessons->title,
+                'status' => 0,
+                'slug' => $getmembercomment->id,
+                'created_at' => $now,
+            ]);
             $getemailchild = DB::table('comments')
                              ->Join('comments as B', 'comments.id', 'B.parent_id')
                              ->Where('B.parent_id', $input['parent_id'])
                              ->where('comments.member_id', '<>', 'B.member_id')
                              ->select('comments.member_id as tanya', 'B.member_id as jawab')->distinct()
                              ->get();
-
-                    DB::table('contributor_notif')->insert([
-                        'contributor_id' => $lessons->contributor_id,
-                        'category' => 'Komentar',
-                        'title' => 'Anda mendapat pertanyaan dari ' . $member->username,
-                        'notif' => 'Anda mendapatkan pertanyaan dari ' . $member->username . ' pada ' . $lessons->title,
-                        'status' => 0,
-                        'slug' => $getmembercomment->id,
-                        'created_at' => $now,
-                    ]);
-        
-
-            // dd($getemailchild);
             if($parent_id != null){
                 foreach ($getemailchild as $mails) {
                 //  Check type
