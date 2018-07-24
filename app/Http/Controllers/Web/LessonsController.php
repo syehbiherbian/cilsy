@@ -35,6 +35,8 @@ class LessonsController extends Controller
         $categories = Category::where('enable', 1)->get();
         if ($by == 'category') {
             $category = Category::where('enable', 1)->where('title', 'like', '%' . $keyword . '%')->first();
+
+            if(!empty($mem_id)){
             $results = Lesson::Join('categories', 'lessons.category_id', 'categories.id')
             ->leftjoin('tutorial_member', function($join){
                 $join->on('lessons.id', '=', 'tutorial_member.lesson_id')
@@ -47,7 +49,14 @@ class LessonsController extends Controller
             ->where('lessons.status', 1)
             ->where('lessons.category_id', $category->id)
             ->paginate(10);
-
+            }else{
+                $results = Lesson::Join('categories', 'lessons.category_id', 'categories.id')
+                ->select('lessons.*', 'categories.title as category_title')
+                ->where('lessons.enable', 1)
+                ->where('lessons.status', 1)
+                ->where('lessons.category_id', $category->id)
+                ->paginate(10); 
+            }
 
 
 
@@ -96,6 +105,7 @@ class LessonsController extends Controller
     }
     public function detail($slug)
     {
+        
         $now = new DateTime();
         $mem_id = isset(Auth::guard('members')->user()->id) ? Auth::guard('members')->user()->id : 0;
         $services = Service::where('status', 1)->where('status', 2)->where('download', 1)->where('members_id', $mem_id)->where('expired', '>', $now)->first();
@@ -286,7 +296,7 @@ class LessonsController extends Controller
             $input['images'] = null;
             $input['member_id'] = $member->id;
             $input['contributor_id'] = str_replace('}','',str_replace('{"contributor_id":', '',$contri));
-            $input['status'] = 1;
+            $input['status'] = 0;
             // dd($input);
 
             if ($request->hasFile('image')){
@@ -301,10 +311,10 @@ class LessonsController extends Controller
             ->Join('members','members.id','=','comments.member_id')
             ->where('comments.lesson_id',$input['lesson_id'])
             ->where('comments.parent_id',0)
-            ->where('comments.status',1)
+            ->where('comments.status',0)
             ->select('comments.*','members.username as username')
             ->first();
-
+        
             $getemailchild = DB::table('comments')
                              ->Join('comments as B', 'comments.id', 'B.parent_id')
                              ->Where('B.parent_id', $input['parent_id'])
@@ -314,20 +324,20 @@ class LessonsController extends Controller
         
 
             // dd($getemailchild);
-            if($parent_id != 0){
-                foreach ($getemailchild as $mails) {
-                //  Check type
-                if (is_array($mails)){
-                    //  Scan through inner loop
-                    foreach ($mails as $value) {
-                        $member = Member::Find($value);
-                        $lesson = Lesson::Find($lesson_id);
-                        $contrib = Contributor::find($lessons->contributor_id);
-                        $member->notify(new UserReplyNotification($member, $lesson, $contrib));
-                        }
-                    }
-                }
-            }
+            // if($parent_id != null){
+            //     // foreach ($getemailchild as $mails) {
+            //     // //  Check type
+            //     // if (is_array($mails)){
+            //         // //  Scan through inner loop
+            //         // foreach ($mails as $value) {
+            //             $member = Member::Find($value);
+            //             $lesson = Lesson::Find($lesson_id);
+            //             $contrib = Contributor::find($lessons->contributor_id);
+            //             $member->notify(new UserReplyNotification($member, $lesson, $contrib));
+            //             // }
+            //     //     }
+            //     // }
+            // }
 
                 // dd($store);
                     DB::table('contributor_notif')->insert([
@@ -336,6 +346,7 @@ class LessonsController extends Controller
                         'title' => 'Anda mendapat pertanyaan dari ' . $member->username,
                         'notif' => 'Anda mendapatkan pertanyaan dari ' . $member->username . ' pada ' . $lessons->title,
                         'status' => 0,
+                        'slug' => $getmembercomment->id,
                         'created_at' => $now,
                     ]);
                     $member = Member::Find($uid);
@@ -429,18 +440,12 @@ class LessonsController extends Controller
 									                    <div class="collapse" id="reply' . $comment->id . '">
 									                      <div class="panel-footer ">
 									                        <div class="row reply">
-									                          <div class="col-md-12">
-									                            <div class="form-group">
+                                                              <div class="col-md-12">
+    									                        <div class="form-group">
 									                              <label>Komentar</label>
 									                              <textarea name="name" rows="8" cols="80" class="form-control" name="body" id="textbody' . $comment->id . '"></textarea>
                                                                 </div>
-                                                                <div class="upload-btn-wrapper">
-                                                                <button class="btn-upload btn-info"><i class="fa fa-upload"></i> Tambahkan Gambar/File</button>
-                                                                <input type="file"  name="image" id="image"/>
-                                                                
-                                                                </div>
-                                                                <img id="myImg" src="#" style="height :50px; width:50px; margin-bottom:42px;" />
-									                            <button type="submit" class="btn btn-primary pull-right" onClick="doComment(' . $lesson_id . ',' . $comment->id . ')" >Kirim</button>
+                                                                <button type="submit" class="btn btn-primary pull-right" onClick="doComment(' . $lesson_id . ',' . $comment->id . ')" >Kirim</button>
 									                          </div>
 									                        </div>
 									                      </div>
@@ -483,8 +488,11 @@ class LessonsController extends Controller
 				                        </div>
 				                        <div class="panel-body">
                                           ' . $child->body . '
-				                        </div><!-- /panel-body -->
-				                      </div><!-- /panel panel-default -->
+                                        </div><!-- /panel-body -->';
+                                        if($child->images != null){
+                                    $html .= '<a id="firstlink" data-gall="myGallery" class="venobox vbox-item" data-vbtype="iframe" href="'. asset($child->images) .'"><img src="'. asset($child->images) .'" alt="image alt" style="height:50px; width:50px; margin-left: 15px; margin-bottom: 20px;"/></a>';
+                                        }
+				                      $html .= '</div><!-- /panel panel-default -->
 				                    </div><!-- /col-sm-5 -->
 				                  </div><!-- ./row -->
 				                  <!-- ./Comments Childs -->';

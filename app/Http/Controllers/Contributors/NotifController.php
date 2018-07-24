@@ -44,7 +44,7 @@ class NotifController extends Controller
     public function view(){
       $id = Input::get('id');
       $update= ContributorNotif::find($id);
-      $update->status=2;
+      $update->status=1;
       $update->save();
     }
 

@@ -25,7 +25,7 @@ class SearchController extends Controller
     $q  = Input::get('q');
 
     $categories = Category::where('enable','=',1)->get();
-
+    $mem_id = isset(Auth::guard('members')->user()->id) ? Auth::guard('members')->user()->id : 0;
     if (!empty($c)) { //with Category
 
           $category = Category::where('enable','=',1)->where('title','like','%'.$c.'%')->first();
@@ -34,6 +34,7 @@ class SearchController extends Controller
           }else {
             $cateid = 0;
           }
+          if(!empty($mem_id)){
 
                     $results = Lesson::Join('categories', 'lessons.category_id', 'categories.id')
                     ->leftjoin('tutorial_member', function($join){
@@ -46,11 +47,20 @@ class SearchController extends Controller
                       ->where('lessons.title','like','%'.$q.'%')
                       ->where('lessons.category_id','=',$cateid)
                       ->paginate(10);
+                    }else{
+                      $results = Lesson::Join('categories', 'lessons.category_id', 'categories.id')
+                      ->select('lessons.*', 'categories.title as category_title')
+                      ->where('lessons.enable', 1)
+                      ->where('lessons.status', 1)
+                        ->where('lessons.title','like','%'.$q.'%')
+                        ->where('lessons.category_id','=',$cateid)
+                        ->paginate(10);
 
+                    }
 
 
     }else { //Without Category
-
+      if(!empty($mem_id)){
                       $results = Lesson::Join('categories', 'lessons.category_id', 'categories.id')
                       ->leftjoin('tutorial_member', function($join){
                           $join->on('lessons.id', '=', 'tutorial_member.lesson_id')
@@ -62,6 +72,14 @@ class SearchController extends Controller
                       ->where('lessons.enable','=',1)
                       ->where('lessons.title','like','%'.$q.'%')
                       ->paginate(10);
+                      }else{
+                      $results = Lesson::Join('categories', 'lessons.category_id', 'categories.id')
+                      ->select('lessons.*', 'categories.title as category_title')
+                      ->where('lessons.enable', 1)
+                      ->where('lessons.status', 1)
+                      ->where('lessons.title','like','%'.$q.'%')
+                      ->paginate(10);
+                      }
 
     }
 

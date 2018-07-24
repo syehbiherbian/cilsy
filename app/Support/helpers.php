@@ -138,7 +138,7 @@ function getTotalCart(){
 }
 
 function namemember(){
-  $member_name =  substr(Auth::guard('members')->user()->username, '0', 8);
+  $member_name =  substr(Auth::guard('members')->user()->username, '0', 5);
   return $member_name;
 }
 
@@ -148,8 +148,8 @@ function notif(){
     $notif =ContributorNotif::where('contributor_id',$contribID)->where('status',0)->take(5)->get();
     $html='';
     foreach ($notif as  $value) {
-        $html .='<li><a href="comments/detail/'.$value->id.'" onclick="notifview('.$value->id.')">'.$value->title.'</a></li>';
-
+        $html .='<li><a href="/contributor/comments/detail/'.$value->slug.'" onclick="notifview('.$value->id.')">'.$value->title.'</a></li>';
+        
     }
     return $html;
 }

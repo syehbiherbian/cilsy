@@ -67,7 +67,7 @@
                             <ul>
                               <?php echo notif();?>
                               <li role="separator" class="divider"></li>
-                              <li><a href="{{ url('/contributor/notif')}}">Lihat Semua Pemberitahuan</a></li>
+                              <li><a href="{{ url('/contributor/comments')}}">Lihat Semua Pemberitahuan</a></li>
                             </ul>
                         </div>
                     </li>
