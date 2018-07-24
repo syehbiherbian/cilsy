@@ -317,7 +317,7 @@ class LessonsController extends Controller
                 'title' => 'Anda mendapat pertanyaan dari ' . $member->username,
                 'notif' => 'Anda mendapatkan pertanyaan dari ' . $member->username . ' pada ' . $lessons->title,
                 'status' => 0,
-                'slug' => $getmembercomment->id,
+                'slug' => 0,
                 'created_at' => $now,
             ]);
             $getemailchild = DB::table('comments')
