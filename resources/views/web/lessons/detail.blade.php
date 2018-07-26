@@ -287,6 +287,7 @@
 .video-js.vjs-fullscreen,.video-js.vjs-fullscreen .vjs-tech {
     width: 100%!important;
     height: 100%!important
+    
 }
 
 .video-js {
@@ -296,6 +297,7 @@
 
 .video-js .vjs-control {
     color: inherit
+    
 }
 
 .video-js .vjs-menu-button-inline:hover,.video-js.vjs-no-flex .vjs-menu-button-inline {
@@ -671,10 +673,10 @@ td{
           <div class="col-md-12">
             <div class="player-container">
               <!-- Main Video -->
-              <video id="video" class="video-js vjs-default-skin vjs-big-play-centered" height="500" width="70%" controls>
+              <video id="video" class="video-js vjs-default-skin vjs-big-play-centered" height="500" width="70%">
                 @if (count($main_videos) > 0) 
                     <source src="{{ !empty($main_videos[0]->video) ? $main_videos[0]->video : '' }}" type="{{ (!empty($main_videos[0]->type_video)) ? $main_videos[0]->type_video : '' }}">
-                @endif
+                @endif 
               </video>
 
               <!-- Playlist Video -->
@@ -701,17 +703,17 @@ td{
 
               <div class="tab-content" style="margin-top:0px;">
                 <div id="tab1" class="tab-pane fade in active">
-                <p>  {!! $lessons->description !!} </p>
+                  {!! nl2br($lessons->description) !!}
                 </div>
                 <div id="tab2" class="tab-pane fade">
-                  <?php $number=1 ?>
+                <?php $number=1; ?>
                   <ul class="materi_list">
                     @foreach ($main_videos as $row)
-                   <li>
+                    <li>
                     <table>
                         <tr>
-                          <td><strong> <?php echo $number?> {{ $row->title }}</strong>
-                              {!! nl2br($row->description) !!}
+                          <td><strong><?php echo $number ?> {{ $row->title }}</strong>
+                              <p>{!! nl2br($row->description) !!}</p>
                           </td>
                           <td>
                           @if ($tutor)
@@ -906,6 +908,33 @@ $(document).ready(function(){
     //     loadcontent()
     // }, 5000);
 </script>
+<script type="text/javascript">
+    var video = document.getElementById("video");
+
+    // $('#video').hover(function toggleControls() {
+    //     if (video.hasAttribute!=("controls")) {
+    //       video.setAttribute("controls", "controls")
+    //     } else {
+    //       video.removeAttribute("controls")
+    //     }
+    // })
+    // var el = document.getElementById("nextButton");
+    // if (el.addEventListener) {
+    //     el.addEventListener("click", yourNextFunction, false);
+    // } else {
+    //     el.attachEvent('onclick', yourNextFunction);
+    // }  
+    // var video_count =1,
+    // videoPlayer = document.getElementById("homevideo");
+
+    // function yourNextFunction (){
+    //   video_count++;
+    //   if (video_count == 16) video_count = 1;
+    //   var nextVideo = "video"+video_count+".mp4";
+    //   videoPlayer.src = nextVideo;
+    //   videoPlayer.play();
+    // }
+</script>
 <script>
   fbq('track', 'ViewContent');
 </script>
@@ -924,7 +953,8 @@ function getPlayList() {
                   "lessons_id": lessons_id
               }
   var player = videojs(document.querySelector('video'), {
-      inactivityTimeout: 0
+      inactivityTimeout: 500,
+      controls: true,
     });
 
   player.on('ended', function() {
@@ -958,7 +988,7 @@ function getPlayList() {
           if (!userActivity) {
             this.userActive(false);
           }
-        }, 2000);
+        }, 500);
       }
     }, 250);
     try {

@@ -25,11 +25,11 @@ class SearchController extends Controller
     $q  = Input::get('q');
 
     $categories = Category::where('enable','=',1)->get();
-    $mem_id = isset(Auth::guard('members')->user()->id) ? Auth::guard('members')->user()->id : 0;
+    
     if (!empty($c)) { //with Category
 
           $category = Category::where('enable','=',1)->where('title','like','%'.$c.'%')->first();
-          if (count($category) > 0) {
+          if (count($category) > 0) { 
             $cateid = $category->id;
           }else {
             $cateid = 0;
@@ -57,6 +57,8 @@ class SearchController extends Controller
                         ->paginate(10);
 
                     }
+                      
+          $results->withPath('search?category='.$c.'&q='.$q);
 
 
     }else { //Without Category
@@ -80,6 +82,7 @@ class SearchController extends Controller
                       ->where('lessons.title','like','%'.$q.'%')
                       ->paginate(10);
                       }
+          $results->withPath('search?&q='.$q);
 
     }
 
@@ -93,10 +96,11 @@ class SearchController extends Controller
   public function autocomplete()
   {
 
+    
+      $keyword 			= Input::get('term');
+      $category 			= Input::get('category');
 
-  		$keyword 			= Input::get('term');
-
-  		$lessons 	= Lesson::where('enable','=','1')->where('title','like','%'.$keyword.'%')->orderBy('id', 'DESC')->get();
+  		$lessons 	= Lesson::where('enable','=','1')->where('category_id','=',$category)->where('title','like','%'.$keyword.'%')->orderBy('id', 'DESC')->get();
 
 
 
