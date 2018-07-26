@@ -4,7 +4,9 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    @if(env('APP_ENV') == 'production')
     <meta name="google-site-verification" content="0r-wquIwdvygXwMpsK8-xcBaNyh36Fw-OUJWZoOKvZk" />
+    @endif
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8; IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no" />
     <title>@yield('title') {{ config('app.name') }}</title>
