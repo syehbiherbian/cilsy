@@ -152,12 +152,12 @@ function totalnotif(){
 function notifuser(){
   
   $mem_id =  Auth::guard('members')->user()->id;
-  $notif = UserNotif::where('id_user',$mem_id)->where('status',0)->take(5)->get();
+  $notif = UserNotif::where('id_user',$mem_id)->where('status',0)->latest()->take(5)->get();
   $html='';
   
   foreach ($notif as  $value) {
       $url = url('lessons', $parameters = [$value->slug], $secure = null);
-      $html .='<li><a href="'.$url.'" onclick="notifview('.$value->id.')">'.$value->title.'</a></li>';
+      $html .='<li><a href="'.$url.'" onclick="notifview('.$value->id.')">'.substr($value->title, '0', 25).'</a></li>';
 
   }
   return $html;
