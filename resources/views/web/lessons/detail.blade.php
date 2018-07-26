@@ -655,7 +655,8 @@ td{
             @if($tutor == null)
               @if($cart == null)
             <div class="lesson-video-count">Rp{{ number_format($lessons->price, 0, ",", ".") }}</div>
-            <button type="button" class="lesson-video-count" onclick="addToCart({{ $lessons->id }})"><i class="fa fa-shopping-cart"></i> Beli</button>
+            <button id="beli" type="button" class="lesson-video-count" onclick="addToCart({{ $lessons->id }})"><i class="fa fa-shopping-cart"></i> Beli</button>
+            <a id="guest" href="{{ url('cart') }}" class="btn" style="background-color:#fff; color:#5bc0de; border-color:#46b8da; display:none;">Lihat Keranjang</a>
               @else
             <div class="lesson-video-count">Rp{{ number_format($lessons->price, 0, ",", ".") }}</div>
             <a href="{{ url('cart') }}" class="btn" style="background-color:#fff; color:#5bc0de; border-color:#46b8da;">Lihat Keranjang</a>
@@ -851,7 +852,7 @@ function imageIsLoaded(e) {
     $('#myImg').attr('src', e.target.result);
 };
 </script>
-<script>
+<script>            $('#guest-'+v['id']).show();
 $(document).ready(function(){
     $('.venobox').venobox(); 
 });
@@ -1199,5 +1200,16 @@ function videoTracking(videosrc) {
     }
   }
 </script>
-
+<script>
+  var cek = localStorage.getItem('cart');
+  if(cek != null){
+    var results = JSON.parse(cek);
+    if (results.length > 0){
+      $.each(results, function(k,v) {
+            $('#beli').hide();
+            $('#guest').show();
+      });
+    }
+  }
+</script>
 @endsection
