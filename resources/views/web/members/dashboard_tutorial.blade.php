@@ -66,21 +66,19 @@
       <h4>Tutorial yang sudah di miliki</h4>
       <?php
            if(!count($last) == 0) {
-                foreach ($last as $key => $last): ?>
-                    
-                      <div class="col-md-4">
-                        <a href="{{ url('lessons/'.$last->slug)}}" style="text-decoration: none;">
-                          <div class="card" >
-                            <?php if (!empty($last->image)) {?>
-                              <img src="{{ asset($last->image) }}" alt="" class="img-responsive">
-                            <?php } else {?>
-                              <img src="{{ asset('template/web/img/no-image-available.png') }}" alt="" class="img-responsive">
-                            <?php }?>
-                            <h5 class="card-title" style="width: 18rem;">{{ $last->title }} <br></br></h5>
-                            
-                          </div>
-                        </a>
-                      </div>
+                foreach ($last as $key => $last): ?>  
+                  <div class="col-md-3">
+                    <div class="card" >
+                      <a href="{{ url('lessons/'.$last->slug)}}">
+                          <?php if (!empty($last->image)) {?>
+                            <div class="card-img" style="background-image: url('{{ asset($last->image)}}');"></div>
+                          <?php } else {?>
+                            <div class="card-img" style="background-image: url('{{ asset('template/web/img/no-image-available.png')}}');"></div>
+                          <?php }?>
+                          <div class="card-body"><p class="card-title">{{ $last->title }}</p></div>           
+                      </a>
+                    </div>
+                  </div>
 
               <?php endforeach; 
               }else{ ?>
