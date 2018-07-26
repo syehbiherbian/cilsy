@@ -61,6 +61,10 @@
                 "pdf"
             ],
             "time": "2018-02-07T17:43:25+00:00"
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 76362bd97b8d4ea0f367b283739e2df765a73898
         },
         {
             "name": "doctrine/annotations",
@@ -129,6 +133,11 @@
                 "parser"
             ],
             "time": "2017-12-06T07:11:42+00:00"
+<<<<<<< HEAD
+=======
+>>>>>>> cilsymarket-fariz
+=======
+>>>>>>> 76362bd97b8d4ea0f367b283739e2df765a73898
         },
         {
             "name": "doctrine/cache",
@@ -281,7 +290,15 @@
                 "persistence",
                 "queryobject"
             ],
+<<<<<<< HEAD
+<<<<<<< HEAD
+            "time": "2017-07-22T10:37:32+00:00"
+=======
             "time": "2018-07-13T03:16:35+00:00"
+>>>>>>> cilsymarket-fariz
+=======
+            "time": "2018-07-13T03:16:35+00:00"
+>>>>>>> 76362bd97b8d4ea0f367b283739e2df765a73898
         },
         {
             "name": "doctrine/event-manager",
@@ -342,6 +359,81 @@
                 {
                     "name": "Johannes Schmitt",
                     "email": "schmittjoh@gmail.com"
+<<<<<<< HEAD
+                }
+            ],
+            "description": "Common Library for Doctrine projects",
+            "homepage": "http://www.doctrine-project.org",
+            "keywords": [
+                "annotations",
+                "collections",
+                "eventmanager",
+                "persistence",
+                "spl"
+            ],
+            "time": "2017-08-31T08:43:38+00:00"
+        },
+        {
+            "name": "doctrine/dbal",
+            "version": "v2.7.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/doctrine/dbal.git",
+                "reference": "11037b4352c008373561dc6fc836834eed80c3b5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/11037b4352c008373561dc6fc836834eed80c3b5",
+                "reference": "11037b4352c008373561dc6fc836834eed80c3b5",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/common": "^2.7.1",
+                "ext-pdo": "*",
+                "php": "^7.1"
+            },
+            "require-dev": {
+                "doctrine/coding-standard": "^4.0",
+                "phpunit/phpunit": "^7.0",
+                "phpunit/phpunit-mock-objects": "!=3.2.4,!=3.2.5",
+                "symfony/console": "^2.0.5||^3.0",
+                "symfony/phpunit-bridge": "^3.4.5|^4.0.5"
+            },
+            "suggest": {
+                "symfony/console": "For helpful console commands such as SQL execution and import of files."
+            },
+            "bin": [
+                "bin/doctrine-dbal"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.7.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Doctrine\\DBAL\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Roman Borschel",
+                    "email": "roman@code-factory.org"
+                },
+                {
+                    "name": "Benjamin Eberlei",
+                    "email": "kontakt@beberlei.de"
+                },
+                {
+                    "name": "Guilherme Blanco",
+                    "email": "guilhermeblanco@gmail.com"
+=======
+>>>>>>> 76362bd97b8d4ea0f367b283739e2df765a73898
                 },
                 {
                     "name": "Marco Pivetta",
@@ -587,7 +679,15 @@
                 "cron",
                 "schedule"
             ],
+<<<<<<< HEAD
+<<<<<<< HEAD
+            "time": "2018-04-06T15:51:55+00:00"
+=======
             "time": "2018-06-06T03:12:17+00:00"
+>>>>>>> cilsymarket-fariz
+=======
+            "time": "2018-06-06T03:12:17+00:00"
+>>>>>>> 76362bd97b8d4ea0f367b283739e2df765a73898
         },
         {
             "name": "egulias/email-validator",
@@ -1078,7 +1178,15 @@
                 "progress",
                 "upload"
             ],
+<<<<<<< HEAD
+<<<<<<< HEAD
+            "time": "2018-05-18T18:33:43+00:00"
+=======
             "time": "2018-07-18T08:24:51+00:00"
+>>>>>>> cilsymarket-fariz
+=======
+            "time": "2018-07-18T08:24:51+00:00"
+>>>>>>> 76362bd97b8d4ea0f367b283739e2df765a73898
         },
         {
             "name": "laravel/framework",
@@ -1217,7 +1325,15 @@
                 "framework",
                 "laravel"
             ],
+<<<<<<< HEAD
+<<<<<<< HEAD
+            "time": "2018-06-04T14:51:03+00:00"
+=======
             "time": "2018-07-17T14:15:36+00:00"
+>>>>>>> cilsymarket-fariz
+=======
+            "time": "2018-07-17T14:15:36+00:00"
+>>>>>>> 76362bd97b8d4ea0f367b283739e2df765a73898
         },
         {
             "name": "league/flysystem",
@@ -1614,7 +1730,15 @@
                 "pseudorandom",
                 "random"
             ],
+<<<<<<< HEAD
+<<<<<<< HEAD
+            "time": "2018-04-04T21:24:14+00:00"
+=======
             "time": "2018-07-02T15:55:56+00:00"
+>>>>>>> cilsymarket-fariz
+=======
+            "time": "2018-07-02T15:55:56+00:00"
+>>>>>>> 76362bd97b8d4ea0f367b283739e2df765a73898
         },
         {
             "name": "pbmedia/binary-driver",
@@ -2161,6 +2285,65 @@
                 "simple-cache"
             ],
             "time": "2017-10-23T01:57:42+00:00"
+<<<<<<< HEAD
+<<<<<<< HEAD
+        },
+        {
+            "name": "pusher/pusher-php-server",
+            "version": "v3.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pusher/pusher-http-php.git",
+                "reference": "1496ef5ae12670ff8ffe83b9f47d1e4514608d9b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pusher/pusher-http-php/zipball/1496ef5ae12670ff8ffe83b9f47d1e4514608d9b",
+                "reference": "1496ef5ae12670ff8ffe83b9f47d1e4514608d9b",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "php": "^5.4 || ^7.0",
+                "psr/log": "^1.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.8 || ^5.7"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Pusher\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Library for interacting with the Pusher REST API",
+            "keywords": [
+                "events",
+                "messaging",
+                "php-pusher-server",
+                "publish",
+                "push",
+                "pusher",
+                "real time",
+                "real-time",
+                "realtime",
+                "rest",
+                "trigger"
+            ],
+            "time": "2018-05-21T13:25:35+00:00"
+=======
+>>>>>>> cilsymarket-fariz
+=======
+>>>>>>> 76362bd97b8d4ea0f367b283739e2df765a73898
         },
         {
             "name": "ramsey/uuid",
@@ -2242,7 +2425,15 @@
                 "identifier",
                 "uuid"
             ],
+<<<<<<< HEAD
+<<<<<<< HEAD
+            "time": "2018-01-20T00:28:24+00:00"
+=======
             "time": "2018-07-19T23:38:55+00:00"
+>>>>>>> cilsymarket-fariz
+=======
+            "time": "2018-07-19T23:38:55+00:00"
+>>>>>>> 76362bd97b8d4ea0f367b283739e2df765a73898
         },
         {
             "name": "sabberworm/php-css-parser",
@@ -2342,7 +2533,15 @@
                 "screenshot",
                 "webpage"
             ],
+<<<<<<< HEAD
+<<<<<<< HEAD
+            "time": "2018-04-20T10:24:16+00:00"
+=======
             "time": "2018-07-12T21:55:12+00:00"
+>>>>>>> cilsymarket-fariz
+=======
+            "time": "2018-07-12T21:55:12+00:00"
+>>>>>>> 76362bd97b8d4ea0f367b283739e2df765a73898
         },
         {
             "name": "spatie/crawler",
@@ -2401,7 +2600,15 @@
                 "spatie",
                 "website"
             ],
+<<<<<<< HEAD
+<<<<<<< HEAD
+            "time": "2018-05-22T07:49:31+00:00"
+=======
             "time": "2018-06-25T12:35:02+00:00"
+>>>>>>> cilsymarket-fariz
+=======
+            "time": "2018-06-25T12:35:02+00:00"
+>>>>>>> 76362bd97b8d4ea0f367b283739e2df765a73898
         },
         {
             "name": "spatie/image",
@@ -2502,7 +2709,15 @@
                 "image-optimizer",
                 "spatie"
             ],
+<<<<<<< HEAD
+<<<<<<< HEAD
+            "time": "2018-03-07T13:42:33+00:00"
+=======
             "time": "2018-06-05T07:36:17+00:00"
+>>>>>>> cilsymarket-fariz
+=======
+            "time": "2018-06-05T07:36:17+00:00"
+>>>>>>> 76362bd97b8d4ea0f367b283739e2df765a73898
         },
         {
             "name": "spatie/laravel-sitemap",
@@ -2714,7 +2929,15 @@
                 "mail",
                 "mailer"
             ],
+<<<<<<< HEAD
+<<<<<<< HEAD
+            "time": "2017-09-30T22:39:41+00:00"
+=======
             "time": "2018-07-13T07:04:35+00:00"
+>>>>>>> cilsymarket-fariz
+=======
+            "time": "2018-07-13T07:04:35+00:00"
+>>>>>>> 76362bd97b8d4ea0f367b283739e2df765a73898
         },
         {
             "name": "symfony/console",
@@ -2782,7 +3005,15 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "https://symfony.com",
+<<<<<<< HEAD
+<<<<<<< HEAD
+            "time": "2018-05-30T07:26:09+00:00"
+=======
             "time": "2018-05-31T10:17:53+00:00"
+>>>>>>> cilsymarket-fariz
+=======
+            "time": "2018-05-31T10:17:53+00:00"
+>>>>>>> 76362bd97b8d4ea0f367b283739e2df765a73898
         },
         {
             "name": "symfony/css-selector",
@@ -2891,7 +3122,15 @@
             ],
             "description": "Symfony Debug Component",
             "homepage": "https://symfony.com",
+<<<<<<< HEAD
+<<<<<<< HEAD
+            "time": "2018-05-16T14:33:22+00:00"
+=======
             "time": "2018-06-08T09:39:36+00:00"
+>>>>>>> cilsymarket-fariz
+=======
+            "time": "2018-06-08T09:39:36+00:00"
+>>>>>>> 76362bd97b8d4ea0f367b283739e2df765a73898
         },
         {
             "name": "symfony/dom-crawler",
@@ -3110,7 +3349,15 @@
             ],
             "description": "Symfony Finder Component",
             "homepage": "https://symfony.com",
+<<<<<<< HEAD
+<<<<<<< HEAD
+            "time": "2018-05-16T14:33:22+00:00"
+=======
             "time": "2018-06-19T21:38:16+00:00"
+>>>>>>> cilsymarket-fariz
+=======
+            "time": "2018-06-19T21:38:16+00:00"
+>>>>>>> 76362bd97b8d4ea0f367b283739e2df765a73898
         },
         {
             "name": "symfony/http-foundation",
@@ -3164,7 +3411,15 @@
             ],
             "description": "Symfony HttpFoundation Component",
             "homepage": "https://symfony.com",
+<<<<<<< HEAD
+<<<<<<< HEAD
+            "time": "2018-05-25T14:55:38+00:00"
+=======
             "time": "2018-06-19T21:38:16+00:00"
+>>>>>>> cilsymarket-fariz
+=======
+            "time": "2018-06-19T21:38:16+00:00"
+>>>>>>> 76362bd97b8d4ea0f367b283739e2df765a73898
         },
         {
             "name": "symfony/http-kernel",
@@ -3251,7 +3506,15 @@
             ],
             "description": "Symfony HttpKernel Component",
             "homepage": "https://symfony.com",
+<<<<<<< HEAD
+<<<<<<< HEAD
+            "time": "2018-05-30T12:52:34+00:00"
+=======
             "time": "2018-06-25T13:06:45+00:00"
+>>>>>>> cilsymarket-fariz
+=======
+            "time": "2018-06-25T13:06:45+00:00"
+>>>>>>> 76362bd97b8d4ea0f367b283739e2df765a73898
         },
         {
             "name": "symfony/polyfill-ctype",
@@ -3469,7 +3732,15 @@
             ],
             "description": "Symfony Process Component",
             "homepage": "https://symfony.com",
+<<<<<<< HEAD
+<<<<<<< HEAD
+            "time": "2018-05-30T07:26:09+00:00"
+=======
             "time": "2018-05-31T10:17:53+00:00"
+>>>>>>> cilsymarket-fariz
+=======
+            "time": "2018-05-31T10:17:53+00:00"
+>>>>>>> 76362bd97b8d4ea0f367b283739e2df765a73898
         },
         {
             "name": "symfony/routing",
@@ -3546,7 +3817,15 @@
                 "uri",
                 "url"
             ],
+<<<<<<< HEAD
+<<<<<<< HEAD
+            "time": "2018-05-30T07:26:09+00:00"
+=======
             "time": "2018-06-19T21:38:16+00:00"
+>>>>>>> cilsymarket-fariz
+=======
+            "time": "2018-06-19T21:38:16+00:00"
+>>>>>>> 76362bd97b8d4ea0f367b283739e2df765a73898
         },
         {
             "name": "symfony/translation",
@@ -3615,7 +3894,15 @@
             ],
             "description": "Symfony Translation Component",
             "homepage": "https://symfony.com",
+<<<<<<< HEAD
+<<<<<<< HEAD
+            "time": "2018-05-30T07:26:09+00:00"
+=======
             "time": "2018-06-22T08:59:39+00:00"
+>>>>>>> cilsymarket-fariz
+=======
+            "time": "2018-06-22T08:59:39+00:00"
+>>>>>>> 76362bd97b8d4ea0f367b283739e2df765a73898
         },
         {
             "name": "symfony/var-dumper",
@@ -3690,7 +3977,15 @@
                 "debug",
                 "dump"
             ],
+<<<<<<< HEAD
+<<<<<<< HEAD
+            "time": "2018-04-29T07:56:09+00:00"
+=======
             "time": "2018-06-23T12:23:56+00:00"
+>>>>>>> cilsymarket-fariz
+=======
+            "time": "2018-06-23T12:23:56+00:00"
+>>>>>>> 76362bd97b8d4ea0f367b283739e2df765a73898
         },
         {
             "name": "tightenco/collect",
@@ -3740,7 +4035,15 @@
                 "collection",
                 "laravel"
             ],
+<<<<<<< HEAD
+<<<<<<< HEAD
+            "time": "2018-05-22T17:57:22+00:00"
+=======
             "time": "2018-07-11T13:31:08+00:00"
+>>>>>>> cilsymarket-fariz
+=======
+            "time": "2018-07-11T13:31:08+00:00"
+>>>>>>> 76362bd97b8d4ea0f367b283739e2df765a73898
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",
@@ -3788,6 +4091,11 @@
             "description": "CssToInlineStyles is a class that enables you to convert HTML-pages/files into HTML-pages/files with inline styles. This is very useful when you're sending emails.",
             "homepage": "https://github.com/tijsverkoyen/CssToInlineStyles",
             "time": "2017-11-27T11:13:29+00:00"
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 76362bd97b8d4ea0f367b283739e2df765a73898
         },
         {
             "name": "uxweb/sweet-alert",
@@ -3849,6 +4157,10 @@
                 "sweet"
             ],
             "time": "2017-09-10T17:14:08+00:00"
+<<<<<<< HEAD
+>>>>>>> cilsymarket-fariz
+=======
+>>>>>>> 76362bd97b8d4ea0f367b283739e2df765a73898
         },
         {
             "name": "veritrans/veritrans-php",
@@ -3897,7 +4209,15 @@
             ],
             "description": "PHP Wraper for Veritrans VT-Web Payment API.",
             "homepage": "https://midtrans.com",
+<<<<<<< HEAD
+<<<<<<< HEAD
+            "time": "2018-04-26T10:03:43+00:00"
+=======
             "time": "2018-05-19T11:20:46+00:00"
+>>>>>>> cilsymarket-fariz
+=======
+            "time": "2018-05-19T11:20:46+00:00"
+>>>>>>> 76362bd97b8d4ea0f367b283739e2df765a73898
         },
         {
             "name": "vlucas/phpdotenv",
@@ -3947,7 +4267,15 @@
                 "env",
                 "environment"
             ],
+<<<<<<< HEAD
+<<<<<<< HEAD
+            "time": "2016-09-01T10:05:43+00:00"
+=======
             "time": "2018-07-01T10:25:50+00:00"
+>>>>>>> cilsymarket-fariz
+=======
+            "time": "2018-07-01T10:25:50+00:00"
+>>>>>>> 76362bd97b8d4ea0f367b283739e2df765a73898
         }
     ],
     "packages-dev": [
@@ -4121,7 +4449,15 @@
                 "faker",
                 "fixtures"
             ],
+<<<<<<< HEAD
+<<<<<<< HEAD
+            "time": "2017-08-15T16:48:10+00:00"
+=======
             "time": "2018-07-12T10:23:15+00:00"
+>>>>>>> cilsymarket-fariz
+=======
+            "time": "2018-07-12T10:23:15+00:00"
+>>>>>>> 76362bd97b8d4ea0f367b283739e2df765a73898
         },
         {
             "name": "hamcrest/hamcrest-php",
@@ -4340,7 +4676,15 @@
                 "object",
                 "object graph"
             ],
+<<<<<<< HEAD
+<<<<<<< HEAD
+            "time": "2018-05-29T17:25:09+00:00"
+=======
             "time": "2018-06-11T23:09:50+00:00"
+>>>>>>> cilsymarket-fariz
+=======
+            "time": "2018-06-11T23:09:50+00:00"
+>>>>>>> 76362bd97b8d4ea0f367b283739e2df765a73898
         },
         {
             "name": "phpdocumentor/reflection-common",

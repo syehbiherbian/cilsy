@@ -706,7 +706,7 @@ td{
                   {!! nl2br($lessons->description) !!}
                 </div>
                 <div id="tab2" class="tab-pane fade">
-                <?php $number=1; ?>
+                  <?php $number=1 ?>
                   <ul class="materi_list">
                     @foreach ($main_videos as $row)
                     <li>
