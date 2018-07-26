@@ -49,10 +49,10 @@
   }
   @media (min-width:768px) {
     .vjs-playlist {
-        width: 35%;
+        width:35%;
+        
     }
   }
-
   .vjs-mouse.vjs-playlist cite{
     font-size: 13px;
   }
@@ -72,7 +72,7 @@
   list-style: none;
   display: table;
   width: 100%;
-}
+  }
 
 .tab {
   position: relative;
@@ -612,6 +612,10 @@ td{
 		font-weight: bold;
 		text-transform: uppercase;
 	}
+  .vjs-playlist {
+        width:35%;
+        height:270px;
+    }
 }
 </style>
 
