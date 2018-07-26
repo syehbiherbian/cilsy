@@ -320,12 +320,27 @@ class LessonsController extends Controller
             ]);
             $getemailchild = DB::table('comments')
                              ->Join('comments as B', 'comments.id', 'B.parent_id')
+                             ->Join('members','members.id','=','B.member_id')
                              ->Where('B.parent_id', $input['parent_id'])
                              ->where('comments.member_id', '<>', 'B.member_id')
-                             ->select('comments.member_id as tanya', 'B.member_id as jawab')->distinct()
+                             ->where('comments.member_id', '<>', 'B.contributor_id')
+                             ->select('comments.member_id as tanya', 'B.member_id as jawab', 'members.username as username')->distinct()
                              ->get();
+
+                            
             if($parent_id != null){
                 foreach ($getemailchild as $mails) {
+
+                    $getnotif = DB::table('user_notif')->insert([
+                        'id_user' => $mails->tanya,
+                        'category' => 'Komentar',
+                        'title' => 'Anda mendapat balasan dari ' . $mails->username,
+                        'notif' => 'Anda mendapatkan balasan dari ' . $mails->username . ' pada ' . $lessons->title,
+                        'status' => 0,
+                        'slug' => $lessons->slug,
+                        'created_at' => $now,
+                    ]);
+
                 //  Check type
                 if (is_array($mails)){
                     //  Scan through inner loop
@@ -334,10 +349,14 @@ class LessonsController extends Controller
                         $lesson = Lesson::Find($lesson_id);
                         $contrib = Contributor::find($lessons->contributor_id);
                         $member->notify(new UserReplyNotification($member, $lesson, $contrib));
+                       
                         }
                     }
+                   
                 }
             }
+
+           
             // dd($getmembercomment);
                 // dd($uid);
             
