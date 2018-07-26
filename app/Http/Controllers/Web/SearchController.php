@@ -25,7 +25,7 @@ class SearchController extends Controller
     $q  = Input::get('q');
 
     $categories = Category::where('enable','=',1)->get();
-    $mem_id = isset(Auth::guard('members')->user()->id) ? Auth::guard('members')->user()->id : 0;
+    
     if (!empty($c)) { //with Category
 
           $category = Category::where('enable','=',1)->where('title','like','%'.$c.'%')->first();
@@ -57,7 +57,7 @@ class SearchController extends Controller
                         ->paginate(10);
 
                     }
-
+                    $results->withPath('search?category='.$c.'&q='.$q);
 
     }else { //Without Category
       if(!empty($mem_id)){
@@ -80,7 +80,7 @@ class SearchController extends Controller
                       ->where('lessons.title','like','%'.$q.'%')
                       ->paginate(10);
                       }
-
+                      $results->withPath('search?&q='.$q);
     }
 
 

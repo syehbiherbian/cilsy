@@ -87,7 +87,7 @@
               <div class="col-sm-8">
                 <p><a href="{{ url('lessons/'.$result->slug) }}" style="text-decoration:none;"><strong>{{ $result->title }}</strong></a></p>
                 <a href="{{ url('lessons/'.$result->slug) }}" style="text-decoration:none;">
-                <p><small><?php $sentence= $result->description;
+                 <p><small><?php $sentence= $result->description;
                     $numberofcharacters=500;
                     $print = substr($sentence, 0, $numberofcharacters);
                     echo $print; ?></small></p>

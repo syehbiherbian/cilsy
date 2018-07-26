@@ -673,7 +673,7 @@ td{
           <div class="col-md-12">
             <div class="player-container">
               <!-- Main Video -->
-              <video id="video" class="video-js vjs-default-skin vjs-big-play-centered" height="500" width="70%" controls>
+              <video id="video" class="video-js vjs-default-skin vjs-big-play-centered" height="500" width="70%">
                 @if (count($main_videos) > 0) 
                     <source src="{{ !empty($main_videos[0]->video) ? $main_videos[0]->video : '' }}" type="{{ (!empty($main_videos[0]->type_video)) ? $main_videos[0]->type_video : '' }}">
                 @endif 
@@ -712,8 +712,8 @@ td{
                     <li>
                     <table>
                         <tr>
-                          <td><strong> <?php echo $number?> {{ $row->title }}</strong>
-                              {!! nl2br($row->description) !!}
+                          <td><strong><?php echo $number ?> {{ $row->title }}</strong>
+                              <p>{!! nl2br($row->description) !!}</p>
                           </td>
                           <td>
                           @if ($tutor)
@@ -725,7 +725,7 @@ td{
                     </li>
                     <?php $number++; ?>
                     @endforeach
-                  </ol>
+                  </ul>
                 </div>
                 <div id="tab3" class="tab-pane fade">
                   @if ($tutor)
@@ -911,14 +911,13 @@ $(document).ready(function(){
 <script type="text/javascript">
     var video = document.getElementById("video");
 
-    $('#video').hover(function toggleControls() {
-        if (video.hasAttribute!=("controls")) {
-          video.setAttribute("controls", "controls")
-            
-        } else {
-          video.removeAttribute("controls")
-        }
-    })
+    // $('#video').hover(function toggleControls() {
+    //     if (video.hasAttribute!=("controls")) {
+    //       video.setAttribute("controls", "controls")
+    //     } else {
+    //       video.removeAttribute("controls")
+    //     }
+    // })
     // var el = document.getElementById("nextButton");
     // if (el.addEventListener) {
     //     el.addEventListener("click", yourNextFunction, false);
@@ -954,7 +953,8 @@ function getPlayList() {
                   "lessons_id": lessons_id
               }
   var player = videojs(document.querySelector('video'), {
-      inactivityTimeout: 0
+      inactivityTimeout: 500,
+      controls: true,
     });
 
   player.on('ended', function() {
@@ -988,7 +988,7 @@ function getPlayList() {
           if (!userActivity) {
             this.userActive(false);
           }
-        }, 2000);
+        }, 500);
       }
     }, 250);
     try {
