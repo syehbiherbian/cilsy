@@ -145,7 +145,7 @@ function namemember(){
 function notif(){
 
     $contribID = Auth::guard('contributors')->user()->id;
-    $notif =ContributorNotif::where('contributor_id',$contribID)->where('status',0)->take(5)->get();
+    $notif =ContributorNotif::where('contributor_id',$contribID)->where('status',0)->latest()->take(5)->get();
     $html='';
     foreach ($notif as  $value) {
         $url = url('/contributor/comments/detail', $parameters = [$value->slug], $secure = null);

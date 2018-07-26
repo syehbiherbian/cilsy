@@ -87,6 +87,16 @@ class VtwebController extends Controller {
     }
 
     public function notification(Request $r) {
+        $input = $r->order_id.$r->status_code.$r->gross_amount.$this->sk;
+        $signature = openssl_digest($input, 'sha512');
+
+        /* cek request signature */
+        if ($signature != $r->signature_key) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Transaction failed'
+            ], 500);
+        }
         
         $vt = new Veritrans;
         $notif = $vt->status($r->order_id);
