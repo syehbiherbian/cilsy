@@ -84,11 +84,12 @@
   background-color: #fff;
   max-height: 340px;
   min-width: 100%;
+  
 }
 .tutorial .tutorial-row .card .harga{
   position: absolute;
-  top:0px;
-  left: 0;
+  top:12px;
+  left: 12px;
   background: #FFF;
   padding: 10px 15px;
   color: #09121a;

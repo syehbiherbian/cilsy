@@ -118,6 +118,9 @@ class VtwebController extends Controller {
                         'type' => $type,
                         'notes' => "Transaction order_id: " . $order_id . " is challenged by FDS",
                     ]);
+                    return response()->json([
+                        'status' => true
+                    ], 200);
                 } else {
                     // TODO set payment status in merchant's database to 'Success'
                     // Update status Invoices
@@ -158,6 +161,9 @@ class VtwebController extends Controller {
                 'type' => $type,
                 'notes' => "Waiting customer to finish transaction order_id: " . $order_id . " using " . $type,
             ]);
+            return response()->json([
+                'status' => true
+            ], 200);
             //send mail invoice pending
             $this->send_mail($order_id);
         } else if ($transaction == 'deny') {
@@ -167,6 +173,9 @@ class VtwebController extends Controller {
                 'type' => $type,
                 'notes' => "Payment using " . $type . " for transaction order_id: " . $order_id . " is denied.",
             ]);
+            return response()->json([
+                'status' => true
+            ], 200);
         }
         error_log(print_r($r, TRUE));
     }
