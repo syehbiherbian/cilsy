@@ -57,9 +57,7 @@ class SearchController extends Controller
                         ->paginate(10);
 
                     }
-                      
-          $results->withPath('search?category='.$c.'&q='.$q);
-
+                    $results->withPath('search?category='.$c.'&q='.$q);
 
     }else { //Without Category
       if(!empty($mem_id)){
@@ -82,8 +80,7 @@ class SearchController extends Controller
                       ->where('lessons.title','like','%'.$q.'%')
                       ->paginate(10);
                       }
-          $results->withPath('search?&q='.$q);
-
+                      $results->withPath('search?&q='.$q);
     }
 
 
