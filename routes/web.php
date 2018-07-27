@@ -218,6 +218,8 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::resource('system/videos', 'VideosController');
 	Route::resource('system/income','IncomeController');
 	Route::resource('system/coupon','AdminCouponController');
+	Route::get('system/logout', 'Auth\LoginController@logout');
+
 	//rating
 	
 });
