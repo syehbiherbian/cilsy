@@ -4,7 +4,9 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    @if(env('APP_ENV') == 'production')
     <meta name="google-site-verification" content="0r-wquIwdvygXwMpsK8-xcBaNyh36Fw-OUJWZoOKvZk" />
+    @endif
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8; IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no" />
     <title>@yield('title') {{ config('app.name') }}</title>
@@ -531,9 +533,7 @@ a #items .item {
                   </span> <i class="ion-android-arrow-dropdown"></i>
                 </button>
                 <div class="dropdown-menu dropdown-menu-right">
-                  <a class="dropdown-item" href="javascript:void(0)" onclick="changeCategory('Linux')">Linux</a>
-                  <a class="dropdown-item" href="javascript:void(0)" onclick="changeCategory('Mikrotik')">Mikrotik</a>
-                  <a class="dropdown-item" href="javascript:void(0)" onclick="changeCategory('Cisco')">Cisco</a>
+                <?php echo getCategory(); ?>
                   <div role="separator" class="dropdown-divider"></div>
                   <a class="dropdown-item" href="javascript:void(0)" onclick="changeCategory('Semua Kategori')">Semua Kategori</a>
                 </div>
@@ -632,9 +632,7 @@ a #items .item {
                   </span> <i class="ion-android-arrow-dropdown"></i>
                 </button>
                 <div class="dropdown-menu dropdown-menu-right" >
-                  <a class="dropdown-item" href="javascript:void(0)" onclick="changeCategory('Linux')">Linux</a>
-                  <a class="dropdown-item" href="javascript:void(0)" onclick="changeCategory('Mikrotik')">Mikrotik</a>
-                  <a class="dropdown-item" href="javascript:void(0)" onclick="changeCategory('Cisco')">Cisco</a>
+                  <?php echo getCategory(); ?>
                   <div role="separator" class="dropdown-divider"></div>
                   <a class="dropdown-item" href="javascript:void(0)" onclick="changeCategory('Semua Kategori')">Semua Kategori</a>
                 </div>
@@ -768,12 +766,30 @@ a #items .item {
     <script type="text/javascript">
       function changeCategory(category) {
         $('.cate_title').text(category);
-        if (category == 'Semua Kategori') {
-            $('.searchcategory').val('');
+        if (category != 'Semua Kategori') {
+          $('.searchcategory').val(category);
         }else {
-            $('.searchcategory').val(category);
+            $('.searchcategory').val('');
         }
       }
+      $(document).ready(function() {
+    $('.dropdown-item').change(function() {
+
+            // var url = '{{ url('category') }}' + '/' + $(this).val();
+            const url = "search/autocomplete";
+            const full = url + ($(".keyword").val() != "" ? ("q=" + $(".keyword").val()) : "" ) + ($('.dropdown-item').val() != "" ? ("&category=" + $('.dropdown-item').val()) : "");
+
+            $.get(full, function(data) {
+                var select = $('form input[name=lesson]');
+
+                select.empty();
+
+                $.each(data,function(key, value) {
+                    select.append('<option value=' + value.id + '>' + value.nama + '</option>');
+                });
+            });
+        });
+    });
     </script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-show-password/1.0.3/bootstrap-show-password.min.js"></script>
 
@@ -815,8 +831,13 @@ a #items .item {
     <!-- Search Form Auto complete -->
     <script type="text/javascript">
     $(function() {
+      function getUrl(){
+        const url = "search/autocomplete";
+        const full = url + ($(".keyword").val() != "" ? ("q=" + $(".keyword").val()) : "" );
+        return full;
+      }
       $(".keyword").autocomplete({
-        source:'{{ url("search/autocomplete")}}',
+        source:'{{ url("'+getUrl()+'")}}',
         select:function(event,ui) {
           $(".keyword").val(ui.item.label);
           return false;
@@ -826,7 +847,7 @@ a #items .item {
         $('.ui-autocomplete').css('z-index','9999').css('overflow-y','scroll').css('max-height','300px');
         // $('.ui-autocomplete').css('background','#09121a').css('color','#fff');
         // $('.ui-menu .ui-menu-item-wrapper').css('padding','11px 1em 3px 1.4em !important');
-        $(this).autocomplete("search");
+        // $(this).autocomplete("search");
         // var btncategory = $('.btn-category').width();
         // var left = '-'+btncategory+'px';
       });

@@ -49,7 +49,7 @@
     background-position: center center;
 }
 .card-body {
-    height: 180px;
+    height: 100px;
     padding: 15px;
     padding-bottom: 15px;
     background-color: #FAFAFA;
