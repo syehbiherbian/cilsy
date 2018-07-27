@@ -613,7 +613,7 @@ td{
 		text-transform: uppercase;
 	}
   .vjs-playlist {
-        width:35%;
+        width:100%;
         height:270px;
     }
 }
