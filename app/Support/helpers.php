@@ -166,7 +166,7 @@ function notifuser(){
   $html='';
   
   foreach ($notif as  $value) {
-      $url = url('lessons', $parameters = [$value->id], $secure = null);
+      $url = url('lessons', $parameters = [$value->slug], $secure = null);
       $html .='<li><a href="'.$url.'" onclick="notifview('.$value->id.')">'.substr($value->title, '0', 40).'</a></li>';
 
   }
