@@ -146,7 +146,7 @@
     function formbalas(comment_id){
         $('#balas'+comment_id).html('<label class="col-md-1" style="padding-left:0px;">Anda</label>'+
                                 '<div class="col-md-11" style="padding-right:0px;">'+
-                                '   <input type="text" class="form-control" id="input_balas'+comment_id+'" name="balasan" placeholder="tambahkan komentar/balasan" value="">'+
+                                '   <textarea class="form-control" id="input_balas'+comment_id+'" name="balasan" placeholder="tambahkan komentar/balasan" value="" style="white-space: pre-line" rows="8" cols="80"></textarea>'+
                                 '</div>'+
                                 '<a href="javascript:void(0)" class="btn btn-info pull-right" onclick="dobalas('+comment_id+')" style="float:right;margin-top:10px; border-radius:3px;">Kirim</a>');
     }
