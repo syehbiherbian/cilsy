@@ -194,16 +194,19 @@ Route::get('member/reward/{id}/detail','Contributors\PointController@detail');
 
 Auth::routes();
 
-Route::get('/system/login', function () {
-	return view('admin.login');
-});
 Route::group(['middleware' => ['auth']], function () {
+
 	Route::get('/system/dashboard', function () {
 		return view('admin.home');
 	});
+
 	Route::resource('system/members', 'MembersController');
 	// Edit Member
+});
 
+		Route::get('/system/login', function () {
+			return view('admin.login');
+		});
 	Route::post('system/members/getServices', 'MembersController@getServices');
 	Route::post('system/members/addServices', 'MembersController@addServices');
 	Route::post('system/members/getEditServices', 'MembersController@getEditServices');
@@ -222,7 +225,7 @@ Route::group(['middleware' => ['auth']], function () {
 
 	//rating
 	
-});
+
 
 //  Route::get('cron/system/generate-income', 'GenerateIncomeController@generate');
 /*
