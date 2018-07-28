@@ -661,8 +661,8 @@ td{
             @if($tutor == null)
               @if($cart == null)
             <div class="lesson-video-count">Rp{{ number_format($lessons->price, 0, ",", ".") }}</div>
-            <button id="beli" type="button" class="lesson-video-count" onclick="addToCart({{ $lessons->id }})"><i class="fa fa-shopping-cart"></i> Beli</button>
-            <a id="guest" href="{{ url('cart') }}" class="btn" style="background-color:#fff; color:#5bc0de; border-color:#46b8da; display:none;">Lihat Keranjang</a>
+            <button id="beli-{{ $lessons->id }}" type="button" class="lesson-video-count" onclick="addToCart({{ $lessons->id }})"><i class="fa fa-shopping-cart"></i> Beli</button>
+            <a id="guest-{{ $lessons->id }}" href="{{ url('cart') }}" class="btn" style="background-color:#fff; color:#5bc0de; border-color:#46b8da; display:none;">Lihat Keranjang</a>
               @else
             <div class="lesson-video-count">Rp{{ number_format($lessons->price, 0, ",", ".") }}</div>
             <a href="{{ url('cart') }}" class="btn" style="background-color:#fff; color:#5bc0de; border-color:#46b8da;">Lihat Keranjang</a>
@@ -1240,8 +1240,8 @@ function videoTracking(videosrc) {
     var results = JSON.parse(cek);
     if (results.length > 0){
       $.each(results, function(k,v) {
-            $('#beli').hide();
-            $('#guest').show();
+            $('#beli-'+v['id']).hide();
+            $('#guest-'+v['id']).show();
       });
     }
   }
