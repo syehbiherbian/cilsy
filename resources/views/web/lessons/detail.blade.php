@@ -659,14 +659,9 @@ td{
           <div class="col-xs-12 col-md-2">
           <ul style="right">
             @if($tutor == null)
-              @if($cart == null)
             <div class="lesson-video-count">Rp{{ number_format($lessons->price, 0, ",", ".") }}</div>
             <button id="beli-{{ $lessons->id }}" type="button" class="lesson-video-count" onclick="addToCart({{ $lessons->id }})"><i class="fa fa-shopping-cart"></i> Beli</button>
             <a id="guest-{{ $lessons->id }}" href="{{ url('cart') }}" class="btn" style="background-color:#fff; color:#5bc0de; border-color:#46b8da; display:none;">Lihat Keranjang</a>
-              @else
-            <div class="lesson-video-count">Rp{{ number_format($lessons->price, 0, ",", ".") }}</div>
-            <a href="{{ url('cart') }}" class="btn" style="background-color:#fff; color:#5bc0de; border-color:#46b8da;">Lihat Keranjang</a>
-              @endif
             @endif  
           </ul>  
           </div>

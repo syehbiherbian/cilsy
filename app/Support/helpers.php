@@ -149,7 +149,7 @@ function notif(){
     $html='';
     foreach ($notif as  $value) {
         $url = url('/contributor/comments/detail', $parameters = [$value->id], $secure = null);
-        $html .='<li><a href="'.$url.'" onclick="notifview('.$value->id.')">'.$value->title.'</a></li>';
+        $html .='<li><a href="'.$url.'" onclick="contribnotif('.$value->id.')">'.$value->title.'</a></li>';
         
     }
     return $html;

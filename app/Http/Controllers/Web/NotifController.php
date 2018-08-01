@@ -11,7 +11,7 @@ use Session;
 use Hash;
 use DateTime;
 use DB;
-use App\Models\members;
+use App\Models\Member;
 use App\Models\UserNotif;
 use Auth;
 
@@ -38,6 +38,7 @@ class NotifController extends Controller
 
     public function read(){
       $id = Input::get('id');
+      dd($id);
       $update= UserNotif::find($id);
       $update->status=1;
       $update->save();
@@ -45,7 +46,7 @@ class NotifController extends Controller
     public function view(){
       $id = Input::get('id');
       $update= UserNotif::find($id);
-      $update->status=2;
+      $update->status=1;
       $update->save();
     }
 
