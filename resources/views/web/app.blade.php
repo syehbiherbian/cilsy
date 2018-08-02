@@ -444,7 +444,7 @@ a #items .item {
 }
     </style>
 
-
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="{{ asset('template/web/css/helper.css') }}">
     <link rel="stylesheet" href="{{ asset('template/web/css/common.css') }}">
     <link rel="stylesheet" href="{{ asset('template/web/css/blocks.css') }}">
@@ -480,7 +480,7 @@ a #items .item {
     <?php } ?>
       <div class="container">
         <div class="navbar-header navbar-fixed-side navbar-fixed-side-left">
-          <div id="btn" class="hidden-lg hidden-md">
+            <div id="btn" class="hidden-lg hidden-md" onclick="sideBarOverlay()">
               <div id='top'></div>
               <div id='middle'></div>
               <div id='bottom'></div>
@@ -495,13 +495,15 @@ a #items .item {
                   <a href="{{ url('member/signout') }}"><div class="item">Logout</div></a>
               </div>
               @else
-              <div id="items">
-                  <a href="{{ url('lessons/browse/all') }}" class="hidden-lg hidden-md" style="color: #fff;"><div class="item browse" style="background-color:#2BA8E2;">Browse Tutorial</div></a>
-                  <a href="{{ url('member/signin') }}"><div class="item">Masuk</div></a>
-                  <a href="{{ url('member/signup') }}"><div class="item">Daftar</div></a>
-              </div>
+                <div id="items">
+                    <a href="{{ url('lessons/browse/all') }}" class="hidden-lg hidden-md" style="color: #fff;"><div class="item browse" style="background-color:#2BA8E2;">Browse Tutorial</div></a>
+                    <a href="{{ url('member/signin') }}"><div class="item" onclick="w3_close()">Masuk</div></a>
+                    <a href="{{ url('member/signup') }}"><div class="item">Daftar</div></a>
+                </div>
               @endif
-          </div>
+            </div>
+            <div class="w3-overlay w3-animate-opacity"  style="cursor:pointer"  id="myOverlay"></div>
+
           <a href="{{ url('cart')}}" class="navbar-brand pull-right hidden-lg hidden-md" >
           <i style="height: 32px; width: 32px; color: white;" class="fa fa-shopping-cart"></i>
           </a>
@@ -728,32 +730,43 @@ a #items .item {
             </div>
         </div>
     </div>
-   <script>
-            var sidebarBox = document.querySelector('#box'),
-                sidebarBtn = document.querySelector('#btn'),
-                pageWrapper = document.querySelector('#page-wrapper');
+  <script>
+  function sideBarOverlay() {
+    var overlay = document.getElementById("myOverlay");
+    if (overlay.style.display === "block") {
+      overlay.style.display = "none";
+    } else {
+      overlay.style.display = "block";
+    }
+      
+  }
+</script>    
+<script>
+  var sidebarBox = document.querySelector('#box'),
+      sidebarBtn = document.querySelector('#btn'),
+      pageWrapper = document.querySelector('#page-wrapper');
 
-            sidebarBtn.addEventListener('click', function (event) {
-                sidebarBtn.classList.toggle('active');
-                sidebarBox.classList.toggle('active');
-            });
+      sidebarBtn.addEventListener('click', function (event) {
+      sidebarBtn.classList.toggle('active');
+      sidebarBox.classList.toggle('active');
+      });
 
-            pageWrapper.addEventListener('click', function (event) {
+      pageWrapper.addEventListener('click', function (event) {
 
-                if (sidebarBox.classList.contains('active')) {
-                    sidebarBtn.classList.remove('active');
-                    sidebarBox.classList.remove('active');
-                }
-            });
+        if (sidebarBox.classList.contains('active')) {
+            sidebarBtn.classList.remove('active');
+            sidebarBox.classList.remove('active');
+        }
+      });
 
-            window.addEventListener('keydown', function (event) {
+      window.addEventListener('keydown', function (event) {
 
-                if (sidebarBox.classList.contains('active') && event.keyCode === 27) {
-                    sidebarBtn.classList.remove('active');
-                    sidebarBox.classList.remove('active');
-                }
-            });
-          </script>
+        if (sidebarBox.classList.contains('active') && event.keyCode === 27) {
+            sidebarBtn.classList.remove('active');
+            sidebarBox.classList.remove('active');
+            }
+      });
+  </script>
  <script type="text/javascript">
     // $("#close").ready(function(){
     //   $("#top-section").css("margin-top", "76px")
