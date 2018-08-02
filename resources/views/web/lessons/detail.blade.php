@@ -640,6 +640,31 @@ td{
   top: 0;
   opacity: 0;
 }
+.fileUpload {
+	position: relative;
+	overflow: hidden;
+	margin: 10px;
+	background-color: #BDBDBD;
+	height: 50px;
+	width: 50px;
+	text-align: center;
+}
+.fileUpload input.upload {
+	position: absolute;
+	top: 0;
+	right: 0;
+	margin: 0;
+	padding: 0;
+	font-size: 6px;
+	cursor: pointer;
+	opacity: 0;
+	filter: alpha(opacity=0);
+	height: 100%;
+	text-align: center;
+}
+.custom-span{ font-family: Arial; font-weight: bold;font-size: 25px; color: #FE57A1}
+#uploadFile{border: none;margin-left: 10px; width: 50px;}
+.custom-para{font-family: arial;font-weight: bold;font-size: 6px; color:#585858;}
 </style>
 
 <div id="content-section">
@@ -759,12 +784,12 @@ td{
                           <textarea style="white-space: pre-line" rows="8" cols="80" class="form-control" name="body" id="textbody0"></textarea>
                         </div>
                        <ul class="left">
-                         <div class="upload-btn-wrapper">
-                          <button class="btn-upload btn-info"><i class="fa fa-upload"></i> Tambahkan Gambar/File</button>
-                          <input type="file"  name="image" id="image"/>
-                          
-                        </div>
-                        <img id="myImg" src="#" style="height :50px; width:50px; margin-bottom:42px;" />
+                          <div class="fileUpload">
+                          <span class="custom-span">+</span>
+                          <p class="custom-para">Add Images</p>
+                          <input id="uploadBtn" type="file" class="upload" name="image" />
+                          </div>
+                          <input id="uploadFile" placeholder="0 files selected" disabled="disabled" />
                        </ul>
                        
                        <ul class="right">
@@ -853,7 +878,32 @@ function imageIsLoaded(e) {
     $('#myImg').attr('src', e.target.result);
 };
 </script>
-<script>            $('#guest-'+v['id']).show();
+<script type="text/javascript">
+document.getElementById("uploadBtn").onchange = function () {
+document.getElementById("uploadFile").value = this.value;
+};
+</script>
+<script type="text/javascript">
+document.getElementById("uploadbtn").onchange = function () {
+document.getElementById("uploadfile").value = this.value;
+};
+</script>
+<script>
+  $(function () {
+    $(":file").change(function () {
+        if (this.files && this.files[0]) {
+            var reader = new FileReader();
+            reader.onload = imageLoaded;
+            reader.readAsDataURL(this.files[0]);
+        }
+    });
+});
+
+function imageLoaded(e) {
+    $('#Img').attr('src', e.target.result);
+};
+</script>
+<script>            
 $(document).ready(function(){
     $('.venobox').venobox(); 
 });
@@ -906,33 +956,6 @@ $(document).ready(function(){
     // setInterval(function(){
     //     loadcontent()
     // }, 5000);
-</script>
-<script type="text/javascript">
-    var video = document.getElementById("video");
-
-    // $('#video').hover(function toggleControls() {
-    //     if (video.hasAttribute!=("controls")) {
-    //       video.setAttribute("controls", "controls")
-    //     } else {
-    //       video.removeAttribute("controls")
-    //     }
-    // })
-    // var el = document.getElementById("nextButton");
-    // if (el.addEventListener) {
-    //     el.addEventListener("click", yourNextFunction, false);
-    // } else {
-    //     el.attachEvent('onclick', yourNextFunction);
-    // }  
-    // var video_count =1,
-    // videoPlayer = document.getElementById("homevideo");
-
-    // function yourNextFunction (){
-    //   video_count++;
-    //   if (video_count == 16) video_count = 1;
-    //   var nextVideo = "video"+video_count+".mp4";
-    //   videoPlayer.src = nextVideo;
-    //   videoPlayer.play();
-    // }
 </script>
 <script>
   fbq('track', 'ViewContent');
@@ -1169,7 +1192,7 @@ function videoTracking(videosrc) {
 
   function doComment(lesson_id, parent_id) {
     var body = $('#textbody'+parent_id).val();
-    var file_data = $('#image').prop("files")[0];
+    var file_data = $('#uploadBtn').prop("files")[0];
     dataform = new FormData();
     dataform.append( 'image', file_data);
     dataform.append( 'body', body);
@@ -1208,14 +1231,14 @@ function videoTracking(videosrc) {
                 allowOutsideClick: false
             });
             // Show image container
-            
           },
           success:function(data){
             if (data.success == false) {
                window.location.href = '{{ url("member/signin") }}';
             }else if (data.success == true) {
+              console.log(data);
               $('#textbody'+parent_id).val('');
-              $("#form-comment").find('[type=file]').val('');
+              $("#uploadFile").val('');
               swal({
                 title: "Komentar anda sudah terkirim!",
                 showConfirmButton: true,
