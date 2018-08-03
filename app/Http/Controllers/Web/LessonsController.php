@@ -331,11 +331,11 @@ class LessonsController extends Controller
                              ->where('comments.member_id', '<>', 'B.contributor_id')
                              ->select('comments.member_id as tanya', 'B.member_id as jawab', 'members.username as username')->distinct()
                              ->get();
-
                             
             if($parent_id != null){
                 foreach ($getemailchild as $mails) {
-
+                    if( $mails->tanya !=$input['member_id'] ){
+                        if($mails->tanya != $mails->jawab){
                     $getnotif = DB::table('user_notif')->insert([
                         'id_user' => $mails->tanya,
                         'category' => 'Komentar',
@@ -345,7 +345,8 @@ class LessonsController extends Controller
                         'slug' => $lessons->slug,
                         'created_at' => $now,
                     ]);
-
+                        }
+                    }
                 //  Check type
                 if (is_array($mails)){
                     //  Scan through inner loop
