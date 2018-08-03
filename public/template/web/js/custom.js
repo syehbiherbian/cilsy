@@ -6,6 +6,7 @@ $(document).ready(function() {
 			var cart = JSON.parse(cek);
 			if (cart.length > 0) {
 				$('.badge-cart').removeClass('hide').html(cart.length);
+				$('.badge-cart-mobile').removeClass('hide').html(cart.length);
 			}
 		}
 	}
