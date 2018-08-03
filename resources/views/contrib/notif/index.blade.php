@@ -99,7 +99,7 @@
             <tbody>
 			@foreach($data as $dat)
 			<?php
-				if($dat->status !== 1){
+				if($dat->status == 0){
 			?>
               <tr>
                 <td><?= date('d/m/Y',strtotime($dat->created_at)) ?></td>

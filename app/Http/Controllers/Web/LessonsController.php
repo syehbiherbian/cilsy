@@ -462,6 +462,12 @@ class LessonsController extends Controller
 									                              <label>Komentar</label>
 									                              <textarea name="name" rows="8" cols="80" class="form-control" name="body" id="textbody' . $comment->id . '"></textarea>
                                                                 </div>
+                                                                <div class="fileUpload">
+                                                                <span class="custom-span">+</span>
+                                                                <p class="custom-para">Add Images</p>
+                                                                <input id="uploadbtn' . $comment->id . '" type="file" class="upload" name="image" />
+                                                                </div>
+                                                                <input id="uploadfile' . $comment->id . '" placeholder="0 files selected" disabled="disabled" />
                                                                 <button type="submit" class="btn btn-primary pull-right" onClick="doComment(' . $lesson_id . ',' . $comment->id . ')" >Kirim</button>
 									                          </div>
 									                        </div>
