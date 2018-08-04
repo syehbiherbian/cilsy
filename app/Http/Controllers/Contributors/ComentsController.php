@@ -106,7 +106,7 @@ class ComentsController extends Controller
         $lessons = DB::table('lessons')->where('id',$lesson_id)->first();
         $notify = DB::table('comments')->where('id', $comment_id)->first();
         $contrib = Contributor::find($uid);
-
+        $now = new DateTime();
         DB::table('comments')->insert([
             'lesson_id'     => $lesson_id,
             'member_id'     => null,
@@ -123,12 +123,40 @@ class ComentsController extends Controller
         $notif_user =   DB::table('user_notif')->insertGetId([
                         'id_user'=> $notify->member_id,
                         'category'=>'comments',
-                        'title'   => 'Anda mendapatkan balasan dari pertanyaan anda di tutorial ' . $lessons->title,
-                        'notif'   => 'Anda mendapatkan balasan dari pertanyaan anda dari ' . Auth::guard('contributors')->user()->username,
+                        'title'   => 'Kontributor membalas pertanyaan anda di tutorial ' . $lessons->title,
+                        'notif'   => 'Kontributor '. Auth::guard('contributors')->user()->username. 'membalas pertanyaan anda di tutorial ' . $lessons->title ,
                         'status'  => 0,
                         'slug'    => $lessons->slug,
                         'created_at'    => new DateTime(),
                         ]);
+
+        $getemailchild = DB::table('comments')
+        ->Join('comments as B', 'comments.id', 'B.parent_id')
+        ->Join('contributors','contributors.id','=','B.contributor_id')
+        ->Where('B.parent_id', $comment_id)
+        ->where('comments.member_id', '<>', 'B.member_id')
+        ->where('comments.member_id', '<>', 'B.contributor_id')
+        ->select('comments.member_id as tanya', 'B.member_id as jawab', 'contributors.username as username')->distinct()
+        ->get();
+       if($comment_id != null){
+           foreach ($getemailchild as $mails) {
+                   if($mails->tanya != $mails->jawab){
+                //        if($mails->jawab != $uid){
+                    if($mails->jawab != null){
+               $getnotif = DB::table('user_notif')->insert([
+                   'id_user' => $mails->jawab,
+                   'category' => 'Komentar',
+                   'title' => 'Hai,Anda mendapat balasan dari kontributor ' . $mails->username . ' pada ' . $lessons->title,
+                   'notif' => 'Anda mendapatkan balasan dari kontributor ' . $mails->username . ' pada ' . $lessons->title,
+                   'status' => 0,
+                   'slug' => $lessons->slug,
+                   'created_at' => $now,
+               ]);
+                }
+                }
+            // }
+            }
+        }
         $member = Member::Find($notify->member_id);
         $lessonn = Lesson::find($lessons->id);
         $contrib = Contributor::find($lessons->contributor_id);

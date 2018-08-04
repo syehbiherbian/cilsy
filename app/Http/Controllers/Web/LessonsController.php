@@ -306,6 +306,22 @@ class LessonsController extends Controller
                 $request->image->move(public_path('/assets/source/komentar'), $input['images']);
             }
             // dd($input);
+
+            $getmembercomment = DB::table('comments')
+            ->where('comments.lesson_id',$input['lesson_id'])
+            ->where('comments.status',0)
+            ->select('comments.id as id')
+            ->first();
+            DB::table('contributor_notif')->insert([
+            'contributor_id' => $lessons->contributor_id,
+            'category' => 'Komentar',
+            'title' => 'Anda mendapat pertanyaan dari ' . $member->username,
+            'notif' => 'Anda mendapatkan pertanyaan dari ' . $member->username . ' pada ' . $lessons->title,
+            'status' => 0,
+            'slug' => $getmembercomment->id,
+            'created_at' => $now,
+            ]);
+
             $store = Comment::create($input);
             // dd($store);
             if ($store) {
@@ -334,11 +350,11 @@ class LessonsController extends Controller
                              ->where('comments.member_id', '<>', 'B.contributor_id')
                              ->select('comments.member_id as tanya', 'B.member_id as jawab', 'members.username as username')->distinct()
                              ->get();
-
                             
             if($parent_id != null){
                 foreach ($getemailchild as $mails) {
-
+                    if( $mails->tanya !=$input['member_id'] ){
+                        if($mails->tanya != $mails->jawab){
                     $getnotif = DB::table('user_notif')->insert([
                         'id_user' => $mails->tanya,
                         'category' => 'Komentar',
@@ -348,7 +364,8 @@ class LessonsController extends Controller
                         'slug' => $lessons->slug,
                         'created_at' => $now,
                     ]);
-
+                        }
+                    }
                 //  Check type
                 if (is_array($mails)){
                     //  Scan through inner loop
