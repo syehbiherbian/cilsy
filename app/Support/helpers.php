@@ -148,8 +148,8 @@ function notif(){
     $notif =ContributorNotif::where('contributor_id',$contribID)->where('status',0)->latest()->take(5)->get();
     $html='';
     foreach ($notif as  $value) {
-        $url = url('/contributor/comments/detail', $parameters = [$value->id], $secure = null);
-        $html .='<li><a href="'.$url.'" onclick="notifview('.$value->id.')">'.$value->title.'</a></li>';
+        $url = url('/contributor/comments/detail', $parameters = [$value->slug], $secure = null);
+        $html .='<li><a href="'.$url.'" onclick="contribnotif('.$value->id.')">'.$value->title.'</a></li>';
         
     }
     return $html;

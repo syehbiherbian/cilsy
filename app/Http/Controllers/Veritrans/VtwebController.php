@@ -95,7 +95,7 @@ class VtwebController extends Controller {
             return response()->json([
                 'status' => false,
                 'message' => 'Transaction failed'
-            ], 500);
+            ], 200);
         }
         
         $vt = new Veritrans;
@@ -172,6 +172,16 @@ class VtwebController extends Controller {
                 'status' => 4,
                 'type' => $type,
                 'notes' => "Payment using " . $type . " for transaction order_id: " . $order_id . " is denied.",
+            ]);
+            return response()->json([
+                'status' => true
+            ], 200);
+        } else if ($transaction == 'expire') {
+            // TODO set payment status in merchant's database to 'Expire'
+            Invoice::where('code', $order_id)->update([
+                'status' => 5,
+                'type' => $type,
+                'notes' => "Payment using " . $type . " for transaction order_id: " . $order_id . " is expired.",
             ]);
             return response()->json([
                 'status' => true

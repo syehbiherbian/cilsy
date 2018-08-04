@@ -196,8 +196,8 @@
     <script type="text/javascript" src="{{asset('template/kontributor/js/sweetalert.min.js')}}"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js"></script>
 
-    <!-- <script type="text/javascript">
-      function notifview(id){
+    <script type="text/javascript">
+      function contribnotif(id){
         var token   = "{{csrf_token()}}";
         var dataString= '_token='+ token + '&id=' + id ;
          $.ajax({
@@ -208,7 +208,7 @@
           }
         });
       }
-    </script> -->
+    </script>
 
 </body>
 

@@ -24,6 +24,8 @@ use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Validator;
+use App\Mail\WaitingNotifMail;
+use Illuminate\Support\Facades\Mail;
 
 class LessonsController extends Controller
 {
@@ -304,10 +306,27 @@ class LessonsController extends Controller
                 $request->image->move(public_path('/assets/source/komentar'), $input['images']);
             }
             // dd($input);
+
+            $getmembercomment = DB::table('comments')
+            ->where('comments.lesson_id',$input['lesson_id'])
+            ->where('comments.status',0)
+            ->select('comments.id as id')
+            ->first();
+            DB::table('contributor_notif')->insert([
+            'contributor_id' => $lessons->contributor_id,
+            'category' => 'Komentar',
+            'title' => 'Anda mendapat pertanyaan dari ' . $member->username,
+            'notif' => 'Anda mendapatkan pertanyaan dari ' . $member->username . ' pada ' . $lessons->title,
+            'status' => 0,
+            'slug' => $getmembercomment->id,
+            'created_at' => $now,
+            ]);
+
             $store = Comment::create($input);
             // dd($store);
             if ($store) {
-             $getmembercomment = DB::table('comments')
+            Mail::to($member)->send(new WaitingNotifMail());
+            $getmembercomment = DB::table('comments')
                                 ->Join('members','members.id','=','comments.member_id')
                                 ->where('comments.lesson_id',$input['lesson_id'])
                                 ->where('comments.parent_id',0)
@@ -331,11 +350,11 @@ class LessonsController extends Controller
                              ->where('comments.member_id', '<>', 'B.contributor_id')
                              ->select('comments.member_id as tanya', 'B.member_id as jawab', 'members.username as username')->distinct()
                              ->get();
-
                             
             if($parent_id != null){
                 foreach ($getemailchild as $mails) {
-
+                    if( $mails->tanya !=$input['member_id'] ){
+                        if($mails->tanya != $mails->jawab){
                     $getnotif = DB::table('user_notif')->insert([
                         'id_user' => $mails->tanya,
                         'category' => 'Komentar',
@@ -345,7 +364,8 @@ class LessonsController extends Controller
                         'slug' => $lessons->slug,
                         'created_at' => $now,
                     ]);
-
+                        }
+                    }
                 //  Check type
                 if (is_array($mails)){
                     //  Scan through inner loop
@@ -457,11 +477,22 @@ class LessonsController extends Controller
 									                      <div class="panel-footer ">
 									                        <div class="row reply">
                                                               <div class="col-md-12">
+                                                              <form id="form-comment" class="mb-25" enctype="multipart/form-data" method="POST">
+                                                                <input type="hidden" name="_method" value="POST">
+                                                                <input type="hidden" name="lesson_id" value="' . $lesson_id . '">
+                                                                <input type="hidden" name="parent_id" value="' . $comment->id . '"> 
     									                        <div class="form-group">
 									                              <label>Komentar</label>
 									                              <textarea name="name" rows="8" cols="80" class="form-control" name="body" id="textbody' . $comment->id . '"></textarea>
                                                                 </div>
-                                                                <button type="submit" class="btn btn-primary pull-right" onClick="doComment(' . $lesson_id . ',' . $comment->id . ')" >Kirim</button>
+                                                                <div class="fileUpload">
+                                                                <span class="custom-span">+</span>
+                                                                <p class="custom-para">Add Images</p>
+                                                                <input id="uploadBtn" type="file" class="upload" name="image" />
+                                                                </div>
+                                                                <input id="uploadFile" placeholder="0 files selected" disabled="disabled" />
+                                                                <button type="button" class="btn btn-primary pull-right" onClick="doComment(' . $lesson_id . ',' . $comment->id . ')" >Kirim</button>
+                                                                </form>
 									                          </div>
 									                        </div>
 									                      </div>
