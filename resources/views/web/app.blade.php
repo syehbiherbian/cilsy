@@ -345,6 +345,20 @@ a #items .item {
   margin-left: 30px;
   margin-top: -75px;
 }
+.badge-cart-mobile {
+  background-color: red;
+  border-radius: 10px;
+  color: white;
+  display: inline-block;
+  font-size: 10px;
+  line-height: 1;
+  padding: 2px 5px;
+  text-align: center;
+  vertical-align: middle;
+  white-space: nowrap;
+  margin-left: 20px;
+  margin-top: -55px;
+}
 
 
 .shopping-cart {
@@ -505,7 +519,15 @@ a #items .item {
             <div class="w3-overlay w3-animate-opacity"  style="cursor:pointer"  id="myOverlay"></div>
 
           <a href="{{ url('cart')}}" class="navbar-brand pull-right hidden-lg hidden-md" >
-          <i style="height: 32px; width: 32px; color: white;" class="fa fa-shopping-cart"></i>
+          <i style="height: 32px; width: 32px; color: white;" class="fa fa-shopping-cart">
+              @if (Auth::guard("members")->user())
+                <?php if(getTotalCart() != null){ ?>
+                        <span class="badge-cart-mobile"><?php echo getTotalCart();?></span>
+                        <?php } ?>
+              @else
+                <span class="badge-cart-mobile hide"> <?php echo getTotalCart();?></span>
+              @endif
+          </i>
           </a>
           <button type="button" class="navbar-toggle collapsed search-toogle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-search" aria-expanded="false">
             <!-- <span class="sr-only">Toggle navigation</span> -->
@@ -514,7 +536,7 @@ a #items .item {
           <a class="navbar-brand" href="{{ url('/') }}"><img class="logo" src="{{asset('template/web/img/logo.png')}}"></a>
           <a href="{{ url('lessons/browse/all') }}" class="browse-btn hidden-xs hidden-sm">Browse Tutorial</a>
         </div>
-
+        
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <!-- <form class="navbar-form navbar-left">
@@ -525,7 +547,7 @@ a #items .item {
           </form> -->
           <form class="navbar-form navbar-left form-search hidden-xs" action="{{ url('search') }}" method="get">
             <input type="hidden" name="category" value="" class="searchcategory">
-
+            
             <div class="input-group">
 
               <div class="input-group-btn btn-category">
@@ -599,11 +621,10 @@ a #items .item {
                 </ul>
           </div>
           <div class="shopping-cart" style="display: none;">
-
             <ul class="shopping-cart-items">
               <?php echo cart();?>
             </ul>
-
+            
             <a href="{{ url('/cart') }}" class="button">Lihat Keranjang</a>
           </div>
           @else
@@ -620,7 +641,7 @@ a #items .item {
            </div>
           @endif
         </div><!-- /.navbar-collapse -->
-
+            
         <div class="collapse navbar-collapse hidden-sm hidden-md hidden-lg" id="bs-example-navbar-collapse-search" style="overflow-y: visible;">
           <form class="navbar-form navbar-left form-search " action="{{ url('search') }}" method="get">
             <input type="hidden" name="category" value="" class="searchcategory">

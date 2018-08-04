@@ -883,11 +883,6 @@ document.getElementById("uploadBtn").onchange = function () {
 document.getElementById("uploadFile").value = this.value;
 };
 </script>
-<script type="text/javascript">
-document.getElementById("uploadbtn").onchange = function () {
-document.getElementById("uploadfile").value = this.value;
-};
-</script>
 <script>
   $(function () {
     $(":file").change(function () {
@@ -1202,14 +1197,6 @@ function videoTracking(videosrc) {
     if (body == '') {
       alert('Harap Isi Komentar !')
     }else {
-      var postData =
-                  {
-                      "_token":$('meta[name="csrf-token"]').attr('content'),
-                      "lesson_id": lesson_id,
-                      "parent_id": parent_id,
-                      "image" : file_data,
-                      "body": body
-                  }
       $.ajaxSetup({
           headers: {
               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -1236,7 +1223,6 @@ function videoTracking(videosrc) {
             if (data.success == false) {
                window.location.href = '{{ url("member/signin") }}';
             }else if (data.success == true) {
-              console.log(data);
               $('#textbody'+parent_id).val('');
               $("#uploadFile").val('');
               swal({

@@ -24,6 +24,8 @@ use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Validator;
+use App\Mail\WaitingNotifMail;
+use Illuminate\Support\Facades\Mail;
 
 class LessonsController extends Controller
 {
@@ -307,7 +309,8 @@ class LessonsController extends Controller
             $store = Comment::create($input);
             // dd($store);
             if ($store) {
-             $getmembercomment = DB::table('comments')
+            Mail::to($member)->send(new WaitingNotifMail());
+            $getmembercomment = DB::table('comments')
                                 ->Join('members','members.id','=','comments.member_id')
                                 ->where('comments.lesson_id',$input['lesson_id'])
                                 ->where('comments.parent_id',0)
@@ -457,6 +460,10 @@ class LessonsController extends Controller
 									                      <div class="panel-footer ">
 									                        <div class="row reply">
                                                               <div class="col-md-12">
+                                                              <form id="form-comment" class="mb-25" enctype="multipart/form-data" method="POST">
+                                                                <input type="hidden" name="_method" value="POST">
+                                                                <input type="hidden" name="lesson_id" value="' . $lesson_id . '">
+                                                                <input type="hidden" name="parent_id" value="' . $comment->id . '"> 
     									                        <div class="form-group">
 									                              <label>Komentar</label>
 									                              <textarea name="name" rows="8" cols="80" class="form-control" name="body" id="textbody' . $comment->id . '"></textarea>
@@ -464,10 +471,11 @@ class LessonsController extends Controller
                                                                 <div class="fileUpload">
                                                                 <span class="custom-span">+</span>
                                                                 <p class="custom-para">Add Images</p>
-                                                                <input id="uploadbtn' . $comment->id . '" type="file" class="upload" name="image" />
+                                                                <input id="uploadBtn" type="file" class="upload" name="image" />
                                                                 </div>
-                                                                <input id="uploadfile' . $comment->id . '" placeholder="0 files selected" disabled="disabled" />
-                                                                <button type="submit" class="btn btn-primary pull-right" onClick="doComment(' . $lesson_id . ',' . $comment->id . ')" >Kirim</button>
+                                                                <input id="uploadFile" placeholder="0 files selected" disabled="disabled" />
+                                                                <button type="button" class="btn btn-primary pull-right" onClick="doComment(' . $lesson_id . ',' . $comment->id . ')" >Kirim</button>
+                                                                </form>
 									                          </div>
 									                        </div>
 									                      </div>
