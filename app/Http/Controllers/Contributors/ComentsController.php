@@ -13,6 +13,7 @@ use DB;
 use App\Models\Contributor;
 use App\Models\UserNotif;
 use App\Models\Member;
+use App\Models\Comment;
 use App\Models\Lesson;
 use App\Notifications\ContribReplyNotification;
 use Auth;
@@ -91,13 +92,29 @@ class ComentsController extends Controller
         }
     }
 
-    public function postcomment(){
+    public function postcomment(Request $request){
         if (empty(Auth::guard('contributors')->user()->id)) {
             return 0;
             exit();
         }
         $uid = Auth::guard('contributors')->user()->id;
-        $isi_balas  = Input::get('isi_balas');
+        $input = $request->all();
+        $input['lesson_id'] = Input::get('lesson_id');
+        $input['parent_id'] = Input::get('comment_id');
+        $input['body'] = Input::get('body');
+        $input['images'] = null;
+        $input['member_id'] = Input::get('member_id');
+        $input['contributor_id'] = Contributor::find($uid);
+        if ($request->hasFile('image')){
+            $input['images'] = 'assets/source/komentar/komentar-'.$request->image->getClientOriginalName().'.'.$request->image->getClientOriginalExtension();
+            $request->image->move(public_path('/assets/source/komentar'), $input['images']);
+        }
+        $input['status'] = 0;
+        $input['desc'] = 1;
+        $input['created_at'] = new DateTime();
+        $store = Comment::create($input);
+        dd($store);
+        $isi_balas  = Input::get('body');
         $comment_id = Input::get('comment_id');
         $lesson_id  = Input::get('lesson_id');
         $member_id  = Input::get('member_id');
@@ -107,16 +124,7 @@ class ComentsController extends Controller
         $notify = DB::table('comments')->where('id', $comment_id)->first();
         $contrib = Contributor::find($uid);
         $now = new DateTime();
-        DB::table('comments')->insert([
-            'lesson_id'     => $lesson_id,
-            'member_id'     => null,
-            'contributor_id'=> $uid,
-            'body'          => $isi_balas,
-            'parent_id'     => $comment_id,
-            'status'        => '0',
-            'desc'        => '1',
-            'created_at'    => new DateTime()
-        ]);
+        // dd($lesson_id);
 
         
 
@@ -161,32 +169,7 @@ class ComentsController extends Controller
         $lessonn = Lesson::find($lessons->id);
         $contrib = Contributor::find($lessons->contributor_id);
         $member->notify(new ContribReplyNotification($member, $lessonn, $contrib));
-        // $mem = DB::table('comments')->where('parent_id','<>', $comment_id)
-        // ->where('comments.member_id', '<>',$uid)
-        // ->select('comments.member_id')
-        // ->orderby('comments.created_at', 'DESC')
-        // ->first();
-        // if(!empty($mem)){
-          
-        // $notif_nimbrung =   DB::table('user_notif')->insertGetId([
-        //     'id_user'=> $mem->member_id,
-        //     'category'=>'comments',
-        //     'title'   => 'Anda mendapatkan balasan dari pertanyaan anda di tutorial ' . $lessons->title,
-        //     'notif'   => 'Anda mendapatkan balasan dari pertanyaan anda dari ' . Auth::guard('contributors')->user()->username,
-        //     'status'  => 0,
-        //     'slug'    => $lessons->slug,
-        //     'created_at'    => new DateTime(),
-        // ]);  
-        
 
-        // }
- 
-
-        // $member = Member::Find($member_id);
-        // $lesson = Lesson::Find($lesson_id);
-        // $contrib = Contributor::find($uid);
-
-        // $member->notify(new ContribReplyNotification([$member, $lesson, $contrib]));
 
         $check=DB::table('comments')->where('parent_id',$comment_id)->get();
 

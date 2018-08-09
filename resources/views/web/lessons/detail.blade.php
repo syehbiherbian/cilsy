@@ -9,8 +9,6 @@
 {{-- <link href="https://vjs.zencdn.net/5.16.0/video-js.min.css" rel="stylesheet"/> --}}
 <script src="https://vjs.zencdn.net/5.16.0/video.min.js"></script>
 <script src="https://rawgit.com/atlance01/vrapp-ionic/master/www/js/lib/videojs-playlist.js"></script>
-<script src="{{ asset('template/web/js/component.js') }}"></script>
-<script src="{{ asset('template/web/js/control-bar/control-bar.js') }}"></script>
 <style>
   body {
     /*font-family: Arial, sans-serif;*/
@@ -863,6 +861,8 @@ td{
 <script src="{{ asset('template/web/js/videojs-playlist-ui.js') }}"></script>
 <script src="{{ asset('template/web/js/videojs-errors.js') }}"></script>
 <script type="text/javascript" src="https://unpkg.com/sweetalert2@7.9.2/dist/sweetalert2.all.js"></script>
+<script src="{{ asset('template/web/js/component.js') }}"></script>
+<script src="{{ asset('template/web/js/control-bar/control-bar.js') }}"></script>
 <script>
   $(function () {
     $(":file").change(function () {
@@ -1210,6 +1210,7 @@ function videoTracking(videosrc) {
           contentType: false,
           processData: false,
           beforeSend: function(){
+               console.log(data);
                swal({
                 title: "Sedang mengirim Komentar",
                 text: "Mohon Tunggu sebentar",
