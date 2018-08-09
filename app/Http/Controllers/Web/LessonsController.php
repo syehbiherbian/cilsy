@@ -353,16 +353,16 @@ class LessonsController extends Controller
                         }
                     }
                 //  Check type
-                if (is_array($mails)){
-                    //  Scan through inner loop
-                    foreach ($mails as $value) {
-                        $member = Member::Find($value);
-                        $lesson = Lesson::Find($lesson_id);
-                        $contrib = Contributor::find($lessons->contributor_id);
-                        $member->notify(new UserReplyNotification($member, $lesson, $contrib));
+                // if (is_array($mails)){
+                //     //  Scan through inner loop
+                //     foreach ($mails as $value) {
+                //         $member = Member::Find($value);
+                //         $lesson = Lesson::Find($lesson_id);
+                //         $contrib = Contributor::find($lessons->contributor_id);
+                //         $member->notify(new UserReplyNotification($member, $lesson, $contrib));
                        
-                        }
-                    }
+                //         }
+                //     }
                    
                 }
             }
