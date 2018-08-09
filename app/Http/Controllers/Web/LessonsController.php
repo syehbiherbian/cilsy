@@ -307,40 +307,26 @@ class LessonsController extends Controller
             }
             // dd($input);
 
-            $getmembercomment = DB::table('comments')
-            ->where('comments.lesson_id',$input['lesson_id'])
-            ->where('comments.status',0)
-            ->select('comments.id as id')
-            ->first();
-            DB::table('contributor_notif')->insert([
-            'contributor_id' => $lessons->contributor_id,
-            'category' => 'Komentar',
-            'title' => 'Anda mendapat pertanyaan dari ' . $member->username,
-            'notif' => 'Anda mendapatkan pertanyaan dari ' . $member->username . ' pada ' . $lessons->title,
-            'status' => 0,
-            'slug' => $getmembercomment->id,
-            'created_at' => $now,
-            ]);
+            
 
             $store = Comment::create($input);
             // dd($store);
             if ($store) {
-            Mail::to($member)->send(new WaitingNotifMail());
-            $getmembercomment = DB::table('comments')
-                                ->Join('members','members.id','=','comments.member_id')
-                                ->where('comments.lesson_id',$input['lesson_id'])
-                                ->where('comments.parent_id',0)
-                                ->where('comments.status',0)
-                                ->select('comments.*','members.username as username')
-                                ->first();
-            DB::table('contributor_notif')->insert([
+                $getmembercomment = DB::table('comments')
+                ->where('comments.lesson_id',$input['lesson_id'])
+                ->where('comments.status',0)
+                ->select('comments.id as id')
+                ->first();
+    
+                DB::table('contributor_notif')->insert([
                 'contributor_id' => $lessons->contributor_id,
                 'category' => 'Komentar',
                 'title' => 'Anda mendapat pertanyaan dari ' . $member->username,
                 'notif' => 'Anda mendapatkan pertanyaan dari ' . $member->username . ' pada ' . $lessons->title,
                 'status' => 0,
-                'slug' => 0,
+                'slug' => $getmembercomment->id,
                 'created_at' => $now,
+            
             ]);
             $getemailchild = DB::table('comments')
                              ->Join('comments as B', 'comments.id', 'B.parent_id')
@@ -367,16 +353,16 @@ class LessonsController extends Controller
                         }
                     }
                 //  Check type
-                if (is_array($mails)){
-                    //  Scan through inner loop
-                    foreach ($mails as $value) {
-                        $member = Member::Find($value);
-                        $lesson = Lesson::Find($lesson_id);
-                        $contrib = Contributor::find($lessons->contributor_id);
-                        $member->notify(new UserReplyNotification($member, $lesson, $contrib));
+                // if (is_array($mails)){
+                //     //  Scan through inner loop
+                //     foreach ($mails as $value) {
+                //         $member = Member::Find($value);
+                //         $lesson = Lesson::Find($lesson_id);
+                //         $contrib = Contributor::find($lessons->contributor_id);
+                //         $member->notify(new UserReplyNotification($member, $lesson, $contrib));
                        
-                        }
-                    }
+                //         }
+                //     }
                    
                 }
             }

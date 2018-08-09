@@ -62,6 +62,7 @@ class ComentsController extends Controller
         return redirect('contributor/login?next=/contributor/comments/detail/'.$id);
         }
         $detailcomment  = DB::table('comments')->where('id',$id)->first();
+        // dd($detailcomment);
         $getlesson      = DB::table('lessons')->where('id',$detailcomment->lesson_id)->first();
         $getcomment     = DB::table('comments')
                     ->leftJoin('members','members.id','=','comments.member_id')

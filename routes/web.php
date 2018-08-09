@@ -201,14 +201,14 @@ Auth::routes();
 
 Route::group(['middleware' => ['auth']], function () {
 
-	Route::get('/system/dashboard', function () {
-		return view('admin.home');
-	});
-
-	Route::resource('system/members', 'MembersController');
+	
 	// Edit Member
 });
+Route::get('/system/dashboard', function () {
+	return view('admin.home');
+});
 
+Route::resource('system/members', 'MembersController');
 	Route::get('/system/login', function () {
 		return view('admin.login');
 	});
