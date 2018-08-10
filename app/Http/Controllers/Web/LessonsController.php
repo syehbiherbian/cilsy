@@ -352,6 +352,20 @@ class LessonsController extends Controller
                     ]);
                         }
                     }
+
+                    if( $mails->jawab !=$input['member_id'] ){
+                        if($mails->tanya != $mails->jawab){
+                    $getnotif = DB::table('user_notif')->insert([
+                        'id_user' => $mails->jawab,
+                        'category' => 'Komentar',
+                        'title' => 'Hello, Anda Nimbrung di komentar ini ada tanggapan dari ' . $mails->username,
+                        'notif' => 'Anda mendapatkan balasan dari ' . $mails->username . ' pada ' . $lessons->title,
+                        'status' => 0,
+                        'slug' => $lessons->slug,
+                        'created_at' => $now,
+                    ]);
+                        }
+                    }
                 //  Check type
                 // if (is_array($mails)){
                 //     //  Scan through inner loop
