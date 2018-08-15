@@ -429,7 +429,7 @@ a #items .item {
   text-align: center;
   padding: 12px;
   text-decoration: none;
-  display: block;
+  display: block;url
   border-radius: 3px;
   font-size: 16px;
   margin: 25px 0 15px 0;
@@ -865,18 +865,13 @@ a #items .item {
     <!-- Search Form Auto complete -->
     <script type="text/javascript">
     $(function() {
-      function getUrl(){
-        const url = "search/autocomplete";
-        const full = url + ($(".keyword").val() != "" ? ("q=" + $(".keyword").val()) : "" );
-        return full;
-      }
       $(".keyword").autocomplete({
-        source:'{{ url("'+getUrl()+'")}}',
+        source:'{{ url("search/autocomplete")}}',
         select:function(event,ui) {
           $(".keyword").val(ui.item.label);
           return false;
         },
-        minLength: 1,
+        minLength: 2,
       }).bind('focus', function () {
         $('.ui-autocomplete').css('z-index','9999').css('overflow-y','scroll').css('max-height','300px');
         // $('.ui-autocomplete').css('background','#09121a').css('color','#fff');

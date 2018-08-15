@@ -1210,7 +1210,6 @@ function videoTracking(videosrc) {
           contentType: false,
           processData: false,
           beforeSend: function(){
-               console.log(data);
                swal({
                 title: "Sedang mengirim Komentar",
                 text: "Mohon Tunggu sebentar",

@@ -49,7 +49,7 @@ Route::post('lessons/LessonsQuiz','Web\LessonsController@LessonsQuiz');
 // Route::post('attachment', 'AttachmentController@upload');
 // Search
 Route::get('search', 'Web\SearchController@index');
-Route::get('search/autocomplete', 'Web\SearchController@autocomplete');
+Route::get('search/autocomplete/', 'Web\SearchController@autocomplete');
 Route::get('category/{id}','Web\LessonController@getSearchcategory');
 
 // Point

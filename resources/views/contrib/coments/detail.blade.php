@@ -71,6 +71,31 @@
   border-color: #e74c3c;
   color: #e74c3c;
 }
+.fileUpload {
+	position: relative;
+	overflow: hidden;
+	margin: 10px;
+	background-color: #BDBDBD;
+	height: 50px;
+	width: 50px;
+	text-align: center;
+}
+.fileUpload input.upload {
+	position: absolute;
+	top: 0;
+	right: 0;
+	margin: 0;
+	padding: 0;
+	font-size: 6px;
+	cursor: pointer;
+	opacity: 0;
+	filter: alpha(opacity=0);
+	height: 100%;
+	text-align: center;
+}
+.custom-span{ font-family: Arial; font-weight: bold;font-size: 25px; color: #FE57A1}
+#uploadFile{border: none;margin-left: 10px; width: 50px;}
+.custom-para{font-family: arial;font-weight: bold;font-size: 6px; color:#585858;}
 </style>
 <div class="row">
   <div class="col-md-12">
@@ -92,7 +117,7 @@
 					<strong style="color:#ff5e10;">@if($comment->member_id !==null)  User @else ($comment->contributor_id  !==null)  Contributor @endif</strong>
 					<div class="col-md-12" style="margin-top:10px;padding-left:5%; white-space:pre-line;">
                             {{ $comment->body }}
-                    <?php if($comment->images) { ?>
+                    <?php if(!empty($comment->images)) { ?>
                             <a id="firstlink" data-gall="myGallery" class="venobox" data-vbtype="iframe" href="{{ asset($comment->images) }}"><img src="{{ asset($comment->images) }}" alt="image alt" style="height:50px; width:50px; margin-left: 15px; margin-bottom: 20px;"/></a>
                     <?php } ?>
 					</div>
@@ -123,6 +148,9 @@
 								<strong style="color:#ff5e10;">@if($child->member_id !==null)  User @else ($child->contributor_id  !==null)  Contributor @endif</strong>
 								<div class="col-md-12" style="margin-top:10px;margin-bottom:10px;padding-left:5%; white-space: pre-line">
                                     {{ $child->body }}
+                                    <?php if($child->images != null) { ?>
+                                        <a id="firstlink" data-gall="myGallery" class="venobox" data-vbtype="iframe" href="{{ asset($child->images) }}"><img src="{{ asset($child->images) }}" alt="image alt" style="height:50px; width:50px; margin-left: 15px; margin-bottom: 20px;"/></a>
+                                <?php } ?>
 								</div>
 								<div class="clearfix"></div>
 						</div>

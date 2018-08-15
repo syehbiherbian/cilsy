@@ -100,21 +100,22 @@ class ComentsController extends Controller
         }
         $uid = Auth::guard('contributors')->user()->id;
         $input = $request->all();
-        $input['lesson_id'] = Input::get('lesson_id');
+        // $input['lesson_id'] = Input::get('lesson_id');
         $input['parent_id'] = Input::get('comment_id');
-        $input['body'] = Input::get('body');
-        $input['images'] = null;
-        $input['member_id'] = Input::get('member_id');
-        $input['contributor_id'] = Contributor::find($uid);
+        // $input['body'] = Input::get('body');
+        // $input['images'] = null;
+        // $input['member_id'] = Input::get('member_id');
+        $input['contributor_id'] = $uid;
         if ($request->hasFile('image')){
             $input['images'] = 'assets/source/komentar/komentar-'.$request->image->getClientOriginalName().'.'.$request->image->getClientOriginalExtension();
             $request->image->move(public_path('/assets/source/komentar'), $input['images']);
         }
-        $input['status'] = 0;
+        // $input['status'] = 0;
         $input['desc'] = 1;
         $input['created_at'] = new DateTime();
+        $input['updated_at'] = new DateTime();
         $store = Comment::create($input);
-        dd($store);
+        // dd($input);
         $isi_balas  = Input::get('body');
         $comment_id = Input::get('comment_id');
         $lesson_id  = Input::get('lesson_id');
@@ -126,8 +127,6 @@ class ComentsController extends Controller
         $contrib = Contributor::find($uid);
         $now = new DateTime();
         // dd($lesson_id);
-
-        
 
         $notif_user =   DB::table('user_notif')->insertGetId([
                         'id_user'=> $notify->member_id,
