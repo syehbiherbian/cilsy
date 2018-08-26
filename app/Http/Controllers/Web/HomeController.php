@@ -5,6 +5,7 @@ use App\Models\Category;
 use App\Http\Controllers\Controller;
 use App\Models\Invoice;
 use App\Models\Lesson;
+use App\Models\TutorialMember;
 use DateTime;
 use Session;
 use Auth;
@@ -31,6 +32,11 @@ class HomeController extends Controller {
 		$mem_id= Auth::guard("members")->user();
 
 		if(($mem_id) != null){
+
+		$cekdulu = TutorialMember::where('member_id', Auth::guard("members")->user()->id)
+		->where(DB::raw('DATEDIFF( now(),`created_at`)') , '>', 30)
+		->orderby('created_at', 'asc')->first();
+
 		$ratenow = Rate::select('id_member')
 		->where('id_member', '=', Auth::guard("members")->user()->id)
     	->whereRaw('YEAR(created_at) = YEAR(now()) AND MONTH(created_at) = MONTH(now())')
@@ -52,7 +58,8 @@ class HomeController extends Controller {
 			'lessons' => $lessons,
 			'invoice' => $invoice,
 			'mem_id' => $mem_id,
-			'ratenow' => $ratenow
+			'ratenow' => $ratenow,
+			'cekdulu' => $cekdulu
 		]);
 	}
 }
