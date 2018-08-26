@@ -44,6 +44,7 @@ class HomeController extends Controller {
 
 		}else{
 			$ratenow=[''];
+			$cekdulu =[''];
 		}
     	$now = new DateTime();
 		$categories = Category::where('enable', '=', 1)->get();
