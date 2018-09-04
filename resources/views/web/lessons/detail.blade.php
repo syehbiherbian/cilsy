@@ -977,7 +977,7 @@ function getPlayList() {
   player.on('ended', function() {
     var videosrc = player.currentSrc();
     videoTracking(videosrc);
-    lessonsQuiz(videosrc);
+  //  lessonsQuiz(videosrc);
   });
 
     activityCheck = setInterval(function() {
@@ -1151,7 +1151,7 @@ function videoTracking(videosrc) {
     data: postData,
     // dataType: "json",
     beforeSend: function() {
-      // $('#hasil').html('<tr><td colspan="6">Loading...</td></tr>');
+      $('#hasil').html('<tr><td colspan="6">Loading...</td></tr>');
     },
     success: function (data){
 
