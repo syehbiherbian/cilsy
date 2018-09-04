@@ -90,14 +90,14 @@ class SearchController extends Controller
     ]);
   }
 
-  public function autocomplete()
+  public function autocomplete(Request $request)
   {
 
     
       $keyword 			= Input::get('term');
       $category 			= Input::get('category');
 
-  		$lessons 	= Lesson::where('enable','=','1')->where('category_id','=', '2')->where('title','like','%'.$keyword.'%')->orderBy('id', 'DESC')->get();
+  		$lessons 	= Lesson::where('enable','=','1')->where('category_id', $request->id)->where('title','like','%'.$keyword.'%')->orderBy('id', 'DESC')->get();
 
 
 

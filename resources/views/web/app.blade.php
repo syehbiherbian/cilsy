@@ -36,6 +36,7 @@
 
     <link rel="stylesheet" href="{{ asset('template/web/plugins/jquery-ui-1.12.1.custom/jquery-ui.css') }}">
     <script type="text/javascript" src="{{asset('template/web/js/jquery.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('template/web/js/jquery-ui.min.js')}}"></script>
     <script type="text/javascript" src="{{ asset('template/web/js/venobox.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('template/web/js/imageviewer.min.js') }}"></script>
     <script type="text/javascript" src="https://unpkg.com/sweetalert2@7.9.2/dist/sweetalert2.all.js"></script>
@@ -136,7 +137,7 @@
         /* min-width: 160px; */
         box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
         z-index: 1;
-        margin-left: -270px;
+        margin-left: -270px;I have jQuery code, which looks this way:
         right: 0px;
         padding: 15px;
       }
@@ -221,6 +222,7 @@
     float: left;
     height: 50px;
     padding: 15px;
+    padding-left: 0px;
     font-size: 18px;
     line-height: 20px;
     text-align: center;
@@ -362,7 +364,7 @@ a #items .item {
 
 
 .shopping-cart {
-  margin: 75px 544px;
+  margin: 75px 605px;
   float: right;
   background: white;
   width: 320px;
@@ -556,7 +558,7 @@ a #items .item {
                   <i class="fa fa-th" aria-hidden="true"></i>
                   </span> <i class="ion-android-arrow-dropdown"></i>
                 </button>
-                <div class="dropdown-menu dropdown-menu-right">
+                <div class="dropdown-menu dropdown-menu-right" id="cate">
                 <?php echo getCategory(); ?>
                   <div role="separator" class="dropdown-divider"></div>
                   <a class="dropdown-item" href="javascript:void(0)" onclick="changeCategory('Semua Kategori')">Semua Kategori</a>
@@ -864,14 +866,39 @@ a #items .item {
     </script>
     <!-- Search Form Auto complete -->
     <script type="text/javascript">
+        
     $(function() {
+      let autocompleteData = {};
+
+      $("#cate").change(function () {
+          autocompleteData.id = this.value;
+          $(".keyword").autocomplete("search");
+      });
       $(".keyword").autocomplete({
-        source:'{{ url("search/autocomplete")}}',
+        source: function(request, response) {
+          $.ajax({
+              url: "search/autocomplete",
+              type: "GET",
+              dataType: "json",
+              data: {id : 1},
+              success: function(data) {
+                  response($.map(data, function(item) {
+                    return {
+                      label: item.value,
+                      value: item.value
+                  };
+                  }));
+              }
+          });
+        },
         select:function(event,ui) {
           $(".keyword").val(ui.item.label);
           return false;
         },
         minLength: 2,
+        select: function(event, ui) {
+          window.location = "/lessons/" + ui.item.value;
+      }
       }).bind('focus', function () {
         $('.ui-autocomplete').css('z-index','9999').css('overflow-y','scroll').css('max-height','300px');
         // $('.ui-autocomplete').css('background','#09121a').css('color','#fff');

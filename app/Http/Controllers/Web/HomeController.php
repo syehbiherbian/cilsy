@@ -10,6 +10,9 @@ use Session;
 use Auth;
 use App\Models\Rate;
 use DB;
+use App\Models\TutorialMember;
+use App\Models\Cart;
+
 
 class HomeController extends Controller {
 	//
@@ -23,13 +26,39 @@ class HomeController extends Controller {
             $mem_id      = 0;
         }
 		$categories = Category::where('enable', '=', 1)->get();
-		$newlessons = Lesson::where('enable', '=', 1)->where('status', 1)->orderBy('id','DESC')->get();
-		$lessons = Lesson::where('enable', '=', 1)
+		if(!empty($mem_id)){
+            $lessons = Lesson::leftjoin('tutorial_member', function($join){
+				$join->on('lessons.id', '=', 'tutorial_member.lesson_id')
+				->where('tutorial_member.member_id','=', Auth::guard('members')->user()->id);})
+				->leftjoin('cart', function($join){
+				$join->on('lessons.id', '=', 'cart.lesson_id')
+				->where('cart.member_id','=', Auth::guard('members')->user()->id);})
+				->select('lessons.*', 'tutorial_member.member_id as nilai', 'cart.member_id as hasil')
+				->where('lessons.enable', 1)
+				->where('lessons.status', 1)
+				->orderBy('id','ASC')->get();
+			$newlessons = Lesson::leftjoin('tutorial_member', function($join){
+				$join->on('lessons.id', '=', 'tutorial_member.lesson_id')
+				->where('tutorial_member.member_id','=', Auth::guard('members')->user()->id);})
+				->leftjoin('cart', function($join){
+				$join->on('lessons.id', '=', 'cart.lesson_id')
+				->where('cart.member_id','=', Auth::guard('members')->user()->id);})
+				->select('lessons.*', 'tutorial_member.member_id as nilai', 'cart.member_id as hasil')
+				->where('lessons.enable', 1)
+				->where('lessons.status', 1)
+				->orderBy('id','DESC')->get();
+            }else{
+				$newlessons = Lesson::where('enable', '=', 1)->where('status', 1)->orderBy('id','DESC')->get();
+                $lessons = Lesson::where('enable', '=', 1)
 				   ->where('status', 1)
 				   ->orderBy('id','ASC')->get();
+        }
+		
 		$invoice = Invoice::where('status', '=', 1)->where('members_id', '=', $mem_id)->first();
 		$mem_id= Auth::guard("members")->user();
-
+		// $tutorial = TutorialMember::where('member_id', $mem_id)->get();
+		// $cart = Cart::where('member_id', $mem_id)->where('lesson_id', $lessons->id)->get();
+		// dd($lessons);		
 		if(($mem_id) != null){
 		$ratenow = Rate::select('id_member')
 		->where('id_member', '=', Auth::guard("members")->user()->id)
@@ -42,9 +71,36 @@ class HomeController extends Controller {
     	$now = new DateTime();
 		$categories = Category::where('enable', '=', 1)->get();
 		$newlessons = Lesson::where('enable', '=', 1)->where('status', 1)->orderBy('id','DESC')->get();
-		$lessons = Lesson::where('enable', '=', 1)
-					->where('status', 1)
-					->orderBy('id','ASC')->get();
+		if(!empty($mem_id)){
+            $lessons = Lesson::leftjoin('tutorial_member', function($join){
+				$join->on('lessons.id', '=', 'tutorial_member.lesson_id')
+				->where('tutorial_member.member_id','=', Auth::guard('members')->user()->id);})
+				->leftjoin('cart', function($join){
+				$join->on('lessons.id', '=', 'cart.lesson_id')
+				->where('cart.member_id','=', Auth::guard('members')->user()->id);})
+				->select('lessons.*', 'tutorial_member.member_id as nilai', 'cart.member_id as hasil')
+				->where('lessons.enable', 1)
+				->where('lessons.status', 1)
+				->orderBy('id','ASC')->get();
+				$newlessons = Lesson::leftjoin('tutorial_member', function($join){
+					$join->on('lessons.id', '=', 'tutorial_member.lesson_id')
+					->where('tutorial_member.member_id','=', Auth::guard('members')->user()->id);})
+					->leftjoin('cart', function($join){
+					$join->on('lessons.id', '=', 'cart.lesson_id')
+					->where('cart.member_id','=', Auth::guard('members')->user()->id);})
+					->select('lessons.*', 'tutorial_member.member_id as nilai', 'cart.member_id as hasil')
+					->where('lessons.enable', 1)
+					->where('lessons.status', 1)
+					->orderBy('id','DESC')->get();
+            }else{
+				$newlessons = Lesson::where('enable', '=', 1)->where('status', 1)->orderBy('id','DESC')->get();
+                $lessons = Lesson::where('enable', '=', 1)
+				   ->where('status', 1)
+				   ->orderBy('id','ASC')->get();
+        }
+		// $tutorial = TutorialMember::where('member_id', $mem_id)->where('lesson_id', $lessons->id)->get();
+		// $cart = Cart::where('member_id', $mem_id)->where('lesson_id', $lessons->id)->get();
+		// dd($tutorial);
 		$invoice = Invoice::where('status', '=', 1)->where('members_id', '=', $mem_id)->first();
 		return view('web.home', [
 			'categories' => $categories,
@@ -52,6 +108,8 @@ class HomeController extends Controller {
 			'lessons' => $lessons,
 			'invoice' => $invoice,
 			'mem_id' => $mem_id,
+			// 'tutor' => $tutorial,
+            // 'cart' => $cart,
 			'ratenow' => $ratenow
 		]);
 	}

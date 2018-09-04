@@ -69,7 +69,7 @@
                 foreach ($last as $key => $last): ?>  
                   <div class="col-md-3">
                     <div class="card" >
-                      <a href="{{ url('lessons/'.$last->slug)}}">
+                      <a href="{{ url('kelas/v3/'.$last->slug)}}">
                           <?php if (!empty($last->image)) {?>
                             <div class="card-img" style="background-image: url('{{ asset($last->image)}}');"></div>
                           <?php } else {?>

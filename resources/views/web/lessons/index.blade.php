@@ -80,14 +80,25 @@
         <div class="item">
             <div class="row">
             <div class="col-md-2">
-                <a href="{{ url('lessons/'.$result->slug) }}" >
+                <?php if(!empty($result->nilai)){ ?>
+                <a href="{{ url('kelas/v3/'.$result->slug) }}">
                 <img src="{{ $result->image }}" alt="" class="img-responsive">
                  </a>
+                 <?php }else{?>
+                  <a href="{{ url('lessons/'.$result->slug) }}" >
+                    <img src="{{ $result->image }}" alt="" class="img-responsive">
+                  </a>
+                  <?php } ?>
               </div>
               <div class="col-sm-8">
-                <p><a href="{{ url('lessons/'.$result->slug) }}" style="text-decoration:none;"><strong>{{ $result->title }}</strong></a></p>
-                <a href="{{ url('lessons/'.$result->slug) }}" style="text-decoration:none;">
-                 <p><small><?php $sentence= $result->description;
+                  <?php if(!empty($result->nilai)){ ?>
+                    <p><a href="{{ url('kelas/v3/'.$result->slug) }}" style="text-decoration:none;"><strong>{{ $result->title }}</strong></a></p>
+                    <a href="{{ url('kelas/v3/'.$result->slug) }}" style="text-decoration:none;">
+                      <?php }else{?>
+                      <p><a href="{{ url('lessons/'.$result->slug) }}" style="text-decoration:none;"><strong>{{ $result->title }}</strong></a></p>
+                        <a href="{{ url('lessons/'.$result->slug) }}" style="text-decoration:none;">
+                      <?php } ?>
+                      <p><small><?php $sentence= $result->description;
                     $numberofcharacters=500;
                     $print = substr($sentence, 0, $numberofcharacters);
                     echo $print; ?></small></p>
@@ -100,7 +111,7 @@
              
                 <?php if(!empty($result->nilai)){ ?>
                 <p style="font-weight:bold color:green;">
-                <a href="{{ url('lessons/'.$result->slug) }}" class="btn" style="background-color:#f1c40f; color:white; padding: 6px 22px;">Lihat Tutorial</a>
+                <a href="{{ url('kelas/v3/'.$result->slug) }}" class="btn" style="background-color:#f1c40f; color:white; padding: 6px 22px;">Lihat Tutorial</a>
                 </p>
                 <?php }else{?>
                 <p style="font-weight:bold;">Rp. {{ number_format($result->price, 0, ",", ".") }}</p>

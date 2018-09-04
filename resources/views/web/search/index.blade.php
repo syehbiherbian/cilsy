@@ -99,7 +99,7 @@
               <div class="col-md-2">
                <?php if(!empty($result->nilai)){ ?>
                 <p style="font-weight:bold color:green;">
-                <a href="{{ url('lessons/'.$result->slug) }}" class="btn" style="background-color:#f1c40f; color:white; padding: 6px 22px;">Lihat Tutorial</a>
+                <a href="{{ url('kelas/v3/'.$result->slug) }}" class="btn" style="background-color:#f1c40f; color:white; padding: 6px 22px;">Lihat Tutorial</a>
                 </p>
                 <?php }else{?>
                 <p style="font-weight:bold;">Rp. {{ number_format($result->price, 0, ",", ".") }}</p>

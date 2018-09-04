@@ -78,7 +78,11 @@
                   <?php if ($category->id == $lesson->category_id) {?>
                     <?php if ($i <= 3) {?>
                       <div class="col-md-3">
-                        <a href="{{ url('lessons/'.$lesson->slug)}}">
+                        <?php if(!empty($lesson->nilai)){ ?>
+                        <a href="{{ url('kelas/v3/'.$lesson->slug)}}">
+                        <?php }else{?>
+                          <a href="{{ url('lessons/'.$lesson->slug)}}">
+                            <?php } ?>
                           <div class="card">
                             <?php if (!empty($lesson->image)) {?>
                               <img src="{{ asset($lesson->image) }}" alt="" class="img-responsive img-card">
@@ -120,7 +124,11 @@
                   <?php if ($category->id == $lesson->category_id) {?>
                     <?php if ($i <= 3) {?>
                       <div class="col-md-3">
-                        <a href="{{ url('lessons/'.$lesson->slug)}}">
+                          <?php if(!empty($lesson->nilai)){ ?>
+                            <a href="{{ url('kelas/v3/'.$lesson->slug)}}">
+                            <?php }else{?>
+                              <a href="{{ url('lessons/'.$lesson->slug)}}">
+                                <?php } ?>
                           <div class="card">
                             <?php if (!empty($lesson->image)) {?>
                               <img src="{{ asset($lesson->image) }}" alt="" class="img-responsive img-card">

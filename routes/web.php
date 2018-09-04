@@ -35,7 +35,8 @@ Route::get('robot/{filename}', function ($filename)
 Route::get('/', 'Web\HomeController@index');
 // LESSONS PAGE
 Route::get('lessons/{by}/{keyword}', 'Web\LessonsController@index');
-Route::get('lessons/{lessons}', 'Web\LessonsController@detail');
+Route::get('lessons/{lessons}', 'Web\LessonsController@preview');
+Route::get('kelas/v3/{lessons}', 'Web\LessonsController@detail');
 Route::get('lessons/{lessons}/{quiz}', 'Web\LessonsController@quiz');
 Route::get('dashboard/{lessons}', 'Web\Members\LessonsMemberController@detail');
 Route::post('lessons/getplaylist', 'Web\LessonsController@getplaylist');

@@ -105,17 +105,61 @@ class LessonsController extends Controller
     public function getSearchcategory(Category $category){
         return $category->lesson()->select('id', 'title')->get();
     }
-    public function detail($slug)
+
+    public function preview($slug)
     {
         
         $now = new DateTime();
         $mem_id = isset(Auth::guard('members')->user()->id) ? Auth::guard('members')->user()->id : 0;
-        $services = Service::where('status', 1)->where('status', 2)->where('download', 1)->where('members_id', $mem_id)->where('expired', '>', $now)->first();
 
         $lessons = Lesson::where('enable', 1)->where('status', 1)->where('slug', $slug)->first();
         $tutorial = TutorialMember::where('member_id', $mem_id)->where('lesson_id', $lessons->id)->first();
         $cart = Cart::where('member_id', $mem_id)->where('lesson_id', $lessons->id)->first();
         $categories = Category::where('enable', 1)->get();
+        // dd($tutorial);
+        if (count($lessons) > 0) {
+            $main_videos = Video::where('enable', 1)->where('lessons_id', $lessons->id)->orderBy('id', 'asc')->get();
+            $files = File::where('enable', 1)->where('lesson_id', $lessons->id)->orderBy('id', 'asc')->get();
+            
+            // Contributor
+            $contributors = Contributor::find($lessons->contributor_id);
+            $contributors_total_lessons = Lesson::where('enable', 1)->where('status', 1)->where('contributor_id', $lessons->contributor_id)->with('videos.views')->get();
+            $contributors_total_view = 0;
+            foreach ($contributors_total_lessons as $lessonss) {
+                foreach ($lessonss->videos as $videos) {
+                    if ($videos->views) {
+                        $contributors_total_view += 1;
+                    }
+                }
+            }
+
+            return view('web.lessons.preview', [
+                'categories' => $categories,
+                'lessons' => $lessons,
+                'main_videos' => $main_videos,
+                'file' => $files,
+                'tutor' => $tutorial,
+                'cart' => $cart,
+                'contributors' => $contributors,
+                'contributors_total_lessons' => $contributors_total_lessons,
+                'contributors_total_view' => $contributors_total_view,
+            ]);
+            // echo "syehbo";
+        } else {
+            abort(404);
+        }
+    }
+    public function detail($slug)
+    {
+        
+        $now = new DateTime();
+        $mem_id = isset(Auth::guard('members')->user()->id) ? Auth::guard('members')->user()->id : 0;
+
+        $lessons = Lesson::where('enable', 1)->where('status', 1)->where('slug', $slug)->first();
+        $tutorial = TutorialMember::where('member_id', $mem_id)->where('lesson_id', $lessons->id)->first();
+        $cart = Cart::where('member_id', $mem_id)->where('lesson_id', $lessons->id)->first();
+        $categories = Category::where('enable', 1)->get();
+        // dd($lessons);
         
         if (count($lessons) > 0) {
             $main_videos = Video::where('enable', 1)->where('lessons_id', $lessons->id)->orderBy('id', 'asc')->get();
@@ -140,12 +184,11 @@ class LessonsController extends Controller
                 'file' => $files,
                 'tutor' => $tutorial,
                 'cart' => $cart,
-                'services' => $services,
                 'contributors' => $contributors,
                 'contributors_total_lessons' => $contributors_total_lessons,
                 'contributors_total_view' => $contributors_total_view,
             ]);
-            // echo "syehbo";
+            echo "syehbo";
         } else {
             abort(404);
         }
