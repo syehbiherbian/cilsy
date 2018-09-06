@@ -16,6 +16,7 @@ use App\Models\TutorialMember;
 use App\Models\Member;
 use App\Models\Comment;
 use App\Models\Cart;
+use App\Models\Invoice;
 use App\Notifications\UserCommentNotification;
 use App\Notifications\UserReplyNotification;
 use Auth;
@@ -109,12 +110,21 @@ class LessonsController extends Controller
         $now = new DateTime();
         $mem_id = isset(Auth::guard('members')->user()->id) ? Auth::guard('members')->user()->id : 0;
         $services = Service::where('status', 1)->where('status', 2)->where('download', 1)->where('members_id', $mem_id)->where('expired', '>', $now)->first();
-
+        
         $lessons = Lesson::where('enable', 1)->where('status', 1)->where('slug', $slug)->first();
         $tutorial = TutorialMember::where('member_id', $mem_id)->where('lesson_id', $lessons->id)->first();
         $cart = Cart::where('member_id', $mem_id)->where('lesson_id', $lessons->id)->first();
         $categories = Category::where('enable', 1)->get();
         
+        $invo = Invoice::Join('invoice_details', 'invoice_details.invoice_id', 'invoice.id')
+                ->Join('lessons', 'lessons.id', 'invoice_details.lesson_id')
+                ->select('invoice.code', 'invoice_details.lesson_id', 'lessons.title', 'invoice.status as status')
+                ->where('lessons.id', $lessons->id)
+                ->where('invoice.members_id', $mem_id)
+                ->where('invoice.status','<>', '1')
+                ->orderby('invoice.created_at', 'desc')
+                ->first();
+        // SELECT A.code, B.lesson_id, C.title , A.status as status FROM `invoice` A JOIN invoice_details B On A.id = B.invoice_id JOIN lessons C On B.lesson_id = C.id
         if (count($lessons) > 0) {
             $main_videos = Video::where('enable', 1)->where('lessons_id', $lessons->id)->orderBy('id', 'asc')->get();
             $files = File::where('enable', 1)->where('lesson_id', $lessons->id)->orderBy('id', 'asc')->get();
@@ -138,6 +148,7 @@ class LessonsController extends Controller
                 'file' => $files,
                 'tutor' => $tutorial,
                 'cart' => $cart,
+                'invo' => $invo,
                 'services' => $services,
                 'contributors' => $contributors,
                 'contributors_total_lessons' => $contributors_total_lessons,
