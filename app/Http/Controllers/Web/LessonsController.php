@@ -15,6 +15,7 @@ use App\Models\Viewer;
 use App\Models\TutorialMember;
 use App\Models\Member;
 use App\Models\Comment;
+use App\Models\Cart;
 use App\Models\Invoice;
 use App\Notifications\UserCommentNotification;
 use App\Notifications\UserReplyNotification;
@@ -35,44 +36,86 @@ class LessonsController extends Controller
         $categories = Category::where('enable', 1)->get();
         if ($by == 'category') {
             $category = Category::where('enable', 1)->where('title', 'like', '%' . $keyword . '%')->first();
-            $results = Lesson::leftJoin('categories', 'lessons.category_id', 'categories.id')
+
+            if(!empty($mem_id)){
+            $results = Lesson::Join('categories', 'lessons.category_id', 'categories.id')
+            ->leftjoin('tutorial_member', function($join){
+                $join->on('lessons.id', '=', 'tutorial_member.lesson_id')
+                ->where('tutorial_member.member_id','=', Auth::guard('members')->user()->id);})
+            ->leftjoin('cart', function($join){
+                $join->on('lessons.id', '=', 'cart.lesson_id')
+                ->where('cart.member_id','=', Auth::guard('members')->user()->id);})
+            ->select('lessons.*', 'categories.title as category_title', 'tutorial_member.member_id as nilai', 'cart.member_id as hasil')
+            ->where('lessons.enable', 1)
+            ->where('lessons.status', 1)
+            ->where('lessons.category_id', $category->id)
+            ->paginate(10);
+            }else{
+                $results = Lesson::Join('categories', 'lessons.category_id', 'categories.id')
                 ->select('lessons.*', 'categories.title as category_title')
                 ->where('lessons.enable', 1)
                 ->where('lessons.status', 1)
                 ->where('lessons.category_id', $category->id)
-                ->paginate(10);
+                ->paginate(10); 
+            }
+
+
+
             // dd($results);
         } else {
-            $results = Lesson::leftJoin('categories', 'lessons.category_id', 'categories.id')
-            ->select('lessons.*', 'categories.title as category_title')
-            ->where('lessons.status', 1)
+            if(!empty($mem_id)){
+            $results = Lesson::Join('categories', 'lessons.category_id', 'categories.id')
+                ->leftjoin('tutorial_member', function($join){
+                    $join->on('lessons.id', '=', 'tutorial_member.lesson_id')
+                    ->where('tutorial_member.member_id','=', Auth::guard('members')->user()->id);})
+                ->leftjoin('cart', function($join){
+                    $join->on('lessons.id', '=', 'cart.lesson_id')
+                    ->where('cart.member_id','=', Auth::guard('members')->user()->id);})
+                ->select('lessons.*', 'categories.title as category_title', 'tutorial_member.member_id as nilai', 'cart.member_id as hasil')
                 ->where('lessons.enable', 1)
+                ->where('lessons.status', 1)
                 ->paginate(10);
+
+           
+            }else{
+                $results = Lesson::Join('categories', 'lessons.category_id', 'categories.id')
+                ->select('lessons.*', 'categories.title as category_title')
+                ->where('lessons.enable', 1)
+                ->where('lessons.status', 1)
+                ->paginate(10);
+            }
         }
         # code...
-        $tutorial = TutorialMember::Join('lessons', 'lessons.id', 'tutorial_member.lesson_id')
-        ->select('tutorial_member.lesson_id')
-        ->where('lessons.status', 1)
-        ->where('lessons.enable', 1)
-        ->where('tutorial_member.member_id' , $mem_id)
-        ->get();
+        // $tutorial = TutorialMember::Join('lessons', 'lessons.id', 'tutorial_member.lesson_id')
+        // ->select('tutorial_member.lesson_id')
+        // ->where('lessons.status', 1)
+        // ->where('lessons.enable', 1)
+        // ->where('tutorial_member.member_id' , $mem_id)
+        // ->get();
 
         // dd($tutorial);
         return view('web.lessons.index', [
             'categories' => $categories,
-            'results' => $results,            
-            'tutorial'=>$tutorial
+            'results' => $results,    
+            // 'tutorial'=>$tutorial
         ]);
 
     }
+    public function getSearchcategory(Category $category){
+        return $category->lesson()->select('id', 'title')->get();
+    }
     public function detail($slug)
     {
+        
         $now = new DateTime();
         $mem_id = isset(Auth::guard('members')->user()->id) ? Auth::guard('members')->user()->id : 0;
         $services = Service::where('status', 1)->where('status', 2)->where('download', 1)->where('members_id', $mem_id)->where('expired', '>', $now)->first();
         
         $lessons = Lesson::where('enable', 1)->where('status', 1)->where('slug', $slug)->first();
         $tutorial = TutorialMember::where('member_id', $mem_id)->where('lesson_id', $lessons->id)->first();
+        $cart = Cart::where('member_id', $mem_id)->where('lesson_id', $lessons->id)->first();
+        $categories = Category::where('enable', 1)->get();
+        
         $invo = Invoice::Join('invoice_details', 'invoice_details.invoice_id', 'invoice.id')
                 ->Join('lessons', 'lessons.id', 'invoice_details.lesson_id')
                 ->select('invoice.code', 'invoice_details.lesson_id', 'lessons.title', 'invoice.status as status')
@@ -99,10 +142,12 @@ class LessonsController extends Controller
             }
 
             return view('web.lessons.detail', [
+                'categories' => $categories,
                 'lessons' => $lessons,
                 'main_videos' => $main_videos,
                 'file' => $files,
                 'tutor' => $tutorial,
+                'cart' => $cart,
                 'invo' => $invo,
                 'services' => $services,
                 'contributors' => $contributors,
@@ -233,67 +278,85 @@ class LessonsController extends Controller
         }
         return $ip;
     }
-    public function doComment()
+    
+    public function doComment(Request $request)
     {
         $response = array();
         if (empty(Auth::guard('members')->user()->id)) {
             $response['success'] = false;
         } else {
-          
+            
             $now = new DateTime();
             $uid = Auth::guard('members')->user()->id;
-            $body = Input::get('body');
-            $lesson_id = Input::get('lesson_id');
+            // $body = Input::get('body');
+            // $lesson_id = Input::get('lesson_id');
             $member = DB::table('members')->where('id', $uid)->first();
-            $lessons = DB::table('lessons')->where('id', $lesson_id)->first();
+            
+            // // dd($lesson_id);
+            // $image = Input::file('image');
+            // // dd($image);
+            
+            // $lessonsDestinationPath= 'assets/source/komentar';
+
+            $input = $request->all();
+            $lessons = DB::table('lessons')->where('id', $input['lesson_id'])->first();
             $parent_id = Input::get('parent_id');
-            $contri = Lesson::where('id',$lesson_id)
+            $contri = Lesson::where('id',$input['lesson_id'])
                       ->select('contributor_id')
                       ->first();
+            $input['images'] = null;
+            $input['member_id'] = $member->id;
+            $input['contributor_id'] = str_replace('}','',str_replace('{"contributor_id":', '',$contri));
+            $input['status'] = 0;
+            // dd($input);
 
-            $store = DB::table('comments')->insertGetId([
-                'lesson_id' => $lesson_id,
-                'member_id' => $uid,
-                'body' => $body,
-                'parent_id' => $parent_id,
+            if ($request->hasFile('image')){
+                $input['images'] = 'assets/source/komentar/komentar-'.$request->image->getClientOriginalName().'.'.$request->image->getClientOriginalExtension();
+                $request->image->move(public_path('/assets/source/komentar'), $input['images']);
+            }
+            // dd($input);
+            $store = Comment::create($input);
+            // dd($store);
+            if ($store) {
+             $getmembercomment = DB::table('comments')
+                                ->Join('members','members.id','=','comments.member_id')
+                                ->where('comments.lesson_id',$input['lesson_id'])
+                                ->where('comments.parent_id',0)
+                                ->where('comments.status',0)
+                                ->select('comments.*','members.username as username')
+                                ->first();
+            DB::table('contributor_notif')->insert([
+                'contributor_id' => $lessons->contributor_id,
+                'category' => 'Komentar',
+                'title' => 'Anda mendapat pertanyaan dari ' . $member->username,
+                'notif' => 'Anda mendapatkan pertanyaan dari ' . $member->username . ' pada ' . $lessons->title,
                 'status' => 0,
-                'desc'   => 0,
-                'contributor_id' => str_replace('}','',str_replace('{"contributor_id":', '',$contri)),
+                'slug' => 0,
                 'created_at' => $now,
-                'updated_at' => $now,
             ]);
-
-            $getmembercomment = DB::table('comments')
-            ->Join('members','members.id','=','comments.member_id')
-            ->where('comments.lesson_id',$lesson_id)
-            ->where('comments.parent_id',0)
-            ->where('comments.status',1)
-            ->select('comments.*','members.username as username')
-            ->first();
-            // dd($getmembercomment);
-            // $getchild = DB::table('comments')
-			// 				->leftJoin('members','members.id','=','comments.member_id')
-			// 				->leftJoin('contributors','contributors.id','=','comments.contributor_id')
-			// 				->where('comments.lesson_id',$lesson_id)
-			// 				->where('parent_id',$parent_id)
-			// 				->orderBy('comments.created_at','ASC')
-			// 				->select('comments.*','members.username as username','contributors.username as contriname')
-            //                 ->first();
-                            
-            // dd($getchild);
-
             $getemailchild = DB::table('comments')
                              ->Join('comments as B', 'comments.id', 'B.parent_id')
-                             ->Where('B.parent_id', $parent_id)
+                             ->Join('members','members.id','=','B.member_id')
+                             ->Where('B.parent_id', $input['parent_id'])
                              ->where('comments.member_id', '<>', 'B.member_id')
-                             ->select('comments.member_id as tanya', 'B.member_id as jawab')->distinct()
+                             ->where('comments.member_id', '<>', 'B.contributor_id')
+                             ->select('comments.member_id as tanya', 'B.member_id as jawab', 'members.username as username')->distinct()
                              ->get();
 
-        
-
-            // dd($getemailchild);
-            if($parent_id != 0){
+                            
+            if($parent_id != null){
                 foreach ($getemailchild as $mails) {
+
+                    $getnotif = DB::table('user_notif')->insert([
+                        'id_user' => $mails->tanya,
+                        'category' => 'Komentar',
+                        'title' => 'Anda mendapat balasan dari ' . $mails->username,
+                        'notif' => 'Anda mendapatkan balasan dari ' . $mails->username . ' pada ' . $lessons->title,
+                        'status' => 0,
+                        'slug' => $lessons->slug,
+                        'created_at' => $now,
+                    ]);
+
                 //  Check type
                 if (is_array($mails)){
                     //  Scan through inner loop
@@ -302,24 +365,19 @@ class LessonsController extends Controller
                         $lesson = Lesson::Find($lesson_id);
                         $contrib = Contributor::find($lessons->contributor_id);
                         $member->notify(new UserReplyNotification($member, $lesson, $contrib));
+                       
+                        }
                     }
+                   
                 }
             }
-                        
-            }
-            if ($store) {
 
-                // dd($store);
-                    DB::table('contributor_notif')->insert([
-                        'contributor_id' => $lessons->contributor_id,
-                        'category' => 'Komentar',
-                        'title' => 'Anda mendapat pertanyaan dari ' . $member->username,
-                        'notif' => 'Anda mendapatkan pertanyaan dari ' . $member->username . ' pada ' . $lessons->title,
-                        'status' => 0,
-                        'created_at' => $now,
-                    ]);
-                    $member = Member::Find($uid);
-                    $comment = Comment::Find($store);
+           
+            // dd($getmembercomment);
+                // dd($uid);
+            
+                    $member = Member::Find($member->id);
+                    $comment = Comment::Find($store->id);
                     $lesson = Lesson::find($lessons->id);
                     $contrib = Contributor::find($lessons->contributor_id);
                     $contrib->notify(new UserCommentNotification($member, $comment, $contrib, $lesson));
@@ -395,23 +453,26 @@ class LessonsController extends Controller
 				                    <div class="panel-heading">
 				                      <strong>' . $usernam . '</strong> <span class="text-muted">commented ' . $this->time_elapsed_string($comment->created_at) . '</span>
 				                    </div>
-				                    <div class="panel-body">
+				                    <div class="panel-body" style="white-space:pre-line;">
 				                      ' . $comment->body . '
-				                    </div>';
-            if (!empty(Auth::guard('members')->user()->id)) {
-                if(count($tutorial) >0 ){
-                $html .= '<div class="panel-footer reply-btn-area text-right">
+                                    </div>';
+                                    if($comment->images != null){
+                                    $html .= '<a id="firstlink" data-gall="myGallery" class="venobox vbox-item" data-vbtype="iframe" href="'. asset($comment->images) .'"><img src="'. asset($comment->images) .'" alt="image alt" style="height:50px; width:50px; margin-left: 15px; margin-bottom: 20px;"/></a>';
+                                    }
+                                    if (!empty(Auth::guard('members')->user()->id)) {
+                                        if(count($tutorial) >0 ){
+                                        $html .= '<div class="panel-footer reply-btn-area text-right">
 									                        <button type="button" name="button" class="btn btn-primary" data-toggle="collapse" data-target="#reply' . $comment->id . '"><i class="glyphicon glyphicon-share-alt"></i> Balas</button>
 									                    </div>
 									                    <div class="collapse" id="reply' . $comment->id . '">
 									                      <div class="panel-footer ">
 									                        <div class="row reply">
-									                          <div class="col-md-12">
-									                            <div class="form-group">
+                                                              <div class="col-md-12">
+    									                        <div class="form-group">
 									                              <label>Komentar</label>
 									                              <textarea name="name" rows="8" cols="80" class="form-control" name="body" id="textbody' . $comment->id . '"></textarea>
-									                            </div>
-									                            <button type="submit" class="btn btn-primary pull-right" onClick="doComment(' . $lesson_id . ',' . $comment->id . ')" >Kirim</button>
+                                                                </div>
+                                                                <button type="submit" class="btn btn-primary pull-right" onClick="doComment(' . $lesson_id . ',' . $comment->id . ')" >Kirim</button>
 									                          </div>
 									                        </div>
 									                      </div>
@@ -453,9 +514,12 @@ class LessonsController extends Controller
 				                          <strong>' . $userna . '</strong> <span class="text-muted">commented ' . $this->time_elapsed_string($child->created_at) . '</span>
 				                        </div>
 				                        <div class="panel-body">
-				                          ' . $child->body . '
-				                        </div><!-- /panel-body -->
-				                      </div><!-- /panel panel-default -->
+                                          ' . $child->body . '
+                                        </div><!-- /panel-body -->';
+                                        if($child->images != null){
+                                    $html .= '<a id="firstlink" data-gall="myGallery" class="venobox vbox-item" data-vbtype="iframe" href="'. asset($child->images) .'"><img src="'. asset($child->images) .'" alt="image alt" style="height:50px; width:50px; margin-left: 15px; margin-bottom: 20px;"/></a>';
+                                        }
+				                      $html .= '</div><!-- /panel panel-default -->
 				                    </div><!-- /col-sm-5 -->
 				                  </div><!-- ./row -->
 				                  <!-- ./Comments Childs -->';

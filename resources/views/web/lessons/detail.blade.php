@@ -49,10 +49,10 @@
   }
   @media (min-width:768px) {
     .vjs-playlist {
-        width: 35%;
+        width:35%;
+        
     }
   }
-
   .vjs-mouse.vjs-playlist cite{
     font-size: 13px;
   }
@@ -72,7 +72,7 @@
   list-style: none;
   display: table;
   width: 100%;
-}
+  }
 
 .tab {
   position: relative;
@@ -287,6 +287,7 @@
 .video-js.vjs-fullscreen,.video-js.vjs-fullscreen .vjs-tech {
     width: 100%!important;
     height: 100%!important
+    
 }
 
 .video-js {
@@ -296,6 +297,7 @@
 
 .video-js .vjs-control {
     color: inherit
+    
 }
 
 .video-js .vjs-menu-button-inline:hover,.video-js.vjs-no-flex .vjs-menu-button-inline {
@@ -610,6 +612,33 @@ td{
 		font-weight: bold;
 		text-transform: uppercase;
 	}
+  .vjs-playlist {
+        width:100%;
+        height:270px;
+    }
+}
+.upload-btn-wrapper {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.btn-upload{
+  border: 2px solid gray;
+  color: gray;
+  background-color: white;
+  padding: 8px 20px;
+  height:50px;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+.upload-btn-wrapper input[type=file] {
+  font-size: 100px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
 }
 </style>
 
@@ -622,17 +651,22 @@ td{
       <section class="video-player mb-50">
       <div class="container">
         <!-- Title -->
-        <div class="row pt-25 pb-15">
+        <div class="row pt-25 pb-15"> 
           <div class="col-xs-12 col-md-10">
             <p class="lesson-title">{{ $lessons->title }}</p>
             <p><img src="{{asset('template/web/img/video.png')}}" alt="" style="height:25px; width:25px;"> <b>{{ count($main_videos) }}</b> Video</p>
           </div>
           <div class="col-xs-12 col-md-2">
+          <ul style="right">
             @if($tutor == null)
-            @if(count($invo) != 0)
-              @if($invo->status == '2')
-              <div class="lesson-video-count">Rp{{ number_format($lessons->price, 0, ",", ".") }}</div>
-              <button type="button" class="lesson-video-count" ><i class="fa fa-shopping-cart"></i> Waiting Payment</button>
+              @if(count($invo) != 0)
+                @if($invo->status == '2')
+                <div class="lesson-video-count">Rp{{ number_format($lessons->price, 0, ",", ".") }}</div>
+                <button type="button" class="lesson-video-count" ><i class="fa fa-shopping-cart"></i> Waiting Payment</button>
+                @else
+                <div class="lesson-video-count">Rp{{ number_format($lessons->price, 0, ",", ".") }}</div>
+                <button type="button" class="lesson-video-count" onclick="addToCart({{ $lessons->id }})"><i class="fa fa-shopping-cart"></i> Beli</button>
+                @endif
               @else
               <div class="lesson-video-count">Rp{{ number_format($lessons->price, 0, ",", ".") }}</div>
               <button type="button" class="lesson-video-count" onclick="addToCart({{ $lessons->id }})"><i class="fa fa-shopping-cart"></i> Beli</button>
@@ -650,10 +684,10 @@ td{
           <div class="col-md-12">
             <div class="player-container">
               <!-- Main Video -->
-              <video id="video" class="video-js vjs-default-skin vjs-big-play-centered" height="500" width="70%" controls>
+              <video id="video" class="video-js vjs-default-skin vjs-big-play-centered" height="500" width="70%">
                 @if (count($main_videos) > 0) 
                     <source src="{{ !empty($main_videos[0]->video) ? $main_videos[0]->video : '' }}" type="{{ (!empty($main_videos[0]->type_video)) ? $main_videos[0]->type_video : '' }}">
-                @endif
+                @endif 
               </video>
 
               <!-- Playlist Video -->
@@ -680,16 +714,17 @@ td{
 
               <div class="tab-content" style="margin-top:0px;">
                 <div id="tab1" class="tab-pane fade in active">
-                <p>  {!! $lessons->description !!} </p>
+                  {!! nl2br($lessons->description) !!}
                 </div>
                 <div id="tab2" class="tab-pane fade">
+                  <?php $number=1 ?>
                   <ul class="materi_list">
                     @foreach ($main_videos as $row)
-                   <li>
+                    <li>
                     <table>
                         <tr>
-                          <td><strong>{{ $row->title }}</strong>
-                              {!! nl2br($row->description) !!}
+                          <td><strong><?php echo $number ?> {{ $row->title }}</strong>
+                              <p>{!! nl2br($row->description) !!}</p>
                           </td>
                           <td>
                           @if ($tutor)
@@ -699,6 +734,7 @@ td{
                         </tr>
                     </table>
                     </li>
+                    <?php $number++; ?>
                     @endforeach
                   </ul>
                 </div>
@@ -725,23 +761,28 @@ td{
                     @else
                     <!-- Comment Form -->
                     <div class="comments-form mb-25">
-                      <!-- <form id="form-comment" class="mb-25">
-                        {{-- csrf_field() --}}
-                        <input type="hidden" name="lesson_id" value="{{-- $lessons->id --}}">
-                        <input type="hidden" name="parent_id" value="0"> -->
+                     <form id="form-comment" class="mb-25" enctype="multipart/form-data" method="POST">
+                        @csrf
+                        {{ method_field('POST') }}
+                        <input type="hidden" name="lesson_id" value="{{ $lessons->id }}">
+                        <input type="hidden" name="parent_id" value="0"> 
                         <div class="form-group">
                           <label>Komentar</label>
-                          <textarea rows="8" cols="80" class="form-control" name="body" id="textbody0"></textarea>
+                          <textarea style="white-space: pre-line" rows="8" cols="80" class="form-control" name="body" id="textbody0"></textarea>
                         </div>
-                        {{--  <ul class="left">
-                        <meta name="csrf-token" content="{{ csrf_token() }}">
-                        <a id="browse" href="javascript:;" style="float:right" class="uploader"  url="{{ url('attachment')}}" >
-                        <button  type="button"  class="btn btn-warning"> <i class="fa fa-paperclip"> </i> Upload gambar</button></a>
-                       </ul>  --}}
-                       <ul class="right"> 
-                      <button type="button" class="btn btn-primary" onClick="doComment({{ $lessons->id }},0)" >Kirim</button> 
+                       <ul class="left">
+                         <div class="upload-btn-wrapper">
+                          <button class="btn-upload btn-info"><i class="fa fa-upload"></i> Tambahkan Gambar/File</button>
+                          <input type="file"  name="image" id="image"/>
+                          
+                        </div>
+                        <img id="myImg" src="#" style="height :50px; width:50px; margin-bottom:42px;" />
+                       </ul>
+                       
+                       <ul class="right">
+                      <button type="button" class="btn btn-primary upload-image" onclick="doComment({{ $lessons->id}}, 0)">Kirim</button> 
                       </ul>
-                      <!-- </form><!--./ Comment Form -->
+                      </form><!--./ Comment Form -->
                     </div>
                     @endif
 
@@ -804,54 +845,32 @@ td{
     </div>
 
 </div>
-
 <script src="{{ asset('template/web/js/video.js') }}"></script>
 <script src="{{ asset('template/web/js/videojs-playlist.js') }}"></script>
 <script src="{{ asset('template/web/js/videojs-playlist-ui.js') }}"></script>
 <script src="{{ asset('template/web/js/videojs-errors.js') }}"></script>
 <script type="text/javascript" src="https://unpkg.com/sweetalert2@7.9.2/dist/sweetalert2.all.js"></script>
+<script>
+  $(function () {
+    $(":file").change(function () {
+        if (this.files && this.files[0]) {
+            var reader = new FileReader();
+            reader.onload = imageIsLoaded;
+            reader.readAsDataURL(this.files[0]);
+        }
+    });
+});
 
-<script type="text/javascript">
-  function dokirim(){
-      var isi_kirim = $('#input_kirim').val();
-      var lesson_id = '{{ $lessons->id }}';
-      // alert(comment_id+' = '+isi_balas);
-      var datapost = {
-          '_token'    : '{{ csrf_token() }}',
-          'isi_kirim' : isi_kirim,
-          'lesson_id' : lesson_id
-
-      },
-      {{--  swal({
-              title: "Sedang Mengirim Komentar..",
-              text: "Mohon Tunggu",
-              imageUrl: "https://demos.laraget.com/images/loading2.gif",
-              showConfirmButton: false,
-              allowOutsideClick: false
-      },
-      function(){  --}}
-      $.ajax({
-          type    :'POST',
-          url     :'{{ url("lessons/coments/kirimcomment") }}',
-          data    :datapost,
-          beforeSend: function(){
-            // Show image container
-          },
-          success:function(data){
-          if(data==0){
-                  window.location.href = '{{url("member/signin")}}';
-          } else if (data !== 'null') {
-                  // $("#row"+comment_id).load(window.location.href + " #row"+comment_id);
-                  $('.content-reload').prepend(data);
-              }else {
-                  alert('Koneksi Bermasalah, Silahkan Ulangi');
-                  location.reload();
-              }
-          }
-      });
-    {{--  });  --}}
-  }
+function imageIsLoaded(e) {
+    $('#myImg').attr('src', e.target.result);
+};
 </script>
+<script>            $('#guest-'+v['id']).show();
+$(document).ready(function(){
+    $('.venobox').venobox(); 
+});
+</script>
+
 <script type="text/javascript">
     function formbalas(comment_id){
 
@@ -900,6 +919,33 @@ td{
     //     loadcontent()
     // }, 5000);
 </script>
+<script type="text/javascript">
+    var video = document.getElementById("video");
+
+    // $('#video').hover(function toggleControls() {
+    //     if (video.hasAttribute!=("controls")) {
+    //       video.setAttribute("controls", "controls")
+    //     } else {
+    //       video.removeAttribute("controls")
+    //     }
+    // })
+    // var el = document.getElementById("nextButton");
+    // if (el.addEventListener) {
+    //     el.addEventListener("click", yourNextFunction, false);
+    // } else {
+    //     el.attachEvent('onclick', yourNextFunction);
+    // }  
+    // var video_count =1,
+    // videoPlayer = document.getElementById("homevideo");
+
+    // function yourNextFunction (){
+    //   video_count++;
+    //   if (video_count == 16) video_count = 1;
+    //   var nextVideo = "video"+video_count+".mp4";
+    //   videoPlayer.src = nextVideo;
+    //   videoPlayer.play();
+    // }
+</script>
 <script>
   fbq('track', 'ViewContent');
 </script>
@@ -918,7 +964,8 @@ function getPlayList() {
                   "lessons_id": lessons_id
               }
   var player = videojs(document.querySelector('video'), {
-      inactivityTimeout: 0
+      inactivityTimeout: 500,
+      controls: true,
     });
 
   player.on('ended', function() {
@@ -952,7 +999,7 @@ function getPlayList() {
           if (!userActivity) {
             this.userActive(false);
           }
-        }, 2000);
+        }, 500);
       }
     }, 250);
     try {
@@ -1109,43 +1156,11 @@ function videoTracking(videosrc) {
     }
   });
 }
-function lessonsQuiz(videosrc, player) {
-  var postData =
-              {
-                  "_token":"{{ csrf_token() }}",
-                  "videosrc": videosrc
-              }
-  $.ajax({
-    type: "POST",
-    url: "{{ url('lessons/LessonsQuiz')}}",
-    data: postData,
-    // dataType: "json",
-    beforeSend: function() {
-      
-    },
-    success: function (data){
-      swal({
-        title: 'Selamat!',
-        text: "Anda harus menyelesaikan quiz berupa pertanyaan pilihan ganda untuk melanjutkan ke video tutorial selanjutnya. Silahkan klik mulai untuk memulai quiz",
-        type: 'success',
-        confirmButtonColor: '#ad0d0d',
-        confirmButtonText: 'MULAI',
-        allowEnterKey: false,
-        allowEscapeKey: false,
-        allowOutsideClick: false,
-      });
-      
-      window.location = data;
-      // player.start();
-      if (data == true) {
-        console.log('Viewers has been updated');
-      }
-    }
-  });
-}
 
 </script>
+
 <script type="text/javascript">
+  
   $(document).on('ready',function () {
     getComments();
   });
@@ -1165,42 +1180,54 @@ function lessonsQuiz(videosrc, player) {
   }
 
   function doComment(lesson_id, parent_id) {
-
     var body = $('#textbody'+parent_id).val();
+    var file_data = $('#image').prop("files")[0];
+    dataform = new FormData();
+    dataform.append( 'image', file_data);
+    dataform.append( 'body', body);
+    dataform.append( 'lesson_id', lesson_id);
+    dataform.append( 'parent_id', parent_id);
+
     if (body == '') {
       alert('Harap Isi Komentar !')
     }else {
-
-
       var postData =
                   {
-                      "_token":"{{ csrf_token() }}",
+                      "_token":$('meta[name="csrf-token"]').attr('content'),
                       "lesson_id": lesson_id,
                       "parent_id": parent_id,
+                      "image" : file_data,
                       "body": body
                   }
-
+      $.ajaxSetup({
+          headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          }
+      });
       $.ajax({
-          type    :'POST',
-          url     :'{{ url("lessons/coments/doComment") }}',
-          dataType: 'json',
-          data    : postData,
+          type    :"POST",
+          url     :'{{ url("/lessons/coments/doComment") }}',
+          data    : dataform,
+          dataType : 'json',
+          contentType: false,
+          processData: false,
           beforeSend: function(){
-            // Show image container
-            swal({
+               swal({
                 title: "Sedang mengirim Komentar",
                 text: "Mohon Tunggu sebentar",
                 imageUrl: "{{ asset('template/web/img/loading.gif') }}",
                 showConfirmButton: false,
                 allowOutsideClick: false
-              });
-              {{--  $("#loader").show();  --}}
+            });
+            // Show image container
+            
           },
           success:function(data){
             if (data.success == false) {
                window.location.href = '{{ url("member/signin") }}';
             }else if (data.success == true) {
               $('#textbody'+parent_id).val('');
+              $("#form-comment").find('[type=file]').val('');
               swal({
                 title: "Komentar anda sudah terkirim!",
                 showConfirmButton: true,
@@ -1214,5 +1241,16 @@ function lessonsQuiz(videosrc, player) {
     }
   }
 </script>
-
+<script>
+  var cek = localStorage.getItem('cart');
+  if(cek != null){
+    var results = JSON.parse(cek);
+    if (results.length > 0){
+      $.each(results, function(k,v) {
+            $('#beli-'+v['id']).hide();
+            $('#guest-'+v['id']).show();
+      });
+    }
+  }
+</script>
 @endsection

@@ -46,10 +46,11 @@ Route::post('lessons/videoTracking','Web\LessonsController@videoTracking');
 Route::post('lessons/LessonsQuiz','Web\LessonsController@LessonsQuiz');
 
 //attachment
-Route::post('attachment', 'AttachmentController@upload');
+// Route::post('attachment', 'AttachmentController@upload');
 // Search
 Route::get('search', 'Web\SearchController@index');
 Route::get('search/autocomplete', 'Web\SearchController@autocomplete');
+Route::get('category/{id}','Web\LessonController@getSearchcategory');
 
 // Point
 Route::get('point', 'Web\PointController@index');
@@ -59,7 +60,7 @@ Route::get('cart', 'Web\CartController@index')->name('cart');
 Route::post('cart/add', 'Web\CartController@store');
 Route::delete('cart/delete/{cart}', 'Web\CartController@destroy');
 
-// Conributor Profile
+// Contributor Profile
 Route::get('contributor/profile/{username}', 'Web\ContributorsController@getProfile');
  
 // PAGES
@@ -190,19 +191,27 @@ Route::get('member/reward','Contributors\PointController@index');
 Route::get('member/reward/{id}/change', 'Contributors\PointController@change');
 Route::post('member/reward/{id}/change', 'Contributors\PointController@doChange');
 Route::get('member/reward/{id}/detail','Contributors\PointController@detail');
+//notifuser
+Route::get('user/notif', 'Web\NotifController@index');
+Route::get('user/notif/view','Web\NotifController@view');
+Route::get('user/notif/read','Web\NotifController@read');
+Route::post('user/notif/delete/{id}','Web\NotifController@delete');
 
 Auth::routes();
 
-Route::get('/system/login', function () {
-	return view('admin.login');
-});
 Route::group(['middleware' => ['auth']], function () {
+
 	Route::get('/system/dashboard', function () {
 		return view('admin.home');
 	});
+
 	Route::resource('system/members', 'MembersController');
 	// Edit Member
+});
 
+	Route::get('/system/login', function () {
+		return view('admin.login');
+	});
 	Route::post('system/members/getServices', 'MembersController@getServices');
 	Route::post('system/members/addServices', 'MembersController@addServices');
 	Route::post('system/members/getEditServices', 'MembersController@getEditServices');
@@ -217,11 +226,13 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::resource('system/videos', 'VideosController');
 	Route::resource('system/income','IncomeController');
 	Route::resource('system/coupon','AdminCouponController');
+	Route::get('system/logout', 'Auth\LoginController@logout');
+
 	//rating
 	
-});
 
- Route::get('cron/system/generate-income', 'GenerateIncomeController@generate');
+
+//  Route::get('cron/system/generate-income', 'GenerateIncomeController@generate');
 /*
 |--------------------------------------------------------------------------
 | Contributor Routes
@@ -237,7 +248,7 @@ Route::group(['middleware' => ['auth']], function () {
 
 Route::get('contributor/login', 'Contributors\ContribAuth\LoginController@showLoginForm');
 Route::post('contributor/login', 'Contributors\ContribAuth\LoginController@Login');
-Route::post('contributor/logout', 'Contributors\ContribAuth\LogoutController@Logout');
+// Route::post('contributor/logout', 'Contributors\ContribAuth\LogoutController@Logout');
 Route::post('contributor/password/email', 'Contributors\ContribAuth\ForgotPasswordController@sendResetLinkEmail');
 Route::get('contributor/password/reset', 'Contributors\ContribAuth\ForgotPasswordController@showLinkRequestForm');
 Route::post('contributor/password/reset', 'Contributors\ContribAuth\ResetPasswordController@reset');
@@ -339,7 +350,3 @@ Route::get('contributor/account/profile/{id}/edit', 'Contributors\AccountControl
 Route::post('contributor/account/profile/{id}/edit', 'Contributors\AccountController@update_halaman');
 //rating
 Route::post('system/rate','RateController@store');
-//notifuser
-Route::get('user/notif/view','Web\NotifController@view');
-Route::get('user/notif/read','Web\NotifController@read');
-Route::post('user/notif/delete/{id}','Web\NotifController@delete');

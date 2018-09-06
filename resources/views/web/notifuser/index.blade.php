@@ -1,4 +1,4 @@
-@extends('contrib.app')
+@extends('web.app')
 @section('title','')
 @section('breadcumbs')
 <div id="navigation">
@@ -99,21 +99,13 @@
             <tbody>
 			@foreach($data as $dat)
 			<?php
-				if($dat->status !== 1){
+				if($dat->status == 0){
 			?>
               <tr>
                 <td><?= date('d/m/Y',strtotime($dat->created_at)) ?></td>
                 <td>{{ $dat->notif }}</td>
                 <td>
-                  @if($dat->category=='coments')
-                   <a href="{{ url('contributor/comments/detail/'.$dat->id) }}" onclick="readnotif({{$dat->id}})" class="btn blue">Lihat</a>
-                  @elseif($dat->category=='point')
-                   <a href="{{ url('contributor/dashboard') }}" onclick="readnotif({{$dat->id}})" class="btn blue">Lihat</a>
-                  @elseif($dat->category=='transfer')
-                   <a href="{{ url('contributor/income') }}"  onclick="readnotif({{$dat->id}})" class="btn blue">Lihat</a>
-                  @else
-                  <a href="#" class="btn blue">Lihat</a>
-                  @endif
+                  <a href="{{ url('lessons/'.$dat->slug) }}" onclick="readnotif({{$dat->id}})" class="btn blue">Lihat</a>
                  	<a href="javascript:void(0)" class="btn red" onclick="$('#un{{ $dat->id }}').submit();">Abaikan</a>
 					<form id="un{{ $dat->id }}" class="" action="{{ url('contributor/notif/delete/'.$dat->id) }}" method="post">
 						{{ csrf_field() }}
@@ -203,17 +195,16 @@
   </div>
 </div>
 <script type="text/javascript">
-  function readnotif(id){
-    var token   = "{{csrf_token()}}";
-    var dataString= '_token='+ token + '&id=' + id ;
-     $.ajax({
-      type:"GET",
-      url:"{{url('ajax/notif/read')}}",
-      data:dataString,
-      success:function(data){
-
+      function readnotif(id){
+        var token   = "{{csrf_token()}}";
+        var dataString= '_token='+ token + '&id=' + id ;
+         $.ajax({
+          type:"GET",
+          url:"{{url('user/notif/view')}}",
+          data:dataString,
+          success:function(data){
+          }
+        });
       }
-    });
-  }
-</script>
+    </script>
 @endsection()

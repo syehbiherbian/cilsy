@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Input;
 use Validator;
-
+use App\Models\Cart;
+use Auth;
 // use App\Models\Member;
 use App\Models\Lesson;
 use App\Models\Category;
@@ -24,33 +25,62 @@ class SearchController extends Controller
     $q  = Input::get('q');
 
     $categories = Category::where('enable','=',1)->get();
-
+    
     if (!empty($c)) { //with Category
 
           $category = Category::where('enable','=',1)->where('title','like','%'.$c.'%')->first();
-          if (count($category) > 0) {
+          if (count($category) > 0) { 
             $cateid = $category->id;
           }else {
             $cateid = 0;
           }
+          if(!empty($mem_id)){
 
-          $results  = Lesson::leftJoin('categories', 'lessons.category_id', '=', 'categories.id')
-                      ->select('lessons.*','categories.title as category_title')
-                      ->where('lessons.enable','=',1)
+                    $results = Lesson::Join('categories', 'lessons.category_id', 'categories.id')
+                    ->leftjoin('tutorial_member', function($join){
+                        $join->on('lessons.id', '=', 'tutorial_member.lesson_id')
+                        ->where('tutorial_member.member_id','=', Auth::guard('members')->user()->id);})
+                    ->leftjoin('cart', function($join){
+                        $join->on('lessons.id', '=', 'cart.lesson_id')
+                        ->where('cart.member_id','=', Auth::guard('members')->user()->id);})
+                    ->select('lessons.*', 'categories.title as category_title', 'tutorial_member.member_id as nilai', 'cart.member_id as hasil')
                       ->where('lessons.title','like','%'.$q.'%')
                       ->where('lessons.category_id','=',$cateid)
                       ->paginate(10);
+                    }else{
+                      $results = Lesson::Join('categories', 'lessons.category_id', 'categories.id')
+                      ->select('lessons.*', 'categories.title as category_title')
+                      ->where('lessons.enable', 1)
+                      ->where('lessons.status', 1)
+                        ->where('lessons.title','like','%'.$q.'%')
+                        ->where('lessons.category_id','=',$cateid)
+                        ->paginate(10);
 
-
+                    }
+                    $results->withPath('search?category='.$c.'&q='.$q);
 
     }else { //Without Category
-
-          $results  = Lesson::leftJoin('categories', 'lessons.category_id', '=', 'categories.id')
-                      ->select('lessons.*','categories.title as category_title')
+      if(!empty($mem_id)){
+                      $results = Lesson::Join('categories', 'lessons.category_id', 'categories.id')
+                      ->leftjoin('tutorial_member', function($join){
+                          $join->on('lessons.id', '=', 'tutorial_member.lesson_id')
+                          ->where('tutorial_member.member_id','=', Auth::guard('members')->user()->id);})
+                      ->leftjoin('cart', function($join){
+                          $join->on('lessons.id', '=', 'cart.lesson_id')
+                          ->where('cart.member_id','=', Auth::guard('members')->user()->id);})
+                      ->select('lessons.*', 'categories.title as category_title', 'tutorial_member.member_id as nilai', 'cart.member_id as hasil')
                       ->where('lessons.enable','=',1)
                       ->where('lessons.title','like','%'.$q.'%')
                       ->paginate(10);
-
+                      }else{
+                      $results = Lesson::Join('categories', 'lessons.category_id', 'categories.id')
+                      ->select('lessons.*', 'categories.title as category_title')
+                      ->where('lessons.enable', 1)
+                      ->where('lessons.status', 1)
+                      ->where('lessons.title','like','%'.$q.'%')
+                      ->paginate(10);
+                      }
+                      $results->withPath('search?&q='.$q);
     }
 
 
@@ -63,10 +93,11 @@ class SearchController extends Controller
   public function autocomplete()
   {
 
+    
+      $keyword 			= Input::get('term');
+      $category 			= Input::get('category');
 
-  		$keyword 			= Input::get('term');
-
-  		$lessons 	= Lesson::where('enable','=','1')->where('title','like','%'.$keyword.'%')->orderBy('id', 'DESC')->get();
+  		$lessons 	= Lesson::where('enable','=','1')->where('category_id','=',$category)->where('title','like','%'.$keyword.'%')->orderBy('id', 'DESC')->get();
 
 
 

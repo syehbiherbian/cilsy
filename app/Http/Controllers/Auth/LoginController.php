@@ -5,6 +5,14 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+
+use Auth;
+use Session;
+use DB;
+use App\invoice;
+use Redirect;
 
 class LoginController extends Controller
 {
@@ -64,4 +72,15 @@ class LoginController extends Controller
             'password' => bcrypt($data['password']),
         ]);
     }
+    public function logout(Request $request)
+    {
+        $this->guard()->logout();
+
+        $request->session()->flush();
+
+        $request->session()->regenerate();
+
+        return redirect('/system/login')->with('success', 'Logout berhasil!');
+    }
+
 }

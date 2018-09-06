@@ -4,7 +4,9 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="google-site-verification" content="4yTZI7aHiFWK-AD03jB5ffbkI5Q8svP423zsKLmtp4I" />
+    @if(env('APP_ENV') == 'production')
+    <meta name="google-site-verification" content="0r-wquIwdvygXwMpsK8-xcBaNyh36Fw-OUJWZoOKvZk" />
+    @endif
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8; IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no" />
     <title>@yield('title') {{ config('app.name') }}</title>
@@ -13,8 +15,12 @@
     <link href="{{asset('template/web/css/video-js.css')}}" rel="stylesheet">
     <link href="{{asset('template/web/css/navbar.css')}}" rel="stylesheet">
     <link href="{{asset('template/web/css/pace.css')}}" rel="stylesheet">
+    <link href="{{ asset('template/web/css/venobox.css') }}" rel="stylesheet">
+
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- rating -->
     <link rel="stylesheet" href="{{ asset('template/web/css/star-rating.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('template/web/css/imageviewer.css') }}" />
     <!-- rating -->
     <link rel="stylesheet" href="{{ asset('template/web/css/owl.carousel.min.css') }}">
     <link rel="stylesheet" href="{{ asset('template/web/css/owl.theme.default.min.css') }}">
@@ -30,6 +36,8 @@
 
     <link rel="stylesheet" href="{{ asset('template/web/plugins/jquery-ui-1.12.1.custom/jquery-ui.css') }}">
     <script type="text/javascript" src="{{asset('template/web/js/jquery.min.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('template/web/js/venobox.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('template/web/js/imageviewer.min.js') }}"></script>
     <script type="text/javascript" src="https://unpkg.com/sweetalert2@7.9.2/dist/sweetalert2.all.js"></script>
     <!-- Jquery UI   -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/plupload/3.1.2/plupload.full.min.js"></script>
@@ -340,7 +348,7 @@ a #items .item {
 
 
 .shopping-cart {
-  margin: 75px 632px;
+  margin: 75px 544px;
   float: right;
   background: white;
   width: 320px;
@@ -422,8 +430,18 @@ a #items .item {
   display: table;
   clear: both;
 }
-
-
+.dropdown-container{
+    display: none;
+    position: absolute;
+    top: 53px;
+    right: 15px;
+    width: 250px;
+    padding: 10px 0;
+    border: 1px solid #DBDEDE;
+    border-radius: 6px;
+    background-color: #FFF;
+    z-index: 99;
+}
     </style>
 
 
@@ -515,9 +533,7 @@ a #items .item {
                   </span> <i class="ion-android-arrow-dropdown"></i>
                 </button>
                 <div class="dropdown-menu dropdown-menu-right">
-                  <a class="dropdown-item" href="javascript:void(0)" onclick="changeCategory('Linux')">Linux</a>
-                  <a class="dropdown-item" href="javascript:void(0)" onclick="changeCategory('Mikrotik')">Mikrotik</a>
-                  <a class="dropdown-item" href="javascript:void(0)" onclick="changeCategory('Cisco')">Cisco</a>
+                <?php echo getCategory(); ?>
                   <div role="separator" class="dropdown-divider"></div>
                   <a class="dropdown-item" href="javascript:void(0)" onclick="changeCategory('Semua Kategori')">Semua Kategori</a>
                 </div>
@@ -544,20 +560,26 @@ a #items .item {
                         </a>                   
                     </li>
                       
-                    <li>
-                        <span class="hello-user">Halo, {{ Auth::guard('members')->user()->username }}</span>
-                    </li>
+                    
                     <li class="has-dropdown">
                         <img src="{{asset('template/kontributor/img/icon/Notifikasi.png')}}" alt="">
+                        <?php if(totalnotifuser() != null){ ?>
+                        <span class="badge-cart"><?php echo totalnotifuser();?></span>
+                        <?php } ?>
                         <div class="dropdown-container">
                             <ul>
                               <?php echo notifuser();?>
+                              <li role="separator" class="divider"></li>
+                              <li><a href="{{ url('/user/notif')}}">Lihat Semua Pemberitahuan</a></li>
                             </ul>
                         </div>
                     </li>
+                    <li>
+                        <span class="hello-user">Halo, {{namemember()}}..</span>
+                    </li>
                     <li class="has-dropdown">
                         <img src="{{asset('template/web/img/drop-down-round-button.png')}}" alt="">
-                        <div class="dropdown-container">
+                        <div class="dropdown-container" style="right: 0px;">
                             <ul>
                                 <li>
                                     <a href="{{ url('member/profile')}}">
@@ -610,9 +632,7 @@ a #items .item {
                   </span> <i class="ion-android-arrow-dropdown"></i>
                 </button>
                 <div class="dropdown-menu dropdown-menu-right" >
-                  <a class="dropdown-item" href="javascript:void(0)" onclick="changeCategory('Linux')">Linux</a>
-                  <a class="dropdown-item" href="javascript:void(0)" onclick="changeCategory('Mikrotik')">Mikrotik</a>
-                  <a class="dropdown-item" href="javascript:void(0)" onclick="changeCategory('Cisco')">Cisco</a>
+                  <?php echo getCategory(); ?>
                   <div role="separator" class="dropdown-divider"></div>
                   <a class="dropdown-item" href="javascript:void(0)" onclick="changeCategory('Semua Kategori')">Semua Kategori</a>
                 </div>
@@ -746,12 +766,30 @@ a #items .item {
     <script type="text/javascript">
       function changeCategory(category) {
         $('.cate_title').text(category);
-        if (category == 'Semua Kategori') {
-            $('.searchcategory').val('');
+        if (category != 'Semua Kategori') {
+          $('.searchcategory').val(category);
         }else {
-            $('.searchcategory').val(category);
+            $('.searchcategory').val('');
         }
       }
+      $(document).ready(function() {
+    $('.dropdown-item').change(function() {
+
+            // var url = '{{ url('category') }}' + '/' + $(this).val();
+            const url = "search/autocomplete";
+            const full = url + ($(".keyword").val() != "" ? ("q=" + $(".keyword").val()) : "" ) + ($('.dropdown-item').val() != "" ? ("&category=" + $('.dropdown-item').val()) : "");
+
+            $.get(full, function(data) {
+                var select = $('form input[name=lesson]');
+
+                select.empty();
+
+                $.each(data,function(key, value) {
+                    select.append('<option value=' + value.id + '>' + value.nama + '</option>');
+                });
+            });
+        });
+    });
     </script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-show-password/1.0.3/bootstrap-show-password.min.js"></script>
 
@@ -793,8 +831,13 @@ a #items .item {
     <!-- Search Form Auto complete -->
     <script type="text/javascript">
     $(function() {
+      function getUrl(){
+        const url = "search/autocomplete";
+        const full = url + ($(".keyword").val() != "" ? ("q=" + $(".keyword").val()) : "" );
+        return full;
+      }
       $(".keyword").autocomplete({
-        source:'{{ url("search/autocomplete")}}',
+        source:'{{ url("'+getUrl()+'")}}',
         select:function(event,ui) {
           $(".keyword").val(ui.item.label);
           return false;
@@ -804,7 +847,7 @@ a #items .item {
         $('.ui-autocomplete').css('z-index','9999').css('overflow-y','scroll').css('max-height','300px');
         // $('.ui-autocomplete').css('background','#09121a').css('color','#fff');
         // $('.ui-menu .ui-menu-item-wrapper').css('padding','11px 1em 3px 1.4em !important');
-        $(this).autocomplete("search");
+        // $(this).autocomplete("search");
         // var btncategory = $('.btn-category').width();
         // var left = '-'+btncategory+'px';
       });
@@ -823,7 +866,7 @@ a #items .item {
     })();
     </script>
     <!--End of Tawk.to Script-->
-    <script>
+    {{--  <script>
 // Set the date we're counting down to
     var countDownDate = new Date("Feb 10, 2018 23:59:59").getTime();
     // Update the count down every 1 second
@@ -849,7 +892,7 @@ a #items .item {
             document.getElementById("demo").innerHTML = "EXPIRED";
         }
     }, 1000);
-    </script>
+    </script>  --}}
 
     <script type="text/javascript">
       function notifview(id){
@@ -886,6 +929,7 @@ a #items .item {
     </script>
     <?php $mtime = file_exists(public_path('template/web/js/custom.js')) ? filemtime(public_path('template/web/js/custom.js')) : '' ?>
     <script type="text/javascript" src="{{ asset('template/web/js/custom.js?'.$mtime) }}"></script>
+
     @stack('js')
 </body>
 

@@ -89,10 +89,15 @@
                 @foreach($datacomment as $comment)
                 <div class="col-md-12" style="margin-bottom:30px;" id="row{{ $comment->id }}">
                     <strong>{{ $comment->username }}</strong> pada <strong><?= date('d/m/Y',strtotime($comment->created_at)) ?></strong>
-					<strong style="color:#ff5e10;">@if($comment->member_id !==null)  User @endif @if($comment->contributor_id  !==null)  Contributor @endif</strong>
-					<div class="col-md-12" style="margin-top:10px;padding-left:5%;">
-							{{ $comment->body }}
+					<strong style="color:#ff5e10;">@if($comment->member_id !==null)  User @else ($comment->contributor_id  !==null)  Contributor @endif</strong>
+					<div class="col-md-12" style="margin-top:10px;padding-left:5%; white-space:pre-line;">
+                            {{ $comment->body }}
+                    <?php if($comment->images) { ?>
+                            <a id="firstlink" data-gall="myGallery" class="venobox" data-vbtype="iframe" href="{{ asset($comment->images) }}"><img src="{{ asset($comment->images) }}" alt="image alt" style="height:50px; width:50px; margin-left: 15px; margin-bottom: 20px;"/></a>
+                    <?php } ?>
 					</div>
+
+                    
 						<br><br>
 						<?php
 						$getchild = DB::table('comments')
@@ -103,7 +108,6 @@
 							->orderBy('comments.created_at','ASC')
 							->select('comments.*','members.username as username','contributors.username as contriname')
 							->get();
-
 						if (count($getchild) > 0) {
 							foreach ($getchild as $child) {
 						?>
@@ -116,9 +120,9 @@
 										{{ $child->contriname }}
 									<?php } ?>
 								</strong> pada <strong><?= date('d/m/Y',strtotime($child->created_at)) ?></strong>
-								<strong style="color:#ff5e10;">@if($child->member_id !==null)  User @endif @if($child->contributor_id  !==null)  Contributor @endif</strong>
-								<div class="col-md-12" style="margin-top:10px;margin-bottom:10px;padding-left:5%;">
-									{{ $child->body }}
+								<strong style="color:#ff5e10;">@if($child->member_id !==null)  User @else ($child->contributor_id  !==null)  Contributor @endif</strong>
+								<div class="col-md-12" style="margin-top:10px;margin-bottom:10px;padding-left:5%; white-space: pre-line">
+                                    {{ $child->body }}
 								</div>
 								<div class="clearfix"></div>
 						</div>
@@ -142,7 +146,7 @@
     function formbalas(comment_id){
         $('#balas'+comment_id).html('<label class="col-md-1" style="padding-left:0px;">Anda</label>'+
                                 '<div class="col-md-11" style="padding-right:0px;">'+
-                                '   <input type="text" class="form-control" id="input_balas'+comment_id+'" name="balasan" placeholder="tambahkan komentar/balasan" value="">'+
+                                '   <textarea class="form-control" id="input_balas'+comment_id+'" name="balasan" placeholder="tambahkan komentar/balasan" value="" style="white-space: pre-line" rows="8" cols="80"></textarea>'+
                                 '</div>'+
                                 '<a href="javascript:void(0)" class="btn btn-info pull-right" onclick="dobalas('+comment_id+')" style="float:right;margin-top:10px; border-radius:3px;">Kirim</a>');
     }
@@ -150,7 +154,7 @@
     function dobalas(comment_id){
         var isi_balas = $('#input_balas'+comment_id).val();
         var lesson_id = '{{ $datalesson->id }}';
-        var member_id = '{{ $comment->member_id }}';
+        var member_id = '{{ $comment->member_id}}';
         // alert(comment_id+' = '+isi_balas);
         var datapost = {
             '_token'    : '{{ csrf_token() }}',

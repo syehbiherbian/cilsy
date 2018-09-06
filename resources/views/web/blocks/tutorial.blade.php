@@ -35,7 +35,7 @@
                           <?php }?>
                           <div class="harga">Rp. {{ number_format($lesson->price, 0, ",", ".") }}</div>
                           <div class="caption">
-                            <p>{{ $lesson->title }}</p>
+                            <p><?php echo substr($lesson->title, '0', 40); ?>..</p>
                           </div>
                           <div class="footer">
                             <p>Total <?php echo Helper::getTotalVideo($lesson->id);?> Video</p>

@@ -77,7 +77,6 @@
       <h4>Result</h4>
       <?php if(count($results) == 0){ echo "No Data Available";}?>
       <?php foreach ($results as $key => $result): ?>
-
         <div class="item">
             <div class="row">
             <div class="col-md-2">
@@ -98,30 +97,30 @@
                 </p>
               </div>
               <div class="col-md-2">
-
-<<<<<<< HEAD
-               
-=======
-               {{--  @if($result->id != $result->tutor)  --}}
->>>>>>> 7602aa1a5db68b6a00c53802bfbe5fe58e64e83f
-                <p style="font-weight:bold;">Rp. {{ number_format($result->price, 0, ",", ".") }}</p>
-                <p>
-                <button type="button" class="btn btn-info" onclick="addToCart({{ $result->id }})"><i class="fa fa-shopping-cart"></i> Beli</button>
+             
+                <?php if(!empty($result->nilai)){ ?>
+                <p style="font-weight:bold color:green;">
+                <a href="{{ url('lessons/'.$result->slug) }}" class="btn" style="background-color:#f1c40f; color:white; padding: 6px 22px;">Lihat Tutorial</a>
                 </p>
-<<<<<<< HEAD
-=======
-                {{--  @else
-                
-                @endif  --}}
->>>>>>> 7602aa1a5db68b6a00c53802bfbe5fe58e64e83f
-
+                <?php }else{?>
+                <p style="font-weight:bold;">Rp. {{ number_format($result->price, 0, ",", ".") }}</p>
+                <?php if(empty($result->hasil)){ ?>
+                <p>
+                <button id="beli-{{ $result->id }}" type="button" class="btn btn-info" style="padding: 6px 48px"  onclick="addToCart({{ $result->id }})"><i class="fa fa-shopping-cart"></i>Beli </button>
+                <a id="guest-{{ $result->id }}" href="{{ url('cart') }}" class="btn" style="background-color:#fff; color:#5bc0de; border-color:#46b8da; display:none" >Lihat Keranjang</a>
+                </p>
+                <?php }else{ ?>
+                <p>
+                <a href="{{ url('cart') }}" class="btn" style="background-color:#fff; color:#5bc0de; border-color:#46b8da;">Lihat Keranjang</a>
+                </p>
+                <?php } ?>
+                <?php }?>
+              
                 </div>
-                
             </div>
           {{-- </a> --}}
         </div>
              
-
       <?php endforeach; ?>
       <div class="row">
           <div class="col-md-12 text-center">
@@ -131,6 +130,19 @@
     </div>
   </div>
 </div>
+
+<script>
+  var cek = localStorage.getItem('cart');
+  if(cek != null){
+    var results = JSON.parse(cek);
+    if (results.length > 0){
+      $.each(results, function(k,v) {
+            $('#beli-'+v['id']).hide();
+            $('#guest-'+v['id']).show();
+      });
+    }
+  }
+</script>
 <script>
 fbq('track', 'Search');
 </script>

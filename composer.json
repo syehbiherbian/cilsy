@@ -17,6 +17,7 @@
         "pusher/pusher-php-server": "^3.0",
         "spatie/laravel-sitemap": "^5.0",
         "symfony/dom-crawler": "^4.0",
+        "uxweb/sweet-alert": "^1.4",
         "veritrans/veritrans-php": "dev-master"
     },
     "require-dev": {

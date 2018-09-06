@@ -10,6 +10,7 @@ use App\Models\Video;
 use App\Models\UserNotif;
 use App\Models\Income;
 use App\Models\Cart;
+use App\Models\Category;
 /**
  *
  */
@@ -29,6 +30,7 @@ class Helper
         return $result;
       }
   }
+
   static function package($field)
   {
       $now = new DateTime();
@@ -121,33 +123,62 @@ function cart(){
   }
   return $html;
 }
+function getCategory(){
+  $categories = Category::all();
+  $html='';
+  
+  foreach ($categories as $key => $category)
+      $html .=' <a id="'.$category->id.'" class="dropdown-item" href="javascript:void(0)"  onclick="changeCategory(&apos;'.$category->title.'&apos;)">'. $category->title.'</a>';
+  return $html;
+}
 function getTotalCart(){
   $member_id =  Auth::guard('members')->user()->id ?? null;
   $data = Cart::where('member_id', $member_id)->count();
   return $data;
 }
+
+function namemember(){
+  $member_name =  substr(Auth::guard('members')->user()->username, '0', 5);
+  return $member_name;
+}
+
 function notif(){
 
     $contribID = Auth::guard('contributors')->user()->id;
-    $notif =ContributorNotif::where('contributor_id',$contribID)->where('status',0)->get();
+    $notif =ContributorNotif::where('contributor_id',$contribID)->where('status',0)->latest()->take(5)->get();
     $html='';
     foreach ($notif as  $value) {
-        $html .='<li><a href="notif" onclick="notifview('.$value->id.')">'.$value->title.'</a></li>';
-
+        $url = url('/contributor/comments/detail', $parameters = [$value->id], $secure = null);
+        $html .='<li><a href="'.$url.'" onclick="contribnotif('.$value->id.')">'.$value->title.'</a></li>';
+        
     }
     return $html;
+}
+function totalnotif(){
+  $mem_id =  Auth::guard('contributors')->user()->id;
+  $notif = ContributorNotif::where('contributor_id',$mem_id)->where('status',0)->count();
+  return $notif;
 }
 function notifuser(){
   
   $mem_id =  Auth::guard('members')->user()->id;
-  $notif = UserNotif::where('id_user',$mem_id)->where('status',0)->get();
+  $notif = UserNotif::where('id_user',$mem_id)->where('status',0)->latest()->take(5)->get();
   $html='';
+  
   foreach ($notif as  $value) {
-      $html .='<li><a href="notif" onclick="notifview('.$value->id.')">'.$value->title.'</a></li>';
+      $url = url('lessons', $parameters = [$value->slug], $secure = null);
+      $html .='<li><a href="'.$url.'" onclick="notifview('.$value->id.')">'.substr($value->title, '0', 40).'</a></li>';
 
   }
   return $html;
 }
+
+function totalnotifuser(){
+  $mem_id =  Auth::guard('members')->user()->id;
+  $notif = UserNotif::where('id_user',$mem_id)->where('status',0)->count();
+  return $notif;
+}
+
 function coments(){
   $contribID = Auth::guard('contributors')->user()->id;
   $html='';

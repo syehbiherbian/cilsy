@@ -36,7 +36,8 @@ return [
     |
     */
 
-    'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
+    'host' => env('MAIL_HOST', 'smtp.gmail.com'),
+    //'host' => env('MAIL_HOST', 'mail.cilsy.id'),
 
     /*
     |--------------------------------------------------------------------------
@@ -63,8 +64,9 @@ return [
     */
 
     'from' => [
-        'address' => 'noreply@cilsy.id',
-        'name' => 'Cilsy Fiolution',
+        //'address' => 'noreply@cilsy.id',
+        'address' => 'noreplycilsy@gmail.com',
+        'name' => 'No Reply Cilsy Fiolution',
     ],
 
     /*

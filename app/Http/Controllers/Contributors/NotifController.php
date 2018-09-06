@@ -29,7 +29,7 @@ class NotifController extends Controller
         $getnotif = DB::table('contributor_notif')
             ->where('contributor_id',$uid)
             ->orderBy('contributor_notif.created_at','DESC')
-            ->get();
+            ->paginate(10);
         return view('contrib.notif.index', [
             'data' => $getnotif
         ]);
@@ -44,7 +44,7 @@ class NotifController extends Controller
     public function view(){
       $id = Input::get('id');
       $update= ContributorNotif::find($id);
-      $update->status=2;
+      $update->status=1;
       $update->save();
     }
 

@@ -95,7 +95,7 @@ class VtwebController extends Controller {
             return response()->json([
                 'status' => false,
                 'message' => 'Transaction failed'
-            ], 500);
+            ], 200);
         }
         
         $vt = new Veritrans;
@@ -118,6 +118,9 @@ class VtwebController extends Controller {
                         'type' => $type,
                         'notes' => "Transaction order_id: " . $order_id . " is challenged by FDS",
                     ]);
+                    return response()->json([
+                        'status' => true
+                    ], 200);
                 } else {
                     // TODO set payment status in merchant's database to 'Success'
                     // Update status Invoices
@@ -160,6 +163,9 @@ class VtwebController extends Controller {
                 'type' => $type,
                 'notes' => "Waiting customer to finish transaction order_id: " . $order_id . " using " . $type,
             ]);
+            return response()->json([
+                'status' => true
+            ], 200);
             $this->hapus_cart($order_id);
             //send mail invoice pending
             $this->send_mail($order_id);
@@ -170,6 +176,19 @@ class VtwebController extends Controller {
                 'type' => $type,
                 'notes' => "Payment using " . $type . " for transaction order_id: " . $order_id . " is denied.",
             ]);
+            return response()->json([
+                'status' => true
+            ], 200);
+        } else if ($transaction == 'expire') {
+            // TODO set payment status in merchant's database to 'Expire'
+            Invoice::where('code', $order_id)->update([
+                'status' => 5,
+                'type' => $type,
+                'notes' => "Payment using " . $type . " for transaction order_id: " . $order_id . " is expired.",
+            ]);
+            return response()->json([
+                'status' => true
+            ], 200);
         }
         error_log(print_r($r, TRUE));
     }
