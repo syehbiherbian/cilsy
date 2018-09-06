@@ -696,9 +696,10 @@ td{
             <div class="player-container">
               <!-- Main Video -->
               <video id="video" class="video-js vjs-default-skin vjs-big-play-centered" height="500" width="70%">
-                @if (count($main_videos) > 0) 
-                    <source src="{{ !empty($main_videos[0]->video) ? $main_videos[0]->video : '' }}" type="{{ (!empty($main_videos[0]->type_video)) ? $main_videos[0]->type_video : '' }}">
+                @if (count($last_videos) > 0) 
+                    <source src="{{ !empty($last_videos->video) ? $last_videos->video : '' }}" type="{{ (!empty($last_videos->type_video)) ? $last_videos->type_video : '' }}">
                 @endif 
+                
               </video>
 
               <!-- Playlist Video -->
