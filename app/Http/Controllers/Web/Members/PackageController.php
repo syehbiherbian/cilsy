@@ -123,7 +123,6 @@ class PackageController extends Controller
             }
 
             /* hapus cart */
-            Cart::where('member_id', $member_id)->delete();
             session()->forget('coupon');
           }
 
