@@ -129,20 +129,20 @@ Route::get('cron/mail/user/reminder/payment', 'Cron\ReminderController@index');
 // Route::get('member/signout', 'Web\Members\AuthController@signout');
 Route::post('member/change-password', 'Web\Members\PasswordController@doSubmit');
 Route::get('member/change-password', 'Web\Members\PasswordController@index');
-// Route::get('member/reset', 'Web\Members\AuthController@forgetpassword');
-// Route::post('member/reset', 'Web\Members\AuthController@doforgetpassword');
-// Route::post('member/reset/update', 'Web\Members\AuthController@doupdate');
-// Route::get('member/reset/update/{token}', 'Web\Members\AuthController@updatereset');
+Route::get('member/reset', 'Web\Members\AuthController@forgetpassword');
+Route::post('member/reset', 'Web\Members\AuthController@doforgetpassword');
+Route::post('member/reset/update', 'Web\Members\AuthController@doupdate');
+Route::get('member/reset/update/{token}', 'Web\Members\AuthController@updatereset');
 
 Route::get('member/signup', 'Web\Members\MemberAuth\RegisterController@showRegistrationForm');
 Route::post('member/signup', 'Web\Members\MemberAuth\RegisterController@register');
 Route::get('member/signin', 'Web\Members\MemberAuth\LoginController@showLoginForm');
 Route::post('member/signin', 'Web\Members\MemberAuth\LoginController@login');
 Route::get('member/signout', 'Web\Members\MemberAuth\LoginController@logout');
-Route::post('member/email', 'Web\Members\MemberAuth\ForgotPasswordController@sendResetLinkEmail');
-Route::get('member/reset', 'Web\Members\MemberAuth\ForgotPasswordController@showLinkRequestForm');
-Route::post('member/reset', 'Web\Members\MemberAuth\ResetPasswordController@reset');
-Route::get('member/reset/{token}', 'Web\Members\MemberAuth\ResetPasswordController@showResetForm');
+// Route::post('member/email', 'Web\Members\MemberAuth\ForgotPasswordController@sendResetLinkEmail');
+// Route::get('member/reset', 'Web\Members\MemberAuth\ForgotPasswordController@showLinkRequestForm');
+// Route::post('member/reset', 'Web\Members\MemberAuth\ResetPasswordController@reset');
+// Route::get('member/reset/{token}', 'Web\Members\MemberAuth\ResetPasswordController@showResetForm');
 Route::get('member/profile', 'Web\Members\ProfileController@index');
 Route::post('member/profile', 'Web\Members\ProfileController@doSubmit');
 Route::get('member/subscriptions', 'Web\Members\SubscriptionsController@index');
@@ -175,9 +175,9 @@ Route::get('member/signin', 'Web\Members\MemberAuth\LoginController@showLoginFor
 Route::post('member/signin', 'Web\Members\MemberAuth\LoginController@login');
 Route::get('member/signout', 'Web\Members\MemberAuth\LoginController@logout');
 Route::post('member/email', 'Web\Members\MemberAuth\ForgotPasswordController@sendResetLinkEmail');
-Route::get('member/reset', 'Web\Members\MemberAuth\ForgotPasswordController@showLinkRequestForm');
-Route::post('member/reset', 'Web\Members\MemberAuth\ResetPasswordController@reset');
-Route::get('member/reset/{token}', 'Web\Members\MemberAuth\ResetPasswordController@showResetForm');
+// Route::get('member/reset', 'Web\Members\MemberAuth\ForgotPasswordController@showLinkRequestForm');
+// Route::post('member/reset', 'Web\Members\MemberAuth\ResetPasswordController@reset');
+// Route::get('member/reset/{token}', 'Web\Members\MemberAuth\ResetPasswordController@showResetForm');
 Route::get('member/profile', 'Web\Members\ProfileController@index');
 Route::post('member/profile', 'Web\Members\ProfileController@doSubmit');
 Route::get('member/subscriptions', 'Web\Members\SubscriptionsController@index');
@@ -200,19 +200,20 @@ Route::post('user/notif/delete/{id}','Web\NotifController@delete');
 
 Auth::routes();
 
-Route::group(['middleware' => ['auth']], function () {
 
+	Route::resource('/system/dashboard',  'DashboardController');
+	Route::resource('system/members', 'MembersController');
 	
 	// Edit Member
-});
-Route::get('/system/dashboard', function () {
-	return view('admin.home');
-});
 
-Route::resource('system/members', 'MembersController');
+
+	// Route::get('system/login', 'Auth\LoginController@showLoginForm');
+	// Route::post('system/login', 'Auth\LoginController@Login');
+
 	Route::get('/system/login', function () {
 		return view('admin.login');
 	});
+
 	Route::post('system/members/getServices', 'MembersController@getServices');
 	Route::post('system/members/addServices', 'MembersController@addServices');
 	Route::post('system/members/getEditServices', 'MembersController@getEditServices');

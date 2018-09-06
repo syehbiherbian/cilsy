@@ -5,6 +5,7 @@ use App\Models\Category;
 use App\Http\Controllers\Controller;
 use App\Models\Invoice;
 use App\Models\Lesson;
+use App\Models\TutorialMember;
 use DateTime;
 use Session;
 use Auth;
@@ -60,6 +61,11 @@ class HomeController extends Controller {
 		// $cart = Cart::where('member_id', $mem_id)->where('lesson_id', $lessons->id)->get();
 		// dd($lessons);		
 		if(($mem_id) != null){
+
+		$cekdulu = TutorialMember::where('member_id', Auth::guard("members")->user()->id)
+		->where(DB::raw('DATEDIFF( now(),`created_at`)') , '>', 30)
+		->orderby('created_at', 'asc')->first();
+
 		$ratenow = Rate::select('id_member')
 		->where('id_member', '=', Auth::guard("members")->user()->id)
     	->whereRaw('YEAR(created_at) = YEAR(now()) AND MONTH(created_at) = MONTH(now())')
@@ -67,6 +73,7 @@ class HomeController extends Controller {
 
 		}else{
 			$ratenow=[''];
+			$cekdulu =[''];
 		}
     	$now = new DateTime();
 		$categories = Category::where('enable', '=', 1)->get();
@@ -110,7 +117,8 @@ class HomeController extends Controller {
 			'mem_id' => $mem_id,
 			// 'tutor' => $tutorial,
             // 'cart' => $cart,
-			'ratenow' => $ratenow
+			'ratenow' => $ratenow,
+			'cekdulu' => $cekdulu
 		]);
 	}
 }
