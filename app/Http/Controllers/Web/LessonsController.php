@@ -73,7 +73,7 @@ class LessonsController extends Controller
         
         $lessons = Lesson::where('enable', 1)->where('status', 1)->where('slug', $slug)->first();
         $tutorial = TutorialMember::where('member_id', $mem_id)->where('lesson_id', $lessons->id)->first();
-        $invo = Invoice::Join('invoice_details', 'invoice_details.id', 'invoice.id')
+        $invo = Invoice::Join('invoice_details', 'invoice_details.invoice_id', 'invoice.id')
                 ->Join('lessons', 'lessons.id', 'invoice_details.lesson_id')
                 ->select('invoice.code', 'invoice_details.lesson_id', 'lessons.title', 'invoice.status as status')
                 ->where('lessons.id', $lessons->id)
