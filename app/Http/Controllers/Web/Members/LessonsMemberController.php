@@ -74,6 +74,7 @@ class LessonsMemberController extends Controller
         $get_hist = [0]; 
         $get_videos = [0]; 
         $progress = [0];
+        $get_full = [0];
        }
       
 

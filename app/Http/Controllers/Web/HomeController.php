@@ -11,7 +11,6 @@ use Session;
 use Auth;
 use App\Models\Rate;
 use DB;
-use App\Models\TutorialMember;
 use App\Models\Cart;
 
 

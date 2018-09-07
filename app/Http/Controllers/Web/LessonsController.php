@@ -849,7 +849,8 @@ class LessonsController extends Controller
                             'media' => '(min-width: 400px;)',
                         ],
 						[
-							'src' => url($last_videos['image']),
+                            'srcset' => url($last_videos['image']),
+							'src' => url($last_videos['video']),
 						]),
                     );
                     }else{

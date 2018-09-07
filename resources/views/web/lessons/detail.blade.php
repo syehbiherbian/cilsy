@@ -733,7 +733,7 @@ td{
                   <ul class="materi_list">
                     @foreach ($main_videos as $row)
                     <li>
-                    <table>
+                    <table> 
                         <tr>
                           <td><strong><?php echo $number ?> {{ $row->title }}</strong>
                               <p>{!! nl2br($row->description) !!}</p>

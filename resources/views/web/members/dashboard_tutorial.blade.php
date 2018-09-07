@@ -70,7 +70,7 @@
         <div class="item">
           <?php
            if(!count($last) == 0) { 
-             if(!count($progress) == 0) {?>
+             if(!count($progress) == 0) { ?>
             <div class="row">
             <div class="col-md-4">
                 <img src="{{ $last->image }}" alt="" class="img-responsive">
