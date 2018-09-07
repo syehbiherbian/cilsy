@@ -662,7 +662,7 @@ td{
               @if(count($invo) != 0)
                 @if($invo->status == '2')
                 <div class="lesson-video-count">Rp{{ number_format($lessons->price, 0, ",", ".") }}</div>
-                <button type="button" class="lesson-video-count" ><i class="fa fa-shopping-cart"></i> Waiting Payment</button>
+                <button type="button" class="btn disabled" style="background-color:#fff; color:#5bc0de; border-color:#46b8da; display:none;" >Waiting Payment</button>
                 @else
                 <div class="lesson-video-count">Rp{{ number_format($lessons->price, 0, ",", ".") }}</div>
                 <button type="button" class="lesson-video-count" onclick="addToCart({{ $lessons->id }})"><i class="fa fa-shopping-cart"></i> Beli</button>
