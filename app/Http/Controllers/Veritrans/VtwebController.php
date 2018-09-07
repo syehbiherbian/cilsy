@@ -164,12 +164,12 @@ class VtwebController extends Controller {
                 'type' => $type,
                 'notes' => "Waiting customer to finish transaction order_id: " . $order_id . " using " . $type,
             ]);
-            return response()->json([
-                'status' => true
-            ], 200);
             $this->hapus_cart($order_id);
             //send mail invoice pending
             $this->send_mail($order_id);
+            return response()->json([
+                'status' => true
+            ], 200);
         } else if ($transaction == 'deny') {
             // TODO set payment status in merchant's database to 'Denied'
             Invoice::where('code', $order_id)->update([
@@ -230,9 +230,10 @@ class VtwebController extends Controller {
             );
     }
 
-    private function hapus_cart($order_id){
+    public function hapus_cart($order_id){
         $invoice = Invoice::where('code', $order_id)->first();
-        Cart::where('member_id', $invoice->member_id)->delete();
+        $cart = Cart::find('member_id', $invoice->member_id)->first();
+        $cart->delete();
         
     }
 }
