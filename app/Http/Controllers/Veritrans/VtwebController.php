@@ -7,6 +7,7 @@ use App\Models\Invoice;
 use App\Models\InvoiceDetail;
 use App\Models\Member;
 use App\Models\Package;
+use App\Models\Cart;
 use App\Models\TutorialMember;
 use App\Veritrans\Veritrans;
 use DateTime;
@@ -216,7 +217,6 @@ class VtwebController extends Controller {
                     'member_id' => $invoice->members_id,
                     'lesson_id' => $detail->lesson_id,
                 ]);
-                
             }
             
         }
@@ -224,9 +224,9 @@ class VtwebController extends Controller {
     private function update_flag($order_id){
         $invoice = Invoice::where('code', $order_id)->first();
         $ud = InvoiceDetail::where('invoice_id', $invoice->id)->update(
-            [
-                'flag' => 0,
-            ]
+                [
+                    'flag' => 0,
+                ]
             );
     }
 
