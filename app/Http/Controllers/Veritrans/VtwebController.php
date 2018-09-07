@@ -199,6 +199,7 @@ class VtwebController extends Controller {
         $members = Member::where('id', $invoice->members_id)->first();
         $send = Member::findOrFail($members->id);
         Mail::to($members->email)->send(new InvoiceMail($send));
+        echo "berhasil kirim email";
     }
 
     private function sukses_mail($order_id) {
@@ -206,6 +207,7 @@ class VtwebController extends Controller {
         $members = Member::where('id', $invoice->members_id)->first();
         $send = Member::findOrFail($members->id);
         Mail::to($members->email)->send(new SuksesMail($send));
+        echo "berhasil kirim email";
     }
 
     public function create_tutorial_member($order_id)
@@ -234,6 +236,6 @@ class VtwebController extends Controller {
         $invoice = Invoice::where('code', $order_id)->first();
         $cart = Cart::find('member_id', $invoice->member_id)->first();
         $cart->delete();
-        
+        echo "berhasil hapus keranjang";
     }
 }
