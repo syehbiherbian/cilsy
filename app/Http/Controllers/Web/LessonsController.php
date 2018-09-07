@@ -50,6 +50,7 @@ class LessonsController extends Controller
             ->where('lessons.status', 1)
             ->where('lessons.category_id', $category->id)
             ->paginate(10);
+            // dd($results);
             }else{
                 $results = Lesson::Join('categories', 'lessons.category_id', 'categories.id')
                 ->select('lessons.*', 'categories.title as category_title')
@@ -59,9 +60,6 @@ class LessonsController extends Controller
                 ->paginate(10); 
             }
 
-
-
-            // dd($results);
         } else {
             if(!empty($mem_id)){
             $results = Lesson::Join('categories', 'lessons.category_id', 'categories.id')
@@ -75,8 +73,6 @@ class LessonsController extends Controller
                 ->where('lessons.enable', 1)
                 ->where('lessons.status', 1)
                 ->paginate(10);
-
-           
             }else{
                 $results = Lesson::Join('categories', 'lessons.category_id', 'categories.id')
                 ->select('lessons.*', 'categories.title as category_title')
@@ -97,7 +93,7 @@ class LessonsController extends Controller
         return view('web.lessons.index', [
             'categories' => $categories,
             'results' => $results,    
-            // 'tutorial'=>$tutorial
+            // 'invo' => $invo,
         ]);
 
     }

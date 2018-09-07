@@ -658,11 +658,11 @@ td{
           </div>
           <div class="col-xs-12 col-md-2">
           <ul style="right">
-            @if($tutor == null)
+          @if($tutor == null)
               @if(count($invo) != 0)
                 @if($invo->status == '2')
                 <div class="lesson-video-count">Rp{{ number_format($lessons->price, 0, ",", ".") }}</div>
-                <button type="button" class="btn disabled" style="background-color:#fff; color:#5bc0de; border-color:#46b8da; display:none;" >Waiting Payment</button>
+                <button type="button" class="btn disabled" style="background-color:#fff; color:#5bc0de; border-color:#46b8da; display:none;" >Menunggu Pembayaran</button>
                 @else
                 <div class="lesson-video-count">Rp{{ number_format($lessons->price, 0, ",", ".") }}</div>
                 <button type="button" class="lesson-video-count" onclick="addToCart({{ $lessons->id }})"><i class="fa fa-shopping-cart"></i> Beli</button>
@@ -671,11 +671,7 @@ td{
               <div class="lesson-video-count">Rp{{ number_format($lessons->price, 0, ",", ".") }}</div>
               <button type="button" class="lesson-video-count" onclick="addToCart({{ $lessons->id }})"><i class="fa fa-shopping-cart"></i> Beli</button>
               @endif
-            @else
-            <div class="lesson-video-count">Rp{{ number_format($lessons->price, 0, ",", ".") }}</div>
-            <button type="button" class="lesson-video-count" onclick="addToCart({{ $lessons->id }})"><i class="fa fa-shopping-cart"></i> Beli</button>
             @endif
-          @endif
           </div>
         </div><!--./ Title -->
 
