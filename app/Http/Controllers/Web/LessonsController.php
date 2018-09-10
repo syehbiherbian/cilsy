@@ -794,21 +794,21 @@ class LessonsController extends Controller
                     if(count($last_videos) != 0){
                        
                     $play[] = array(
-                        'name' => $last_videos['title'],
-                        'description' => strip_tags($last_videos['description']),
-                        'duration' => $last_videos['durasi'],
+                        'name' => $video['title'],
+                        'description' => strip_tags($video['description']),
+                        'duration' => $video['durasi'],
                         'sources' => array([
-                            'src' => url($last_videos['video']),
-                            'type' => $last_videos['type_video'],
+                            'src' => url($video['video']),
+                            'type' => $video['type_video'],
                         ]),
-                        'poster' => url($last_videos['image']),
+                        'poster' => url($video['image']),
                         'thumbnail' => array([
-                            'srcset' => url($last_videos['image']),
+                            'srcset' => url($video['image']),
                             'type' => 'image/png',
                             'media' => '(min-width: 400px;)',
                         ],
 						[
-							'src' => url($last_videos['image']),
+							'src' => url($video['image']),
 						]),
                     );
                     }else{
