@@ -890,7 +890,7 @@ document.getElementById("uploadFile").value = this.value;
             var reader = new FileReader();
             reader.onload = imageLoaded;
             reader.readAsDataURL(this.files[0]);
-        }
+        } 
     });
 });
 

@@ -810,7 +810,7 @@ class LessonsController extends Controller
 						[
 							'src' => url($video['image']),
 						]),
-                    );
+                    ); 
                     }else{
                         $play[] = array(
                             'name' => $video['title'],

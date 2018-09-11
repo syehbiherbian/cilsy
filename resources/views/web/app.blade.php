@@ -787,7 +787,7 @@ a #items .item {
         if (sidebarBox.classList.contains('active') && event.keyCode === 27) {
             sidebarBtn.classList.remove('active');
             sidebarBox.classList.remove('active');
-            }
+            } 
       });
   </script>
  <script type="text/javascript">
