@@ -99,7 +99,7 @@
               </div>
 
             <?php } ?> 
-  @endif;                
+  @endif
  </div>
 
     <div class="col-sm-12" style="margin-top: 50px;">
