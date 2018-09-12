@@ -66,6 +66,7 @@
 <div class="container section-content">
 
 <div class="col-sm-12">
+@if(empty($last) || empty($progress))
       <h4>Tutorial Terakhir Ditonton</h4>
         <div class="item">
           <?php
@@ -97,7 +98,8 @@
               Belum ada tutorial yang anda tonton 
               </div>
 
-            <?php } ?>        
+            <?php } ?> 
+  @endif;                
  </div>
 
     <div class="col-sm-12" style="margin-top: 50px;">
@@ -138,7 +140,7 @@
 
     <div class="col-sm-12" style="margin-top: 50px;">
       <h4>Tutorial Terselesaikan</h4>
-     
+     @if(empty($full))
         <?php
         if(!count($full) == 0) {
                 $i = 1;
@@ -170,6 +172,11 @@
       </div>
 
       <?php } ?>
+      @else
+      <div class="alert alert-danger" role="alert">
+               Belum ada tutorial yang anda selesaikan 
+      </div>
+      @endif
     </div>
 
   <div class="col-sm-12" style="margin-top: 20px;">
