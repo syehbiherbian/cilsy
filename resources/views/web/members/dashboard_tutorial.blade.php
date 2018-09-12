@@ -69,7 +69,7 @@
 @if(empty($progress) || empty($last))
 <div class="alert alert-danger" role="alert">
               Belum ada tutorial yang anda tonton 
-</div>
+</div> 
   @else
     <h4>Tutorial Terakhir Ditonton</h4>
         <div class="item">
