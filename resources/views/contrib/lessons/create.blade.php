@@ -1,5 +1,6 @@
 @extends('contrib.app')
 @section('title','')
+<link href="{{asset('template/kontributor/summernote/summernote.css')}}" rel="stylesheet">
 @section('breadcumbs')
 <div id="navigation">
 		<ul class="breadcrumb">
@@ -71,7 +72,13 @@
 	        <div class="col-sm-10">
 	          <input type="text"  required class="form-control" placeholder="minimum : 10000" name="price" value="{{ old('title') }}">
 	        </div>
-	      </div>
+				</div>
+				<div class="form-group">
+						<label class="col-sm-2 control-label">Audiens</label>
+						<div class="col-sm-10">
+							<input type="text"  required class="form-control" placeholder="Newbie" name="audien">
+						</div>
+				</div>
 	      <div class="form-group">
 	        <label class="col-sm-2 control-label">Upload gambar</label>
 	        <div class="col-sm-10">
@@ -81,17 +88,52 @@
 	      <div class="form-group">
 	        <label class="col-sm-2 control-label">Description</label>
 	        <div class="col-sm-10">
-	        <textarea class="form-control" rows="8" cols="80"  name="description" placeholder="Contoh: Active Directory Domain Controller merupakan salah satu keunggulan server windows.">{{ old('description') }}</textarea>
+						<textarea id="summernote" name="description"></textarea>
+	        </div>
+				</div>
+				<div class="form-group">
+						<label class="col-sm-2 control-label">Goal Tutorial</label>
+						<div class="col-sm-10">
+							<textarea id="summergoal" name="goal"></textarea>
+						</div>
+				</div>
+				<div class="form-group">
+	        <label class="col-sm-2 control-label">Requirement</label>
+	        <div class="col-sm-10">
+						<textarea id="textedit" name="requirement"></textarea>
 	        </div>
 	      </div>
 	      <div class="form-group">
 	        <div class="col-sm-offset-2 col-sm-10 text-right">
 	          <a href="{{ url('contributor/lessons') }}" class="btn btn-danger">Batal</a>
 						<button type="submit" class="btn btn-info">Submit</button>
+
 	        </div>
 	      </div>
 	    </form>
 		</div>
   </div>
 </div>
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
+<script type="text/javascript" src="{{asset('template/kontributor/summernote/summernote.js')}}"></script>
+<script>
+	$('#summernote').summernote({
+		height: 200,                 // set editor height
+		minHeight: null,             // set minimum height of editor
+		maxHeight: null,             // set maximum height of editor
+		focus: true                  // set focus to editable area after initializing summernote
+	});
+	$('#textedit').summernote({
+		height: 200,                 // set editor height
+		minHeight: null,             // set minimum height of editor
+		maxHeight: null,             // set maximum height of editor
+		focus: true                  // set focus to editable area after initializing summernote
+	});
+	$('#summergoal').summernote({
+		height: 200,                 // set editor height
+		minHeight: null,             // set minimum height of editor
+		maxHeight: null,             // set maximum height of editor
+		focus: true                  // set focus to editable area after initializing summernote
+	});
+</script>
 @endsection()

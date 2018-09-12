@@ -699,7 +699,6 @@ td{
                 @if (count($last_videos) > 0) 
                     <source src="{{ !empty($last_videos->video) ? $last_videos->video : '' }}" type="{{ (!empty($last_videos->type_video)) ? $last_videos->type_video : '' }}">
                 @endif 
-                
               </video>
 
               <!-- Playlist Video -->
@@ -826,7 +825,7 @@ td{
                       @if ($contributors->avatar)
                         <img src="{{ asset($contributors->avatar) }}" alt="" class="img-responsive img-center">
                       @else
-                        <img src="{{ asset('template/kontributor/img/icon/avatar.png') }}" alt="" class="img-responsive img-center">
+                        <img src="{{ asset('template/kontributor/img/user.png') }}" alt="" class="img-responsive img-center">
                       @endif
                       <div class="text-center mt-15">
                         <div class="btn-group">
@@ -891,7 +890,7 @@ document.getElementById("uploadFile").value = this.value;
             var reader = new FileReader();
             reader.onload = imageLoaded;
             reader.readAsDataURL(this.files[0]);
-        }
+        } 
     });
 });
 
@@ -902,6 +901,12 @@ function imageLoaded(e) {
 <script>            
 $(document).ready(function(){
     $('.venobox').venobox(); 
+    $('#video_html5_api').ready(function(){
+      setTimeout(function(){
+        $('#video_html5_api').attr('src',$('#video_html5_api>source').attr('src'))
+        setTimeout(function(){document.querySelector('.vjs-playlist').scrollTo(0,document.querySelector('.vjs-playlist-now-playing').getBoundingClientRect().y)},1000)
+        },5000)
+    });
 });
 </script>
 

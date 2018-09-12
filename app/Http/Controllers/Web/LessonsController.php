@@ -115,10 +115,16 @@ class LessonsController extends Controller
         $lessons = Lesson::where('enable', 1)->where('status', 1)->where('slug', $slug)->first();
         $tutorial = TutorialMember::where('member_id', $mem_id)->where('lesson_id', $lessons->id)->first();
         $cart = Cart::where('member_id', $mem_id)->where('lesson_id', $lessons->id)->first();
-        $categories = Category::where('enable', 1)->get();
-        // dd($tutorial);
+        $categories = Category::where('id', $lessons->category_id)->first();
+        $time = strtotime($lessons->created_at);
+        $myFormatForView = date("d F y", $time);
+        // dd($lessons);
         if (count($lessons) > 0) {
             $main_videos = Video::where('enable', 1)->where('lessons_id', $lessons->id)->orderBy('id', 'asc')->get();
+            $last_videos = Viewer::leftJoin('videos', 'videos.id', '=', 'viewers.video_id')
+            ->select('videos.*', 'viewers.video_id')
+            ->where('viewers.member_id', $mem_id)
+            ->where('videos.lessons_id', $lessons->id)->orderBy('viewers.updated_at', 'desc')->first();
             $files = File::where('enable', 1)->where('lesson_id', $lessons->id)->orderBy('id', 'asc')->get();
             
             // Contributor
@@ -137,9 +143,11 @@ class LessonsController extends Controller
                 'categories' => $categories,
                 'lessons' => $lessons,
                 'main_videos' => $main_videos,
+                'last_videos' => $last_videos,
                 'file' => $files,
                 'tutor' => $tutorial,
                 'cart' => $cart,
+                'tanggal' => $myFormatForView,
                 'contributors' => $contributors,
                 'contributors_total_lessons' => $contributors_total_lessons,
                 'contributors_total_view' => $contributors_total_view,
@@ -835,24 +843,23 @@ class LessonsController extends Controller
                     if(count($last_videos) != 0){
                        
                     $play[] = array(
-                        'name' => $last_videos['title'],
-                        'description' => strip_tags($last_videos['description']),
-                        'duration' => $last_videos['durasi'],
+                        'name' => $video['title'],
+                        'description' => strip_tags($video['description']),
+                        'duration' => $video['durasi'],
                         'sources' => array([
-                            'src' => url($last_videos['video']),
-                            'type' => $last_videos['type_video'],
+                            'src' => url($video['video']),
+                            'type' => $video['type_video'],
                         ]),
-                        'poster' => url($last_videos['image']),
+                        'poster' => url($video['image']),
                         'thumbnail' => array([
-                            'srcset' => url($last_videos['image']),
+                            'srcset' => url($video['image']),
                             'type' => 'image/png',
                             'media' => '(min-width: 400px;)',
                         ],
 						[
-                            'srcset' => url($last_videos['image']),
-							'src' => url($last_videos['video']),
+							'src' => url($video['image']),
 						]),
-                    );
+                    ); 
                     }else{
                         $play[] = array(
                             'name' => $video['title'],

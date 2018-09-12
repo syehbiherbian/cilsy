@@ -127,8 +127,11 @@ class LessonsController extends Controller
         $cid          = Auth::guard('contributors')->user()->id;
         $title        = Input::get('title');
         $price        = Input::get('price');
+        $goal         = Input::get('goal');
+        $audiens      = Input::get('audien');
         $category_id  = Input::get('category_id');
         $lessons_image = Input::file('image');
+        $requirement        = Input::get('requirement');
         $description  = Input::get('description');
 
         $lessonsDestinationPath= 'assets/source/lessons';
@@ -154,6 +157,9 @@ class LessonsController extends Controller
         $store->enable          = 1;
         $store->title           = $title;
         $store->price           = $price;
+        $store->goal_tutorial   = $goal;
+        $store->requirement     = $requirement;
+        $store->audiens         = $audiens;
         $store->slug            = str_replace("/","-",preg_replace('/\s+/', '-', $str));
         $store->category_id     = $category_id;
         $store->image           = $url_image;
@@ -315,8 +321,11 @@ class LessonsController extends Controller
           $title        = Input::get('title');
           $category_id  = Input::get('category_id');
           $price        = Input::get('price');
+          $goal         = Input::get('goal');
+          $audiens      = Input::get('audien');
           $lessons_image = Input::file('image');
           $image_text =  Input::get('image_text');
+          $req          = Input::get('requirement');
           $description  = Input::get('description');
 
           $lessonsDestinationPath= 'assets/source/lessons';
@@ -340,11 +349,14 @@ class LessonsController extends Controller
           $store->enable          = 1;
           $store->title           = $title;
           $store->price           = $price;
+          $store->goal_tutorial   = $goal;
+          $store->audiens         = $audiens;
           $store->slug            = str_replace("/","-",preg_replace('/\s+/', '-', $str));
           $store->category_id     = $category_id;
           $store->image           = $url_image;
+          $store->requirement     = $req;
           $store->description     = $description;
-          $store->created_at      = $now;
+          $store->updated_at      = $now;
           $store->save();
           // Session::set('lessons_title',$title);
           // Session::set('lessons_category_id',$category_id);

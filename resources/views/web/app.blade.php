@@ -16,9 +16,11 @@
     <link href="{{asset('template/web/css/navbar.css')}}" rel="stylesheet">
     <link href="{{asset('template/web/css/pace.css')}}" rel="stylesheet">
     <link href="{{ asset('template/web/css/venobox.css') }}" rel="stylesheet">
-
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/flickity@2.1.2/dist/flickity.css"/>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- rating -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    <!-- <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.9.0/slick/slick-theme.css"/> -->
     <link rel="stylesheet" href="{{ asset('template/web/css/star-rating.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('template/web/css/imageviewer.css') }}" />
     <!-- rating -->
@@ -787,7 +789,7 @@ a #items .item {
         if (sidebarBox.classList.contains('active') && event.keyCode === 27) {
             sidebarBtn.classList.remove('active');
             sidebarBox.classList.remove('active');
-            }
+            } 
       });
   </script>
  <script type="text/javascript">
@@ -985,6 +987,8 @@ a #items .item {
     </script>
     <?php $mtime = file_exists(public_path('template/web/js/custom.js')) ? filemtime(public_path('template/web/js/custom.js')) : '' ?>
     <script type="text/javascript" src="{{ asset('template/web/js/custom.js?'.$mtime) }}"></script>
+    //penambahan untuk slick
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 
     @stack('js')
 </body>
