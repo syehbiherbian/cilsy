@@ -23,6 +23,7 @@ class SearchController extends Controller
   {
     $c  = Input::get('category');
     $q  = Input::get('q');
+    $mem_id = isset(Auth::guard('members')->user()->id) ? Auth::guard('members')->user()->id : 0;
 
     $categories = Category::where('enable','=',1)->get();
     
@@ -55,7 +56,7 @@ class SearchController extends Controller
                         ->where('lessons.title','like','%'.$q.'%')
                         ->where('lessons.category_id','=',$cateid)
                         ->paginate(10);
-                    dd($results);
+                    // dd($results);
 
 
                     }
@@ -76,10 +77,7 @@ class SearchController extends Controller
                       ->paginate(10);
                       }else{
                       $results = Lesson::Join('categories', 'lessons.category_id', 'categories.id')
-                      ->leftjoin('tutorial_member', function($join){
-                        $join->on('lessons.id', '=', 'tutorial_member.lesson_id')
-                        ->where('tutorial_member.member_id','=', Auth::guard('members')->user()->id);})
-                      ->select('lessons.*', 'categories.title as category_title', 'tutorial_member.member_id as nilai')
+                      ->select('lessons.*', 'categories.title as category_title')
                       ->where('lessons.enable', 1)
                       ->where('lessons.status', 1)
                       ->where('lessons.title','like','%'.$q.'%')
