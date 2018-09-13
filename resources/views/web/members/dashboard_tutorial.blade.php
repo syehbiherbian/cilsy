@@ -66,11 +66,16 @@
 <div class="container section-content">
 
 <div class="col-sm-12">
-      <h4>Tutorial Terakhir Ditonton</h4>
+@if(empty($progress) || empty($last))
+<div class="alert alert-danger" role="alert">
+              Belum ada tutorial yang anda tonton 
+</div> 
+  @else
+    <h4>Tutorial Terakhir Ditonton</h4>
         <div class="item">
           <?php
-           if(!count($last) == 0) { 
-             if(!count($progress) == 0) { ?>
+           if($last != '0') { 
+             if($progress != '0') { ?>
             <div class="row">
             <div class="col-md-4">
                 <img src="{{ $last->image }}" alt="" class="img-responsive">
@@ -97,7 +102,8 @@
               Belum ada tutorial yang anda tonton 
               </div>
 
-            <?php } ?>        
+            <?php } ?>   
+  @endif
  </div>
 
     <div class="col-sm-12" style="margin-top: 50px;">
@@ -138,8 +144,14 @@
 
     <div class="col-sm-12" style="margin-top: 50px;">
       <h4>Tutorial Terselesaikan</h4>
+     @if(empty($full))
+         <div class="alert alert-danger" role="alert">
+               Belum ada tutorial yang anda selesaikan 
+      </div>
+
+      @else
      
-        <?php
+      <?php
         if(!count($full) == 0) {
                 $i = 1;
                 foreach ($full as $key => $full): ?>
@@ -170,6 +182,7 @@
       </div>
 
       <?php } ?>
+      @endif
     </div>
 
   <div class="col-sm-12" style="margin-top: 20px;">

@@ -233,9 +233,13 @@ class LessonsController extends Controller
             $video = Video::where('video', 'like', '%' . $videosrc . '%')->first();
             if ($video) {
                 $nilai =  Viewer::where('video_id',$video->id)->where('member_id',$mem_id)->first();
-				if (count($nilai)== 0 ){
-					$viewers  = Viewer::where('video_id',$video->id)->where('ip_address',$ip_address)->where('member_id',$mem_id)->first();
 
+                $viewers  = Viewer::where('video_id',$video->id)->where('member_id',$mem_id)->first();
+                    DB::table('viewers')
+                    ->where('video_id', $video->id)
+                    ->update(['updated_at' => $now ]);
+				if (count($nilai)== 0 ){
+					
 				if ($viewers) { // Viewers exist
 
 					$update = Viewer::find($viewers->id);
@@ -244,7 +248,8 @@ class LessonsController extends Controller
 					$update->updated_at = $now;
 					if ($update->save()) {
 							return 'true';
-					}
+                    }
+                   
 				}else { // Create new Viewers
 
 					$store = new Viewer;

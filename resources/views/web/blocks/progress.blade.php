@@ -485,9 +485,10 @@
                   <?php $no++;
                   endforeach; ?>
                 </ul>
-                <p><a href="{{ url('kelas/v3/'.$last->slug) }}" class="btn btn-primary btn-lg pull-right" style="color :white; background-color: #3CA3E0; border-color: #3CA3E0; margin-top: 100px;">Lanjutkan Tutorial</a></p>
-                </p>
+                
               </div>
+              <p><a href="{{ url('kelas/v3/'.$last->slug) }}" class="btn btn-primary btn-lg pull-right" style="color :white; background-color: #3CA3E0; border-color: #3CA3E0; margin-top: 100px;">Lanjutkan Tutorial</a></p>
+                </p>
             </div>
           
         </div>
