@@ -118,9 +118,9 @@ class LessonsController extends Controller
         $time = strtotime($lessons->created_at);
         $myFormatForView = date("d F y", $time);
         $tutorial = TutorialMember::where('member_id', $mem_id)->where('lesson_id', $lessons->id)->first();
-        if(($tutorial == null)){
-            return redirect('kelas/v3/'.$slug);
-        }
+        // if(($tutorial == null)){
+        //     return redirect('kelas/v3/'.$slug);
+        // }
         // dd($cart);
         if (count($lessons) > 0) {
             $main_videos = Video::where('enable', 1)->where('lessons_id', $lessons->id)->orderBy('id', 'asc')->get();
