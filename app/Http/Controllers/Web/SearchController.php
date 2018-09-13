@@ -76,12 +76,16 @@ class SearchController extends Controller
                       ->paginate(10);
                       }else{
                       $results = Lesson::Join('categories', 'lessons.category_id', 'categories.id')
-                      ->select('lessons.*', 'categories.title as category_title')
+                      ->leftjoin('tutorial_member', function($join){
+                        $join->on('lessons.id', '=', 'tutorial_member.lesson_id')
+                        ->where('tutorial_member.member_id','=', Auth::guard('members')->user()->id);})
+                      ->select('lessons.*', 'categories.title as category_title', 'tutorial_member.member_id as nilai')
                       ->where('lessons.enable', 1)
                       ->where('lessons.status', 1)
                       ->where('lessons.title','like','%'.$q.'%')
                       ->paginate(10);
                       }
+                      // dd($results);
                       $results->withPath('search?&q='.$q);
     }
 
