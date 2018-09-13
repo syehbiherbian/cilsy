@@ -143,10 +143,6 @@ fbq('track', 'Search');
   }
 </script>
 <script type="text/javascript">
-<div class="modal-header bg-info">
-        <button type="button" class="close" data-dismiss="modal" onclick="closer()">&times;</button>
-        <h4 class="modal-title">Seberapa puas anda dengan Pelayanan kami ? </h4>
- </div>
 
   function addToCart(id) {
       var datapost = {

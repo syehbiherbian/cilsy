@@ -887,7 +887,8 @@ a #items .item {
                   response($.map(data, function(item) {
                     return {
                       label: item.value,
-                      value: item.value
+                      value: item.value,
+                      slug: item.slug
                   };
                   }));
               }
@@ -899,7 +900,7 @@ a #items .item {
         },
         minLength: 2,
         select: function(event, ui) {
-          window.location = "/lessons/" + ui.item.value;
+          window.location = "/lessons/" + ui.item.slug;
       }
       }).bind('focus', function () {
         $('.ui-autocomplete').css('z-index','9999').css('overflow-y','scroll').css('max-height','300px');

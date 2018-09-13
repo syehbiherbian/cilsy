@@ -18,7 +18,12 @@
           <h1 class="price">Rp. {{ number_format($lessons->price, 0, ",", ".") }}</h1>
           <h1>{{$lessons->title}}</h1>
           <h6 class="mb-4">Oleh {{$contributors->username}}, Created at {{ $tanggal }}</h6>
+          <a id="guest-{{ $lessons->id }}" href="{{ url('cart') }}" class="btn" style="background-color:#fff; color:#5bc0de; border-color:#46b8da; display:none" >Lihat Keranjang</a>        
+          <?php if(($cart != null)){ ?>
+          <a href="{{ url('cart') }}" class="btn btn-lg btn-primary mb-2" style="background-color:#fff; color:#5bc0de; border-color:#46b8da;" >Lihat Keranjang</a> &nbsp;&nbsp;&nbsp;       
+          <?php }else{ ?>          
           <button id="beli-{{ $lessons->id }}" class="btn btn-lg btn-primary mb-2" onclick="addToCart({{ $lessons->id }})"><i class="fa fa-shopping-cart"></i> Beli Tutorial</button> &nbsp;&nbsp;&nbsp;
+          <?php } ?>
           <button class="btn btn-lg btn-secondary mb-2" data-toggle="modal" data-target="#ModalVideo">Preview Tutorial</button>
         </div>
         <div class="col-md-4 col-xs-12 video-preview">
@@ -127,8 +132,13 @@
       <div class="row">
         <div class="col-lg-offset-3 col-lg-6 col-md-offset-2 col-md-8 text-center mt-5">
           <h3 class="mb-4">{{$lessons->title}}</h3>
-          <button class="btn btn-lg btn-primary mb-2 mr-2"><i class="fa fa-shopping-cart"></i> Beli Tutorial</button>
-          <button class="btn btn-lg btn-thirty mb-2">Preview Tutorial</button>
+          <a id="guest-{{ $lessons->id }}" href="{{ url('cart') }}" class="btn" style="background-color:#fff; color:#5bc0de; border-color:#46b8da; display:none" >Lihat Keranjang</a>        
+          <?php if(($cart != null)){ ?>
+          <a href="{{ url('cart') }}" class="btn btn-lg btn-primary mb-2" style="background-color:#fff; color:#5bc0de; border-color:#46b8da;" >Lihat Keranjang</a> &nbsp;&nbsp;&nbsp;       
+          <?php }else{ ?>          
+          <button id="beli-{{ $lessons->id }}" class="btn btn-lg btn-primary mb-2" onclick="addToCart({{ $lessons->id }})"><i class="fa fa-shopping-cart"></i> Beli Tutorial</button> &nbsp;&nbsp;&nbsp;
+          <?php } ?>
+          <button class="btn btn-lg btn-secondary mb-2" data-toggle="modal" data-target="#ModalVideo">Preview Tutorial</button>
         </div>
       </div>
     </div>
@@ -142,7 +152,7 @@
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-body p-0">
-          <video width="100%" height="350" controls name="preview"><source src="{{ asset('$last_videos->video')}}"></video>
+          <video width="100%" height="350" controls name="preview" controlsList="nodownload" autoplay><source src="{{ asset($preview->video)}}"></video>
         </div>
         <div class="modal-body">
             <?php $count = 0; ?>

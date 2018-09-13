@@ -108,23 +108,26 @@ class LessonsController extends Controller
 
     public function preview($slug)
     {
-        
-        $now = new DateTime();
         $mem_id = isset(Auth::guard('members')->user()->id) ? Auth::guard('members')->user()->id : 0;
+                
+        $now = new DateTime();
 
         $lessons = Lesson::where('enable', 1)->where('status', 1)->where('slug', $slug)->first();
-        $tutorial = TutorialMember::where('member_id', $mem_id)->where('lesson_id', $lessons->id)->first();
         $cart = Cart::where('member_id', $mem_id)->where('lesson_id', $lessons->id)->first();
         $categories = Category::where('id', $lessons->category_id)->first();
         $time = strtotime($lessons->created_at);
         $myFormatForView = date("d F y", $time);
-        // dd($lessons);
+        $tutorial = TutorialMember::where('member_id', $mem_id)->where('lesson_id', $lessons->id)->first();
+        
+        // dd($cart);
         if (count($lessons) > 0) {
             $main_videos = Video::where('enable', 1)->where('lessons_id', $lessons->id)->orderBy('id', 'asc')->get();
+            $preview = Video::where('enable', 1)->where('lessons_id', $lessons->id)->orderBy('id', 'asc')->first();
             $last_videos = Viewer::leftJoin('videos', 'videos.id', '=', 'viewers.video_id')
             ->select('videos.*', 'viewers.video_id')
             ->where('viewers.member_id', $mem_id)
             ->where('videos.lessons_id', $lessons->id)->orderBy('viewers.updated_at', 'desc')->first();
+            // dd($last_videos);
             $files = File::where('enable', 1)->where('lesson_id', $lessons->id)->orderBy('id', 'asc')->get();
             
             // Contributor
@@ -147,6 +150,7 @@ class LessonsController extends Controller
                 'file' => $files,
                 'tutor' => $tutorial,
                 'cart' => $cart,
+                'preview' => $preview,
                 'tanggal' => $myFormatForView,
                 'contributors' => $contributors,
                 'contributors_total_lessons' => $contributors_total_lessons,
@@ -165,6 +169,9 @@ class LessonsController extends Controller
 
         $lessons = Lesson::where('enable', 1)->where('status', 1)->where('slug', $slug)->first();
         $tutorial = TutorialMember::where('member_id', $mem_id)->where('lesson_id', $lessons->id)->first();
+        if(($tutorial == null)){
+            return redirect('lessons/'.$slug);
+        }
         $cart = Cart::where('member_id', $mem_id)->where('lesson_id', $lessons->id)->first();
         $categories = Category::where('enable', 1)->get();
         if (count($lessons) > 0) {

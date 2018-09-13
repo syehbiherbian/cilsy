@@ -55,6 +55,8 @@ class SearchController extends Controller
                         ->where('lessons.title','like','%'.$q.'%')
                         ->where('lessons.category_id','=',$cateid)
                         ->paginate(10);
+                    dd($results);
+
 
                     }
                     $results->withPath('search?category='.$c.'&q='.$q);
@@ -114,6 +116,7 @@ class SearchController extends Controller
   								 array_push($results,[
                     //  'pelajaran'=> $pel->id ,
                      'value'=>$lesson->title,
+                     'slug' =>$lesson->slug,
                     //  'label'=>$av->ask->body.' di '.$pel->title
                    ]);
   						// }
