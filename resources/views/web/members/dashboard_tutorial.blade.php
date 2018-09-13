@@ -114,7 +114,7 @@
                 foreach ($lessons as $key => $lesson): ?>
                     <?php if ($i <= 4) {?>
                       <div class="col-md-3">
-                        <a href="{{ url('lessons/'.$lesson->slug)}}" style="text-decoration: none;">
+                        <a href="{{ url('kelas/v3/'.$lesson->slug)}}" style="text-decoration: none;">
                           <div class="card">
                             <?php if (!empty($lesson->image)) {?>
                               <img src="{{ asset($lesson->image) }}" alt="" class="img-responsive">
@@ -157,7 +157,7 @@
                 foreach ($full as $key => $full): ?>
                     <?php if ($i <= 4) {?>
                       <div class="col-md-3">
-                        <a href="{{ url('lessons/'.$full->slug)}}" style="text-decoration: none;">
+                        <a href="{{ url('kelas/v3/'.$full->slug)}}" style="text-decoration: none;">
                           <div class="card">
                             <?php if (!empty($full->image)) {?>
                               <img src="{{ asset($full->image) }}" alt="" class="img-responsive">
@@ -192,7 +192,7 @@
                 foreach ($belitut as $key => $belitut): ?>  
                   <div class="col-md-3">
                     <div class="card" >
-                      <a href="{{ url('lessons/'.$belitut->slug)}}">
+                      <a href="{{ url('kelas/v3/'.$belitut->slug)}}">
                           <?php if (!empty($belitut->image)) {?>
                             <div class="card-img" style="background-image: url('{{ asset($belitut->image)}}');"></div>
                           <?php } else {?>
