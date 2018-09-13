@@ -152,7 +152,7 @@
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-body p-0">
-          <video width="100%" height="350" controls name="preview" controlsList="nodownload" autoplay><source src="{{ asset($preview->video)}}"></video>
+          <video width="100%" height="350" controls name="preview" controlsList="nodownload" ><source src="{{ asset($preview->video)}}"></video>
         </div>
         <div class="modal-body">
             <?php $count = 0; ?>
