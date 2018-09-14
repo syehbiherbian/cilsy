@@ -65,19 +65,17 @@ class LessonsMemberController extends Controller
        ->where('viewers.member_id', '=', $mem_id)
        ->where('videos.lessons_id', '=', $last_videos->lessons_id)->get();
        $get_videos = Video::where('videos.lessons_id', '=', $last_videos->lessons_id)->get();
-       
        $progress = count($get_hist)*100/count($get_videos);
 
        
        }else{
-        $last_lessons = [0]; 
-        $get_hist = [0]; 
-        $get_videos = [0]; 
-        $progress = [0];
-        $get_full = [0];
+        $last_lessons = 0;
+        $get_hist = 0; 
+        $get_videos = 0; 
+        $progress = 0;
+        $get_full = 0;
        }
-      
-
+       
         return view('web.members.dashboard_tutorial', [
             'progress' => $progress,
             'last' => $last_lessons,
