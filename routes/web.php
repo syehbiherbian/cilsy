@@ -129,8 +129,6 @@ Route::get('cron/mail/user/reminder/payment', 'Cron\ReminderController@index');
 // Route::get('member/signout', 'Web\Members\AuthController@signout');
 Route::post('member/change-password', 'Web\Members\PasswordController@doSubmit');
 Route::get('member/change-password', 'Web\Members\PasswordController@index');
-Route::get('member/reset/{token}', 'Web\Members\AuthController@forgetpassword');
-Route::post('member/reset', 'Web\Members\AuthController@doforgetpassword');
 Route::post('member/reset/update', 'Web\Members\AuthController@doupdate');
 Route::get('member/reset/update/{token}', 'Web\Members\AuthController@updatereset');
 
@@ -139,10 +137,10 @@ Route::post('member/signup', 'Web\Members\MemberAuth\RegisterController@register
 Route::get('member/signin', 'Web\Members\MemberAuth\LoginController@showLoginForm');
 Route::post('member/signin', 'Web\Members\MemberAuth\LoginController@login');
 Route::get('member/signout', 'Web\Members\MemberAuth\LoginController@logout');
-// Route::post('member/email', 'Web\Members\MemberAuth\ForgotPasswordController@sendResetLinkEmail');
-// Route::get('member/reset', 'Web\Members\MemberAuth\ForgotPasswordController@showLinkRequestForm');
-// Route::post('member/reset', 'Web\Members\MemberAuth\ResetPasswordController@reset');
-// Route::get('member/reset/{token}', 'Web\Members\MemberAuth\ResetPasswordController@showResetForm');
+Route::post('member/email', 'Web\Members\MemberAuth\ForgotPasswordController@sendResetLinkEmail');
+Route::get('member/reset', 'Web\Members\MemberAuth\ForgotPasswordController@showLinkRequestForm');
+Route::post('member/reset', 'Web\Members\MemberAuth\ResetPasswordController@reset');
+Route::get('member/reset/{token}', 'Web\Members\MemberAuth\ResetPasswordController@showResetForm');
 Route::get('member/profile', 'Web\Members\ProfileController@index');
 Route::post('member/profile', 'Web\Members\ProfileController@doSubmit');
 Route::get('member/subscriptions', 'Web\Members\SubscriptionsController@index');
