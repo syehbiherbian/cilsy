@@ -129,8 +129,8 @@ Route::get('cron/mail/user/reminder/payment', 'Cron\ReminderController@index');
 // Route::get('member/signout', 'Web\Members\AuthController@signout');
 Route::post('member/change-password', 'Web\Members\PasswordController@doSubmit');
 Route::get('member/change-password', 'Web\Members\PasswordController@index');
-Route::get('member/reset', 'Web\Members\AuthController@forgetpassword');
-Route::post('member/reset/{token}', 'Web\Members\AuthController@doforgetpassword');
+Route::get('member/reset/{token}', 'Web\Members\AuthController@forgetpassword');
+Route::post('member/reset', 'Web\Members\AuthController@doforgetpassword');
 Route::post('member/reset/update', 'Web\Members\AuthController@doupdate');
 Route::get('member/reset/update/{token}', 'Web\Members\AuthController@updatereset');
 
