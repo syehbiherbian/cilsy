@@ -226,5 +226,12 @@ class VtwebController extends Controller {
             ]
             );
     }
+    
+    public function hapus_cart($order_id){
+        $invoice = Invoice::where('code', $order_id)->first();
+        $cart = Cart::find('member_id', $invoice->member_id)->first();
+        $cart->delete();
+        echo "berhasil hapus keranjang";
+    }
 
 }

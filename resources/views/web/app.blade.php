@@ -69,24 +69,6 @@
     // mixpanel.init("b208ef84bd5045e39433ef24aa0b823c");
     </script>
     <!-- end Mixpanel -->
-{{--     <?php if (Session::get('memberID'));{?>
-    <script>
-    document.onkeydown = function(e) {
-    if(event.keyCode == 123) {
-    return false;
-    }
-    if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)){
-    return false;
-    }
-    if(e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)){
-    return false;
-    }
-    if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)){
-    return false;
-    }
-    }
-    </script>
-    <?php }?> --}}
     <style media="screen">
     .owl-prev {
     width: 15px;
@@ -988,7 +970,6 @@ a #items .item {
     </script>
     <?php $mtime = file_exists(public_path('template/web/js/custom.js')) ? filemtime(public_path('template/web/js/custom.js')) : '' ?>
     <script type="text/javascript" src="{{ asset('template/web/js/custom.js?'.$mtime) }}"></script>
-    //penambahan untuk slick
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 
     @stack('js')
