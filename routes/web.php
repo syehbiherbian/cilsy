@@ -35,7 +35,8 @@ Route::get('robot/{filename}', function ($filename)
 Route::get('/', 'Web\HomeController@index');
 // LESSONS PAGE
 Route::get('lessons/{by}/{keyword}', 'Web\LessonsController@index');
-Route::get('lessons/{lessons}', 'Web\LessonsController@detail');
+Route::get('lessons/{lessons}', 'Web\LessonsController@preview');
+Route::get('kelas/v3/{lessons}', 'Web\LessonsController@detail');
 Route::get('lessons/{lessons}/{quiz}', 'Web\LessonsController@quiz');
 Route::get('dashboard/{lessons}', 'Web\Members\LessonsMemberController@detail');
 Route::post('lessons/getplaylist', 'Web\LessonsController@getplaylist');
@@ -45,21 +46,24 @@ Route::post('lessons/coments/doComment','Web\LessonsController@doComment');
 Route::post('lessons/videoTracking','Web\LessonsController@videoTracking');
 Route::post('lessons/LessonsQuiz','Web\LessonsController@LessonsQuiz');
 
+//attachment
+// Route::post('attachment', 'AttachmentController@upload');
 // Search
 Route::get('search', 'Web\SearchController@index');
-Route::get('search/autocomplete', 'Web\SearchController@autocomplete');
+Route::get('search/autocomplete/', 'Web\SearchController@autocomplete');
+Route::get('category/{id}','Web\LessonController@getSearchcategory');
 
 // Point
 Route::get('point', 'Web\PointController@index');
 
 // Cart
-Route::get('cart', 'Web\CartController@index');
+Route::get('cart', 'Web\CartController@index')->name('cart');
 Route::post('cart/add', 'Web\CartController@store');
 Route::delete('cart/delete/{cart}', 'Web\CartController@destroy');
 
-// Conributor Profile
+// Contributor Profile
 Route::get('contributor/profile/{username}', 'Web\ContributorsController@getProfile');
-
+ 
 // PAGES
 Route::get('pages/{pages}', 'Web\PagesController@index');
 
@@ -125,10 +129,8 @@ Route::get('cron/mail/user/reminder/payment', 'Cron\ReminderController@index');
 // Route::get('member/signout', 'Web\Members\AuthController@signout');
 Route::post('member/change-password', 'Web\Members\PasswordController@doSubmit');
 Route::get('member/change-password', 'Web\Members\PasswordController@index');
-// Route::get('member/reset', 'Web\Members\AuthController@forgetpassword');
-// Route::post('member/reset', 'Web\Members\AuthController@doforgetpassword');
-// Route::post('member/reset/update', 'Web\Members\AuthController@doupdate');
-// Route::get('member/reset/update/{token}', 'Web\Members\AuthController@updatereset');
+Route::post('member/reset/update', 'Web\Members\AuthController@doupdate');
+Route::get('member/reset/update/{token}', 'Web\Members\AuthController@updatereset');
 
 Route::get('member/signup', 'Web\Members\MemberAuth\RegisterController@showRegistrationForm');
 Route::post('member/signup', 'Web\Members\MemberAuth\RegisterController@register');
@@ -145,8 +147,7 @@ Route::get('member/subscriptions', 'Web\Members\SubscriptionsController@index');
 Route::get('member/subscriptions/unsubscribe/{id}', 'Web\Members\SubscriptionsController@doUnsubscribe');
 Route::get('member/point', 'Web\Members\PointController@index');
 Route::get('member/dashboard', 'Web\Members\LessonsMemberController@index');
-Route::get('member/package', 'Web\Members\PackageController@index');
-Route::post('member/package', 'Web\Members\PackageController@dopackage');
+
 //reward user 
 //reward
 Route::get('member/reward','Contributors\PointController@index');
@@ -172,17 +173,15 @@ Route::get('member/signin', 'Web\Members\MemberAuth\LoginController@showLoginFor
 Route::post('member/signin', 'Web\Members\MemberAuth\LoginController@login');
 Route::get('member/signout', 'Web\Members\MemberAuth\LoginController@logout');
 Route::post('member/email', 'Web\Members\MemberAuth\ForgotPasswordController@sendResetLinkEmail');
-Route::get('member/reset', 'Web\Members\MemberAuth\ForgotPasswordController@showLinkRequestForm');
-Route::post('member/reset', 'Web\Members\MemberAuth\ResetPasswordController@reset');
-Route::get('member/reset/{token}', 'Web\Members\MemberAuth\ResetPasswordController@showResetForm');
+// Route::get('member/reset', 'Web\Members\MemberAuth\ForgotPasswordController@showLinkRequestForm');
+// Route::post('member/reset', 'Web\Members\MemberAuth\ResetPasswordController@reset');
+// Route::get('member/reset/{token}', 'Web\Members\MemberAuth\ResetPasswordController@showResetForm');
 Route::get('member/profile', 'Web\Members\ProfileController@index');
 Route::post('member/profile', 'Web\Members\ProfileController@doSubmit');
 Route::get('member/subscriptions', 'Web\Members\SubscriptionsController@index');
 Route::get('member/subscriptions/unsubscribe/{id}', 'Web\Members\SubscriptionsController@doUnsubscribe');
 Route::get('member/point', 'Web\Members\PointController@index');
 Route::get('member/dashboard', 'Web\Members\LessonsMemberController@index');
-Route::get('member/package', 'Web\Members\PackageController@index');
-Route::post('member/package', 'Web\Members\PackageController@dopackage');
 Route::get('member/generatepdf/{id}', 'Web\Members\LessonsMemberController@download');
 
 
@@ -191,18 +190,27 @@ Route::get('member/reward','Contributors\PointController@index');
 Route::get('member/reward/{id}/change', 'Contributors\PointController@change');
 Route::post('member/reward/{id}/change', 'Contributors\PointController@doChange');
 Route::get('member/reward/{id}/detail','Contributors\PointController@detail');
+//notifuser
+Route::get('user/notif', 'Web\NotifController@index');
+Route::get('user/notif/view','Web\NotifController@view');
+Route::get('user/notif/read','Web\NotifController@read');
+Route::post('user/notif/delete/{id}','Web\NotifController@delete');
 
 Auth::routes();
 
-Route::get('/system/login', function () {
-	return view('admin.login');
-});
-Route::group(['middleware' => ['auth']], function () {
-	Route::get('/system/dashboard', function () {
-		return view('admin.home');
-	});
+
+	Route::resource('/system/dashboard',  'DashboardController');
 	Route::resource('system/members', 'MembersController');
+	
 	// Edit Member
+
+
+	// Route::get('system/login', 'Auth\LoginController@showLoginForm');
+	// Route::post('system/login', 'Auth\LoginController@Login');
+
+	Route::get('/system/login', function () {
+		return view('admin.login');
+	});
 
 	Route::post('system/members/getServices', 'MembersController@getServices');
 	Route::post('system/members/addServices', 'MembersController@addServices');
@@ -218,11 +226,13 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::resource('system/videos', 'VideosController');
 	Route::resource('system/income','IncomeController');
 	Route::resource('system/coupon','AdminCouponController');
+	Route::get('system/logout', 'Auth\LoginController@logout');
+
 	//rating
 	
-});
 
- Route::get('cron/system/generate-income', 'GenerateIncomeController@generate');
+
+//  Route::get('cron/system/generate-income', 'GenerateIncomeController@generate');
 /*
 |--------------------------------------------------------------------------
 | Contributor Routes
@@ -238,7 +248,7 @@ Route::group(['middleware' => ['auth']], function () {
 
 Route::get('contributor/login', 'Contributors\ContribAuth\LoginController@showLoginForm');
 Route::post('contributor/login', 'Contributors\ContribAuth\LoginController@Login');
-Route::post('contributor/logout', 'Contributors\ContribAuth\LogoutController@Logout');
+// Route::post('contributor/logout', 'Contributors\ContribAuth\LogoutController@Logout');
 Route::post('contributor/password/email', 'Contributors\ContribAuth\ForgotPasswordController@sendResetLinkEmail');
 Route::get('contributor/password/reset', 'Contributors\ContribAuth\ForgotPasswordController@showLinkRequestForm');
 Route::post('contributor/password/reset', 'Contributors\ContribAuth\ResetPasswordController@reset');
@@ -280,13 +290,14 @@ Route::get('contributor/lessons/{lesson_id}/create/videos', 'Contributors\Videos
 Route::post('contributor/lessons/{lesson_id}/create/videos', 'Contributors\VideosController@doCreate');
 Route::get('contributor/lessons/{lesson_id}/edit/videos', 'Contributors\VideosController@edit');
 Route::post('contributor/lessons/{lesson_id}/edit/videos', 'Contributors\VideosController@doEdit');
-
+Route::delete('contributor/lessons/delete/videos/{id}', 'Contributors\VideosController@destroy');
 
 // Attachment
 Route::get('contributor/lessons/{lesson_id}/create/attachments', 'Contributors\AttachmentsController@create');
 Route::post('contributor/lessons/{lesson_id}/create/attachments', 'Contributors\AttachmentsController@doCreate');
 Route::get('contributor/lessons/{lesson_id}/edit/attachments', 'Contributors\AttachmentsController@edit');
 Route::post('contributor/lessons/{lesson_id}/edit/attachments', 'Contributors\AttachmentsController@doEdit');
+Route::get('contributor/lessons/{lesson_id}/delete/attachments/{id}', 'Contributors\AttachmentsController@delete');
 
 // Quiz
 Route::get('contributor/lessons/{id}/create/quiz', 'Contributors\QuizController@create');

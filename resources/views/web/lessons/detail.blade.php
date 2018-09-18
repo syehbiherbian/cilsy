@@ -9,8 +9,6 @@
 {{-- <link href="https://vjs.zencdn.net/5.16.0/video-js.min.css" rel="stylesheet"/> --}}
 <script src="https://vjs.zencdn.net/5.16.0/video.min.js"></script>
 <script src="https://rawgit.com/atlance01/vrapp-ionic/master/www/js/lib/videojs-playlist.js"></script>
-<script src="{{ asset('template/web/js/component.js') }}"></script>
-<script src="{{ asset('template/web/js/control-bar/control-bar.js') }}"></script>
 <style>
   body {
     /*font-family: Arial, sans-serif;*/
@@ -49,10 +47,10 @@
   }
   @media (min-width:768px) {
     .vjs-playlist {
-        width: 35%;
+        width:35%;
+        
     }
   }
-
   .vjs-mouse.vjs-playlist cite{
     font-size: 13px;
   }
@@ -72,7 +70,7 @@
   list-style: none;
   display: table;
   width: 100%;
-}
+  }
 
 .tab {
   position: relative;
@@ -287,6 +285,7 @@
 .video-js.vjs-fullscreen,.video-js.vjs-fullscreen .vjs-tech {
     width: 100%!important;
     height: 100%!important
+    
 }
 
 .video-js {
@@ -296,6 +295,7 @@
 
 .video-js .vjs-control {
     color: inherit
+    
 }
 
 .video-js .vjs-menu-button-inline:hover,.video-js.vjs-no-flex .vjs-menu-button-inline {
@@ -593,6 +593,76 @@
 .vjs-fullscreen.vjs-user-inactive {
   cursor: none;
 }
+table{
+  width: 100%;
+}
+td{
+  padding:5px;
+}
+@media screen and (max-width: 600px) {
+	table td {
+		display: block;
+		text-align: justify;
+	}
+	table td:before {
+		content: attr(data-label);
+		float: left;
+		font-weight: bold;
+		text-transform: uppercase;
+	}
+  .vjs-playlist {
+        width:100%;
+        height:270px;
+    }
+}
+.upload-btn-wrapper {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.btn-upload{
+  border: 2px solid gray;
+  color: gray;
+  background-color: white;
+  padding: 8px 20px;
+  height:50px;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+.upload-btn-wrapper input[type=file] {
+  font-size: 100px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+}
+.fileUpload {
+	position: relative;
+	overflow: hidden;
+	margin: 10px;
+	background-color: #BDBDBD;
+	height: 50px;
+	width: 50px;
+	text-align: center;
+}
+.fileUpload input.upload {
+	position: absolute;
+	top: 0;
+	right: 0;
+	margin: 0;
+	padding: 0;
+	font-size: 6px;
+	cursor: pointer;
+	opacity: 0;
+	filter: alpha(opacity=0);
+	height: 100%;
+	text-align: center;
+}
+.custom-span{ font-family: Arial; font-weight: bold;font-size: 25px; color: #FE57A1}
+#uploadFile{border: none;margin-left: 10px; width: 50px;}
+.custom-para{font-family: arial;font-weight: bold;font-size: 6px; color:#585858;}
 </style>
 
 <div id="content-section">
@@ -604,16 +674,19 @@
       <section class="video-player mb-50">
       <div class="container">
         <!-- Title -->
-        <div class="row pt-25 pb-15">
+        <div class="row pt-25 pb-15"> 
           <div class="col-xs-12 col-md-10">
             <p class="lesson-title">{{ $lessons->title }}</p>
             <p><img src="{{asset('template/web/img/video.png')}}" alt="" style="height:25px; width:25px;"> <b>{{ count($main_videos) }}</b> Video</p>
           </div>
           <div class="col-xs-12 col-md-2">
+          <ul style="right">
             @if($tutor == null)
             <div class="lesson-video-count">Rp{{ number_format($lessons->price, 0, ",", ".") }}</div>
-            <button type="button" class="lesson-video-count" onclick="addToCart({{ $lessons->id }})"><i class="fa fa-shopping-cart"></i> Beli</button>
-            @endif
+            <button id="beli-{{ $lessons->id }}" type="button" class="lesson-video-count" onclick="addToCart({{ $lessons->id }})"><i class="fa fa-shopping-cart"></i> Beli</button>
+            <a id="guest-{{ $lessons->id }}" href="{{ url('cart') }}" class="btn" style="background-color:#fff; color:#5bc0de; border-color:#46b8da; display:none;">Lihat Keranjang</a>
+            @endif  
+          </ul>  
           </div>
         </div><!--./ Title -->
 
@@ -622,10 +695,10 @@
           <div class="col-md-12">
             <div class="player-container">
               <!-- Main Video -->
-              <video id="video" class="video-js vjs-default-skin vjs-big-play-centered" height="500" width="70%" controls>
-                @if (count($main_videos) > 0) 
-                    <source src="{{ !empty($main_videos[0]->video) ? $main_videos[0]->video : '' }}" type="{{ (!empty($main_videos[0]->type_video)) ? $main_videos[0]->type_video : '' }}">
-                @endif
+              <video id="video" class="video-js vjs-default-skin vjs-big-play-centered" height="500" width="70%">
+                @if (count($last_videos) > 0) 
+                    <source src="{{ !empty($last_videos->video) ? $last_videos->video : '' }}" type="{{ (!empty($last_videos->type_video)) ? $last_videos->type_video : '' }}">
+                @endif 
               </video>
 
               <!-- Playlist Video -->
@@ -652,18 +725,27 @@
 
               <div class="tab-content" style="margin-top:0px;">
                 <div id="tab1" class="tab-pane fade in active">
-                  {!! $lessons->description !!}
+                  {!! nl2br($lessons->description) !!}
                 </div>
                 <div id="tab2" class="tab-pane fade">
+                  <?php $number=1 ?>
                   <ul class="materi_list">
                     @foreach ($main_videos as $row)
                     <li>
-                      <strong>{{ $row->title }}</strong>
-                      {!! nl2br($row->description) !!}
-                      @if ($tutor)
-                    <span class="pull-right"><a href="{{ $row->video }}" class="btn btn-info btn-md" download><i class="fa fa-download"></i> Download Video</a></span>
-                      @endif
+                    <table> 
+                        <tr>
+                          <td><strong><?php echo $number ?> {{ $row->title }}</strong>
+                              <p>{!! nl2br($row->description) !!}</p>
+                          </td>
+                          <td>
+                          @if ($tutor)
+                          <span class="pull-right"><a href="{{ $row->video }}" class="btn btn-info btn-md" download><i class="fa fa-download"></i> Download Video</a></span>
+                          @endif
+                          </td>
+                        </tr>
+                    </table>
                     </li>
+                    <?php $number++; ?>
                     @endforeach
                   </ul>
                 </div>
@@ -683,23 +765,40 @@
                       Silahkan <a href="{{ url('member/signin') }}" class="btn btn-primary"> Masuk</a> untuk memberikan komentar
                     </div>
                   @else
-
-                  <!-- Comment Form -->
-                  <div class="comments-form mb-25">
-                    <!-- <form id="form-comment" class="mb-25">
-                      {{-- csrf_field() --}}
-                      <input type="hidden" name="lesson_id" value="{{-- $lessons->id --}}">
-                      <input type="hidden" name="parent_id" value="0"> -->
-                      <div class="form-group">
-                        <label>Komentar</label>
-                        <textarea rows="8" cols="80" class="form-control" name="body" id="textbody0"></textarea>
-                      </div>
-                      <button type="button" class="btn btn-primary" onClick="doComment({{ $lessons->id }},0)" >Kirim</button>
-                    <!-- </form><!--./ Comment Form -->
-                  </div>
+                    @if (empty($tutor))
+                     <div class="text-center mb-25">
+                      Fitur Komentar hanya bisa di gunakan jika sudah melakukan pembelian
+                    </div>
+                    @else
+                    <!-- Comment Form -->
+                    <div class="comments-form mb-25">
+                     <form id="form-comment" class="mb-25" enctype="multipart/form-data" method="POST">
+                        @csrf
+                        {{ method_field('POST') }}
+                        <input type="hidden" name="lesson_id" value="{{ $lessons->id }}">
+                        <input type="hidden" name="parent_id" value="0"> 
+                        <div class="form-group">
+                          <label>Komentar</label>
+                          <textarea style="white-space: pre-line" rows="8" cols="80" class="form-control" name="body" id="textbody0"></textarea>
+                        </div>
+                       <ul class="left">
+                          <div class="fileUpload">
+                          <span class="custom-span">+</span>
+                          <p class="custom-para">Add Images</p>
+                          <input id="uploadBtn" type="file" class="upload" name="image" />
+                          </div>
+                          <input id="uploadFile" placeholder="0 files selected" disabled="disabled" />
+                       </ul>
+                       
+                       <ul class="right">
+                      <button type="button" class="btn btn-primary upload-image" onclick="doComment({{ $lessons->id}}, 0)">Kirim</button> 
+                      </ul>
+                      </form><!--./ Comment Form -->
+                    </div>
+                    @endif
 
                   @endif
-
+        
                   <!-- Comments Lists -->
                   <div id="comments-lists">
                     <p>Memuat Komentar . . .</p>
@@ -726,12 +825,11 @@
                       @if ($contributors->avatar)
                         <img src="{{ asset($contributors->avatar) }}" alt="" class="img-responsive img-center">
                       @else
-                        <img src="{{ asset('template/kontributor/img/icon/avatar.png') }}" alt="" class="img-responsive img-center">
+                        <img src="{{ asset('template/kontributor/img/user.png') }}" alt="" class="img-responsive img-center">
                       @endif
                       <div class="text-center mt-15">
                         <div class="btn-group">
                           <button type="button" class="btn btn-primary">{{ count($contributors_total_lessons) }} Tutorial</button>
-                          <button type="button" class="btn btn-primary">{{ $contributors_total_view }} View</button>
                         </div>
                       </div>
                     </div>
@@ -758,41 +856,60 @@
     </div>
 
 </div>
-
 <script src="{{ asset('template/web/js/video.js') }}"></script>
 <script src="{{ asset('template/web/js/videojs-playlist.js') }}"></script>
 <script src="{{ asset('template/web/js/videojs-playlist-ui.js') }}"></script>
 <script src="{{ asset('template/web/js/videojs-errors.js') }}"></script>
-<script type="text/javascript">
-  function dokirim(){
-      var isi_kirim = $('#input_kirim').val();
-      var lesson_id = '{{ $lessons->id }}';
-      // alert(comment_id+' = '+isi_balas);
-      var datapost = {
-          '_token'    : '{{ csrf_token() }}',
-          'isi_kirim' : isi_kirim,
-          'lesson_id' : lesson_id
+<script type="text/javascript" src="https://unpkg.com/sweetalert2@7.9.2/dist/sweetalert2.all.js"></script>
+<script src="{{ asset('template/web/js/component.js') }}"></script>
+<script src="{{ asset('template/web/js/control-bar/control-bar.js') }}"></script>
+<script>
+  $(function () {
+    $(":file").change(function () {
+        if (this.files && this.files[0]) {
+            var reader = new FileReader();
+            reader.onload = imageIsLoaded;
+            reader.readAsDataURL(this.files[0]);
+        }
+    });
+});
 
-      }
-
-      $.ajax({
-          type    :'POST',
-          url     :'{{ url("lessons/coments/kirimcomment") }}',
-          data    :datapost,
-          success:function(data){
-          if(data==0){
-                  window.location.href = '{{url("member/signin")}}';
-          } else if (data !== 'null') {
-                  // $("#row"+comment_id).load(window.location.href + " #row"+comment_id);
-                  $('.content-reload').prepend(data);
-              }else {
-                  alert('Koneksi Bermasalah, Silahkan Ulangi');
-                  location.reload();
-              }
-          }
-      })
-  }
+function imageIsLoaded(e) {
+    $('#myImg').attr('src', e.target.result);
+};
 </script>
+<script type="text/javascript">
+document.getElementById("uploadBtn").onchange = function () {
+document.getElementById("uploadFile").value = this.value;
+};
+</script>
+<script>
+  $(function () {
+    $(":file").change(function () {
+        if (this.files && this.files[0]) {
+            var reader = new FileReader();
+            reader.onload = imageLoaded;
+            reader.readAsDataURL(this.files[0]);
+        } 
+    });
+});
+
+function imageLoaded(e) {
+    $('#Img').attr('src', e.target.result);
+};
+</script>
+<script>            
+$(document).ready(function(){
+    $('.venobox').venobox(); 
+    $('#video_html5_api').ready(function(){
+      setTimeout(function(){
+        $('#video_html5_api').attr('src',$('#video_html5_api>source').attr('src'))
+        setTimeout(function(){document.querySelector('.vjs-playlist').scrollTo(0,document.querySelector('.vjs-playlist-now-playing').getBoundingClientRect().y)},1000)
+        },5000)
+    });
+});
+</script>
+
 <script type="text/javascript">
     function formbalas(comment_id){
 
@@ -859,13 +976,14 @@ function getPlayList() {
                   "lessons_id": lessons_id
               }
   var player = videojs(document.querySelector('video'), {
-      inactivityTimeout: 0
+      inactivityTimeout: 500,
+      controls: true,
     });
 
   player.on('ended', function() {
     var videosrc = player.currentSrc();
     videoTracking(videosrc);
-    lessonsQuiz(videosrc);
+  //  lessonsQuiz(videosrc);
   });
 
     activityCheck = setInterval(function() {
@@ -893,7 +1011,7 @@ function getPlayList() {
           if (!userActivity) {
             this.userActive(false);
           }
-        }, 2000);
+        }, 500);
       }
     }, 250);
     try {
@@ -1039,7 +1157,7 @@ function videoTracking(videosrc) {
     data: postData,
     // dataType: "json",
     beforeSend: function() {
-      // $('#hasil').html('<tr><td colspan="6">Loading...</td></tr>');
+      $('#hasil').html('<tr><td colspan="6">Loading...</td></tr>');
     },
     success: function (data){
 
@@ -1047,46 +1165,14 @@ function videoTracking(videosrc) {
         console.log('Viewers has been updated');
       }
 
-    }
-  });
-}
-function lessonsQuiz(videosrc, player) {
-  var postData =
-              {
-                  "_token":"{{ csrf_token() }}",
-                  "videosrc": videosrc
-              }
-  $.ajax({
-    type: "POST",
-    url: "{{ url('lessons/LessonsQuiz')}}",
-    data: postData,
-    // dataType: "json",
-    beforeSend: function() {
-      
-    },
-    success: function (data){
-      swal({
-        title: 'Selamat!',
-        text: "Anda harus menyelesaikan quiz berupa pertanyaan pilihan ganda untuk melanjutkan ke video tutorial selanjutnya. Silahkan klik mulai untuk memulai quiz",
-        type: 'success',
-        confirmButtonColor: '#ad0d0d',
-        confirmButtonText: 'MULAI',
-        allowEnterKey: false,
-        allowEscapeKey: false,
-        allowOutsideClick: false,
-      });
-      
-      window.location = data;
-      // player.start();
-      if (data == true) {
-        console.log('Viewers has been updated');
-      }
     }
   });
 }
 
 </script>
+
 <script type="text/javascript">
+  
   $(document).on('ready',function () {
     getComments();
   });
@@ -1106,31 +1192,51 @@ function lessonsQuiz(videosrc, player) {
   }
 
   function doComment(lesson_id, parent_id) {
-
     var body = $('#textbody'+parent_id).val();
+    var file_data = $('#uploadBtn').prop("files")[0];
+    dataform = new FormData();
+    dataform.append( 'image', file_data);
+    dataform.append( 'body', body);
+    dataform.append( 'lesson_id', lesson_id);
+    dataform.append( 'parent_id', parent_id);
+
     if (body == '') {
       alert('Harap Isi Komentar !')
     }else {
-
-
-      var postData =
-                  {
-                      "_token":"{{ csrf_token() }}",
-                      "lesson_id": lesson_id,
-                      "parent_id": parent_id,
-                      "body": body
-                  }
-
+      $.ajaxSetup({
+          headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          }
+      });
       $.ajax({
-          type    :'POST',
-          url     :'{{ url("lessons/coments/doComment") }}',
-          dataType: 'json',
-          data    : postData,
+          type    :"POST",
+          url     :'{{ url("/lessons/coments/doComment") }}',
+          data    : dataform,
+          dataType : 'json',
+          contentType: false,
+          processData: false,
+          beforeSend: function(){
+               swal({
+                title: "Sedang mengirim Komentar",
+                text: "Mohon Tunggu sebentar",
+                imageUrl: "{{ asset('template/web/img/loading.gif') }}",
+                showConfirmButton: false,
+                allowOutsideClick: false
+            });
+            // Show image container
+          },
           success:function(data){
             if (data.success == false) {
                window.location.href = '{{ url("member/signin") }}';
             }else if (data.success == true) {
               $('#textbody'+parent_id).val('');
+              $("#uploadFile").val('');
+              swal({
+                title: "Komentar anda sudah terkirim!",
+                showConfirmButton: true,
+                timer: 3000
+              });
+              
               getComments();
             }
           }
@@ -1138,5 +1244,16 @@ function lessonsQuiz(videosrc, player) {
     }
   }
 </script>
-
+<script>
+  var cek = localStorage.getItem('cart');
+  if(cek != null){
+    var results = JSON.parse(cek);
+    if (results.length > 0){
+      $.each(results, function(k,v) {
+            $('#beli-'+v['id']).hide();
+            $('#guest-'+v['id']).show();
+      });
+    }
+  }
+</script>
 @endsection

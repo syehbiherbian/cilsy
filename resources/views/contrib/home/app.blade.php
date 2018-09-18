@@ -30,7 +30,7 @@
     <div id="header">
         <div class="container">
             <div class="logo-container">
-                <a href="#">
+                <a href="{{url('contributor/')}}">
                     <img class="logo" src="{{asset('template/web/img/logo.png')}}"></img>
                 </a>
             </div>

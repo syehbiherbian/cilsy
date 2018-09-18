@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no" />
     <title>Cilsy Fiolution | Contributor</title>
     <link rel="shortcut icon" type="image/png" href="{{asset('template/kontributor/img/logo-only.png')}}"/>
+    <link href="{{ asset('template/web/css/venobox.css') }}" rel="stylesheet">
     <link href="{{asset('template/kontributor/css/custom.css')}}" rel="stylesheet">
     <link href="{{asset('template/kontributor/css/bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{asset('template/kontributor/css/sweetalert.css')}}" rel="stylesheet">
@@ -19,6 +20,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.2.1/assets/owl.theme.default.min.css" type="text/css" />
 
     <script type="text/javascript" src="{{asset('template/kontributor/js/jquery.min.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('template/web/js/venobox.min.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.2.1/owl.carousel.js"></script>
 
     <style>
@@ -29,6 +31,20 @@
         color: #fff;
         }
         .grayscale { filter: grayscale(100%); }
+        .badge-cart {
+  background-color: red;
+  border-radius: 10px;
+  color: white;
+  display: inline-block;
+  font-size: 12px;
+  line-height: 1;
+  padding: 3px 7px;
+  text-align: center;
+  vertical-align: middle;
+  white-space: nowrap;
+  margin-left: 30px;
+  margin-top: -75px;
+}
     </style>
 </head>
 
@@ -42,25 +58,19 @@
                     <li>
                         <span class="hello-user">Halo, {{ Auth::guard('contributors')->user()->first_name }} </span>
                     </li>
-                    <?php if(!empty(notif())){ ?>
                     <li class="has-dropdown">
                         <img src="{{asset('template/kontributor/img/icon/Notifikasi.png')}}" alt="">
+                        <?php if(totalnotif() != null){ ?>
+                        <span class="badge-cart"><?php echo totalnotif();?></span>
+                        <?php } ?>
                         <div class="dropdown-container">
                             <ul>
                               <?php echo notif();?>
+                              <li role="separator" class="divider"></li>
+                              <li><a href="{{ url('/contributor/notif')}}">Lihat Semua Pemberitahuan</a></li>
                             </ul>
                         </div>
                     </li>
-                    <?php } else { ?>
-                        <li class="has-dropdown">
-                        <img src="{{asset('template/kontributor/img/icon/Notifikasi.png')}}" alt="">
-                        <div class="dropdown-container">
-                            <ul>
-                              Tidak Ada Pemberitahuan
-                            </ul>
-                        </div>
-                    </li>
-                    <?php } ?>
                     <li class="has-dropdown">
                         <img src="{{asset('template/kontributor/img/icon/Akun.png')}}" alt="">
                         <div class="dropdown-container">
@@ -186,8 +196,8 @@
     <script type="text/javascript" src="{{asset('template/kontributor/js/sweetalert.min.js')}}"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js"></script>
 
-    <!-- <script type="text/javascript">
-      function notifview(id){
+    <script type="text/javascript">
+      function contribnotif(id){
         var token   = "{{csrf_token()}}";
         var dataString= '_token='+ token + '&id=' + id ;
          $.ajax({
@@ -198,7 +208,7 @@
           }
         });
       }
-    </script> -->
+    </script>
 
 </body>
 

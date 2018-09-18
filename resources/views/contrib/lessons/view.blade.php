@@ -129,7 +129,7 @@
           </div>
           <div class="col-md-6">
             <div class="box-option text-right">
-              <a href="{{url('contributor/lessons/'.$row->id.'/edit/videos')}}" class="btn btn-danger">Edit</a>
+               <a href="{{url('contributor/lessons/'.$row->id.'/edit/videos')}}" class="btn btn-danger">Edit</a>
               <a href="{{url('contributor/lessons/'.$row->id.'/create/videos')}}" class="btn btn-info">Tambah Video</a>
             </div>
           </div>
@@ -142,7 +142,7 @@
               <tr>
                 <th>No</th>
                 <th>Judul</th>
-
+                <th></th>
               </tr>
             </thead>
             <tbody>
@@ -157,6 +157,9 @@
               <tr>
                 <td width="25">{{ $i }}</td>
                 <td>{{$value->title}}</td>
+                <td>
+                    
+                </td>
 
               </tr>
               <?php $i++;?>
@@ -198,6 +201,7 @@
               <tr>
                 <th>No</th>
                 <th>Judul</th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
@@ -212,6 +216,11 @@
                <tr>
                  <td width="25">{{ $i }}</td>
                  <td>{{$value->title}}</td>
+                 <td>   
+                  <div class="btn-group" role="group" aria-label="Default button group">
+                  <a href="{{ url('contributor/lessons/'.$row->id.'/delete/attachments/'.$value->id) }}" class="btn bg-pink waves-effect"><i class="fa fa-trash"></i></button>
+                  </div>
+                </td>
                </tr>
                <?php $i++;?>
                @endif
@@ -303,6 +312,30 @@
      showCancelButton: true,
      confirmButtonColor: "#DD6B55",
      confirmButtonText: "Ya, Hapus Tutorial!",
+     cancelButtonText: "Tidak, Batalkan!",
+     closeOnConfirm: false,
+     closeOnCancel: false
+     },
+     function(isConfirm){
+     if (isConfirm) {
+
+       $('#'+id).submit();
+
+       swal("Deleted!", "Data Anda telah dihapus.", "success");
+     } else {
+       swal("Cancelled", "Data Anda aman :)", "error");
+     }
+     });
+ }
+ function hapusfile(id){
+
+   swal({
+     title: "Apakah kamu yakin mau menghapus video ini?",
+     text: "Anda tidak akan dapat memulihkan data ini!",
+     type: "warning",
+     showCancelButton: true,
+     confirmButtonColor: "#DD6B55",
+     confirmButtonText: "Ya, Hapus Video",
      cancelButtonText: "Tidak, Batalkan!",
      closeOnConfirm: false,
      closeOnCancel: false

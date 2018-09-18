@@ -45,7 +45,6 @@ class LessonsController extends Controller
       $data = Lesson::where('contributor_id',$contribID)
       ->leftJoin('categories', 'lessons.category_id', '=', 'categories.id')
       ->select('lessons.*','categories.title as category_title')
-      ->where('lessons.status',1)
       ->orderby('created_at', 'desc')
       ->get();
     }elseif ($filter == 'processing') {
@@ -128,8 +127,11 @@ class LessonsController extends Controller
         $cid          = Auth::guard('contributors')->user()->id;
         $title        = Input::get('title');
         $price        = Input::get('price');
+        $goal         = Input::get('goal');
+        $audiens      = Input::get('audien');
         $category_id  = Input::get('category_id');
         $lessons_image = Input::file('image');
+        $requirement        = Input::get('requirement');
         $description  = Input::get('description');
 
         $lessonsDestinationPath= 'assets/source/lessons';
@@ -151,11 +153,14 @@ class LessonsController extends Controller
         $str = strtolower($title);
         $store                  = new Lesson();
         $store->contributor_id  = $cid;
-        $store->status          = 1;
+        $store->status          = 0;
         $store->enable          = 1;
         $store->title           = $title;
         $store->price           = $price;
-        $store->slug            = preg_replace('/\s+/', '-', $str);
+        $store->goal_tutorial   = $goal;
+        $store->requirement     = $requirement;
+        $store->audiens         = $audiens;
+        $store->slug            = str_replace("/","-",preg_replace('/\s+/', '-', $str));
         $store->category_id     = $category_id;
         $store->image           = $url_image;
         $store->description     = $description;
@@ -224,10 +229,10 @@ class LessonsController extends Controller
       $now                    = new DateTime();;
       $cid                    = Auth::guard('contributors')->user()->id;
       $store                  = Lesson::find($id);
-      $store->status          = 2;
+      $store->status          = 1;
       $store->updated_at      = $now;
       $store->save();
-      return redirect('contributor/lessons/'.$id.'/view')->with('success','Tutorial berhasil di submit!');
+      return redirect('contributor/lessons/pending/list')->with('success','Tutorial berhasil di Publish!');
 
 
   }
@@ -316,8 +321,11 @@ class LessonsController extends Controller
           $title        = Input::get('title');
           $category_id  = Input::get('category_id');
           $price        = Input::get('price');
+          $goal         = Input::get('goal');
+          $audiens      = Input::get('audien');
           $lessons_image = Input::file('image');
           $image_text =  Input::get('image_text');
+          $req          = Input::get('requirement');
           $description  = Input::get('description');
 
           $lessonsDestinationPath= 'assets/source/lessons';
@@ -341,11 +349,14 @@ class LessonsController extends Controller
           $store->enable          = 1;
           $store->title           = $title;
           $store->price           = $price;
-          $store->slug            = preg_replace('/\s+/', '-', $str);
+          $store->goal_tutorial   = $goal;
+          $store->audiens         = $audiens;
+          $store->slug            = str_replace("/","-",preg_replace('/\s+/', '-', $str));
           $store->category_id     = $category_id;
           $store->image           = $url_image;
+          $store->requirement     = $req;
           $store->description     = $description;
-          $store->created_at      = $now;
+          $store->updated_at      = $now;
           $store->save();
           // Session::set('lessons_title',$title);
           // Session::set('lessons_category_id',$category_id);
@@ -391,7 +402,7 @@ class LessonsController extends Controller
         $now          = new DateTime();
         $cid          = Auth::guard('contributors')->user()->id;
         $update = Revision::find($id);
-        $update->status = 2;
+        $update->status = 1;
         $update->updated_at=$now;
         $update->save();
 

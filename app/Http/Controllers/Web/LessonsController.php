@@ -13,58 +13,179 @@ use App\Models\Service;
 use App\Models\Video;
 use App\Models\Viewer;
 use App\Models\TutorialMember;
+use App\Models\Member;
+use App\Models\Comment;
+use App\Models\Cart;
+use App\Notifications\UserCommentNotification;
+use App\Notifications\UserReplyNotification;
 use Auth;
 use DateTime;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Validator;
+use App\Mail\WaitingNotifMail;
+use Illuminate\Support\Facades\Mail;
 
 class LessonsController extends Controller
 {
 
     public function index($by, $keyword)
     {
+        $mem_id = isset(Auth::guard('members')->user()->id) ? Auth::guard('members')->user()->id : 0;
+
         $categories = Category::where('enable', 1)->get();
         if ($by == 'category') {
             $category = Category::where('enable', 1)->where('title', 'like', '%' . $keyword . '%')->first();
-            $results = Lesson::leftJoin('categories', 'lessons.category_id', 'categories.id')
+
+            if(!empty($mem_id)){
+            $results = Lesson::Join('categories', 'lessons.category_id', 'categories.id')
+            ->leftjoin('tutorial_member', function($join){
+                $join->on('lessons.id', '=', 'tutorial_member.lesson_id')
+                ->where('tutorial_member.member_id','=', Auth::guard('members')->user()->id);})
+            ->leftjoin('cart', function($join){
+                $join->on('lessons.id', '=', 'cart.lesson_id')
+                ->where('cart.member_id','=', Auth::guard('members')->user()->id);})
+            ->select('lessons.*', 'categories.title as category_title', 'tutorial_member.member_id as nilai', 'cart.member_id as hasil')
+            ->where('lessons.enable', 1)
+            ->where('lessons.status', 1)
+            ->where('lessons.category_id', $category->id)
+            ->paginate(10);
+            }else{
+                $results = Lesson::Join('categories', 'lessons.category_id', 'categories.id')
                 ->select('lessons.*', 'categories.title as category_title')
                 ->where('lessons.enable', 1)
                 ->where('lessons.status', 1)
                 ->where('lessons.category_id', $category->id)
-                ->paginate(10);
+                ->paginate(10); 
+            }
+
+
+
             // dd($results);
         } else {
-            $results = Lesson::leftJoin('categories', 'lessons.category_id', 'categories.id')
-                ->select('lessons.*', 'categories.title as category_title')
-                ->where('lessons.status', 1)
+            if(!empty($mem_id)){
+            $results = Lesson::Join('categories', 'lessons.category_id', 'categories.id')
+                ->leftjoin('tutorial_member', function($join){
+                    $join->on('lessons.id', '=', 'tutorial_member.lesson_id')
+                    ->where('tutorial_member.member_id','=', Auth::guard('members')->user()->id);})
+                ->leftjoin('cart', function($join){
+                    $join->on('lessons.id', '=', 'cart.lesson_id')
+                    ->where('cart.member_id','=', Auth::guard('members')->user()->id);})
+                ->select('lessons.*', 'categories.title as category_title', 'tutorial_member.member_id as nilai', 'cart.member_id as hasil')
                 ->where('lessons.enable', 1)
+                ->where('lessons.status', 1)
                 ->paginate(10);
+
+           
+            }else{
+                $results = Lesson::Join('categories', 'lessons.category_id', 'categories.id')
+                ->select('lessons.*', 'categories.title as category_title')
+                ->where('lessons.enable', 1)
+                ->where('lessons.status', 1)
+                ->paginate(10);
+            }
         }
         # code...
+        // $tutorial = TutorialMember::Join('lessons', 'lessons.id', 'tutorial_member.lesson_id')
+        // ->select('tutorial_member.lesson_id')
+        // ->where('lessons.status', 1)
+        // ->where('lessons.enable', 1)
+        // ->where('tutorial_member.member_id' , $mem_id)
+        // ->get();
+
+        // dd($tutorial);
         return view('web.lessons.index', [
             'categories' => $categories,
-            'results' => $results,
-            
+            'results' => $results,    
+            // 'tutorial'=>$tutorial
         ]);
-    }
-    public function detail($slug)
-    {
-        $now = new DateTime();
-        $mem_id = isset(Auth::guard('members')->user()->id) ? Auth::guard('members')->user()->id : 0;
-        $services = Service::where('status', 1)->where('status', 2)->where('download', 1)->where('members_id', $mem_id)->where('expired', '>', $now)->first();
 
-        $lessons = Lesson::where('enable', 1)->where('slug', $slug)->first();
+    }
+    public function getSearchcategory(Category $category){
+        return $category->lesson()->select('id', 'title')->get();
+    }
+
+    public function preview($slug)
+    {
+        $mem_id = isset(Auth::guard('members')->user()->id) ? Auth::guard('members')->user()->id : 0;
+                
+        $now = new DateTime();
+
+        $lessons = Lesson::where('enable', 1)->where('status', 1)->where('slug', $slug)->first();
+        $cart = Cart::where('member_id', $mem_id)->where('lesson_id', $lessons->id)->first();
+        $categories = Category::where('id', $lessons->category_id)->first();
+        $time = strtotime($lessons->created_at);
+        $myFormatForView = date("d F y", $time);
         $tutorial = TutorialMember::where('member_id', $mem_id)->where('lesson_id', $lessons->id)->first();
-        
+        if(($tutorial != null && $mem_id != null)){
+            return redirect('kelas/v3/'.$slug);
+        }
+        // dd($cart);
         if (count($lessons) > 0) {
             $main_videos = Video::where('enable', 1)->where('lessons_id', $lessons->id)->orderBy('id', 'asc')->get();
+            $preview = Video::where('enable', 1)->where('lessons_id', $lessons->id)->orderBy('id', 'asc')->first();
+            $last_videos = Viewer::leftJoin('videos', 'videos.id', '=', 'viewers.video_id')
+            ->select('videos.*', 'viewers.video_id')
+            ->where('viewers.member_id', $mem_id)
+            ->where('videos.lessons_id', $lessons->id)->orderBy('viewers.updated_at', 'desc')->first();
+            // dd($last_videos);
             $files = File::where('enable', 1)->where('lesson_id', $lessons->id)->orderBy('id', 'asc')->get();
             
             // Contributor
             $contributors = Contributor::find($lessons->contributor_id);
-            $contributors_total_lessons = Lesson::where('enable', 1)->where('contributor_id', $lessons->contributor_id)->with('videos.views')->get();
+            $contributors_total_lessons = Lesson::where('enable', 1)->where('status', 1)->where('contributor_id', $lessons->contributor_id)->with('videos.views')->get();
+            $contributors_total_view = 0;
+            foreach ($contributors_total_lessons as $lessonss) {
+                foreach ($lessonss->videos as $videos) {
+                    if ($videos->views) {
+                        $contributors_total_view += 1;
+                    }
+                }
+            }
+
+            return view('web.lessons.preview', [
+                'categories' => $categories,
+                'lessons' => $lessons,
+                'main_videos' => $main_videos,
+                'last_videos' => $last_videos,
+                'file' => $files,
+                'tutor' => $tutorial,
+                'cart' => $cart,
+                'preview' => $preview,
+                'tanggal' => $myFormatForView,
+                'contributors' => $contributors,
+                'contributors_total_lessons' => $contributors_total_lessons,
+                'contributors_total_view' => $contributors_total_view,
+            ]);
+            // echo "syehbo";
+        } else {
+            abort(404);
+        }
+    }
+    public function detail($slug)
+    {
+        
+        $now = new DateTime();
+        $mem_id = isset(Auth::guard('members')->user()->id) ? Auth::guard('members')->user()->id : 0;
+
+        $lessons = Lesson::where('enable', 1)->where('status', 1)->where('slug', $slug)->first();
+        $tutorial = TutorialMember::where('member_id', $mem_id)->where('lesson_id', $lessons->id)->first();
+        if(($tutorial == null)){
+            return redirect('lessons/'.$slug);
+        }
+        $cart = Cart::where('member_id', $mem_id)->where('lesson_id', $lessons->id)->first();
+        $categories = Category::where('enable', 1)->get();
+        if (count($lessons) > 0) {
+            $main_videos = Video::where('enable', 1)->where('lessons_id', $lessons->id)->orderBy('id', 'asc')->get();
+            $last_videos = Viewer::leftJoin('videos', 'videos.id', '=', 'viewers.video_id')
+            ->select('videos.*', 'viewers.video_id')
+            ->where('viewers.member_id', '=', $mem_id)
+            ->where('videos.lessons_id', '=', $lessons->id)->orderBy('viewers.updated_at', 'desc')->first();
+            $files = File::where('enable', 1)->where('lesson_id', $lessons->id)->orderBy('id', 'asc')->get();
+            // Contributor
+            $contributors = Contributor::find($lessons->contributor_id);
+            $contributors_total_lessons = Lesson::where('enable', 1)->where('status', 1)->where('contributor_id', $lessons->contributor_id)->with('videos.views')->get();
             $contributors_total_view = 0;
             foreach ($contributors_total_lessons as $lessonss) {
                 foreach ($lessonss->videos as $videos) {
@@ -75,16 +196,18 @@ class LessonsController extends Controller
             }
 
             return view('web.lessons.detail', [
+                'categories' => $categories,
                 'lessons' => $lessons,
                 'main_videos' => $main_videos,
+                'last_videos' => $last_videos,
                 'file' => $files,
                 'tutor' => $tutorial,
-                'services' => $services,
+                'cart' => $cart,
                 'contributors' => $contributors,
                 'contributors_total_lessons' => $contributors_total_lessons,
                 'contributors_total_view' => $contributors_total_view,
             ]);
-            // echo "syehbo";
+            echo "syehbo";
         } else {
             abort(404);
         }
@@ -110,9 +233,13 @@ class LessonsController extends Controller
             $video = Video::where('video', 'like', '%' . $videosrc . '%')->first();
             if ($video) {
                 $nilai =  Viewer::where('video_id',$video->id)->where('member_id',$mem_id)->first();
-				if (count($nilai)== 0 ){
-					$viewers  = Viewer::where('video_id',$video->id)->where('ip_address',$ip_address)->where('member_id',$mem_id)->first();
 
+                $viewers  = Viewer::where('video_id',$video->id)->where('member_id',$mem_id)->first();
+                    DB::table('viewers')
+                    ->where('video_id', $video->id)
+                    ->update(['updated_at' => $now ]);
+				if (count($nilai)== 0 ){
+					
 				if ($viewers) { // Viewers exist
 
 					$update = Viewer::find($viewers->id);
@@ -121,7 +248,8 @@ class LessonsController extends Controller
 					$update->updated_at = $now;
 					if ($update->save()) {
 							return 'true';
-					}
+                    }
+                   
 				}else { // Create new Viewers
 
 					$store = new Viewer;
@@ -208,66 +336,151 @@ class LessonsController extends Controller
         }
         return $ip;
     }
-    public function doComment()
+    
+    public function doComment(Request $request)
     {
         $response = array();
         if (empty(Auth::guard('members')->user()->id)) {
             $response['success'] = false;
         } else {
-          
+            
             $now = new DateTime();
             $uid = Auth::guard('members')->user()->id;
-            $body = Input::get('body');
-            $lesson_id = Input::get('lesson_id');
+            // $body = Input::get('body');
+            // $lesson_id = Input::get('lesson_id');
             $member = DB::table('members')->where('id', $uid)->first();
-            $lessons = DB::table('lessons')->where('id', $lesson_id)->first();
+            
+            // // dd($lesson_id);
+            // $image = Input::file('image');
+            // // dd($image);
+            
+            // $lessonsDestinationPath= 'assets/source/komentar';
+
+            $input = $request->all();
+            $lessons = DB::table('lessons')->where('id', $input['lesson_id'])->first();
             $parent_id = Input::get('parent_id');
-            $contri = Lesson::where('id',$lesson_id)
+            $contri = Lesson::where('id',$input['lesson_id'])
                       ->select('contributor_id')
                       ->first();
+            $input['images'] = null;
+            $input['member_id'] = $member->id;
+            $input['contributor_id'] = str_replace('}','',str_replace('{"contributor_id":', '',$contri));
+            $input['status'] = 0;
+            // dd($input);
 
-            $store = DB::table('comments')->insertGetId([
-                'lesson_id' => $lesson_id,
-                'member_id' => $uid,
-                'body' => $body,
-                'parent_id' => $parent_id,
-                'status' => 0,
-                'contributor_id' => str_replace('}','',str_replace('{"contributor_id":', '',$contri)),
-                'created_at' => $now,
-                'updated_at' => $now,
-            ]);
+            if ($request->hasFile('image')){
+                $input['images'] = 'assets/source/komentar/komentar-'.$request->image->getClientOriginalName().'.'.$request->image->getClientOriginalExtension();
+                $request->image->move(public_path('/assets/source/komentar'), $input['images']);
+            }
+            // dd($input);
+
+            
+
+            $store = Comment::create($input);
+            // dd($store);
             if ($store) {
-
-
-                    DB::table('contributor_notif')->insert([
-                        'contributor_id' => $lessons->contributor_id,
-                        'category' => 'coments',
-                        'title' => 'Anda mendapat pertanyaan dari ' . $member->username,
-                        'notif' => 'Anda mendapatkan pertanyaan dari ' . $member->username . ' pada ' . $lessons->title,
+                $getmembercomment = DB::table('comments')
+                ->where('comments.lesson_id',$input['lesson_id'])
+                ->where('comments.status',0)
+                ->select('comments.id as id')
+                ->first();
+    
+                DB::table('contributor_notif')->insert([
+                'contributor_id' => $lessons->contributor_id,
+                'category' => 'Komentar',
+                'title' => 'Anda mendapat pertanyaan dari ' . $member->username,
+                'notif' => 'Anda mendapatkan pertanyaan dari ' . $member->username . ' pada ' . $lessons->title,
+                'status' => 0,
+                'slug' => $getmembercomment->id,
+                'created_at' => $now,
+            
+            ]);
+            $getemailchild = DB::table('comments')
+                             ->Join('comments as B', 'comments.id', 'B.parent_id')
+                             ->Join('members','members.id','=','B.member_id')
+                             ->Where('B.parent_id', $input['parent_id'])
+                             ->where('comments.member_id', '<>', 'B.member_id')
+                             ->where('comments.member_id', '<>', 'B.contributor_id')
+                             ->select('comments.member_id as tanya', 'B.member_id as jawab', 'members.username as username')->distinct()
+                             ->get();
+                            
+            if($parent_id != null){
+                foreach ($getemailchild as $mails) {
+                    if( $mails->tanya !=$input['member_id'] ){
+                        if($mails->tanya != $mails->jawab){
+                    $getnotif = DB::table('user_notif')->insert([
+                        'id_user' => $mails->tanya,
+                        'category' => 'Komentar',
+                        'title' => 'Anda mendapat balasan dari ' . $mails->username,
+                        'notif' => 'Anda mendapatkan balasan dari ' . $mails->username . ' pada ' . $lessons->title,
                         'status' => 0,
+                        'slug' => $lessons->slug,
                         'created_at' => $now,
                     ]);
+                        }
+                    }
+
+                    if( $mails->jawab !=$input['member_id'] ){
+                        if($mails->tanya != $mails->jawab){
+                    $getnotif = DB::table('user_notif')->insert([
+                        'id_user' => $mails->jawab,
+                        'category' => 'Komentar',
+                        'title' => 'Hello, Anda Nimbrung di komentar ini ada tanggapan dari ' . $mails->username,
+                        'notif' => 'Anda mendapatkan balasan dari ' . $mails->username . ' pada ' . $lessons->title,
+                        'status' => 0,
+                        'slug' => $lessons->slug,
+                        'created_at' => $now,
+                    ]);
+                        }
+                    }
+                //  Check type
+                // if (is_array($mails)){
+                //     //  Scan through inner loop
+                //     foreach ($mails as $value) {
+                //         $member = Member::Find($value);
+                //         $lesson = Lesson::Find($lesson_id);
+                //         $contrib = Contributor::find($lessons->contributor_id);
+                //         $member->notify(new UserReplyNotification($member, $lesson, $contrib));
+                       
+                //         }
+                //     }
+                   
+                }
+            }
+
+           
+            // dd($getmembercomment);
+                // dd($uid);
+            
+                    $member = Member::Find($member->id);
+                    $comment = Comment::Find($store->id);
+                    $lesson = Lesson::find($lessons->id);
+                    $contrib = Contributor::find($lessons->contributor_id);
+                    $contrib->notify(new UserCommentNotification($member, $comment, $contrib, $lesson));
+                    
+                    // dd($contrib);
                 // Create Point
-                if ($parent_id == 0) { // Berkomentar
-                    $point = new Point;
-                    $point->status = 0;
-                    $point->member_id = $uid;
-                    $point->type = 'QUESTION';
-                    $point->value = 2;
-                    $point->created_at = $now;
-                    $point->updated_at = $now;
-                } else { // Membalas Komentar
-                    $point = new Point;
-                    $point->status = 0;
-                    $point->member_id = $uid;
-                    $point->type = 'REPLY';
-                    $point->value = 3;
-                    $point->created_at = $now;
-                    $point->updated_at = $now;
-                }
-                if ($point->save()) {
+                // if ($parent_id == 0) { // Berkomentar
+                //     $point = new Point;
+                //     $point->status = 0;
+                //     $point->member_id = $uid;
+                //     $point->type = 'QUESTION';
+                //     $point->value = 2;
+                //     $point->created_at = $now;
+                //     $point->updated_at = $now;
+                // } else { // Membalas Komentar
+                //     $point = new Point;
+                //     $point->status = 0;
+                //     $point->member_id = $uid;
+                //     $point->type = 'REPLY';
+                //     $point->value = 3;
+                //     $point->created_at = $now;
+                //     $point->updated_at = $now;
+                // }
+                // if ($point->save()) {
+                        // dd($getemailchild);
                     $response['success'] = true;
-                }
+                // }
             }
         }
         echo json_encode($response);
@@ -275,66 +488,108 @@ class LessonsController extends Controller
     public function getComments($lesson_id)
     {
         $comments = DB::table('comments')
-            ->leftJoin('members', 'members.id', '=', 'comments.member_id')
-            ->select('comments.*', 'members.username as username', 'members.avatar as avatar')
-            ->where('comments.parent_id', '=', 0)
-            ->where('comments.lesson_id', '=', $lesson_id)
-            ->orderBy('comments.id', 'DESC')
-            ->get();
+        ->leftJoin('members', 'members.id', '=', 'comments.member_id')
+        ->leftJoin('contributors','contributors.id','=','comments.contributor_id')
+        ->select('comments.*', 'members.username as username', 'members.avatar as avatar', 'contributors.username as contriname', 'contributors.avatar as avatarc')
+        ->where('comments.parent_id', '=', 0)
+        ->where('comments.lesson_id', '=', $lesson_id)
+        ->orderBy('comments.id', 'DESC')
+        ->get();
+
+        $tutorial = TutorialMember::Join('lessons', 'lessons.id', 'tutorial_member.lesson_id')
+        ->select('tutorial_member.lesson_id')
+        ->where('lessons.status', 1)
+        ->where('lessons.enable', 1)
+        ->where('tutorial_member.member_id' , Auth::guard('members')->user()->id)
+        ->where('tutorial_member.lesson_id', $lesson_id)
+        ->first();
         $html = '';
         $i = 1;
         foreach ($comments as $key => $comment) {
             $html .= '<div class="row">
 				                <div class="col-sm-1">
-													<div class="thumbnail">';
-            if ($comment->avatar) {
+                                                    <div class="thumbnail">';
+            if($comment->desc == 0)     {
+                $ava = $comment->avatar;
+                $usernam =  $comment->username;
+            }else{
+                $ava = $comment->avatarc;
+                $usernam =  $comment->contriname;
+            }        
+            if ($ava != null) {
                 $html .= '<img class="img-responsive user-photo" src="' . asset($comment->avatar) . '">';
             } else {
                 $html .= '<img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">';
             }
+            
             $html .= '</div><!-- /thumbnail -->
 				                </div>
 				                <div class="col-sm-11">
 				                  <div class="panel panel-default">
 				                    <div class="panel-heading">
-				                      <strong>' . $comment->username . '</strong> <span class="text-muted">commented ' . $this->time_elapsed_string($comment->created_at) . '</span>
+				                      <strong>' . $usernam . '</strong> <span class="text-muted">commented ' . $this->time_elapsed_string($comment->created_at) . '</span>
 				                    </div>
-				                    <div class="panel-body">
+				                    <div class="panel-body" style="white-space:pre-line;">
 				                      ' . $comment->body . '
-				                    </div>';
-            if (!empty(Auth::guard('members')->user()->id)) {
-                $html .= '<div class="panel-footer reply-btn-area text-right">
+                                    </div>';
+                                    if($comment->images != null){
+                                    $html .= '<a id="firstlink" data-gall="myGallery" class="venobox vbox-item" data-vbtype="iframe" href="'. asset($comment->images) .'"><img src="'. asset($comment->images) .'" alt="image alt" style="height:50px; width:50px; margin-left: 15px; margin-bottom: 20px;"/></a>';
+                                    }
+                                    if (!empty(Auth::guard('members')->user()->id)) {
+                                        if(count($tutorial) >0 ){
+                                        $html .= '<div class="panel-footer reply-btn-area text-right">
 									                        <button type="button" name="button" class="btn btn-primary" data-toggle="collapse" data-target="#reply' . $comment->id . '"><i class="glyphicon glyphicon-share-alt"></i> Balas</button>
 									                    </div>
 									                    <div class="collapse" id="reply' . $comment->id . '">
 									                      <div class="panel-footer ">
 									                        <div class="row reply">
-									                          <div class="col-md-12">
-									                            <div class="form-group">
+                                                              <div class="col-md-12">
+                                                              <form id="form-comment" class="mb-25" enctype="multipart/form-data" method="POST">
+                                                                <input type="hidden" name="_method" value="POST">
+                                                                <input type="hidden" name="lesson_id" value="' . $lesson_id . '">
+                                                                <input type="hidden" name="parent_id" value="' . $comment->id . '"> 
+    									                        <div class="form-group">
 									                              <label>Komentar</label>
 									                              <textarea name="name" rows="8" cols="80" class="form-control" name="body" id="textbody' . $comment->id . '"></textarea>
-									                            </div>
-									                            <button type="submit" class="btn btn-primary pull-right" onClick="doComment(' . $lesson_id . ',' . $comment->id . ')" >Kirim</button>
+                                                                </div>
+                                                                <div class="fileUpload">
+                                                                <span class="custom-span">+</span>
+                                                                <p class="custom-para">Add Images</p>
+                                                                <input id="uploadBtn" type="file" class="upload" name="image" />
+                                                                </div>
+                                                                <input id="uploadFile" placeholder="0 files selected" disabled="disabled" />
+                                                                <button type="button" class="btn btn-primary pull-right" onClick="doComment(' . $lesson_id . ',' . $comment->id . ')" >Kirim</button>
+                                                                </form>
 									                          </div>
 									                        </div>
 									                      </div>
-									                    </div>';
+                                                        </div>';
+                }
             }
             $html .= '</div><!-- /panel panel-default -->';
             $childcomments = DB::table('comments')
                 ->leftJoin('members', 'members.id', '=', 'comments.member_id')
-                ->select('comments.*', 'members.username as username', 'members.avatar as avatar')
+                ->leftJoin('contributors','contributors.id','=','comments.contributor_id')
+                ->select('comments.*', 'members.username as username', 'members.avatar as avatar', 'contributors.username as contriname', 'contributors.avatar as avatarc')
                 ->where('comments.parent_id', '=', $comment->id)
                 ->where('comments.lesson_id', '=', $lesson_id)
-                ->orderBy('comments.id', 'DESC')
+                ->orderBy('comments.id', 'asc')
                 ->get();
             foreach ($childcomments as $key => $child) {
                 $html .= '<!-- Comments Child -->
 				                  <div class="row">
 				                    <div class="col-sm-1">
-				                      <div class="thumbnail">';
-                if ($child->avatar) {
-                    $html .= '<img class="img-responsive user-photo" src="' . asset($child->avatar) . '">';
+                                      <div class="thumbnail">';
+                if($child->desc == 0){
+                   $ava = $child->avatar;
+                   $userna = $child->username;
+                }else{
+                    $ava = $child->avatarc;
+                    $userna = $child->contriname;
+
+                }                                     
+                if ($ava) {
+                    $html .= '<img class="img-responsive user-photo" src="' . asset($ava) . '">';
                 } else {
                     $html .= '<img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">';
                 }
@@ -343,12 +598,15 @@ class LessonsController extends Controller
 				                    <div class="col-sm-11">
 				                      <div class="panel panel-default">
 				                        <div class="panel-heading">
-				                          <strong>' . $child->username . '</strong> <span class="text-muted">commented ' . $this->time_elapsed_string($child->created_at) . '</span>
+				                          <strong>' . $userna . '</strong> <span class="text-muted">commented ' . $this->time_elapsed_string($child->created_at) . '</span>
 				                        </div>
 				                        <div class="panel-body">
-				                          ' . $child->body . '
-				                        </div><!-- /panel-body -->
-				                      </div><!-- /panel panel-default -->
+                                          ' . $child->body . '
+                                        </div><!-- /panel-body -->';
+                                        if($child->images != null){
+                                    $html .= '<a id="firstlink" data-gall="myGallery" class="venobox vbox-item" data-vbtype="iframe" href="'. asset($child->images) .'"><img src="'. asset($child->images) .'" alt="image alt" style="height:50px; width:50px; margin-left: 15px; margin-bottom: 20px;"/></a>';
+                                        }
+				                      $html .= '</div><!-- /panel panel-default -->
 				                    </div><!-- /col-sm-5 -->
 				                  </div><!-- ./row -->
 				                  <!-- ./Comments Childs -->';
@@ -398,12 +656,13 @@ class LessonsController extends Controller
         $comment = Input::get('comment');
         $lesson_id = Input::get('lesson_id');
         $lessons = DB::table('lessons')->where('id', $lesson_id)->first();
-        $store = DB::table('coments')->insertGetId([
+        $store = DB::table('comments')->insertGetId([
             'lesson_id' => $lesson_id,
             'member_id' => $uid,
             'description' => $comment,
             'parent' => 0,
             'status' => 0,
+            'desc'   => 0,
             'created_at' => new DateTime(),
         ]);
         // if(count($check)==1){
@@ -428,19 +687,19 @@ class LessonsController extends Controller
         if ($store) {
             DB::table('contributor_notif')->insert([
                 'contributor_id' => $lessons->contributor_id,
-                'category' => 'coments',
+                'category' => 'comments',
                 'title' => 'Anda mendapat pertanyaan dari ' . $member->username,
                 'notif' => 'Anda mendapatkan pertanyaan dari ' . $member->username . ' pada ' . $lessons->title,
                 'status' => 0,
                 'created_at' => new DateTime(),
             ]);
-            $comment = DB::table('coments')
-                ->leftJoin('members', 'members.id', '=', 'coments.member_id')
-                ->select('coments.*', 'members.username as username')
-                ->where('coments.id', $store)
-                ->where('coments.parent', 0)
-                ->where('coments.status', 0)
-                ->orderBy('coments.created_at', 'DESC')
+            $comment = DB::table('comments')
+                ->leftJoin('members', 'members.id', '=', 'comments.member_id')
+                ->select('comments.*', 'members.username as username')
+                ->where('comments.id', $store)
+                ->where('comments.parent', 0)
+                ->where('comments.status', 0)
+                ->orderBy('comments.created_at', 'DESC')
                 ->first();
             echo '<div class="col-md-12" style="margin-bottom:30px;" id="row' . $comment->id . '">';
             echo '<img class="user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png"height="40px" width="40px" style="object-fit:scale-down;border-radius: 100%;margin-bottom:10px;">';
@@ -481,6 +740,7 @@ class LessonsController extends Controller
                     echo '</div>';
                 }
             }
+               
             echo '<div class="col-md-12" id="balas' . $comment->id . '" style="padding-top:10px; padding-left:0px; padding-right:0px;">';
             echo '<a href="javascript:void(0)" class="btn btn-info pull-right" onclick="formbalas(' . $comment->id . ')">Balas</a>';
             echo '	</div>';
@@ -501,12 +761,13 @@ class LessonsController extends Controller
         $comment_id = Input::get('comment_id');
         $lesson_id = Input::get('lesson_id');
         $lessons = DB::table('lessons')->where('id', $lesson_id)->first();
-        DB::table('coments')->insert([
+        DB::table('comments')->insert([
             'lesson_id' => $lesson_id,
             'member_id' => $uid,
             'description' => $isi_balas,
             'parent' => $comment_id,
             'status' => 0,
+            'desc'   => 0,
             'created_at' => new DateTime(),
         ]);
         $check = DB::table('coments')->where('parent', $comment_id)->get();
@@ -556,13 +817,22 @@ class LessonsController extends Controller
 		$lessons_id = Input::get('lessons_id');
 		$lesson = Lesson::find($lessons_id);
         $videos = Video::where('enable', 1)->where('lessons_id', $lessons_id)->orderBy('id', 'asc')->get();
+        
         $services = Service::where('status', 1)->where('members_id', $memberID)->where('expired', '>=', $now)->first();
         $tutorial = TutorialMember::where('member_id', $memberID)->where('lesson_id', $lessons_id)->first();
         // dd($tutorial);
+
+        //last video
+        $last_videos = Viewer::leftJoin('videos', 'videos.id', '=', 'viewers.video_id')
+            ->select('videos.*', 'viewers.video_id')
+            ->where('viewers.member_id', '=', $memberID)
+            ->where('videos.lessons_id', '=', $lessons_id)->orderBy('viewers.updated_at', 'desc')->first();
+
         $access = 0;
         if (isset($services) && $services->access == 1) {
             $access = 1;
         }
+        
         $play = array();
         foreach ($videos as $key => $video) {
             if ($key >= 3 && $tutorial == null && isset($video['video'])) {
@@ -584,6 +854,8 @@ class LessonsController extends Controller
                 );
             } else {
                 if (isset($video['video'])) {
+                    if(count($last_videos) != 0){
+                       
                     $play[] = array(
                         'name' => $video['title'],
                         'description' => strip_tags($video['description']),
@@ -601,7 +873,27 @@ class LessonsController extends Controller
 						[
 							'src' => url($video['image']),
 						]),
-                    );
+                    ); 
+                    }else{
+                        $play[] = array(
+                            'name' => $video['title'],
+                            'description' => strip_tags($video['description']),
+                            'duration' => $video['durasi'],
+                            'sources' => array([
+                                'src' => url($video['video']),
+                                'type' => $video['type_video'],
+                            ]),
+                            'poster' => url($video['image']),
+                            'thumbnail' => array([
+                                'srcset' => url($video['image']),
+                                'type' => 'image/png',
+                                'media' => '(min-width: 400px;)',
+                            ],
+                            [
+                                'src' => url($video['image']),
+                            ]),
+                        ); 
+                    }
                 }
 			}
 			

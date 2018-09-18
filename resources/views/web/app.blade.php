@@ -4,7 +4,9 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="google-site-verification" content="4yTZI7aHiFWK-AD03jB5ffbkI5Q8svP423zsKLmtp4I" />
+    @if(env('APP_ENV') == 'production')
+    <meta name="google-site-verification" content="0r-wquIwdvygXwMpsK8-xcBaNyh36Fw-OUJWZoOKvZk" />
+    @endif
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8; IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no" />
     <title>@yield('title') {{ config('app.name') }}</title>
@@ -13,8 +15,14 @@
     <link href="{{asset('template/web/css/video-js.css')}}" rel="stylesheet">
     <link href="{{asset('template/web/css/navbar.css')}}" rel="stylesheet">
     <link href="{{asset('template/web/css/pace.css')}}" rel="stylesheet">
+    <link href="{{ asset('template/web/css/venobox.css') }}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/flickity@2.1.2/dist/flickity.css"/>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- rating -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    <!-- <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.9.0/slick/slick-theme.css"/> -->
     <link rel="stylesheet" href="{{ asset('template/web/css/star-rating.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('template/web/css/imageviewer.css') }}" />
     <!-- rating -->
     <link rel="stylesheet" href="{{ asset('template/web/css/owl.carousel.min.css') }}">
     <link rel="stylesheet" href="{{ asset('template/web/css/owl.theme.default.min.css') }}">
@@ -30,8 +38,12 @@
 
     <link rel="stylesheet" href="{{ asset('template/web/plugins/jquery-ui-1.12.1.custom/jquery-ui.css') }}">
     <script type="text/javascript" src="{{asset('template/web/js/jquery.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('template/web/js/jquery-ui.min.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('template/web/js/venobox.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('template/web/js/imageviewer.min.js') }}"></script>
     <script type="text/javascript" src="https://unpkg.com/sweetalert2@7.9.2/dist/sweetalert2.all.js"></script>
     <!-- Jquery UI   -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/plupload/3.1.2/plupload.full.min.js"></script>
     <script type="text/javascript" src="{{ asset('template/web/plugins/jquery-ui-1.12.1.custom/jquery-ui.js') }}"></script>
     <script type="text/javascript" src="{{ asset('template/web/plugins/OwlCarousel2-2.2.1/dist/owl.carousel.js') }}"></script>
     <!-- Facebook Pixel Code -->
@@ -127,7 +139,7 @@
         /* min-width: 160px; */
         box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
         z-index: 1;
-        margin-left: -270px;
+        margin-left: -270px;I have jQuery code, which looks this way:
         right: 0px;
         padding: 15px;
       }
@@ -212,6 +224,7 @@
     float: left;
     height: 50px;
     padding: 15px;
+    padding-left: 0px;
     font-size: 18px;
     line-height: 20px;
     text-align: center;
@@ -336,10 +349,24 @@ a #items .item {
   margin-left: 30px;
   margin-top: -75px;
 }
+.badge-cart-mobile {
+  background-color: red;
+  border-radius: 10px;
+  color: white;
+  display: inline-block;
+  font-size: 10px;
+  line-height: 1;
+  padding: 2px 5px;
+  text-align: center;
+  vertical-align: middle;
+  white-space: nowrap;
+  margin-left: 20px;
+  margin-top: -55px;
+}
 
 
 .shopping-cart {
-  margin: 75px 632px;
+  margin: 75px 605px;
   float: right;
   background: white;
   width: 320px;
@@ -406,7 +433,7 @@ a #items .item {
   text-align: center;
   padding: 12px;
   text-decoration: none;
-  display: block;
+  display: block;url
   border-radius: 3px;
   font-size: 16px;
   margin: 25px 0 15px 0;
@@ -421,11 +448,21 @@ a #items .item {
   display: table;
   clear: both;
 }
-
-
+.dropdown-container{
+    display: none;
+    position: absolute;
+    top: 53px;
+    right: 15px;
+    width: 250px;
+    padding: 10px 0;
+    border: 1px solid #DBDEDE;
+    border-radius: 6px;
+    background-color: #FFF;
+    z-index: 99;
+}
     </style>
 
-
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="{{ asset('template/web/css/helper.css') }}">
     <link rel="stylesheet" href="{{ asset('template/web/css/common.css') }}">
     <link rel="stylesheet" href="{{ asset('template/web/css/blocks.css') }}">
@@ -461,7 +498,7 @@ a #items .item {
     <?php } ?>
       <div class="container">
         <div class="navbar-header navbar-fixed-side navbar-fixed-side-left">
-          <div id="btn" class="hidden-lg hidden-md">
+            <div id="btn" class="hidden-lg hidden-md" onclick="sideBarOverlay()">
               <div id='top'></div>
               <div id='middle'></div>
               <div id='bottom'></div>
@@ -471,19 +508,30 @@ a #items .item {
               <div id="items" style="top:38%">
                   <div class="item" style="background-color:white">Halo, {{ Auth::guard('members')->user()->username }}</div>
                   <a href="{{ url('lessons/browse/all') }}" class="hidden-lg hidden-md" style="color: #fff;"><div class="item browse" style="background-color:#2BA8E2;">Browse Tutorial</div></a>                  
+                  <a href="{{ url('member/dashboard') }}" ><div class="item">Tutorial Saya</div></a>
                   <a href="{{ url('member/change') }}" ><div class="item">Ganti Password</div></a>
                   <a href="{{ url('member/signout') }}"><div class="item">Logout</div></a>
               </div>
               @else
-              <div id="items">
-                  <a href="{{ url('lessons/browse/all') }}" class="hidden-lg hidden-md" style="color: #fff;"><div class="item browse" style="background-color:#2BA8E2;">Browse Tutorial</div></a>
-                  <a href="{{ url('member/signin') }}"><div class="item">Masuk</div></a>
-                  <a href="{{ url('member/signup') }}"><div class="item">Daftar</div></a>
-              </div>
+                <div id="items">
+                    <a href="{{ url('lessons/browse/all') }}" class="hidden-lg hidden-md" style="color: #fff;"><div class="item browse" style="background-color:#2BA8E2;">Browse Tutorial</div></a>
+                    <a href="{{ url('member/signin') }}"><div class="item" onclick="w3_close()">Masuk</div></a>
+                    <a href="{{ url('member/signup') }}"><div class="item">Daftar</div></a>
+                </div>
               @endif
-          </div>
+            </div>
+            <div class="w3-overlay w3-animate-opacity"  style="cursor:pointer"  id="myOverlay"></div>
+
           <a href="{{ url('cart')}}" class="navbar-brand pull-right hidden-lg hidden-md" >
-          <i style="height: 32px; width: 32px; color: white;" class="fa fa-shopping-cart"></i>
+          <i style="height: 32px; width: 32px; color: white;" class="fa fa-shopping-cart">
+              @if (Auth::guard("members")->user())
+                <?php if(getTotalCart() != null){ ?>
+                        <span class="badge-cart-mobile"><?php echo getTotalCart();?></span>
+                        <?php } ?>
+              @else
+                <span class="badge-cart-mobile hide"> <?php echo getTotalCart();?></span>
+              @endif
+          </i>
           </a>
           <button type="button" class="navbar-toggle collapsed search-toogle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-search" aria-expanded="false">
             <!-- <span class="sr-only">Toggle navigation</span> -->
@@ -492,7 +540,7 @@ a #items .item {
           <a class="navbar-brand" href="{{ url('/') }}"><img class="logo" src="{{asset('template/web/img/logo.png')}}"></a>
           <a href="{{ url('lessons/browse/all') }}" class="browse-btn hidden-xs hidden-sm">Browse Tutorial</a>
         </div>
-
+        
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <!-- <form class="navbar-form navbar-left">
@@ -503,7 +551,7 @@ a #items .item {
           </form> -->
           <form class="navbar-form navbar-left form-search hidden-xs" action="{{ url('search') }}" method="get">
             <input type="hidden" name="category" value="" class="searchcategory">
-
+            
             <div class="input-group">
 
               <div class="input-group-btn btn-category">
@@ -512,10 +560,8 @@ a #items .item {
                   <i class="fa fa-th" aria-hidden="true"></i>
                   </span> <i class="ion-android-arrow-dropdown"></i>
                 </button>
-                <div class="dropdown-menu dropdown-menu-right">
-                  <a class="dropdown-item" href="javascript:void(0)" onclick="changeCategory('Linux')">Linux</a>
-                  <a class="dropdown-item" href="javascript:void(0)" onclick="changeCategory('Mikrotik')">Mikrotik</a>
-                  <a class="dropdown-item" href="javascript:void(0)" onclick="changeCategory('Cisco')">Cisco</a>
+                <div class="dropdown-menu dropdown-menu-right" id="cate">
+                <?php echo getCategory(); ?>
                   <div role="separator" class="dropdown-divider"></div>
                   <a class="dropdown-item" href="javascript:void(0)" onclick="changeCategory('Semua Kategori')">Semua Kategori</a>
                 </div>
@@ -541,12 +587,27 @@ a #items .item {
                         <?php } ?>
                         </a>                   
                     </li>
+                      
+                    
+                    <li class="has-dropdown">
+                        <img src="{{asset('template/kontributor/img/icon/Notifikasi.png')}}" alt="">
+                        <?php if(totalnotifuser() != null){ ?>
+                        <span class="badge-cart"><?php echo totalnotifuser();?></span>
+                        <?php } ?>
+                        <div class="dropdown-container">
+                            <ul>
+                              <?php echo notifuser();?>
+                              <li role="separator" class="divider"></li>
+                              <li><a href="{{ url('/user/notif')}}">Lihat Semua Pemberitahuan</a></li>
+                            </ul>
+                        </div>
+                    </li>
                     <li>
-                        <span class="hello-user">Halo, {{ Auth::guard('members')->user()->username }}</span>
+                        <span class="hello-user">Halo, {{namemember()}}..</span>
                     </li>
                     <li class="has-dropdown">
                         <img src="{{asset('template/web/img/drop-down-round-button.png')}}" alt="">
-                        <div class="dropdown-container">
+                        <div class="dropdown-container" style="right: 0px;">
                             <ul>
                                 <li>
                                     <a href="{{ url('member/profile')}}">
@@ -564,18 +625,17 @@ a #items .item {
                 </ul>
           </div>
           <div class="shopping-cart" style="display: none;">
-
             <ul class="shopping-cart-items">
               <?php echo cart();?>
             </ul>
-
+            
             <a href="{{ url('/cart') }}" class="button">Lihat Keranjang</a>
           </div>
           @else
           <div class="header-menu">
             <ul class="navbar-nav navbar-right">
                 <li class="class">
-                  <a href="{{ ('/cart') }}" ><img src="{{asset('template/web/img/CART.png')}}" alt="cart">
+                  <a href="{{ url('/cart') }}" ><img src="{{asset('template/web/img/CART.png')}}" alt="cart">
                     <span class="badge-cart hide"></span>
                   </a>                   
                 </li>
@@ -585,7 +645,7 @@ a #items .item {
            </div>
           @endif
         </div><!-- /.navbar-collapse -->
-
+            
         <div class="collapse navbar-collapse hidden-sm hidden-md hidden-lg" id="bs-example-navbar-collapse-search" style="overflow-y: visible;">
           <form class="navbar-form navbar-left form-search " action="{{ url('search') }}" method="get">
             <input type="hidden" name="category" value="" class="searchcategory">
@@ -599,9 +659,7 @@ a #items .item {
                   </span> <i class="ion-android-arrow-dropdown"></i>
                 </button>
                 <div class="dropdown-menu dropdown-menu-right" >
-                  <a class="dropdown-item" href="javascript:void(0)" onclick="changeCategory('Linux')">Linux</a>
-                  <a class="dropdown-item" href="javascript:void(0)" onclick="changeCategory('Mikrotik')">Mikrotik</a>
-                  <a class="dropdown-item" href="javascript:void(0)" onclick="changeCategory('Cisco')">Cisco</a>
+                  <?php echo getCategory(); ?>
                   <div role="separator" class="dropdown-divider"></div>
                   <a class="dropdown-item" href="javascript:void(0)" onclick="changeCategory('Semua Kategori')">Semua Kategori</a>
                 </div>
@@ -659,7 +717,7 @@ a #items .item {
                         Satu-satunya kursus online jaringan dan server yang dipandu sampai bisa. Terdapat ratusan video tutorial eksklusif serta trainer profesional yang siap membantu proses belajar anda.
                     </p>
                     <p class="copyrigth-text">
-                        Copyright Cilsy Fiolution 2016-2017
+                        Copyright Cilsy Fiolution 2016-2018
                     </p>
                 </div>
                 <div class="col-md-2">
@@ -681,11 +739,12 @@ a #items .item {
                         <li>Bantuan</li>
                         <li><a href="{{ url('/kontak') }}">Kontak</a></li>
                         <li><a href="{{ url('/kebijakan') }}">Kebijakan Layanan</a></li>
-                        <li><a href="{{ url('/carapesan') }}">Cara Pesan & Berlangganan</a></li>
-                        <li><a href="{{ url('member/package') }}">Harga & Perbandingan Paket</a></li>
+                        <li><a href="{{ url('/carapesan') }}">Cara Pesan</a></li>
                         <li><a href="{{ url('/petunjuk') }}">Petunjuk Pembayaran</a></li>
                         <li><a href="{{ url('/faq') }}">FAQ</a></li>
+                        <li><a href="{{ url('https://linuxsupports.com') }}">Official Company</a></li>
                         <li><a href="{{ url('https://blog.cilsy.id') }}">Blog</a></li>
+                        <li><a href="{{ url('https://devops.cilsy.id') }}">Sekolah DevOps Cilsy</a></li>
                     </ul>
                 </div>
                 <div class="col-md-3">
@@ -696,32 +755,43 @@ a #items .item {
             </div>
         </div>
     </div>
-   <script>
-            var sidebarBox = document.querySelector('#box'),
-                sidebarBtn = document.querySelector('#btn'),
-                pageWrapper = document.querySelector('#page-wrapper');
+  <script>
+  function sideBarOverlay() {
+    var overlay = document.getElementById("myOverlay");
+    if (overlay.style.display === "block") {
+      overlay.style.display = "none";
+    } else {
+      overlay.style.display = "block";
+    }
+      
+  }
+</script>    
+<script>
+  var sidebarBox = document.querySelector('#box'),
+      sidebarBtn = document.querySelector('#btn'),
+      pageWrapper = document.querySelector('#page-wrapper');
 
-            sidebarBtn.addEventListener('click', function (event) {
-                sidebarBtn.classList.toggle('active');
-                sidebarBox.classList.toggle('active');
-            });
+      sidebarBtn.addEventListener('click', function (event) {
+      sidebarBtn.classList.toggle('active');
+      sidebarBox.classList.toggle('active');
+      });
 
-            pageWrapper.addEventListener('click', function (event) {
+      pageWrapper.addEventListener('click', function (event) {
 
-                if (sidebarBox.classList.contains('active')) {
-                    sidebarBtn.classList.remove('active');
-                    sidebarBox.classList.remove('active');
-                }
-            });
+        if (sidebarBox.classList.contains('active')) {
+            sidebarBtn.classList.remove('active');
+            sidebarBox.classList.remove('active');
+        }
+      });
 
-            window.addEventListener('keydown', function (event) {
+      window.addEventListener('keydown', function (event) {
 
-                if (sidebarBox.classList.contains('active') && event.keyCode === 27) {
-                    sidebarBtn.classList.remove('active');
-                    sidebarBox.classList.remove('active');
-                }
-            });
-          </script>
+        if (sidebarBox.classList.contains('active') && event.keyCode === 27) {
+            sidebarBtn.classList.remove('active');
+            sidebarBox.classList.remove('active');
+            } 
+      });
+  </script>
  <script type="text/javascript">
     // $("#close").ready(function(){
     //   $("#top-section").css("margin-top", "76px")
@@ -734,12 +804,30 @@ a #items .item {
     <script type="text/javascript">
       function changeCategory(category) {
         $('.cate_title').text(category);
-        if (category == 'Semua Kategori') {
-            $('.searchcategory').val('');
+        if (category != 'Semua Kategori') {
+          $('.searchcategory').val(category);
         }else {
-            $('.searchcategory').val(category);
+            $('.searchcategory').val('');
         }
       }
+      $(document).ready(function() {
+    $('.dropdown-item').change(function() {
+
+            // var url = '{{ url('category') }}' + '/' + $(this).val();
+            const url = "search/autocomplete";
+            const full = url + ($(".keyword").val() != "" ? ("q=" + $(".keyword").val()) : "" ) + ($('.dropdown-item').val() != "" ? ("&category=" + $('.dropdown-item').val()) : "");
+
+            $.get(full, function(data) {
+                var select = $('form input[name=lesson]');
+
+                select.empty();
+
+                $.each(data,function(key, value) {
+                    select.append('<option value=' + value.id + '>' + value.nama + '</option>');
+                });
+            });
+        });
+    });
     </script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-show-password/1.0.3/bootstrap-show-password.min.js"></script>
 
@@ -780,25 +868,51 @@ a #items .item {
     </script>
     <!-- Search Form Auto complete -->
     <script type="text/javascript">
+        
     $(function() {
+      let autocompleteData = {};
+
+      $("#cate").change(function () {
+          autocompleteData.id = this.value;
+          $(".keyword").autocomplete("search");
+      });
       $(".keyword").autocomplete({
-        source:'{{ url("search/autocomplete")}}',
+        source: function(request, response) {
+          $.ajax({
+              url: "search/autocomplete",
+              type: "GET",
+              dataType: "json",
+              data: {id : 1},
+              success: function(data) {
+                  response($.map(data, function(item) {
+                    return {
+                      label: item.value,
+                      value: item.value,
+                      slug: item.slug
+                  };
+                  }));
+              }
+          });
+        },
         select:function(event,ui) {
           $(".keyword").val(ui.item.label);
           return false;
         },
-        minLength: 1,
+        minLength: 2,
+        select: function(event, ui) {
+          window.location = "/lessons/" + ui.item.slug;
+      }
       }).bind('focus', function () {
         $('.ui-autocomplete').css('z-index','9999').css('overflow-y','scroll').css('max-height','300px');
         // $('.ui-autocomplete').css('background','#09121a').css('color','#fff');
         // $('.ui-menu .ui-menu-item-wrapper').css('padding','11px 1em 3px 1.4em !important');
-        $(this).autocomplete("search");
+        // $(this).autocomplete("search");
         // var btncategory = $('.btn-category').width();
         // var left = '-'+btncategory+'px';
       });
     });
     </script>
-    @if (env('APP_ENV') == 'production')
+    <!--Start of Tawk.to Script-->
     <script type="text/javascript">
     var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
     (function(){
@@ -810,8 +924,8 @@ a #items .item {
     s0.parentNode.insertBefore(s1,s0);
     })();
     </script>
-    @endif
-    <script>
+    <!--End of Tawk.to Script-->
+    {{--  <script>
 // Set the date we're counting down to
     var countDownDate = new Date("Feb 10, 2018 23:59:59").getTime();
     // Update the count down every 1 second
@@ -837,21 +951,21 @@ a #items .item {
             document.getElementById("demo").innerHTML = "EXPIRED";
         }
     }, 1000);
-    </script>
+    </script>  --}}
 
-    <!-- <script type="text/javascript">
+    <script type="text/javascript">
       function notifview(id){
         var token   = "{{csrf_token()}}";
         var dataString= '_token='+ token + '&id=' + id ;
          $.ajax({
           type:"GET",
-          url:"{{url('ajax/notif/view')}}",
+          url:"{{url('user/notif/view')}}",
           data:dataString,
           success:function(data){
           }
         });
       }
-    </script> -->
+    </script>
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -874,6 +988,9 @@ a #items .item {
     </script>
     <?php $mtime = file_exists(public_path('template/web/js/custom.js')) ? filemtime(public_path('template/web/js/custom.js')) : '' ?>
     <script type="text/javascript" src="{{ asset('template/web/js/custom.js?'.$mtime) }}"></script>
+    //penambahan untuk slick
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
     @stack('js')
 </body>
 

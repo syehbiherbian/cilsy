@@ -80,28 +80,58 @@
         <div class="item">
             <div class="row">
             <div class="col-md-2">
-                <a href="{{ url('lessons/'.$result->slug) }}" >
+                <?php if(!empty($result->nilai)){ ?>
+                <a href="{{ url('kelas/v3/'.$result->slug) }}">
                 <img src="{{ $result->image }}" alt="" class="img-responsive">
                  </a>
+                 <?php }else{?>
+                  <a href="{{ url('lessons/'.$result->slug) }}" >
+                    <img src="{{ $result->image }}" alt="" class="img-responsive">
+                  </a>
+                  <?php } ?>
               </div>
               <div class="col-sm-8">
-                <p><a href="{{ url('lessons/'.$result->slug) }}" style="text-decoration:none;"><strong>{{ $result->title }}</strong></a></p>
-                <a href="{{ url('lessons/'.$result->slug) }}" style="text-decoration:none;">
-                <p><small><?php echo nl2br($result->description); ?></small></p>
+                  <?php if(!empty($result->nilai)){ ?>
+                    <p><a href="{{ url('kelas/v3/'.$result->slug) }}" style="text-decoration:none;"><strong>{{ $result->title }}</strong></a></p>
+                    <a href="{{ url('kelas/v3/'.$result->slug) }}" style="text-decoration:none;">
+                      <?php }else{?>
+                      <p><a href="{{ url('lessons/'.$result->slug) }}" style="text-decoration:none;"><strong>{{ $result->title }}</strong></a></p>
+                        <a href="{{ url('lessons/'.$result->slug) }}" style="text-decoration:none;">
+                      <?php } ?>
+                      <p><small><?php $sentence= $result->description;
+                    $numberofcharacters=500;
+                    $print = substr($sentence, 0, $numberofcharacters);
+                    echo $print; ?></small></p>
                 </a>
                 <p><div class="badge badge-default">{{ $result->category_title }}</div>
                   <?=date('d M Y H:i', strtotime($result->created_at));?>
                 </p>
               </div>
               <div class="col-md-2">
-                <p style="font-weight:bold;">Rp. {{ number_format($result->price, 0, ",", ".") }}</p>
-                <p>
-                <button type="button" class="btn btn-info" onclick="addToCart({{ $result->id }})"><i class="fa fa-shopping-cart"></i> Beli</button>
+             
+                <?php if(!empty($result->nilai)){ ?>
+                <p style="font-weight:bold color:green;">
+                <a href="{{ url('kelas/v3/'.$result->slug) }}" class="btn" style="background-color:#f1c40f; color:white; padding: 6px 22px;">Lihat Tutorial</a>
                 </p>
-              </div>
+                <?php }else{?>
+                <p style="font-weight:bold;">Rp. {{ number_format($result->price, 0, ",", ".") }}</p>
+                <?php if(empty($result->hasil)){ ?>
+                <p>
+                <button id="beli-{{ $result->id }}" type="button" class="btn btn-info" style="padding: 6px 48px"  onclick="addToCart({{ $result->id }})"><i class="fa fa-shopping-cart"></i>Beli </button>
+                <a id="guest-{{ $result->id }}" href="{{ url('cart') }}" class="btn" style="background-color:#fff; color:#5bc0de; border-color:#46b8da; display:none" >Lihat Keranjang</a>
+                </p>
+                <?php }else{ ?>
+                <p>
+                <a href="{{ url('cart') }}" class="btn" style="background-color:#fff; color:#5bc0de; border-color:#46b8da;">Lihat Keranjang</a>
+                </p>
+                <?php } ?>
+                <?php }?>
+              
+                </div>
             </div>
           {{-- </a> --}}
         </div>
+             
       <?php endforeach; ?>
       <div class="row">
           <div class="col-md-12 text-center">
@@ -111,6 +141,19 @@
     </div>
   </div>
 </div>
+
+<script>
+  var cek = localStorage.getItem('cart');
+  if(cek != null){
+    var results = JSON.parse(cek);
+    if (results.length > 0){
+      $.each(results, function(k,v) {
+            $('#beli-'+v['id']).hide();
+            $('#guest-'+v['id']).show();
+      });
+    }
+  }
+</script>
 <script>
 fbq('track', 'Search');
 </script>

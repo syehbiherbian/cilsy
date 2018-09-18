@@ -27,6 +27,7 @@ class AttachmentsController extends Controller
     if($lesson->status==2){
         return redirect('contributor/lessons/'.$lessonsid.'/view')->with('no-delete','Tutorial sedang / dalam verifikasi!');
     }
+   
     $files=File::where('lesson_id',$lessonsid)->get();
     $count_files=count($files);
 
@@ -88,7 +89,7 @@ class AttachmentsController extends Controller
                     $url_files= $lessonsfilename;
                 }else{
                     $urls=url('');
-                    $url_files= $urls.'/assets/source/lessons/files-'.$i.'/'.$lessonsfilename;
+                    $url_files= $urls.'/assets/source/lessons/lessons-'.$lessonsid.'/files-'.$i.'/'.$lessonsfilename;
                 }
 
 
@@ -190,7 +191,7 @@ class AttachmentsController extends Controller
                     $url_files= $files_text[$key];
                 }else{
                     $urls=url('');
-                    $url_files= $urls.'/assets/source/lessons/files-'.$i.'/'.$lessonsfilename;
+                    $url_files= $urls.'/assets/source/lessons/lessons-'.$lessonsid.'/files-'.$i.'/'.$lessonsfilename;
                 }
 
                 $store                  = new File();
@@ -213,5 +214,8 @@ class AttachmentsController extends Controller
 
     }
   }
-
+  public function delete($lessonsid, $id){
+      $delete= File::where('lesson_id',$lessonsid)->where('id', $id)->delete();
+      return redirect()->back()->with('success', 'Data successfully deleted');
+  }
 }

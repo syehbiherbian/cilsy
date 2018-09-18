@@ -22,7 +22,7 @@
         text-align: right
     }
     #cart-total {
-        font-size: 26px;
+        font-size: 16px;
         font-weight: bolder;
         margin-bottom: 20px;
     }
@@ -84,11 +84,79 @@
         <div id="cart-total" class="row  {{ !count($carts) ? 'hide' : '' }}">
             <div class="col-md-offset-8 col-md-4">
                 <div class="row">
+                    @if (! session()->has('coupon'))
+                    <a href="#" class="have-code col-md-12" id="hide" style="display:block">Gunakan Kode Promo</a>
+                    <form action="{{ url('coupon') }}" method="POST" id="form" style="display:none;">
+                        {{ csrf_field() }}
+                        <input type="hidden" value="{{$total}}" name="total">
+                        <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Promo Code" name="coupon_code">
+                        <span class="input-group-btn">
+                            <button class="btn btn-primary" type="submit" style="background-color: #3CA3E0;">Gunakan</button>
+                        </span>
+                        </div><!-- /input-group -->
+                    </form>
+                        @if(count($errors) > 0)
+                            <div class="spacer"></div>
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{!! $error !!}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+                    @endif
                     <div class="col-md-6">
                         Total
                     </div>
                     <div class="col-md-6" style="text-align:right">
-                        <span id="total-price">Rp{{ number_format($total, 0, ",", ".") }}</span>
+                        <span id="total-price">Rp. {{ number_format($total, 0, ",", ".") }}</span>
+                    </div>
+                    <div class="col-md-6">
+                    @if (session()->has('coupon'))
+                    Diskon <span style="font-size:11px;">{{ session()->get('coupon')['name'] }}</span>
+                    <form action="{{ url('coupon/delete') }}" method="POST" style="display:inline">
+                        {{ csrf_field() }}
+                        {{ method_field('delete') }}
+                        <button type="submit" style="font-size:14px" class="btn-link" alt="Hapus Voucher"><i class="fa fa-trash"></i></button>
+                    </form>
+                    </div>
+                    <div class="col-md-6" style="text-align:right">
+                        @if(session()->get('coupon')['type'] == 'fixed')
+                        Rp. {{ number_format(session()->get('coupon')['value'], 0, ",", ".") }}
+                        @elseif(session()->get('coupon')['type'] == 'percent')
+                        Diskon {{ session()->get('coupon')['percent_off'] }} %
+                        @endif
+                    @endif
+                    </div>
+                    @if(session()->has('coupon'))
+                    <div class="col-md-6 bawah">
+                    </div>
+                    <div class="col-md-6 bawah">
+                    </div>
+                    <div class="col-md-6 bawah">
+                    </div>
+                    @endif
+                    <div class="col-md-6 bawah">
+                    </div>
+                    <div class="col-md-6">
+                        Total Pembayaran
+                    </div>
+                    <div class="col-md-6" style="text-align:right">
+                        @if(session()->has('coupon'))
+                        <span id="total-price">Rp. {{ number_format(session()->get('coupon')['discount'], 0, ",", ".") }}</span>
+                        @else
+                        <span id="total-price">Rp. {{ number_format($total, 0, ",", ".") }}</span>
+                        @endif
+                    </div>
+                    <div class="col-md-12">
+                        @if (session()->has('success_message'))
+                            <div class="spacer"></div>
+                            <div class="alert alert-success">
+                                {{ session()->get('success_message') }}
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -97,12 +165,28 @@
             <div class="col-md-offset-8 col-md-4" style="padding:0">
                 <form action="{{ url('member/checkout')}}" method="post">
                     {{ csrf_field() }} 
-                    <button class="btn btn-primary btn-lg btn-block" style="background-color: #3CA3E0; border:0; padding-top:20px;padding-bottom:20px">Pilih Metode Pembayaran</button>
+                    <button class="btn btn-primary btn-lg btn-block" id="inicheckout" style="background-color: #3CA3E0; border:0; padding-top:20px;padding-bottom:20px">Pilih Metode Pembayaran</button>
                 </form>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+fbq('track', 'AddToCart');
+</script>
+
+<script type="text/javascript">
+  var button = document.getElementById('inicheckout');
+  button.addEventListener(
+    'click',
+    function() {
+      fbq('track', 'InitiateCheckout');
+    },
+    false
+  );
+</script>
+
 @if (!Auth::guard('members')->user()) 
 <script>
     $('document').ready(function(){
@@ -141,5 +225,14 @@
         }
     });
 </script>
+
 @endif
+<script>
+$(document).ready(function(){
+    $("#hide").click(function(){
+        document.getElementById('form').style.display = 'block';
+        document.getElementById('hide').style.display = 'none';
+    });
+});
+</script>
 @endsection

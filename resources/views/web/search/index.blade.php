@@ -87,17 +87,33 @@
               <div class="col-sm-8">
                 <p><a href="{{ url('lessons/'.$result->slug) }}" style="text-decoration:none;"><strong>{{ $result->title }}</strong></a></p>
                 <a href="{{ url('lessons/'.$result->slug) }}" style="text-decoration:none;">
-                <p><small><?php echo nl2br($result->description); ?></small></p>
+                <p><small><?php $sentence= $result->description;
+                    $numberofcharacters=500;
+                    $print = substr($sentence, 0, $numberofcharacters);
+                    echo $print; ?></small></p>
                 </a>
                 <p><div class="badge badge-default">{{ $result->category_title }}</div>
                   <?=date('d M Y H:i', strtotime($result->created_at));?>
                 </p>
               </div>
               <div class="col-md-2">
-                <p style="font-weight:bold;">Rp. {{ number_format($result->price, 0, ",", ".") }}</p>
-                <p>
-                <button type="button" class="btn btn-info" onclick="addToCart({{ $result->id }})"><i class="fa fa-shopping-cart"></i> Beli</button>
+               <?php if(!empty($result->nilai)){ ?>
+                <p style="font-weight:bold color:green;">
+                <a href="{{ url('kelas/v3/'.$result->slug) }}" class="btn" style="background-color:#f1c40f; color:white; padding: 6px 22px;">Lihat Tutorial</a>
                 </p>
+                <?php }else{?>
+                <p style="font-weight:bold;">Rp. {{ number_format($result->price, 0, ",", ".") }}</p>
+                <?php if(empty($result->hasil)){ ?>
+                <p>
+                <button id="beli-{{ $result->id }}" type="button" class="btn btn-info" style="padding: 6px 48px"  onclick="addToCart({{ $result->id }})"><i class="fa fa-shopping-cart"></i>Beli </button>
+                <a id="guest-{{ $result->id }}" href="{{ url('cart') }}" class="btn" style="background-color:#fff; color:#5bc0de; border-color:#46b8da; display:none" >Lihat Keranjang</a>
+                </p>
+                <?php }else{ ?>
+                <p>
+                <a href="{{ url('cart') }}" class="btn" style="background-color:#fff; color:#5bc0de; border-color:#46b8da;">Lihat Keranjang</a>
+                </p>
+                <?php } ?>
+                <?php }?>
               </div>
             </div>
           {{-- </a> --}}
@@ -113,6 +129,18 @@
 </div>
 <script>
 fbq('track', 'Search');
+</script>
+<script>
+  var cek = localStorage.getItem('cart');
+  if(cek != null){
+    var results = JSON.parse(cek);
+    if (results.length > 0){
+      $.each(results, function(k,v) {
+            $('#beli-'+v['id']).hide();
+            $('#guest-'+v['id']).show();
+      });
+    }
+  }
 </script>
 <script type="text/javascript">
 
@@ -162,21 +190,23 @@ fbq('track', 'Search');
                 
                 localStorage.setItem('cart', JSON.stringify(cart));
               @endif
-
               swal({
                   title: "Menambahkan ke keranjang",
                   text: data.title,
                   type: "success",
+                  closeModal: true,
                   showCancelButton: true,
+                  focusConfirm: false,
                   cancelButtonText: 'Lihat keranjang',
-                  cancelButtonColor: '#3085d6',
                   confirmButtonText: "Tutorial lainnya"
               }).then(function(isConfirm) {
-                  if (isConfirm.value) {
-                      window.location.href = '{{ url("lessons/browse/all") }}';
-                  } else {
-                      window.location.href = '{{ url("cart") }}';
-                  }
+                if (isConfirm.value) {
+					        window.location.href = SITE_URL+'/cart';
+				        }else if(swal.cancelButton){
+					        window.location.href = SITE_URL+'/lessons/browse/all';
+				        }else {
+					        window.location.href = SITE_URL+'/lessons/browse/all';
+              }
               });
             } else {
                 alert('Koneksi Bermasalah, Silahkan Ulangi');

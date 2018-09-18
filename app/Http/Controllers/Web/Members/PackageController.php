@@ -98,6 +98,9 @@ class PackageController extends Controller
           foreach ($carts as $cart) {
             $price += $cart->lesson->price;
           }
+          if(Session::get('coupon')){
+            $price = session()->get('coupon')['discount'];
+          }
 
           $code = $this->generateCode();
           // store
@@ -114,13 +117,14 @@ class PackageController extends Controller
               InvoiceDetail::updateOrCreate([
                 'invoice_id' => $invoice->id,
                 'lesson_id' => $cart->lesson->id,
-                'flag' => 0,
+                'harga_lesson' => $cart->lesson->price,
                 'contributor_id' => $cart->lesson->contributor_id,
               ]);
             }
 
             /* hapus cart */
             Cart::where('member_id', $member_id)->delete();
+            session()->forget('coupon');
           }
 
           Session::put('invoiceCODE', $invoice->code);

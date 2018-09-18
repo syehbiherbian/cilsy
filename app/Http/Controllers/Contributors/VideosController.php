@@ -79,7 +79,7 @@ class VideosController extends Controller
                 //insert video
                 $lessonsfilename = '';
                 if (!empty($lessons_video[$key])) {
-                    $lessonsfilename = str_slug($lessons_video[$key]->getClientOriginalName());
+                    $lessonsfilename = $lessons_video[$key]->getClientOriginalName();
                     $lessons_video[$key]->move($DestinationPath, $lessonsfilename);
                 }
                 //insert image
@@ -101,7 +101,7 @@ class VideosController extends Controller
                 } else {
                     $lessonsfilename = '';
                 }
-                if ($lessonsfilename == '') {
+                if ($lessonsfilename == '') { 
                     $url_video = $lessonsfilename;
                 } else {
                     $url_video = $DestinationPath . '/' . $lessonsfilename;
@@ -129,8 +129,9 @@ class VideosController extends Controller
                 $store->created_at = $now;
                 $store->enable = 1;
                 $store->save();
+                // dd($store->video);
                 /*if($store){
-                // dd($url_video);
+                dd($url_video);
                 $media = FFMpeg::open($url_video);
                 // $frame = FFMpeg::open($link)
                 //         ->getFrameFromSeconds(10)
@@ -256,20 +257,20 @@ class VideosController extends Controller
                     $url_video = $urls . '/assets/source/lessons/video-' . $i . '/' . $lessonsfilename;
                 }
                 /* siapin video */
-                $media = FFMpeg::fromDisk('local_public')->open($DestinationPath . '/' . $lessonsfilename);
-                /* ambil durasi */
-                $duration = $media->getDurationInSeconds();
-                // dd($duration);
-                /* generate thumbnail */
-                $filename = pathinfo($lessonsfilename, PATHINFO_FILENAME);
-                $thumbnailname = 'thumbnail-' . $filename . '.jpg';
-                $thumnail = $media->getFrameFromSeconds(0)->export()->save($DestinationPath . '/' . $thumbnailname);
+                // $media = FFMpeg::fromDisk('local_public')->open($DestinationPath . '/' . $lessonsfilename);
+                // /* ambil durasi */
+                // $duration = $media->getDurationInSeconds();
+                // // dd($duration);
+                // /* generate thumbnail */
+                // $filename = pathinfo($lessonsfilename, PATHINFO_FILENAME);
+                // $thumbnailname = 'thumbnail-' . $filename . '.jpg';
+                // $thumnail = $media->getFrameFromSeconds(0)->export()->save($DestinationPath . '/' . $thumbnailname);
                 // dd($thumnail);
 
                 $store = new Video;
                 $store->lessons_id = $lessonsid;
                 $store->title = $titles;
-                $store->image = $thumbnailname;
+                // $store->image = $thumbnailname;
                 $store->video = $url_video;
                 $store->description = $description[$key];
                 $store->type_video = $type_video;
@@ -289,5 +290,9 @@ class VideosController extends Controller
 
         }
     }
+    public function destroy($id) {
+		$delete = Video::where('id', $id)->delete();
 
+		return redirect()->back()->with('success', 'Data successfully deleted');
+	}
 }

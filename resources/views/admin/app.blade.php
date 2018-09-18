@@ -84,7 +84,7 @@
                     <!-- <li><a href="javascript:void(0);" class="js-search" data-close="true"><i class="material-icons">search</i></a></li> -->
                     <!-- #END# Call Search -->
                     <!-- Notifications -->
-                    <!-- <li class="dropdown">
+                    {{--  <!-- <li class="dropdown">
                         <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button">
                             <i class="material-icons">notifications</i>
                             <span class="label-count">7</span>
@@ -190,7 +190,7 @@
                                 <a href="javascript:void(0);">View All Notifications</a>
                             </li>
                         </ul>
-                    </li>-->
+                    </li>-->  --}}
                     <!-- #END# Notifications -->
                     <!-- Tasks -->
                     <!-- <li class="dropdown">
@@ -270,11 +270,8 @@
                         </ul>
                     </li>
                     <!-- #END# Tasks -->
-                    <li class="pull-right"><a href="javascript:void(0);" onclick="$('#form-logout').submit();">Logout</a></li>
-                    <form id="form-logout" action="{{url('/logout')}}" method="post">
-                        {{ csrf_field() }}
-                    </form>
-                    <!-- <li class="pull-right"><a href="javascript:void(0);" class="js-right-sidebar" data-close="true"><i class="material-icons">more_vert</i></a></li> -->
+                    <li class="pull-right"> <a href="{{url('system/logout')}}">Logout</a></li>
+                  
                 </ul>
             </div>
         </div>
@@ -288,7 +285,7 @@
                 <div class="image">
                     {{--<img src="images/user.png" width="48" height="48" alt="User" />--}}
                 </div>
-                <div class="info-container">
+                {{--  <div class="info-container">
                     <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ Auth::user()->name }}</div>
                     <div class="email">{{ Auth::user()->email}}</div>
                     <!-- <div class="btn-group user-helper-dropdown">
@@ -300,13 +297,11 @@
                             <li><a href="javascript:void(0);"><i class="material-icons">shopping_cart</i>Sales</a></li>
                             <li><a href="javascript:void(0);"><i class="material-icons">favorite</i>Likes</a></li>
                             <li role="seperator" class="divider"></li>
-                            <li><a href="javascript:void(0);" onclick="$('#form-logout').submit();"><i class="material-icons">input</i>Sign Out</a></li>
-
-
+                            <li> <a href="{{url('system/logout')}}">input</i>Sign Out</a></li>
 
                         </ul>
                     </div> -->
-                </div>
+                </div>  --}}
             </div>
             <!-- #User Info -->
             <!-- Menu -->

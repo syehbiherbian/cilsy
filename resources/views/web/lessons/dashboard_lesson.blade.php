@@ -7,14 +7,7 @@
         <div class="container">
           <div class="row video mb-25">
            <?php if($full != null) {?>
-            <div class="col-md-12">
-              <div class="tab-content" style="margin-top:0px;">
-                <div id="tab1" class="tab-pane fade in active">
-                  <img src="http://www.rewardle.com/Common/Images/ribbon_rewards.png" alt="medal" style="height:105px; width:175px; text-align:center;">
-                  <h4>Selamat anda telah menyelesaikan tutorial, anda berhak mendapatkan sertifikat kompetensi keahlian</h4>
-                  <a href="{{ url('member/generatepdf/'. Auth::guard('members')->user()->id) }}" class="btn btn-primary btn-lg " style="color :white; background-color: #3CA3E0; border-color: #3CA3E0;">Lihat Sertifikat</a>
-                </div>
-              </div>
+           
               
 
             </div>
@@ -62,7 +55,11 @@
                       Silahkan <a href="{{ url('member/signin') }}" class="btn btn-primary"> Masuk</a> untuk memberikan komentar
                     </div>
                   <?php	}else { ?>
-
+                 @if ( empty($tutor))
+                    <div class="text-center mb-25">
+                      Fitur Komentar hanya bisa di gunakan jika sudah melakukan pembelian
+                    </div>
+                  @else
                   <!-- Comment Form -->
                   <div class="comments-form mb-25">
                     <!-- <form id="form-comment" class="mb-25">
@@ -73,10 +70,15 @@
                         <label>Komentar</label>
                         <textarea rows="8" cols="80" class="form-control" name="body" id="textbody0"></textarea>
                       </div>
+                      
+                      <span id="file_progress" class="float-left"></span>
+                      <a id="browse" href="javascript:;" style="float:right" class="uploader"  url="{{ url('attachment')}}" >
+                       <button  type="button"  class="btn btn-warning"> <i class="fa fa-paperclip"> </i> Upload </button></a> 
                       <button type="button" class="btn btn-primary" onClick="doComment({{ $lessons->id }},0)" >Kirim</button>
-                    <!-- </form><!--./ Comment Form -->
+                      <button type="button" class="btn btn-warning" onClick="doComment({{ $lessons->id }},0)" >upload</button>
+                  <!-- </form><!--./ Comment Form -->
                   </div>
-
+                  @endif
                   <?php } ?>
 
                   <!-- Comments Lists -->
@@ -111,7 +113,6 @@
                       <div class="text-center mt-15">
                         <div class="btn-group">
                           <button type="button" class="btn btn-primary">{{ count($contributors_total_lessons) }} Tutorial</button>
-                          <button type="button" class="btn btn-primary">{{ $contributors_total_view }} View</button>
                         </div>
                       </div>
                     </div>

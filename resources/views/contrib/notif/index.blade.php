@@ -99,14 +99,14 @@
             <tbody>
 			@foreach($data as $dat)
 			<?php
-				if($dat->status !== 1){
+				if($dat->status == 0){
 			?>
               <tr>
                 <td><?= date('d/m/Y',strtotime($dat->created_at)) ?></td>
                 <td>{{ $dat->notif }}</td>
                 <td>
-                  @if($dat->category=='coments')
-                   <a href="{{ url('contributor/coments') }}" onclick="readnotif({{$dat->id}})" class="btn blue">Lihat</a>
+                  @if($dat->category=='Komentar')
+                   <a href="{{ url('contributor/comments/detail/'.$dat->slug) }}" onclick="readnotif({{$dat->id}})" class="btn blue">Lihat</a>
                   @elseif($dat->category=='point')
                    <a href="{{ url('contributor/dashboard') }}" onclick="readnotif({{$dat->id}})" class="btn blue">Lihat</a>
                   @elseif($dat->category=='transfer')
@@ -122,7 +122,7 @@
               </tr>
 
 			<?php } ?>
-			@endforeach
+      @endforeach
             </tbody>
           </table>
         </div>
@@ -144,8 +144,8 @@
                   <td><?= date('d/m/Y',strtotime($dat->created_at)) ?></td>
                   <td>{{ $dat->notif }}</td>
                   <td>
-                    @if($dat->category=='coments')
-                     <a href="{{ url('contributor/coments') }}" class="btn blue">Lihat</a>
+                    @if($dat->category=='Komentar')
+                     <a href="{{ url('contributor/comments/detail/'.$dat->slug) }}" class="btn blue">Lihat</a>
                     @elseif($dat->category=='point')
                      <a href="{{ url('contributor/point') }}"  class="btn blue">Lihat</a>
                     @elseif($dat->category=='transfer')
@@ -160,7 +160,8 @@
                   </td>
                 </tr>
 			<?php } ?>
-  			@endforeach
+        @endforeach
+                      
               </tbody>
             </table>
         </div>
@@ -179,8 +180,8 @@
               <td><?= date('d/m/Y',strtotime($dat->created_at)) ?></td>
               <td>{{ $dat->notif }}</td>
               <td>
-                @if($dat->category=='coments')
-                 <a href="{{ url('contributor/coments') }}" onclick="readnotif({{$dat->id}})" class="btn blue">Lihat</a>
+                @if($dat->category=='Komentar')
+                 <a href="{{ url('contributor/comments/detail/'.$dat->slug) }}" onclick="readnotif({{$dat->id}})" class="btn blue">Lihat</a>
                 @elseif($dat->category=='point')
                  <a href="{{ url('contributor/point') }}" onclick="readnotif({{$dat->id}})" class="btn blue">Lihat</a>
                 @elseif($dat->category=='transfer')
@@ -194,12 +195,18 @@
       				 </form>
               </td>
             </tr>
-  			@endforeach
+        @endforeach
               </tbody>
             </table>
+        
         </div>
       </div>
     </div>
+    <div class="row">
+          <div class="col-md-12 text-center">
+              {{ $data->links() }}
+          </div>
+      </div>
   </div>
 </div>
 <script type="text/javascript">

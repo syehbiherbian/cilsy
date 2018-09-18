@@ -17,4 +17,8 @@ class Lesson extends Model
 	{
 		return $this->hasMany('\App\Models\Video', 'lessons_id');
 	}
+
+	public function category(){
+		return $this->belongTo('App\Models\Category');
+	}
 }

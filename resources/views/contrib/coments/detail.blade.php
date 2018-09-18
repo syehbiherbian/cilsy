@@ -71,6 +71,31 @@
   border-color: #e74c3c;
   color: #e74c3c;
 }
+.fileUpload {
+	position: relative;
+	overflow: hidden;
+	margin: 10px;
+	background-color: #BDBDBD;
+	height: 50px;
+	width: 50px;
+	text-align: center;
+}
+.fileUpload input.upload {
+	position: absolute;
+	top: 0;
+	right: 0;
+	margin: 0;
+	padding: 0;
+	font-size: 6px;
+	cursor: pointer;
+	opacity: 0;
+	filter: alpha(opacity=0);
+	height: 100%;
+	text-align: center;
+}
+.custom-span{ font-family: Arial; font-weight: bold;font-size: 25px; color: #FE57A1}
+#uploadFile{border: none;margin-left: 10px; width: 50px;}
+.custom-para{font-family: arial;font-weight: bold;font-size: 6px; color:#585858;}
 </style>
 <div class="row">
   <div class="col-md-12">
@@ -89,10 +114,15 @@
                 @foreach($datacomment as $comment)
                 <div class="col-md-12" style="margin-bottom:30px;" id="row{{ $comment->id }}">
                     <strong>{{ $comment->username }}</strong> pada <strong><?= date('d/m/Y',strtotime($comment->created_at)) ?></strong>
-					<strong style="color:#ff5e10;">@if($comment->member_id !==null)  User @endif @if($comment->contributor_id  !==null)  Contributor @endif</strong>
-					<div class="col-md-12" style="margin-top:10px;padding-left:5%;">
-							{{ $comment->body }}
+					<strong style="color:#ff5e10;">@if($comment->member_id !==null)  User @else ($comment->contributor_id  !==null)  Contributor @endif</strong>
+					<div class="col-md-12" style="margin-top:10px;padding-left:5%; white-space:pre-line;">
+                            {{ $comment->body }}
+                    <?php if(!empty($comment->images)) { ?>
+                            <a id="firstlink" data-gall="myGallery" class="venobox" data-vbtype="iframe" href="{{ asset($comment->images) }}"><img src="{{ asset($comment->images) }}" alt="image alt" style="height:50px; width:50px; margin-left: 15px; margin-bottom: 20px;"/></a>
+                    <?php } ?>
 					</div>
+
+                    
 						<br><br>
 						<?php
 						$getchild = DB::table('comments')
@@ -103,22 +133,24 @@
 							->orderBy('comments.created_at','ASC')
 							->select('comments.*','members.username as username','contributors.username as contriname')
 							->get();
-
 						if (count($getchild) > 0) {
 							foreach ($getchild as $child) {
 						?>
 						<div class="col-md-12" style="margin-top:10px;padding-left:5%;">
 							<img class="user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png"height="40px" width="40px" style="object-fit:scale-down;border-radius: 100%;margin-bottom:10px;">
 								<strong>
-									<?php if(!empty($child->username)){ ?>
+									<?php if($child->desc == 0){ ?>
 										{{ $child->username }}
 									<?php }else{ ?>
 										{{ $child->contriname }}
 									<?php } ?>
 								</strong> pada <strong><?= date('d/m/Y',strtotime($child->created_at)) ?></strong>
-								<strong style="color:#ff5e10;">@if($child->member_id !==null)  User @endif @if($child->contributor_id  !==null)  Contributor @endif</strong>
-								<div class="col-md-12" style="margin-top:10px;margin-bottom:10px;padding-left:5%;">
-									{{ $child->body }}
+								<strong style="color:#ff5e10;">@if($child->member_id !==null)  User @else ($child->contributor_id  !==null)  Contributor @endif</strong>
+								<div class="col-md-12" style="margin-top:10px;margin-bottom:10px;padding-left:5%; white-space: pre-line">
+                                    {{ $child->body }}
+                                    <?php if($child->images != null) { ?>
+                                        <a id="firstlink" data-gall="myGallery" class="venobox" data-vbtype="iframe" href="{{ asset($child->images) }}"><img src="{{ asset($child->images) }}" alt="image alt" style="height:50px; width:50px; margin-left: 15px; margin-bottom: 20px;"/></a>
+                                <?php } ?>
 								</div>
 								<div class="clearfix"></div>
 						</div>
@@ -127,8 +159,8 @@
                         }
                         ?>
 
-                    <div class="col-md-12" id="balas{{ $comment->id }}" style="padding-top:10px;padding-left:5%;">
-                        <a href="javascript:void(0)" class="btn btn-info pull-right" onclick="formbalas({{ $comment->id }})">Balas</a>
+                    <div class="col-md-12" id="balas{{ $comment->id }}" style="padding-top:10px;padding-left:5%; ">
+                        <a href="javascript:void(0)" class="btn btn-info pull-right" onclick="formbalas({{ $comment->id }})" style="border-radius:3px;">Balas</a>
                     </div>
                 </div>
                 @endforeach
@@ -142,41 +174,77 @@
     function formbalas(comment_id){
         $('#balas'+comment_id).html('<label class="col-md-1" style="padding-left:0px;">Anda</label>'+
                                 '<div class="col-md-11" style="padding-right:0px;">'+
-                                '   <input type="text" class="form-control" id="input_balas'+comment_id+'" name="balasan" placeholder="tambahkan komentar/balasan" value="">'+
+                                '   <textarea class="form-control" id="input_balas'+comment_id+'" name="balasan" placeholder="tambahkan komentar/balasan" value="" style="white-space: pre-line" rows="8" cols="80"></textarea>'+
                                 '</div>'+
-                                '<a href="javascript:void(0)" class="btn btn-info pull-right" onclick="dobalas('+comment_id+')" style="float:right;margin-top:10px;">Kirim</a>');
+                                '<div class="fileUpload">'+
+                                '<span class="custom-span">+</span>'+
+                                '<p class="custom-para">Add Images</p>'+
+                                '<input id="uploadBtn" type="file" class="upload" name="image" />'+
+                                '</div>'+
+                                '<input id="uploadFile" placeholder="0 files selected" disabled="disabled" />'+
+                                '<a href="javascript:void(0)" class="btn btn-info pull-right" onclick="dobalas('+comment_id+')" style="float:right;margin-top:10px; border-radius:3px;">Kirim</a>');
     }
 
     function dobalas(comment_id){
+        var token = '{{ csrf_token() }}';
         var isi_balas = $('#input_balas'+comment_id).val();
+        var file_data = $('#uploadBtn').prop("files")[0];
         var lesson_id = '{{ $datalesson->id }}';
-        var member_id = '{{ $comment->member_id }}';
-        // alert(comment_id+' = '+isi_balas);
-        var datapost = {
-            '_token'    : '{{ csrf_token() }}',
-            'isi_balas' : isi_balas,
-            'comment_id': comment_id,
-            'lesson_id' : lesson_id,
-            'member_id' : member_id
-        }
-
-        $.ajax({
-            type    :'POST',
-            url     :'{{ url("contributor/comments/postcomment") }}',
-            data    :datapost,
-            success:function(data){
+        var member_id = '{{ $comment->member_id}}';
+        dataform = new FormData();
+        dataform.append( '_token', token);
+        dataform.append( 'image', file_data);
+        dataform.append( 'body', isi_balas);
+        dataform.append( 'lesson_id', lesson_id);
+        dataform.append( 'member_id', member_id);
+        dataform.append( 'comment_id', comment_id);
+    
+        if (isi_balas == '') {
+          alert('Harap Isi Komentar !')
+        }else {
+          $.ajaxSetup({
+              headers: {
+                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+              }
+          });
+          $.ajax({
+              type    :"POST",
+              url     :'{{ url("contributor/comments/postcomment") }}',
+              data    : dataform,
+              dataType : 'json',
+              contentType: false,
+              processData: false,
+              beforeSend: function(){
+                   swal({
+                    title: "Sedang mengirim Komentar",
+                    text: "Mohon Tunggu sebentar",
+                    imageUrl: "{{ asset('template/web/img/loading.gif') }}",
+                    showConfirmButton: false,
+                    allowOutsideClick: false
+                });
+                // Show image container
+              },
+              success:function(data){
                 if (data == 1) {
+                    swal({
+                        title: "Anda Berhasil Membalas Komentar",
+                        showConfirmButton: true,
+                        icon: "success",
+                        timer: 3000
+                    });
                     $("#row"+comment_id).load(window.location.href + " #row"+comment_id);
                 }
-				else if(data==0){
-						window.location.href = '{{url("contributor/login")}}';
-				}else {
-                    alert('Koneksi Bermasalah, Silahkan Ulangi');
-                    location.reload();
+                else if(data==0){
+                    window.location.href = '{{url("contributor/login")}}';
+                }else {
+                            alert('Koneksi Bermasalah, Silahkan Ulangi');
+                            location.reload();
+                  }
                 }
-            }
-        })
-    }
+          });
+        }
+      }
+    
 
     function loadcontent(){
         $(".content-reload").load(window.location.href + " .content-reload");

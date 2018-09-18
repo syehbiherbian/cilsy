@@ -42,9 +42,12 @@ class LoginController extends Controller
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(Request $r)
     {
         $this->middleware('RedirectIfContrib', ['except' => 'logout']);
+        if ($r->input('next')) {
+            $this->redirectTo = url($r->input('next'));
+        }
         
     }
 

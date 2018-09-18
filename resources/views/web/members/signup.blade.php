@@ -49,7 +49,7 @@
                     @if ($errors->has('password_confirmation')) <p class="help-block">{{ $errors->first('password_confirmation') }}</p> @endif
                 </div>
                 <!-- <button type="submit" class="btn btn-primary">DAFTAR</button> -->
-                <button type="submit" class="btn btn-primary" id="daftar">DAFTAR</button>
+                <button type="submit" class="btn btn-primary" style="margin: auto;" id="daftar">DAFTAR</button>
             </form>
         </div>
         <div id="tab-2-content" style="display: none;">

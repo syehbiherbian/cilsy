@@ -3,6 +3,7 @@
 
 @endpush
  @if (Auth::guard("members")->user()) 
+ @if (count($cekdulu) > 0)
  @if (count($ratenow) <1)
  <?echo $ratenow ?>
   <div id="myModal" class="modal fade" role="dialog">
@@ -32,6 +33,7 @@
 </div>
 @endif
 @endif
+@endif
 
 <!-- BEGIN MAIN BANNER -->
 <section class="main-banner">
@@ -44,11 +46,11 @@
               Satu-satunya Kursus Online Jaringan & Server yang dipandu sampai bisa.</br>
               Bergabung sekarang dengan 2000++ pendaftar lainnya.</br>
             </p>
-            <?php if (Session::get('memberID')): ?>
-	      <a href="{{ url('lessons/browse/all')}}" class="daftar-btn">Browse</a>
-            <?php else: ?>
+            @if (Auth::guard("members")->user())
+	            <a href="{{ url('lessons/browse/all')}}" class="daftar-btn">Browse</a>
+            @else
               <a href="{{ url('member/signup')}}" class="daftar-btn">Daftar</a>
-            <?php endif;?>
+            @endif
           </div>
         </div>
       </div>
@@ -59,7 +61,7 @@
           <div class="col-md-4">
             <div class="card">
               <strong class="title ">Interaktif</strong>
-              <p class="mt-15">Bisa konsultasi dengan Trainer Profesional via chat dan remote teamviewer</p>
+              <p class="mt-15">Bisa konsultasi dengan Trainer Profesional jika mengalami kesulitan saat praktek.</p>
             </div>
           </div>
 
