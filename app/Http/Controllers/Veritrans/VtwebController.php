@@ -17,7 +17,7 @@ use App\Mail\InvoiceMail;
 use App\Mail\SuksesMail;
 use Auth;
 use Illuminate\Http\Request;
-// use App\Models\Cart;
+use App\Models\Cart;
 
 class VtwebController extends Controller {
 
@@ -230,7 +230,7 @@ class VtwebController extends Controller {
     
     public function hapus_cart($order_id){
         $invoice = Invoice::where('code', $order_id)->first();
-        $cart = Cart::find('member_id', $invoice->members_id)->first();
+        $cart = Cart::where('member_id', $invoice->members_id)->first();
         $cart->delete();
         echo "berhasil hapus keranjang";
     }
