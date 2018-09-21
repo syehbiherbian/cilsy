@@ -25,6 +25,8 @@ use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Validator;
+use App\Mail\WaitingNotifMail;
+use Illuminate\Support\Facades\Mail;
 
 class LessonsController extends Controller
 {
@@ -100,15 +102,74 @@ class LessonsController extends Controller
     public function getSearchcategory(Category $category){
         return $category->lesson()->select('id', 'title')->get();
     }
+
+    public function preview($slug)
+    {
+        $mem_id = isset(Auth::guard('members')->user()->id) ? Auth::guard('members')->user()->id : 0;
+                
+        $now = new DateTime();
+
+        $lessons = Lesson::where('enable', 1)->where('status', 1)->where('slug', $slug)->first();
+        $cart = Cart::where('member_id', $mem_id)->where('lesson_id', $lessons->id)->first();
+        $categories = Category::where('id', $lessons->category_id)->first();
+        $time = strtotime($lessons->created_at);
+        $myFormatForView = date("d F y", $time);
+        $tutorial = TutorialMember::where('member_id', $mem_id)->where('lesson_id', $lessons->id)->first();
+        if(($tutorial != null && $mem_id != null)){
+            return redirect('kelas/v3/'.$slug);
+        }
+        // dd($cart);
+        if (count($lessons) > 0) {
+            $main_videos = Video::where('enable', 1)->where('lessons_id', $lessons->id)->orderBy('id', 'asc')->get();
+            $preview = Video::where('enable', 1)->where('lessons_id', $lessons->id)->orderBy('id', 'asc')->first();
+            $last_videos = Viewer::leftJoin('videos', 'videos.id', '=', 'viewers.video_id')
+            ->select('videos.*', 'viewers.video_id')
+            ->where('viewers.member_id', $mem_id)
+            ->where('videos.lessons_id', $lessons->id)->orderBy('viewers.updated_at', 'desc')->first();
+            // dd($last_videos);
+            $files = File::where('enable', 1)->where('lesson_id', $lessons->id)->orderBy('id', 'asc')->get();
+            
+            // Contributor
+            $contributors = Contributor::find($lessons->contributor_id);
+            $contributors_total_lessons = Lesson::where('enable', 1)->where('status', 1)->where('contributor_id', $lessons->contributor_id)->with('videos.views')->get();
+            $contributors_total_view = 0;
+            foreach ($contributors_total_lessons as $lessonss) {
+                foreach ($lessonss->videos as $videos) {
+                    if ($videos->views) {
+                        $contributors_total_view += 1;
+                    }
+                }
+            }
+
+            return view('web.lessons.preview', [
+                'categories' => $categories,
+                'lessons' => $lessons,
+                'main_videos' => $main_videos,
+                'last_videos' => $last_videos,
+                'file' => $files,
+                'tutor' => $tutorial,
+                'cart' => $cart,
+                'preview' => $preview,
+                'tanggal' => $myFormatForView,
+                'contributors' => $contributors,
+                'contributors_total_lessons' => $contributors_total_lessons,
+                'contributors_total_view' => $contributors_total_view,
+            ]);
+            // echo "syehbo";
+        } else {
+            abort(404);
+        }
+    }
     public function detail($slug)
     {
         
         $now = new DateTime();
         $mem_id = isset(Auth::guard('members')->user()->id) ? Auth::guard('members')->user()->id : 0;
-        $services = Service::where('status', 1)->where('status', 2)->where('download', 1)->where('members_id', $mem_id)->where('expired', '>', $now)->first();
-        
         $lessons = Lesson::where('enable', 1)->where('status', 1)->where('slug', $slug)->first();
         $tutorial = TutorialMember::where('member_id', $mem_id)->where('lesson_id', $lessons->id)->first();
+        if(($tutorial == null)){
+            return redirect('lessons/'.$slug);
+        }
         $cart = Cart::where('member_id', $mem_id)->where('lesson_id', $lessons->id)->first();
         $categories = Category::where('enable', 1)->get();
         
@@ -123,8 +184,11 @@ class LessonsController extends Controller
         // SELECT A.code, B.lesson_id, C.title , A.status as status FROM `invoice` A JOIN invoice_details B On A.id = B.invoice_id JOIN lessons C On B.lesson_id = C.id
         if (count($lessons) > 0) {
             $main_videos = Video::where('enable', 1)->where('lessons_id', $lessons->id)->orderBy('id', 'asc')->get();
+            $last_videos = Viewer::leftJoin('videos', 'videos.id', '=', 'viewers.video_id')
+            ->select('videos.*', 'viewers.video_id')
+            ->where('viewers.member_id', '=', $mem_id)
+            ->where('videos.lessons_id', '=', $lessons->id)->orderBy('viewers.updated_at', 'desc')->first();
             $files = File::where('enable', 1)->where('lesson_id', $lessons->id)->orderBy('id', 'asc')->get();
-            
             // Contributor
             $contributors = Contributor::find($lessons->contributor_id);
             $contributors_total_lessons = Lesson::where('enable', 1)->where('status', 1)->where('contributor_id', $lessons->contributor_id)->with('videos.views')->get();
@@ -141,16 +205,17 @@ class LessonsController extends Controller
                 'categories' => $categories,
                 'lessons' => $lessons,
                 'main_videos' => $main_videos,
+                'last_videos' => $last_videos,
                 'file' => $files,
                 'tutor' => $tutorial,
                 'cart' => $cart,
                 'invo' => $invo,
-                'services' => $services,
+                // 'services' => $services,
                 'contributors' => $contributors,
                 'contributors_total_lessons' => $contributors_total_lessons,
                 'contributors_total_view' => $contributors_total_view,
             ]);
-            // echo "syehbo";
+            echo "syehbo";
         } else {
             abort(404);
         }
@@ -176,9 +241,13 @@ class LessonsController extends Controller
             $video = Video::where('video', 'like', '%' . $videosrc . '%')->first();
             if ($video) {
                 $nilai =  Viewer::where('video_id',$video->id)->where('member_id',$mem_id)->first();
-				if (count($nilai)== 0 ){
-					$viewers  = Viewer::where('video_id',$video->id)->where('ip_address',$ip_address)->where('member_id',$mem_id)->first();
 
+                $viewers  = Viewer::where('video_id',$video->id)->where('member_id',$mem_id)->first();
+                    DB::table('viewers')
+                    ->where('video_id', $video->id)
+                    ->update(['updated_at' => $now ]);
+				if (count($nilai)== 0 ){
+					
 				if ($viewers) { // Viewers exist
 
 					$update = Viewer::find($viewers->id);
@@ -187,7 +256,8 @@ class LessonsController extends Controller
 					$update->updated_at = $now;
 					if ($update->save()) {
 							return 'true';
-					}
+                    }
+                   
 				}else { // Create new Viewers
 
 					$store = new Viewer;
@@ -311,24 +381,27 @@ class LessonsController extends Controller
                 $request->image->move(public_path('/assets/source/komentar'), $input['images']);
             }
             // dd($input);
+
+            
+
             $store = Comment::create($input);
             // dd($store);
             if ($store) {
-             $getmembercomment = DB::table('comments')
-                                ->Join('members','members.id','=','comments.member_id')
-                                ->where('comments.lesson_id',$input['lesson_id'])
-                                ->where('comments.parent_id',0)
-                                ->where('comments.status',0)
-                                ->select('comments.*','members.username as username')
-                                ->first();
-            DB::table('contributor_notif')->insert([
+                $getmembercomment = DB::table('comments')
+                ->where('comments.lesson_id',$input['lesson_id'])
+                ->where('comments.status',0)
+                ->select('comments.id as id')
+                ->first();
+    
+                DB::table('contributor_notif')->insert([
                 'contributor_id' => $lessons->contributor_id,
                 'category' => 'Komentar',
                 'title' => 'Anda mendapat pertanyaan dari ' . $member->username,
                 'notif' => 'Anda mendapatkan pertanyaan dari ' . $member->username . ' pada ' . $lessons->title,
                 'status' => 0,
-                'slug' => 0,
+                'slug' => $getmembercomment->id,
                 'created_at' => $now,
+            
             ]);
             $getemailchild = DB::table('comments')
                              ->Join('comments as B', 'comments.id', 'B.parent_id')
@@ -338,11 +411,11 @@ class LessonsController extends Controller
                              ->where('comments.member_id', '<>', 'B.contributor_id')
                              ->select('comments.member_id as tanya', 'B.member_id as jawab', 'members.username as username')->distinct()
                              ->get();
-
                             
             if($parent_id != null){
                 foreach ($getemailchild as $mails) {
-
+                    if( $mails->tanya !=$input['member_id'] ){
+                        if($mails->tanya != $mails->jawab){
                     $getnotif = DB::table('user_notif')->insert([
                         'id_user' => $mails->tanya,
                         'category' => 'Komentar',
@@ -352,18 +425,33 @@ class LessonsController extends Controller
                         'slug' => $lessons->slug,
                         'created_at' => $now,
                     ]);
-
-                //  Check type
-                if (is_array($mails)){
-                    //  Scan through inner loop
-                    foreach ($mails as $value) {
-                        $member = Member::Find($value);
-                        $lesson = Lesson::Find($lesson_id);
-                        $contrib = Contributor::find($lessons->contributor_id);
-                        $member->notify(new UserReplyNotification($member, $lesson, $contrib));
-                       
                         }
                     }
+
+                    if( $mails->jawab !=$input['member_id'] ){
+                        if($mails->tanya != $mails->jawab){
+                    $getnotif = DB::table('user_notif')->insert([
+                        'id_user' => $mails->jawab,
+                        'category' => 'Komentar',
+                        'title' => 'Hello, Anda Nimbrung di komentar ini ada tanggapan dari ' . $mails->username,
+                        'notif' => 'Anda mendapatkan balasan dari ' . $mails->username . ' pada ' . $lessons->title,
+                        'status' => 0,
+                        'slug' => $lessons->slug,
+                        'created_at' => $now,
+                    ]);
+                        }
+                    }
+                //  Check type
+                // if (is_array($mails)){
+                //     //  Scan through inner loop
+                //     foreach ($mails as $value) {
+                //         $member = Member::Find($value);
+                //         $lesson = Lesson::Find($lesson_id);
+                //         $contrib = Contributor::find($lessons->contributor_id);
+                //         $member->notify(new UserReplyNotification($member, $lesson, $contrib));
+                       
+                //         }
+                //     }
                    
                 }
             }
@@ -464,11 +552,22 @@ class LessonsController extends Controller
 									                      <div class="panel-footer ">
 									                        <div class="row reply">
                                                               <div class="col-md-12">
+                                                              <form id="form-comment" class="mb-25" enctype="multipart/form-data" method="POST">
+                                                                <input type="hidden" name="_method" value="POST">
+                                                                <input type="hidden" name="lesson_id" value="' . $lesson_id . '">
+                                                                <input type="hidden" name="parent_id" value="' . $comment->id . '"> 
     									                        <div class="form-group">
 									                              <label>Komentar</label>
 									                              <textarea name="name" rows="8" cols="80" class="form-control" name="body" id="textbody' . $comment->id . '"></textarea>
                                                                 </div>
-                                                                <button type="submit" class="btn btn-primary pull-right" onClick="doComment(' . $lesson_id . ',' . $comment->id . ')" >Kirim</button>
+                                                                <div class="fileUpload">
+                                                                <span class="custom-span">+</span>
+                                                                <p class="custom-para">Add Images</p>
+                                                                <input id="uploadBtn" type="file" class="upload" name="image" />
+                                                                </div>
+                                                                <input id="uploadFile" placeholder="0 files selected" disabled="disabled" />
+                                                                <button type="button" class="btn btn-primary pull-right" onClick="doComment(' . $lesson_id . ',' . $comment->id . ')" >Kirim</button>
+                                                                </form>
 									                          </div>
 									                        </div>
 									                      </div>
@@ -726,13 +825,22 @@ class LessonsController extends Controller
 		$lessons_id = Input::get('lessons_id');
 		$lesson = Lesson::find($lessons_id);
         $videos = Video::where('enable', 1)->where('lessons_id', $lessons_id)->orderBy('id', 'asc')->get();
+        
         $services = Service::where('status', 1)->where('members_id', $memberID)->where('expired', '>=', $now)->first();
         $tutorial = TutorialMember::where('member_id', $memberID)->where('lesson_id', $lessons_id)->first();
         // dd($tutorial);
+
+        //last video
+        $last_videos = Viewer::leftJoin('videos', 'videos.id', '=', 'viewers.video_id')
+            ->select('videos.*', 'viewers.video_id')
+            ->where('viewers.member_id', '=', $memberID)
+            ->where('videos.lessons_id', '=', $lessons_id)->orderBy('viewers.updated_at', 'desc')->first();
+
         $access = 0;
         if (isset($services) && $services->access == 1) {
             $access = 1;
         }
+        
         $play = array();
         foreach ($videos as $key => $video) {
             if ($key >= 3 && $tutorial == null && isset($video['video'])) {
@@ -754,6 +862,8 @@ class LessonsController extends Controller
                 );
             } else {
                 if (isset($video['video'])) {
+                    if(count($last_videos) != 0){
+                       
                     $play[] = array(
                         'name' => $video['title'],
                         'description' => strip_tags($video['description']),
@@ -771,7 +881,27 @@ class LessonsController extends Controller
 						[
 							'src' => url($video['image']),
 						]),
-                    );
+                    ); 
+                    }else{
+                        $play[] = array(
+                            'name' => $video['title'],
+                            'description' => strip_tags($video['description']),
+                            'duration' => $video['durasi'],
+                            'sources' => array([
+                                'src' => url($video['video']),
+                                'type' => $video['type_video'],
+                            ]),
+                            'poster' => url($video['image']),
+                            'thumbnail' => array([
+                                'srcset' => url($video['image']),
+                                'type' => 'image/png',
+                                'media' => '(min-width: 400px;)',
+                            ],
+                            [
+                                'src' => url($video['image']),
+                            ]),
+                        ); 
+                    }
                 }
 			}
 			

@@ -18,6 +18,7 @@ use App\Mail\InvoiceMail;
 use App\Mail\SuksesMail;
 use Auth;
 use Illuminate\Http\Request;
+use App\Models\Cart;
 
 class VtwebController extends Controller {
 
@@ -119,6 +120,7 @@ class VtwebController extends Controller {
                         'type' => $type,
                         'notes' => "Transaction order_id: " . $order_id . " is challenged by FDS",
                     ]);
+                    $this->hapus_cart($order_id);
                     return response()->json([
                         'status' => true
                     ], 200);
@@ -130,6 +132,7 @@ class VtwebController extends Controller {
                         'type' => $type,
                         'notes' => "Transaction order_id: " . $order_id . " successfully captured using " . $type,
                     ]);
+                    $this->hapus_cart($order_id);
                     // Create New Services
                     $this->create_tutorial_member($order_id);
                     $this->update_flag($order_id);
@@ -177,6 +180,7 @@ class VtwebController extends Controller {
                 'type' => $type,
                 'notes' => "Payment using " . $type . " for transaction order_id: " . $order_id . " is denied.",
             ]);
+            $this->hapus_cart($order_id);
             return response()->json([
                 'status' => true
             ], 200);
@@ -187,6 +191,7 @@ class VtwebController extends Controller {
                 'type' => $type,
                 'notes' => "Payment using " . $type . " for transaction order_id: " . $order_id . " is expired.",
             ]);
+            $this->hapus_cart($order_id);
             return response()->json([
                 'status' => true
             ], 200);
@@ -231,6 +236,11 @@ class VtwebController extends Controller {
                 ]
             );
     }
+    
+    public function hapus_cart($order_id){
+        $invoice = Invoice::where('code', $order_id)->first();
+        $cart = Cart::where('member_id', $invoice->members_id)->delete();
+    }
 
     public function hapus_cart($order_id){
         $invoice = Invoice::where('code', $order_id)->first();
@@ -238,3 +248,4 @@ class VtwebController extends Controller {
         echo "berhasil hapus keranjang";
     }
 }
+    

@@ -16,9 +16,11 @@
     <link href="{{asset('template/web/css/navbar.css')}}" rel="stylesheet">
     <link href="{{asset('template/web/css/pace.css')}}" rel="stylesheet">
     <link href="{{ asset('template/web/css/venobox.css') }}" rel="stylesheet">
-
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/flickity@2.1.2/dist/flickity.css"/>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- rating -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    <!-- <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.9.0/slick/slick-theme.css"/> -->
     <link rel="stylesheet" href="{{ asset('template/web/css/star-rating.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('template/web/css/imageviewer.css') }}" />
     <!-- rating -->
@@ -36,6 +38,7 @@
 
     <link rel="stylesheet" href="{{ asset('template/web/plugins/jquery-ui-1.12.1.custom/jquery-ui.css') }}">
     <script type="text/javascript" src="{{asset('template/web/js/jquery.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('template/web/js/jquery-ui.min.js')}}"></script>
     <script type="text/javascript" src="{{ asset('template/web/js/venobox.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('template/web/js/imageviewer.min.js') }}"></script>
     <script type="text/javascript" src="https://unpkg.com/sweetalert2@7.9.2/dist/sweetalert2.all.js"></script>
@@ -66,24 +69,6 @@
     // mixpanel.init("b208ef84bd5045e39433ef24aa0b823c");
     </script>
     <!-- end Mixpanel -->
-{{--     <?php if (Session::get('memberID'));{?>
-    <script>
-    document.onkeydown = function(e) {
-    if(event.keyCode == 123) {
-    return false;
-    }
-    if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)){
-    return false;
-    }
-    if(e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)){
-    return false;
-    }
-    if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)){
-    return false;
-    }
-    }
-    </script>
-    <?php }?> --}}
     <style media="screen">
     .owl-prev {
     width: 15px;
@@ -136,7 +121,7 @@
         /* min-width: 160px; */
         box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
         z-index: 1;
-        margin-left: -270px;
+        margin-left: -270px;I have jQuery code, which looks this way:
         right: 0px;
         padding: 15px;
       }
@@ -221,6 +206,7 @@
     float: left;
     height: 50px;
     padding: 15px;
+    padding-left: 0px;
     font-size: 18px;
     line-height: 20px;
     text-align: center;
@@ -345,10 +331,24 @@ a #items .item {
   margin-left: 30px;
   margin-top: -75px;
 }
+.badge-cart-mobile {
+  background-color: red;
+  border-radius: 10px;
+  color: white;
+  display: inline-block;
+  font-size: 10px;
+  line-height: 1;
+  padding: 2px 5px;
+  text-align: center;
+  vertical-align: middle;
+  white-space: nowrap;
+  margin-left: 20px;
+  margin-top: -55px;
+}
 
 
 .shopping-cart {
-  margin: 75px 544px;
+  margin: 75px 605px;
   float: right;
   background: white;
   width: 320px;
@@ -415,7 +415,7 @@ a #items .item {
   text-align: center;
   padding: 12px;
   text-decoration: none;
-  display: block;
+  display: block;url
   border-radius: 3px;
   font-size: 16px;
   margin: 25px 0 15px 0;
@@ -444,7 +444,7 @@ a #items .item {
 }
     </style>
 
-
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="{{ asset('template/web/css/helper.css') }}">
     <link rel="stylesheet" href="{{ asset('template/web/css/common.css') }}">
     <link rel="stylesheet" href="{{ asset('template/web/css/blocks.css') }}">
@@ -480,7 +480,7 @@ a #items .item {
     <?php } ?>
       <div class="container">
         <div class="navbar-header navbar-fixed-side navbar-fixed-side-left">
-          <div id="btn" class="hidden-lg hidden-md">
+            <div id="btn" class="hidden-lg hidden-md" onclick="sideBarOverlay()">
               <div id='top'></div>
               <div id='middle'></div>
               <div id='bottom'></div>
@@ -495,15 +495,25 @@ a #items .item {
                   <a href="{{ url('member/signout') }}"><div class="item">Logout</div></a>
               </div>
               @else
-              <div id="items">
-                  <a href="{{ url('lessons/browse/all') }}" class="hidden-lg hidden-md" style="color: #fff;"><div class="item browse" style="background-color:#2BA8E2;">Browse Tutorial</div></a>
-                  <a href="{{ url('member/signin') }}"><div class="item">Masuk</div></a>
-                  <a href="{{ url('member/signup') }}"><div class="item">Daftar</div></a>
-              </div>
+                <div id="items">
+                    <a href="{{ url('lessons/browse/all') }}" class="hidden-lg hidden-md" style="color: #fff;"><div class="item browse" style="background-color:#2BA8E2;">Browse Tutorial</div></a>
+                    <a href="{{ url('member/signin') }}"><div class="item" onclick="w3_close()">Masuk</div></a>
+                    <a href="{{ url('member/signup') }}"><div class="item">Daftar</div></a>
+                </div>
               @endif
-          </div>
+            </div>
+            <div class="w3-overlay w3-animate-opacity"  style="cursor:pointer"  id="myOverlay"></div>
+
           <a href="{{ url('cart')}}" class="navbar-brand pull-right hidden-lg hidden-md" >
-          <i style="height: 32px; width: 32px; color: white;" class="fa fa-shopping-cart"></i>
+          <i style="height: 32px; width: 32px; color: white;" class="fa fa-shopping-cart">
+              @if (Auth::guard("members")->user())
+                <?php if(getTotalCart() != null){ ?>
+                        <span class="badge-cart-mobile"><?php echo getTotalCart();?></span>
+                        <?php } ?>
+              @else
+                <span class="badge-cart-mobile hide"> <?php echo getTotalCart();?></span>
+              @endif
+          </i>
           </a>
           <button type="button" class="navbar-toggle collapsed search-toogle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-search" aria-expanded="false">
             <!-- <span class="sr-only">Toggle navigation</span> -->
@@ -512,7 +522,7 @@ a #items .item {
           <a class="navbar-brand" href="{{ url('/') }}"><img class="logo" src="{{asset('template/web/img/logo.png')}}"></a>
           <a href="{{ url('lessons/browse/all') }}" class="browse-btn hidden-xs hidden-sm">Browse Tutorial</a>
         </div>
-
+        
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <!-- <form class="navbar-form navbar-left">
@@ -523,7 +533,7 @@ a #items .item {
           </form> -->
           <form class="navbar-form navbar-left form-search hidden-xs" action="{{ url('search') }}" method="get">
             <input type="hidden" name="category" value="" class="searchcategory">
-
+            
             <div class="input-group">
 
               <div class="input-group-btn btn-category">
@@ -532,7 +542,7 @@ a #items .item {
                   <i class="fa fa-th" aria-hidden="true"></i>
                   </span> <i class="ion-android-arrow-dropdown"></i>
                 </button>
-                <div class="dropdown-menu dropdown-menu-right">
+                <div class="dropdown-menu dropdown-menu-right" id="cate">
                 <?php echo getCategory(); ?>
                   <div role="separator" class="dropdown-divider"></div>
                   <a class="dropdown-item" href="javascript:void(0)" onclick="changeCategory('Semua Kategori')">Semua Kategori</a>
@@ -597,11 +607,10 @@ a #items .item {
                 </ul>
           </div>
           <div class="shopping-cart" style="display: none;">
-
             <ul class="shopping-cart-items">
               <?php echo cart();?>
             </ul>
-
+            
             <a href="{{ url('/cart') }}" class="button">Lihat Keranjang</a>
           </div>
           @else
@@ -618,7 +627,7 @@ a #items .item {
            </div>
           @endif
         </div><!-- /.navbar-collapse -->
-
+            
         <div class="collapse navbar-collapse hidden-sm hidden-md hidden-lg" id="bs-example-navbar-collapse-search" style="overflow-y: visible;">
           <form class="navbar-form navbar-left form-search " action="{{ url('search') }}" method="get">
             <input type="hidden" name="category" value="" class="searchcategory">
@@ -728,32 +737,43 @@ a #items .item {
             </div>
         </div>
     </div>
-   <script>
-            var sidebarBox = document.querySelector('#box'),
-                sidebarBtn = document.querySelector('#btn'),
-                pageWrapper = document.querySelector('#page-wrapper');
+  <script>
+  function sideBarOverlay() {
+    var overlay = document.getElementById("myOverlay");
+    if (overlay.style.display === "block") {
+      overlay.style.display = "none";
+    } else {
+      overlay.style.display = "block";
+    }
+      
+  }
+</script>    
+<script>
+  var sidebarBox = document.querySelector('#box'),
+      sidebarBtn = document.querySelector('#btn'),
+      pageWrapper = document.querySelector('#page-wrapper');
 
-            sidebarBtn.addEventListener('click', function (event) {
-                sidebarBtn.classList.toggle('active');
-                sidebarBox.classList.toggle('active');
-            });
+      sidebarBtn.addEventListener('click', function (event) {
+      sidebarBtn.classList.toggle('active');
+      sidebarBox.classList.toggle('active');
+      });
 
-            pageWrapper.addEventListener('click', function (event) {
+      pageWrapper.addEventListener('click', function (event) {
 
-                if (sidebarBox.classList.contains('active')) {
-                    sidebarBtn.classList.remove('active');
-                    sidebarBox.classList.remove('active');
-                }
-            });
+        if (sidebarBox.classList.contains('active')) {
+            sidebarBtn.classList.remove('active');
+            sidebarBox.classList.remove('active');
+        }
+      });
 
-            window.addEventListener('keydown', function (event) {
+      window.addEventListener('keydown', function (event) {
 
-                if (sidebarBox.classList.contains('active') && event.keyCode === 27) {
-                    sidebarBtn.classList.remove('active');
-                    sidebarBox.classList.remove('active');
-                }
-            });
-          </script>
+        if (sidebarBox.classList.contains('active') && event.keyCode === 27) {
+            sidebarBtn.classList.remove('active');
+            sidebarBox.classList.remove('active');
+            } 
+      });
+  </script>
  <script type="text/javascript">
     // $("#close").ready(function(){
     //   $("#top-section").css("margin-top", "76px")
@@ -830,19 +850,40 @@ a #items .item {
     </script>
     <!-- Search Form Auto complete -->
     <script type="text/javascript">
+        
     $(function() {
-      function getUrl(){
-        const url = "search/autocomplete";
-        const full = url + ($(".keyword").val() != "" ? ("q=" + $(".keyword").val()) : "" );
-        return full;
-      }
+      let autocompleteData = {};
+
+      $("#cate").change(function () {
+          autocompleteData.id = this.value;
+          $(".keyword").autocomplete("search");
+      });
       $(".keyword").autocomplete({
-        source:'{{ url("'+getUrl()+'")}}',
+        source: function(request, response) {
+          $.ajax({
+              url: "search/autocomplete",
+              type: "GET",
+              dataType: "json",
+              data: {id : 1},
+              success: function(data) {
+                  response($.map(data, function(item) {
+                    return {
+                      label: item.value,
+                      value: item.value,
+                      slug: item.slug
+                  };
+                  }));
+              }
+          });
+        },
         select:function(event,ui) {
           $(".keyword").val(ui.item.label);
           return false;
         },
-        minLength: 1,
+        minLength: 2,
+        select: function(event, ui) {
+          window.location = "/lessons/" + ui.item.slug;
+      }
       }).bind('focus', function () {
         $('.ui-autocomplete').css('z-index','9999').css('overflow-y','scroll').css('max-height','300px');
         // $('.ui-autocomplete').css('background','#09121a').css('color','#fff');
@@ -929,6 +970,7 @@ a #items .item {
     </script>
     <?php $mtime = file_exists(public_path('template/web/js/custom.js')) ? filemtime(public_path('template/web/js/custom.js')) : '' ?>
     <script type="text/javascript" src="{{ asset('template/web/js/custom.js?'.$mtime) }}"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 
     @stack('js')
 </body>

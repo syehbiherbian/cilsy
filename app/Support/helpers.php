@@ -128,7 +128,7 @@ function getCategory(){
   $html='';
   
   foreach ($categories as $key => $category)
-      $html .=' <a id="'.$category->id.'" class="dropdown-item" href="javascript:void(0)"  onclick="changeCategory(&apos;'.$category->title.'&apos;)">'. $category->title.'</a>';
+      $html .=' <a class="dropdown-item" value="'.$category->id.'" href="javascript:void(0)"  onclick="changeCategory(&apos;'.$category->title.'&apos;)">'. $category->title.'</a>';
   return $html;
 }
 function getTotalCart(){
@@ -148,7 +148,7 @@ function notif(){
     $notif =ContributorNotif::where('contributor_id',$contribID)->where('status',0)->latest()->take(5)->get();
     $html='';
     foreach ($notif as  $value) {
-        $url = url('/contributor/comments/detail', $parameters = [$value->id], $secure = null);
+        $url = url('/contributor/comments/detail', $parameters = [$value->slug], $secure = null);
         $html .='<li><a href="'.$url.'" onclick="contribnotif('.$value->id.')">'.$value->title.'</a></li>';
         
     }
@@ -166,7 +166,7 @@ function notifuser(){
   $html='';
   
   foreach ($notif as  $value) {
-      $url = url('lessons', $parameters = [$value->slug], $secure = null);
+      $url = url('kelas/v3', $parameters = [$value->slug], $secure = null);
       $html .='<li><a href="'.$url.'" onclick="notifview('.$value->id.')">'.substr($value->title, '0', 40).'</a></li>';
 
   }

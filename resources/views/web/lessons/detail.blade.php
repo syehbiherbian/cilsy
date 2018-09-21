@@ -9,8 +9,6 @@
 {{-- <link href="https://vjs.zencdn.net/5.16.0/video-js.min.css" rel="stylesheet"/> --}}
 <script src="https://vjs.zencdn.net/5.16.0/video.min.js"></script>
 <script src="https://rawgit.com/atlance01/vrapp-ionic/master/www/js/lib/videojs-playlist.js"></script>
-<script src="{{ asset('template/web/js/component.js') }}"></script>
-<script src="{{ asset('template/web/js/control-bar/control-bar.js') }}"></script>
 <style>
   body {
     /*font-family: Arial, sans-serif;*/
@@ -640,6 +638,31 @@ td{
   top: 0;
   opacity: 0;
 }
+.fileUpload {
+	position: relative;
+	overflow: hidden;
+	margin: 10px;
+	background-color: #BDBDBD;
+	height: 50px;
+	width: 50px;
+	text-align: center;
+}
+.fileUpload input.upload {
+	position: absolute;
+	top: 0;
+	right: 0;
+	margin: 0;
+	padding: 0;
+	font-size: 6px;
+	cursor: pointer;
+	opacity: 0;
+	filter: alpha(opacity=0);
+	height: 100%;
+	text-align: center;
+}
+.custom-span{ font-family: Arial; font-weight: bold;font-size: 25px; color: #FE57A1}
+#uploadFile{border: none;margin-left: 10px; width: 50px;}
+.custom-para{font-family: arial;font-weight: bold;font-size: 6px; color:#585858;}
 </style>
 
 <div id="content-section">
@@ -681,8 +704,8 @@ td{
             <div class="player-container">
               <!-- Main Video -->
               <video id="video" class="video-js vjs-default-skin vjs-big-play-centered" height="500" width="70%">
-                @if (count($main_videos) > 0) 
-                    <source src="{{ !empty($main_videos[0]->video) ? $main_videos[0]->video : '' }}" type="{{ (!empty($main_videos[0]->type_video)) ? $main_videos[0]->type_video : '' }}">
+                @if (count($last_videos) > 0) 
+                    <source src="{{ !empty($last_videos->video) ? $last_videos->video : '' }}" type="{{ (!empty($last_videos->type_video)) ? $last_videos->type_video : '' }}">
                 @endif 
               </video>
 
@@ -717,7 +740,7 @@ td{
                   <ul class="materi_list">
                     @foreach ($main_videos as $row)
                     <li>
-                    <table>
+                    <table> 
                         <tr>
                           <td><strong><?php echo $number ?> {{ $row->title }}</strong>
                               <p>{!! nl2br($row->description) !!}</p>
@@ -767,12 +790,12 @@ td{
                           <textarea style="white-space: pre-line" rows="8" cols="80" class="form-control" name="body" id="textbody0"></textarea>
                         </div>
                        <ul class="left">
-                         <div class="upload-btn-wrapper">
-                          <button class="btn-upload btn-info"><i class="fa fa-upload"></i> Tambahkan Gambar/File</button>
-                          <input type="file"  name="image" id="image"/>
-                          
-                        </div>
-                        <img id="myImg" src="#" style="height :50px; width:50px; margin-bottom:42px;" />
+                          <div class="fileUpload">
+                          <span class="custom-span">+</span>
+                          <p class="custom-para">Add Images</p>
+                          <input id="uploadBtn" type="file" class="upload" name="image" />
+                          </div>
+                          <input id="uploadFile" placeholder="0 files selected" disabled="disabled" />
                        </ul>
                        
                        <ul class="right">
@@ -810,7 +833,7 @@ td{
                       @if ($contributors->avatar)
                         <img src="{{ asset($contributors->avatar) }}" alt="" class="img-responsive img-center">
                       @else
-                        <img src="{{ asset('template/kontributor/img/icon/avatar.png') }}" alt="" class="img-responsive img-center">
+                        <img src="{{ asset('template/kontributor/img/user.png') }}" alt="" class="img-responsive img-center">
                       @endif
                       <div class="text-center mt-15">
                         <div class="btn-group">
@@ -846,6 +869,8 @@ td{
 <script src="{{ asset('template/web/js/videojs-playlist-ui.js') }}"></script>
 <script src="{{ asset('template/web/js/videojs-errors.js') }}"></script>
 <script type="text/javascript" src="https://unpkg.com/sweetalert2@7.9.2/dist/sweetalert2.all.js"></script>
+<script src="{{ asset('template/web/js/component.js') }}"></script>
+<script src="{{ asset('template/web/js/control-bar/control-bar.js') }}"></script>
 <script>
   $(function () {
     $(":file").change(function () {
@@ -861,9 +886,35 @@ function imageIsLoaded(e) {
     $('#myImg').attr('src', e.target.result);
 };
 </script>
-<script>            $('#guest-'+v['id']).show();
+<script type="text/javascript">
+document.getElementById("uploadBtn").onchange = function () {
+document.getElementById("uploadFile").value = this.value;
+};
+</script>
+<script>
+  $(function () {
+    $(":file").change(function () {
+        if (this.files && this.files[0]) {
+            var reader = new FileReader();
+            reader.onload = imageLoaded;
+            reader.readAsDataURL(this.files[0]);
+        } 
+    });
+});
+
+function imageLoaded(e) {
+    $('#Img').attr('src', e.target.result);
+};
+</script>
+<script>            
 $(document).ready(function(){
     $('.venobox').venobox(); 
+    $('#video_html5_api').ready(function(){
+      setTimeout(function(){
+        $('#video_html5_api').attr('src',$('#video_html5_api>source').attr('src'))
+        setTimeout(function(){document.querySelector('.vjs-playlist').scrollTo(0,document.querySelector('.vjs-playlist-now-playing').getBoundingClientRect().y)},1000)
+        },5000)
+    });
 });
 </script>
 
@@ -915,33 +966,6 @@ $(document).ready(function(){
     //     loadcontent()
     // }, 5000);
 </script>
-<script type="text/javascript">
-    var video = document.getElementById("video");
-
-    // $('#video').hover(function toggleControls() {
-    //     if (video.hasAttribute!=("controls")) {
-    //       video.setAttribute("controls", "controls")
-    //     } else {
-    //       video.removeAttribute("controls")
-    //     }
-    // })
-    // var el = document.getElementById("nextButton");
-    // if (el.addEventListener) {
-    //     el.addEventListener("click", yourNextFunction, false);
-    // } else {
-    //     el.attachEvent('onclick', yourNextFunction);
-    // }  
-    // var video_count =1,
-    // videoPlayer = document.getElementById("homevideo");
-
-    // function yourNextFunction (){
-    //   video_count++;
-    //   if (video_count == 16) video_count = 1;
-    //   var nextVideo = "video"+video_count+".mp4";
-    //   videoPlayer.src = nextVideo;
-    //   videoPlayer.play();
-    // }
-</script>
 <script>
   fbq('track', 'ViewContent');
 </script>
@@ -967,7 +991,7 @@ function getPlayList() {
   player.on('ended', function() {
     var videosrc = player.currentSrc();
     videoTracking(videosrc);
-    lessonsQuiz(videosrc);
+  //  lessonsQuiz(videosrc);
   });
 
     activityCheck = setInterval(function() {
@@ -1141,7 +1165,7 @@ function videoTracking(videosrc) {
     data: postData,
     // dataType: "json",
     beforeSend: function() {
-      // $('#hasil').html('<tr><td colspan="6">Loading...</td></tr>');
+      $('#hasil').html('<tr><td colspan="6">Loading...</td></tr>');
     },
     success: function (data){
 
@@ -1177,7 +1201,7 @@ function videoTracking(videosrc) {
 
   function doComment(lesson_id, parent_id) {
     var body = $('#textbody'+parent_id).val();
-    var file_data = $('#image').prop("files")[0];
+    var file_data = $('#uploadBtn').prop("files")[0];
     dataform = new FormData();
     dataform.append( 'image', file_data);
     dataform.append( 'body', body);
@@ -1187,14 +1211,6 @@ function videoTracking(videosrc) {
     if (body == '') {
       alert('Harap Isi Komentar !')
     }else {
-      var postData =
-                  {
-                      "_token":$('meta[name="csrf-token"]').attr('content'),
-                      "lesson_id": lesson_id,
-                      "parent_id": parent_id,
-                      "image" : file_data,
-                      "body": body
-                  }
       $.ajaxSetup({
           headers: {
               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -1216,14 +1232,13 @@ function videoTracking(videosrc) {
                 allowOutsideClick: false
             });
             // Show image container
-            
           },
           success:function(data){
             if (data.success == false) {
                window.location.href = '{{ url("member/signin") }}';
             }else if (data.success == true) {
               $('#textbody'+parent_id).val('');
-              $("#form-comment").find('[type=file]').val('');
+              $("#uploadFile").val('');
               swal({
                 title: "Komentar anda sudah terkirim!",
                 showConfirmButton: true,

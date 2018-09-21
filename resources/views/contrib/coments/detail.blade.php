@@ -71,6 +71,31 @@
   border-color: #e74c3c;
   color: #e74c3c;
 }
+.fileUpload {
+	position: relative;
+	overflow: hidden;
+	margin: 10px;
+	background-color: #BDBDBD;
+	height: 50px;
+	width: 50px;
+	text-align: center;
+}
+.fileUpload input.upload {
+	position: absolute;
+	top: 0;
+	right: 0;
+	margin: 0;
+	padding: 0;
+	font-size: 6px;
+	cursor: pointer;
+	opacity: 0;
+	filter: alpha(opacity=0);
+	height: 100%;
+	text-align: center;
+}
+.custom-span{ font-family: Arial; font-weight: bold;font-size: 25px; color: #FE57A1}
+#uploadFile{border: none;margin-left: 10px; width: 50px;}
+.custom-para{font-family: arial;font-weight: bold;font-size: 6px; color:#585858;}
 </style>
 <div class="row">
   <div class="col-md-12">
@@ -92,7 +117,7 @@
 					<strong style="color:#ff5e10;">@if($comment->member_id !==null)  User @else ($comment->contributor_id  !==null)  Contributor @endif</strong>
 					<div class="col-md-12" style="margin-top:10px;padding-left:5%; white-space:pre-line;">
                             {{ $comment->body }}
-                    <?php if($comment->images) { ?>
+                    <?php if(!empty($comment->images)) { ?>
                             <a id="firstlink" data-gall="myGallery" class="venobox" data-vbtype="iframe" href="{{ asset($comment->images) }}"><img src="{{ asset($comment->images) }}" alt="image alt" style="height:50px; width:50px; margin-left: 15px; margin-bottom: 20px;"/></a>
                     <?php } ?>
 					</div>
@@ -123,6 +148,9 @@
 								<strong style="color:#ff5e10;">@if($child->member_id !==null)  User @else ($child->contributor_id  !==null)  Contributor @endif</strong>
 								<div class="col-md-12" style="margin-top:10px;margin-bottom:10px;padding-left:5%; white-space: pre-line">
                                     {{ $child->body }}
+                                    <?php if($child->images != null) { ?>
+                                        <a id="firstlink" data-gall="myGallery" class="venobox" data-vbtype="iframe" href="{{ asset($child->images) }}"><img src="{{ asset($child->images) }}" alt="image alt" style="height:50px; width:50px; margin-left: 15px; margin-bottom: 20px;"/></a>
+                                <?php } ?>
 								</div>
 								<div class="clearfix"></div>
 						</div>
@@ -148,38 +176,55 @@
                                 '<div class="col-md-11" style="padding-right:0px;">'+
                                 '   <textarea class="form-control" id="input_balas'+comment_id+'" name="balasan" placeholder="tambahkan komentar/balasan" value="" style="white-space: pre-line" rows="8" cols="80"></textarea>'+
                                 '</div>'+
+                                '<div class="fileUpload">'+
+                                '<span class="custom-span">+</span>'+
+                                '<p class="custom-para">Add Images</p>'+
+                                '<input id="uploadBtn" type="file" class="upload" name="image" />'+
+                                '</div>'+
+                                '<input id="uploadFile" placeholder="0 files selected" disabled="disabled" />'+
                                 '<a href="javascript:void(0)" class="btn btn-info pull-right" onclick="dobalas('+comment_id+')" style="float:right;margin-top:10px; border-radius:3px;">Kirim</a>');
     }
 
     function dobalas(comment_id){
+        var token = '{{ csrf_token() }}';
         var isi_balas = $('#input_balas'+comment_id).val();
+        var file_data = $('#uploadBtn').prop("files")[0];
         var lesson_id = '{{ $datalesson->id }}';
         var member_id = '{{ $comment->member_id}}';
-        // alert(comment_id+' = '+isi_balas);
-        var datapost = {
-            '_token'    : '{{ csrf_token() }}',
-            'isi_balas' : isi_balas,
-            'comment_id': comment_id,
-            'lesson_id' : lesson_id,
-            'member_id' : member_id
-        }
-
-        $.ajax({
-            type    :'POST',
-            url     :'{{ url("contributor/comments/postcomment") }}',
-            data    :datapost,
-            beforeSend: function(){
-            // Show image container
-            swal({
-                title: "Sedang mengirim Komentar",
-                text: "Mohon Tunggu sebentar",
-                imageUrl: "{{ asset('template/web/img/loading.gif') }}",
-                showConfirmButton: false,
-                allowOutsideClick: false
-              });
-              {{--  $("#loader").show();  --}}
-          },
-            success:function(data){
+        dataform = new FormData();
+        dataform.append( '_token', token);
+        dataform.append( 'image', file_data);
+        dataform.append( 'body', isi_balas);
+        dataform.append( 'lesson_id', lesson_id);
+        dataform.append( 'member_id', member_id);
+        dataform.append( 'comment_id', comment_id);
+    
+        if (isi_balas == '') {
+          alert('Harap Isi Komentar !')
+        }else {
+          $.ajaxSetup({
+              headers: {
+                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+              }
+          });
+          $.ajax({
+              type    :"POST",
+              url     :'{{ url("contributor/comments/postcomment") }}',
+              data    : dataform,
+              dataType : 'json',
+              contentType: false,
+              processData: false,
+              beforeSend: function(){
+                   swal({
+                    title: "Sedang mengirim Komentar",
+                    text: "Mohon Tunggu sebentar",
+                    imageUrl: "{{ asset('template/web/img/loading.gif') }}",
+                    showConfirmButton: false,
+                    allowOutsideClick: false
+                });
+                // Show image container
+              },
+              success:function(data){
                 if (data == 1) {
                     swal({
                         title: "Anda Berhasil Membalas Komentar",
@@ -189,15 +234,17 @@
                     });
                     $("#row"+comment_id).load(window.location.href + " #row"+comment_id);
                 }
-				else if(data==0){
-						window.location.href = '{{url("contributor/login")}}';
-				}else {
-                    alert('Koneksi Bermasalah, Silahkan Ulangi');
-                    location.reload();
+                else if(data==0){
+                    window.location.href = '{{url("contributor/login")}}';
+                }else {
+                            alert('Koneksi Bermasalah, Silahkan Ulangi');
+                            location.reload();
+                  }
                 }
-            }
-        })
-    }
+          });
+        }
+      }
+    
 
     function loadcontent(){
         $(".content-reload").load(window.location.href + " .content-reload");

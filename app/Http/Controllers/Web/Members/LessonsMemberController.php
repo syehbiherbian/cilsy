@@ -34,24 +34,128 @@ class LessonsMemberController extends Controller
         }
         $mem_id = Auth::guard('members')->user()->id;
 
-
-        // $last_videos = Viewer::leftJoin('videos', 'videos.id', '=', 'viewers.video_id')
-        //              ->select('videos.*', 'viewers.*')
-        //              ->where('viewers.member_id', '=', $mem_id)->orderBy('viewers.updated_at', 'desc')->first();
-    
-
-
-        $last_lessons = TutorialMember::join('lessons','lessons.id', '=', 'tutorial_member.lesson_id')
+        $belitut = TutorialMember::join('lessons','lessons.id', '=', 'tutorial_member.lesson_id')
                         ->where('member_id', '=',  $mem_id)->get();
 
+        $get_lessons = Lesson::join('videos', 'lessons.id', '=', 'videos.lessons_id')
+                     ->join('viewers', 'videos.id', '=', 'viewers.video_id')
+                     ->where('viewers.member_id', '=', $mem_id)
+                     ->orderBy('viewers.member_id', 'viewers.updated_at', 'asc')
+                     ->distinct()
+                     ->get(['viewers.member_id', 'lessons.*']);           
+                   
+        $last_videos = Viewer::leftJoin('videos', 'videos.id', '=', 'viewers.video_id')
+                     ->select('videos.*', 'viewers.*')
+                     ->where('viewers.member_id', '=', $mem_id)->orderBy('viewers.updated_at', 'desc')->first();
+    
+                
+        $get_full = Lesson::join('videos', 'lessons.id', '=', 'videos.lessons_id')
+                     ->leftjoin('viewers', 'videos.id', '=', 'viewers.video_id', 'and', '`viewers`.`member_id`', '=', $mem_id)
+                     ->select('lessons.title', 'lessons.image')
+                     ->select(DB::raw('count(distinct viewers.video_id) as id_count, count(distinct videos.id) as vid_id, lessons.title, lessons.image, lessons.id, lessons.slug'))
+                    //  ->where('viewers.member_id', '=', $mem_id)
+                     ->groupby('lessons.title', 'lessons.image', 'lessons.id', 'lessons.slug')
+                     ->having(DB::raw('count(distinct viewers.video_id)'), '=', DB::raw('count(distinct videos.id)'))                   
+                     ->get(['lessons.title', 'lessons.image', 'lessons.id', 'lessons.slug']);
+
+       if(!empty($last_videos)){
+       $last_lessons = Lesson::where('lessons.id', '=', $last_videos->lessons_id)->first();
+       
+       $get_hist = Viewer::join('videos', 'viewers.video_id', '=', 'videos.id')
+       ->where('viewers.member_id', '=', $mem_id)
+       ->where('videos.lessons_id', '=', $last_videos->lessons_id)->get();
+       $get_videos = Video::where('videos.lessons_id', '=', $last_videos->lessons_id)->get();
+       $progress = count($get_hist)*100/count($get_videos);
+
+       
+       }else{
+        $last_lessons = 0;
+        $get_hist = 0; 
+        $get_videos = 0; 
+        $progress = 0;
+        $get_full = 0;
+       }
+       
         return view('web.members.dashboard_tutorial', [
-            //  'progress' => $progress,
+            'progress' => $progress,
             'last' => $last_lessons,
-            // 'lessons' => $get_lessons,
-            // 'full' => $get_full,
+            'belitut' => $belitut,
+            'lessons' => $get_lessons,
+            'full' => $get_full,
             //  'videos' => $last_videos,
         ]);
     }
+
+    // public function index()
+    // {
+    //     if (empty(Auth::guard('members')->user()->id)) {
+    //       return redirect('member/signin')->with('error', 'Anda Harus Login terlebih dahulu!');
+    //     }
+    //     $mem_id = Auth::guard('members')->user()->id;
+
+    //     $belitut = TutorialMember::join('lessons','lessons.id', '=', 'tutorial_member.lesson_id')
+    //     ->where('member_id', '=',  $mem_id)->get();
+
+    //     $last_videos = Viewer::leftJoin('videos', 'videos.id', '=', 'viewers.video_id')
+    //                  ->select('videos.*', 'viewers.*')
+    //                  ->where('viewers.member_id', '=', $mem_id)->orderBy('viewers.updated_at', 'desc')->first();
+    
+    //                  if(empty($last_videos)){
+    //                     $last_videos = [''];
+    //                  }
+
+
+    //     $last_lessons = Lesson::where('lessons.id', '=', $last_videos->lessons_id)->first();
+
+    //     if(empty($last_lessons)){
+    //         $last_lessons = [''];
+    //      } 
+    //     $get_lessons = Lesson::join('videos', 'lessons.id', '=', 'videos.lessons_id')
+    //                  ->join('viewers', 'videos.id', '=', 'viewers.video_id')
+    //                  ->where('viewers.member_id', '=', $mem_id)
+    //                  ->orderBy('viewers.member_id', 'viewers.updated_at', 'asc')
+    //                  ->distinct()
+    //                  ->get(['viewers.member_id', 'lessons.*']);           
+    //                  if(empty($get_lessons)){
+    //                     $get_lessons = [''];
+    //                  }
+    //     $get_videos = Video::where('videos.lessons_id', '=', $last_videos->lessons_id)->get();
+    //     // dd( count($watched_video));
+    //     if(empty($get_videos)){
+    //         $get_videos = [''];
+    //      }
+
+    //     $get_hist = Viewer::join('videos', 'viewers.video_id', '=', 'videos.id')
+    //     ->where('viewers.member_id', '=', $mem_id)
+    //     ->where('videos.lessons_id', '=', $last_videos->lessons_id)->get();
+
+    //     if(empty($get_hist)){
+    //         $get_hist = [''];
+    //      }
+
+    //     $progress = count($get_hist)*100/count($get_videos);
+    //      if(empty($progress)){
+    //         $progress = [''];
+    //      } 
+    //     // $get_full = Lesson::join('videos', 'lessons.id', '=', 'videos.lessons_id')
+    //     //              ->leftjoin('viewers', 'videos.id', '=', 'viewers.video_id', 'and', '`viewers`.`member_id`', '=', $mem_id)
+    //     //              ->select('lessons.title', 'lessons.image')
+    //     //              ->select(DB::raw('count(distinct viewers.video_id) as id_count, count(distinct videos.id) as vid_id, lessons.title, lessons.image, lessons.id, lessons.slug'))
+    //     //             //  ->where('viewers.member_id', '=', $mem_id)
+    //     //              ->groupby('lessons.title', 'lessons.image', 'lessons.id', 'lessons.slug')
+    //     //              ->having(DB::raw('count(distinct viewers.video_id)'), '=', DB::raw('count(distinct videos.id)'))                   
+    //     //              ->get(['lessons.title', 'lessons.image', 'lessons.id', 'lessons.slug']);
+                    
+    //     return view('web.members.dashboard_tutorial', [
+    //          'progress' => $progress,
+    //         'last' => $last_lessons,
+    //         // 'lessons' => $get_lessons,
+    //         // 'full' => $get_full,
+    //         'belitut' => $belitut,
+    //         //  'videos' => $last_videos,
+    //     ]);
+    // }
+
     public function detail($slug) {
 
         if (empty(Auth::guard('members')->user()->id)) {

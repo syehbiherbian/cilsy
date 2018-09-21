@@ -122,7 +122,6 @@ class PackageController extends Controller
               ]);
             }
 
-            /* hapus cart */
             session()->forget('coupon');
           }
 

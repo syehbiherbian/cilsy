@@ -35,7 +35,8 @@ Route::get('robot/{filename}', function ($filename)
 Route::get('/', 'Web\HomeController@index');
 // LESSONS PAGE
 Route::get('lessons/{by}/{keyword}', 'Web\LessonsController@index');
-Route::get('lessons/{lessons}', 'Web\LessonsController@detail');
+Route::get('lessons/{lessons}', 'Web\LessonsController@preview');
+Route::get('kelas/v3/{lessons}', 'Web\LessonsController@detail');
 Route::get('lessons/{lessons}/{quiz}', 'Web\LessonsController@quiz');
 Route::get('dashboard/{lessons}', 'Web\Members\LessonsMemberController@detail');
 Route::post('lessons/getplaylist', 'Web\LessonsController@getplaylist');
@@ -49,7 +50,7 @@ Route::post('lessons/LessonsQuiz','Web\LessonsController@LessonsQuiz');
 // Route::post('attachment', 'AttachmentController@upload');
 // Search
 Route::get('search', 'Web\SearchController@index');
-Route::get('search/autocomplete', 'Web\SearchController@autocomplete');
+Route::get('search/autocomplete/', 'Web\SearchController@autocomplete');
 Route::get('category/{id}','Web\LessonController@getSearchcategory');
 
 // Point
@@ -128,10 +129,8 @@ Route::get('cron/mail/user/reminder/payment', 'Cron\ReminderController@index');
 // Route::get('member/signout', 'Web\Members\AuthController@signout');
 Route::post('member/change-password', 'Web\Members\PasswordController@doSubmit');
 Route::get('member/change-password', 'Web\Members\PasswordController@index');
-// Route::get('member/reset', 'Web\Members\AuthController@forgetpassword');
-// Route::post('member/reset', 'Web\Members\AuthController@doforgetpassword');
-// Route::post('member/reset/update', 'Web\Members\AuthController@doupdate');
-// Route::get('member/reset/update/{token}', 'Web\Members\AuthController@updatereset');
+Route::post('member/reset/update', 'Web\Members\AuthController@doupdate');
+Route::get('member/reset/update/{token}', 'Web\Members\AuthController@updatereset');
 
 Route::get('member/signup', 'Web\Members\MemberAuth\RegisterController@showRegistrationForm');
 Route::post('member/signup', 'Web\Members\MemberAuth\RegisterController@register');
@@ -174,9 +173,9 @@ Route::get('member/signin', 'Web\Members\MemberAuth\LoginController@showLoginFor
 Route::post('member/signin', 'Web\Members\MemberAuth\LoginController@login');
 Route::get('member/signout', 'Web\Members\MemberAuth\LoginController@logout');
 Route::post('member/email', 'Web\Members\MemberAuth\ForgotPasswordController@sendResetLinkEmail');
-Route::get('member/reset', 'Web\Members\MemberAuth\ForgotPasswordController@showLinkRequestForm');
-Route::post('member/reset', 'Web\Members\MemberAuth\ResetPasswordController@reset');
-Route::get('member/reset/{token}', 'Web\Members\MemberAuth\ResetPasswordController@showResetForm');
+// Route::get('member/reset', 'Web\Members\MemberAuth\ForgotPasswordController@showLinkRequestForm');
+// Route::post('member/reset', 'Web\Members\MemberAuth\ResetPasswordController@reset');
+// Route::get('member/reset/{token}', 'Web\Members\MemberAuth\ResetPasswordController@showResetForm');
 Route::get('member/profile', 'Web\Members\ProfileController@index');
 Route::post('member/profile', 'Web\Members\ProfileController@doSubmit');
 Route::get('member/subscriptions', 'Web\Members\SubscriptionsController@index');
@@ -199,19 +198,20 @@ Route::post('user/notif/delete/{id}','Web\NotifController@delete');
 
 Auth::routes();
 
-Route::group(['middleware' => ['auth']], function () {
 
-	Route::get('/system/dashboard', function () {
-		return view('admin.home');
-	});
-
+	Route::resource('/system/dashboard',  'DashboardController');
 	Route::resource('system/members', 'MembersController');
+	
 	// Edit Member
-});
+
+
+	// Route::get('system/login', 'Auth\LoginController@showLoginForm');
+	// Route::post('system/login', 'Auth\LoginController@Login');
 
 	Route::get('/system/login', function () {
 		return view('admin.login');
 	});
+
 	Route::post('system/members/getServices', 'MembersController@getServices');
 	Route::post('system/members/addServices', 'MembersController@addServices');
 	Route::post('system/members/getEditServices', 'MembersController@getEditServices');

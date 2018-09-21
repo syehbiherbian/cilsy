@@ -3,6 +3,7 @@
 
 @endpush
  @if (Auth::guard("members")->user()) 
+ @if (count($cekdulu) > 0)
  @if (count($ratenow) <1)
  <?echo $ratenow ?>
   <div id="myModal" class="modal fade" role="dialog">
@@ -30,6 +31,7 @@
 
   </div>
 </div>
+@endif
 @endif
 @endif
 

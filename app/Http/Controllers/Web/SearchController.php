@@ -23,6 +23,7 @@ class SearchController extends Controller
   {
     $c  = Input::get('category');
     $q  = Input::get('q');
+    $mem_id = isset(Auth::guard('members')->user()->id) ? Auth::guard('members')->user()->id : 0;
 
     $categories = Category::where('enable','=',1)->get();
     
@@ -55,6 +56,8 @@ class SearchController extends Controller
                         ->where('lessons.title','like','%'.$q.'%')
                         ->where('lessons.category_id','=',$cateid)
                         ->paginate(10);
+                    // dd($results);
+
 
                     }
                     $results->withPath('search?category='.$c.'&q='.$q);
@@ -80,6 +83,7 @@ class SearchController extends Controller
                       ->where('lessons.title','like','%'.$q.'%')
                       ->paginate(10);
                       }
+                      // dd($results);
                       $results->withPath('search?&q='.$q);
     }
 
@@ -90,14 +94,14 @@ class SearchController extends Controller
     ]);
   }
 
-  public function autocomplete()
+  public function autocomplete(Request $request)
   {
 
     
       $keyword 			= Input::get('term');
       $category 			= Input::get('category');
 
-  		$lessons 	= Lesson::where('enable','=','1')->where('category_id','=',$category)->where('title','like','%'.$keyword.'%')->orderBy('id', 'DESC')->get();
+  		$lessons 	= Lesson::where('enable','=','1')->where('category_id', $request->id)->where('title','like','%'.$keyword.'%')->orderBy('id', 'DESC')->get();
 
 
 
@@ -114,6 +118,7 @@ class SearchController extends Controller
   								 array_push($results,[
                     //  'pelajaran'=> $pel->id ,
                      'value'=>$lesson->title,
+                     'slug' =>$lesson->slug,
                     //  'label'=>$av->ask->body.' di '.$pel->title
                    ]);
   						// }
