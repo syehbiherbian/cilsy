@@ -66,11 +66,12 @@ class ComentsController extends Controller
         $getlesson      = DB::table('lessons')->where('id',$detailcomment->lesson_id)->first();
         $getcomment     = DB::table('comments')
                     ->leftJoin('members','members.id','=','comments.member_id')
+                    ->leftJoin('contributors','contributors.id','=','comments.contributor_id')
                     ->where('comments.lesson_id',$getlesson->id)
                     ->where('comments.parent_id',0)
                     ->where('comments.status',1)
                     ->orderBy('comments.created_at','DESC')
-                    ->select('comments.*','members.username as username')
+                    ->select('comments.*','members.username as username', 'contributors.username as contriname')
                     ->get();
 
             DB::table('comments')
@@ -102,16 +103,17 @@ class ComentsController extends Controller
         $input = $request->all();
         // $input['lesson_id'] = Input::get('lesson_id');
         $input['parent_id'] = Input::get('comment_id');
-        // $input['body'] = Input::get('body');
+        $input['body'] = Input::get('body');
         // $input['images'] = null;
         // $input['member_id'] = Input::get('member_id');
         $input['contributor_id'] = $uid;
+        $input['desc'] = '1';
         if ($request->hasFile('image')){
             $input['images'] = 'assets/source/komentar/komentar-'.$request->image->getClientOriginalName().'.'.$request->image->getClientOriginalExtension();
             $request->image->move(public_path('/assets/source/komentar'), $input['images']);
         }
         // $input['status'] = 0;
-        $input['desc'] = 1;
+       
         $input['created_at'] = new DateTime();
         $input['updated_at'] = new DateTime();
         $store = Comment::create($input);
@@ -121,6 +123,12 @@ class ComentsController extends Controller
         $lesson_id  = Input::get('lesson_id');
         $member_id  = Input::get('member_id');
          
+        DB::table('comments')
+        ->where('parent_id', Input::get('comment_id'))
+        ->where('body', $isi_balas)
+        ->where('lesson_id', $lesson_id)
+        ->update(['desc' => 1 ]);
+
 
         $lessons = DB::table('lessons')->where('id',$lesson_id)->first();
         $notify = DB::table('comments')->where('id', $comment_id)->first();
