@@ -18,7 +18,7 @@ use App\Mail\InvoiceMail;
 use App\Mail\SuksesMail;
 use Auth;
 use Illuminate\Http\Request;
-use App\Models\Cart;
+// use App\Models\Cart;
 
 class VtwebController extends Controller {
 
@@ -136,7 +136,7 @@ class VtwebController extends Controller {
                     // Create New Services
                     $this->create_tutorial_member($order_id);
                     $this->update_flag($order_id);
-                    // $this->hapus_cart($order_id);
+                    $this->hapus_cart($order_id);
                     // echo "INPUT: " . $input."<br/>";
                     // echo "SIGNATURE: " . $signature;
                     return response()->json([
@@ -154,7 +154,7 @@ class VtwebController extends Controller {
             // Create New Services
             $this->create_tutorial_member($order_id);
             $this->update_flag($order_id);
-            // $this->hapus_cart($order_id);
+            $this->hapus_cart($order_id);
             // echo "INPUT: " . $input."<br/>";
             // echo "SIGNATURE: " . $signature;
             return response()->json([
@@ -167,7 +167,7 @@ class VtwebController extends Controller {
                 'type' => $type,
                 'notes' => "Waiting customer to finish transaction order_id: " . $order_id . " using " . $type,
             ]);
-            // $this->hapus_cart($order_id);
+            $this->hapus_cart($order_id);
             //send mail invoice pending
             $this->send_mail($order_id);
             return response()->json([
@@ -237,15 +237,9 @@ class VtwebController extends Controller {
             );
     }
     
-    public function hapus_cart($order_id){
+    private function hapus_cart($order_id){
         $invoice = Invoice::where('code', $order_id)->first();
         $cart = Cart::where('member_id', $invoice->members_id)->delete();
-    }
-
-    public function hapus_cart($order_id){
-        $invoice = Invoice::where('code', $order_id)->first();
-        $cart = Cart::where('member_id', $invoice->member_id)->delete();
-        echo "berhasil hapus keranjang";
     }
 }
     
