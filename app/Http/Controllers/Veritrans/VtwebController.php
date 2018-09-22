@@ -191,7 +191,7 @@ class VtwebController extends Controller {
                 'type' => $type,
                 'notes' => "Payment using " . $type . " for transaction order_id: " . $order_id . " is expired.",
             ]);
-            $this->hapus_cart($order_id);
+            // $this->hapus_cart($order_id);
             return response()->json([
                 'status' => true
             ], 200);
