@@ -132,11 +132,11 @@
       <div class="row">
         <div class="col-lg-offset-3 col-lg-6 col-md-offset-2 col-md-8 text-center mt-5">
           <h3 class="mb-4">{{$lessons->title}}</h3>
-          <a id="guest-{{ $lessons->id }}" href="{{ url('cart') }}" class="btn" style="background-color:#fff; color:#5bc0de; border-color:#46b8da; display:none" >Lihat Keranjang</a>        
+          <a id="tamu-{{ $lessons->id }}" href="{{ url('cart') }}" class="btn" style="background-color:#fff; color:#5bc0de; border-color:#46b8da; display:none" >Lihat Keranjang</a>        
           <?php if(($cart != null)){ ?>
           <a href="{{ url('cart') }}" class="btn btn-lg btn-primary mb-2" style="background-color:#fff; color:#5bc0de; border-color:#46b8da;" >Lihat Keranjang</a> &nbsp;&nbsp;&nbsp;       
           <?php }else{ ?>          
-          <button id="beli-{{ $lessons->id }}" class="btn btn-lg btn-primary mb-2" onclick="addToCart({{ $lessons->id }})"><i class="fa fa-shopping-cart"></i> Beli Tutorial</button> &nbsp;&nbsp;&nbsp;
+          <button id="jual-{{ $lessons->id }}" class="btn btn-lg btn-primary mb-2" onclick="addToCart({{ $lessons->id }})"><i class="fa fa-shopping-cart"></i> Beli Tutorial</button> &nbsp;&nbsp;&nbsp;
           <?php } ?>
           <button class="btn btn-lg btn-secondary mb-2" data-toggle="modal" data-target="#ModalVideo">Preview Tutorial</button>
         </div>
@@ -176,6 +176,8 @@
         $.each(results, function(k,v) {
               $('#beli-'+v['id']).hide();
               $('#guest-'+v['id']).show();
+              $('#jual-'+v['id']).hide();
+              $('#tamu-'+v['id']).show();
         });
       }
     }

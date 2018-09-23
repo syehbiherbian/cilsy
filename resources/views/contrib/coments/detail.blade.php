@@ -113,8 +113,8 @@
             <div class="content-reload">
                 @foreach($datacomment as $comment)
                 <div class="col-md-12" style="margin-bottom:30px;" id="row{{ $comment->id }}">
-                    <strong>{{ $comment->username }}</strong> pada <strong><?= date('d/m/Y',strtotime($comment->created_at)) ?></strong>
-					<strong style="color:#ff5e10;">@if($comment->member_id !==null)  User @else ($comment->contributor_id  !==null)  Contributor @endif</strong>
+                    <strong> @if($comment->desc == 0)  {{ $comment->username }} @else ($comment->desc == 1)  {{ $comment->contriname }} @endif </strong> pada <strong><?= date('d/m/Y',strtotime($comment->created_at)) ?></strong>
+					<strong style="color:#ff5e10;">@if($comment->desc == 0)  User @else ($comment->desc == 1)  Contributor @endif</strong>
 					<div class="col-md-12" style="margin-top:10px;padding-left:5%; white-space:pre-line;">
                             {{ $comment->body }}
                     <?php if(!empty($comment->images)) { ?>
@@ -145,7 +145,7 @@
 										{{ $child->contriname }}
 									<?php } ?>
 								</strong> pada <strong><?= date('d/m/Y',strtotime($child->created_at)) ?></strong>
-								<strong style="color:#ff5e10;">@if($child->member_id !==null)  User @else ($child->contributor_id  !==null)  Contributor @endif</strong>
+								<strong style="color:#ff5e10;">@if($child->desc == 0)  User @else ($child->desc == 1)  Contributor @endif</strong>
 								<div class="col-md-12" style="margin-top:10px;margin-bottom:10px;padding-left:5%; white-space: pre-line">
                                     {{ $child->body }}
                                     <?php if($child->images != null) { ?>
@@ -198,7 +198,7 @@
         dataform.append( 'lesson_id', lesson_id);
         dataform.append( 'member_id', member_id);
         dataform.append( 'comment_id', comment_id);
-    
+
         if (isi_balas == '') {
           alert('Harap Isi Komentar !')
         }else {
