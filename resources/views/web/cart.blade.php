@@ -35,7 +35,7 @@
 <div class="content-section">
     <div class="container">
         <div class="row">
-            <div class="col-sm-12">
+            <div class="col-sm-12" style="margin-top: 50px;">
                 <h3>Keranjang Belanja (<span id="tutorial-total">{{ count($carts) }}</span> tutorial)</h3>  
             </div>
         </div>

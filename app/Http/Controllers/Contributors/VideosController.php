@@ -274,7 +274,7 @@ class VideosController extends Controller
                 $store->video = $url_video;
                 $store->description = $description[$key];
                 $store->type_video = $type_video;
-                $store->durasi = $duration;
+                // $store->durasi = $duration;
                 $store->created_at = $now;
                 $store->enable = 1;
                 $store->save();
