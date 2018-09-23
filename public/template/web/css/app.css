@@ -161,6 +161,7 @@ html, body {
   background: linear-gradient(to bottom, #33cccc 0%, #6600cc 100%);
   color : #fff;
   padding: 100px 0;
+  text-align: center;
 }
 #header {
     min-height: 80px;
