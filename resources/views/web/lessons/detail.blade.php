@@ -728,7 +728,7 @@ td{
                 <li class="active"><a data-toggle="tab" href="#tab1">Deskripsi Tutorial</a></li>
                 <li><a data-toggle="tab" href="#tab2">Daftar Materi</a></li>
                 <li><a data-toggle="tab" href="#tab3">Berkas Praktek</a></li>
-                <li><a data-toggle="tab" href="#tab4">Komentar</a></li>
+                <li><a data-toggle="tab" href="#tab4">Diskusi</a></li>
               </ul>
 
               <div class="tab-content" style="margin-top:0px;">
