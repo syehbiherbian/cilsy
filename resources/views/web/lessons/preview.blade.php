@@ -169,6 +169,9 @@
   </div>
 </div>
 <script>
+  fbq('track', 'ViewContent');
+</script>
+<script>
     var cek = localStorage.getItem('cart');
     if(cek != null){
       var results = JSON.parse(cek);

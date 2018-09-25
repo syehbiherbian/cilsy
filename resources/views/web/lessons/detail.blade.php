@@ -966,9 +966,6 @@ $(document).ready(function(){
     //     loadcontent()
     // }, 5000);
 </script>
-<script>
-  fbq('track', 'ViewContent');
-</script>
 <script type="text/javascript">
 
 $(document).ready(function() {
