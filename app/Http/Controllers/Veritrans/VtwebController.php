@@ -23,7 +23,7 @@ class VtwebController extends Controller {
         $is_production = (config('app.env') == 'production');
         Veritrans::$serverKey = $this->sk;
         //set Veritrans::$isProduction  value to true for production mode
-        Veritrans::$isProduction = true;
+        Veritrans::$isProduction = false;
     }
     public function vtweb() {
         $members = Auth::guard('members')->user();
