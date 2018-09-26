@@ -81,4 +81,8 @@ class ProfileController extends Controller
       }
     }
 
+    public function Riwayat(){
+      return view('web.members.riwayat');
+    }
+
 }

@@ -11,6 +11,7 @@
           <ul class="nav">
             <li><a href="{{ url('member/profile') }}">Informasi Personal</a></li>
             <li><a href="{{ url('member/change-password') }}">Ubah Password</a></li>
+            <li><a href="{{ url('member/riwayat') }}">Riwayat Pembelian</a></li>
           </ul>
         </div>
       </div>

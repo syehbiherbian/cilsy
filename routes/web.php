@@ -178,6 +178,7 @@ Route::post('member/email', 'Web\Members\MemberAuth\ForgotPasswordController@sen
 // Route::get('member/reset/{token}', 'Web\Members\MemberAuth\ResetPasswordController@showResetForm');
 Route::get('member/profile', 'Web\Members\ProfileController@index');
 Route::post('member/profile', 'Web\Members\ProfileController@doSubmit');
+Route::get('member/riwayat', 'Web\Members\ProfileController@riwayat');
 Route::get('member/subscriptions', 'Web\Members\SubscriptionsController@index');
 Route::get('member/subscriptions/unsubscribe/{id}', 'Web\Members\SubscriptionsController@doUnsubscribe');
 Route::get('member/point', 'Web\Members\PointController@index');
