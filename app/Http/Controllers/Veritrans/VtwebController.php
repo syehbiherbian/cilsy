@@ -6,6 +6,7 @@ use App\Models\InvoiceDetail;
 use App\Models\Member;
 use App\Models\Package;
 use App\Models\TutorialMember;
+use App\Models\Cart;
 use App\Veritrans\Veritrans;
 use DateTime;
 use DB;
@@ -16,7 +17,7 @@ use App\Mail\SuksesMail;
 use Auth;
 use Illuminate\Http\Request;
 class VtwebController extends Controller {
-    public $sk = 'VT-server-_cXc9tYjPxt4JEX7B7qDSQP_';
+    public $sk = 'VT-server-4O7hlRyievnwHHB5b0J-z-xf';
     public function __construct() {
         $secret = env('VT_SECRET_'.strtoupper(config('app.env')));
         $is_production = (config('app.env') == 'production');
@@ -129,6 +130,7 @@ class VtwebController extends Controller {
             // Create New Services
             $this->create_tutorial_member($order_id);
             $this->update_flag($order_id);
+            $this->hapus_cart($order_id);
             // echo "INPUT: " . $input."<br/>";
             // echo "SIGNATURE: " . $signature;
             return response()->json([
@@ -141,6 +143,7 @@ class VtwebController extends Controller {
                 'type' => $type,
                 'notes' => "Waiting customer to finish transaction order_id: " . $order_id . " using " . $type,
             ]);
+            $this->hapus_cart($order_id);
             return response()->json([
                 'status' => true
             ], 200);
@@ -202,5 +205,11 @@ class VtwebController extends Controller {
                 'flag' => 0,
             ]
             );
+    }
+
+    private function hapus_cart($order_id){
+        $invo = Invoice::where('code', $order_id)->first();
+        $hapus = Cart::where('member_id', $invo->members_id)->delete();
+
     }
 }
