@@ -105,11 +105,12 @@ class VtwebController extends Controller {
                 } else {
                     // TODO set payment status in merchant's database to 'Success'
                     // Update status Invoices
-                    Invoice::where('code', $order_id)->update([
+                    $invo = Invoice::where('code', $order_id)->update([
                         'status' => 1,
                         'type' => $type,
                         'notes' => "Transaction order_id: " . $order_id . " successfully captured using " . $type,
                     ]);
+                    Cart::where('member_id', $invo->members_id)->delete();
                     // Create New Services
                     $this->create_tutorial_member($order_id);
                     $this->update_flag($order_id);
@@ -127,10 +128,10 @@ class VtwebController extends Controller {
                 'type' => $type,
                 'notes' => "Transaction order_id: " . $order_id . " successfully transfered using " . $type,
             ]);
+            Cart::where('member_id', $invoice->members_id)->delete();
             // Create New Services
             $this->create_tutorial_member($order_id);
             $this->update_flag($order_id);
-            $this->hapus_cart($order_id);
             // echo "INPUT: " . $input."<br/>";
             // echo "SIGNATURE: " . $signature;
             return response()->json([
