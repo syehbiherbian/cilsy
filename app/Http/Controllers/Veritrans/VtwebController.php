@@ -69,6 +69,7 @@ class VtwebController extends Controller {
         } catch (Exception $e) {
             return $e->getMessage;
         }
+        Cart::where('member_id', $invoice->members_id)->delete();
     }
     public function notification(Request $r) {
         $input = $r->order_id.$r->status_code.$r->gross_amount.$this->sk;
@@ -110,7 +111,7 @@ class VtwebController extends Controller {
                         'type' => $type,
                         'notes' => "Transaction order_id: " . $order_id . " successfully captured using " . $type,
                     ]);
-                    Cart::where('member_id', $invo->members_id)->delete();
+                    
                     // Create New Services
                     $this->create_tutorial_member($order_id);
                     $this->update_flag($order_id);
@@ -128,7 +129,6 @@ class VtwebController extends Controller {
                 'type' => $type,
                 'notes' => "Transaction order_id: " . $order_id . " successfully transfered using " . $type,
             ]);
-            Cart::where('member_id', $invoice->members_id)->delete();
             // Create New Services
             $this->create_tutorial_member($order_id);
             $this->update_flag($order_id);
