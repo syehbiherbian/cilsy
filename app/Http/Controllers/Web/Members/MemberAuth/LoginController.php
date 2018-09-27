@@ -68,7 +68,7 @@ class LoginController extends Controller
     protected function authenticated(Request $r, $user)
     {
         /* sync cart */
-        // if ($r->input('next')) {
+        if ($r->input('next')) {
             $ids = explode(",", $r->input('lessons'));
             foreach ($ids as $id) {
                 /* cek lesson */
@@ -82,7 +82,11 @@ class LoginController extends Controller
                     ]);
                 }
             }
-        // }
+            return redirect($this->redirectTo);
+        }else{
+            return redirect('/');
+        }
+
 
         if (session()->get('invoiceCode')) {
             return view('web.payment.summary', compact('member'));
