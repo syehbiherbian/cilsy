@@ -597,7 +597,7 @@ a #items .item {
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{ url('member/signout')}}">
+                                    <a id="logout" href="{{ url('member/signout')}}">
                                         Logout
                                     </a>
                                 </li>
@@ -747,6 +747,9 @@ a #items .item {
     }
       
   }
+  $("#logout").click(function(){
+    localStorage.clear();
+  });
 </script>    
 <script>
   var sidebarBox = document.querySelector('#box'),

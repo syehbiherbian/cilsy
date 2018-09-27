@@ -82,7 +82,6 @@
                 }
                 lessonsid += v.id;
             })
-            window.localStorage.removeItem('cart');
             $('input[name=lessons]').val(lessonsid);
         }
     {{--  @endif  --}}
