@@ -100,8 +100,12 @@ class SearchController extends Controller
     
       $keyword 			= Input::get('term');
       $category 			= Input::get('category');
-
-  		$lessons 	= Lesson::where('enable','=','1')->where('category_id', $request->id)->where('title','like','%'.$keyword.'%')->orderBy('id', 'DESC')->get();
+      if($request->id != null){
+  		    $lessons 	= Lesson::where('enable','=','1')->where('category_id', $request->id)->where('title','like','%'.$keyword.'%')->orderBy('id', 'DESC')->get();
+      }
+      else{
+        $lessons 	= Lesson::where('enable','=','1')->where('title','like','%'.$keyword.'%')->orderBy('id', 'DESC')->get();
+      }
 
 
 

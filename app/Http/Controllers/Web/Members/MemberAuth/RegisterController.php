@@ -121,12 +121,15 @@ class RegisterController extends Controller
                 if ($lesson) {
                     /* simpan ke cart */
                     $cart = \App\Models\Cart::firstOrCreate([
-                        'member_id' => $members->id,
+                        'member_id' => Auth::guard('members')->user()->id,
                         'contributor_id' => $lesson->contributor_id,
                         'lesson_id' => $lesson->id
                     ]);
                 }
             }
+            return redirect($this->redirectTo);
+        }else{
+            return redirect('/');
         }
 
        //Redirects sellers
