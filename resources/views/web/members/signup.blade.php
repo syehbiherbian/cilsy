@@ -93,7 +93,7 @@
       }
     });
 
-    @if (isset($_GET['next']))
+    {{--  @if (isset($_GET['next']))  --}}
         var lessonsid = '';
         var cek = localStorage.getItem('cart');
         if (cek != null) {
@@ -106,6 +106,6 @@
             })
             $('input[name=lessons]').val(lessonsid);
         }
-    @endif
+    {{--  @endif  --}}
 </script>
 @endsection
