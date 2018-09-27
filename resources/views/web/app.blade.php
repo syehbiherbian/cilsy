@@ -792,10 +792,10 @@ a #items .item {
     });
     </script>
     <script type="text/javascript">
-      function changeCategory(category) {
+      function changeCategory(category, id) {
         $('.cate_title').text(category);
         if (category != 'Semua Kategori') {
-          $('.searchcategory').val(category);
+          $('.searchcategory').val(id);
         }else {
             $('.searchcategory').val('');
         }
@@ -860,19 +860,20 @@ a #items .item {
     <script type="text/javascript">
         
     $(function() {
-      let autocompleteData = {};
+      let autocompleteData = {id: 1};
 
       $("#cate").change(function () {
-          autocompleteData.id = this.value;
-          $(".keyword").autocomplete("search");
-      });
+        {{--  console.log($('.searchcategory').val());  --}}
+        autocompleteData.id = this.value;
+                  $(".keyword").autocomplete("search");
+              });
       $(".keyword").autocomplete({
         source: function(request, response) {
           $.ajax({
               url: "search/autocomplete",
               type: "GET",
               dataType: "json",
-              data: {id : 1},
+              data: {id: $('.searchcategory').val()},
               success: function(data) {
                   response($.map(data, function(item) {
                     return {
@@ -893,6 +894,8 @@ a #items .item {
           window.location = "/lessons/" + ui.item.slug;
       }
       }).bind('focus', function () {
+        console.log($('.searchcategory').val());  
+
         $('.ui-autocomplete').css('z-index','9999').css('overflow-y','scroll').css('max-height','300px');
         // $('.ui-autocomplete').css('background','#09121a').css('color','#fff');
         // $('.ui-menu .ui-menu-item-wrapper').css('padding','11px 1em 3px 1.4em !important');

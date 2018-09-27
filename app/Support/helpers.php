@@ -128,7 +128,7 @@ function getCategory(){
   $html='';
   
   foreach ($categories as $key => $category)
-      $html .=' <a class="dropdown-item" value="'.$category->id.'" href="javascript:void(0)"  onclick="changeCategory(&apos;'.$category->title.'&apos;)">'. $category->title.'</a>';
+      $html .=' <a class="dropdown-item" value="'.$category->id.'" href="javascript:void(0)"  onclick="changeCategory(&apos;'.$category->title.'&apos;, '.$category->id.')">'. $category->title.'</a>';
   return $html;
 }
 function getTotalCart(){
