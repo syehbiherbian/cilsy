@@ -36,10 +36,10 @@
 
             <form action="{{ url('member/signin') }}" method="post">
                 {{ csrf_field() }}
-                @if (isset($_GET['next']))
+                {{--  @if (isset($_GET['next']))  --}}
                 <input type="hidden" name="next" value="{{ $_GET['next'] }}">
                 <input type="hidden" name="lessons" value="">
-                @endif
+                {{--  @endif  --}}
                 <div class="form-group @if ($errors->has('email')) has-error @endif">
                     <label for="exampleInputPassword1">Email :</label>
                     <input type="email" class="form-control" name="email">
@@ -71,7 +71,7 @@
       }
     });
 
-    @if (isset($_GET['next']))
+    {{--  @if (isset($_GET['next']))  --}}
         var lessonsid = '';
         var cek = localStorage.getItem('cart');
         if (cek != null) {
@@ -85,6 +85,6 @@
             window.localStorage.removeItem('cart');
             $('input[name=lessons]').val(lessonsid);
         }
-    @endif
+    {{--  @endif  --}}
 </script>
 @endsection
