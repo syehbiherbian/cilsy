@@ -64,12 +64,12 @@ class VtwebController extends Controller {
             'customer_details' => $customer_details,
         );
         try {
+            Cart::where('member_id', $members->id)->delete();
             $vtweb_url = $vt->vtweb_charge($transaction_data);
             return redirect($vtweb_url);
         } catch (Exception $e) {
             return $e->getMessage;
         }
-        Cart::where('member_id', $invoice->members_id)->delete();
     }
     public function notification(Request $r) {
         $input = $r->order_id.$r->status_code.$r->gross_amount.$this->sk;
