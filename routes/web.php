@@ -179,6 +179,10 @@ Route::post('member/email', 'Web\Members\MemberAuth\ForgotPasswordController@sen
 Route::get('member/profile', 'Web\Members\ProfileController@index');
 Route::post('member/profile', 'Web\Members\ProfileController@doSubmit');
 Route::get('member/riwayat', 'Web\Members\ProfileController@riwayat');
+Route::get('member/invoice/{inv}', 'Web\Members\ProfileController@download');
+Route::get('member/tambah/{invoice}', 'Web\Members\ProfileController@tambah');
+Route::post('member/tambah/{invoice}', 'Web\Members\ProfileController@tambah');
+
 Route::get('member/subscriptions', 'Web\Members\SubscriptionsController@index');
 Route::get('member/subscriptions/unsubscribe/{id}', 'Web\Members\SubscriptionsController@doUnsubscribe');
 Route::get('member/point', 'Web\Members\PointController@index');

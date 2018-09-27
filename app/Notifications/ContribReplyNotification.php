@@ -49,8 +49,8 @@ class ContribReplyNotification extends Notification
         return (new MailMessage)
                     ->subject('Notification From Cilsy Fiolution')
                     ->greeting(sprintf('Hello %s', $this->contrib->first_name))
-                    ->line(sprintf('Halo, %s telah membalas komentar pada tutorial %s,', $this->contrib->first_name, $this->lesson->title))
-                    ->action('Balas Komentar', $url)
+                    ->line(sprintf('Halo, %s telah menjawab Pertanyaan pada tutorial %s,', $this->contrib->first_name, $this->lesson->title))
+                    ->action('Lihat Diskusi', $url)
                     ->line('Terima Kasih telah menggunakan aplikasi kami!');
     }
 

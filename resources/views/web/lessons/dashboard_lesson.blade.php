@@ -18,7 +18,7 @@
                 <li class="active"><a data-toggle="tab" href="#tab1">Deskripsi Tutorial</a></li>
                 <li><a data-toggle="tab" href="#tab2">Daftar Materi</a></li>
                 <li><a data-toggle="tab" href="#tab3">Berkas Praktek</a></li>
-                <li><a data-toggle="tab" href="#tab4">Komentar</a></li>
+                <li><a data-toggle="tab" href="#tab4">Diskusi</a></li>
               </ul>
 
               <div class="tab-content" style="margin-top:0px;">
@@ -52,12 +52,12 @@
 
                   <?php if (empty(Auth::guard('members')->user()->id)) { ?>
                     <div class="text-center mb-25">
-                      Silahkan <a href="{{ url('member/signin') }}" class="btn btn-primary"> Masuk</a> untuk memberikan komentar
+                      Silahkan <a href="{{ url('member/signin') }}" class="btn btn-primary"> Masuk</a> untuk memberikan pertanyaan
                     </div>
                   <?php	}else { ?>
                  @if ( empty($tutor))
                     <div class="text-center mb-25">
-                      Fitur Komentar hanya bisa di gunakan jika sudah melakukan pembelian
+                      Fitur Diskusi hanya bisa di gunakan jika sudah melakukan pembelian
                     </div>
                   @else
                   <!-- Comment Form -->
@@ -67,14 +67,14 @@
                       <input type="hidden" name="lesson_id" value="{{-- $lessons->id --}}">
                       <input type="hidden" name="parent_id" value="0"> -->
                       <div class="form-group">
-                        <label>Komentar</label>
+                        <label>Pertanyaan</label>
                         <textarea rows="8" cols="80" class="form-control" name="body" id="textbody0"></textarea>
                       </div>
                       
                       <span id="file_progress" class="float-left"></span>
                       <a id="browse" href="javascript:;" style="float:right" class="uploader"  url="{{ url('attachment')}}" >
                        <button  type="button"  class="btn btn-warning"> <i class="fa fa-paperclip"> </i> Upload </button></a> 
-                      <button type="button" class="btn btn-primary" onClick="doComment({{ $lessons->id }},0)" >Kirim</button>
+                      <button type="button" class="btn btn-primary" onClick="doComment({{ $lessons->id }},0)" >Tambah Pertanyaan</button>
                       <button type="button" class="btn btn-warning" onClick="doComment({{ $lessons->id }},0)" >upload</button>
                   <!-- </form><!--./ Comment Form -->
                   </div>
@@ -83,7 +83,7 @@
 
                   <!-- Comments Lists -->
                   <div id="comments-lists">
-                    <p>Memuat Komentar . . .</p>
+                    <p>Memuat Pertanyaan . . .</p>
                   </div>
                   <!--./ Comments Lists -->
 
@@ -171,7 +171,7 @@
 
         $('#balas'+comment_id).html('<label class="col-md-1" style="padding-left:0px;">Anda</label>'+
                                 '<div class="col-md-11" style="padding-right:0px;">'+
-                                '   <input type="text" class="form-control" id="input_balas'+comment_id+'" name="balasan" placeholder="tambahkan komentar/balasan" value="">'+
+                                '   <input type="text" class="form-control" id="input_balas'+comment_id+'" name="balasan" placeholder="tambahkan Pertanyaan/balasan" value="">'+
                                 '</div>'+
                                 '<a href="javascript:void(0)" class="btn btn-info pull-right" onclick="dobalas('+comment_id+')" style="float:right;margin-top:10px;">Kirim</a>');
     }

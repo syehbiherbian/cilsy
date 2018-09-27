@@ -546,7 +546,7 @@ class LessonsController extends Controller
                                     if (!empty(Auth::guard('members')->user()->id)) {
                                         if(count($tutorial) >0 ){
                                         $html .= '<div class="panel-footer reply-btn-area text-right">
-									                        <button type="button" name="button" class="btn btn-primary" data-toggle="collapse" data-target="#reply' . $comment->id . '"><i class="glyphicon glyphicon-share-alt"></i> Balas</button>
+									                        <button type="button" name="button" class="btn btn-primary" data-toggle="collapse" data-target="#reply' . $comment->id . '"><i class="glyphicon glyphicon-share-alt"></i> Jawab</button>
 									                    </div>
 									                    <div class="collapse" id="reply' . $comment->id . '">
 									                      <div class="panel-footer ">
@@ -566,7 +566,7 @@ class LessonsController extends Controller
                                                                 <input id="uploadBtn" type="file" class="upload" name="image" />
                                                                 </div>
                                                                 <input id="uploadFile" placeholder="0 files selected" disabled="disabled" />
-                                                                <button type="button" class="btn btn-primary pull-right" onClick="doComment(' . $lesson_id . ',' . $comment->id . ')" >Kirim</button>
+                                                                <button type="button" class="btn btn-primary pull-right" onClick="doComment(' . $lesson_id . ',' . $comment->id . ')" >Tanbah Jawaban</button>
                                                                 </form>
 									                          </div>
 									                        </div>

@@ -597,6 +597,11 @@ a #items .item {
                                     </a>
                                 </li>
                                 <li>
+                                    <a href="{{ url('member/riwayat')}}">
+                                        Riwayat Pembelian
+                                    </a>
+                                </li>
+                                <li>
                                     <a href="{{ url('member/signout')}}">
                                         Logout
                                     </a>
