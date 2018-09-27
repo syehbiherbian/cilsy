@@ -127,8 +127,20 @@ class RegisterController extends Controller
                     ]);
                 }
             }
-            return redirect($this->redirectTo);
         }else{
+            $ids = explode(",", $r->input('lessons'));
+            foreach ($ids as $id) {
+                /* cek lesson */
+                $lesson = \App\Models\Lesson::find($id);
+                if ($lesson) {
+                    /* simpan ke cart */
+                    $cart = \App\Models\Cart::firstOrCreate([
+                        'member_id' => Auth::guard('members')->user()->id,
+                        'contributor_id' => $lesson->contributor_id,
+                        'lesson_id' => $lesson->id
+                    ]);
+                }
+            }
             return redirect('/');
         }
 
