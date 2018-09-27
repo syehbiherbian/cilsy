@@ -1,259 +1,199 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
+<!doctype html>
 <html>
 <head>
-<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
-<title>Krogarna.se Certificate</title>
-<style type="text/css" media="print">
-
-	{
-	left:0px !important;
-	width:11in !important;
-	height:8.5in !important;
-	font-size:107% !important;
-	}
-</style>
-
-<style type="text/css" media="all">
-    #top {
-height: 100%;
-}
-#position_me {
-left: 0;
-}
-
-    .SlideBackGround
-    {
-        height:650px;
-        width:880px;
-        position:fixed;
-        margin:10px 10px 10px 10px;
-        background-color:white;
-        background-image:url(frame.png);
-        background-size:880px 650px;
-        background-repeat:no-repeat;
-        z-index: 2;
-        filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='frame.png',sizingMethod='scale');
-        -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='frame.png',sizingMethod='scale')";
-
-    }
-    .MiddlePart
-    {
-    height:170px;
-    width:670px;
-    position:fixed;
-    left:125px;
-    top:80px;
-    background-image:url(middle_part.png);
-    background-size:670px 170px;
-    background-repeat:no-repeat;
-    z-index: 5;
-            filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='middle_part.png',sizingMethod='scale');
-            -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='middle_part.png',sizingMethod='scale')";
+    <meta charset="utf-8">
+    <title>CILSY INVOICE</title>
+    
+    <style>
+    .invoice-box {
+        max-width: 800px;
+        margin: auto;
+        padding: 30px;
+        border: 1px solid #eee;
+        box-shadow: 0 0 10px rgba(0, 0, 0, .15);
+        font-size: 16px;
+        line-height: 24px;
+        font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+        color: #555;
     }
     
-    .Seal
-    {
-    height:90px;
-    width:90px;
-    position:fixed;
-    left:415px;
-    top:420px;
-    background-image:url(sigill.png);
-    background-size:90px 90px;
-    background-repeat:no-repeat;
-    z-index: 5;
-                filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='sigill.png',sizingMethod='scale');
-                -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='sigill.png',sizingMethod='scale')";
+    .invoice-box table {
+        width: 100%;
+        line-height: inherit;
+        text-align: left;
+    }
     
+    .invoice-box table td {
+        padding: 5px;
+        vertical-align: top;
+    }
+    
+    .invoice-box table tr td:nth-child(2) {
+        text-align: right;
+    }
+    
+    .invoice-box table tr.top table td {
+        padding-bottom: 20px;
+    }
+    
+    .invoice-box table tr.top table td.title {
+        font-size: 45px;
+        line-height: 2px;
+        color: #333;
+    }
+    
+    .invoice-box table tr.information table td {
+        padding-bottom: 40px;
+    }
+    
+    .invoice-box table tr.heading td {
+        background: #5bc0de;
+        border-bottom: 1px solid #ddd;
+        font-weight: bold;
+        color:white;
+    }
+    
+    .invoice-box table tr.details td {
+        padding-bottom: 20px;
+    }
+    
+    .invoice-box table tr.item td{
+        border-bottom: 1px solid #eee;
+    }
+    
+    .invoice-box table tr.item.last td {
+        border-bottom: none;
+    }
+    
+    .invoice-box table tr.total td:nth-child(2) {
+        border-top: 2px solid #eee;
+        font-weight: bold;
+    }
+    
+    @media only screen and (max-width: 600px) {
+        .invoice-box table tr.top table td {
+            width: 100%;
+            display: block;
+            text-align: center;
         }
-    
-    .Ribbon
-   {
-    
-    width:60px;
-    height:90px;
-    position:fixed;
-    left:435px;
-    top:520px;
-    background-image:url(band.png);
-    background-size:60px 90px;
-    background-repeat:no-repeat;
-    z-index: 5;
-                filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='band.png',sizingMethod='scale');
-                -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='band.png',sizingMethod='scale')";
-    
+        
+        .invoice-box table tr.information table td {
+            width: 100%;
+            display: block;
+            text-align: center;
         }
-    
-    .Signature
-    {
-    width:180px;
-    height:90px;
-    position:fixed;
-    left:582px;
-    top:517px;
-      
-    background-image:url(signature.png);
-    background-size:180px 90px;
-    background-repeat:no-repeat;
-    z-index: 11;
-      filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='signature.png',sizingMethod='scale');
-    -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='signature.png',sizingMethod='scale')";
-    
     }
     
-    .DateLine
-    {
-    width:300px;
-    position:fixed;
-    left:112px;
-    top:570px;
-    z-index:11;
+    /** RTL **/
+    .rtl {
+        direction: rtl;
+        font-family: Tahoma, 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
     }
     
-    .ExaminerLine
-    {
-    width:300px;
-    position:fixed;
-    left:500px;
-    top:570px;
-    z-index:11;
+    .rtl table {
+        text-align: right;
     }
     
-    .ExaminerText
-    {
-    width:270px;
-    position:fixed;
-    left:632px;
-    top:585px;
-    color:#8B7B67;
-    z-index:11;
+    .rtl table tr td:nth-child(2) {
+        text-align: left;
     }
-    
-    .DateText
-    {
-    width:270px;
-    position:fixed;
-    left:232px;
-    top:585px;
-    z-index:11;
-    color:#8B7B67;
-    }
-    
-    .ParagraphSmall
-    {
-    height:200px;
-    width:500px;
-    position:fixed;
-    left:200px;
-    top:350px;
-    font-size:13px;
-    text-align:center;
-    z-index:11;
-    color:#8B7B67;
-    }
-    
-    .ParagraphMedium
-    {
-    height:200px;
-    width:420px;
-    position:fixed;
-    left:240px;
-    top:260px;
-    font-size:14px;
-    text-align:center;
-    z-index:11;
-    color:#8B7B67;
-    }
-    
-    .HeadingLarge
-    {
-    height:200px;
-    width:600px;
-    position:fixed;
-    left:330px;
-    top:130px;
-    font-size:66px;
-    z-index:11;
-    color:#8B7B67;
-    }
-    
-    .MiddleLine
-    {
-    width:720px;
-    position:fixed;
-    left:100px;
-    top:330px;
-    z-index:11;
-    color:#8B7B67;
-    }
-    
-    .StudentName
-    {
-    font-weight:bold;
-    height:200px;
-    width:720px;
-    position:fixed;
-    left:100px;
-    top:310px;
-    font-size:18px;
-    text-align:center;
-    z-index:11;
-    color:#8B7B67;
-    }
-    
-    .CompletionDate
-    {
-    position:fixed;
-    left:225px;
-    top:555px;
-    z-index:11;
-    color:#8B7B67;
-    text-align:center;
-    }
-    
-</style>
+    </style>
 </head>
 
 <body>
-<div class="SlideBackGround">
-</div>
+    <div class="invoice-box">
+    @foreach($get_hist as $get_hist => $cari)
+        <table cellpadding="0" cellspacing="0">
+            <tr class="top" style="background:#d9edf7;">
+                <td colspan="2">
+                    <table>
+                        <tr>
+                            <td class="title">
+                                <img src="{{asset('template/web/img/logobaru.png')}}" style="max-width: 165px;">
+                            </td>
+                            <td>
+                            <h1 style="color:#2ba8e2; text-align:right;">cilsy.id</h1>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            
+            <tr class="information" style="background:#d9edf7;  font-weight: bold;">
+                <td colspan="2" >
+                    <table>
+                        <tr>
+                            <td>
+                                Invoice To<br>
+                                {{$cari->user}}<br>
+                                {{$cari->email}}
+                            </td>
+                            
+                            <td>
+                                Tanggal {{$cari->hari}}<br>
+                                Batas Pembayaran {{$cari->batas}}<br>
+                                No. Invoice #{{$cari->invoice}}<br>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            
+            @if(!is_array($cari))
+            <?php
+                  $getdos = DB::table('invoice')
+                  ->join('invoice_details as B', 'invoice.id', '=', 'B.invoice_id')
+                  ->join('lessons as C', 'B.lesson_id', '=', 'C.id')
+                  ->leftjoin('tutorial_member', function($join){
+                    $join->on('C.id', '=', 'tutorial_member.lesson_id')
+                    ->where('tutorial_member.member_id','=', Auth::guard('members')->user()->id);})
+                  ->where('invoice.code', '=', $cari->invoice)
+                  ->where('B.harga_lesson', '<>', '0')
+                  ->orderBy('invoice.created_at', 'desc')
+                  ->distinct()
+                  ->select(['C.id as id', 'C.slug as slug', 'tutorial_member.id as ada', 'invoice.code as invoice' , 'invoice.created_at as hari', 'C.title as title', 'B.harga_lesson as harga', 'invoice.type as type', 
+                  DB::raw('DATE_ADD(invoice.created_at, INTERVAL 23 HOUR) as batas') , 'invoice.status as status', 'invoice.price as total'])
+                  ->get();
+                ?>
+              
+            <tr class="heading">
+                <td>
+                    Rincian
+                </td>
+                
+                <td>
+                    Harga
+                </td>
+            </tr>
+            @foreach($getdos as $tes) 
+            <tr class="item">
+                <td>
+                {{$tes->title}}
+                </td>
+                
+                <td>
+                {{$tes->harga}}
+                </td>
+            </tr>
+            @endforeach
 
-<div class="MiddlePart">
-</div>
+            <tr class="total">
+                <td></td>
+                
+                <td style="color:red;">
+                   Total: Rp. {{$cari->total}}
+                </td>
+            </tr>
 
-<div class="HeadingLarge">Kursintyg</div>
+           
+            @endif
+        </table>
+       
+        <p style="font-weight: bold;">Metode Pembayaran</p>
+                  <p><?php if($cari->type== "bank_transfer"){ ?> Bank Transfer <?php }else{?>{{$cari->type}} <?php }?></p>
+    @endforeach
+    <h3 style="text-align:center;"> TERIMA KASIH ATAS KEPERCAYAAN ANDA </h3>
 
-<div class="ParagraphMedium">HÄRMED INTYGAS
-ATT NEDANSTÅENDE PERSON KLARAT UTBILDNINGEN
-SERVERINGSTILLSTÅND
-</div>
-<div class="ParagraphSmall">Ni har visat prov på förståelse och kunnighet inom området alkoholservering. De 4 delar
-som avhandlats är: alkoholpolitik, tillsyn, servering samt mat, lokal och utrustning. Ni har
-efter denna utbildning de teoretiska kunskaper som krävs för att servera alkoholhaltiga
-drycker.
-</div>
-
-<div class="Seal"></div>
-
-<div class="Ribbon"></div>
-
-<hr class="DateLine" />
-
-<hr class="ExaminerLine" />
-
-<hr class="MiddleLine" />
-
-<div class="DateText">Datum</div>
-
-<div class="ExaminerText">Examiner</div>
-
-<div class="Signature"></div>
-
-<div class="CompletionDate">1/1/2014</div>
-<div class="StudentName">{{ $user->username }}</div>
-
-
-
+    </div>
 </body>
 </html>

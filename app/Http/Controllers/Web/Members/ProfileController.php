@@ -10,12 +10,12 @@ use App\Http\Requests;
 use Validator;
 use Redirect;
 use App\Models\Member;
-// use App\Models\Invoice;
+use App\Models\Invoice;
 // use App\Models\Package;
 use Session;
 // use Hash;
 use DateTime;
-// use DB;
+use DB;
 use Auth;
 
 class ProfileController extends Controller
@@ -82,7 +82,75 @@ class ProfileController extends Controller
     }
 
     public function Riwayat(){
-      return view('web.members.riwayat');
+      $mem_id = Auth::guard('members')->user()->id;
+      if (!$mem_id) {
+        return redirect('/member/signin');
+        exit;
+      }
+
+      $get_hist = Invoice::join('invoice_details as B', 'invoice.id', '=', 'B.invoice_id')
+      ->join('lessons as C', 'B.lesson_id', '=', 'C.id')
+      ->where('invoice.members_id', '=', $mem_id)
+      ->where('invoice.status', '2')
+      ->where('B.harga_lesson', '<>', '0')
+      ->orderBy('invoice.created_at', 'desc')
+      ->distinct()
+      ->select(['invoice.code as invoice' , 'invoice.created_at as hari',  'invoice.type as type', 
+      DB::raw('DATE_ADD(invoice.created_at, INTERVAL 23 HOUR) as batas') , 'invoice.status as status', 'invoice.price as total'])
+      ->get();
+
+      $get_tot = Invoice::join('invoice_details as B', 'invoice.id', '=', 'B.invoice_id')
+      ->join('lessons as C', 'B.lesson_id', '=', 'C.id')
+      ->where('invoice.members_id', '=', $mem_id)
+      ->where('invoice.status','<>', '2')
+      ->where('B.harga_lesson', '<>', '0')
+      ->orderBy('invoice.created_at', 'desc')
+      ->distinct()
+      ->select(['invoice.code as invoice' , 'invoice.created_at as hari',  'invoice.type as type', 
+      DB::raw('DATE_ADD(invoice.created_at, INTERVAL 23 HOUR) as batas') , 'invoice.status as status', DB::raw('SUM(distinct B.harga_lesson) as total')])
+      ->groupby('invoice.code','invoice.created_at', 'invoice.type', 'invoice.created_at', 'invoice.status')
+      ->get();
+
+      
+      return view('web.members.riwayat', [
+        'get_hist' => $get_hist,
+        'get_tot' => $get_tot,
+    ]);
+    }
+
+    public function Tambah($invoice){
+      $mem_id = Auth::guard('members')->user()->id;
+      if (!$mem_id) {
+        return redirect('/member/signin');
+        exit;
+      }
+
+
+    }
+    public function download($inv){
+
+      $mem_id = Auth::guard('members')->user()->id;
+      if (!$mem_id) {
+        return redirect('/member/signin');
+        exit;
+      }
+      $get_hist = Invoice::join('invoice_details as B', 'invoice.id', '=', 'B.invoice_id')
+      ->join('lessons as C', 'B.lesson_id', '=', 'C.id')
+      ->join('members as D', 'invoice.members_id', '=', 'D.id')
+      ->where('invoice.members_id', '=', $mem_id)
+      ->where('invoice.code',$inv)
+      ->orderBy('invoice.created_at', 'desc')
+      ->distinct()
+      ->select(['invoice.code as invoice' ,'D.username as user', 'D.email as email', 'invoice.created_at as hari',  'invoice.type as type', 
+      DB::raw('DATE_ADD(invoice.created_at, INTERVAL 23 HOUR) as batas') , DB::raw('SUM(distinct B.harga_lesson) as total')])
+      ->groupby('invoice.code', 'D.username', 'D.email', 'invoice.created_at', 'invoice.type', 'invoice.created_at' )
+      ->get();
+
+      return view('web.members.sertifikat.sertifikat',[
+        'get_hist' => $get_hist,
+      ]);
+
+
     }
 
 }

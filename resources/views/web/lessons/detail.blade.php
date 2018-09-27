@@ -770,12 +770,12 @@ td{
 
                   @if (empty(Auth::guard('members')->user()->id))
                     <div class="text-center mb-25">
-                      Silahkan <a href="{{ url('member/signin') }}" class="btn btn-primary"> Masuk</a> untuk memberikan komentar
+                      Silahkan <a href="{{ url('member/signin') }}" class="btn btn-primary"> Masuk</a> untuk memberikan pertanyaan
                     </div>
                   @else
                     @if (empty($tutor))
                      <div class="text-center mb-25">
-                      Fitur Komentar hanya bisa di gunakan jika sudah melakukan pembelian
+                      Fitur Diskusi hanya bisa di gunakan jika sudah melakukan pembelian
                     </div>
                     @else
                     <!-- Comment Form -->
@@ -786,7 +786,7 @@ td{
                         <input type="hidden" name="lesson_id" value="{{ $lessons->id }}">
                         <input type="hidden" name="parent_id" value="0"> 
                         <div class="form-group">
-                          <label>Komentar</label>
+                          <label>Buat Pertanyaan</label>
                           <textarea style="white-space: pre-line" rows="8" cols="80" class="form-control" name="body" id="textbody0"></textarea>
                         </div>
                        <ul class="left">
@@ -799,7 +799,7 @@ td{
                        </ul>
                        
                        <ul class="right">
-                      <button type="button" class="btn btn-primary upload-image" onclick="doComment({{ $lessons->id}}, 0)">Kirim</button> 
+                      <button type="button" class="btn btn-primary upload-image" onclick="doComment({{ $lessons->id}}, 0)">Tambah Pertanyaan</button> 
                       </ul>
                       </form><!--./ Comment Form -->
                     </div>
@@ -809,7 +809,7 @@ td{
         
                   <!-- Comments Lists -->
                   <div id="comments-lists">
-                    <p>Memuat Komentar . . .</p>
+                    <p>Memuat Pertanyaan . . .</p>
                   </div>
                   <!--./ Comments Lists -->
 
@@ -1188,7 +1188,7 @@ function videoTracking(videosrc) {
         url     :'{{ url("lessons/coments/getComments/".$lessons->id) }}',
         success:function(data){
           if (data == '') {
-            $('#comments-lists').html('Tidak Ada Komentar');
+            $('#comments-lists').html('Tidak Ada Pertanyaan');
           }else {
             $('#comments-lists').html(data);
           }
@@ -1206,7 +1206,7 @@ function videoTracking(videosrc) {
     dataform.append( 'parent_id', parent_id);
 
     if (body == '') {
-      alert('Harap Isi Komentar !')
+      alert('Harap Isi form !')
     }else {
       $.ajaxSetup({
           headers: {
@@ -1222,8 +1222,8 @@ function videoTracking(videosrc) {
           processData: false,
           beforeSend: function(){
                swal({
-                title: "Sedang mengirim Komentar",
-                text: "Mohon Tunggu sebentar",
+                title: "Memuat Pertanyaan",
+                text: "Mohon Tunggu sebentar Pertanyaan anda sedang dimuat",
                 imageUrl: "{{ asset('template/web/img/loading.gif') }}",
                 showConfirmButton: false,
                 allowOutsideClick: false
@@ -1237,7 +1237,7 @@ function videoTracking(videosrc) {
               $('#textbody'+parent_id).val('');
               $("#uploadFile").val('');
               swal({
-                title: "Komentar anda sudah terkirim!",
+                title: "Pertanyaan berhasil terkirim!",
                 showConfirmButton: true,
                 timer: 3000
               });
