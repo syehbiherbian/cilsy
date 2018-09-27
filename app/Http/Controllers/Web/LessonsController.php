@@ -535,7 +535,7 @@ class LessonsController extends Controller
 				                <div class="col-sm-11">
 				                  <div class="panel panel-default">
 				                    <div class="panel-heading">
-				                      <strong>' . $usernam . '</strong> <span class="text-muted">commented ' . $this->time_elapsed_string($comment->created_at) . '</span>
+				                      <strong>' . $usernam . '</strong> <span class="text-muted"> ' . $this->time_elapsed_string($comment->created_at) . '</span>
 				                    </div>
 				                    <div class="panel-body" style="white-space:pre-line;">
 				                      ' . $comment->body . '
@@ -606,7 +606,7 @@ class LessonsController extends Controller
 				                    <div class="col-sm-11">
 				                      <div class="panel panel-default">
 				                        <div class="panel-heading">
-				                          <strong>' . $userna . '</strong> <span class="text-muted">commented ' . $this->time_elapsed_string($child->created_at) . '</span>
+				                          <strong>' . $userna . '</strong> <span class="text-muted"> ' . $this->time_elapsed_string($child->created_at) . '</span>
 				                        </div>
 				                        <div class="panel-body">
                                           ' . $child->body . '
