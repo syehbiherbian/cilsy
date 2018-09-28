@@ -24,9 +24,14 @@
             <a class="btn pull-right" style="background-color:#fff; color:#5bc0de; border-color:#46b8da; " href="{{ url('/petunjuk')}}" >
                 Cara Pembayaran
             </a><br><br>
-            <p class="pull-right">Total : {{$cari->total}}</p>
+            <?php if($cari->disc == 0){?>
+                <?php }else{ ?>
+              <p class="pull-right">Potongan Diskon : {{$cari->disc}}</p><br><br>
+              <?php } ?>
+            <p class="pull-right">Total Bayar: {{$cari->total}}</p>         
+
         </div>
-       
+
         <table class="table borderless">
                 <thead>
                     <tr>
@@ -84,7 +89,9 @@
             <p>{{$cari->hari}}</p>
         </div>
         <div class="col-md-6 ">
-         
+        <a class="btn pull-right" style="background-color:#fff; color:#5bc0de; border-color:#46b8da; " href="{{ url('/member/invoice/'.$cari->invoice)}}" >
+                Download Invoice
+                </a><br><br>
               <?php if($cari->status == 1){?>
                 <a class="btn pull-right" style="background-color:#fff; color:#5bc0de; border-color:#46b8da; " href="{{ url('/member/invoice/'.$cari->invoice)}}" >
                 Download Invoice
@@ -94,7 +101,11 @@
                 <!-- <button id="{{ $cari->invoice }}" type="button" class="btn btn-info" style="background-color:#fff; color:#5bc0de; border-color:#46b8da; "  onclick="riway({{ $cari->invoice }})"><i class="fa fa-shopping-cart"></i>Beli Lagi</button> -->
                 </ul>
               <?php } ?>
-              <p class="pull-right">Total : {{$cari->total}}</p>
+              <?php if($cari->disc == 0){?>
+                <?php }else{ ?>
+              <p class="pull-right">Potongan Diskon : {{$cari->disc}}</p><br><br>
+              <?php } ?>
+              <p class="pull-right">Total Bayar: {{$cari->total}}</p>
 
         </div>
        
