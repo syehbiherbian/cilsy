@@ -86,7 +86,7 @@
         <div class="col-md-6 ">
          
               <?php if($cari->status == 1){?>
-                <a class="btn pull-right" style="background-color:#fff; color:#5bc0de; border-color:#46b8da; " href="{{ url('/petunjuk')}}" >
+                <a class="btn pull-right" style="background-color:#fff; color:#5bc0de; border-color:#46b8da; " href="{{ url('/member/invoice/'.$cari->invoice)}}" >
                 Download Invoice
                 </a><br><br>
               <?php }else if($cari->status == 5 || $cari->status == 4){ ?>
