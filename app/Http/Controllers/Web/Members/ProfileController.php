@@ -96,7 +96,7 @@ class ProfileController extends Controller
       ->orderBy('invoice.created_at', 'desc')
       ->distinct()
       ->select(['invoice.code as invoice' , 'invoice.created_at as hari',  'invoice.type as type', 
-      DB::raw('DATE_ADD(invoice.created_at, INTERVAL 23 HOUR) as batas') , 'invoice.status as status', 'invoice.price as total', DB::raw('SUM(distinct B.harga_lesson)-invoice.price as disc')])
+      DB::raw('DATE_ADD(invoice.created_at, INTERVAL 23 HOUR) as batas') , 'invoice.status as status', 'invoice.price as total', DB::raw('SUM(distinct B.harga_lesson)-Sum(distinct invoice.price) as disc')])
       ->groupby('invoice.code', 'invoice.price', 'invoice.type', 'invoice.created_at', 'invoice.status' )
       ->get();
 
@@ -108,7 +108,7 @@ class ProfileController extends Controller
       ->orderBy('invoice.created_at', 'desc')
       ->distinct()
       ->select(['invoice.code as invoice' , 'invoice.created_at as hari',  'invoice.type as type', 
-      DB::raw('DATE_ADD(invoice.created_at, INTERVAL 23 HOUR) as batas') , 'invoice.status as status', 'invoice.price as total',  DB::raw('SUM(distinct B.harga_lesson)-invoice.price as disc')])
+      DB::raw('DATE_ADD(invoice.created_at, INTERVAL 23 HOUR) as batas') , 'invoice.status as status', 'invoice.price as total',  DB::raw('SUM(distinct B.harga_lesson)-Sum(distinct invoice.price) as disc')])
       ->groupby('invoice.code', 'invoice.price', 'invoice.type', 'invoice.created_at', 'invoice.status' )
       ->get();
 
@@ -143,7 +143,7 @@ class ProfileController extends Controller
       ->orderBy('invoice.created_at', 'desc')
       ->distinct()
       ->select(['invoice.code as invoice' ,'D.username as user', DB::raw('SUM(distinct B.harga_lesson) as subtotal'), 'D.email as email', 'invoice.created_at as hari',  'invoice.type as type', 
-      DB::raw('DATE_ADD(invoice.created_at, INTERVAL 23 HOUR) as batas') , 'invoice.price as total', DB::raw('SUM(distinct B.harga_lesson)-invoice.price as disc')])
+      DB::raw('DATE_ADD(invoice.created_at, INTERVAL 23 HOUR) as batas') , 'invoice.price as total', DB::raw('SUM(distinct B.harga_lesson)-Sum(distinct invoice.price) as disc')])
       ->groupby('invoice.code', 'D.username','invoice.price', 'D.email', 'invoice.created_at', 'invoice.type', 'invoice.created_at' )
       ->get();
 
