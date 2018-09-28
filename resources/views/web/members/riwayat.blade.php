@@ -132,7 +132,7 @@
                         <td colspan="2">{{$tes->title}}</td>
                         <td>{{$tes->harga}}</td>
                         <td>{{$tes->type}}</td>
-                        <td><i class="fa fa-checklist"></i>
+                        <td>
                         <?php if($tes->status == "1"){?> 
                         Selesai <?php }else if($tes->status == "5" || $tes->status == "4"){ ?> dibatalkan <?php }?>
                         </td>
@@ -141,9 +141,10 @@
                         if(!empty($tes->ada)){
                         ?>
                         <td>
-                        <a href="{{ url('kelas/v3/'.$tes->slug) }}" class="btn pull-right" style="background-color:#f1c40f; color:white; padding: 6px 22px;">
+                        <!-- <a href="{{ url('kelas/v3/'.$tes->slug) }}" class="btn pull-right" style="background-color:#f1c40f; color:white; padding: 6px 22px;">
                         Lihat tutorial
-                        </a>
+                        </a> -->
+                        sudah memiliki
                         </td>
                          <?php }else{
                         if($tes->status == 5 || $tes->status == 4){ ?>
