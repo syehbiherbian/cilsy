@@ -106,7 +106,7 @@
               <p class="pull-right">Potongan Diskon : {{$cari->disc}}</p><br><br>
               <?php } ?>
               <p class="pull-right">Total Bayar: {{$cari->total}}</p>
-
+ 
         </div>
        
         <table class="table borderless">

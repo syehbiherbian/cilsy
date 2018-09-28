@@ -176,7 +176,7 @@
                 </td>
             </tr>
             @endforeach
-
+ 
             <tr class="total">
                 <td></td>
                 
