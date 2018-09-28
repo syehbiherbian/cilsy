@@ -48,7 +48,7 @@ class ContribReplyNotification extends Notification
         $url = url('/lessons/'.$this->lesson->slug);
         return (new MailMessage)
                     ->subject('Notification From Cilsy Fiolution')
-                    ->greeting(sprintf('Hello %s', $this->contrib->first_name))
+                    ->greeting(sprintf('Hello %s', $this->member->username))
                     ->line(sprintf('Halo, %s telah menjawab Pertanyaan pada tutorial %s,', $this->contrib->first_name, $this->lesson->title))
                     ->action('Lihat Diskusi', $url)
                     ->line('Terima Kasih telah menggunakan aplikasi kami!');
