@@ -184,6 +184,20 @@
         });
       }
     }
+    @if($cart != null)
+    var cek = localStorage.getItem('cart');
+    if(cek != null){
+      var results = JSON.parse(cek);
+      if (results.length > 0){
+        $.each(results, function(k,v) {
+          $('#guest-'+v['id']).hide();
+          $('#tamu-'+v['id']).hide();
+        });
+      }
+    }
+    
+    @endif
+
   </script>
   <script>
     $('#collapse').click(function(){ 

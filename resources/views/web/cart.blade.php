@@ -60,7 +60,7 @@
                             <form action="{{ url('cart/delete/'.$cart->id)}}" method="post">
                                 {{ csrf_field() }} 
                                 {{ method_field('delete') }} 
-                                <button class="btn btn-default btn-lg"><i class="fa fa-trash"></i></button>
+                                <button onclick="deleteCart({{$cart->id}})" class="btn btn-default btn-lg"><i class="fa fa-trash"></i></button>
                             </form>
                         </div>
                     </div>
