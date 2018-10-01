@@ -13,7 +13,7 @@ class CreateTablePoints extends Migration
      */
     public function up()
     {
-        Schema::table('points', function (Blueprint $table) {
+        Schema::create('points', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('member_id')->unsigned();
             $table->string('tyoe');
@@ -29,8 +29,6 @@ class CreateTablePoints extends Migration
      */
     public function down()
     {
-        Schema::table('points', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('points');
     }
 }

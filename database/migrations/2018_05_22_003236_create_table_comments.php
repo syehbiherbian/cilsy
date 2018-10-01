@@ -13,7 +13,7 @@ class CreateTableComments extends Migration
      */
     public function up()
     {
-        Schema::table('comments', function (Blueprint $table) {
+        Schema::create('comments', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('lesson_id')->unsigned()->nullable();
             $table->integer('member_id')->unsigned()->nullable();
@@ -32,8 +32,6 @@ class CreateTableComments extends Migration
      */
     public function down()
     {
-        Schema::table('comments', function (Blueprint $table) {
-            $table->dropColumn('id');
-        });
+        Schema::dropIfExists('comments');
     }
 }

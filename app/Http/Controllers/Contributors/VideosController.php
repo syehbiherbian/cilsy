@@ -294,5 +294,105 @@ class VideosController extends Controller
 		$delete = Video::where('id', $id)->delete();
 
 		return redirect()->back()->with('success', 'Data successfully deleted');
-	}
+    }
+    
+    public function createNew($lessonsid)
+    {
+        if (empty(Auth::guard('contributors')->user()->id)) {
+            return redirect('contributor/login');
+        }
+        $lesson = Lesson::where('id', $lessonsid)->first();
+
+        if ($lesson == null) {
+            return redirect('not-found');
+        }
+        if ($lesson->status == 2) {
+            return redirect('contributor/lessons/' . $lessonsid . '/view')->with('no-delete', 'Tutorial sedang / dalam verifikasi!');
+        }
+        $video = Video::where('lessons_id', $lessonsid)->get();
+        $count_video = count($video);
+
+        # code...
+        return view('contrib.videos.create_new', [
+            'lesson' => $lesson,
+            'count_video' => $count_video,
+        ]);
+    }
+    
+    public function doCreateNew($lessonsid)
+    {
+        if (empty(Auth::guard('contributors')->user()->id)) {
+            return redirect('contributor/login');
+        }
+        # code...
+        // validate
+        // read more on validation at http://laravel.com/docs/validation
+        $rules = array(
+            'judul' => 'required',
+            //   'video.*'  => 'mimes:mp4,mov,ogg,webm |required|max:100000',
+            //   'image.*' => 'mimes:jpeg,jpg,png,gif|required|max:30000'
+        );
+        $validator = Validator::make(Input::all(), $rules);
+        // process the login
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        } else {
+            $now = new DateTime();
+            $cid = Auth::guard('contributors')->user()->id;
+            $title = Input::get('judul');
+            $image_video = Input::file('image');
+            $lessons_video = Input::file('video');
+            // dd($lessons_video);
+            $description = Input::get('desc');
+            $video = Video::where('lessons_id', $lessonsid)->get();
+            $count_video = count($video);
+            // dd(!is_dir("assets/source/lessons/lessons-$lessonsid"));
+            if (!is_dir("assets/source/lessons/lessons-$lessonsid")) {
+                $newforder = mkdir("assets/source/lessons/lessons-" . $lessonsid);
+            }
+
+            $i = $count_video + 1;
+            foreach ($title as $key => $titles) {
+                $type_video = $lessons_video[$key]->getMimeType();
+                $DestinationPath = "assets/source/lessons/lessons-" . $lessonsid . "/video-" . $i;
+                if (!is_dir($DestinationPath)) {
+                    $newforder = mkdir($DestinationPath);
+                }
+
+                //insert video
+                $lessonsfilename = '';
+                if (!empty($lessons_video[$key])) {
+                    $lessonsfilename = $lessons_video[$key]->getClientOriginalName();
+                    $lessons_video[$key]->move($DestinationPath, $lessonsfilename);
+                }
+
+                /* siapin video */
+                $media = FFMpeg::fromDisk('local_public')->open($DestinationPath . '/' . $lessonsfilename);
+                
+                /* ambil durasi */
+                $duration = $media->getDurationInSeconds();
+                
+                /* generate thumbnail */
+                $filename = pathinfo($lessonsfilename, PATHINFO_FILENAME);
+                $thumbnailname = 'thumbnail-' . $filename . '.jpg';
+                $thumnail = $media->getFrameFromSeconds(0)->export()->save($DestinationPath . '/' . $thumbnailname);
+
+                $store = new Video;
+                $store->lessons_id = $lessonsid;
+                $store->title = $titles;
+                $store->image = '/' . $DestinationPath . '/' . $thumbnailname;
+                $store->video = '/' . $DestinationPath . '/' . $lessonsfilename;
+                $store->description = $description[$key];
+                $store->type_video = $type_video;
+                $store->durasi = $duration;
+                $store->created_at = $now;
+                $store->enable = 1;
+                $store->save();
+                
+                $i++;
+            }
+            
+            return redirect('contributor/lessons/' . $lessonsid . '/view')->with('success', 'Penambahan video berhasil');
+        }
+    }
 }

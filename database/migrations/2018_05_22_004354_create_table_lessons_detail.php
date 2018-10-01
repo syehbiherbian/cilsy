@@ -13,10 +13,10 @@ class CreateTableLessonsDetail extends Migration
      */
     public function up()
     {
-        Schema::table('lessons_detail', function (Blueprint $table) {
+        Schema::create('lessons_detail', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('lesson_id')->unsigned();
-            $table->tinyInteger('moth', 2)->unsigned();
+            $table->tinyInteger('moth')->unsigned(); // https://stackoverflow.com/a/30329900/6885956
             $table->year('year');
             $table->integer('view')->unsigned();
             $table->integer('like')->unsigned();
@@ -31,8 +31,6 @@ class CreateTableLessonsDetail extends Migration
      */
     public function down()
     {
-        Schema::table('lessons_detail', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('lessons_detail');
     }
 }

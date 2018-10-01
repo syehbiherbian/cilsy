@@ -13,7 +13,7 @@ class CreateTableInvoiceDetail extends Migration
      */
     public function up()
     {
-        Schema::table('invoice_details', function (Blueprint $table) {
+        Schema::create('invoice_details', function (Blueprint $table) {
             $table->integer('invoice_id');
             $table->integer('lesson_id');
             $table->timestamps();
@@ -27,6 +27,6 @@ class CreateTableInvoiceDetail extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('invoice_details');
     }
 }

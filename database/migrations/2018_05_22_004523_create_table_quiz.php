@@ -13,7 +13,7 @@ class CreateTableQuiz extends Migration
      */
     public function up()
     {
-        Schema::table('quiz', function (Blueprint $table) {
+        Schema::create('quiz', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('lesson_id')->unsigned();
             $table->integer('video_id')->unsigned();
@@ -32,8 +32,6 @@ class CreateTableQuiz extends Migration
      */
     public function down()
     {
-        Schema::table('quiz', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('quiz');
     }
 }

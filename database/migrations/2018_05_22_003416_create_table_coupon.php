@@ -13,7 +13,7 @@ class CreateTableCoupon extends Migration
      */
     public function up()
     {
-        Schema::table('coupon', function (Blueprint $table) {
+        Schema::create('coupon', function (Blueprint $table) {
             $table->increments('id');
             $table->boolean('enable')->unsigned();
             $table->string('code');
@@ -33,8 +33,6 @@ class CreateTableCoupon extends Migration
      */
     public function down()
     {
-        Schema::table('coupon', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('coupon');
     }
 }
