@@ -176,12 +176,14 @@
                 </td>
             </tr>
             @endforeach
-
+ 
             <tr class="total">
                 <td></td>
                 
                 <td style="color:red;">
-                   Total: Rp. {{$cari->total}}
+                   Subtotal Rp. {{$cari->subtotal}}<br><br>
+                   Disc Rp. {{$cari->disc}}<br><br>
+                   Total Rp. {{$cari->total}}
                 </td>
             </tr>
 

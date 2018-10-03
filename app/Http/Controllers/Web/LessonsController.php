@@ -566,7 +566,7 @@ class LessonsController extends Controller
                                                                 <input id="uploadBtn" type="file" class="upload" name="image" />
                                                                 </div>
                                                                 <input id="uploadFile" placeholder="0 files selected" disabled="disabled" />
-                                                                <button type="button" class="btn btn-primary pull-right" onClick="doComment(' . $lesson_id . ',' . $comment->id . ')" >Tanbah Jawaban</button>
+                                                                <button type="button" class="btn btn-primary pull-right" onClick="doComment(' . $lesson_id . ',' . $comment->id . ')" >Tambah Jawaban</button>
                                                                 </form>
 									                          </div>
 									                        </div>
