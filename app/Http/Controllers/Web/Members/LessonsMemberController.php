@@ -50,13 +50,13 @@ class LessonsMemberController extends Controller
     
                 
         $get_full = Lesson::join('videos', 'lessons.id', '=', 'videos.lessons_id')
-                     ->leftjoin('viewers', 'videos.id', '=', 'viewers.video_id', 'and', '`viewers`.`member_id`', '=', $mem_id)
-                     ->select('lessons.title', 'lessons.image')
+                     ->leftjoin('viewers', function($join){
+                        $join->on('videos.id', '=', 'viewers.video_id')
+                        ->where('viewers.member_id', '=', Auth::guard('members')->user()->id);})
                      ->select(DB::raw('count(distinct viewers.video_id) as id_count, count(distinct videos.id) as vid_id, lessons.title, lessons.image, lessons.id, lessons.slug'))
-                    //  ->where('viewers.member_id', '=', $mem_id)
                      ->groupby('lessons.title', 'lessons.image', 'lessons.id', 'lessons.slug')
                      ->having(DB::raw('count(distinct viewers.video_id)'), '=', DB::raw('count(distinct videos.id)'))                   
-                     ->get(['lessons.title', 'lessons.image', 'lessons.id', 'lessons.slug']);
+                     ->get();
 
        if(!empty($last_videos)){
        $last_lessons = Lesson::where('lessons.id', '=', $last_videos->lessons_id)->first();
