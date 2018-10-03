@@ -132,7 +132,7 @@ function deleteCart(id) {
             if (id == v.id) {
                 carts.splice(k, 1);
                 localStorage.setItem('cart', JSON.stringify(carts));
-                // $('#cart-'+id).remove();
+                $('#cart-'+id).remove();
                 window.location.href = SITE_URL + '/cart';
             }
         });
