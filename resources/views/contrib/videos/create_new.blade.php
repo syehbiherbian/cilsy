@@ -122,6 +122,7 @@
 			<h3>{{$lesson->title}}</h3>
 		</div>
 		<form id="form-upload" class="form-horizontal form-contributor" enctype="multipart/form-data">
+			@csrf
 			<input class="input-files" type="file" name="files[]" id="file" multiple />
 			<label id="form-starter" for="file">
 				<span id="drop-icon" class="fa fa-angle-double-down"></span><br>
@@ -145,14 +146,16 @@
 	var nVideo = 0;
 
 	$(document).ready(function(){
+      	var sort = $('#file-sort').sortable();
+
 		$('#file').on('change', function(e) {
 			generateList(e.target.files);
 		})
+		
 		/* aktifkan fitr drag n' drop */
 		if (isAdvancedUpload) {
-			$form.addClass('is-draggable');
-
 			var droppedFiles = false;
+			$form.addClass('is-draggable');
 
 			$form.on('drag dragstart dragend dragover dragenter dragleave drop', function(e) {
 					e.preventDefault();
@@ -197,8 +200,9 @@
 
 			/* siapkan html */
 			var html = '';
-			html += '<div id="video' + nVideo + '" class="row nVideo">'+
-				'<input id="id' + nVideo + '" type="hidden" name="id[]">'+
+			html += '<div id="video' + nVideo + '" class="row">'+
+				'<input id="id' + nVideo + '" type="hidden" name="videos[' + nVideo + '][id]">'+
+				'<input id="status' + nVideo + '" type="hidden" name="videos[' + nVideo + '][status]">'+
 				'<div class="col-md-12" style="padding:0">'+
 					'<div id="progress' + nVideo + '" class="progress">'+
 						'<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">'+
@@ -215,10 +219,10 @@
 					'</div>'+
 					'<div class="col-md-9">'+
 						'<div class="form-group">'+
-							'<input name="title[]" class="form-control" placeholder="Judul (Contoh: Pengenalan dasar terminal Ubuntu)" value="' + title + '">'+
+							'<input name="videos[' + nVideo + '][title]" class="form-control" placeholder="Judul (Contoh: Pengenalan dasar terminal Ubuntu)" value="' + title + '">'+
 						'</div>'+
 						'<div class="form-group">'+
-							'<textarea name="description[]" rows="11" class="form-control" placeholder="Deskripsi (Contoh: Active Directory Domain Controller merupakan salah satu keunggulan server windows.)"></textarea>'+
+							'<textarea name="videos[' + nVideo + '][description]" rows="11" class="form-control" placeholder="Deskripsi (Contoh: Active Directory Domain Controller merupakan salah satu keunggulan server windows.)"></textarea>'+
 						'</div>'+
 					'</div>'+
 				'</div>'+
@@ -226,6 +230,9 @@
 
 			/* tampilkan ke form */
 			$('#file-list').append(html);
+			
+			/* upload video */
+			uploadVideo(v, nVideo);
 			nVideo++;
 		});
 
@@ -238,12 +245,70 @@
 		// $('#file-list').sortable();
 	}
 
-	var uploadVideo = function(file) {
-		
-	}
+	var uploadVideo = function(file, n) {
+		var newForm = document.createElement('form');
+		var ajaxData = new FormData(newForm);
+		ajaxData.append('_token', '{{ csrf_token() }}');
+		ajaxData.append('video', file);
+		ajaxData.append('lesson_id', '{{ $lesson->id }}');
+		// console.log(ajaxData);
+		// return 
 
-	$(function() {
-      var group = $('#file-sort').sortable();
-    });
+		$.ajax({
+			url: "{{ url('contributor/lessons/'.$lesson->id.'/upload/videos') }}",
+			type: 'post',
+			data: ajaxData,
+			dataType: 'json',
+			cache: false,
+			contentType: false,
+			processData: false,
+			xhr: function () {
+				var xhr = new window.XMLHttpRequest();
+				xhr.upload.addEventListener("progress", function (evt) {
+					if (evt.lengthComputable) {
+						console.log('upload loaded', evt.loaded)
+						console.log('upload total', evt.total)
+						var percentComplete = evt.loaded / evt.total;
+						console.log('upload', percentComplete);
+						$('#progress'+n+' .progress-bar').css({
+							width: percentComplete * 100 + '%'
+						});
+						$('#progress'+n+' .progress-bar .nilai-persen').html(percentComplete * 100)
+						if (percentComplete === 1) {
+							// $('.progress').addClass('hide');
+							$('#progress'+n+' .progress-bar').removeClass('active');
+						}
+					}
+				}, false);
+				/* xhr.addEventListener("progress", function (evt) {
+					if (evt.lengthComputable) {
+						console.log('download loaded', evt.loaded)
+						console.log('download total', evt.total)
+						var percentComplete = evt.loaded / evt.total;
+						console.log('download', percentComplete);
+						$('.progress').css({
+							width: percentComplete * 100 + '%'
+						});
+					}
+				}, false); */
+				return xhr;
+			},
+			complete: function() {
+				$form.removeClass('is-uploading');
+			},
+			success: function(res) {
+				if (res.status) {
+					// var durasi = (new Date).clearTime().addSeconds(res.data.duration).toString('H:mm:ss');
+					$('#thumbnail'+n).html('<img src="'+res.data.thumbnail+'">');
+					$('#waktu-durasi'+n).html(secondsToTime(res.data.duration));
+				} else {
+
+				}
+			},
+			error: function() {
+				// Log the error, show an alert, whatever works for you
+			}
+		});
+	}
 </script>
 @endsection()

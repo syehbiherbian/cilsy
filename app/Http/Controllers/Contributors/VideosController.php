@@ -395,4 +395,79 @@ class VideosController extends Controller
             return redirect('contributor/lessons/' . $lessonsid . '/view')->with('success', 'Penambahan video berhasil');
         }
     }
+
+    public function uploadVideo()
+    {
+        $statusCode = 500;
+        $response = [
+            'status' => false,
+            'message' => 'upload video failed'
+        ];
+        $file = Input::file('video');
+        $lessonsid = Input::get('lesson_id');
+
+        $video = Video::where('lessons_id', $lessonsid)->get();
+        $count_video = count($video);
+        $i = $count_video + 1;
+
+        if (!is_dir("assets/source/lessons/lessons-$lessonsid")) {
+            $newforder = mkdir("assets/source/lessons/lessons-" . $lessonsid);
+        }
+
+        $type_video = $file->getMimeType();
+        $DestinationPath = "assets/source/lessons/lessons-" . $lessonsid . "/video-" . $i;
+        if (!is_dir($DestinationPath)) {
+            $newforder = mkdir($DestinationPath);
+        }
+
+        //insert video
+        $lessonsfilename = '';
+        if (!empty($file)) {
+            $fullname = $file->getClientOriginalName();
+            $filename = pathinfo($fullname, PATHINFO_FILENAME);
+            $extension = $file->getClientOriginalExtension();
+            $lessonsfilename = str_slug($filename). '.' . $extension;
+            $file->move($DestinationPath, $lessonsfilename);
+        }
+
+        /* siapin video */
+        $media = FFMpeg::fromDisk('local_public')->open($DestinationPath . '/' . $lessonsfilename);
+        
+        /* ambil durasi */
+        $duration = $media->getDurationInSeconds();
+        
+        /* generate thumbnail */
+        $filename = pathinfo($lessonsfilename, PATHINFO_FILENAME);
+        $thumbnailname = 'thumbnail-' . $filename . '.jpg';
+        $thumnail = $media->getFrameFromSeconds(0)->export()->save($DestinationPath . '/' . $thumbnailname);
+
+        $store = new Video;
+        $store->lessons_id = $lessonsid;
+        $store->title = '';
+        $store->image = '/' . $DestinationPath . '/' . $thumbnailname;
+        $store->video = '/' . $DestinationPath . '/' . $lessonsfilename;
+        $store->description = '';
+        $store->type_video = $type_video;
+        $store->durasi = $duration;
+        // $store->created_at = $now;
+        $store->enable = 0;
+        $store->save();
+
+        if ($store) {
+            $statusCode = 200;
+            $response = [
+                'status' => true,
+                'message' => 'Upload video success',
+                'data' => [
+                    'id' => $store->id,
+                    'duration' => $store->durasi,
+                    'thumbnail' => $store->image
+                ]
+            ];
+        } else {
+
+        }
+
+        return response()->json($response, $statusCode);
+    }
 }
