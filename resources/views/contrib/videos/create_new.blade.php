@@ -219,7 +219,7 @@
 		}, function(isConfirm) {
 			if (isConfirm	) {
 				ajaxCall[n].abort()
-				$('#video'+n).remove()
+				$('#videobox'+n).remove()
 				delete videos[n]
 				if (typeof videos[0] == 'undefined') {
 					$('#form-starter').show();
@@ -237,6 +237,7 @@
 
 		/* generate masing2 file */
 		$.each(files, function(i, v) {
+			console.log(files)
 			/* siapkan variable */
 			var title = v.name.split('.').slice(0, -1).join('.');
 			var extension = v.name.split('.').pop();
@@ -247,15 +248,27 @@
 			}
 
 			/* validasi awal */
+			var maxSize = 1024 * 1024 * 100; // 100MB 
 			if (extension != 'mp4' && extension2 != 'mp4') {
 				swal("Ups", "Maaf, format video yang diperbolehkan adalah .mp4", "error");
-				return
+				return false
 			}
+			console.log(v)
+			console.log(v.size)
+			console.log(maxSize)
+			if (v.size > maxSize) {
+				swal("Ups", "Maksimal ukuran video yang dapat diupload adalah 100MB", "error");
+				return false
+			}
+			
 
 			/* siapkan html */
 			var html = '';
-			html += '<div id="video' + nVideo + '" class="videos row">'+
+			html += '<div id="videobox' + nVideo + '" class="videos row">'+
 				'<input id="id' + nVideo + '" type="hidden" name="videos[' + nVideo + '][id]">'+
+				'<input id="image' + nVideo + '" type="hidden" name="videos[' + nVideo + '][image]">'+
+				'<input id="video' + nVideo + '" type="hidden" name="videos[' + nVideo + '][video]">'+
+				'<input id="duration' + nVideo + '" type="hidden" name="videos[' + nVideo + '][duration]">'+
 				// '<input id="status' + nVideo + '" type="hidden" name="videos[' + nVideo + '][status]">'+
 				'<div class="col-md-12" style="padding:0">'+
 					'<div id="progress' + nVideo + '" class="progress" style="height:30px;">'+
@@ -374,8 +387,11 @@
 					allDone++
 					// var durasi = (new Date).clearTime().addSeconds(res.data.duration).toString('H:mm:ss');
 					$('#id'+n).val(res.data.id);
-					$('#thumbnail'+n).html('<img src="'+res.data.thumbnail+'">');
+					$('#image'+n).val(res.data.image);
+					$('#video'+n).val(res.data.video);
+					$('#thumbnail'+n).html('<img src="'+res.data.image+'">');
 					$('#waktu-durasi'+n).html(secondsToTime(res.data.duration));
+					$('#duration'+n).val(res.data.duration);
 
 					console.log('upload success isSubmitted', isSubmitted)
 					console.log('upload success allDone', allDone)
