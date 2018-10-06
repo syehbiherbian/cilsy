@@ -121,7 +121,7 @@
 		<div class="form-title">
 			<h3>{{$lesson->title}}</h3>
 		</div>
-		<form id="form-upload" enctype="multipart/form-data">
+		<form id="form-upload" enctype="multipart/form-data" method="POST">
 			@csrf
 			<input class="input-files" type="file" name="files[]" id="file" multiple />
 			<label id="form-starter" for="file">
@@ -130,6 +130,12 @@
 				<span id="draggable-text"> atau tarik video ke sini</span>
 			</label>
 			<div id="file-list"></div>
+			<div id="btn-submit-group" class="form-group" style="display: none;">
+				<div class="col-sm-12 text-right">
+					<a href="{{url('contributor/lessons/'.$lesson->id.'/view')}}"class="btn btn-danger">Batal</a>
+					<button id="btn-submit" type="submit" class="btn btn-info">Submit</button>
+				</div>
+			</div>
 		</form>
 	</div>
   </div>
@@ -144,8 +150,10 @@
 
 	var $form = $('#form-upload');
 	var nVideo = 0;
-	var ajaxCall = {};
-	var videos = {};
+	var ajaxCall = [];
+	var videos = [];
+	var allDone = 0;
+	var isSubmitted = false;
 
 	$(document).ready(function(){
       	var sort = $('#file-sort').sortable();
@@ -174,6 +182,23 @@
 					generateList(droppedFiles);
 				});
 		}
+
+		$form.on('submit', function(e){
+			e.preventDefault()
+			isSubmitted = true
+			$('#btn-submit').attr('disabled', true)
+			$.each(videos, function(i, v) {
+				// console.log(i, v.process)
+				/* if (v.process == 'done') {
+					allDone++;
+				} */
+			})
+			if (allDone == videos.length) {
+				console.log('alldone!')
+				$form.unbind('submit').submit()
+			}
+			return false;
+		})
 	})
 
     /* cek fitur drag n' drop */
@@ -185,8 +210,8 @@
 	/* cancel proses ajax */
 	var cancelUpload = function(n) {
 		swal({
-			title: "Batalkan proses upload video?",
-			text: videos[n],
+			title: "Batalkan upload?",
+			text: videos[n]['title'],
 			type: "warning",
 			showCloseButton: true,
 			showCancelButton: true,
@@ -194,19 +219,23 @@
 			cancelButtonColor: '#3085d6',
 			confirmButtonText: "Ya"
 		}, function(isConfirm) {
-			console.log('confirm', isConfirm)
 			if (isConfirm	) {
 				ajaxCall[n].abort()
 				$('#video'+n).remove()
+				delete videos[n]
+				if (typeof videos[0] == 'undefined') {
+					$('#form-starter').show();
+					$('#btn-submit-group').hide();
+				}
 			}
 		})
-		// console.log('proses aborted', n)
 	}
 
 	/* generate dropped/selected files */
 	var generateList = function(files) {
 		/* sembunyikan tampilan form utama */
 		$('#form-starter').hide();
+		$('#btn-submit-group').show();
 
 		/* generate masing2 file */
 		$.each(files, function(i, v) {
@@ -214,12 +243,14 @@
 			var title = v.name.split('.').slice(0, -1).join('.');
 			var extension = v.name.split('.').pop();
 			var extension2 = v.type ? v.type.split('/').pop() : '';
-
-			videos[i] = title
+			videos[i] = {
+				title: title,
+				process: 'ready'
+			}
 
 			/* validasi awal */
 			if (extension != 'mp4' && extension2 != 'mp4') {
-				swal("Cancelled", "Data Anda aman :)", "error");
+				swal("Ups", "Maaf, format video yang diperbolehkan adalah .mp4", "error");
 				return
 			}
 
@@ -270,6 +301,7 @@
 		/* munculkan kembali jika tidak ada video yang ditampilkan */
 		if (!nVideo) {
 			$('#form-starter').show();
+			$('#btn-submit-group').hide();
 		}
 
 		/* aktifkan sortable */
@@ -282,6 +314,7 @@
 		ajaxData.append('_token', '{{ csrf_token() }}');
 		ajaxData.append('video', file);
 		ajaxData.append('lesson_id', '{{ $lesson->id }}');
+		videos[n].process = 'uploading';
 		// console.log(ajaxData);
 		// return 
 
@@ -311,6 +344,7 @@
 							$('#progress'+n+' .progress-bar').removeClass('active');
 							$('#progress'+n+' .progress-bar').removeClass('progress-bar-striped');
 							$('#btn-cancel'+n).removeAttr('onclick').attr('disabled', true);
+							videos[n].process = 'done';
 						}
 					}
 				}, false);
@@ -332,9 +366,18 @@
 			}, */
 			success: function(res) {
 				if (res.status) {
+					allDone++
 					// var durasi = (new Date).clearTime().addSeconds(res.data.duration).toString('H:mm:ss');
 					$('#thumbnail'+n).html('<img src="'+res.data.thumbnail+'">');
 					$('#waktu-durasi'+n).html(secondsToTime(res.data.duration));
+
+					console.log('upload success isSubmitted', isSubmitted)
+					console.log('upload success allDone', allDone)
+					console.log('upload success videos.length', videos.length)
+					if (isSubmitted && (allDone == videos.length)) {
+						console.log('alldone! after upload')
+						$form.submit()
+					}
 				} else {
 
 				}

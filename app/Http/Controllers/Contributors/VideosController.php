@@ -338,6 +338,7 @@ class VideosController extends Controller
     
     public function doCreateNew($lessonsid)
     {
+        dd($lessonsid, Input::all());
         if (empty(Auth::guard('contributors')->user()->id)) {
             return redirect('contributor/login');
         }
