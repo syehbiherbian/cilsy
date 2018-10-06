@@ -121,7 +121,7 @@
 		<div class="form-title">
 			<h3>{{$lesson->title}}</h3>
 		</div>
-		<form id="form-upload" class="form-horizontal form-contributor" enctype="multipart/form-data">
+		<form id="form-upload" enctype="multipart/form-data">
 			@csrf
 			<input class="input-files" type="file" name="files[]" id="file" multiple />
 			<label id="form-starter" for="file">
@@ -203,15 +203,15 @@
 			html += '<div id="video' + nVideo + '" class="row">'+
 				'<input id="id' + nVideo + '" type="hidden" name="videos[' + nVideo + '][id]">'+
 				'<input id="status' + nVideo + '" type="hidden" name="videos[' + nVideo + '][status]">'+
-				'<div class="col-md-12" style="padding:0">'+
+				'<div class="col-md-12">'+
 					'<div id="progress' + nVideo + '" class="progress">'+
 						'<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">'+
 							'<span class="nilai-persen">0</span>%'+
 						'</div>'+
 					'</div>'+
 				'</div>'+
-				'<div class="col-md-12">'+
-					'<div class="col-md-3">'+
+				'<div class="col-md-12" style="padding-right:0">'+
+					'<div class="col-md-3" style="padding:0">'+
 						'<div id="thumbnail' + nVideo + '" class="thumbnail">'+
 							'Menunggu gambar..'+
 						'</div>'+
@@ -266,17 +266,19 @@
 				var xhr = new window.XMLHttpRequest();
 				xhr.upload.addEventListener("progress", function (evt) {
 					if (evt.lengthComputable) {
-						console.log('upload loaded', evt.loaded)
-						console.log('upload total', evt.total)
+						// console.log('upload loaded', evt.loaded)
+						// console.log('upload total', evt.total)
 						var percentComplete = evt.loaded / evt.total;
-						console.log('upload', percentComplete);
+						// console.log('upload', percentComplete);
+						var percent = Math.round(percentComplete * 100);
 						$('#progress'+n+' .progress-bar').css({
-							width: percentComplete * 100 + '%'
+							width: percent + '%'
 						});
-						$('#progress'+n+' .progress-bar .nilai-persen').html(percentComplete * 100)
-						if (percentComplete === 1) {
+						$('#progress'+n+' .progress-bar .nilai-persen').html(percent)
+						if (percent === 100) {
 							// $('.progress').addClass('hide');
 							$('#progress'+n+' .progress-bar').removeClass('active');
+							$('#progress'+n+' .progress-bar').removeClass('progress-bar-striped');
 						}
 					}
 				}, false);

@@ -263,7 +263,24 @@ class LessonsController extends Controller
     ->leftJoin('lessons_detail','lessons.id','lessons_detail.lesson_id')
     ->select('lessons.*','categories.title as category_title')
     ->first();
-    $video =Video::where('lessons_id',$id)->get();
+
+    /* delete draft video */
+    $drafts = Video::where([
+        'title' => 'draft',
+        'enable' => 0,
+        'lessons_id' => $id
+    ])->get();
+    foreach ($drafts as $draft) {
+      if (file_exists(public_path($draft->image))) {
+        unlink(public_path($draft->image));
+      }
+      if (file_exists(public_path($draft->video))) {
+        unlink(public_path($draft->video));
+      }
+      $draft->delete();
+    }
+
+    $video = Video::where('lessons_id',$id)->get();
     $quiz = Quiz::where('lesson_id',$id)->get();
     $files= File::where('lesson_id',$id)->get();
     $revisi = Revision::where('lession_id',$id)->get();

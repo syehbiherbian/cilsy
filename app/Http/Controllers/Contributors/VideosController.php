@@ -309,6 +309,23 @@ class VideosController extends Controller
         if ($lesson->status == 2) {
             return redirect('contributor/lessons/' . $lessonsid . '/view')->with('no-delete', 'Tutorial sedang / dalam verifikasi!');
         }
+
+        /* delete draft video */
+        $drafts = Video::where([
+            'title' => 'draft',
+            'enable' => 0,
+            'lessons_id' => $lessonsid
+        ])->get();
+        foreach ($drafts as $draft) {
+          if (file_exists(public_path($draft->image))) {
+            unlink(public_path($draft->image));
+          }
+          if (file_exists(public_path($draft->video))) {
+            unlink(public_path($draft->video));
+          }
+          $draft->delete();
+        }
+
         $video = Video::where('lessons_id', $lessonsid)->get();
         $count_video = count($video);
 
@@ -401,7 +418,7 @@ class VideosController extends Controller
         $statusCode = 500;
         $response = [
             'status' => false,
-            'message' => 'upload video failed'
+            'message' => 'Upload video failed'
         ];
         $file = Input::file('video');
         $lessonsid = Input::get('lesson_id');
@@ -426,7 +443,7 @@ class VideosController extends Controller
             $fullname = $file->getClientOriginalName();
             $filename = pathinfo($fullname, PATHINFO_FILENAME);
             $extension = $file->getClientOriginalExtension();
-            $lessonsfilename = str_slug($filename). '.' . $extension;
+            $lessonsfilename = md5($filename.time()). '.' . strtolower($extension);
             $file->move($DestinationPath, $lessonsfilename);
         }
 
@@ -439,11 +456,12 @@ class VideosController extends Controller
         /* generate thumbnail */
         $filename = pathinfo($lessonsfilename, PATHINFO_FILENAME);
         $thumbnailname = 'thumbnail-' . $filename . '.jpg';
-        $thumnail = $media->getFrameFromSeconds(0)->export()->save($DestinationPath . '/' . $thumbnailname);
+        $thumbnail = $media->getFrameFromSeconds(0)->export()->save($DestinationPath . '/' . $thumbnailname);
 
+        /* save as draft */
         $store = new Video;
         $store->lessons_id = $lessonsid;
-        $store->title = '';
+        $store->title = 'draft';
         $store->image = '/' . $DestinationPath . '/' . $thumbnailname;
         $store->video = '/' . $DestinationPath . '/' . $lessonsfilename;
         $store->description = '';
