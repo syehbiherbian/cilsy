@@ -137,13 +137,15 @@
 <script type="text/javascript" src="{{asset('template/kontributor/js/jquery.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('template/kontributor/js/jquery-ui.min.js')}}"></script>
 <script>
-	$( function() {
+	$(function() {
 		$( "#file-list" ).sortable();
 		$( "#file-list" ).disableSelection();
 	});
 
 	var $form = $('#form-upload');
 	var nVideo = 0;
+	var ajaxCall = {};
+	var videos = {};
 
 	$(document).ready(function(){
       	var sort = $('#file-sort').sortable();
@@ -178,7 +180,28 @@
     var isAdvancedUpload = function() {
         var div = document.createElement('div');
         return (('draggable' in div) || ('ondragstart' in div && 'ondrop' in div)) && 'FormData' in window && 'FileReader' in window;
-    }();
+	}();
+	
+	/* cancel proses ajax */
+	var cancelUpload = function(n) {
+		swal({
+			title: "Batalkan proses upload video?",
+			text: videos[n],
+			type: "warning",
+			showCloseButton: true,
+			showCancelButton: true,
+			cancelButtonText: 'Tidak',
+			cancelButtonColor: '#3085d6',
+			confirmButtonText: "Ya"
+		}, function(isConfirm) {
+			console.log('confirm', isConfirm)
+			if (isConfirm	) {
+				ajaxCall[n].abort()
+				$('#video'+n).remove()
+			}
+		})
+		// console.log('proses aborted', n)
+	}
 
 	/* generate dropped/selected files */
 	var generateList = function(files) {
@@ -192,9 +215,11 @@
 			var extension = v.name.split('.').pop();
 			var extension2 = v.type ? v.type.split('/').pop() : '';
 
+			videos[i] = title
+
 			/* validasi awal */
 			if (extension != 'mp4' && extension2 != 'mp4') {
-				alert('harus mp4');
+				swal("Cancelled", "Data Anda aman :)", "error");
 				return
 			}
 
@@ -203,10 +228,16 @@
 			html += '<div id="video' + nVideo + '" class="row">'+
 				'<input id="id' + nVideo + '" type="hidden" name="videos[' + nVideo + '][id]">'+
 				'<input id="status' + nVideo + '" type="hidden" name="videos[' + nVideo + '][status]">'+
-				'<div class="col-md-12">'+
-					'<div id="progress' + nVideo + '" class="progress">'+
+				'<div class="col-md-12" style="padding-right:0">'+
+					'<div id="progress' + nVideo + '" class="progress" style="height:30px;">'+
 						'<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">'+
-							'<span class="nilai-persen">0</span>%'+
+							'<span class="nilai-persen" style="line-height: 30px;">0</span>%'+
+						'</div>'+
+						'<div style="position: absolute;top: -5px;right: 0;">'+
+							'<div class="btn-group">'+
+								//'<button type="button" class="btn btn-default handle" style="padding: 4px 8px; cursor: move"><i class="fa fa-arrows"></i></button>'+
+								'<button id="btn-cancel' + nVideo + '" type="button" class="btn btn-default" style="padding: 4px 8px;" onclick="cancelUpload(' + nVideo + ')"><i class="fa fa-times"></i></button>'+
+							'</div>'+
 						'</div>'+
 					'</div>'+
 				'</div>'+
@@ -217,7 +248,7 @@
 						'</div>'+
 						'<span class="durasi">Durasi: <span id="waktu-durasi' + nVideo + '">...</span></span>'+
 					'</div>'+
-					'<div class="col-md-9">'+
+					'<div class="col-md-9" style="padding-right:0">'+
 						'<div class="form-group">'+
 							'<input name="videos[' + nVideo + '][title]" class="form-control" placeholder="Judul (Contoh: Pengenalan dasar terminal Ubuntu)" value="' + title + '">'+
 						'</div>'+
@@ -254,7 +285,7 @@
 		// console.log(ajaxData);
 		// return 
 
-		$.ajax({
+		ajaxCall[n] = $.ajax({
 			url: "{{ url('contributor/lessons/'.$lesson->id.'/upload/videos') }}",
 			type: 'post',
 			data: ajaxData,
@@ -279,6 +310,7 @@
 							// $('.progress').addClass('hide');
 							$('#progress'+n+' .progress-bar').removeClass('active');
 							$('#progress'+n+' .progress-bar').removeClass('progress-bar-striped');
+							$('#btn-cancel'+n).removeAttr('onclick').attr('disabled', true);
 						}
 					}
 				}, false);
@@ -295,9 +327,9 @@
 				}, false); */
 				return xhr;
 			},
-			complete: function() {
+			/* complete: function() {
 				$form.removeClass('is-uploading');
-			},
+			}, */
 			success: function(res) {
 				if (res.status) {
 					// var durasi = (new Date).clearTime().addSeconds(res.data.duration).toString('H:mm:ss');
