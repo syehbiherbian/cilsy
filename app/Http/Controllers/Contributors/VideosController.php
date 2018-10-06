@@ -416,6 +416,8 @@ class VideosController extends Controller
 
     public function uploadVideo()
     {
+        set_time_limit(0);
+        
         $statusCode = 500;
         $response = [
             'status' => false,

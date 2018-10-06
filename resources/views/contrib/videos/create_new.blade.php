@@ -143,10 +143,10 @@
 <script type="text/javascript" src="{{asset('template/kontributor/js/jquery.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('template/kontributor/js/jquery-ui.min.js')}}"></script>
 <script>
-	$(function() {
+	/* $(function() {
 		$( "#file-list" ).sortable();
 		$( "#file-list" ).disableSelection();
-	});
+	}); */
 
 	var $form = $('#form-upload');
 	var nVideo = 0;
@@ -156,8 +156,6 @@
 	var isSubmitted = false;
 
 	$(document).ready(function(){
-      	var sort = $('#file-sort').sortable();
-
 		$('#file').on('change', function(e) {
 			generateList(e.target.files);
 		})
@@ -243,7 +241,7 @@
 			var title = v.name.split('.').slice(0, -1).join('.');
 			var extension = v.name.split('.').pop();
 			var extension2 = v.type ? v.type.split('/').pop() : '';
-			videos[i] = {
+			videos[nVideo] = {
 				title: title,
 				process: 'ready'
 			}
@@ -256,30 +254,30 @@
 
 			/* siapkan html */
 			var html = '';
-			html += '<div id="video' + nVideo + '" class="row">'+
+			html += '<div id="video' + nVideo + '" class="videos row">'+
 				'<input id="id' + nVideo + '" type="hidden" name="videos[' + nVideo + '][id]">'+
-				'<input id="status' + nVideo + '" type="hidden" name="videos[' + nVideo + '][status]">'+
-				'<div class="col-md-12" style="padding-right:0">'+
+				// '<input id="status' + nVideo + '" type="hidden" name="videos[' + nVideo + '][status]">'+
+				'<div class="col-md-12" style="padding:0">'+
 					'<div id="progress' + nVideo + '" class="progress" style="height:30px;">'+
 						'<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">'+
 							'<span class="nilai-persen" style="line-height: 30px;">0</span>%'+
 						'</div>'+
 						'<div style="position: absolute;top: -5px;right: 0;">'+
 							'<div class="btn-group">'+
-								//'<button type="button" class="btn btn-default handle" style="padding: 4px 8px; cursor: move"><i class="fa fa-arrows"></i></button>'+
-								'<button id="btn-cancel' + nVideo + '" type="button" class="btn btn-default" style="padding: 4px 8px;" onclick="cancelUpload(' + nVideo + ')"><i class="fa fa-times"></i></button>'+
+								'<button type="button" class="btn btn-default handle" style="padding: 4px 8px; cursor: move" title="Ubah Posisi"><i class="fa fa-arrows"></i></button>'+
+								'<button id="btn-cancel' + nVideo + '" type="button" class="btn btn-default" style="padding: 4px 8px;" title="Batalkan" onclick="cancelUpload(' + nVideo + ')"><i class="fa fa-times"></i></button>'+
 							'</div>'+
 						'</div>'+
 					'</div>'+
 				'</div>'+
-				'<div class="col-md-12" style="padding-right:0">'+
+				'<div class="col-md-12">'+
 					'<div class="col-md-3" style="padding:0">'+
 						'<div id="thumbnail' + nVideo + '" class="thumbnail">'+
 							'Menunggu gambar..'+
 						'</div>'+
 						'<span class="durasi">Durasi: <span id="waktu-durasi' + nVideo + '">...</span></span>'+
 					'</div>'+
-					'<div class="col-md-9" style="padding-right:0">'+
+					'<div class="col-md-9">'+
 						'<div class="form-group">'+
 							'<input name="videos[' + nVideo + '][title]" class="form-control" placeholder="Judul (Contoh: Pengenalan dasar terminal Ubuntu)" value="' + title + '">'+
 						'</div>'+
@@ -293,6 +291,12 @@
 			/* tampilkan ke form */
 			$('#file-list').append(html);
 			
+			/* generate sortable */
+			$("#file-list").sortable({
+				handle: ".handle",
+				cancel: ''
+			});//.disableSelection();
+
 			/* upload video */
 			uploadVideo(v, nVideo);
 			nVideo++;
@@ -314,6 +318,7 @@
 		ajaxData.append('_token', '{{ csrf_token() }}');
 		ajaxData.append('video', file);
 		ajaxData.append('lesson_id', '{{ $lesson->id }}');
+		console.log('n', n)
 		videos[n].process = 'uploading';
 		// console.log(ajaxData);
 		// return 
@@ -368,6 +373,7 @@
 				if (res.status) {
 					allDone++
 					// var durasi = (new Date).clearTime().addSeconds(res.data.duration).toString('H:mm:ss');
+					$('#id'+n).val(res.data.id);
 					$('#thumbnail'+n).html('<img src="'+res.data.thumbnail+'">');
 					$('#waktu-durasi'+n).html(secondsToTime(res.data.duration));
 
