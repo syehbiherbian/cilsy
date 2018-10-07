@@ -83,7 +83,7 @@ $(document).ready(function() {
     });
 });
 
-var secondsToTime = function(seconds) {
+var generateDuration = function(seconds) {
     var secondsInAMinute = 60;
     var secondsInAnHour = 60 * secondsInAMinute;
     var secondsInADay = 24 * secondsInAnHour;

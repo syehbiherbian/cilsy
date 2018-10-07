@@ -10,7 +10,6 @@
 		border: 2px dashed transparent
 	}
 	* {
-
 		-webkit-transition: none!important;
 		transition: unset!important
 	}
@@ -71,7 +70,7 @@
 	#file-list .videos {
 		border: 1px solid #ccc;
 		border-radius: 5px;
-		margin-top: 50px;
+		margin-top: 20px;
 	}
 </style>
 <div id="navigation">
@@ -143,11 +142,6 @@
 <script type="text/javascript" src="{{asset('template/kontributor/js/jquery.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('template/kontributor/js/jquery-ui.min.js')}}"></script>
 <script>
-	/* $(function() {
-		$( "#file-list" ).sortable();
-		$( "#file-list" ).disableSelection();
-	}); */
-
 	var $form = $('#form-upload');
 	var nVideo = {{ $count_video }};
 	var ajaxCall = [];
@@ -186,8 +180,8 @@
 			isSubmitted = true
 			// $('#btn-submit').attr('disabled', true)
 			$.each(videos, function(i, v) {
-				// console.log(i, v.process)
-				/* if (v.process == 'done') {
+				// console.log(i, v.status)
+				/* if (v.status == 'done') {
 					allDone++;
 				} */
 			})
@@ -258,7 +252,7 @@
 			var extension2 = v.type ? v.type.split('/').pop() : '';
 			videos[nVideo] = {
 				title: title,
-				process: 'ready',
+				status: 'ready',
 				n: nVideo
 			}
 			console.log('video ready', videos)
@@ -305,7 +299,7 @@
 						'</div>'+
 						'<span class="durasi">Durasi: <span id="waktu-durasi' + nVideo + '">...</span></span>'+
 					'</div>'+
-					'<div class="col-md-9">'+
+					'<div class="col-md-9" style="padding-right:0">'+
 						'<div class="form-group">'+
 							'<input name="videos[' + nVideo + '][title]" class="form-control" placeholder="Judul (Contoh: Pengenalan dasar terminal Ubuntu)" value="' + title + '">'+
 						'</div>'+
@@ -348,7 +342,7 @@
 		ajaxData.append('lesson_id', '{{ $lesson->id }}');
 		ajaxData.append('position', n + 1);
 		console.log('n', n)
-		videos[n].process = 'uploading';
+		videos[n].status = 'uploading';
 		console.log('video uploading', videos);
 		// return 
 
@@ -378,7 +372,7 @@
 							$('#progress'+n+' .progress-bar').removeClass('active');
 							$('#progress'+n+' .progress-bar').removeClass('progress-bar-striped');
 							// $('#btn-cancel'+n).removeAttr('onclick').attr('disabled', true);
-							videos[n].process = 'done';
+							videos[n].status = 'done';
 							console.log('videos done', videos)
 						}
 					}
@@ -407,7 +401,7 @@
 					$('#image'+n).val(res.data.image);
 					$('#video'+n).val(res.data.video);
 					$('#thumbnail'+n).html('<img src="'+res.data.image+'">');
-					$('#waktu-durasi'+n).html(secondsToTime(res.data.duration));
+					$('#waktu-durasi'+n).html(generateDuration(res.data.duration));
 					$('#duration'+n).val(res.data.duration);
 
 					console.log('upload success isSubmitted', isSubmitted)

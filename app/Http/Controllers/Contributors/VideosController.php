@@ -326,8 +326,8 @@ class VideosController extends Controller
           $draft->delete();
         }
 
-        $video = Video::where('lessons_id', $lessonsid)->get();
-        $count_video = count($video);
+        $videos = Video::where('lessons_id', $lessonsid)->get();
+        $count_video = count($videos);
 
         # code...
         return view('contrib.videos.create_new', [
@@ -358,17 +358,6 @@ class VideosController extends Controller
         } else {
             $videos = Input::get('videos');
             foreach ($videos as $order => $video) {
-                /* Video::where([
-                    'lessons_id' => $lessonsid,
-                    'id' => $video['id'],
-                ])->update([
-                    'title' => $video['title'],
-                    'description' => $video['description'],
-                    'durasi' => $video['duration'],
-                    'image' => $video['image'],
-                    'video' => $video['video'],
-                    'enable' => 1
-                ]); */
                 Video::where([
                     'lessons_id' => $lessonsid,
                     'id' => $video['id'],
@@ -388,10 +377,50 @@ class VideosController extends Controller
             return redirect('contributor/lessons/' . $lessonsid . '/view')->with('success', 'Penambahan video berhasil');
         }
     }
+    
+    public function editNew($lessonsid)
+    {
+        if (empty(Auth::guard('contributors')->user()->id)) {
+            return redirect('contributor/login');
+        }
+        $lesson = Lesson::where('id', $lessonsid)->first();
+
+        if ($lesson == null) {
+            return redirect('not-found');
+        }
+        if ($lesson->status == 2) {
+            return redirect('contributor/lessons/' . $lessonsid . '/view')->with('no-delete', 'Tutorial sedang / dalam verifikasi!');
+        }
+
+        /* delete draft video */
+        $drafts = Video::where([
+            'title' => 'draft',
+            'enable' => 0,
+            'lessons_id' => $lessonsid
+        ])->get();
+        foreach ($drafts as $draft) {
+          if (file_exists(public_path($draft->image))) {
+            unlink(public_path($draft->image));
+          }
+          if (file_exists(public_path($draft->video))) {
+            unlink(public_path($draft->video));
+          }
+          $draft->delete();
+        }
+
+        $videos = Video::where('lessons_id', $lessonsid)->get();
+        $count_video = count($videos);
+
+        # code...
+        return view('contrib.videos.edit_new', [
+            'lesson' => $lesson,
+            'count_video' => $count_video,
+            'videos' => $videos
+        ]);
+    }
 
     public function uploadVideo()
     {
-        // dd(Input::all());
         set_time_limit(0);
         
         $statusCode = 500;
@@ -401,10 +430,6 @@ class VideosController extends Controller
         ];
         $file = Input::file('video');
         $lessonsid = Input::get('lesson_id');
-
-        /* $video = Video::where('lessons_id', $lessonsid)->get();
-        $count_video = count($video);
-        $i = $count_video + 1; */
         $i = Input::get('position');
 
         if (!is_dir("assets/source/lessons/lessons-$lessonsid")) {
@@ -470,5 +495,10 @@ class VideosController extends Controller
         }
 
         return response()->json($response, $statusCode);
+    }
+
+    public function uploadVideoChange()
+    {
+
     }
 }
