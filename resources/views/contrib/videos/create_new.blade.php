@@ -122,7 +122,7 @@
 		</div>
 		<form id="form-upload" enctype="multipart/form-data" method="POST">
 			@csrf
-			<input class="input-files" type="file" name="files[]" id="file" multiple />
+			<input class="input-files" type="file" name="files[]" id="file" accept=".mp4" multiple />
 			<label id="form-starter" for="file">
 				<span id="drop-icon" class="fa fa-angle-double-down"></span><br>
 				<strong>Pilih<span id="video-text"> video</span></strong>

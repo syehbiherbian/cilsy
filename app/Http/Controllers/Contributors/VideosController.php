@@ -499,6 +499,91 @@ class VideosController extends Controller
 
     public function uploadVideoChange()
     {
+        set_time_limit(0);
+        
+        $statusCode = 500;
+        $response = [
+            'status' => false,
+            'message' => 'Upload video failed'
+        ];
+        $file = Input::file('video');
+        $lessonsid = Input::get('lesson_id');
+        $i = Input::get('position');
+        $id = Input::get('id');
 
+        if (!is_dir("assets/source/lessons/lessons-$lessonsid")) {
+            $newforder = mkdir("assets/source/lessons/lessons-" . $lessonsid);
+        }
+
+        $type_video = $file->getMimeType();
+        $DestinationPath = "assets/source/lessons/lessons-" . $lessonsid . "/video-" . $i;
+        if (!is_dir($DestinationPath)) {
+            $newforder = mkdir($DestinationPath);
+        }
+
+        //insert video
+        $lessonsfilename = '';
+        if (!empty($file)) {
+            $fullname = $file->getClientOriginalName();
+            $filename = pathinfo($fullname, PATHINFO_FILENAME);
+            $extension = $file->getClientOriginalExtension();
+            $lessonsfilename = md5($filename.time()). '.' . strtolower($extension);
+            $file->move($DestinationPath, $lessonsfilename);
+        }
+
+        /* siapin video */
+        $media = FFMpeg::fromDisk('local_public')->open($DestinationPath . '/' . $lessonsfilename);
+        
+        /* ambil durasi */
+        $duration = $media->getDurationInSeconds();
+        
+        /* generate thumbnail */
+        $filename = pathinfo($lessonsfilename, PATHINFO_FILENAME);
+        $thumbnailname = 'thumbnail-' . $filename . '.jpg';
+        $thumbnail = $media->getFrameFromSeconds(0)->export()->save($DestinationPath . '/' . $thumbnailname);
+
+        /* save as draft */
+        $store = Video::find($id);
+        $old_image = $store->image;
+        $old_video = $store->video;
+        // $store = new Video;
+        // $store->lessons_id = $lessonsid;
+        // $store->title = 'draft';
+        $store->image = '/' . $DestinationPath . '/' . $thumbnailname;
+        $store->video = '/' . $DestinationPath . '/' . $lessonsfilename;
+        // $store->description = '';
+        // $store->type_video = $type_video;
+        $store->durasi = $duration;
+        // $store->created_at = $now;
+        // $store->enable = 0;
+        $store->save();
+
+        if ($store) {
+            $statusCode = 200;
+            $response = [
+                'status' => true,
+                'message' => 'Change video success',
+                'data' => [
+                    'id' => $store->id,
+                    'title' => $store->title,
+                    'description' => $store->description,
+                    'duration' => $store->durasi,
+                    'image' => $store->image,
+                    'video' => $store->video,
+                ]
+            ];
+
+            /* remove old files */
+            if (file_exists(public_path($old_image))) {
+                unlink(public_path($old_image));
+            }
+            if (file_exists(public_path($old_video))) {
+                unlink(public_path($old_video));
+            }
+        } else {
+
+        }
+
+        return response()->json($response, $statusCode);
     }
 }
