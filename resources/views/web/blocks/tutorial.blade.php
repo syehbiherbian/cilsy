@@ -38,13 +38,19 @@
                             <img src="{{ asset('template/web/img/no-image-available.png') }}" alt="" class="img-responsive">
                           <?php }?>
                           <div class="harga">Rp. {{ number_format($lesson->price, 0, ",", ".") }}</div>
-                          <div class="caption">
-                            <p> {{ $lesson->title }}</p>
+                          <div class="caption" style="height:108px">
+                            <p> <?php $sentence=  $lesson->title;
+                            $numberofcharacters=105 ;
+                            $print = substr($sentence, 0, $numberofcharacters);
+                            echo $print;if(strlen($sentence) >105){?>...<?php } ?></p>
+                            
                           </div>
                           <div class="footer">
                             <p>Total <?php echo Helper::getTotalVideo($lesson->id);?> Video</p>
                           </div>
                         </div>
+                        
+                         
                       </a>
                     </div>
                 <?php } ?>
@@ -94,8 +100,12 @@
                               <img src="{{ asset('template/web/img/no-image-available.png') }}" alt="" class="img-responsive">
                             <?php }?>
                             <div class="harga">Rp.{{ number_format($lesson->price, 0, ",", ".") }}</div>
-                            <div class="caption">
-                              <p>{{ $lesson->title }}</p>
+                            <div class="caption" style="height:108px">
+                            <p> <?php $sentence=  $lesson->title;
+                            $numberofcharacters=105;
+                            $print = substr($sentence, 0, $numberofcharacters);
+                            echo $print; if(strlen($sentence) >105){?>...<?php } ?></p>
+                              
                             </div>
                             <div class="footer">
                               <p>Total <?php echo Helper::getTotalVideo($lesson->id);?> Video</p>
@@ -140,8 +150,11 @@
                               <img src="{{ asset('template/web/img/no-image-available.png') }}" alt="" class="img-responsive">
                             <?php }?>
                             <div class="harga">Rp. {{ number_format($lesson->price, 0, ",", ".") }}</div>
-                            <div class="caption">
-                              <p>{{ $lesson->title }}</p>
+                            <div class="caption" style="height:108px">
+                            <p> <?php $sentence=  $lesson->title;
+                            $numberofcharacters=105;
+                            $print = substr($sentence, 0, $numberofcharacters);
+                            echo $print;if(strlen($sentence) >105){?>...<?php } ?></p>
                             </div>
                             <div class="footer">
                               <p>Total <?php echo Helper::getTotalVideo($lesson->id);?> Video</p>
