@@ -441,11 +441,25 @@ class VideosController extends Controller
         } else {
             $videos = Input::get('videos');
             foreach ($videos as $order => $video) {
-                Video::where([
-                    'lessons_id' => $lessonsid,
-                    'id' => $video['id'],
-                ])->delete();
-                if (!bool($video['delete'])) {
+                if (bool($video['delete'])) {
+                    $exist = Video::where([
+                        'lessons_id' => $lessonsid,
+                        'id' => $video['id'],
+                    ])->first();
+
+                    if (file_exists(public_path($exist->image))) {
+                        unlink(public_path($exist->image));
+                    }
+                    if (file_exists(public_path($exist->video))) {
+                        unlink(public_path($exist->video));
+                    }
+
+                    $exist->delete();
+                } else {
+                    Video::where([
+                        'lessons_id' => $lessonsid,
+                        'id' => $video['id'],
+                    ])->delete();
                     Video::insert([
                         // 'id' => $video['id'],
                         'lessons_id' => $lessonsid,
@@ -456,7 +470,7 @@ class VideosController extends Controller
                         'video' => $video['video'],
                         'enable' => 1
                     ]);
-                }
+                } 
             }
             
             return redirect('contributor/lessons/' . $lessonsid . '/view')->with('success', 'Perubahan video berhasil');
