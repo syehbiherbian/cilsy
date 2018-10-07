@@ -201,7 +201,7 @@
 					@endforeach
 				@endif
 			</div>
-			<div id="btn-submit-group" class="form-group" style="display: none;">
+			<div id="btn-submit-group" class="form-group">
 				<div class="col-sm-12 text-right">
 					<a href="{{url('contributor/lessons/'.$lesson->id.'/view')}}"class="btn btn-danger">Batal</a>
 					<button id="btn-submit" type="submit" class="btn btn-info">Submit</button>

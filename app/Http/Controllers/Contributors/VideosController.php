@@ -418,6 +418,50 @@ class VideosController extends Controller
             'videos' => $videos
         ]);
     }
+    
+    public function doEditNew($lessonsid)
+    {
+        // dd($lessonsid, Input::all());
+        if (empty(Auth::guard('contributors')->user()->id)) {
+            return redirect('contributor/login');
+        }
+        # code...
+        // validate
+        // read more on validation at http://laravel.com/docs/validation
+        $rules = array(
+            'videos.*.title' => 'required',
+            // 'videos.*.description' => 'required',
+            //   'video.*'  => 'mimes:mp4,mov,ogg,webm |required|max:100000',
+            //   'image.*' => 'mimes:jpeg,jpg,png,gif|required|max:30000'
+        );
+        $validator = Validator::make(Input::all(), $rules);
+        // process the login
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        } else {
+            $videos = Input::get('videos');
+            foreach ($videos as $order => $video) {
+                Video::where([
+                    'lessons_id' => $lessonsid,
+                    'id' => $video['id'],
+                ])->delete();
+                if (!bool($video['delete'])) {
+                    Video::insert([
+                        // 'id' => $video['id'],
+                        'lessons_id' => $lessonsid,
+                        'title' => $video['title'],
+                        'description' => $video['description'],
+                        'durasi' => $video['duration'],
+                        'image' => $video['image'],
+                        'video' => $video['video'],
+                        'enable' => 1
+                    ]);
+                }
+            }
+            
+            return redirect('contributor/lessons/' . $lessonsid . '/view')->with('success', 'Perubahan video berhasil');
+        }
+    }
 
     public function uploadVideo()
     {
