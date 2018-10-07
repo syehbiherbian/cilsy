@@ -264,7 +264,7 @@
 			console.log('video ready', videos)
 
 			/* validasi awal */
-			var maxSize = 1024 * 1024 * 500; // 100MB 
+			var maxSize = 1024 * 1024 * {{ env('max_upload_size', 100) }}; // 100MB 
 			if (extension != 'mp4' && extension2 != 'mp4') {
 				swal("Ups", "Maaf, format video yang diperbolehkan adalah .mp4", "error");
 				return false
