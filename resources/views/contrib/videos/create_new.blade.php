@@ -149,7 +149,7 @@
 	}); */
 
 	var $form = $('#form-upload');
-	var nVideo = 0;
+	var nVideo = {{ $count_video }};
 	var ajaxCall = [];
 	var videos = [];
 	var allDone = 0;
@@ -184,13 +184,16 @@
 		$form.on('submit', function(e){
 			e.preventDefault()
 			isSubmitted = true
-			$('#btn-submit').attr('disabled', true)
+			// $('#btn-submit').attr('disabled', true)
 			$.each(videos, function(i, v) {
 				// console.log(i, v.process)
 				/* if (v.process == 'done') {
 					allDone++;
 				} */
 			})
+
+			videos = clearQueue(videos)
+			console.log('submit clear queue', videos)
 			if (allDone == videos.length) {
 				console.log('alldone!')
 				$form.unbind('submit').submit()
@@ -207,9 +210,20 @@
 	
 	/* cancel proses ajax */
 	var cancelUpload = function(n) {
+		console.log(videos)
+		console.log(n)
+		console.log(videos[n])
+		var nV = videos.map(function(arr) {
+			console.log('arr', arr)
+			console.log('arr n', arr.n)
+			return arr.n
+		}).indexOf(n)
+		// console.log('nv', nV)
+		// console.log('n', n)
+		// console.log('nv n', nV.indexOf(n))
 		swal({
 			title: "Batalkan upload?",
-			text: videos[n]['title'],
+			text: videos[nV]['title'],
 			type: "warning",
 			showCloseButton: true,
 			showCancelButton: true,
@@ -217,10 +231,10 @@
 			cancelButtonColor: '#3085d6',
 			confirmButtonText: "Ya"
 		}, function(isConfirm) {
-			if (isConfirm	) {
+			if (isConfirm) {
 				ajaxCall[n].abort()
 				$('#videobox'+n).remove()
-				delete videos[n]
+				delete videos[nV]
 				if (typeof videos[0] == 'undefined') {
 					$('#form-starter').show();
 					$('#btn-submit-group').hide();
@@ -244,11 +258,13 @@
 			var extension2 = v.type ? v.type.split('/').pop() : '';
 			videos[nVideo] = {
 				title: title,
-				process: 'ready'
+				process: 'ready',
+				n: nVideo
 			}
+			console.log('video ready', videos)
 
 			/* validasi awal */
-			var maxSize = 1024 * 1024 * 100; // 100MB 
+			var maxSize = 1024 * 1024 * 500; // 100MB 
 			if (extension != 'mp4' && extension2 != 'mp4') {
 				swal("Ups", "Maaf, format video yang diperbolehkan adalah .mp4", "error");
 				return false
@@ -261,7 +277,6 @@
 				return false
 			}
 			
-
 			/* siapkan html */
 			var html = '';
 			html += '<div id="videobox' + nVideo + '" class="videos row">'+
@@ -331,9 +346,10 @@
 		ajaxData.append('_token', '{{ csrf_token() }}');
 		ajaxData.append('video', file);
 		ajaxData.append('lesson_id', '{{ $lesson->id }}');
+		ajaxData.append('position', n + 1);
 		console.log('n', n)
 		videos[n].process = 'uploading';
-		// console.log(ajaxData);
+		console.log('video uploading', videos);
 		// return 
 
 		ajaxCall[n] = $.ajax({
@@ -361,8 +377,9 @@
 							// $('.progress').addClass('hide');
 							$('#progress'+n+' .progress-bar').removeClass('active');
 							$('#progress'+n+' .progress-bar').removeClass('progress-bar-striped');
-							$('#btn-cancel'+n).removeAttr('onclick').attr('disabled', true);
+							// $('#btn-cancel'+n).removeAttr('onclick').attr('disabled', true);
 							videos[n].process = 'done';
+							console.log('videos done', videos)
 						}
 					}
 				}, false);
@@ -396,6 +413,8 @@
 					console.log('upload success isSubmitted', isSubmitted)
 					console.log('upload success allDone', allDone)
 					console.log('upload success videos.length', videos.length)
+					videos = clearQueue(videos)
+					console.log('upload clear queue', videos)
 					if (isSubmitted && (allDone == videos.length)) {
 						console.log('alldone! after upload')
 						$form.submit()
@@ -408,6 +427,20 @@
 				// Log the error, show an alert, whatever works for you
 			}
 		});
+	}
+
+	var clearQueue = function(videos) {
+		$.each(videos, function(i,v) {
+			console.log('each videos', v);
+			if (typeof v == 'undefined') {
+				console.log('v undefined', i)
+				delete videos[i]
+				console.log('v after delete', i)
+				console.log('videos after delete', videos)
+			}
+		})
+		console.log('clear queue result', videos)
+		return videos.filter(String)
 	}
 </script>
 @endsection()

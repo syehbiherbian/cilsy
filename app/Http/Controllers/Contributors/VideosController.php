@@ -358,10 +358,24 @@ class VideosController extends Controller
         } else {
             $videos = Input::get('videos');
             foreach ($videos as $order => $video) {
-                Video::where([
+                /* Video::where([
                     'lessons_id' => $lessonsid,
                     'id' => $video['id'],
                 ])->update([
+                    'title' => $video['title'],
+                    'description' => $video['description'],
+                    'durasi' => $video['duration'],
+                    'image' => $video['image'],
+                    'video' => $video['video'],
+                    'enable' => 1
+                ]); */
+                Video::where([
+                    'lessons_id' => $lessonsid,
+                    'id' => $video['id'],
+                ])->delete();
+                Video::insert([
+                    // 'id' => $video['id'],
+                    'lessons_id' => $lessonsid,
                     'title' => $video['title'],
                     'description' => $video['description'],
                     'durasi' => $video['duration'],
@@ -377,6 +391,7 @@ class VideosController extends Controller
 
     public function uploadVideo()
     {
+        // dd(Input::all());
         set_time_limit(0);
         
         $statusCode = 500;
@@ -387,9 +402,10 @@ class VideosController extends Controller
         $file = Input::file('video');
         $lessonsid = Input::get('lesson_id');
 
-        $video = Video::where('lessons_id', $lessonsid)->get();
+        /* $video = Video::where('lessons_id', $lessonsid)->get();
         $count_video = count($video);
-        $i = $count_video + 1;
+        $i = $count_video + 1; */
+        $i = Input::get('position');
 
         if (!is_dir("assets/source/lessons/lessons-$lessonsid")) {
             $newforder = mkdir("assets/source/lessons/lessons-" . $lessonsid);
