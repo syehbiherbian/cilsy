@@ -178,20 +178,12 @@
 		$form.on('submit', function(e){
 			e.preventDefault()
 			isSubmitted = true
-			// $('#btn-submit').attr('disabled', true)
-			$.each(videos, function(i, v) {
-				// console.log(i, v.status)
-				/* if (v.status == 'done') {
-					allDone++;
-				} */
-			})
 
 			videos = clearQueue(videos)
-			console.log('submit clear queue', videos)
 			if (allDone == videos.length) {
-				console.log('alldone!')
 				$form.unbind('submit').submit()
 			}
+
 			return false;
 		})
 	})
@@ -204,17 +196,10 @@
 	
 	/* cancel proses ajax */
 	var cancelUpload = function(n) {
-		console.log(videos)
-		console.log(n)
-		console.log(videos[n])
 		var nV = videos.map(function(arr) {
-			console.log('arr', arr)
-			console.log('arr n', arr.n)
 			return arr.n
 		}).indexOf(n)
-		// console.log('nv', nV)
-		// console.log('n', n)
-		// console.log('nv n', nV.indexOf(n))
+		
 		swal({
 			title: "Batalkan upload?",
 			text: videos[nV]['title'],
@@ -245,7 +230,6 @@
 
 		/* generate masing2 file */
 		$.each(files, function(i, v) {
-			console.log(files)
 			/* siapkan variable */
 			var title = v.name.split('.').slice(0, -1).join('.');
 			var extension = v.name.split('.').pop();
@@ -255,7 +239,6 @@
 				status: 'ready',
 				n: nVideo
 			}
-			console.log('video ready', videos)
 
 			/* validasi awal */
 			var maxSize = 1024 * 1024 * {{ env('max_upload_size', 100) }}; // 100MB 
@@ -263,9 +246,6 @@
 				swal("Ups", "Maaf, format video yang diperbolehkan adalah .mp4", "error");
 				return false
 			}
-			console.log(v)
-			console.log(v.size)
-			console.log(maxSize)
 			if (v.size > maxSize) {
 				swal("Ups", "Maksimal ukuran video yang dapat diupload adalah 100MB", "error");
 				return false
@@ -329,9 +309,6 @@
 			$('#form-starter').show();
 			$('#btn-submit-group').hide();
 		}
-
-		/* aktifkan sortable */
-		// $('#file-list').sortable();
 	}
 
 	var uploadVideo = function(file, n) {
@@ -341,10 +318,7 @@
 		ajaxData.append('video', file);
 		ajaxData.append('lesson_id', '{{ $lesson->id }}');
 		ajaxData.append('position', n + 1);
-		console.log('n', n)
 		videos[n].status = 'uploading';
-		console.log('video uploading', videos);
-		// return 
 
 		ajaxCall[n] = $.ajax({
 			url: "{{ url('contributor/lessons/'.$lesson->id.'/upload/videos') }}",
@@ -358,45 +332,26 @@
 				var xhr = new window.XMLHttpRequest();
 				xhr.upload.addEventListener("progress", function (evt) {
 					if (evt.lengthComputable) {
-						// console.log('upload loaded', evt.loaded)
-						// console.log('upload total', evt.total)
 						var percentComplete = evt.loaded / evt.total;
-						// console.log('upload', percentComplete);
 						var percent = Math.round(percentComplete * 100);
 						$('#progress'+n+' .progress-bar').css({
 							width: percent + '%'
 						});
 						$('#progress'+n+' .progress-bar .nilai-persen').html(percent)
 						if (percent === 100) {
-							// $('.progress').addClass('hide');
 							$('#progress'+n+' .progress-bar').removeClass('active');
 							$('#progress'+n+' .progress-bar').removeClass('progress-bar-striped');
-							// $('#btn-cancel'+n).removeAttr('onclick').attr('disabled', true);
 							videos[n].status = 'done';
-							console.log('videos done', videos)
 						}
 					}
 				}, false);
-				/* xhr.addEventListener("progress", function (evt) {
-					if (evt.lengthComputable) {
-						console.log('download loaded', evt.loaded)
-						console.log('download total', evt.total)
-						var percentComplete = evt.loaded / evt.total;
-						console.log('download', percentComplete);
-						$('.progress').css({
-							width: percentComplete * 100 + '%'
-						});
-					}
-				}, false); */
+				
 				return xhr;
 			},
-			/* complete: function() {
-				$form.removeClass('is-uploading');
-			}, */
 			success: function(res) {
 				if (res.status) {
 					allDone++
-					// var durasi = (new Date).clearTime().addSeconds(res.data.duration).toString('H:mm:ss');
+					
 					$('#id'+n).val(res.data.id);
 					$('#image'+n).val(res.data.image);
 					$('#video'+n).val(res.data.video);
@@ -404,13 +359,8 @@
 					$('#waktu-durasi'+n).html(generateDuration(res.data.duration));
 					$('#duration'+n).val(res.data.duration);
 
-					console.log('upload success isSubmitted', isSubmitted)
-					console.log('upload success allDone', allDone)
-					console.log('upload success videos.length', videos.length)
 					videos = clearQueue(videos)
-					console.log('upload clear queue', videos)
 					if (isSubmitted && (allDone == videos.length)) {
-						console.log('alldone! after upload')
 						$form.submit()
 					}
 				} else {
@@ -424,16 +374,6 @@
 	}
 
 	var clearQueue = function(videos) {
-		$.each(videos, function(i,v) {
-			console.log('each videos', v);
-			if (typeof v == 'undefined') {
-				console.log('v undefined', i)
-				delete videos[i]
-				console.log('v after delete', i)
-				console.log('videos after delete', videos)
-			}
-		})
-		console.log('clear queue result', videos)
 		return videos.filter(String)
 	}
 </script>
