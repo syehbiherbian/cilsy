@@ -26,7 +26,7 @@ class VideosController extends Controller
         if ($lesson->status == 2) {
             return redirect('contributor/lessons/' . $lessonsid . '/view')->with('no-delete', 'Tutorial sedang / dalam verifikasi!');
         }
-        $video = Video::where('lessons_id', $lessonsid)->get();
+        $video = Video::where('lessons_id', $lessonsid)->orderBy('position', 'asc')->get();
         $count_video = count($video);
 
         # code...
@@ -61,7 +61,7 @@ class VideosController extends Controller
             $lessons_video = Input::file('video');
             // dd($lessons_video);
             $description = Input::get('desc');
-            $video = Video::where('lessons_id', $lessonsid)->get();
+            $video = Video::where('lessons_id', $lessonsid)->orderBy('position', 'asc')->get();
             $count_video = count($video);
             // dd(!is_dir("assets/source/lessons/lessons-$lessonsid"));
             if (!is_dir("assets/source/lessons/lessons-$lessonsid")) {
@@ -166,7 +166,7 @@ class VideosController extends Controller
         if ($lesson->status == 2) {
             return redirect('contributor/lessons/' . $lessonsid . '/view')->with('no-delete', 'Tutorial sedang / dalam verifikasi!');
         }
-        $video = Video::where('lessons_id', $lessonsid)->get();
+        $video = Video::where('lessons_id', $lessonsid)->orderBy('position', 'asc')->get();
         $count_video = count($video);
 
         # code...
@@ -208,7 +208,7 @@ class VideosController extends Controller
             $description = Input::get('desc');
 
             $delete = Video::where('lessons_id', $lessonsid)->delete();
-            $video = Video::where('lessons_id', $lessonsid)->get();
+            $video = Video::where('lessons_id', $lessonsid)->orderBy('position', 'asc')->get();
             $count_video = count($video);
 
             if (!is_dir("assets/source/lessons/lessons-$lessonsid")) {
@@ -326,7 +326,7 @@ class VideosController extends Controller
           $draft->delete();
         }
 
-        $videos = Video::where('lessons_id', $lessonsid)->get();
+        $videos = Video::where('lessons_id', $lessonsid)->orderBy('position', 'asc')->get();
         $count_video = count($videos);
 
         # code...
@@ -408,7 +408,7 @@ class VideosController extends Controller
           $draft->delete();
         }
 
-        $videos = Video::where('lessons_id', $lessonsid)->get();
+        $videos = Video::where('lessons_id', $lessonsid)->orderBy('position', 'asc')->get();
         $count_video = count($videos);
 
         # code...

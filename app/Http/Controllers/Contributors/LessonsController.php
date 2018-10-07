@@ -280,7 +280,7 @@ class LessonsController extends Controller
       $draft->delete();
     }
 
-    $video = Video::where('lessons_id',$id)->get();
+    $video = Video::where('lessons_id',$id)->orderBy('position', 'asc')->get();
     $quiz = Quiz::where('lesson_id',$id)->get();
     $files= File::where('lesson_id',$id)->get();
     $revisi = Revision::where('lession_id',$id)->get();
