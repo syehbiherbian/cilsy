@@ -356,13 +356,12 @@ class VideosController extends Controller
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         } else {
-            $videos = Input::get('videos');
-            foreach ($videos as $order => $video) {
+            $videos = array_values(Input::get('videos'));
+            foreach ($videos as $position => $video) {
                 Video::where([
                     'lessons_id' => $lessonsid,
                     'id' => $video['id'],
-                ])->delete();
-                Video::insert([
+                ])->update([
                     // 'id' => $video['id'],
                     'lessons_id' => $lessonsid,
                     'title' => $video['title'],
@@ -370,7 +369,8 @@ class VideosController extends Controller
                     'durasi' => $video['duration'],
                     'image' => $video['image'],
                     'video' => $video['video'],
-                    'enable' => 1
+                    'enable' => 1,
+                    'position' => $position + 1
                 ]);
             }
             
@@ -439,8 +439,8 @@ class VideosController extends Controller
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         } else {
-            $videos = Input::get('videos');
-            foreach ($videos as $order => $video) {
+            $videos = array_values(Input::get('videos'));
+            foreach ($videos as $position => $video) {
                 if (bool($video['delete'])) {
                     $exist = Video::where([
                         'lessons_id' => $lessonsid,
@@ -459,8 +459,7 @@ class VideosController extends Controller
                     Video::where([
                         'lessons_id' => $lessonsid,
                         'id' => $video['id'],
-                    ])->delete();
-                    Video::insert([
+                    ])->update([
                         // 'id' => $video['id'],
                         'lessons_id' => $lessonsid,
                         'title' => $video['title'],
@@ -468,7 +467,8 @@ class VideosController extends Controller
                         'durasi' => $video['duration'],
                         'image' => $video['image'],
                         'video' => $video['video'],
-                        'enable' => 1
+                        'enable' => 1,
+                        'position' => $position + 1
                     ]);
                 } 
             }
@@ -532,6 +532,7 @@ class VideosController extends Controller
         $store->durasi = $duration;
         // $store->created_at = $now;
         $store->enable = 0;
+        $store->position = $i;
         $store->save();
 
         if ($store) {
