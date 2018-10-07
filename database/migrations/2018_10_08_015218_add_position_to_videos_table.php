@@ -14,7 +14,7 @@ class AddPositionToVideosTable extends Migration
     public function up()
     {
         Schema::table('videos', function (Blueprint $table) {
-            $table->tinyInteger('position');
+            $table->tinyInteger('position')->unsigned();
         });
     }
 
