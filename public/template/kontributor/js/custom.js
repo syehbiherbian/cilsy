@@ -104,8 +104,8 @@ var secondsToTime = function(seconds) {
     var seconds = Math.ceil(remainingSeconds);
 
     var d = (days > 0) ? days + ':' : '';
-    var h = (hours > 0) ? (hours <= 9 ? '0' + hours : hours) + ':' : '';
-    var m = (minutes > 0) ? (minutes <= 9 ? '0' + minutes : minutes) + ':' : '0';
+    var h = (hours > 0) ? (hours <= 9 ? '0' + hours : hours) + ':' : '0:';
+    var m = (minutes > 0) ? (minutes <= 9 ? '0' + minutes : minutes) + ':' : '0:';
     var s = (seconds > 0) ? (seconds <= 9 ? '0' + seconds : seconds) : '';
 
     return d + h + m + s;
