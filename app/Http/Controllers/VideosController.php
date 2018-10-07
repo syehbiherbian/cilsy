@@ -20,7 +20,7 @@ class VideosController extends Controller {
 	public function index() {
 		$videos = Video::leftJoin('lessons', 'videos.lessons_id', '=', 'lessons.id')
 			->select('videos.*', 'lessons.title as lessons_title')
-			->orderBy('position', 'asc')
+			->orderBy('videos.position', 'asc')
 			->get();
 		return view('admin.videos.index', [
 			'videos' => $videos,
