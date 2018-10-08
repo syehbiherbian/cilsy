@@ -370,7 +370,7 @@ class VideosController extends Controller
                     'image' => $video['image'],
                     'video' => $video['video'],
                     'enable' => 1,
-                    'position' => $position + 1
+                    // 'position' => $position + 1
                 ]);
             }
             
