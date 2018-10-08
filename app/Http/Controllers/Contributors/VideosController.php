@@ -517,9 +517,10 @@ class VideosController extends Controller
         $duration = $media->getDurationInSeconds();
         
         /* generate thumbnail */
+        $midsecs = round($duration/2);
         $filename = pathinfo($lessonsfilename, PATHINFO_FILENAME);
         $thumbnailname = 'thumbnail-' . $filename . '.jpg';
-        $thumbnail = $media->getFrameFromSeconds(0)->export()->save($DestinationPath . '/' . $thumbnailname);
+        $thumbnail = $media->getFrameFromSeconds($midsecs)->export()->save($DestinationPath . '/' . $thumbnailname);
 
         /* save as draft */
         $store = new Video;
@@ -597,9 +598,10 @@ class VideosController extends Controller
         $duration = $media->getDurationInSeconds();
         
         /* generate thumbnail */
+        $midsecs = round($duration/2);
         $filename = pathinfo($lessonsfilename, PATHINFO_FILENAME);
         $thumbnailname = 'thumbnail-' . $filename . '.jpg';
-        $thumbnail = $media->getFrameFromSeconds(0)->export()->save($DestinationPath . '/' . $thumbnailname);
+        $thumbnail = $media->getFrameFromSeconds($midsecs)->export()->save($DestinationPath . '/' . $thumbnailname);
 
         /* save as draft */
         $store = Video::find($id);
