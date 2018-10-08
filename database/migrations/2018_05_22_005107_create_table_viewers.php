@@ -13,7 +13,7 @@ class CreateTableViewers extends Migration
      */
     public function up()
     {
-        Schema::table('viewers', function (Blueprint $table) {
+        Schema::create('viewers', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('video_id')->unsigned();
             $table->integer('member_id')->unsigned();
@@ -30,8 +30,6 @@ class CreateTableViewers extends Migration
      */
     public function down()
     {
-        Schema::table('viewers', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('viewers');
     }
 }

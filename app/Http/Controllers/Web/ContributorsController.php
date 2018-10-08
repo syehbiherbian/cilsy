@@ -32,7 +32,7 @@ class ContributorsController extends Controller
       $contributors_lessons = Lesson::where('enable', '=', 1)->where('status', 1)->where('contributor_id', '=', $contributors->id)->paginate(12);
       $contributors_total_view 		= 0;
       foreach ($contributors_lessons as $key => $lesson) {
-				$videos = Video::where('lessons_id',$lesson->id)->get();
+				$videos = Video::where('lessons_id',$lesson->id)->orderBy('position', 'asc')->get();
 				if ($videos) {
 					foreach ($videos as $key => $video) {
 						$viewers = Viewer::where('video_id', '=', $video->id)->first();

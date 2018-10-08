@@ -13,7 +13,7 @@ class CreateTableContributorNotif extends Migration
      */
     public function up()
     {
-        Schema::table('contributor_notif', function (Blueprint $table) {
+        Schema::create('contributor_notif', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('contributor_id')->unsigned();
             $table->string('category');
@@ -31,8 +31,6 @@ class CreateTableContributorNotif extends Migration
      */
     public function down()
     {
-        Schema::table('contributor_notif', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('contributor_notif');
     }
 }

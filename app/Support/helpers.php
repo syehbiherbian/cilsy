@@ -313,6 +313,43 @@ function insert_array( $array, $search_key, $insert_key, $insert_value, $insert_
 
 }
 
+function generateDuration($seconds) {
+  $secondsInAMinute = 60;
+  $secondsInAnHour = 60 * $secondsInAMinute;
+  $secondsInADay = 24 * $secondsInAnHour;
+
+  // extract days
+  $days = floor($seconds / $secondsInADay);
+
+  // extract hours
+  $hourSeconds = $seconds % $secondsInADay;
+  $hours = floor($hourSeconds / $secondsInAnHour);
+
+  // extract minutes
+  $minuteSeconds = $hourSeconds % $secondsInAnHour;
+  $minutes = floor($minuteSeconds / $secondsInAMinute);
+
+  // extract the remaining seconds
+  $remainingSeconds = $minuteSeconds % $secondsInAMinute;
+  $seconds = ceil($remainingSeconds);
+
+  $d = ($days > 0) ? $days . ':' : '';
+  $h = ($hours > 0) ? ($hours <= 9 ? '0' . $hours : $hours) . ':' : '0:';
+  $m = ($minutes > 0) ? ($minutes <= 9 ? '0' . $minutes : $minutes) . ':' : '0:';
+  $s = ($seconds > 0) ? ($seconds <= 9 ? '0' . $seconds : $seconds) : '';
+
+  return $d . $h . $m . $s;
+}
+
+function bool($bool) {
+    $bool = strtolower(trim($bool));
+    if (($bool == 'true') || ($bool == 't') || ($bool == 'yes') || ($bool == 'y') || ($bool == '1') || ($bool == 'on')) {
+        return true;
+    }
+    
+    return false;
+}
+
 // function join_video_quiz($videos, $quiz) {
 //   $video = $videos->toArray();
   
