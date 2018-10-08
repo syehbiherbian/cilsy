@@ -177,6 +177,7 @@
 		}
 
 		$form.on('submit', function(e){
+			$('#btn-submit').html('menyimpan..').attr('disabled', true);
 			e.preventDefault()
 			isSubmitted = true
 
