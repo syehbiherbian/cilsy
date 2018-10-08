@@ -152,6 +152,7 @@
 	$(document).ready(function(){
 		$('#file').on('change', function(e) {
 			generateList(e.target.files);
+			$(this).val('')
 		})
 		
 		/* aktifkan fitr drag n' drop */
