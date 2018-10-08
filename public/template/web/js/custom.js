@@ -131,8 +131,9 @@ function deleteCart(id) {
         $.each(carts, function(k, v) {
             if (id == v.id) {
                 carts.splice(k, 1);
-                localStorage.setItem('cart', JSON.stringify(carts));
-                $('#cart-'+id).remove();
+                localStorage.removeItem('cart', JSON.stringify(carts));
+                // $('#cart-'+id).remove();
+                // localStorage.removeItem('cart');
                 window.location.href = SITE_URL + '/cart';
             }
         });

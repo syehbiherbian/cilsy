@@ -112,7 +112,7 @@ class Helper
 }
 function cart(){
   $member_id = Auth::guard('members')->user()->id ?? null;
-  $data = Cart::where('member_id', $member_id)->with('member', 'contributor', 'lesson')->get();
+  $data = Cart::where('member_id', $member_id)->with('member', 'contributor', 'lesson')->take(3)->get();
   $html='';
   foreach ($data as $cart) {
         $html .='<li class="clearfix">
