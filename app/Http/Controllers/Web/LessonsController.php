@@ -120,8 +120,8 @@ class LessonsController extends Controller
         }
         // dd($cart);
         if (count($lessons) > 0) {
-            $main_videos = Video::where('enable', 1)->where('lessons_id', $lessons->id)->orderBy('id', 'asc')->get();
-            $preview = Video::where('enable', 1)->where('lessons_id', $lessons->id)->orderBy('id', 'asc')->first();
+            $main_videos = Video::where('enable', 1)->where('lessons_id', $lessons->id)->orderBy('position', 'asc')->get();
+            $preview = Video::where('enable', 1)->where('lessons_id', $lessons->id)->orderBy('position', 'asc')->first();
             $last_videos = Viewer::leftJoin('videos', 'videos.id', '=', 'viewers.video_id')
             ->select('videos.*', 'viewers.video_id')
             ->where('viewers.member_id', $mem_id)
@@ -183,7 +183,7 @@ class LessonsController extends Controller
                 ->first();
         // SELECT A.code, B.lesson_id, C.title , A.status as status FROM `invoice` A JOIN invoice_details B On A.id = B.invoice_id JOIN lessons C On B.lesson_id = C.id
         if (count($lessons) > 0) {
-            $main_videos = Video::where('enable', 1)->where('lessons_id', $lessons->id)->orderBy('id', 'asc')->get();
+            $main_videos = Video::where('enable', 1)->where('lessons_id', $lessons->id)->orderBy('position', 'asc')->get();
             $last_videos = Viewer::leftJoin('videos', 'videos.id', '=', 'viewers.video_id')
             ->select('videos.*', 'viewers.video_id')
             ->where('viewers.member_id', '=', $mem_id)
@@ -281,7 +281,7 @@ class LessonsController extends Controller
     {
         // create points
         $now = new DateTime();
-        $total_videos = Video::where('lessons_id', $lessons_id)->where('enable', 1)->get();
+        $total_videos = Video::where('lessons_id', $lessons_id)->where('enable', 1)->orderBy('position', 'asc')->get();
         $total_viewing = 0;
         foreach ($total_videos as $key => $totv) {
             $view = Viewer::where('video_id', $totv->id)->where('member_id', $mem_id)->first();
@@ -824,7 +824,7 @@ class LessonsController extends Controller
         }
 		$lessons_id = Input::get('lessons_id');
 		$lesson = Lesson::find($lessons_id);
-        $videos = Video::where('enable', 1)->where('lessons_id', $lessons_id)->orderBy('id', 'asc')->get();
+        $videos = Video::where('enable', 1)->where('lessons_id', $lessons_id)->orderBy('position', 'asc')->get();
         
         $services = Service::where('status', 1)->where('members_id', $memberID)->where('expired', '>=', $now)->first();
         $tutorial = TutorialMember::where('member_id', $memberID)->where('lesson_id', $lessons_id)->first();

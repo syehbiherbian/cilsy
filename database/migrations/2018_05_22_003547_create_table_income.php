@@ -13,7 +13,7 @@ class CreateTableIncome extends Migration
      */
     public function up()
     {
-        Schema::table('income', function (Blueprint $table) {
+        Schema::create('income', function (Blueprint $table) {
             $table->increments('id');
             $table->year('year');
             $table->string('month');
@@ -32,8 +32,6 @@ class CreateTableIncome extends Migration
      */
     public function down()
     {
-        Schema::table('income', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('income');
     }
 }

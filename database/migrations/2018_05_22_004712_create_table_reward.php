@@ -13,7 +13,7 @@ class CreateTableReward extends Migration
      */
     public function up()
     {
-        Schema::table('reward', function (Blueprint $table) {
+        Schema::create('reward', function (Blueprint $table) {
             $table->increments('id');
             $table->string('code');
             $table->string('name');
@@ -34,8 +34,6 @@ class CreateTableReward extends Migration
      */
     public function down()
     {
-        Schema::table('reward', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('reward');
     }
 }

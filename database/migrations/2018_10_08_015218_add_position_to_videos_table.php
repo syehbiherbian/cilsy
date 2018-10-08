@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTableInvoiceDetail extends Migration
+class AddPositionToVideosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,8 @@ class CreateTableInvoiceDetail extends Migration
      */
     public function up()
     {
-        Schema::create('invoice_details', function (Blueprint $table) {
-            $table->integer('invoice_id');
-            $table->integer('lesson_id');
-            $table->timestamps();
+        Schema::table('videos', function (Blueprint $table) {
+            $table->tinyInteger('position')->unsigned();
         });
     }
 
@@ -27,6 +25,8 @@ class CreateTableInvoiceDetail extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('invoice_details');
+        Schema::table('videos', function (Blueprint $table) {
+            //
+        });
     }
 }

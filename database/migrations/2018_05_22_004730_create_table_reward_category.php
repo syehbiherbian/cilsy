@@ -13,7 +13,7 @@ class CreateTableRewardCategory extends Migration
      */
     public function up()
     {
-        Schema::table('reward_category', function (Blueprint $table) {
+        Schema::create('reward_category', function (Blueprint $table) {
             $table->increments('id');
             $table->boolean('enable')->unsigned();
             $table->string('name');
@@ -29,8 +29,6 @@ class CreateTableRewardCategory extends Migration
      */
     public function down()
     {
-        Schema::table('reward_category', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('reward_category');
     }
 }

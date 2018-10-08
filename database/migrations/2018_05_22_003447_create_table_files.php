@@ -13,7 +13,7 @@ class CreateTableFiles extends Migration
      */
     public function up()
     {
-        Schema::table('files', function (Blueprint $table) {
+        Schema::create('files', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('lesson_id')->unsigned();
             $table->boolean('enable')->unsigned();
@@ -31,8 +31,6 @@ class CreateTableFiles extends Migration
      */
     public function down()
     {
-        Schema::table('files', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('files');
     }
 }
