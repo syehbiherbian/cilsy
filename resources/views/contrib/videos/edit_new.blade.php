@@ -219,6 +219,7 @@
 	var ajaxCall = [];
 	var videos_exists = {!! isset($jsonvideos) ? json_encode($jsonvideos) : '[]' !!};
 	var videos = [];
+	var videos_change = [];
 	var allDone = 0;
 	var isSubmitted = false;
 
@@ -260,7 +261,7 @@
 			isSubmitted = true
 
 			videos = clearQueue(videos)
-			if (allDone == videos.length) {
+			if (allDone == (videos_change.length + videos.length)) {
 				$form.unbind('submit').submit()
 			}
 
@@ -452,7 +453,7 @@
 					$('#duration'+n).val(res.data.duration);
 
 					videos = clearQueue(videos)
-					if (isSubmitted && (allDone == videos.length)) {
+					if (isSubmitted && (allDone == (videos_change.length + videos.length))) {
 						$form.submit()
 					}
 				} else {
@@ -473,7 +474,11 @@
 		ajaxData.append('video', e.target.files[0]);
 		ajaxData.append('lesson_id', '{{ $lesson->id }}');
 		ajaxData.append('position', n);
-		videos_exists[n].status = 'uploading';
+		videos_change[n] = {
+			title: $('#title'+n).val(),
+			status: 'ready',
+			n: n
+		}
 
 		ajaxCall[n] = $.ajax({
 			url: "{{ url('contributor/lessons/'.$lesson->id.'/upload/videos_change') }}",
@@ -496,7 +501,7 @@
 						if (percent === 100) {
 							$('#progress'+n+' .progress-bar').removeClass('active');
 							$('#progress'+n+' .progress-bar').removeClass('progress-bar-striped');
-							videos_exists[n].status = 'done';
+							videos_change[n].status = 'done';
 						}
 					}
 				}, false);
@@ -515,8 +520,8 @@
 					$('#duration'+n).val(res.data.duration);
 					$('#change'+n).val('');
 
-					videos = clearQueue(videos)
-					if (isSubmitted && (allDone == videos.length)) {
+					videos_change = clearQueue(videos_change)
+					if (isSubmitted && (allDone == (videos_change.length + videos.length))) {
 						$form.submit()
 					}
 				} else {
