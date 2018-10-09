@@ -71,28 +71,29 @@
   border-color: #e74c3c;
   color: #e74c3c;
 }
-.fileUpload {
-	position: relative;
-	overflow: hidden;
-	margin: 10px;
-	background-color: #BDBDBD;
-	height: 50px;
-	width: 50px;
-	text-align: center;
-}
-.fileUpload input.upload {
-	position: absolute;
-	top: 0;
-	right: 0;
-	margin: 0;
-	padding: 0;
-	font-size: 6px;
-	cursor: pointer;
-	opacity: 0;
-	filter: alpha(opacity=0);
-	height: 100%;
-	text-align: center;
-}
+.inputfile {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+  }
+  .inputfile + label {
+    background-color: #2BA8E2;
+    border-radius: 3px;
+    color: white;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 1em;
+    padding: 10px 15px;
+  }
+  .inputfile + label span {
+    padding-left: 10px;
+  }
+  .inputfile:focus + label, .content .inputfile + label:hover {
+    background-color: #5f36b3;
+  }
 .custom-span{ font-family: Arial; font-weight: bold;font-size: 25px; color: #FE57A1}
 #uploadFile{border: none;margin-left: 10px; width: 50px;}
 .custom-para{font-family: arial;font-weight: bold;font-size: 6px; color:#585858;}
@@ -176,19 +177,36 @@
                                 '<div class="col-md-11" style="padding-right:0px;">'+
                                 '   <textarea class="form-control" id="input_balas'+comment_id+'" name="balasan" placeholder="tambahkan komentar/balasan" value="" style="white-space: pre-line" rows="8" cols="80"></textarea>'+
                                 '</div>'+
-                                '<div class="fileUpload">'+
-                                '<span class="custom-span">+</span>'+
-                                '<p class="custom-para">Add Images</p>'+
-                                '<input id="uploadBtn" type="file" class="upload" name="image" />'+
-                                '</div>'+
+                                '<input class="inputfile" type="file" name="image" id="file" data-multiple-caption="{count} files selected" multiple="multiple"/>'+
+                                '<label for="file"><i class="fa fa-upload"></i><span>Upload Image</span></label>'+
                                 '<input id="uploadFile" placeholder="0 files selected" disabled="disabled" />'+
                                 '<a href="javascript:void(0)" class="btn btn-info pull-right" onclick="dobalas('+comment_id+')" style="float:right;margin-top:10px; border-radius:3px;">Kirim</a>');
     }
-
+    $(function (){
+        $('.inputfile').each(function() {
+            var $input	 = $(this),
+                $label	 = $input.next('label'),
+                labelVal = $label.html();
+          
+            $input.on('change', function(e) {
+              var fileName = '';
+          
+              if(this.files && this.files.length > 1)
+                fileName = (this.getAttribute('data-multiple-caption') || '').replace('{count}', this.files.length);
+              else if(e.target.value)
+                fileName = e.target.value.split('\\').pop();
+          
+              if(fileName)
+                $label.find('span').html(fileName);
+              else
+                $label.html(labelVal);
+            });
+          });
+    })
     function dobalas(comment_id){
         var token = '{{ csrf_token() }}';
         var isi_balas = $('#input_balas'+comment_id).val();
-        var file_data = $('#uploadBtn').prop("files")[0];
+        var file_data = $('#file').prop("files")[0];
         var lesson_id = '{{ $datalesson->id }}';
         var member_id = '{{ $comment->member_id}}';
         dataform = new FormData();
@@ -232,6 +250,12 @@
                         icon: "success",
                         timer: 3000
                     });
+                    $('.inputfile').each(function() {
+                        var $input	 = $(this),
+                            $label	 = $input.next('label'),
+                            labelVal = $label.html();
+                            $label.find('span').html('Upload Image');
+                      });
                     $("#row"+comment_id).load(window.location.href + " #row"+comment_id);
                 }
                 else if(data==0){
