@@ -225,6 +225,7 @@
 	$(document).ready(function(){
 		$('#file').on('change', function(e) {
 			generateList(e.target.files);
+			$(this).val('')
 		})
 
 		$("#file-list").sortable({
@@ -254,6 +255,7 @@
 		}
 
 		$form.on('submit', function(e){
+			$('#btn-submit').html('menyimpan..').attr('disabled', true);
 			e.preventDefault()
 			isSubmitted = true
 
