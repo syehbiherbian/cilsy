@@ -513,6 +513,7 @@
 					$('#thumbnail'+n+' img').attr('src', res.data.image);
 					$('#waktu-durasi'+n).html(generateDuration(res.data.duration));
 					$('#duration'+n).val(res.data.duration);
+					$('#change'+n).val('');
 
 					videos = clearQueue(videos)
 					if (isSubmitted && (allDone == videos.length)) {
