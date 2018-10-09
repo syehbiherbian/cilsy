@@ -154,6 +154,7 @@
 		
 		$('#file').on('change', function(e) {
 			generateList(e.target.files);
+			$('[data-toggle="tooltip"]').tooltip();
 			$(this).val('')
 		})
 		
