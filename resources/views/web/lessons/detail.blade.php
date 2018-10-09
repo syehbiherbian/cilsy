@@ -663,6 +663,35 @@ td{
 .custom-span{ font-family: Arial; font-weight: bold;font-size: 25px; color: #FE57A1}
 #uploadFile{border: none;margin-left: 10px; width: 50px;}
 .custom-para{font-family: arial;font-weight: bold;font-size: 6px; color:#585858;}
+.content {
+  background: #fff;
+  border-radius: 3px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.075), 0 2px 4px rgba(0, 0, 0, 0.0375);
+  padding: 30px 30px 20px;
+}
+.inputfile {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+.inputfile + label {
+  background-color: #2BA8E2;
+  border-radius: 3px;
+  color: white;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 1em;
+  padding: 10px 15px;
+}
+.inputfile + label span {
+  padding-left: 10px;
+}
+.inputfile:focus + label, .content .inputfile + label:hover {
+  background-color: #5f36b3;
+}
 </style>
 
 <div id="content-section">
@@ -789,18 +818,12 @@ td{
                           <label>Komentar</label>
                           <textarea style="white-space: pre-line" rows="8" cols="80" class="form-control" name="body" id="textbody0"></textarea>
                         </div>
-                       <ul class="left">
-                          <div class="fileUpload">
-                          <span class="custom-span">+</span>
-                          <p class="custom-para">Add Images</p>
-                          <input id="uploadBtn" type="file" class="upload" name="image" />
-                          </div>
-                          <input id="uploadFile" placeholder="0 files selected" disabled="disabled" />
-                       </ul>
                        
-                       <ul class="right">
+                        <input class="inputfile" type="file" name="image" id="file" data-multiple-caption="{count} files selected" multiple="multiple"/>
+                        <label for="file"><i class="fa fa-upload"></i><span>Upload Image</span></label>
+                       
                       <button type="button" class="btn btn-primary upload-image" onclick="doComment({{ $lessons->id}}, 0)">Kirim</button> 
-                      </ul>
+                      
                       </form><!--./ Comment Form -->
                     </div>
                     @endif
@@ -886,11 +909,8 @@ function imageIsLoaded(e) {
     $('#myImg').attr('src', e.target.result);
 };
 </script>
-<script type="text/javascript">
-document.getElementById("uploadBtn").onchange = function () {
-document.getElementById("uploadFile").value = this.value;
-};
-</script>
+
+
 <script>
   $(function () {
     $(":file").change(function () {
@@ -899,6 +919,25 @@ document.getElementById("uploadFile").value = this.value;
             reader.onload = imageLoaded;
             reader.readAsDataURL(this.files[0]);
         } 
+    });
+    $('.inputfile').each(function() {
+      var $input	 = $(this),
+          $label	 = $input.next('label'),
+          labelVal = $label.html();
+    
+      $input.on('change', function(e) {
+        var fileName = '';
+    
+        if(this.files && this.files.length > 1)
+          fileName = (this.getAttribute('data-multiple-caption') || '').replace('{count}', this.files.length);
+        else if(e.target.value)
+          fileName = e.target.value.split('\\').pop();
+    
+        if(fileName)
+          $label.find('span').html(fileName);
+        else
+          $label.html(labelVal);
+      });
     });
 });
 
@@ -1198,7 +1237,7 @@ function videoTracking(videosrc) {
 
   function doComment(lesson_id, parent_id) {
     var body = $('#textbody'+parent_id).val();
-    var file_data = $('#uploadBtn').prop("files")[0];
+    var file_data = $('#file').prop("files")[0];
     dataform = new FormData();
     dataform.append( 'image', file_data);
     dataform.append( 'body', body);
@@ -1235,7 +1274,12 @@ function videoTracking(videosrc) {
                window.location.href = '{{ url("member/signin") }}';
             }else if (data.success == true) {
               $('#textbody'+parent_id).val('');
-              $("#uploadFile").val('');
+              $('.inputfile').each(function() {
+                var $input	 = $(this),
+                    $label	 = $input.next('label'),
+                    labelVal = $label.html();
+                    $label.find('span').html('Upload Image');
+              });
               swal({
                 title: "Komentar anda sudah terkirim!",
                 showConfirmButton: true,
