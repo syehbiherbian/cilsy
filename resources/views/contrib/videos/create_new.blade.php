@@ -150,8 +150,11 @@
 	var isSubmitted = false;
 
 	$(document).ready(function(){
+		$('[data-toggle="tooltip"]').tooltip();
+		
 		$('#file').on('change', function(e) {
 			generateList(e.target.files);
+			$('[data-toggle="tooltip"]').tooltip();
 			$(this).val('')
 		})
 		
@@ -177,7 +180,7 @@
 		}
 
 		$form.on('submit', function(e){
-			$('#btn-submit').html('menyimpan..').attr('disabled', true);
+			$('#btn-submit').html('menyimpan.. <i title="Video akan otomatis terpublish" data-toggle="tooltip" class="fa fa-exclamation-circle"></i>').attr('disabled', true);
 			e.preventDefault()
 			isSubmitted = true
 
@@ -268,8 +271,8 @@
 						'</div>'+
 						'<div style="position: absolute;top: -5px;right: 0;">'+
 							'<div class="btn-group">'+
-								'<button type="button" class="btn btn-default handle" style="padding: 4px 8px; cursor: move" title="Ubah Posisi"><i class="fa fa-arrows"></i></button>'+
-								'<button id="btn-cancel' + nVideo + '" type="button" class="btn btn-default" style="padding: 4px 8px;" title="Batalkan" onclick="cancelUpload(' + nVideo + ')"><i class="fa fa-times"></i></button>'+
+								'<button type="button" class="btn btn-default handle" style="padding: 4px 8px; cursor: move" title="Ubah Posisi" data-toggle="tooltip"><i class="fa fa-arrows"></i></button>'+
+								'<button id="btn-cancel' + nVideo + '" type="button" class="btn btn-default" style="padding: 4px 8px;" title="Batalkan" data-toggle="tooltip" onclick="cancelUpload(' + nVideo + ')"><i class="fa fa-times"></i></button>'+
 							'</div>'+
 						'</div>'+
 					'</div>'+

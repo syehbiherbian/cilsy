@@ -173,8 +173,8 @@
 								</div>
 								<div style="position: absolute;top: -5px;right: 0;">
 									<div class="btn-group">
-										<button type="button" class="btn btn-default handle" style="padding: 4px 8px; cursor: move" title="Ubah Posisi"><i class="fa fa-arrows"></i></button>
-										<button id="btn-cancel{{ $i }}" type="button" class="btn btn-default" style="padding: 4px 8px;" title="Batalkan" onclick="removeExists({{ $i }})"><i class="fa fa-times"></i></button>
+										<button type="button" class="btn btn-default handle" style="padding: 4px 8px; cursor: move" title="Ubah Posisi" data-toggle="tooltip"><i class="fa fa-arrows"></i></button>
+										<button id="btn-cancel{{ $i }}" type="button" class="btn btn-default" style="padding: 4px 8px;" title="Hapus" data-toggle="tooltip" onclick="removeExists({{ $i }})"><i class="fa fa-trash"></i></button>
 									</div>
 								</div>
 							</div>
@@ -202,9 +202,11 @@
 				@endif
 			</div>
 			<div id="btn-submit-group" class="form-group">
-				<div class="col-sm-12 text-right">
-					<a href="{{url('contributor/lessons/'.$lesson->id.'/view')}}"class="btn btn-danger">Batal</a>
-					<button id="btn-submit" type="submit" class="btn btn-info">Submit</button>
+				<div class="row">
+					<div class="col-sm-12 text-right">
+						<a href="{{url('contributor/lessons/'.$lesson->id.'/view')}}"class="btn btn-danger">Batal</a>
+						<button id="btn-submit" type="submit" class="btn btn-info">Submit</button>
+					</div>
 				</div>
 			</div>
 		</form>
@@ -219,12 +221,16 @@
 	var ajaxCall = [];
 	var videos_exists = {!! isset($jsonvideos) ? json_encode($jsonvideos) : '[]' !!};
 	var videos = [];
+	var videos_change = [];
 	var allDone = 0;
 	var isSubmitted = false;
 
 	$(document).ready(function(){
+		$('[data-toggle="tooltip"]').tooltip();
+
 		$('#file').on('change', function(e) {
 			generateList(e.target.files);
+			$('[data-toggle="tooltip"]').tooltip();
 			$(this).val('')
 		})
 
@@ -255,12 +261,12 @@
 		}
 
 		$form.on('submit', function(e){
-			$('#btn-submit').html('menyimpan..').attr('disabled', true);
+			$('#btn-submit').html('menyimpan.. <i title="Video akan otomatis terpublish" data-toggle="tooltip" class="fa fa-exclamation-circle"></i>').attr('disabled', true);
 			e.preventDefault()
 			isSubmitted = true
 
 			videos = clearQueue(videos)
-			if (allDone == videos.length) {
+			if (allDone == (videos_change.length + videos.length)) {
 				$form.unbind('submit').submit()
 			}
 
@@ -358,8 +364,8 @@
 						'</div>'+
 						'<div style="position: absolute;top: -5px;right: 0;">'+
 							'<div class="btn-group">'+
-								'<button type="button" class="btn btn-default handle" style="padding: 4px 8px; cursor: move" title="Ubah Posisi"><i class="fa fa-arrows"></i></button>'+
-								'<button id="btn-cancel' + nVideo + '" type="button" class="btn btn-default" style="padding: 4px 8px;" title="Batalkan" onclick="cancelUpload(' + nVideo + ')"><i class="fa fa-times"></i></button>'+
+								'<button type="button" class="btn btn-default handle" style="padding: 4px 8px; cursor: move" title="Ubah Posisi" data-toggle="tooltip"><i class="fa fa-arrows"></i></button>'+
+								'<button id="btn-cancel' + nVideo + '" type="button" class="btn btn-default" style="padding: 4px 8px;" title="Batalkan" data-toggle="tooltip" onclick="cancelUpload(' + nVideo + ')"><i class="fa fa-times"></i></button>'+
 							'</div>'+
 						'</div>'+
 					'</div>'+
@@ -452,7 +458,7 @@
 					$('#duration'+n).val(res.data.duration);
 
 					videos = clearQueue(videos)
-					if (isSubmitted && (allDone == videos.length)) {
+					if (isSubmitted && (allDone == (videos_change.length + videos.length))) {
 						$form.submit()
 					}
 				} else {
@@ -473,7 +479,11 @@
 		ajaxData.append('video', e.target.files[0]);
 		ajaxData.append('lesson_id', '{{ $lesson->id }}');
 		ajaxData.append('position', n);
-		videos_exists[n].status = 'uploading';
+		videos_change[n] = {
+			title: $('#title'+n).val(),
+			status: 'ready',
+			n: n
+		}
 
 		ajaxCall[n] = $.ajax({
 			url: "{{ url('contributor/lessons/'.$lesson->id.'/upload/videos_change') }}",
@@ -496,7 +506,7 @@
 						if (percent === 100) {
 							$('#progress'+n+' .progress-bar').removeClass('active');
 							$('#progress'+n+' .progress-bar').removeClass('progress-bar-striped');
-							videos_exists[n].status = 'done';
+							videos_change[n].status = 'done';
 						}
 					}
 				}, false);
@@ -515,8 +525,8 @@
 					$('#duration'+n).val(res.data.duration);
 					$('#change'+n).val('');
 
-					videos = clearQueue(videos)
-					if (isSubmitted && (allDone == videos.length)) {
+					videos_change = clearQueue(videos_change)
+					if (isSubmitted && (allDone == (videos_change.length + videos.length))) {
 						$form.submit()
 					}
 				} else {
