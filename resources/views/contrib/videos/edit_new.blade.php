@@ -174,7 +174,7 @@
 								<div style="position: absolute;top: -5px;right: 0;">
 									<div class="btn-group">
 										<button type="button" class="btn btn-default handle" style="padding: 4px 8px; cursor: move" title="Ubah Posisi" data-toggle="tooltip"><i class="fa fa-arrows"></i></button>
-										<button id="btn-cancel{{ $i }}" type="button" class="btn btn-default" style="padding: 4px 8px;" title="Hapus" data-toggle="tooltip" onclick="removeExists({{ $i }})"><i class="fa fa-times"></i></button>
+										<button id="btn-cancel{{ $i }}" type="button" class="btn btn-default" style="padding: 4px 8px;" title="Hapus" data-toggle="tooltip" onclick="removeExists({{ $i }})"><i class="fa fa-trash"></i></button>
 									</div>
 								</div>
 							</div>
