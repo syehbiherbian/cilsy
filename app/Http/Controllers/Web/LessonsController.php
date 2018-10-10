@@ -387,6 +387,7 @@ class LessonsController extends Controller
             $store = Comment::create($input);
             // dd($store);
             if ($store) {
+                Mail::to($member)->send(new WaitingNotifMail());
                 $getmembercomment = DB::table('comments')
                 ->where('comments.lesson_id',$input['lesson_id'])
                 ->where('comments.status',0)
