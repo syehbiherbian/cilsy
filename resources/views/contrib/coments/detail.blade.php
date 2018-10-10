@@ -71,7 +71,7 @@
   border-color: #e74c3c;
   color: #e74c3c;
 }
-.inputfile {
+.inputFile {
     width: 0.1px;
     height: 0.1px;
     opacity: 0;
@@ -79,7 +79,7 @@
     position: absolute;
     z-index: -1;
   }
-  .inputfile + label {
+  .inputFile + label {
     background-color: #2BA8E2;
     border-radius: 3px;
     color: white;
@@ -87,11 +87,12 @@
     display: inline-block;
     font-size: 1em;
     padding: 10px 15px;
+    margin-top: 10px;
   }
-  .inputfile + label span {
+  .inputFile + label span {
     padding-left: 10px;
   }
-  .inputfile:focus + label, .content .inputfile + label:hover {
+  .inputFile:focus + label, .content .inputFile + label:hover {
     background-color: #5f36b3;
   }
 .custom-span{ font-family: Arial; font-weight: bold;font-size: 25px; color: #FE57A1}
@@ -176,14 +177,13 @@
         $('#balas'+comment_id).html('<label class="col-md-1" style="padding-left:0px;">Anda</label>'+
                                 '<div class="col-md-11" style="padding-right:0px;">'+
                                 '   <textarea class="form-control" id="input_balas'+comment_id+'" name="balasan" placeholder="tambahkan komentar/balasan" value="" style="white-space: pre-line" rows="8" cols="80"></textarea>'+
-                                '</div>'+
-                                '<input class="inputfile" type="file" name="image" id="file" data-multiple-caption="{count} files selected" multiple="multiple"/>'+
+                                '<input class="inputFile" type="file" name="image" id="file" data-multiple-caption="{count} files selected" multiple="multiple"/>'+
                                 '<label for="file"><i class="fa fa-upload"></i><span>Upload Image</span></label>'+
-                                '<input id="uploadFile" placeholder="0 files selected" disabled="disabled" />'+
+                                '</div>'+
                                 '<a href="javascript:void(0)" class="btn btn-info pull-right" onclick="dobalas('+comment_id+')" style="float:right;margin-top:10px; border-radius:3px;">Kirim</a>');
     }
     $(function (){
-        $('.inputfile').each(function() {
+        $('.inputFile').each(function() {
             var $input	 = $(this),
                 $label	 = $input.next('label'),
                 labelVal = $label.html();
@@ -202,7 +202,7 @@
                 $label.html(labelVal);
             });
           });
-    })
+    });
     function dobalas(comment_id){
         var token = '{{ csrf_token() }}';
         var isi_balas = $('#input_balas'+comment_id).val();
@@ -250,7 +250,7 @@
                         icon: "success",
                         timer: 3000
                     });
-                    $('.inputfile').each(function() {
+                    $('.inputFile').each(function() {
                         var $input	 = $(this),
                             $label	 = $input.next('label'),
                             labelVal = $label.html();
