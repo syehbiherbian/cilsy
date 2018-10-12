@@ -12,6 +12,8 @@ use Auth;
 use Session;
 use App\Mail\InvoiceMail;
 use App\Mail\SuksesMail;
+use Mail;
+
 class PaymentController extends Controller
 {
   public function index($response)
