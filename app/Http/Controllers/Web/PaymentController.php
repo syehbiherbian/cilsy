@@ -17,7 +17,7 @@ class PaymentController extends Controller
   public function index($response)
   {
     Cart::where('member_id', Auth::guard('members')->user()->id)->delete();
-    $invoice = Invoice::where('code', $order_id)->first();
+    $invoice = Invoice::where('members_id', Auth::guard('members')->user()->id)->first();
     $members = Member::where('id', $invoice->members_id)->first();
     $send = Member::findOrFail($members->id);
     if($invoice->status == 2){
