@@ -11,7 +11,7 @@
 </div><br><br>
 
 @foreach($get_hist as $get_hist => $cari)
-    
+    @if(!empty($cari->type) )
 <div class="panel panel-default">
 
     <div class="panel-body">
@@ -72,7 +72,7 @@
     </div>
  
   </div>
-   
+   @endif
 @endforeach
 
 
@@ -80,6 +80,7 @@
         <h4>Pembelian Sebelumnya</h4>
     </div><br><br>
     @foreach($get_tot as $get_tot => $cari)
+    @if(!empty($cari->type) )
     <div class="panel panel-default">
 
     <div class="panel-body">
@@ -172,7 +173,7 @@
     </div>
  
   </div>
-
+@endif
 @endforeach
 
  <script>
