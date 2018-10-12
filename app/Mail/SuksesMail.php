@@ -11,15 +11,15 @@ class SuksesMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $services;
+    
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(services $services)
+    public function __construct()
     {
-        $this->services = $service;
+       
     }
 
     /**
