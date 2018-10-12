@@ -13,7 +13,7 @@ class PaymentController extends Controller
 {
   public function index($response)
   {
-    Cart::where('member_id', Auth::guard('members')->user())->delete();
+    Cart::where('member_id', Auth::guard('members')->user()->id)->delete();
     
     if($response == 'finish'){
       return view('web.payment.finish');
