@@ -7,6 +7,7 @@ use Validator;
 use App\Models\Invoice;
 use App\Models\Cart;
 use DB;
+use Auth;
 use Session;
 class PaymentController extends Controller
 {
