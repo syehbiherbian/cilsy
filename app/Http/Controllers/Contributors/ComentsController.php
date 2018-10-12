@@ -213,23 +213,25 @@ class ComentsController extends Controller
 
     }
 
-    public function deletecomment($id){
+    public function doDelete($id){
+
         if (empty(Auth::guard('contributors')->user()->id)) {
           return redirect('contributor/login');
         }
-        $uid = Auth::guard('contributors')->user()->id;
-        $detailcomment  = DB::table('comments')->where('id',$id)->first();
-        $getlesson      = DB::table('lessons')->where('id',$detailcomment->lesson_id)->first();
-
-        if ($getlesson->contributor_id == $uid) {
-            DB::table('comments')->where('id',$id)->update([
-                'status' => 1
-            ]);
-
-            return redirect()->back();
-        }else{
-            return redirect()->back();
+        $contribID = Auth::guard('contributors')->user()->id;
+        $row = Comment::where('contributor_id',$contribID)->where('id',$id)->first();
+        if(count($row)==0){
+            return Redirect('not-found');
         }
+
+      $i = Comment::where('contributor_id',$contribID)->where('id',$id)->delete();
+      if($i > 0)
+      {
+        return redirect('contributor/comments')->with('success-delete','Komentar berhasil di hapus');
+      }else{
+        return redirect()->back()->with('no-delete','Delete Rekening gagal!');
+      }
+
     }
 
     // public function create()

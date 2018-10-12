@@ -68,7 +68,7 @@ class VtwebController extends Controller {
             'customer_details' => $customer_details,
         );
         try {
-            Cart::where('member_id', $members->id)->delete();
+            // Cart::where('member_id', $members->id)->delete();
             $vtweb_url = $vt->vtweb_charge($transaction_data);
             return redirect($vtweb_url);
         } catch (Exception $e) {
@@ -118,7 +118,6 @@ class VtwebController extends Controller {
                     
                     // Create New Services
                     $this->create_tutorial_member($order_id);
-                    // $this->hapusCart($order_id);
                     $this->update_flag($order_id);
                     // echo "INPUT: " . $input."<br/>";
                     // echo "SIGNATURE: " . $signature;
@@ -137,7 +136,6 @@ class VtwebController extends Controller {
         
             // Create New Services
             $this->create_tutorial_member($order_id);
-            // $this->hapusCart($order_id);
             $this->update_flag($order_id);
             // echo "INPUT: " . $input."<br/>";
             // echo "SIGNATURE: " . $signature;
@@ -151,7 +149,7 @@ class VtwebController extends Controller {
                 'type' => $type,
                 'notes' => "Waiting customer to finish transaction order_id: " . $order_id . " using " . $type,
             ]);
-            // $this->hapusCart($order_id);
+            $this->hapus_cart($order_id);
             return response()->json([
                 'status' => true
             ], 200);
@@ -215,7 +213,7 @@ class VtwebController extends Controller {
             );
     }
 
-    private function hapusCart($order_id){
+    private function hapus_cart($order_id){
         $invo = Invoice::where('code', $order_id)->first();
         $hapus = Cart::where('member_id', $invo->members_id)->delete();
 

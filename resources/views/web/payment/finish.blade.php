@@ -32,6 +32,7 @@
   <div class="container">
     <div class="row">
       <div class="col-sm-6 col-sm-offset-3 text-center ">
+
         <h3>Pemesanan Tutorial Telah Berhasil! </h3>
 	<center><img src="/template/web/img/finish-payment/thumbs-up.jpg" class="img-responsive" alt="finish payment cilsy" style="width:237px;height:141px;"></center>	
         <p class="pay-desc" align="justify">
