@@ -11,15 +11,17 @@ class SuksesMail extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public $send;
+
     
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($send)
     {
-       
+        $this->send = $send;
     }
 
     /**
@@ -29,7 +31,7 @@ class SuksesMail extends Mailable
      */
     public function build()
     {
-        return $this->subject('Selamat! Paket langganan cilsy anda sudah aktif')
+        return $this->subject('Selamat! Anda Sukses membeli tutorial di cilsy')
                     ->view('mail.sukses_bayar');
     }
 }
