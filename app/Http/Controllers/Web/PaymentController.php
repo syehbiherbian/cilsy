@@ -22,13 +22,13 @@ class PaymentController extends Controller
     Cart::where('member_id', Auth::guard('members')->user()->id)->delete();
     $invoice = Invoice::where('members_id', Auth::guard('members')->user()->id)->first();
     $members = Member::where('id', $invoice->members_id)->first();
-    $send = Lesson::where($invoice->details()->lessons_id)->first();
-    dd($send);
+    // $send = Lesson::where($invoice->details())->first();
+    // dd($send);
     if($invoice->status == 2){
-      Mail::to($members->email)->send(new InvoiceMail($send));
+      Mail::to($members->email)->send(new InvoiceMail());
     }
     if($invoice->status == 1){
-      Mail::to($members->email)->send(new SuksesMail($send));
+      Mail::to($members->email)->send(new SuksesMail());
     }
     if($response == 'finish'){
       return view('web.payment.finish');

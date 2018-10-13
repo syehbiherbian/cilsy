@@ -11,7 +11,7 @@ class SuksesMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $send;
+    // public $send;
 
     
     /**
@@ -19,9 +19,9 @@ class SuksesMail extends Mailable
      *
      * @return void
      */
-    public function __construct($send)
+    public function __construct()
     {
-        $this->send = $send;
+        // $this->send = $send;
     }
 
     /**

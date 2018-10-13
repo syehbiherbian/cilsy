@@ -11,15 +11,15 @@ class InvoiceMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $send;
+    // public $send;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($send)
+    public function __construct()
     {
-        $this->send = $send;
+        // $this->send = $send;
     }
 
     /**
