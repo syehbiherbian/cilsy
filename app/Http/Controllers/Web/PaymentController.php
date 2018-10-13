@@ -22,7 +22,7 @@ class PaymentController extends Controller
     Cart::where('member_id', Auth::guard('members')->user()->id)->delete();
     $invoice = Invoice::where('members_id', Auth::guard('members')->user()->id)->first();
     $members = Member::where('id', $invoice->members_id)->first();
-    $send = Lesson::where($invoice->details('lesson_id'))->first();
+    $send = Lesson::where($invoice->details()->lessons_id)->first();
     dd($send);
     if($invoice->status == 2){
       Mail::to($members->email)->send(new InvoiceMail($send));
