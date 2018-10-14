@@ -17,13 +17,13 @@ use App\Mail\SuksesMail;
 use Auth;
 use Illuminate\Http\Request;
 class VtwebController extends Controller {
-    public $sk = 'VT-server-4O7hlRyievnwHHB5b0J-z-xf';
+    public $sk = 'VT-server-_cXc9tYjPxt4JEX7B7qDSQP_';
     public function __construct() {
         $secret = env('VT_SECRET_'.strtoupper(config('app.env')));
         $is_production = (config('app.env') == 'production');
         Veritrans::$serverKey = $this->sk;
         //set Veritrans::$isProduction  value to true for production mode
-        Veritrans::$isProduction = false;
+        Veritrans::$isProduction = true;
     }
     public function vtweb() {
         $members = Auth::guard('members')->user();
