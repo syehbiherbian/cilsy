@@ -24,12 +24,15 @@ class PaymentController extends Controller
     $members = Member::where('id', $invoice->members_id)->first();
     // $send = Lesson::where($invoice->details())->first();
     // dd($send);
-    if($invoice->status == 2){
-      Mail::to($members->email)->send(new InvoiceMail());
+    if($invoice){
+      if($invoice->status == 2){
+        Mail::to($members->email)->send(new InvoiceMail());
+      }
+      else if($invoice->status == 1){
+        Mail::to($members->email)->send(new SuksesMail());
+      }
     }
-    if($invoice->status == 1){
-      Mail::to($members->email)->send(new SuksesMail());
-    }
+    
     if($response == 'finish'){
       return view('web.payment.finish');
     }else if($response == 'unfinish'){
