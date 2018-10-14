@@ -13,7 +13,7 @@ class CreateTableServices extends Migration
      */
     public function up()
     {
-        Schema::table('services', function (Blueprint $table) {
+        Schema::create('services', function (Blueprint $table) {
             $table->increments('id');
             $table->boolean('status')->unsigned();
             $table->integer('member_id')->unsigned();
@@ -37,8 +37,6 @@ class CreateTableServices extends Migration
      */
     public function down()
     {
-        Schema::table('services', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('services');
     }
 }

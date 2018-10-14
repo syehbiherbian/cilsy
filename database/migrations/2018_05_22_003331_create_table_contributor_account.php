@@ -13,7 +13,7 @@ class CreateTableContributorAccount extends Migration
      */
     public function up()
     {
-        Schema::table('contributor_account', function (Blueprint $table) {
+        Schema::create('contributor_account', function (Blueprint $table) {
             $table->increments('id');
             $table->string('account_no');
             $table->string('bank');
@@ -30,8 +30,6 @@ class CreateTableContributorAccount extends Migration
      */
     public function down()
     {
-        Schema::table('contributor_account', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('contributor_account');
     }
 }

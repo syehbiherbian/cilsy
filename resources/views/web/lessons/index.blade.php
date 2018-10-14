@@ -141,7 +141,6 @@
     </div>
   </div>
 </div>
-
 <script>
   var cek = localStorage.getItem('cart');
   if(cek != null){

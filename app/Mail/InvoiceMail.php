@@ -11,15 +11,15 @@ class InvoiceMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $member;
+    // public $send;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(members $member)
+    public function __construct()
     {
-        $this->member = $member;
+        // $this->send = $send;
     }
 
     /**
@@ -29,7 +29,7 @@ class InvoiceMail extends Mailable
      */
     public function build()
     {
-        return $this->subject('Pemesanan Paket Langganan Cilsy Telah Berhasil')
+        return $this->subject('Proses Pembayaran Anda belum Selesai')
                     ->view('mail.pesan_paket');
     }
 }

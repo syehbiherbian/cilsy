@@ -71,7 +71,7 @@
                                     <h1><span style="color:#000000;"><span style="font-family: verdana, geneva, sans-serif;"><strong> Selamat! Paket langganan cilsy anda sudah aktif.</strong></span></span></h1>
 
                                     <p><span style="font-family:verdana,geneva,sans-serif;"><span style="font-size:16px; text-align: justify; text-justify: inter-word;"><span style="color: rgb(0, 0, 0);">
-                                        Pembayaran anda sudah kami terima dan Anda sudah mengaktifkan langganan Paket <b>{{ $service->title }}</b> dengan masa aktif sampai <b>{{ $service-> expired }}</b>
+                                        Pembayaran anda sudah kami terima dan Tutorial berhasil di tambahkan ke dashboard anda.
                                         Penting! Silahkan baca Informasi penting dibawah ini dengan seksama. <br>
                                         <b>Apa yang harus saya lakukan sekarang?</b><br>
                                         Anda bisa langsung login ke cilsy.id dengan klik tombol dibawah ini :
@@ -85,7 +85,7 @@
                                         berikut :
                                         <ol>
                                             <li>
-                                                Ketikkan judul/kata kunci tutorial yang anda mau di tombol search.
+                                                Masuk ke menu Tutorial Member, Lalu klik tutorial yang anda telah beli.
                                             </li>
                                             <li>
                                                 Browse tutorial berdasarkan kategori dengan klik tombol Browse Tutorial, atau klik tombol dibawah ini :

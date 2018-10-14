@@ -17,13 +17,17 @@ use App\Mail\SuksesMail;
 use Auth;
 use Illuminate\Http\Request;
 class VtwebController extends Controller {
-    public $sk = 'VT-server-_cXc9tYjPxt4JEX7B7qDSQP_';
+    
     public function __construct() {
-        $secret = env('VT_SECRET_'.strtoupper(config('app.env')));
-        $is_production = (config('app.env') == 'production');
-        Veritrans::$serverKey = $this->sk;
-        //set Veritrans::$isProduction  value to true for production mode
-        Veritrans::$isProduction = true;
+        if(env('APP_ENV') == 'production'){
+            Veritrans::$serverKey = 'VT-server-_cXc9tYjPxt4JEX7B7qDSQP_';
+            //set Veritrans::$isProduction  value to true for production mode
+            Veritrans::$isProduction = true;
+        }else if(env('APP_ENV') == 'local'){
+            Veritrans::$serverKey = 'VT-server-4O7hlRyievnwHHB5b0J-z-xf';
+            //set Veritrans::$isProduction  value to true for production mode
+            Veritrans::$isProduction = false;
+        }
     }
     public function vtweb() {
         $members = Auth::guard('members')->user();
@@ -64,7 +68,7 @@ class VtwebController extends Controller {
             'customer_details' => $customer_details,
         );
         try {
-            Cart::where('member_id', $members->id)->delete();
+            // Cart::where('member_id', $members->id)->delete();
             $vtweb_url = $vt->vtweb_charge($transaction_data);
             return redirect($vtweb_url);
         } catch (Exception $e) {
@@ -115,8 +119,6 @@ class VtwebController extends Controller {
                     // Create New Services
                     $this->create_tutorial_member($order_id);
                     $this->update_flag($order_id);
-                    // echo "INPUT: " . $input."<br/>";
-                    // echo "SIGNATURE: " . $signature;
                     return response()->json([
                         'status' => true
                     ], 200);
@@ -133,8 +135,6 @@ class VtwebController extends Controller {
             // Create New Services
             $this->create_tutorial_member($order_id);
             $this->update_flag($order_id);
-            // echo "INPUT: " . $input."<br/>";
-            // echo "SIGNATURE: " . $signature;
             return response()->json([
                 'status' => true
             ], 200);
@@ -145,12 +145,9 @@ class VtwebController extends Controller {
                 'type' => $type,
                 'notes' => "Waiting customer to finish transaction order_id: " . $order_id . " using " . $type,
             ]);
-            $this->hapus_cart($order_id);
             return response()->json([
                 'status' => true
             ], 200);
-            //send mail invoice pending
-            $this->send_mail($order_id);
         } else if ($transaction == 'deny') {
             // TODO set payment status in merchant's database to 'Denied'
             Invoice::where('code', $order_id)->update([
@@ -207,11 +204,5 @@ class VtwebController extends Controller {
                 'flag' => 0,
             ]
             );
-    }
-
-    private function hapus_cart($order_id){
-        $invo = Invoice::where('code', $order_id)->first();
-        $hapus = Cart::where('member_id', $invo->members_id)->delete();
-
     }
 }

@@ -34,7 +34,7 @@ class QuizController extends Controller
         return redirect('contributor/lessons/'.$lessons_id.'/view')->with('no-delete','Tutorial sedang / dalam verifikasi!');
     }
 
-    $video= Video::where('lessons_id',$lessons_id)->get();
+    $video= Video::where('lessons_id',$lessons_id)->orderBy('position', 'asc')->get();
 
     return view('contrib.quiz.create', [
       'lessons_id'=>$lessons_id,
@@ -123,7 +123,7 @@ class QuizController extends Controller
     }
     $lessons=Lesson::where('lessons.id',$row->lesson_id)->first();
     $question=Question::where('quiz_id',$row->id)->get();
-    $video= Video::where('lessons_id',$row->lesson_id)->get();
+    $video= Video::where('lessons_id',$row->lesson_id)->orderBy('position', 'asc')->get();
     # code...
     return view('contrib.quiz.edit', [
         'row'=>$row,

@@ -13,7 +13,7 @@ class CreateTableRevisions extends Migration
      */
     public function up()
     {
-        Schema::table('revisions', function (Blueprint $table) {
+        Schema::create('revisions', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('lession_id')->unsigned();
             $table->string('title');
@@ -31,8 +31,6 @@ class CreateTableRevisions extends Migration
      */
     public function down()
     {
-        Schema::table('revisions', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('revisions');
     }
 }

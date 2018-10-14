@@ -291,11 +291,17 @@ Route::post('contributor/lessons/{id}/submit', 'Contributors\LessonsController@d
 Route::get('contributor/lessons/{id}/delete', 'Contributors\LessonsController@doDelete');
 
 // Videos
-Route::get('contributor/lessons/{lesson_id}/create/videos', 'Contributors\VideosController@create');
-Route::post('contributor/lessons/{lesson_id}/create/videos', 'Contributors\VideosController@doCreate');
-Route::get('contributor/lessons/{lesson_id}/edit/videos', 'Contributors\VideosController@edit');
-Route::post('contributor/lessons/{lesson_id}/edit/videos', 'Contributors\VideosController@doEdit');
+// Route::get('contributor/lessons/{lesson_id}/create/videos', 'Contributors\VideosController@create');
+Route::get('contributor/lessons/{lesson_id}/create/videos', 'Contributors\VideosController@createNew');
+// Route::post('contributor/lessons/{lesson_id}/create/videos', 'Contributors\VideosController@doCreate');
+Route::post('contributor/lessons/{lesson_id}/create/videos', 'Contributors\VideosController@doCreateNew');
+// Route::get('contributor/lessons/{lesson_id}/edit/videos', 'Contributors\VideosController@edit');
+Route::get('contributor/lessons/{lesson_id}/edit/videos', 'Contributors\VideosController@editNew');
+// Route::post('contributor/lessons/{lesson_id}/edit/videos', 'Contributors\VideosController@doEdit');
+Route::post('contributor/lessons/{lesson_id}/edit/videos', 'Contributors\VideosController@doEditNew');
 Route::delete('contributor/lessons/delete/videos/{id}', 'Contributors\VideosController@destroy');
+Route::post('contributor/lessons/{lesson_id}/upload/videos', 'Contributors\VideosController@uploadVideo');
+Route::post('contributor/lessons/{lesson_id}/upload/videos_change', 'Contributors\VideosController@uploadVideoChange');
 
 // Attachment
 Route::get('contributor/lessons/{lesson_id}/create/attachments', 'Contributors\AttachmentsController@create');
