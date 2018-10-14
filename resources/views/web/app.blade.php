@@ -616,7 +616,7 @@ a #items .item {
               <?php echo cart();?>
             </ul>
             
-            <a href="{{ url('/cart') }}" class="button">Lihat Keranjang</a>
+            <a href="{{ url('/cart') }}" class="button">See all ( <?php echo getTotalCart();?> )</a>
           </div>
           @else
           <div class="header-menu">

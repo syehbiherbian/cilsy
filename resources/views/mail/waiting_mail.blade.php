@@ -68,7 +68,7 @@
                                         <td align="left" style="padding:50px 50px 50px 50px">
                                         <p style="color:#000000; font-size:16px; text-align:left; font-family: Verdana, Geneva, sans-serif; line-height:22px ">&nbsp;</p>
     
-                                        <h1><span style="color:#000000;"><span style="font-family: verdana, geneva, sans-serif;"><strong>Komentar anda berhasil diposting, silahkan menunggu 1x24 jam untuk mendapat balasan</strong></span></span></h1>
+                                        <h1><span style="color:#000000;"><span style="font-family: verdana, geneva, sans-serif;"><strong>Pesan anda berhasil diposting, silahkan menunggu 1x24 jam untuk mendapat balasan</strong></span></span></h1>
     
                                         <p><span style="font-family:verdana,geneva,sans-serif;"><span style="font-size:16px;"><span style="color: rgb(0, 0, 0);"></span></span></span></p>
     
