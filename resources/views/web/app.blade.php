@@ -614,9 +614,12 @@ a #items .item {
           <div class="shopping-cart" style="display: none;">
             <ul class="shopping-cart-items">
               <?php echo cart();?>
+              <?php if (getTotalCart()>3){ ?>
+              <li style="text-align:center; color:#2BA8E2;"><a href="{{ url('/cart')}}" > See all ( <?php echo getTotalCart();?> )</a></li>
+              <?php } ?>
             </ul>
             
-            <a href="{{ url('/cart') }}" class="button">See all ( <?php echo getTotalCart();?> )</a>
+            <a href="{{ url('/cart') }}" class="button">Lihat Keranjang</a>
           </div>
           @else
           <div class="header-menu">
