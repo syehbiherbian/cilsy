@@ -261,7 +261,7 @@
 		}
 
 		$form.on('submit', function(e){
-			$('#btn-submit').html('menyimpan.. <i title="Video akan otomatis terpublish" data-toggle="tooltip" class="fa fa-exclamation-circle"></i>').attr('disabled', true);
+			$('#btn-submit').html('menyimpan.. <i title="Jangan tutup halaman ini, data akan tersimpan otomatis setelah seluruh proses upload selesai." data-toggle="tooltip" class="fa fa-exclamation-circle"></i>').attr('disabled', true);
 			e.preventDefault()
 			isSubmitted = true
 
@@ -356,6 +356,7 @@
 				'<input id="image' + nVideo + '" type="hidden" name="videos[' + nVideo + '][image]">'+
 				'<input id="video' + nVideo + '" type="hidden" name="videos[' + nVideo + '][video]">'+
 				'<input id="duration' + nVideo + '" type="hidden" name="videos[' + nVideo + '][duration]">'+
+				'<input id="delete' + nVideo + '" type="hidden" name="videos[' + nVideo + '][delete]" value="no">'+
 				// '<input id="status' + nVideo + '" type="hidden" name="videos[' + nVideo + '][status]">'+
 				'<div class="col-md-12" style="padding:0">'+
 					'<div id="progress' + nVideo + '" class="progress" style="height:30px;">'+
