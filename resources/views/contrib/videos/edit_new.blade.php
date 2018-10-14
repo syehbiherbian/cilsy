@@ -261,7 +261,7 @@
 		}
 
 		$form.on('submit', function(e){
-			$('#btn-submit').html('menyimpan.. <i title="Video akan otomatis terpublish" data-toggle="tooltip" class="fa fa-exclamation-circle"></i>').attr('disabled', true);
+			$('#btn-submit').html('menyimpan.. <i title="Jangan tutup halaman ini, data akan tersimpan otomatis setelah seluruh proses upload selesai." data-toggle="tooltip" class="fa fa-exclamation-circle"></i>').attr('disabled', true);
 			e.preventDefault()
 			isSubmitted = true
 
