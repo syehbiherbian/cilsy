@@ -29,6 +29,7 @@ class VtwebController extends Controller {
             Veritrans::$isProduction = false;
         }
     }
+    
     public function vtweb() {
         $members = Auth::guard('members')->user();
         // $packages = Package::where('id', Session::get('packageID'))->first();
@@ -68,7 +69,6 @@ class VtwebController extends Controller {
             'customer_details' => $customer_details,
         );
         try {
-            // Cart::where('member_id', $members->id)->delete();
             $vtweb_url = $vt->vtweb_charge($transaction_data);
             return redirect($vtweb_url);
         } catch (Exception $e) {
@@ -115,7 +115,6 @@ class VtwebController extends Controller {
                         'type' => $type,
                         'notes' => "Transaction order_id: " . $order_id . " successfully captured using " . $type,
                     ]);
-                    
                     // Create New Services
                     $this->create_tutorial_member($order_id);
                     $this->update_flag($order_id);
@@ -126,12 +125,11 @@ class VtwebController extends Controller {
             }
         } else if ($transaction == 'settlement') {
             // TODO set payment status in merchant's database to 'Settlement'
-            Invoice::where('code', $order_id)->update([
+            $invoice = Invoice::where('code', $order_id)->update([
                 'status' => 1,
                 'type' => $type,
                 'notes' => "Transaction order_id: " . $order_id . " successfully transfered using " . $type,
             ]);
-        
             // Create New Services
             $this->create_tutorial_member($order_id);
             $this->update_flag($order_id);

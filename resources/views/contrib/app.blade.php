@@ -76,7 +76,7 @@
                         <div class="dropdown-container">
                             <ul>
                                 <li>
-                                    <a href="">
+                                    <a href="{{ url('contributor/skema') }}">
                                         Panduan Kontributor
                                     </a>
                                 </li>

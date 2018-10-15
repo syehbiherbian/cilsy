@@ -361,3 +361,5 @@ Route::get('contributor/account/profile/{id}/edit', 'Contributors\AccountControl
 Route::post('contributor/account/profile/{id}/edit', 'Contributors\AccountController@update_halaman');
 //rating
 Route::post('system/rate','RateController@store');
+//skema
+Route::get('contributor/skema', 'Contributors\DashboardController@getSchema');
