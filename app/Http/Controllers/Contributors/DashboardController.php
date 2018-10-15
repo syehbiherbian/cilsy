@@ -16,8 +16,11 @@ class DashboardController extends Controller {
 		}else{
 			return view('contrib.dashboard');
 		}
-		
+	}
 
+	public function getSchema(){
+		$file= public_path(). "/panduan/skema_kerjasama.pdf";
+		return response()->file($file);
 	}
 
 }

@@ -491,7 +491,8 @@ a #items .item {
                   <div class="item" style="background-color:white">Halo, {{ Auth::guard('members')->user()->username }}</div>
                   <a href="{{ url('lessons/browse/all') }}" class="hidden-lg hidden-md" style="color: #fff;"><div class="item browse" style="background-color:#2BA8E2;">Browse Tutorial</div></a>                  
                   <a href="{{ url('member/dashboard') }}" ><div class="item">Tutorial Saya</div></a>
-                  <a href="{{ url('member/change') }}" ><div class="item">Ganti Password</div></a>
+                  <a href="{{ url('member/change-password') }}" ><div class="item">Ganti Password</div></a>
+                  <a href="{{ url('member/riwayat') }}" ><div class="item">Riwayat Pembelian</div></a>
                   <a href="{{ url('member/signout') }}"><div class="item">Logout</div></a>
               </div>
               @else

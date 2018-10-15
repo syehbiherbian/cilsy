@@ -36,7 +36,7 @@
             </div>
             <div class="header-right pull-right">
                 <a href="{{ url('contributor/register')}}" class="kontributor-btn">Menjadi Contributor</a>
-                <a href="#" class="panduan-kontributor-btn">Panduan Contributor</a>
+                <a href="{{ url('contributor/skema') }}" target="_blank" class="panduan-kontributor-btn">Panduan Contributor</a>
             </div>
         </div>
     </div>
