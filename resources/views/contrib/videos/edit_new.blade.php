@@ -312,6 +312,7 @@
 				ajaxCall[n].abort()
 				$('#videobox'+n).remove()
 				delete videos[nV]
+				videos = clearQueue(videos)
 				if (typeof videos[0] == 'undefined') {
 					$('#form-starter').show();
 					$('#btn-submit-group').hide();
