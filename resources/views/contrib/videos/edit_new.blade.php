@@ -417,7 +417,7 @@
 		ajaxData.append('video', file);
 		ajaxData.append('lesson_id', '{{ $lesson->id }}');
 		ajaxData.append('position', n + 1);
-		videos[n].status = 'uploading';
+		// videos[n].status = 'uploading';
 
 		ajaxCall[n] = $.ajax({
 			url: "{{ url('contributor/lessons/'.$lesson->id.'/upload/videos') }}",
@@ -440,7 +440,7 @@
 						if (percent === 100) {
 							$('#progress'+n+' .progress-bar').removeClass('active');
 							$('#progress'+n+' .progress-bar').removeClass('progress-bar-striped');
-							videos[n].status = 'done';
+							// videos[n].status = 'done';
 						}
 					}
 				}, false);
@@ -507,7 +507,7 @@
 						if (percent === 100) {
 							$('#progress'+n+' .progress-bar').removeClass('active');
 							$('#progress'+n+' .progress-bar').removeClass('progress-bar-striped');
-							videos_change[n].status = 'done';
+							// videos_change[n].status = 'done';
 						}
 					}
 				}, false);
