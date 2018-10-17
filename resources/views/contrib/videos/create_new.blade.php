@@ -249,10 +249,14 @@
 			/* validasi awal */
 			var maxSize = 1024 * 1024 * {{ env('max_upload_size', 100) }}; // 100MB 
 			if (extension != 'mp4' && extension2 != 'mp4') {
+				$('#form-starter').show();
+				$('#btn-submit-group').hide();
 				swal("Ups", "Maaf, format video yang diperbolehkan adalah .mp4", "error");
 				return false
 			}
 			if (v.size > maxSize) {
+				$('#form-starter').show();
+				$('#btn-submit-group').hide();
 				swal("Ups", "Maksimal ukuran video yang dapat diupload adalah 100MB", "error");
 				return false
 			}
