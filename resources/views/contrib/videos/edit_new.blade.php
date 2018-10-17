@@ -312,6 +312,7 @@
 				ajaxCall[n].abort()
 				$('#videobox'+n).remove()
 				delete videos[nV]
+				videos = clearQueue(videos)
 				if (typeof videos[0] == 'undefined') {
 					$('#form-starter').show();
 					$('#btn-submit-group').hide();
@@ -341,10 +342,14 @@
 			/* validasi awal */
 			var maxSize = 1024 * 1024 * {{ env('max_upload_size', 100) }}; // 100MB 
 			if (extension != 'mp4' && extension2 != 'mp4') {
+				$('#form-starter').show();
+				$('#btn-submit-group').hide();
 				swal("Ups", "Maaf, format video yang diperbolehkan adalah .mp4", "error");
 				return false
 			}
 			if (v.size > maxSize) {
+				$('#form-starter').show();
+				$('#btn-submit-group').hide();
 				swal("Ups", "Maksimal ukuran video yang dapat diupload adalah 100MB", "error");
 				return false
 			}
@@ -417,7 +422,7 @@
 		ajaxData.append('video', file);
 		ajaxData.append('lesson_id', '{{ $lesson->id }}');
 		ajaxData.append('position', n + 1);
-		videos[n].status = 'uploading';
+		// videos[n].status = 'uploading';
 
 		ajaxCall[n] = $.ajax({
 			url: "{{ url('contributor/lessons/'.$lesson->id.'/upload/videos') }}",
@@ -440,7 +445,7 @@
 						if (percent === 100) {
 							$('#progress'+n+' .progress-bar').removeClass('active');
 							$('#progress'+n+' .progress-bar').removeClass('progress-bar-striped');
-							videos[n].status = 'done';
+							// videos[n].status = 'done';
 						}
 					}
 				}, false);
@@ -507,7 +512,7 @@
 						if (percent === 100) {
 							$('#progress'+n+' .progress-bar').removeClass('active');
 							$('#progress'+n+' .progress-bar').removeClass('progress-bar-striped');
-							videos_change[n].status = 'done';
+							// videos_change[n].status = 'done';
 						}
 					}
 				}, false);
