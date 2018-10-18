@@ -69,7 +69,7 @@
           <div class="collapse" id="collapseKurikulum">
               <?php $count = 0; ?>
               @foreach ($main_videos as $row)
-              @if($count>1)
+              @if($count>2)
               <h6><i class="fa fa-play-circle"></i> {{$row->title}}</h6>
               {!! nl2br($row->description) !!}
               <hr>
