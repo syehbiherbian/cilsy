@@ -19,6 +19,7 @@ use App\Models\Cart;
 use App\Models\Invoice;
 use App\Notifications\UserCommentNotification;
 use App\Notifications\UserReplyNotification;
+use App\Notifications\NimbrungReplyNotification;
 use Auth;
 use DateTime;
 use DB;
@@ -420,12 +421,18 @@ class LessonsController extends Controller
                     $getnotif = DB::table('user_notif')->insert([
                         'id_user' => $mails->tanya,
                         'category' => 'Komentar',
-                        'title' => 'Anda mendapat balasan dari ' . $mails->username,
+                        'title' => 'Pertanyaan anda mendapat balasan dari ' . $mails->username,
                         'notif' => 'Anda mendapatkan balasan dari ' . $mails->username . ' pada ' . $lessons->title,
                         'status' => 0,
                         'slug' => $lessons->slug,
                         'created_at' => $now,
                     ]);
+
+                    $member = Member::Find($mails->tanya);
+                    $lesson = Lesson::Find($lessons->id);
+                    $contrib = Contributor::find($lessons->contributor_id);
+                    $member->notify(new UserReplyNotification($member, $lesson, $contrib));
+                   
                         }
                     }
 
@@ -440,19 +447,18 @@ class LessonsController extends Controller
                         'slug' => $lessons->slug,
                         'created_at' => $now,
                     ]);
+
+                    $member = Member::Find($mails->jawab);
+                    $lesson = Lesson::Find($lessons->id);
+                    $contrib = Contributor::find($lessons->contributor_id);
+                    $member->notify(new NimbrungReplyNotification($member, $lesson, $contrib));
+                   
+                 
                         }
                     }
                 //  Check type
-                // if (is_array($mails)){
-                //     //  Scan through inner loop
-                //     foreach ($mails as $value) {
-                //         $member = Member::Find($value);
-                //         $lesson = Lesson::Find($lesson_id);
-                //         $contrib = Contributor::find($lessons->contributor_id);
-                //         $member->notify(new UserReplyNotification($member, $lesson, $contrib));
+                
                        
-                //         }
-                //     }
                    
                 }
             }
