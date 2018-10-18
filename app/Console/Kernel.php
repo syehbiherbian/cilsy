@@ -13,7 +13,11 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        'App\Console\Commands\ReminderPertama',
+        'App\Console\Commands\ReminderKedua',
+        'App\Console\Commands\ReminderKetiga',  
+        'App\Console\Commands\ReminderKeempat',  
+
     ];
 
     /**
@@ -26,6 +30,14 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
+        $schedule->command('email:reminderpertama')
+                 ->everyMinute();
+        $schedule->command('email:reminderkedua')
+                 ->everyMinute();
+        $schedule->command('email:reminderketiga')
+                 ->everyMinute();
+        $schedule->command('email:reminderkeempat')
+        ->everyMinute();
     }
 
     /**

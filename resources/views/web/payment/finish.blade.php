@@ -49,14 +49,14 @@
 
 </div>
 
-<!--<script>
+<script>
 fbq('track', 'Purchase', {
-value: 85000,
+value: {{ $invoice->price }},
 currency: 'IDR'
 });
-</script>-->
+</script>
 <script>
-fbq('track', 'Purchase');
+{{--  fbq('track', 'Purchase');  --}}
 
 /* hapus cart*/
 localStorage.removeItem('cart')

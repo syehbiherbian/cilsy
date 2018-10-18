@@ -34,7 +34,9 @@ class PaymentController extends Controller
     }
     
     if($response == 'finish'){
-      return view('web.payment.finish');
+      return view('web.payment.finish',[
+        'invoice' => $invoice,
+      ]);
     }else if($response == 'unfinish'){
       return view('web.payment.unfinish');
     }else if($response == 'error'){
