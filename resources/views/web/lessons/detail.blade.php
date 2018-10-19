@@ -692,8 +692,8 @@ td{
 .inputfile:focus + label, .content .inputfile + label:hover {
   background-color: #5f36b3;
 }
-</style>
 
+</style>
 <div id="content-section">
 
   <div id="cat-images"> 
@@ -819,7 +819,7 @@ td{
                           <textarea style="white-space: pre-line" rows="8" cols="80" class="form-control" name="body" id="textbody0"></textarea>
                         </div>
                        
-                        <input class="inputfile" type="file" name="image" id="file" data-multiple-caption="{count} files selected" multiple="multiple"/>
+                        <input class="inputfile" type="file" name="image" id="files" data-multiple-caption="{count} files selected" multiple="multiple"/>
                         <label for="file"><i class="fa fa-upload"></i><span>Upload Image</span></label>
                        
                       <button type="button" class="btn btn-primary upload-image" onclick="doComment({{ $lessons->id}}, 0)">Tambah Pertanyaan</button> 
@@ -919,25 +919,6 @@ function imageIsLoaded(e) {
             reader.onload = imageLoaded;
             reader.readAsDataURL(this.files[0]);
         } 
-    });
-    $('.inputfile').each(function() {
-      var $input	 = $(this),
-          $label	 = $input.next('label'),
-          labelVal = $label.html();
-    
-      $input.on('change', function(e) {
-        var fileName = '';
-    
-        if(this.files && this.files.length > 1)
-          fileName = (this.getAttribute('data-multiple-caption') || '').replace('{count}', this.files.length);
-        else if(e.target.value)
-          fileName = e.target.value.split('\\').pop();
-    
-        if(fileName)
-          $label.find('span').html(fileName);
-        else
-          $label.html(labelVal);
-      });
     });
 });
 
