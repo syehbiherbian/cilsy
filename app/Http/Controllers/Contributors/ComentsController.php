@@ -16,6 +16,7 @@ use App\Models\Member;
 use App\Models\Comment;
 use App\Models\Lesson;
 use App\Notifications\ContribReplyNotification;
+use App\Notifications\ContriReplyNotification;
 use Auth;
 
 class ComentsController extends Controller
@@ -152,13 +153,16 @@ class ComentsController extends Controller
         ->Where('B.parent_id', $comment_id)
         ->where('comments.member_id', '<>', 'B.member_id')
         ->where('comments.member_id', '<>', 'B.contributor_id')
+        ->where('B.desc', '<>', '1')
         ->select('comments.member_id as tanya', 'B.member_id as jawab', 'contributors.username as username')->distinct()
         ->get();
+
        if($comment_id != null){
            foreach ($getemailchild as $mails) {
                    if($mails->tanya != $mails->jawab){
-                //        if($mails->jawab != $uid){
+                      if($mails->jawab != $uid){
                     if($mails->jawab != null){
+ 
                $getnotif = DB::table('user_notif')->insert([
                    'id_user' => $mails->jawab,
                    'category' => 'Komentar',
@@ -168,9 +172,15 @@ class ComentsController extends Controller
                    'slug' => $lessons->slug,
                    'created_at' => $now,
                ]);
+
+               $member = Member::Find($mails->jawab);
+               $lessonn = Lesson::find($lessons->id);
+               $contrib = Contributor::find($lessons->contributor_id);
+               $member->notify(new ContriReplyNotification($member, $lessonn, $contrib));
+       
                 }
                 }
-            // }
+            }
             }
         }
         $member = Member::Find($notify->member_id);
