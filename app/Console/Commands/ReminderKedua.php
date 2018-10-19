@@ -42,12 +42,10 @@ class ReminderKedua extends Command
      */
     public function handle()
     {
-        $invo = Invoice::select('code', 'created_at as start', 'DATE_ADD(created_at, INTERVAL 12 HOUR) as remind')->where('status', 1)->get();
-        foreach($invo as $invoice){
-            $member = Member::where('id', $invoice->members_id)->first();
-            $detail = InvoiceDetail::where('invoice_id', $invoice->id)->first();
-            $lessons = Lesson::where('id', $detail->lesson_id)->get();
-            Mail::to($member)->send(new EmailReminderKedua($lessons));
+        $invo = Invoice::select('id', 'code', 'members_id', 'created_at as start', DB::raw('DATE_ADD(created_at, INTERVAL 12 HOUR) as remind'))->where('status', 1)->get();
+        foreach($invo as $inv){
+            $member = Member::where('id', $inv->members_id)->first();
+            Mail::to($member->email)->send(new EmailReminderKedua($lessons));
         }
     }
 }
