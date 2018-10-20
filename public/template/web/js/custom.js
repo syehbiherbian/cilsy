@@ -179,8 +179,8 @@ function formatMoney(c, d, t) {
 	});
 }( document, window, 0 ));
 //custom file input
-var inputs = document.querySelectorAll( '.inputfile-2' );
-Array.prototype.forEach.call( inputs, function( input )
+var input1 = document.querySelectorAll( '.inputfile-2' );
+Array.prototype.forEach.call( input1, function( input )
 {
 	var label	 = input.nextElementSibling,
 		labelVal = label.innerHTML;
