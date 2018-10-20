@@ -819,7 +819,7 @@ td{
                           <textarea style="white-space: pre-line" rows="8" cols="80" class="form-control" name="body" id="textbody0"></textarea>
                         </div>
                        
-                        <input class="inputfile" type="file" name="image" id="files" data-multiple-caption="{count} files selected" multiple="multiple"/>
+                        <input class="inputfile" type="file" name="image" id="file" data-multiple-caption="{count} files selected" multiple="multiple"/>
                         <label for="file"><i class="fa fa-upload"></i><span>Upload Image</span></label>
                        
                       <button type="button" class="btn btn-primary upload-image" onclick="doComment({{ $lessons->id}}, 0)">Tambah Pertanyaan</button> 
