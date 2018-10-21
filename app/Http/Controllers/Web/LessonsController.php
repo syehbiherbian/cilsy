@@ -174,14 +174,14 @@ class LessonsController extends Controller
         }
         $cart = Cart::where('member_id', $mem_id)->where('lesson_id', $lessons->id)->first();
         $categories = Category::where('enable', 1)->get();
-        $invo = Invoice::select('id', 'code', 'members_id', 'created_at as start', DB::raw('DATE_ADD(created_at, INTERVAL 4 HOUR) as remind'))->where('status', 1)->get();
-        // dd($/invo);
-        // $member = Member::where('id', $invo->members_id)->first();
-        // dd($member);
-        foreach($invo as $inv){
-            $member = Member::where('id', $inv->members_id)->get();
-            dd($member);
-        }
+        // $invo = Invoice::select('id', 'code', 'members_id', 'created_at as start', DB::raw('DATE_ADD(created_at, INTERVAL 4 HOUR) as remind'))->where('status', 1)->get();
+        // // dd($/invo);
+        // // $member = Member::where('id', $invo->members_id)->first();
+        // // dd($member);
+        // foreach($invo as $inv){
+        //     $member = Member::where('id', $inv->members_id)->get();
+        //     dd($member);
+        // }
         
         $invo = Invoice::Join('invoice_details', 'invoice_details.invoice_id', 'invoice.id')
                 ->Join('lessons', 'lessons.id', 'invoice_details.lesson_id')
