@@ -693,6 +693,29 @@ td{
   background-color: #5f36b3;
 }
 
+.inputfile-2 {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+.inputfile-2 + label {
+  background-color: #2BA8E2;
+  border-radius: 3px;
+  color: white;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 1em;
+  padding: 10px 15px;
+}
+.inputfile-2 + label span {
+  padding-left: 10px;
+}
+.inputfile-2:focus + label, .content .inputfile-2 + label:hover {
+  background-color: #5f36b3;
+}
 </style>
 <div id="content-section">
 
