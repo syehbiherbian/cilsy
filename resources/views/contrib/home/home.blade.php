@@ -11,7 +11,7 @@
                     <a href="{{ url('contributor/register')}}" class="top-section-btn">Menjadi contributor</a>
                 </div>
                 <div class="col-md-6 col-md-pull-1">
-                    <a href="#" class="top-section-btn">Panduan contributor</a>
+                    <a href="{{ url('contributor/skema') }}" target="_blank" class="top-section-btn">Panduan contributor</a>
                 </div>
             </div>
 

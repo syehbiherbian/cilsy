@@ -10,7 +10,7 @@ use App\Models\Contributor;
 use App\Models\Lesson;
 use App\Models\Member;
 
-class UserReplyNotification extends Notification
+class NimbrungReplyNotification extends Notification
 {
     use Queueable;
 
@@ -49,7 +49,7 @@ class UserReplyNotification extends Notification
         return (new MailMessage)
                     ->subject('Notification From Cilsy Fiolution')
                     ->greeting(sprintf('Hello %s', $this->member->username))
-                    ->line(sprintf('Halo, %s User lain telah membalas pertanyaan anda pada tutorial %s,',$this->member->username, $this->lesson->title))
+                    ->line(sprintf('Halo, %s Ada tanggapan dari komentar kamu di %s,', $this->member->username, $this->lesson->title))
                     ->action('Balas Komentar', $url)
                     ->line('Terima Kasih telah menggunakan aplikasi kami!');
     }

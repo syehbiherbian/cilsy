@@ -20,6 +20,7 @@ use App\Models\Invoice;
 use App\Models\InvoiceDetail;
 use App\Notifications\UserCommentNotification;
 use App\Notifications\UserReplyNotification;
+use App\Notifications\NimbrungReplyNotification;
 use Auth;
 use DateTime;
 use DB;
@@ -430,12 +431,18 @@ class LessonsController extends Controller
                     $getnotif = DB::table('user_notif')->insert([
                         'id_user' => $mails->tanya,
                         'category' => 'Komentar',
-                        'title' => 'Anda mendapat balasan dari ' . $mails->username,
+                        'title' => 'Pertanyaan anda mendapat balasan dari ' . $mails->username,
                         'notif' => 'Anda mendapatkan balasan dari ' . $mails->username . ' pada ' . $lessons->title,
                         'status' => 0,
                         'slug' => $lessons->slug,
                         'created_at' => $now,
                     ]);
+
+                    $member = Member::Find($mails->tanya);
+                    $lesson = Lesson::Find($lessons->id);
+                    $contrib = Contributor::find($lessons->contributor_id);
+                    $member->notify(new UserReplyNotification($member, $lesson, $contrib));
+                   
                         }
                     }
 
@@ -450,19 +457,18 @@ class LessonsController extends Controller
                         'slug' => $lessons->slug,
                         'created_at' => $now,
                     ]);
+
+                    $member = Member::Find($mails->jawab);
+                    $lesson = Lesson::Find($lessons->id);
+                    $contrib = Contributor::find($lessons->contributor_id);
+                    $member->notify(new NimbrungReplyNotification($member, $lesson, $contrib));
+                   
+                 
                         }
                     }
                 //  Check type
-                // if (is_array($mails)){
-                //     //  Scan through inner loop
-                //     foreach ($mails as $value) {
-                //         $member = Member::Find($value);
-                //         $lesson = Lesson::Find($lesson_id);
-                //         $contrib = Contributor::find($lessons->contributor_id);
-                //         $member->notify(new UserReplyNotification($member, $lesson, $contrib));
+                
                        
-                //         }
-                //     }
                    
                 }
             }
@@ -571,7 +577,7 @@ class LessonsController extends Controller
 									                              <label>Komentar</label>
 									                              <textarea name="name" rows="8" cols="80" class="form-control" name="body" id="textbody' . $comment->id . '"></textarea>
                                                                 </div>
-                                                                <input type="file" name="image" id="file-2" class="inputfile inputfile-2" data-multiple-caption="{count} files selected" multiple />
+                                                                <input type="file" name="image" id="file-2" class="inputfile-2" data-multiple-captions="{counts} files selected" multiple />
 					<label for="file-2"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"/></svg> <span>Choose a file&hellip;</span></label>
                                                                 <button type="button" class="btn btn-primary pull-right" onClick="doComment(' . $lesson_id . ',' . $comment->id . ')" >Tambah Jawaban</button>
                                                                 </form>

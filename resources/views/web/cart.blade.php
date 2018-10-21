@@ -85,8 +85,8 @@
             <div class="col-md-offset-8 col-md-4">
                 <div class="row">
                     @if (! session()->has('coupon'))
-                    <a href="#" class="have-code col-md-12" id="hide" style="display:block; color:#2BA8E2;">Gunakan Kode Promo</a>
-                    <form action="{{ url('coupon') }}" method="POST" id="form" style="display:none;">
+                    <span class="col-md-12" style="display:block; color:#2BA8E2;">Gunakan Kode Promo</span>
+                    <form action="{{ url('coupon') }}" method="POST" id="form">
                         {{ csrf_field() }}
                         <input type="hidden" value="{{$total}}" name="total">
                         <div class="input-group">
