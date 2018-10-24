@@ -6,7 +6,11 @@
 <link href="{{ asset('template/web/css/landing.css') }}" rel="stylesheet">
 <script src="https://vjs.zencdn.net/5.16.0/video.min.js"></script>
 {{--  <link href="{{ asset('template/web/css/bootstrap4.min.css') }}" rel="stylesheet">  --}}
-
+<style>
+  .fa-play-circle{
+    color: #2BA8E2;
+  }
+</style>
 <main>
 
   <!-- Section Header -->
@@ -30,7 +34,7 @@
           <img src="{{ asset($lessons->image) }}" class="img-responsive" alt="" height="195" width="290">
         </div>
         <div class="col-xs-12 mt-4">
-          <i class="fa fa-play-circle-o"></i> {{ count($main_videos) }} Video Tutorial Eklusif &nbsp;
+          <i class="fa fa-film"></i> {{ count($main_videos) }} Video Tutorial Eklusif &nbsp;
           <i class="fa fa-book"></i> Modul dan Script Praktek &nbsp;
           <i class="fa fa-jsfiddle"></i> Akses Selamanya &nbsp;
           <i class="fa fa-commenting-o"></i> Support Selamanya
@@ -60,7 +64,13 @@
           <?php $count = 0; ?>
           @foreach ($main_videos as $row)
           <?php if($count == 3) break; ?>
-          <h6><a href="#" data-href="{{ asset($row->video)}}" class="showModal"><i class="fa fa-play-circle"></i> {{$row->title}}</a></h6>
+          <h6><a href="#" data-href="{{ asset($row->video)}}" class="showModal" data-toggle="tooltip" title="Preview Tutorial"><i class="fa fa-play-circle"></i> {{$row->title}}</a></h6>
+          <span class="pull-right" style="color:#2BA8E2;">
+          <?php
+          // Set our duration in seconds
+          echo gmdate("i:s", $row->durasi);
+          ?>
+          </span>
           {!! nl2br($row->description) !!}
           <hr>
           <?php $count++; ?>
@@ -70,7 +80,13 @@
               <?php $count = 0; ?>
               @foreach ($main_videos as $row)
               @if($count>1)
-              <h6><i class="fa fa-play-circle"></i> {{$row->title}}</h6>
+              <h6><i class="fa fa-lock"></i> {{$row->title}}</h6>
+              <span class="pull-right">
+                <?php
+                // Set our duration in seconds
+                echo gmdate("i:s", $row->durasi);
+                ?>
+                </span>
               {!! nl2br($row->description) !!}
               <hr>
               @endif
@@ -151,6 +167,10 @@
 <div class="modal fade" id="ModalVideo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
+          <button type="button" class="close" data-dismiss="modal" style="    margin-right: -28px;
+          margin-top: -12px;
+          font-size: 44px;
+          color: white;">&times;</button>
         <div class="modal-body p-0">
           <video width="100%" height="350" controls name="preview" controlsList="nodownload" ><source src="{{ asset($preview->video)}}"></video>
         </div>

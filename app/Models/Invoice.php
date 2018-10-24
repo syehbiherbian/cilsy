@@ -13,4 +13,9 @@ class Invoice extends Model
     {
         return $this->hasMany('App\Models\InvoiceDetail');
     }
+    
+    public function members()
+    {
+        return $this->belongsTo('App\Models\Member');
+    }
 }

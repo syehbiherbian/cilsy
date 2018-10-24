@@ -37,7 +37,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('email:reminderketiga')
                  ->everyMinute();
         $schedule->command('email:reminderkeempat')
-        ->everyMinute();
+                 ->everyMinute();
     }
 
     /**
