@@ -39,7 +39,8 @@ class ComentsController extends Controller
             ->where('desc', '<>', 1)
             ->orderBy('comments.created_at','DESC')
             ->select('comments.*')
-            ->get();
+            ->paginate(10);
+
         $getabaikan = DB::table('comments')
             ->leftJoin('lessons','lessons.id','=','comments.lesson_id')
             // ->where('comments.parent_id',0)
