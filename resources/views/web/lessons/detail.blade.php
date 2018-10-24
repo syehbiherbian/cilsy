@@ -1296,6 +1296,63 @@ function videoTracking(videosrc) {
       });
     }
   }
+  function replyComment(lesson_id, parent_id) {
+    var body = $('#textbody'+parent_id).val();
+    var file_data = $('#file-2').prop("files")[0];
+    dataform = new FormData();
+    dataform.append( 'image', file_data);
+    dataform.append( 'body', body);
+    dataform.append( 'lesson_id', lesson_id);
+    dataform.append( 'parent_id', parent_id);
+
+    if (body == '') {
+      alert('Harap Isi form !')
+    }else {
+      $.ajaxSetup({
+          headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          }
+      });
+      $.ajax({
+          type    :"POST",
+          url     :'{{ url("/lessons/coments/doComment") }}',
+          data    : dataform,
+          dataType : 'json',
+          contentType: false,
+          processData: false,
+          beforeSend: function(){
+               swal({
+                title: "Memuat Pertanyaan",
+                text: "Mohon Tunggu sebentar Pertanyaan anda sedang dimuat",
+                imageUrl: "{{ asset('template/web/img/loading.gif') }}",
+                showConfirmButton: false,
+                allowOutsideClick: false
+            });
+            // Show image container
+          },
+          success:function(data){
+            if (data.success == false) {
+               window.location.href = '{{ url("member/signin") }}';
+            }else if (data.success == true) {
+              $('#textbody'+parent_id).val('');
+              $('.inputfile').each(function() {
+                var $input	 = $(this),
+                    $label	 = $input.next('label'),
+                    labelVal = $label.html();
+                    $label.find('span').html('Upload Image');
+              });
+              swal({
+                title: "Pertanyaan berhasil terkirim!",
+                showConfirmButton: true,
+                timer: 3000
+              });
+              
+              getComments();
+            }
+          }
+      });
+    }
+  }
 </script>
 <script>
   var cek = localStorage.getItem('cart');
