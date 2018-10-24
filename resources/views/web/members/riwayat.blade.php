@@ -5,6 +5,14 @@
     .borderless td, .borderless th, .borderless thead {
         border: none;
     }
+    .table tbody tr td, .table tbody tr th, .table tfoot tr td, .table tfoot tr th, .table thead tr td, .table thead tr th {
+        padding: 26px;
+        padding-bottom: 5px;
+        line-height: 1.42857143;
+        vertical-align: top;
+        border-top: 1px solid #ddd;
+        /* left: 10px; */
+    }
     table {
         border-spacing: 1;
         border-collapse: collapse;
@@ -62,7 +70,7 @@
           padding: 8px 0;
         }
         table tbody tr td {
-          padding-left: 45%;
+          padding-left: 45% ;
           margin-bottom: 12px;
         }
         table tbody tr td:last-child {
