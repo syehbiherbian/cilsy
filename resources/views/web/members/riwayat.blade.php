@@ -5,14 +5,7 @@
     .borderless td, .borderless th, .borderless thead {
         border: none;
     }
-    .table tbody tr td, .table tbody tr th, .table tfoot tr td, .table tfoot tr th, .table thead tr td, .table thead tr th {
-        padding: 26px;
-        padding-bottom: 5px;
-        line-height: 1.42857143;
-        vertical-align: top;
-        border-top: 1px solid #ddd;
-        /* left: 10px; */
-    }
+    
     table {
         border-spacing: 1;
         border-collapse: collapse;
@@ -94,6 +87,14 @@
         }
         table tbody tr td:nth-child(4):before {
           content: "Status";
+        }
+        .table tbody tr td, .table tbody tr th, .table tfoot tr td, .table tfoot tr th, .table thead tr td, .table thead tr th {
+            padding: 50px;
+            padding-bottom: 5px;
+            line-height: 1.42857143;
+            vertical-align: top;
+            border-top: 1px solid #ddd;
+            /* left: 10px; */
         }
       }
       
