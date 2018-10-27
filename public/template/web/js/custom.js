@@ -178,24 +178,3 @@ function formatMoney(c, d, t) {
 		input.addEventListener( 'blur', function(){ input.classList.remove( 'has-focus' ); });
 	});
 }( document, window, 0 ));
-//custom file input
-var input1 = document.querySelectorAll( '.inputfile-2' );
-Array.prototype.forEach.call( input1, function( input )
-{
-	var lable    = input1.nextElementSibling,
-		lableVal = lable.innerHTML;
-
-	input1.addEventListener( 'change', function( e )
-	{
-		var fileName = '';
-		if( this.files && this.files.length > 1 )
-			fileName = ( this.getAttribute( 'data-multiple-captions' ) || '' ).replace( '{counts}', this.files.length );
-		else
-			fileName = e.target.value.split( '\\' ).pop();
-
-		if( fileName )
-            lable.querySelector( 'span' ).innerHTML = fileName;
-		else
-            lable.innerHTML = lableVal;
-	});
-});

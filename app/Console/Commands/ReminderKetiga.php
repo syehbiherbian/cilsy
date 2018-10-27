@@ -42,10 +42,10 @@ class ReminderKetiga extends Command
      */
     public function handle()
     {
-        $invo = Invoice::select('id', 'code', 'members_id', 'created_at as start', DB::raw('DATE_ADD(created_at, INTERVAL 23 HOUR) as remind'))->where('status', 1)->get();
+        $invo = $invo = Invoice::where('status', 2, DB::raw('DATE_ADD(created_at, INTERVAL 23 HOUR)'))->get();
         foreach($invo as $inv){
-            $member = Member::where('id', $inv->members_id)->first();
-            Mail::to($member->email)->send(new EmailReminderKetiga($lessons));
+            Mail::to($inv->members->email)->send(new EmailReminderKetiga($lessons));
         }
+        $this->info('Reminder messages sent successfully!');
     }
 }

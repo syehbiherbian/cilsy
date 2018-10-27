@@ -42,10 +42,10 @@ class ReminderKeempat extends Command
      */
     public function handle()
     {
-        $invo = Invoice::select('id', 'code', 'members_id', 'updated_at as start', DB::raw('DATE_ADD(updated_at, INTERVAL 1 HOUR) as remind'))->where('status', 1)->get();
+        $invo = $invo = Invoice::where('status', 5, DB::raw('DATE_ADD(updated_at, INTERVAL 1 HOUR)'))->get();
         foreach($invo as $inv){
-            $member = Member::where('id', $inv->members_id)->first();
-            Mail::to($member->email)->send(new EmailReminderPertama($lessons));
+            Mail::to($inv->members->email)->send(new EmailReminderKeempat($lessons));
         }
+        $this->info('Reminder messages sent successfully!');
     }
 }
