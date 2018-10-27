@@ -8,6 +8,8 @@ use App\Models\InvoiceDetail;
 use App\Models\Member;
 use App\Models\Lesson;
 use App\Mail\EmailReminderPertama;
+use DB;
+use Mail;
 
 class ReminderPertama extends Command
 {
@@ -42,13 +44,20 @@ class ReminderPertama extends Command
      */
     public function handle()
     {
-        $invo = $invo = Invoice::where('status', 2, DB::raw('DATE_ADD(created_at, INTERVAL 4 HOUR)'))->get();
-        foreach($invo as $inv){
-            Mail::to($inv->members->email)->send(new EmailReminderPertama($lessons));
-        }
-        $this->info('Reminder messages sent successfully!');
+        $from = date("Y-m-d H:i:s", strtotime("-4 hours"));
+        $to = date("Y-m-d H:i:s");
+        $invo = Invoice::with('members')->where('status', 2)->where('created_at', '==', now()->subHours(4)->toDateTimeString())->get();
+        // dd($invo);
+        // Mail::to($invo->members['email'])->send(new EmailReminderPertama());
+            foreach($invo as $inv){
+                if($inv != null){
+                    Mail::to($inv->members['email'])->send(new EmailReminderPertama());
+                } 
+            }
+            $this->info('Reminder messages sent successfully!');
         
-        // $invo = Invoice::select('code', 'created_at as start', 'DATE_ADD(created_at, INTERVAL 4 HOUR) as remind')->where('status', 1)->get();
+        
+        // $invo = Invoice::select('code', 'created_at as start', DB::raw('DATE_ADD(created_at, INTERVAL 4 HOUR)'))->where('status', 2)->get();
         // foreach($invo as $invoice){
         //     $member = Member::where('id', $invoice->members_id)->first();
         //     $detail = InvoiceDetail::where('invoice_id', $invoice->id)->first();

@@ -174,13 +174,17 @@ class LessonsController extends Controller
         }
         $cart = Cart::where('member_id', $mem_id)->where('lesson_id', $lessons->id)->first();
         $categories = Category::where('enable', 1)->get();
-        // $invo = Invoice::where('status', 2, DB::raw('DATE_ADD(created_at, INTERVAL 4 HOUR)'))->get();
+        // $invo = Invoice::with('members')->where('status', 2)->where('created_at', '<=', now()->subHours(4)->toDateTimeString())->get();
+        // // dd($invo);
+        $from = date("Y-m-d H:i:s", strtotime("-4 hours"));
+        $to = date("Y-m-d H:i:s");
+        $invo = Invoice::with('members')->where('status', 2)->where('created_at', '<=', $from)->get();        
         // dd($invo);
         // // // $member = Member::where('id', $invo->members_id)->first();
         // // // dd($member);
-        // foreach($invo as $inv){
-        //     dd($inv->members->email) ;
-        // }
+        foreach($invo as $inv){
+            dd($inv->members['email']);
+        }
         
         $invo = Invoice::Join('invoice_details', 'invoice_details.invoice_id', 'invoice.id')
                 ->Join('lessons', 'lessons.id', 'invoice_details.lesson_id')

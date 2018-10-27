@@ -10,6 +10,23 @@
   .fa-play-circle{
     color: #2BA8E2;
   }
+  .close-icon {
+    webkit-appearance: none;
+    appearance: none;
+    position: absolute;
+    top: -15px;
+    right: -15px;
+    width: 35px;
+    height: 35px;
+    color: #fff;
+    font-size: 14px;
+    background: #222;
+    border: none;
+    outline: none;
+    border-radius: 50%;
+    cursor: pointer;
+    vertical-align: middle;
+  }
 </style>
 <main>
 
@@ -79,7 +96,7 @@
           <div class="collapse" id="collapseKurikulum">
               <?php $count = 0; ?>
               @foreach ($main_videos as $row)
-              @if($count>1)
+              @if($count>2)
               <h6><i class="fa fa-lock"></i> {{$row->title}}</h6>
               <span class="pull-right">
                 <?php
@@ -167,10 +184,7 @@
 <div class="modal fade" id="ModalVideo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
-          <button type="button" class="close" data-dismiss="modal" style="    margin-right: -28px;
-          margin-top: -12px;
-          font-size: 44px;
-          color: white;">&times;</button>
+          <button type="button" class="close-icon" data-dismiss="modal" >X</button>
         <div class="modal-body p-0">
           <video width="100%" height="350" controls name="preview" controlsList="nodownload" ><source src="{{ asset($preview->video)}}"></video>
         </div>

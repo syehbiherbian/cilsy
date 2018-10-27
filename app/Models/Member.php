@@ -18,4 +18,9 @@ class Member extends User {
     {
         $this->notify(new MemberResetPasswordNotification($token));
     }
+
+    public function invoice()
+    {
+        return $this->belongsTo('App\Models\Invoice');
+    }
 }
