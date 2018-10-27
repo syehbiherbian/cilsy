@@ -147,7 +147,7 @@
                         @if(session()->has('coupon'))
                         <span id="total-price">Rp. {{ number_format(session()->get('coupon')['discount'], 0, ",", ".") }}</span>
                         @else
-                        <span id="total-price">Rp. {{ number_format($total, 0, ",", ".") }}</span>
+                        <span id="total-harga">Rp. {{ number_format($total, 0, ",", ".") }}</span>
                         @endif
                     </div>
                     <div class="col-md-12">
@@ -221,6 +221,7 @@ fbq('track', 'AddToCart');
                 $('#cart').html(html);
                 $('#cart-total, #cart-pay').removeClass('hide');
                 $('#total-price').html('Rp'+total.toLocaleString('id', 'idr'));
+                $('#total-harga').html('Rp'+total.toLocaleString('id', 'idr'));
             }
         }
     });

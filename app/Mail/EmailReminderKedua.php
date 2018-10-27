@@ -18,9 +18,9 @@ class EmailReminderKedua extends Mailable
      *
      * @return void
      */
-    public function __construct($lessons)
+    public function __construct()
     {
-        $this->lessons = $lessons;
+        // $this->lessons = $lessons;
     }
 
     /**
