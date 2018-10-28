@@ -142,6 +142,15 @@ function namemember(){
   return $member_name;
 }
 
+function set_active ($route)
+{
+    if(is_array($route))
+    {
+        return in_array(Request::path(), $route) ? 'icon-active' : '';
+    }
+    return Request::path() == $route ? 'icon-active' : '';
+}
+
 function notif(){
 
     $contribID = Auth::guard('contributors')->user()->id;
