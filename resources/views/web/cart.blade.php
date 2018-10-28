@@ -137,12 +137,17 @@
                     </div>
                     <div class="col-md-6 bawah">
                     </div>
-                    @endif
+                    <div class="col-md-6 bawah">
+                    Total Pembayaran
+                    </div>
+                    @else
+                    
                     <div class="col-md-6 bawah">
                     </div>
                     <div class="col-md-6">
                         Total Pembayaran
                     </div>
+                    @endif
                     <div class="col-md-6" style="text-align:right">
                         @if(session()->has('coupon'))
                         <span id="total-price">Rp. {{ number_format(session()->get('coupon')['discount'], 0, ",", ".") }}</span>
