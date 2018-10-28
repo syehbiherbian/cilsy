@@ -49,12 +49,13 @@ class ReminderPertama extends Command
         $invo = Invoice::with('members')->where('status', 2)->where('created_at', '==', now()->subHours(4)->toDateTimeString())->get();
         // dd($invo);
         // Mail::to($invo->members['email'])->send(new EmailReminderPertama());
-            foreach($invo as $inv){
-                if($inv != null){
-                    Mail::to($inv->members['email'])->send(new EmailReminderPertama());
-                } 
-            }
-            $this->info('Reminder messages sent successfully!');
+        foreach($invo as $inv){
+            if($inv != null){
+                Mail::to($inv->members['email'])->send(new EmailReminderPertama());
+                $this->info('Reminder messages sent successfully!');
+            } 
+        }
+        
         
         
         // $invo = Invoice::select('code', 'created_at as start', DB::raw('DATE_ADD(created_at, INTERVAL 4 HOUR)'))->where('status', 2)->get();
