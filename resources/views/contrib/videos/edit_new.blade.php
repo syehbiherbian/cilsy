@@ -313,7 +313,7 @@
 				$('#videobox'+n).remove()
 				delete videos[nV]
 				videos = clearQueue(videos)
-				if (typeof videos[0] == 'undefined') {
+				if (typeof videos[0] == 'undefined' && videos_exists.length == 0) {
 					$('#form-starter').show();
 					$('#btn-submit-group').hide();
 				}
