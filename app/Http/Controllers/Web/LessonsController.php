@@ -122,7 +122,7 @@ class LessonsController extends Controller
         }
         // dd($cart);
         if (count($lessons) > 0) {
-            $main_videos = Video::where('lessons_id', $lessons->id)->orderBy('id', 'asc')->get();
+            $main_videos = Video::where('lessons_id', $lessons->id)->orderBy('position', 'asc')->get();
             $preview = Video::where('enable', 1)->where('lessons_id', $lessons->id)->orderBy('position', 'asc')->first();
             $last_videos = Viewer::leftJoin('videos', 'videos.id', '=', 'viewers.video_id')
             ->select('videos.*', 'viewers.video_id')
