@@ -8,6 +8,8 @@ use App\Models\InvoiceDetail;
 use App\Models\Member;
 use App\Models\Lesson;
 use App\Mail\EmailReminderKedua;
+use DB;
+use Mail;
 
 class ReminderKedua extends Command
 {
@@ -42,9 +44,13 @@ class ReminderKedua extends Command
      */
     public function handle()
     {
-        $invo = $invo = Invoice::where('status', 2, DB::raw('DATE_ADD(created_at, INTERVAL 12 HOUR)'))->get();
+        $invo = Invoice::with('members')->where('status', 2)->where('created_at', '==', now()->subHours(12)->toDateTimeString())->get();
+        // dd($invo);
+        // Mail::to($invo->members['email'])->send(new EmailReminderPertama());
         foreach($invo as $inv){
-            Mail::to($inv->members->email)->send(new EmailReminderKedua($lessons));
+            if($inv != null){
+                Mail::to($inv->members['email'])->send(new EmailReminderKedua());
+            } 
         }
         $this->info('Reminder messages sent successfully!');
     }

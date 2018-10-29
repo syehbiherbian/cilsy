@@ -110,31 +110,31 @@
 
         <ul>
 
-            <li class="icon-active" data-toggle="tooltip" data-placement="right" title="Dashboard">
+            <li class="{{ set_active('contributor/dashboard') }}" data-toggle="tooltip" data-placement="right" title="Dashboard">
                     <a href="{{ url('contributor/dashboard') }}">
                     <img src="{{asset('template/kontributor/img/icon/Home.png')}}" alt="" />
                     <span>Dashboard</span>
                 </a>
             </li>
-            <li data-toggle="tooltip" data-placement="right" title="Kelola Pendapatan">
+            <li class="{{ set_active('contributor/income') }}" data-toggle="tooltip" data-placement="right" title="Kelola Pendapatan">
                 <a href="{{url('contributor/income')}}">
                     <img src="{{asset('template/kontributor/img/icon/Kelola_Pendapatan.png')}}" alt="" />
                     <span>Kelola Pendapatan</span>
                 </a>
             </l>
-            <li data-toggle="tooltip" data-placement="right" title="Kelola Tutorial">
+            <li class="{{ set_active('contributor/lessons/pending/list') }}"  data-toggle="tooltip" data-placement="right" title="Kelola Tutorial">
                 <a href="{{ url('contributor/lessons') }}">
                     <img src="{{asset('template/kontributor/img/icon/Kelola_Tutorial.png')}}" alt="" />
                     <span>Kelola Tutorial</span>
                 </a>
             </li>
-            <li data-toggle="tooltip" data-placement="right" title="Kelola Pertanyaan">
+            <li class="{{ set_active('contributor/comments') }}"  data-toggle="tooltip" data-placement="right" title="Kelola Pertanyaan">
                 <a href="{{ url('contributor/comments') }}">
                     <img src="{{asset('template/kontributor/img/icon/KelolaPertanyaan.png')}}" alt="" />
                     <span>Kelola Pertanyaan</span>
                 </a>
             </li>
-            <li data-toggle="tooltip" data-placement="right" title="Kelola Akun Dan Halaman">
+            <li class="{{ set_active('contributor/account/informasi') }}"  data-toggle="tooltip" data-placement="right" title="Kelola Akun Dan Halaman">
                 <a href="{{ url('contributor/account/informasi') }}">
                     <img src="{{asset('template/kontributor/img/icon/Kelola_Akun_dan_Halaman.png')}}" alt="" />
                     <span>Kelola Akun dan Halaman</span>
