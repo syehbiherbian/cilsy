@@ -1,5 +1,6 @@
 @extends('web.app')
-@section('title','Tentang | ')
+@section('title','Tentang')
+@section('description','Ini Halaman Tentang')
 @section('content')
 <style media="screen">
   .section-content{
