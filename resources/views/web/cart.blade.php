@@ -65,7 +65,9 @@
                         </div>
                     </div>
                 </div>
-                @php $total += $cart->lesson->price; @endphp
+                @php $total += $cart->lesson->price; 
+                Session::put('total', $total);
+                @endphp
                 @endforeach
             @else
             <div id="cart">
@@ -137,15 +139,20 @@
                     </div>
                     <div class="col-md-6 bawah">
                     </div>
-                    @endif
+                    <div class="col-md-6 bawah">
+                    Total Pembayaran
+                    </div>
+                    @else
+                    
                     <div class="col-md-6 bawah">
                     </div>
                     <div class="col-md-6">
                         Total Pembayaran
                     </div>
+                    @endif
                     <div class="col-md-6" style="text-align:right">
                         @if(session()->has('coupon'))
-                        <span id="total-price">Rp. {{ number_format(session()->get('coupon')['discount'], 0, ",", ".") }}</span>
+                        <span id="total-price">Rp. {{ number_format(getNumbers()->get('newSubtotal'), 0, ",", ".") }}</span>
                         @else
                         <span id="total-harga">Rp. {{ number_format($total, 0, ",", ".") }}</span>
                         @endif

@@ -28,13 +28,40 @@ class NotifController extends Controller
         $uid = Auth::guard('contributors')->user()->id;
         $getnotif = DB::table('contributor_notif')
             ->where('contributor_id',$uid)
+            ->where('status','0')
             ->orderBy('contributor_notif.created_at','DESC')
             ->paginate(10);
         return view('contrib.notif.index', [
             'data' => $getnotif
         ]);
     }
-
+    public function notifread(){
+        if (empty(Auth::guard('contributors')->user()->id)) {
+          return redirect('contributor/login');
+        }
+        $uid = Auth::guard('contributors')->user()->id;
+        $getnotif = DB::table('contributor_notif')
+            ->where('contributor_id',$uid)
+            ->where('status','1')
+            ->orderBy('contributor_notif.created_at','DESC')
+            ->paginate(10);
+        return view('contrib.notif.read', [
+            'data' => $getnotif
+        ]);
+    }
+    public function all(){
+        if (empty(Auth::guard('contributors')->user()->id)) {
+          return redirect('contributor/login');
+        }
+        $uid = Auth::guard('contributors')->user()->id;
+        $getnotif = DB::table('contributor_notif')
+            ->where('contributor_id',$uid)
+            ->orderBy('contributor_notif.created_at','DESC')
+            ->paginate(10);
+        return view('contrib.notif.all', [
+            'data' => $getnotif
+        ]);
+    }
     public function read(){
       $id = Input::get('id');
       $update= ContributorNotif::find($id);

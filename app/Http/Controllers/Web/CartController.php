@@ -13,8 +13,11 @@ class CartController extends Controller
     public function index()
     {
         $member_id = Auth::guard('members')->user()->id ?? null;
+        $discount = session()->get('coupon')['discount'] ?? 0;
+        $code = session()->get('total');
+        // dd($code);
         $data = [
-            'carts' => Cart::where('member_id', $member_id)->with('member', 'contributor', 'lesson')->get()
+            'carts' => Cart::where('member_id', $member_id)->with('member', 'contributor', 'lesson')->get(),
         ];
         // dd($data);
         return view('web.cart', $data);

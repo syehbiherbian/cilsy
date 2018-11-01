@@ -76,34 +76,31 @@
   <div class="col-md-12">
     <div id="exTab1" class="container">
       <ul  class="nav nav-pills">
-      <li class="active">
-          <a id="#1a"  href="{{ url('/contributor/comments') }}" >Unanswered</a>
+      <li>
+          <a id="#1a" href="{{ url('/contributor/comments') }}" >Unanswered</a>
         </li>
-        <li><a id="#2a"  href="{{ url('/contributor/comments/read') }}" >Answared</a>
+        <li id="#2a" class="active"><a href="{{ url('/contributor/comments/read') }}" >Answared</a>
         </li>
-        <li><a  id="#3a" href="{{ url('/contributor/comments/all') }}" >All</a>
+        <li><a id="#3a" href="{{ url('/contributor/comments/all') }}" >All</a>
         </li>
 
       </ul>
-
       <div class="tab-content clearfix">
-        <div class="tab-pane active" id="1a">
-          <table class="table">
-            <thead>
-              <tr>
-                <th>Tanggal</th>
-                <th width="60%">Pertanyaan</th>
-                <th>Lebih Lanjut</th>
-              </tr>
-            </thead>
-            <tbody>
-
-
-			@foreach($data as $dat)
+        <div class="tab-pane active" >
+			<table class="table">
+              <thead>
+                <tr>
+                  <th>Tanggal</th>
+                  <th width="60%">Pertanyaan</th>
+                  <th>Lebih Lanjut</th>
+                </tr>
+              </thead>
+              <tbody>
+  			@foreach($data as $dat)
 
 
 			<?php
-				$cekanswer = DB::table('comments')->where('desc', '<>', 1)->where('status',0)->where('contributor_id',Auth::guard('contributors')->user()->id)->orderBy('created_at','DESC')->first();
+				$cekanswer = DB::table('comments')->where('desc', '<>', 1)->where('status',1)->where('contributor_id',Auth::guard('contributors')->user()->id)->orderBy('created_at','DESC')->first();
 				if(count($cekanswer)==0){
 				?>
 
@@ -111,7 +108,7 @@
               </tr>
 			<?php 
 		 	}  else { ?>
-			  @if($dat->status==0)
+			  @if($dat->status==1)
 				<tr>
 				  <td><?= date('d/m/Y',strtotime($dat->created_at)) ?></td>
 				  <td>{{ $dat->body }}</td>
@@ -126,10 +123,13 @@
 				@endif
 		 <?php	}?>
 			@endforeach
-            </tbody>
-          </table>
+
+
+              </tbody>
+            </table>
+
         </div>
-     
+
       </div>
     </div>
     <div class="row">
