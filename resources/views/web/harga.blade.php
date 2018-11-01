@@ -1,5 +1,5 @@
 @extends('web.app')
-@section('title','Harga | ')
+@section('title','Harga')
 @section('description', 'Ini Halaman Harga')
 @section('content')
  <style>

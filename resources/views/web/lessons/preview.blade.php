@@ -1,6 +1,6 @@
 @extends('web.app')
-@section('title',$lessons->title.' | ')
-@section('description', $lessons->meta_desc)
+@section('title',$lessons->title)
+@section('description', $lessons->description)
 @section('content')
 {{--  <link href="{{ asset('node_modules/video.js/dist/video-js.css') }}" rel="stylesheet">  --}}
 <link href="{{ asset('template/web/css/landing.css') }}" rel="stylesheet">

@@ -1,7 +1,16 @@
 @extends('contrib.app')
 @section('title','')
 <link href="{{asset('template/kontributor/summernote/summernote.css')}}" rel="stylesheet">
+<style>
+	#summernote{
+		z-index:500;
+	}
+	#summergoal{
+		z-index:500;
+	}
+</style>
 @section('breadcumbs')
+
 <div id="navigation">
 		<ul class="breadcrumb">
 			<li><a href="{{ url('contributor/dashboard') }}">Dashboard</a></li>
@@ -120,20 +129,23 @@
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
 <script type="text/javascript" src="{{asset('template/kontributor/summernote/summernote.js')}}"></script>
 <script>
+	$('#summernote').summernote('code', '{!! $row->description !!}');
+	$('#textedit').summernote('code', '{!! $row->requirement !!}');
+	$('#summergoal').summernote('code', '{!! $row->goal !!}');
 	$('#summernote').summernote({
-		height: 200,                 // set editor height
+		height: 500,                 // set editor height
 		minHeight: null,             // set minimum height of editor
 		maxHeight: null,             // set maximum height of editor
-		focus: true                  // set focus to editable area after initializing summernote
+		focus: true,                  // set focus to editable area after initializing summernote 
 	});
 	$('#textedit').summernote({
-		height: 200,                 // set editor height
+		height: 500,                 // set editor height
 		minHeight: null,             // set minimum height of editor
 		maxHeight: null,             // set maximum height of editor
 		focus: true                  // set focus to editable area after initializing summernote
 	});
 	$('#summergoal').summernote({
-		height: 200,                 // set editor height
+		height: 500,                 // set editor height
 		minHeight: null,             // set minimum height of editor
 		maxHeight: null,             // set maximum height of editor
 		focus: true                  // set focus to editable area after initializing summernote
