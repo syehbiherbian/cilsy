@@ -44,16 +44,17 @@ class ReminderPertama extends Command
      */
     public function handle()
     {
-        $from = date("Y-m-d H:i:s", strtotime("-4 hours"));
-        $to = date("Y-m-d H:i:s");
-        $invo = Invoice::with('members')->where('status', 2)->where('created_at', '==', now()->subHours(4)->toDateTimeString())->get();
-        // dd($invo);
+        $invo = Invoice::with('members')
+        ->where('invoice.status', 2)
+        ->where(DB::raw('left(DATE_ADD( invoice.created_at, INTERVAL 1 MINUTE), 16)'), '=', DB::raw(' left(now(), 16)') )
+        ->get();
         // Mail::to($invo->members['email'])->send(new EmailReminderPertama());
         foreach($invo as $inv){
             if($inv != null){
                 Mail::to($inv->members['email'])->send(new EmailReminderPertama());
-                $this->info('Reminder messages sent successfully!');
+               
             } 
+            $this->info('Reminder messages sent successfully!');
         }
         
         
