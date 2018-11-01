@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Web;
 
+use App\Jobs\UpdateCoupon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Coupon;
@@ -62,19 +63,13 @@ class CouponsController extends Controller
             DB::table('coupon')
             ->where('code','=',$request->coupon_code)
             ->update(
-            ['limit_coupon' => $cut]
-            );
+                        ['limit_coupon' => $cut]
+                    );
             // DB::table('invoice')
             // ->where('code', Session::get('invoiceCODE'));
         }
-        session()->put('coupon', [
-            'name' => $coupon->code,
-            'value' => $coupon->value,
-            'discount' => $coupon->discount($total),
-            'type' => $coupon->type,
-            'percent_off' => $coupon->percent_off,
-        ]);
-
+        dispatch_now(new UpdateCoupon($coupon));
+        
         return redirect()->route('cart')->with('success_message', 'Selamat! Kode Promo berhasil ditambahkan');
     }
 

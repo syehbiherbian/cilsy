@@ -16,6 +16,15 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\ContributorRegistered' => [
             'App\Listeners\SendContributorActivation',
         ],
+        'cart.added' => [
+            'App\Listeners\CartUpdatedListener',
+        ],
+        'cart.updated' => [
+            'App\Listeners\CartUpdatedListener',
+        ],
+        'cart.removed' => [
+            'App\Listeners\CartUpdatedListener',
+        ],
     ];
 
     /**
