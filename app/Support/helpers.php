@@ -142,6 +142,15 @@ function namemember(){
   return $member_name;
 }
 
+function set_active ($route)
+{
+    if(is_array($route))
+    {
+        return in_array(Request::path(), $route) ? 'icon-active' : '';
+    }
+    return Request::path() == $route ? 'icon-active' : '';
+}
+
 function notif(){
 
     $contribID = Auth::guard('contributors')->user()->id;
@@ -350,14 +359,28 @@ function bool($bool) {
     return false;
 }
 
-// function join_video_quiz($videos, $quiz) {
-//   $video = $videos->toArray();
-  
-//   foreach ($quiz as $key=> $q) {
-//     $after_vid = $q->video_id;
-//     $idx = search_video_index($videos, $after_vid);
-//     $videos = insert_array($videos, $idx, 'kuis'.$key, $q->toArray());
-//   }
 
-//   return array_values($videos);
-// }
+function getNumbers()
+{
+    $tax = config('cart.tax') / 100;
+    $discount = session()->get('coupon')['discount'] ?? 0;
+    $code = session()->get('coupon')['name'] ?? null;
+    $newSubtotal = (session()->get('total') - $discount);
+    if (session()->get('coupon')['type'] == 'fixed') {
+      $newSubtotal = (session()->get('total') - $discount);
+    } else if (session()->get('coupon')['type'] == 'percent') {
+      $newSubtotal = (session()->get('total') - (session()->get('coupon')['percent_off'] / 100) * session()->get('total')) ;
+    } else {
+        return 0;
+    }
+    $newTax = $newSubtotal * $tax;
+    $newTotal = $newSubtotal * (1 + $tax);
+    return collect([
+        'tax' => $tax,
+        'discount' => $discount,
+        'code' => $code,
+        'newSubtotal' => $newSubtotal,
+        'newTax' => $newTax,
+        'newTotal' => $newTotal,
+    ]);
+}

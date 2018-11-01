@@ -8,6 +8,8 @@ use App\Models\InvoiceDetail;
 use App\Models\Member;
 use App\Models\Lesson;
 use App\Mail\EmailReminderKetiga;
+use DB;
+use Mail;
 
 class ReminderKetiga extends Command
 {
@@ -42,10 +44,14 @@ class ReminderKetiga extends Command
      */
     public function handle()
     {
-        $invo = $invo = Invoice::where('status', 2, DB::raw('DATE_ADD(created_at, INTERVAL 23 HOUR)'))->get();
-        foreach($invo as $inv){
-            Mail::to($inv->members->email)->send(new EmailReminderKetiga($lessons));
-        }
-        $this->info('Reminder messages sent successfully!');
+        $invo = Invoice::with('members')->where('status', 2)->where('created_at', '==', now()->subHours(23)->toDateTimeString())->get();
+        // dd($invo);
+        // Mail::to($invo->members['email'])->send(new EmailReminderPertama());
+            foreach($invo as $inv){
+                if($inv != null){
+                    Mail::to($inv->members['email'])->send(new EmailReminderKetiga());
+                } 
+            }
+            $this->info('Reminder messages sent successfully!');
     }
 }
