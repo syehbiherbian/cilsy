@@ -37,6 +37,7 @@ class ComentsController extends Controller
             // ->where('member_id','!=',null)
             ->where('comments.contributor_id',$uid)
             ->where('desc', '<>', 1)
+            ->where('comments.status','0' )
             ->orderBy('comments.created_at','DESC')
             ->select('comments.*')
             ->paginate(10);
@@ -56,7 +57,67 @@ class ComentsController extends Controller
             'id'=>$uid,
         ]);
     }
+    public function all(){
+        if (empty(Auth::guard('contributors')->user()->id)) {
+          return redirect('contributor/login');
+        }
+        $uid = Auth::guard('contributors')->user()->id;
+        $getcomment = DB::table('comments')
+            ->leftJoin('lessons','lessons.id','=','comments.lesson_id')
+            // ->where('comments.status',0)
+            // ->where('member_id','!=',null)
+            ->where('comments.contributor_id',$uid)
+            ->where('desc', '<>', 1)
+            ->orderBy('comments.created_at','DESC')
+            ->select('comments.*')
+            ->paginate(10);
 
+        $getabaikan = DB::table('comments')
+            ->leftJoin('lessons','lessons.id','=','comments.lesson_id')
+            // ->where('comments.parent_id',0)
+            // ->where('comments.status',0)
+            // ->where('member_id','!=',null)
+            ->where('comments.contributor_id',$uid)
+            ->orderBy('comments.created_at','DESC')
+            ->select('comments.*')
+            ->get();
+        return view('contrib.coments.all', [
+            'data' => $getcomment,
+            'abaikan'=>$getabaikan,
+            'id'=>$uid,
+        ]);
+    }
+    public function read(){
+        if (empty(Auth::guard('contributors')->user()->id)) {
+          return redirect('contributor/login');
+        }
+        $uid = Auth::guard('contributors')->user()->id;
+        $getcomment = DB::table('comments')
+            ->leftJoin('lessons','lessons.id','=','comments.lesson_id')
+            // ->where('comments.status',0)
+            // ->where('member_id','!=',null)
+            ->where('comments.contributor_id',$uid)
+            ->where('desc', '<>', 1)
+            ->where('comments.status','1' )
+            ->orderBy('comments.created_at','DESC')
+            ->select('comments.*')
+            ->paginate(10);
+
+        $getabaikan = DB::table('comments')
+            ->leftJoin('lessons','lessons.id','=','comments.lesson_id')
+            // ->where('comments.parent_id',0)
+            // ->where('comments.status',0)
+            // ->where('member_id','!=',null)
+            ->where('comments.contributor_id',$uid)
+            ->orderBy('comments.created_at','DESC')
+            ->select('comments.*')
+            ->get();
+        return view('contrib.coments.read', [
+            'data' => $getcomment,
+            'abaikan'=>$getabaikan,
+            'id'=>$uid,
+        ]);
+    }
     public function detail($id){
         
         $uid = Auth::guard('contributors')->user()->id ?? null;
