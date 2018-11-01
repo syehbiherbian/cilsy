@@ -1,5 +1,5 @@
 @extends('web.app')
-@section('title',$pages->title.' | ')
+@section('title',$pages->title)
 @section('description', $pages->meta_desc)
 @section('content')
 <style media="screen">

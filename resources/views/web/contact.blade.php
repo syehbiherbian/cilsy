@@ -1,5 +1,6 @@
 @extends('web.app')
-@section('title','Contact | ')
+@section('title','Contact')
+@section('description', 'Ini Halaman Contact Cilsy')
 @section('content')
 <style media="screen">
   .section-content{

@@ -1,5 +1,6 @@
 @extends('web.app')
-@section('title','Kebijakan Layanan | ')
+@section('title','Kebijakan Layanan')
+@section('description','ini Halaman Kebijakan Layanan CIlsy')
 @section('content')
 <style media="screen">
   .section-content{
