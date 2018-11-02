@@ -126,7 +126,7 @@
 		</div>
   </div>
 </div>
-<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
+<script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
 <script type="text/javascript" src="{{asset('template/kontributor/summernote/summernote.js')}}"></script>
 <script>
 	$('#summernote').summernote('code', '{!! $row->description !!}');
