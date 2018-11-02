@@ -26,6 +26,7 @@
     border-radius: 50%;
     cursor: pointer;
     vertical-align: middle;
+    z-index :100;
   }
 </style>
 <main>
