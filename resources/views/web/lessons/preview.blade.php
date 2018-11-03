@@ -26,6 +26,7 @@
     border-radius: 50%;
     cursor: pointer;
     vertical-align: middle;
+    z-index :100;
   }
 </style>
 <main>
@@ -184,7 +185,7 @@
 <div class="modal fade" id="ModalVideo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
-          <button type="button" class="close-icon" data-dismiss="modal" >X</button>
+          <a class="btn close-icon" data-dismiss="modal" ><i class="fa fa-times" aria-hidden="true"></i></a>
         <div class="modal-body p-0">
           <video width="100%" height="350" controls name="preview" controlsList="nodownload" ><source src="{{ asset($preview->video)}}"></video>
         </div>

@@ -147,8 +147,12 @@ function set_active ($route)
     if(is_array($route))
     {
         return in_array(Request::path(), $route) ? 'icon-active' : '';
+        return in_array(Request::is($route.'/*'), $route) ? 'icon-active' : '';
+
     }
     return Request::path() == $route ? 'icon-active' : '';
+    return Request::is($route.'/*') ? 'icon-active' : '';
+
 }
 
 function notif(){

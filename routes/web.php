@@ -357,13 +357,16 @@ Route::get('contributor/comments/detail/{coment_id}','Contributors\ComentsContro
 Route::post('contributor/comments/postcomment','Contributors\ComentsController@postcomment');
 Route::post('contributor/comments/deletecomment/{coment_id}','Contributors\ComentsController@deletecomment');
 
+Route::prefix('contributor/account')->group(function () {
+    Route::get('informasi', 'Contributors\AccountController@informasi');
+	Route::get('informasi/{id}/edit', 'Contributors\AccountController@edit');
+	Route::post('informasi/{id}/edit', 'Contributors\AccountController@update_informasi');
+	Route::get('profile', 'Contributors\AccountController@halaman');
+	Route::get('profile/{id}/edit', 'Contributors\AccountController@edit_halaman');
+	Route::post('profile/{id}/edit', 'Contributors\AccountController@update_halaman');
+});
 //Akun Contributor dan Halaman Contributor
-Route::get('contributor/account/informasi', 'Contributors\AccountController@informasi');
-Route::get('contributor/account/informasi/{id}/edit', 'Contributors\AccountController@edit');
-Route::post('contributor/account/informasi/{id}/edit', 'Contributors\AccountController@update_informasi');
-Route::get('contributor/account/profile', 'Contributors\AccountController@halaman');
-Route::get('contributor/account/profile/{id}/edit', 'Contributors\AccountController@edit_halaman');
-Route::post('contributor/account/profile/{id}/edit', 'Contributors\AccountController@update_halaman');
+
 //rating
 Route::post('system/rate','RateController@store');
 //skema
