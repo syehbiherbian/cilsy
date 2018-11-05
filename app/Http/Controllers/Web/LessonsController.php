@@ -624,7 +624,7 @@ class LessonsController extends Controller
 				                        <div class="panel-heading">
 				                          <strong>' . $userna . '</strong> <span class="text-muted"> ' . $this->time_elapsed_string($child->created_at) . '</span>
 				                        </div>
-				                        <div class="panel-body">
+				                        <div class="panel-body" style="white-space: pre-line;">
                                           ' . $child->body . '
                                         </div><!-- /panel-body -->';
                                         if($child->images != null){

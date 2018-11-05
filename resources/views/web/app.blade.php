@@ -912,7 +912,7 @@ a #items .item {
       }).bind('focus', function () {
         console.log($('.searchcategory').val());  
 
-        $('.ui-autocomplete').css('z-index','9999').css('overflow-y','scroll').css('max-height','300px');
+        $('.ui-autocomplete').css('z-index','9999').css('overflow-y','scroll').css('max-height','300px').stop(true, true).delay(200).fadeIn(200);
         // $('.ui-autocomplete').css('background','#09121a').css('color','#fff');
         // $('.ui-menu .ui-menu-item-wrapper').css('padding','11px 1em 3px 1.4em !important');
         // $(this).autocomplete("search");
