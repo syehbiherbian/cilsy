@@ -37,6 +37,7 @@ class LessonsController extends Controller
         $mem_id = isset(Auth::guard('members')->user()->id) ? Auth::guard('members')->user()->id : 0;
 
         $categories = Category::where('enable', 1)->get();
+        // dd($categories);
         if ($by == 'category') {
             $category = Category::where('enable', 1)->where('title', 'like', '%' . $keyword . '%')->first();
 

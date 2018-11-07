@@ -4,12 +4,14 @@
 @section('breadcumbs')
 
 <div id="navigation">
+		<div class="container">
 		<ul class="breadcrumb">
-			<li><a href="{{ url('contributor/dashboard') }}">Dashboard</a></li>
+						<li><a href="{{ url('contributor/dashboard') }}">Dashboard</a></li>
             <li><a href="{{ url('contributor/lessons') }}">Kelola Tutorial</a></li>
             <li><a href="{{ url('contributor/lessons/'.$row->id.'/view') }}">View Tutorial</a></li>
             <li>Edit tutorial</li>
 		</ul>
+		</div>
 </div>
 @endsection
 @section('content')
