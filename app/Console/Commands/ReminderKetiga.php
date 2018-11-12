@@ -44,9 +44,10 @@ class ReminderKetiga extends Command
      */
     public function handle()
     {
-        $invo = Invoice::with('members')->where('status', 2)->where('created_at', '==', now()->subHours(23)->toDateTimeString())->get();
-        // dd($invo);
-        // Mail::to($invo->members['email'])->send(new EmailReminderPertama());
+        $invo = Invoice::with('members')
+        ->where('invoice.status', 2)
+        ->where(DB::raw('left(DATE_ADD( invoice.created_at, INTERVAL 22 HOUR), 16)'), '=', DB::raw(' left(now(), 16)') )
+        ->get();
             foreach($invo as $inv){
                 if($inv != null){
                     Mail::to($inv->members['email'])->send(new EmailReminderKetiga());
