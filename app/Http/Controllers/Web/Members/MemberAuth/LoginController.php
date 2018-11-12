@@ -117,6 +117,13 @@ class LoginController extends Controller
         return Auth::guard('members');
     }
 
+    protected function attemptLogin(Request $request)
+    {
+        return $this->guard('members')->attempt(
+            $this->credentials($request), $request->filled('remember')
+        );
+    }
+
     /**
      * Log the user out of the application.
      *

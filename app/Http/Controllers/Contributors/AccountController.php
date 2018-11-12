@@ -127,6 +127,7 @@ class AccountController extends Controller
             $tanggal_lahir = Input::get('tanggal_lahir');
             $bio = Input::get('bio');
             $avatar = Input::file('avatar');
+            
 
             $avatarDestinationPath= 'assets/source/avatar';
 
@@ -151,7 +152,13 @@ class AccountController extends Controller
             $halaman->tempat_lahir = $tempat_lahir;
             $halaman->tanggal_lahir = $tanggal_lahir;
             $halaman->deskripsi = $bio;
-            $halaman->avatar = $url_image;
+            if($url_image == null){
+                $halaman->avatar = $halaman->avatar;
+            }
+            else{
+                $halaman->avatar = $url_image;
+            }
+            
             $halaman->created_at = $now;
             $halaman->save();
 
