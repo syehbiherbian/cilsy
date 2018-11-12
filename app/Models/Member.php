@@ -8,6 +8,7 @@ use App\Notifications\MemberResetPasswordNotification;
 
 class Member extends User {
     protected $table = "members";
+    protected $dates = ['tanggal_lahir'];
     /**
      * Send the password reset notification.
      *

@@ -141,12 +141,13 @@ Route::post('member/email', 'Web\Members\MemberAuth\ForgotPasswordController@sen
 Route::get('member/reset', 'Web\Members\MemberAuth\ForgotPasswordController@showLinkRequestForm');
 Route::post('member/reset', 'Web\Members\MemberAuth\ResetPasswordController@reset');
 Route::get('member/reset/{token}', 'Web\Members\MemberAuth\ResetPasswordController@showResetForm');
-Route::get('member/profile', 'Web\Members\ProfileController@index');
-Route::post('member/profile', 'Web\Members\ProfileController@doSubmit');
+Route::get('member/profile/edit', 'Web\Members\ProfileController@index');
+Route::post('member/profile/edit', 'Web\Members\ProfileController@doSubmit');
 Route::get('member/subscriptions', 'Web\Members\SubscriptionsController@index');
 Route::get('member/subscriptions/unsubscribe/{id}', 'Web\Members\SubscriptionsController@doUnsubscribe');
 Route::get('member/point', 'Web\Members\PointController@index');
 Route::get('member/dashboard', 'Web\Members\LessonsMemberController@index');
+Route::get('member/view/profile', 'Web\Members\ProfileController@view');
 
 //reward user 
 //reward
