@@ -147,7 +147,7 @@ Route::get('member/subscriptions', 'Web\Members\SubscriptionsController@index');
 Route::get('member/subscriptions/unsubscribe/{id}', 'Web\Members\SubscriptionsController@doUnsubscribe');
 Route::get('member/point', 'Web\Members\PointController@index');
 Route::get('member/dashboard', 'Web\Members\LessonsMemberController@index');
-Route::get('member/view/profile', 'Web\Members\ProfileController@view');
+Route::get('member/profile/{username}', 'Web\Members\ProfileController@view');
 
 //reward user 
 //reward
@@ -167,6 +167,7 @@ Route::get('member/reward/{id}/detail','Contributors\PointController@detail');
  */
 
 Route::post('member/change-password', 'Web\Members\PasswordController@doSubmit');
+Route::post('member/edit/akun', 'Web\Members\PasswordController@SaveAccount');
 Route::get('member/change-password', 'Web\Members\PasswordController@index');
 Route::get('member/signup', 'Web\Members\MemberAuth\RegisterController@showRegistrationForm');
 Route::post('member/signup', 'Web\Members\MemberAuth\RegisterController@register');
@@ -177,8 +178,8 @@ Route::post('member/email', 'Web\Members\MemberAuth\ForgotPasswordController@sen
 // Route::get('member/reset', 'Web\Members\MemberAuth\ForgotPasswordController@showLinkRequestForm');
 // Route::post('member/reset', 'Web\Members\MemberAuth\ResetPasswordController@reset');
 // Route::get('member/reset/{token}', 'Web\Members\MemberAuth\ResetPasswordController@showResetForm');
-Route::get('member/profile', 'Web\Members\ProfileController@index');
-Route::post('member/profile', 'Web\Members\ProfileController@doSubmit');
+// Route::get('member/profile', 'Web\Members\ProfileController@index');
+// Route::post('member/profile', 'Web\Members\ProfileController@doSubmit');
 Route::get('member/riwayat', 'Web\Members\ProfileController@riwayat');
 Route::get('member/invoice/{inv}', 'Web\Members\ProfileController@download');
 Route::get('member/tambah/{invoice}', 'Web\Members\ProfileController@tambah');

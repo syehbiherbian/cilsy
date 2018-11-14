@@ -14,8 +14,8 @@
       <div class="panel panel-default">
         <div class="panel-body">
           <ul class="nav">
-            <li class="{{ request()->is('member/profile') ? 'active' : ''}}"><a href="{{ url('member/profile') }}">Informasi Personal</a></li>
-            <li class="{{ request()->is('member/change-password') ? 'active' : ''}}"><a href="{{ url('member/change-password') }}">Ubah Password</a></li>
+            <li class="{{ request()->is('member/profile/edit') ? 'active' : ''}}"><a href="{{ url('member/profile/edit') }}">Profil</a></li>
+            <li class="{{ request()->is('member/change-password') ? 'active' : ''}}"><a href="{{ url('member/change-password') }}">Akun</a></li>
             <li class="{{ request()->is('member/riwayat') ? 'active' : ''}}"><a href="{{ url('member/riwayat') }}">Riwayat Pembelian</a></li>
           </ul>
         </div>

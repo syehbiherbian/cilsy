@@ -45,7 +45,7 @@ class ProfileController extends Controller
       }
     }
 
-    public function view()
+    public function view($username)
     {
       // Authentication
       $mem_id = Auth::guard('members')->user()->id;
