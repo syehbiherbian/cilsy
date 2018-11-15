@@ -307,6 +307,7 @@ class LessonsController extends Controller
     ->leftJoin('lessons_detail','lessons.id','lessons_detail.lesson_id')
     ->select('lessons.*','categories.title as category_title')
     ->first();
+    // dd($row->goal_tutorial);
     if($row->status==2){
         return redirect('contributor/lessons/'.$id.'/view')->with('no-delete','Tutorial sedang / dalam verifikasi!');
     }

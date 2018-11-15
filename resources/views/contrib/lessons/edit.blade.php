@@ -95,7 +95,7 @@
 				<div class="form-group">
 						<label class="col-sm-2 control-label">Goal Tutorial</label>
 						<div class="col-sm-10">
-							<textarea id="summergoal" name="goal" value="{{ $row->goal }}">{{ $row->goal }}</textarea>
+							<textarea id="goal" name="goal" value="{{ $row->goal }}">{{ $row->goal }}</textarea>
 						</div>
 				</div>
 	      <div class="form-group">
@@ -125,7 +125,7 @@
 <script>
 	$('#summernote').summernote('code', '{!! $row->description !!}');
 	$('#textedit').summernote('code', '{!! $row->requirement !!}');
-	$('#summergoal').summernote('code', '{!! $row->goal !!}');
+	$('#goal').summernote('code', '{!! $row->goal_tutorial !!}');
 	$('#summernote').summernote({
 		height: 500,                 // set editor height
 		minHeight: null,             // set minimum height of editor
