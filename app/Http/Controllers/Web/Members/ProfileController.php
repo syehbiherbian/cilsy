@@ -111,8 +111,12 @@ class ProfileController extends Controller
       DB::raw('DATE_ADD(invoice.created_at, INTERVAL 23 HOUR) as batas') , 'invoice.status as status', DB::raw('SUM(distinct invoice.price) as total'),  DB::raw('SUM( B.harga_lesson)-Sum(distinct invoice.price) as disc')])
       ->groupby('invoice.code','invoice.type', 'invoice.created_at', 'invoice.status' )
       ->get();
-
-      
+       if(empty($get_tot)){
+        $get_tot  = 0;
+       }
+       if(empty($get_hist)){
+        $get_hist  = 0;
+       }
       return view('web.members.riwayat', [
         'get_hist' => $get_hist,
         'get_tot' => $get_tot,
