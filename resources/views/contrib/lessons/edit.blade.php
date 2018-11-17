@@ -60,7 +60,13 @@
 	        <div class="col-sm-10">
 	          <input type="text" class="form-control" placeholder="Contoh:Tutorial Administrasi Server dengan ubuntu 12.04" name="title" value="{{$row->title}}">
 	        </div>
-	      </div>
+				</div>
+				<div class="form-group">
+						<label class="col-sm-2 control-label">Deskripsi Singkat</label>
+						<div class="col-sm-10">
+							<textarea type="text"  required class="form-control" placeholder="deskripsi singkat mengenai tutorial" name="desk_singkat" value="{{$row->deskripsi_singkat}}"></textarea>
+						</div>
+				</div>
 	      <div class="form-group">
 	        <label class="col-sm-2 control-label">Pilih Kategori</label>
 	        <div class="col-sm-10">

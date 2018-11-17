@@ -128,6 +128,7 @@ class LessonsController extends Controller
         $title        = Input::get('title');
         $price        = Input::get('price');
         $goal         = Input::get('goal');
+        $singkat      = Input::get('desk_singkat');
         $audiens      = Input::get('audien');
         $category_id  = Input::get('category_id');
         $lessons_image = Input::file('image');
@@ -158,6 +159,7 @@ class LessonsController extends Controller
         $store->title           = $title;
         $store->price           = $price;
         $store->goal_tutorial   = $goal;
+        $store->deskripsi_singkat   = $singkat;
         $store->requirement     = $requirement;
         $store->audiens         = $audiens;
         $store->slug            = str_replace("/","-",preg_replace('/\s+/', '-', $str));
@@ -340,6 +342,7 @@ class LessonsController extends Controller
           $category_id  = Input::get('category_id');
           $price        = Input::get('price');
           $goal         = Input::get('goal');
+          $singkat      = Input::get('desk_singkat');
           $audiens      = Input::get('audien');
           $lessons_image = Input::file('image');
           $image_text =  Input::get('image_text');
@@ -368,6 +371,7 @@ class LessonsController extends Controller
           $store->title           = $title;
           $store->price           = $price;
           $store->goal_tutorial   = $goal;
+          $store->deskripsi_singkat   = $singkat;
           $store->audiens         = $audiens;
           $store->slug            = str_replace("/","-",preg_replace('/\s+/', '-', $str));
           $store->category_id     = $category_id;
