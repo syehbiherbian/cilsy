@@ -604,9 +604,17 @@ a #items .item {
                             <ul>
                                 <li>
                                   
-                                    <a href="{{ url('member/view/profile')}}">
-                                      <img src="<?=Helper::member('avatar');?>" class="poto" alt="" style="">
+                                    <a href="{{ url('member/profile/'.Helper::member('username'))}}">
+                                      @if(Helper::member('avatar') != null)
+                                      <img src="<?=Helper::member('avatar');?>" class="poto img-circle" alt="" style="">
+                                      @else
+                                      <img src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png" class="poto img-circle" alt="" style="">
+                                      @endif
+                                      @if(Helper::member('full_name') != null)
                                       <?=Helper::member('full_name');?>
+                                      @else
+                                      <?=Helper::member('username');?>
+                                      @endif
                                     </a>
                                 </li>
                                 <hr>
@@ -645,7 +653,7 @@ a #items .item {
           <div class="header-menu">
             <ul class="navbar-nav navbar-right">
                 <li class="class">
-                  <a href="{{ url('/cart') }}" ><img src="{{asset('template/web/img/CART.png')}}" alt="cart">
+                  <a href="{{ url('/cart') }}" ><img class="icon" src="{{asset('template/web/img/CART.png')}}"  alt="cart">
                     <span class="badge-cart hide"></span>
                   </a>                   
                 </li>

@@ -46,13 +46,47 @@ h1,h2,h3,h4,h5{
     padding-top: 10px;
 }
 .header .price{
-    color: #ffff00;
+    color: white;
 }
 .header .video-preview{
-    padding-top: 100px;
-    text-align: right;
+    padding-top: 15px;
+    text-align: center;
+}
+.video-preview img {
+    width: 100%;
+    height: 300px;
 }
 
+.video-preview .btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    /* background-image: url('template/web/img/play-button.svg'); */
+    color: white;
+    font-size: 73px;
+    padding: 12px 24px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.btn-tag {
+    display: inline-block;
+    position: relative;
+    margin: 5px 10px 5px 0px;
+    background-color: white;
+    color:black;
+    padding:10px 25px;
+    border-radius:50px;
+    font-weight: bold;
+  }
+  .btn-tag:hover {
+    text-decoration: none;
+  }
+  
 
 /* Css For Content Description */
 .row.box{

@@ -26,6 +26,8 @@ class PasswordController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+
     public function index()
     {
       // Authentication
@@ -34,11 +36,31 @@ class PasswordController extends Controller
         return redirect('/member/signin');
         exit;
       }
+      $members = Member::where('id',$mem_id)->first();
+      // dd($members);
       // $packages = Package::all();
       return view('web.members.change-password', [
         // 'packages' => $packages
+        'member' => $members,
       ]);
     }
+    public function SaveAccount(Request $request)
+    {
+      $mem_id = Auth::guard('members')->user()->id;
+
+      $validatedData = $request->validate([
+          'email' => 'email|unique:members',
+      ]);
+
+      //Change Password
+      $user = Auth::guard('members')->user();
+      $user->email = $request->get('email');
+      $user->username = $request->get('username');
+      $user->save();
+
+      return redirect()->back()->with("success","Akun Berhasil di Ubah");
+    }
+
     public function doSubmit(Request $request)
     {
       $mem_id = Auth::guard('members')->user()->id;

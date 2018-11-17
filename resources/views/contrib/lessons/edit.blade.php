@@ -60,7 +60,13 @@
 	        <div class="col-sm-10">
 	          <input type="text" class="form-control" placeholder="Contoh:Tutorial Administrasi Server dengan ubuntu 12.04" name="title" value="{{$row->title}}">
 	        </div>
-	      </div>
+				</div>
+				<div class="form-group">
+						<label class="col-sm-2 control-label">Deskripsi Singkat</label>
+						<div class="col-sm-10">
+							<textarea type="text"  required class="form-control" placeholder="deskripsi singkat mengenai tutorial" name="desk_singkat" value="{{$row->deskripsi_singkat}}"></textarea>
+						</div>
+				</div>
 	      <div class="form-group">
 	        <label class="col-sm-2 control-label">Pilih Kategori</label>
 	        <div class="col-sm-10">
@@ -95,7 +101,7 @@
 				<div class="form-group">
 						<label class="col-sm-2 control-label">Goal Tutorial</label>
 						<div class="col-sm-10">
-							<textarea id="summergoal" name="goal" value="{{ $row->goal }}">{{ $row->goal }}</textarea>
+							<textarea id="goal" name="goal" value="{{ $row->goal }}">{{ $row->goal }}</textarea>
 						</div>
 				</div>
 	      <div class="form-group">
@@ -125,7 +131,7 @@
 <script>
 	$('#summernote').summernote('code', '{!! $row->description !!}');
 	$('#textedit').summernote('code', '{!! $row->requirement !!}');
-	$('#summergoal').summernote('code', '{!! $row->goal !!}');
+	$('#goal').summernote('code', '{!! $row->goal_tutorial !!}');
 	$('#summernote').summernote({
 		height: 500,                 // set editor height
 		minHeight: null,             // set minimum height of editor

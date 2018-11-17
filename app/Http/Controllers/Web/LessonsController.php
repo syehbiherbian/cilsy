@@ -519,7 +519,7 @@ class LessonsController extends Controller
         $comments = DB::table('comments')
         ->leftJoin('members', 'members.id', '=', 'comments.member_id')
         ->leftJoin('contributors','contributors.id','=','comments.contributor_id')
-        ->select('comments.*', 'members.username as username', 'members.avatar as avatar', 'contributors.username as contriname', 'contributors.avatar as avatarc')
+        ->select('comments.*', 'members.username as username', 'members.avatar as avatar', 'members.public', 'members.full_name', 'contributors.username as contriname', 'contributors.avatar as avatarc')
         ->where('comments.parent_id', '=', 0)
         ->where('comments.lesson_id', '=', $lesson_id)
         ->orderBy('comments.id', 'DESC')
@@ -555,9 +555,13 @@ class LessonsController extends Controller
 				                </div>
 				                <div class="col-sm-11">
 				                  <div class="panel panel-default">
-				                    <div class="panel-heading">
-				                      <strong>' . $usernam . '</strong> <span class="text-muted"> ' . $this->time_elapsed_string($comment->created_at) . '</span>
-				                    </div>
+				                    <div class="panel-heading">';
+                                    if($comment->public == 1){
+                                        $html .='<a href="'.url('member/profile/'.$usernam).'"><strong style="font-color:#2BA8E2;">' . $usernam . '</strong></a> <span class="text-muted"> ' . $this->time_elapsed_string($comment->created_at) . '</span>';
+                                        }else{
+                                        $html .='<strong>' . $usernam . '</strong> <span class="text-muted"> ' . $this->time_elapsed_string($comment->created_at) . '</span>';
+                                        }
+				                        $html .='</div>
 				                    <div class="panel-body" style="white-space:pre-line;">
 				                      ' . $comment->body . '
                                     </div>';
@@ -595,7 +599,7 @@ class LessonsController extends Controller
             $childcomments = DB::table('comments')
                 ->leftJoin('members', 'members.id', '=', 'comments.member_id')
                 ->leftJoin('contributors','contributors.id','=','comments.contributor_id')
-                ->select('comments.*', 'members.username as username', 'members.avatar as avatar', 'contributors.username as contriname', 'contributors.avatar as avatarc')
+                ->select('comments.*', 'members.username as username', 'members.public', 'members.full_name', 'members.avatar as avatar', 'contributors.username as contriname', 'contributors.avatar as avatarc')
                 ->where('comments.parent_id', '=', $comment->id)
                 ->where('comments.lesson_id', '=', $lesson_id)
                 ->orderBy('comments.id', 'asc')
@@ -622,9 +626,13 @@ class LessonsController extends Controller
 				                    </div><!-- /col-sm-1 -->
 				                    <div class="col-sm-11">
 				                      <div class="panel panel-default">
-				                        <div class="panel-heading">
-				                          <strong>' . $userna . '</strong> <span class="text-muted"> ' . $this->time_elapsed_string($child->created_at) . '</span>
-				                        </div>
+                                        <div class="panel-heading">';
+                                        if($child->public == 1){
+                                        $html .='<a href="member/profile/'.$userna.'"><strong>' . $userna . '</strong></a> <span class="text-muted"> ' . $this->time_elapsed_string($child->created_at) . '</span>';
+                                        }else{
+                                        $html .='<strong>' . $userna . '</strong> <span class="text-muted"> ' . $this->time_elapsed_string($child->created_at) . '</span>';
+                                        }
+				                        $html .='</div>
 				                        <div class="panel-body" style="white-space: pre-line;">
                                           ' . $child->body . '
                                         </div><!-- /panel-body -->';
@@ -728,7 +736,11 @@ class LessonsController extends Controller
                 ->first();
             echo '<div class="col-md-12" style="margin-bottom:30px;" id="row' . $comment->id . '">';
             echo '<img class="user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png"height="40px" width="40px" style="object-fit:scale-down;border-radius: 100%;margin-bottom:10px;">';
+            if($comment->public == 1){
+            echo '<a href="member/profile/'.$comment->username.'">	<strong>' . $comment->username . '</strong></a> pada <strong>' . date('d/m/Y', strtotime($comment->created_at)) . '</strong>';
+            }else{
             echo '	<strong>' . $comment->username . '</strong> pada <strong>' . date('d/m/Y', strtotime($comment->created_at)) . '</strong>';
+            }
             echo '	<strong style="color:#ff5e10;">';
             if ($comment->member_id !== null) {
                 echo 'User';
