@@ -22,3 +22,4 @@ class Lesson extends Model
 		return $this->belongTo('App\Models\Category');
 	}
 }
+
