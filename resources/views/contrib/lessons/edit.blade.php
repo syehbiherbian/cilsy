@@ -101,7 +101,7 @@
 				<div class="form-group">
 						<label class="col-sm-2 control-label">Goal Tutorial</label>
 						<div class="col-sm-10">
-							<textarea id="goal" name="goal" value="{{ $row->goal }}">{{ $row->goal }}</textarea>
+							<textarea id="summergoal" name="goal" value="{{ $row->goal_tutorial }}"></textarea>
 						</div>
 				</div>
 	      <div class="form-group">
@@ -126,7 +126,7 @@
 		</div>
   </div>
 </div>
-<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
+<script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
 <script type="text/javascript" src="{{asset('template/kontributor/summernote/summernote.js')}}"></script>
 <script>
 	$('#summernote').summernote('code', '{!! $row->description !!}');

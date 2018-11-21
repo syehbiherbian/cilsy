@@ -60,6 +60,8 @@ class ProfileController extends Controller
                      ->distinct()
                      ->get(['viewers.member_id', 'lessons.*']);   
       $members = Member::where('id',$mem_id)->first();
+
+         
       if ($members) {
         return view('web.members.view_profile', [
           'members' => $members,
@@ -177,9 +179,13 @@ class ProfileController extends Controller
       ->select(['invoice.code as invoice' , 'invoice.created_at as hari',  'invoice.type as type', 
       DB::raw('DATE_ADD(invoice.created_at, INTERVAL 23 HOUR) as batas') , 'invoice.status as status', DB::raw('SUM(distinct invoice.price) as total'),  DB::raw('SUM( B.harga_lesson)-Sum(distinct invoice.price) as disc')])
       ->groupby('invoice.code','invoice.type', 'invoice.created_at', 'invoice.status' )
-      ->paginate(5);
-
-      
+      ->get();
+       if(empty($get_tot)){
+        $get_tot  = 0;
+       }
+       if(empty($get_hist)){
+        $get_hist  = 0;
+       }
       return view('web.members.riwayat', [
         'get_hist' => $get_hist,
         'get_tot' => $get_tot,
@@ -208,7 +214,7 @@ class ProfileController extends Controller
       ->where('invoice.members_id', '=', $mem_id)
       ->where('invoice.code',$inv)
       ->orderBy('invoice.created_at', 'desc')
-      ->distinct() 
+      ->distinct()
       ->select(['invoice.code as invoice' ,'D.username as user', DB::raw('SUM(distinct B.harga_lesson) as subtotal'), 'D.email as email', 'invoice.created_at as hari',  'invoice.type as type', 
       DB::raw('DATE_ADD(invoice.created_at, INTERVAL 23 HOUR) as batas') , DB::raw('SUM(distinct invoice.price) as total'), DB::raw('SUM( B.harga_lesson)-Sum(distinct invoice.price) as disc')])
       ->groupby('invoice.code', 'D.username', 'D.email', 'invoice.created_at', 'invoice.type', 'invoice.created_at' )

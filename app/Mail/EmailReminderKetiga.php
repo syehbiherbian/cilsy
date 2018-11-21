@@ -30,6 +30,7 @@ class EmailReminderKetiga extends Mailable
      */
     public function build()
     {
-        return $this->view('mail.reminder_ketiga');
+        return $this->subject('Ini kesempatan terakhir anda...')
+                    ->view('mail.reminder_ketiga');
     }
 }

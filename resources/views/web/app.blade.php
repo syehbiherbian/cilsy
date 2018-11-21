@@ -288,7 +288,7 @@
   width: 300px;
   opacity: 0;
   padding: 20px 0px;
-  height: 100%;
+  bottom:  0px;
   background-color: #f6f6f6;
   color: #343838;
   transition: all 350ms cubic-bezier(0.6, 0.05, 0.28, 0.91);
@@ -608,7 +608,7 @@ a #items .item {
                                       @if(Helper::member('avatar') != null)
                                       <img src="<?=Helper::member('avatar');?>" class="poto img-circle" alt="" style="">
                                       @else
-                                      <img src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png" class="poto img-circle" alt="" style="">
+                                      <img src="{{asset(profil())}}" class="poto img-circle" alt="" style="">
                                       @endif
                                       @if(Helper::member('full_name') != null)
                                       <?=Helper::member('full_name');?>

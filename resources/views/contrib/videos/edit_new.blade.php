@@ -263,7 +263,7 @@
 		}
 
 		$form.on('submit', function(e){
-			$('#btn-submit').html('menyimpan.. <i title="Video akan otomatis terpublish" data-toggle="tooltip" class="fa fa-exclamation-circle"></i>').attr('disabled', true);
+			$('#btn-submit').html('menyimpan.. <i title="Jangan tutup halaman ini, data akan tersimpan otomatis setelah seluruh proses upload selesai." data-toggle="tooltip" class="fa fa-exclamation-circle"></i>').attr('disabled', true);
 			e.preventDefault()
 			isSubmitted = true
 
@@ -314,7 +314,8 @@
 				ajaxCall[n].abort()
 				$('#videobox'+n).remove()
 				delete videos[nV]
-				if (typeof videos[0] == 'undefined') {
+				videos = clearQueue(videos)
+				if (typeof videos[0] == 'undefined' && videos_exists.length == 0) {
 					$('#form-starter').show();
 					$('#btn-submit-group').hide();
 				}
@@ -343,10 +344,14 @@
 			/* validasi awal */
 			var maxSize = 1024 * 1024 * {{ env('max_upload_size', 100) }}; // 100MB 
 			if (extension != 'mp4' && extension2 != 'mp4') {
+				$('#form-starter').show();
+				$('#btn-submit-group').hide();
 				swal("Ups", "Maaf, format video yang diperbolehkan adalah .mp4", "error");
 				return false
 			}
 			if (v.size > maxSize) {
+				$('#form-starter').show();
+				$('#btn-submit-group').hide();
 				swal("Ups", "Maksimal ukuran video yang dapat diupload adalah 100MB", "error");
 				return false
 			}
@@ -358,6 +363,7 @@
 				'<input id="image' + nVideo + '" type="hidden" name="videos[' + nVideo + '][image]">'+
 				'<input id="video' + nVideo + '" type="hidden" name="videos[' + nVideo + '][video]">'+
 				'<input id="duration' + nVideo + '" type="hidden" name="videos[' + nVideo + '][duration]">'+
+				'<input id="delete' + nVideo + '" type="hidden" name="videos[' + nVideo + '][delete]" value="no">'+
 				// '<input id="status' + nVideo + '" type="hidden" name="videos[' + nVideo + '][status]">'+
 				'<div class="col-md-12" style="padding:0">'+
 					'<div id="progress' + nVideo + '" class="progress" style="height:30px;">'+
@@ -418,7 +424,7 @@
 		ajaxData.append('video', file);
 		ajaxData.append('lesson_id', '{{ $lesson->id }}');
 		ajaxData.append('position', n + 1);
-		videos[n].status = 'uploading';
+		// videos[n].status = 'uploading';
 
 		ajaxCall[n] = $.ajax({
 			url: "{{ url('contributor/lessons/'.$lesson->id.'/upload/videos') }}",
@@ -441,7 +447,7 @@
 						if (percent === 100) {
 							$('#progress'+n+' .progress-bar').removeClass('active');
 							$('#progress'+n+' .progress-bar').removeClass('progress-bar-striped');
-							videos[n].status = 'done';
+							// videos[n].status = 'done';
 						}
 					}
 				}, false);
@@ -508,7 +514,7 @@
 						if (percent === 100) {
 							$('#progress'+n+' .progress-bar').removeClass('active');
 							$('#progress'+n+' .progress-bar').removeClass('progress-bar-striped');
-							videos_change[n].status = 'done';
+							// videos_change[n].status = 'done';
 						}
 					}
 				}, false);

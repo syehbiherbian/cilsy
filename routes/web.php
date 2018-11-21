@@ -345,11 +345,16 @@ Route::get('contributor/reward/{id}/detail','Contributors\PointController@detail
 // Route::get('contributor/info-point','Contributors\PointController@point');
 //notif
 Route::get('contributor/notif','Contributors\NotifController@index');
+Route::get('contributor/notif/read','Contributors\NotifController@notifread');
+Route::get('contributor/notif/all','Contributors\NotifController@all');
+
 Route::get('ajax/notif/view','Contributors\NotifController@view');
 Route::get('ajax/notif/read','Contributors\NotifController@read');
 Route::post('contributor/notif/delete/{id}','Contributors\NotifController@delete');
 // Coments
 Route::get('contributor/comments','Contributors\ComentsController@index');
+Route::get('contributor/comments/all','Contributors\ComentsController@all');
+Route::get('contributor/comments/read','Contributors\ComentsController@read');
 Route::get('contributor/comments/detail/{coment_id}','Contributors\ComentsController@detail');
 Route::post('contributor/comments/postcomment','Contributors\ComentsController@postcomment');
 Route::post('contributor/comments/deletecomment/{coment_id}','Contributors\ComentsController@deletecomment');

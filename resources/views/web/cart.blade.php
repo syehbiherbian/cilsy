@@ -117,7 +117,8 @@
                     </div>
                     <div class="col-md-6">
                     @if (session()->has('coupon'))
-                    Diskon <span style="font-size:11px;">{{ session()->get('coupon')['name'] }}</span>
+                    Diskon <span style="font-size:12px;color:blue;">{{ session()->get('coupon')['name'] }}</span>
+                    <br>
                     <form action="{{ url('coupon/delete') }}" method="POST" style="display:inline">
                         {{ csrf_field() }}
                         {{ method_field('delete') }}
@@ -133,30 +134,39 @@
                     @endif
                     </div>
                     @if(session()->has('coupon'))
-                    <div class="col-md-6 bawah">
+                    <div class="col-md-6 ">
                     </div>
-                    <div class="col-md-6 bawah">
+                    <div class="col-md-6 ">
                     </div>
-                    <div class="col-md-6 bawah">
+                    <div class="col-md-6 ">
                     </div>
-                    <div class="col-md-6 bawah">
+                    <div class="col-md-7 ">
+                    </div>
+                    <div class="col-md-7 ">
+                    </div>
+                    <div class="col-md-7 ">
+                    </div>  
+                    <div class="col-md-7">
                     Total Pembayaran
                     </div>
                     @else
-                    
                     <div class="col-md-6 bawah">
                     </div>
                     <div class="col-md-6">
                         Total Pembayaran
                     </div>
                     @endif
-                    <div class="col-md-6" style="text-align:right">
+                    
                         @if(session()->has('coupon'))
+                        <div class="col-md-5" style="text-align:right">
                         <span id="total-price">Rp. {{ number_format(getNumbers()->get('newSubtotal'), 0, ",", ".") }}</span>
+                        </div>
                         @else
+                        <div class="col-md-6" style="text-align:right">
                         <span id="total-harga">Rp. {{ number_format($total, 0, ",", ".") }}</span>
+                        </div>
                         @endif
-                    </div>
+                   
                     <div class="col-md-12">
                         @if (session()->has('success_message'))
                             <div class="spacer"></div>

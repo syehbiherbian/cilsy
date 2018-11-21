@@ -46,7 +46,7 @@ class VideosController extends Controller
         // read more on validation at http://laravel.com/docs/validation
         $rules = array(
             'judul' => 'required',
-            'video.*'  => 'mimes:mp4,mov,ogg,webm |required|max:100000',
+            'video.*'  => 'mimes:mp4,mov,ogg,webm |required|max:500000',
             'image.*' => 'mimes:jpeg,jpg,png,gif|required|max:30000'
         );
         $validator = Validator::make(Input::all(), $rules);

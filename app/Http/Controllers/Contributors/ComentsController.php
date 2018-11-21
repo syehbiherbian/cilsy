@@ -16,6 +16,7 @@ use App\Models\Member;
 use App\Models\Comment;
 use App\Models\Lesson;
 use App\Notifications\ContribReplyNotification;
+use App\Notifications\ContriReplyNotification;
 use Auth;
 
 class ComentsController extends Controller
@@ -36,9 +37,11 @@ class ComentsController extends Controller
             // ->where('member_id','!=',null)
             ->where('comments.contributor_id',$uid)
             ->where('desc', '<>', 1)
+            ->where('comments.status','0' )
             ->orderBy('comments.created_at','DESC')
             ->select('comments.*')
-            ->get();
+            ->paginate(10);
+
         $getabaikan = DB::table('comments')
             ->leftJoin('lessons','lessons.id','=','comments.lesson_id')
             // ->where('comments.parent_id',0)
@@ -54,7 +57,67 @@ class ComentsController extends Controller
             'id'=>$uid,
         ]);
     }
+    public function all(){
+        if (empty(Auth::guard('contributors')->user()->id)) {
+          return redirect('contributor/login');
+        }
+        $uid = Auth::guard('contributors')->user()->id;
+        $getcomment = DB::table('comments')
+            ->leftJoin('lessons','lessons.id','=','comments.lesson_id')
+            // ->where('comments.status',0)
+            // ->where('member_id','!=',null)
+            ->where('comments.contributor_id',$uid)
+            ->where('desc', '<>', 1)
+            ->orderBy('comments.created_at','DESC')
+            ->select('comments.*')
+            ->paginate(10);
 
+        $getabaikan = DB::table('comments')
+            ->leftJoin('lessons','lessons.id','=','comments.lesson_id')
+            // ->where('comments.parent_id',0)
+            // ->where('comments.status',0)
+            // ->where('member_id','!=',null)
+            ->where('comments.contributor_id',$uid)
+            ->orderBy('comments.created_at','DESC')
+            ->select('comments.*')
+            ->get();
+        return view('contrib.coments.all', [
+            'data' => $getcomment,
+            'abaikan'=>$getabaikan,
+            'id'=>$uid,
+        ]);
+    }
+    public function read(){
+        if (empty(Auth::guard('contributors')->user()->id)) {
+          return redirect('contributor/login');
+        }
+        $uid = Auth::guard('contributors')->user()->id;
+        $getcomment = DB::table('comments')
+            ->leftJoin('lessons','lessons.id','=','comments.lesson_id')
+            // ->where('comments.status',0)
+            // ->where('member_id','!=',null)
+            ->where('comments.contributor_id',$uid)
+            ->where('desc', '<>', 1)
+            ->where('comments.status','1' )
+            ->orderBy('comments.created_at','DESC')
+            ->select('comments.*')
+            ->paginate(10);
+
+        $getabaikan = DB::table('comments')
+            ->leftJoin('lessons','lessons.id','=','comments.lesson_id')
+            // ->where('comments.parent_id',0)
+            // ->where('comments.status',0)
+            // ->where('member_id','!=',null)
+            ->where('comments.contributor_id',$uid)
+            ->orderBy('comments.created_at','DESC')
+            ->select('comments.*')
+            ->get();
+        return view('contrib.coments.read', [
+            'data' => $getcomment,
+            'abaikan'=>$getabaikan,
+            'id'=>$uid,
+        ]);
+    }
     public function detail($id){
         
         $uid = Auth::guard('contributors')->user()->id ?? null;
@@ -152,13 +215,16 @@ class ComentsController extends Controller
         ->Where('B.parent_id', $comment_id)
         ->where('comments.member_id', '<>', 'B.member_id')
         ->where('comments.member_id', '<>', 'B.contributor_id')
+        ->where('B.desc', '<>', '1')
         ->select('comments.member_id as tanya', 'B.member_id as jawab', 'contributors.username as username')->distinct()
         ->get();
+
        if($comment_id != null){
            foreach ($getemailchild as $mails) {
                    if($mails->tanya != $mails->jawab){
-                //        if($mails->jawab != $uid){
+                      if($mails->jawab != $uid){
                     if($mails->jawab != null){
+ 
                $getnotif = DB::table('user_notif')->insert([
                    'id_user' => $mails->jawab,
                    'category' => 'Komentar',
@@ -168,9 +234,15 @@ class ComentsController extends Controller
                    'slug' => $lessons->slug,
                    'created_at' => $now,
                ]);
+
+               $member = Member::Find($mails->jawab);
+               $lessonn = Lesson::find($lessons->id);
+               $contrib = Contributor::find($lessons->contributor_id);
+               $member->notify(new ContriReplyNotification($member, $lessonn, $contrib));
+       
                 }
                 }
-            // }
+            }
             }
         }
         $member = Member::Find($notify->member_id);

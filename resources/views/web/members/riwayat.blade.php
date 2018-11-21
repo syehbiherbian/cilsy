@@ -107,7 +107,7 @@
 <div class="col-md-12">
     <h4>Pembelian Dalam Proses</h4>
 </div><br><br>
-
+<?php if(count($get_hist) !=0){ ?>
 @foreach($get_hist as $get_hist => $cari)
     @if(!empty($cari->type) )
 <div class="panel panel-default">
@@ -172,11 +172,17 @@
   </div>
    @endif
 @endforeach
+<?php }else{?>
+<div class="alert alert-danger" role="alert">
+              Belum Pernah melakukan pemesanan
+ </div>
+<?php } ?>
 
 
   <div class="col-md-12">
         <h4>Pembelian Sebelumnya</h4>
     </div><br><br>
+    <?php if(count($get_tot) != 0) {?>
     @foreach($get_tot as $get_tot => $cari)
     @if(!empty($cari->type) )
     <div class="panel panel-default">
@@ -205,7 +211,7 @@
               <p class="pull-right">Potongan Diskon : {{$cari->disc}}</p><br><br>
               <?php } ?>
               <p class="pull-right">Total Bayar: {{$cari->total}}</p>
- 
+
         </div>
        
         <table class="table borderless">
@@ -273,32 +279,9 @@
   </div>
 @endif
 @endforeach
-
- <script>
-function riway(comment_id){
-        var  invoice = '{{ $cari->invoice }}';
-        var datapost = {
-            '_token'    : '{{ csrf_token() }}',
-            'invoice' : invoice
-        }
-
-        $.ajax({
-            type    :'POST',
-            url     :'{{ url("member/tambah/") }}',
-            data    :datapost,
-            success:function(data){
-                if (data == 1) {
-                    $("#row"+comment_id).load(window.location.href + " #row"+comment_id);
-                }
-                else if(data==0){
-                        window.location.href = '{{url("member/signin")}}';
-                }else {
-                    alert('Koneksi Bermasalah, Silahkan Ulangi');
-                    location.reload();
-                }
-            }
-        })
-    }
-
-</script>
+<?php }else{?>
+<div class="alert alert-danger" role="alert">
+              Belum Pernah melakukan pemesanan
+ </div>
+<?php } ?>
 @endsection

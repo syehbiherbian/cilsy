@@ -125,8 +125,6 @@ class VtwebController extends Controller {
                     // Create New Services
                     $this->create_tutorial_member($order_id);
                     $this->update_flag($order_id);
-                    // echo "INPUT: " . $input."<br/>";
-                    // echo "SIGNATURE: " . $signature;
                     return response()->json([
                         'status' => true
                     ], 200);
@@ -142,8 +140,6 @@ class VtwebController extends Controller {
             // Create New Services
             $this->create_tutorial_member($order_id);
             $this->update_flag($order_id);
-            // echo "INPUT: " . $input."<br/>";
-            // echo "SIGNATURE: " . $signature;
             return response()->json([
                 'status' => true
             ], 200);
@@ -157,8 +153,6 @@ class VtwebController extends Controller {
             return response()->json([
                 'status' => true
             ], 200);
-            //send mail invoice pending
-            $this->send_mail($order_id);
         } else if ($transaction == 'deny') {
             // TODO set payment status in merchant's database to 'Denied'
             Invoice::where('code', $order_id)->update([
@@ -216,5 +210,4 @@ class VtwebController extends Controller {
             ]
             );
     }
-
 }

@@ -20,6 +20,7 @@ use App\Models\Invoice;
 use App\Models\InvoiceDetail;
 use App\Notifications\UserCommentNotification;
 use App\Notifications\UserReplyNotification;
+use App\Notifications\NimbrungReplyNotification;
 use Auth;
 use DateTime;
 use DB;
@@ -122,7 +123,7 @@ class LessonsController extends Controller
         }
         // dd($cart);
         if (count($lessons) > 0) {
-            $main_videos = Video::where('enable', 1)->where('lessons_id', $lessons->id)->orderBy('position', 'asc')->get();
+            $main_videos = Video::where('lessons_id', $lessons->id)->orderBy('position', 'asc')->get();
             $preview = Video::where('enable', 1)->where('lessons_id', $lessons->id)->orderBy('position', 'asc')->first();
             $last_videos = Viewer::leftJoin('videos', 'videos.id', '=', 'viewers.video_id')
             ->select('videos.*', 'viewers.video_id')
@@ -434,12 +435,18 @@ class LessonsController extends Controller
                     $getnotif = DB::table('user_notif')->insert([
                         'id_user' => $mails->tanya,
                         'category' => 'Komentar',
-                        'title' => 'Anda mendapat balasan dari ' . $mails->username,
+                        'title' => 'Pertanyaan anda mendapat balasan dari ' . $mails->username,
                         'notif' => 'Anda mendapatkan balasan dari ' . $mails->username . ' pada ' . $lessons->title,
                         'status' => 0,
                         'slug' => $lessons->slug,
                         'created_at' => $now,
                     ]);
+
+                    $member = Member::Find($mails->tanya);
+                    $lesson = Lesson::Find($lessons->id);
+                    $contrib = Contributor::find($lessons->contributor_id);
+                    $member->notify(new UserReplyNotification($member, $lesson, $contrib));
+                   
                         }
                     }
 
@@ -454,19 +461,18 @@ class LessonsController extends Controller
                         'slug' => $lessons->slug,
                         'created_at' => $now,
                     ]);
+
+                    $member = Member::Find($mails->jawab);
+                    $lesson = Lesson::Find($lessons->id);
+                    $contrib = Contributor::find($lessons->contributor_id);
+                    $member->notify(new NimbrungReplyNotification($member, $lesson, $contrib));
+                   
+                 
                         }
                     }
                 //  Check type
-                // if (is_array($mails)){
-                //     //  Scan through inner loop
-                //     foreach ($mails as $value) {
-                //         $member = Member::Find($value);
-                //         $lesson = Lesson::Find($lesson_id);
-                //         $contrib = Contributor::find($lessons->contributor_id);
-                //         $member->notify(new UserReplyNotification($member, $lesson, $contrib));
+                
                        
-                //         }
-                //     }
                    
                 }
             }
@@ -513,7 +519,8 @@ class LessonsController extends Controller
         $comments = DB::table('comments')
         ->leftJoin('members', 'members.id', '=', 'comments.member_id')
         ->leftJoin('contributors','contributors.id','=','comments.contributor_id')
-        ->select('comments.*', 'members.username as username', 'members.avatar as avatar', 'members.public', 'members.full_name', 'contributors.username as contriname', 'contributors.avatar as avatarc')
+        ->leftJoin('profile', DB::raw('left(members.username, 1)'), '=', 'profile.huruf')
+        ->select('comments.*', 'members.username as username', 'members.avatar as avatar', 'members.public', 'members.full_name', 'contributors.username as contriname', 'contributors.avatar as avatarc', 'profile.slug as slug')
         ->where('comments.parent_id', '=', 0)
         ->where('comments.lesson_id', '=', $lesson_id)
         ->orderBy('comments.id', 'DESC')
@@ -531,7 +538,7 @@ class LessonsController extends Controller
         foreach ($comments as $key => $comment) {
             $html .= '<div class="row">
 				                <div class="col-sm-1">
-                                                    <div class="thumbnail">';
+                                                    ';
             if($comment->desc == 0)     {
                 $ava = $comment->avatar;
                 $usernam =  $comment->username;
@@ -540,13 +547,13 @@ class LessonsController extends Controller
                 $usernam =  $comment->contriname;
             }        
             if ($ava != null) {
-                $html .= '<img class="img-responsive user-photo" src="' . asset($comment->avatar) . '">';
+                $html .= '<img class="img-circle img-responsive" src="' . asset($comment->avatar) . '">';
             } else {
-                $html .= '<img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">';
+                $html .= '<img class="img-circle img-responsive" src="'.asset($comment->slug).'">';
             }
             
             $html .= '</div><!-- /thumbnail -->
-				                </div>
+				                
 				                <div class="col-sm-11">
 				                  <div class="panel panel-default">
 				                    <div class="panel-heading">';
@@ -593,7 +600,8 @@ class LessonsController extends Controller
             $childcomments = DB::table('comments')
                 ->leftJoin('members', 'members.id', '=', 'comments.member_id')
                 ->leftJoin('contributors','contributors.id','=','comments.contributor_id')
-                ->select('comments.*', 'members.username as username', 'members.public', 'members.full_name', 'members.avatar as avatar', 'contributors.username as contriname', 'contributors.avatar as avatarc')
+                ->leftJoin('profile', DB::raw('left(members.username, 1)'), '=', 'profile.huruf')
+                ->select('comments.*', 'members.username as username', 'members.public', 'members.full_name', 'members.avatar as avatar', 'contributors.username as contriname', 'contributors.avatar as avatarc', 'profile.slug as slug')
                 ->where('comments.parent_id', '=', $comment->id)
                 ->where('comments.lesson_id', '=', $lesson_id)
                 ->orderBy('comments.id', 'asc')
@@ -602,7 +610,7 @@ class LessonsController extends Controller
                 $html .= '<!-- Comments Child -->
 				                  <div class="row">
 				                    <div class="col-sm-1">
-                                      <div class="thumbnail">';
+                                    ';
                 if($child->desc == 0){
                    $ava = $child->avatar;
                    $userna = $child->username;
@@ -612,12 +620,12 @@ class LessonsController extends Controller
 
                 }                                     
                 if ($ava) {
-                    $html .= '<img class="img-responsive user-photo" src="' . asset($ava) . '">';
+                    $html .= '<img class="img-circle img-responsive" src="' . asset($ava) . '">';
                 } else {
-                    $html .= '<img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">';
+                    $html .= '<img class="img-circle img-responsive" src="'.asset($child->slug).'">';
                 }
                 $html .= '</div><!-- /thumbnail -->
-				                    </div><!-- /col-sm-1 -->
+				                   <!-- /col-sm-1 -->
 				                    <div class="col-sm-11">
 				                      <div class="panel panel-default">
                                         <div class="panel-heading">';

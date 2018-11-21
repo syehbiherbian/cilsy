@@ -78,12 +78,12 @@
   <div class="col-md-12">
     <div id="exTab1" class="container">
       <ul  class="nav nav-pills">
-        <li class="active">
-          <a  href="#1a" data-toggle="tab">Unanswered</a>
+      <li class="active">
+          <a id="#1a"  href="{{ url('/contributor/comments') }}" >Unanswered</a>
         </li>
-        <li><a href="#2a" data-toggle="tab">Answared</a>
+        <li><a id="#2a"  href="{{ url('/contributor/comments/read') }}" >Answared</a>
         </li>
-        <li><a href="#3a" data-toggle="tab">All</a>
+        <li><a  id="#3a" href="{{ url('/contributor/comments/all') }}" >All</a>
         </li>
 
       </ul>
@@ -131,92 +131,15 @@
             </tbody>
           </table>
         </div>
-        <div class="tab-pane" id="2a">
-			<table class="table">
-              <thead>
-                <tr>
-                  <th>Tanggal</th>
-                  <th width="60%">Pertanyaan</th>
-                  <th>Lebih Lanjut</th>
-                </tr>
-              </thead>
-              <tbody>
-  			@foreach($data as $dat)
-
-
-			<?php
-				$cekanswer = DB::table('comments')->where('desc', '<>', 1)->where('status',1)->where('contributor_id',Auth::guard('contributors')->user()->id)->orderBy('created_at','DESC')->first();
-				if(count($cekanswer)==0){
-				?>
-
-              <tr>
-              </tr>
-			<?php 
-		 	}  else { ?>
-			  @if($dat->status==1)
-				<tr>
-				  <td><?= date('d/m/Y',strtotime($dat->created_at)) ?></td>
-				  <td>{{ $dat->body }}</td>
-				  <td>
-					 <a href="{{ url('contributor/comments/detail/'.$dat->id) }}" class="btn blue">Lihat</a>
-					 <a href="javascript:void(0)" class="btn red" onclick="$('#un{{ $dat->id }}').submit();">Abaikan</a>
-					 <form id="un{{ $dat->id }}" class="" action="{{ url('contributor/comments/deletecomment/'.$dat->id) }}" method="post">
-						 {{ csrf_field() }}
-					 </form>
-				  </td>
-				</tr>
-				@endif
-		 <?php	}?>
-			@endforeach
-
-
-              </tbody>
-            </table>
-
-        </div>
-
-        <div class="tab-pane" id="3a">
-			<table class="table">
-              <thead>
-                <tr>
-                  <th>Tanggal</th>
-                  <th width="60%">Pertanyaan</th>
-                  <th>Lebih Lanjut</th>
-                </tr>
-              </thead>
-              <tbody>
-				 		@foreach($data as $dat)
-
-
-			<?php
-				$cekanswer = DB::table('comments')->where('desc', '<>', 1)->where('contributor_id',Auth::guard('contributors')->user()->id)->orderBy('created_at','DESC')->first();
-				if(count($cekanswer)==0){
-				?>
-
-              <tr>
-              </tr>
-			<?php 
-		 	}  else { ?>
-				<tr>
-				  <td><?= date('d/m/Y',strtotime($dat->created_at)) ?></td>
-				  <td>{{ $dat->body }}</td>
-				  <td>
-					 <a href="{{ url('contributor/comments/detail/'.$dat->id) }}" class="btn blue">Lihat</a>
-					 <a href="javascript:void(0)" class="btn red" onclick="$('#un{{ $dat->id }}').submit();">Abaikan</a>
-					 <form id="un{{ $dat->id }}" class="" action="{{ url('contributor/comments/deletecomment/'.$dat->id) }}" method="post">
-						 {{ csrf_field() }}
-					 </form>
-				  </td>
-				</tr>
-		 <?php	}?>
-			@endforeach
-
-
-              </tbody>
-            </table>
-        </div>
+     
       </div>
     </div>
+    <div class="row">
+          <div class="col-md-12 text-center">
+              {{ $data->links() }}
+          </div>
+      </div>
   </div>
+  
 </div>
 @endsection()
