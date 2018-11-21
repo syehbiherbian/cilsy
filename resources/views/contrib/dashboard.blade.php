@@ -2,9 +2,11 @@
 @section('title','')
 @section('breadcumbs')
 <div id="navigation">
+        <div class="container">
 		<ul class="breadcrumb">
 				<li>Dashboard</li>
-		</ul>
+        </ul>
+        </div>
 </div>
 @endsection
 @section('content')

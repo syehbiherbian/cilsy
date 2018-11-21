@@ -2,10 +2,12 @@
 @section('title','')
 @section('breadcumbs')
 <div id="navigation">
+    <div class="container">
 		<ul class="breadcrumb">
 				<li><a href="{{ url('contributor/dashboard') }}">Dashboard</a></li>
                 <li>Komentar</li>
-		</ul>
+    </ul>
+    </div>
 </div>
 @endsection
 @section('content')
@@ -176,7 +178,7 @@
     function formbalas(comment_id){
         $('#balas'+comment_id).html('<label class="col-md-1" style="padding-left:0px;">Anda</label>'+
                                 '<div class="col-md-11" style="padding-right:0px;">'+
-                                '   <textarea class="form-control" id="input_balas'+comment_id+'" name="balasan" placeholder="tambahkan komentar/balasan" value="" style="white-space: pre-line" rows="8" cols="80"></textarea>'+
+                                '<textarea class="form-control" id="input_balas'+comment_id+'" name="balasan" placeholder="tambahkan komentar/balasan" value="" style="white-space: pre-line" rows="8" cols="80"></textarea>'+
                                 '<input class="inputFile" type="file" name="image" id="file" data-multiple-caption="{count} files selected" multiple="multiple"/>'+
                                 '<label for="file"><i class="fa fa-upload"></i><span>Upload Image</span></label>'+
                                 '</div>'+
