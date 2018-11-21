@@ -26,7 +26,7 @@ class Helper
       $mem_id   = Auth::guard('members')->user()->id ;
       if ($mem_id) {
         $members  = Member::where('id','=',$mem_id)->first();
-        $result   = $members->$field;
+        $result   = $members->$field; 
         return $result;
       }
   }
@@ -123,6 +123,13 @@ function cart(){
   }
   return $html;
 }
+function profil(){
+  $member_id = Auth::guard('members')->user()->id ?? null;
+  $profil = Member::Join('profile', DB::raw('left(members.username, 1)'), '=', 'profile.huruf')
+  ->where('members.id',  $member_id)->select('profile.slug as slug')->first();
+
+  return $profil->slug;
+}
 function getCategory(){
   $categories = Category::all();
   $html='';
@@ -147,8 +154,12 @@ function set_active ($route)
     if(is_array($route))
     {
         return in_array(Request::path(), $route) ? 'icon-active' : '';
+        return in_array(Request::is($route.'/*'), $route) ? 'icon-active' : '';
+
     }
     return Request::path() == $route ? 'icon-active' : '';
+    return Request::is($route.'/*') ? 'icon-active' : '';
+
 }
 
 function notif(){
