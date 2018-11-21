@@ -375,7 +375,12 @@ class LessonsController extends Controller
           $store->audiens         = $audiens;
           $store->slug            = str_replace("/","-",preg_replace('/\s+/', '-', $str));
           $store->category_id     = $category_id;
-          $store->image           = $url_image;
+          if($url_image == null){
+            $store->image  = $store->image ;
+          }
+          else{
+            $store->image  = $url_image;
+          }
           $store->requirement     = $req;
           $store->description     = $description;
           $store->updated_at      = $now;

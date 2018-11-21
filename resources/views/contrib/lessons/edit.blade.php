@@ -1,23 +1,17 @@
 @extends('contrib.app')
 @section('title','')
 <link href="{{asset('template/kontributor/summernote/summernote.css')}}" rel="stylesheet">
-<style>
-	#summernote{
-		z-index:500;
-	}
-	#summergoal{
-		z-index:500;
-	}
-</style>
 @section('breadcumbs')
 
 <div id="navigation">
+		<div class="container">
 		<ul class="breadcrumb">
-			<li><a href="{{ url('contributor/dashboard') }}">Dashboard</a></li>
+						<li><a href="{{ url('contributor/dashboard') }}">Dashboard</a></li>
             <li><a href="{{ url('contributor/lessons') }}">Kelola Tutorial</a></li>
             <li><a href="{{ url('contributor/lessons/'.$row->id.'/view') }}">View Tutorial</a></li>
             <li>Edit tutorial</li>
 		</ul>
+		</div>
 </div>
 @endsection
 @section('content')
@@ -125,7 +119,7 @@
 	      <div class="form-group">
 	        <div class="col-sm-offset-2 col-sm-10 text-right">
 	          <a href="{{ url('contributor/lessons') }}" class="btn btn-danger">Batal</a>
-			<button type="submit" class="btn btn-info">Submit</button>
+					<button type="submit" class="btn btn-info">Submit</button>
 	        </div>
 	      </div>
 	    </form>

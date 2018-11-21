@@ -1,8 +1,14 @@
 @extends('web.app')
 @foreach($categories as $object)
-@section('title', 'Kategori | '.$object->title)
+@if(request()->is('lessons/category/'.$object->title) != null)
+@section('title', $object->title)
 @section('description', $object->meta_desc)
+@endif
 @endforeach
+@if(request()->is('lessons/browse/all'))
+@section('title', 'Browse Tutorial ')
+@section('description', 'Halaman Semua tutorial cilsy ')
+@endif
 @section('content')
 <style>
 
