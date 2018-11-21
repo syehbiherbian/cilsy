@@ -2,12 +2,10 @@
 @section('title','')
 @section('breadcumbs')
 <div id="navigation">
-    <div class="container">
     <ul class="breadcrumb">
         <li><a href="{{ url('contributor') }}">Dashboard</a></li>
         <li>Kelola Halaman</li>
     </ul>
-    </div>
 </div>
 @endsection
 @section('content')
@@ -61,9 +59,7 @@
           <img src="{{ $contrib->avatar}}" style="height: 150px; width: 150px;" class="avatar img-circle" alt="avatar">
           <h6>Upload a different photo...</h6>
           
-          <input type="file" class="form-control" name="avatar">
-          <input type="hidden" class="form-control" name="avatar" value="{{ $contrib->avatar}}">
-
+          <input type="file" class="form-control" name="avatar" value="{{ $contrib->avatar}}">
         </div>
       </div>
       

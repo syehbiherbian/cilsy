@@ -5,7 +5,6 @@
 {{--  <link href="{{ asset('node_modules/video.js/dist/video-js.css') }}" rel="stylesheet">  --}}
 <link href="{{ asset('template/web/css/videojs-playlist-ui.vertical.css') }}" rel="stylesheet">
 <link href="{{ asset('template/web/css/videojs-errors.css') }}" rel="stylesheet">
-<link href="{{ asset('template/web/css/videojs-brand.css') }}" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet"/>
 {{-- <link href="https://vjs.zencdn.net/5.16.0/video-js.min.css" rel="stylesheet"/> --}}
 <script src="https://vjs.zencdn.net/5.16.0/video.min.js"></script>
@@ -717,19 +716,6 @@ td{
 .inputfile-2:focus + label, .content .inputfile-2 + label:hover {
   background-color: #5f36b3;
 }
-.video-wrapper{
-  position :relative;
-}
-.video-wrapper:before{
-  content: "";
-  position: absolute;
-  background: url('https://www.cilsy.id/template/web/img/logo.png');
-  width: 44px;
-  height:30px;
-  right:20px;
-  bottom:20px;
-
-}
 </style>
 <div id="content-section">
 
@@ -769,21 +755,17 @@ td{
           <div class="col-md-12">
             <div class="player-container">
               <!-- Main Video -->
-              <div class="video-wrapper">
-                  <video id="video" class="video-js vjs-default-skin vjs-big-play-centered" height="500" width="70%">
-                      @if (count($last_videos) > 0) 
-                          <source src="{{ !empty($last_videos->video) ? $last_videos->video : '' }}" type="{{ (!empty($last_videos->type_video)) ? $last_videos->type_video : '' }}">
-                      @endif 
-                    </video>
-              </div>
-              
+              <video id="video" class="video-js vjs-default-skin vjs-big-play-centered" height="500" width="70%">
+                @if (count($last_videos) > 0) 
+                    <source src="{{ !empty($last_videos->video) ? $last_videos->video : '' }}" type="{{ (!empty($last_videos->type_video)) ? $last_videos->type_video : '' }}">
+                @endif 
+              </video>
 
               <!-- Playlist Video -->
               <div class="vjs-playlist"></div>
               <button class="previous" hidden>Previous</button>
               <button class="next" hidden>Next</button>
               <button class="jump" hidden>Play Third</button>
-              
             </div>
           </div>
         </div><!--./ Video -->
@@ -932,7 +914,6 @@ td{
 <script src="{{ asset('template/web/js/videojs-playlist.js') }}"></script>
 <script src="{{ asset('template/web/js/videojs-playlist-ui.js') }}"></script>
 <script src="{{ asset('template/web/js/videojs-errors.js') }}"></script>
-<script src="{{ asset('template/web/js/videojs-brand.min.js') }}"></script>
 <script type="text/javascript" src="https://unpkg.com/sweetalert2@7.9.2/dist/sweetalert2.all.js"></script>
 <script src="{{ asset('template/web/js/component.js') }}"></script>
 <script src="{{ asset('template/web/js/control-bar/control-bar.js') }}"></script>
@@ -1046,13 +1027,6 @@ function getPlayList() {
       inactivityTimeout: 500,
       controls: true,
     });
-
-    {{--  player.brand({
-      image: "https://www.cilsy.id/template/web/img/logo.png",
-      title: "Logo Title",
-      destination: "http://www.google.com",
-      destinationTarget: "_top"
-    });  --}}
 
   player.on('ended', function() {
     var videosrc = player.currentSrc();

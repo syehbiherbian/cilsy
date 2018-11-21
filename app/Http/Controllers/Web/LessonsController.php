@@ -519,7 +519,8 @@ class LessonsController extends Controller
         $comments = DB::table('comments')
         ->leftJoin('members', 'members.id', '=', 'comments.member_id')
         ->leftJoin('contributors','contributors.id','=','comments.contributor_id')
-        ->select('comments.*', 'members.username as username', 'members.avatar as avatar', 'members.public', 'members.full_name', 'contributors.username as contriname', 'contributors.avatar as avatarc')
+        ->leftJoin('profile', DB::raw('left(members.username, 1)'), '=', 'profile.huruf')
+        ->select('comments.*', 'members.username as username', 'members.avatar as avatar', 'members.public', 'members.full_name', 'contributors.username as contriname', 'contributors.avatar as avatarc', 'profile.slug as slug')
         ->where('comments.parent_id', '=', 0)
         ->where('comments.lesson_id', '=', $lesson_id)
         ->orderBy('comments.id', 'DESC')
@@ -537,7 +538,7 @@ class LessonsController extends Controller
         foreach ($comments as $key => $comment) {
             $html .= '<div class="row">
 				                <div class="col-sm-1">
-                                                    <div class="thumbnail">';
+                                                    ';
             if($comment->desc == 0)     {
                 $ava = $comment->avatar;
                 $usernam =  $comment->username;
@@ -546,13 +547,13 @@ class LessonsController extends Controller
                 $usernam =  $comment->contriname;
             }        
             if ($ava != null) {
-                $html .= '<img class="img-responsive user-photo" src="' . asset($comment->avatar) . '">';
+                $html .= '<img class="img-circle img-responsive" src="' . asset($comment->avatar) . '">';
             } else {
-                $html .= '<img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">';
+                $html .= '<img class="img-circle img-responsive" src="'.asset($comment->slug).'">';
             }
             
             $html .= '</div><!-- /thumbnail -->
-				                </div>
+				                
 				                <div class="col-sm-11">
 				                  <div class="panel panel-default">
 				                    <div class="panel-heading">';
@@ -599,7 +600,8 @@ class LessonsController extends Controller
             $childcomments = DB::table('comments')
                 ->leftJoin('members', 'members.id', '=', 'comments.member_id')
                 ->leftJoin('contributors','contributors.id','=','comments.contributor_id')
-                ->select('comments.*', 'members.username as username', 'members.public', 'members.full_name', 'members.avatar as avatar', 'contributors.username as contriname', 'contributors.avatar as avatarc')
+                ->leftJoin('profile', DB::raw('left(members.username, 1)'), '=', 'profile.huruf')
+                ->select('comments.*', 'members.username as username', 'members.public', 'members.full_name', 'members.avatar as avatar', 'contributors.username as contriname', 'contributors.avatar as avatarc', 'profile.slug as slug')
                 ->where('comments.parent_id', '=', $comment->id)
                 ->where('comments.lesson_id', '=', $lesson_id)
                 ->orderBy('comments.id', 'asc')
@@ -608,7 +610,7 @@ class LessonsController extends Controller
                 $html .= '<!-- Comments Child -->
 				                  <div class="row">
 				                    <div class="col-sm-1">
-                                      <div class="thumbnail">';
+                                    ';
                 if($child->desc == 0){
                    $ava = $child->avatar;
                    $userna = $child->username;
@@ -618,12 +620,12 @@ class LessonsController extends Controller
 
                 }                                     
                 if ($ava) {
-                    $html .= '<img class="img-responsive user-photo" src="' . asset($ava) . '">';
+                    $html .= '<img class="img-circle img-responsive" src="' . asset($ava) . '">';
                 } else {
-                    $html .= '<img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">';
+                    $html .= '<img class="img-circle img-responsive" src="'.asset($child->slug).'">';
                 }
                 $html .= '</div><!-- /thumbnail -->
-				                    </div><!-- /col-sm-1 -->
+				                   <!-- /col-sm-1 -->
 				                    <div class="col-sm-11">
 				                      <div class="panel panel-default">
                                         <div class="panel-heading">';

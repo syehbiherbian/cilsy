@@ -57,15 +57,7 @@ html, body {
     margin-right: 5px;
     color: #FFF;
 }
-.header-menu ul li a img.poto {
-    /* display: block; */
-    height: 35px;
-    margin-top: -4px;
-    cursor: pointer;
-    /* -webkit-filter: invert(100%); */
-    /* filter: invert(100%); */
-  }
-.header-menu ul li img.icon {
+.header-menu ul li img {
     display: block;
     height: 35px;
     margin-top: -4px;
@@ -73,7 +65,6 @@ html, body {
     -webkit-filter: invert(100%);
     filter: invert(100%);
 }
-
 
 .header-menu ul li i {
     display: block;
@@ -364,11 +355,6 @@ html, body {
     position: absolute;
     left: 20;
     bottom: 0;
-}
-.ui-autocomplete{
-    z-index : 9999;
-    overflow-y : scroll;
-    height : 300px;
 }
 .lihat-semua-btn {
     margin: 25px auto;

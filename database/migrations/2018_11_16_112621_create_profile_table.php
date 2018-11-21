@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddPublicToMembersTable extends Migration
+class CreateProfileTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,11 @@ class AddPublicToMembersTable extends Migration
      */
     public function up()
     {
-        Schema::table('members', function (Blueprint $table) {
-            //
+        Schema::create('profile', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('huruf');
+            $table->string('slug');
+            $table->timestamps();
         });
     }
 
@@ -25,8 +28,6 @@ class AddPublicToMembersTable extends Migration
      */
     public function down()
     {
-        Schema::table('members', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('profile');
     }
 }

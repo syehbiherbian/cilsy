@@ -20,7 +20,7 @@
                     @if($members->avatar != null)
                     <img class="img-circle img-responsive" src="{{$members->avatar}}" alt="avatar" style="height: 150px; width: 150px;">
                     @else
-                    <img class="img-circle img-responsive" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png" alt="avatar" style="height: 150px; width: 150px;">
+                    <img class="img-circle img-responsive" src="{{asset(profil())}}" alt="avatar" style="height: 150px; width: 150px;">
                     @endif
             </div>
             <div class="col-md-10">

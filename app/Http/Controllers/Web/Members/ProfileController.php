@@ -60,6 +60,8 @@ class ProfileController extends Controller
                      ->distinct()
                      ->get(['viewers.member_id', 'lessons.*']);   
       $members = Member::where('id',$mem_id)->first();
+
+         
       if ($members) {
         return view('web.members.view_profile', [
           'members' => $members,

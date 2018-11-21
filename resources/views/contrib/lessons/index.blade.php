@@ -4,10 +4,10 @@
 <div id="navigation">
     <div class="container">
         <a href="{{ url('contributor/lessons/create')}}" class="btn btn-info pull-right">Buat Tutorial</a>
-        <ul class="breadcrumb">
-        <li><a href="{{ url('contributor/dashboard') }}">Dashboard</a></li>
-        <li>Kelola Tutorial</li>
-        </ul>
+            <ul class="breadcrumb">
+                    <li><a href="{{ url('contributor/dashboard') }}">Dashboard</a></li>
+            <li>Kelola Tutorial</li>
+            </ul>
     </div>
 </div>
 @endsection

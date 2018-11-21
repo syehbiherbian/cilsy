@@ -2,13 +2,11 @@
 @section('title','')
 @section('breadcumbs')
 <div id="navigation">
-    <div class="container">
 		<ul class="breadcrumb">
 				<li><a href="{{ url('contributor/dashboard') }}">Dashboard</a></li>
                 <li><a href="{{ url('contributor/income') }}">Kelola Pendapatan</a></li>
         <li>Selengkapnya</li>
-    </ul>
-    </div>
+		</ul>
 </div>
 @endsection
 @section('content')

@@ -74,14 +74,12 @@
 	}
 </style>
 <div id="navigation">
-	<div class="container">
 	<ul class="breadcrumb">
 		<li><a href="{{ url('contributor/dashboard') }}">Dashboard</a></li>
 		<li><a href="{{ url('contributor/lessons') }}">Kelola Tutorial</a></li>
 		<li><a href="{{ url('contributor/lessons/'.$lesson->id.'/view') }}">View Video</a></li>
 		<li>Video</li>
 	</ul>
-	</div>
 </div>
 @endsection
 @section('content')
