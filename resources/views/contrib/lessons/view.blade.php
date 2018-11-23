@@ -2,6 +2,7 @@
 @section('title','')
 @section('breadcumbs')
 <div id="navigation">
+    <div class="container">
     <!-- <a href="{{ url('contributor/lessons/create')}}" class="btn btn-danger pull-right">Hapus Tutorial</a> -->
     <form id="{{ $row->id }}" action="{{ url('contributor/lessons/'.$row->id.'/delete')}}" method="get">
           <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -12,7 +13,8 @@
 				<li><a href="{{ url('contributor/dashboard') }}">Dashboard</a></li>
                 <li><a href="{{ url('contributor/lessons') }}">Kelola Tutorial</a></li>
         <li>Tutorial</li>
-		</ul>
+    </ul>
+    </div>
 </div>
 @endsection
 @section('content')

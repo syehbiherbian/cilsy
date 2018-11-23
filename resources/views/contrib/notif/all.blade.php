@@ -76,7 +76,7 @@
   <div class="col-md-12">
     <div id="exTab1" class="container">
       <ul  class="nav nav-pills">
-      <li>
+      <li class="active">
           <a  href="{{ url('contributor/notif') }}" >Unread</a>
         </li>
         <li><a href="{{ url('contributor/notif/read') }}" >Read</a>

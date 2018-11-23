@@ -17,6 +17,7 @@ use Session;
 use DateTime;
 use DB;
 use Auth;
+use App\Models\Lesson;
 
 class ProfileController extends Controller
 {
@@ -44,6 +45,33 @@ class ProfileController extends Controller
       }
     }
 
+    public function view($username)
+    {
+      // Authentication
+      $mem_id = Auth::guard('members')->user()->id;
+      if (!$mem_id) {
+        return redirect('/member/signin');
+        exit;
+      }
+      $get_lessons = Lesson::join('videos', 'lessons.id', '=', 'videos.lessons_id')
+                     ->join('viewers', 'videos.id', '=', 'viewers.video_id')
+                     ->where('viewers.member_id', '=', $mem_id)
+                     ->orderBy('viewers.member_id', 'viewers.updated_at', 'asc')
+                     ->distinct()
+                     ->get(['viewers.member_id', 'lessons.*']);   
+      $members = Member::where('id',$mem_id)->first();
+
+         
+      if ($members) {
+        return view('web.members.view_profile', [
+          'members' => $members,
+          'lessons' => $get_lessons,
+        ]);
+      }else {
+        return redirect('/member/signin');
+        exit;
+      }
+    }
 
     public function doSubmit()
     {
@@ -56,9 +84,12 @@ class ProfileController extends Controller
       // validate
       // read more on validation at http://laravel.com/docs/validation
       $rules = array(
-        'username'      => 'required|min:3|max:255',
-        'email'         => 'required|min:3|max:255|email'
+        'full_name'      => 'required|min:3|max:255',
+        // 'gender'         => 'required',
+        'avatar'         => 'image|max:800',
+        'bio'            => 'max:500',
       );
+
       $validator = Validator::make(Input::all(), $rules);
 
       // process the login
@@ -67,12 +98,50 @@ class ProfileController extends Controller
       } else {
 
         $now = new DateTime();
-        $username = Input::get('username');
-        $email    = Input::get('email');
+        $full_name = Input::get('full_name');
+        $gender    = Input::get('gender');
+        $avatar = Input::file('avatar');
+        $born = Input::get('bornday');
+        $lokasi = Input::get('lokasi');
+        $skill = Input::get('keahlian');
+        $instansi = Input::get('instansi');
+        $public = Input::get('public');
+        $bio = Input::get('bio');
+        $role = Input::get('role');
+        if($public == null){
+          $public = 0;
+        }
+        $avatarDestinationPath= 'assets/source/member/avatar';
+
+        if(!empty($avatar)){
+            $avatarfilename    = $avatar->getClientOriginalName();
+            $avatar->move($avatarDestinationPath, $avatarfilename);
+        }else{
+            $avatarfilename    = '';
+        }
+        if($avatarfilename ==''){
+            $url_image= $avatarfilename;
+        }else{
+            $urls=url('');
+            $url_image= $urls.'/assets/source/member/avatar/'.$avatarfilename;
+        }
 
         $update = Member::findOrFail($mem_id);
-        $update->username   = $username;
-        $update->email      = $email;
+        $update->full_name   = $full_name;
+        $update->gender      = $gender;
+        $update->tanggal_lahir= $born;
+        if($url_image == null){
+          $update->avatar = $update->avatar;
+        }
+        else{
+            $update->avatar = $url_image;
+        }
+        $update->lokasi      = $lokasi;
+        $update->keahlian      = $skill;
+        $update->instansi      = $instansi;
+        $update->public      = $public;
+        $update->role      = $role;
+        $update->bio      = $bio;
         $update->updated_at = $now;
 
         if ($update->save()) {
@@ -98,7 +167,7 @@ class ProfileController extends Controller
       ->select(['invoice.code as invoice' , 'invoice.created_at as hari',  'invoice.type as type', 
       DB::raw('DATE_ADD(invoice.created_at, INTERVAL 23 HOUR) as batas') , 'invoice.status as status',  DB::raw('SUM(distinct invoice.price) as total'), DB::raw('SUM( B.harga_lesson)-Sum(distinct invoice.price) as disc')])
       ->groupby('invoice.code', 'invoice.type', 'invoice.created_at', 'invoice.status' )
-      ->get();
+      ->paginate(5);
 
       $get_tot = Invoice::join('invoice_details as B', 'invoice.id', '=', 'B.invoice_id')
       ->join('lessons as C', 'B.lesson_id', '=', 'C.id')
@@ -111,8 +180,12 @@ class ProfileController extends Controller
       DB::raw('DATE_ADD(invoice.created_at, INTERVAL 23 HOUR) as batas') , 'invoice.status as status', DB::raw('SUM(distinct invoice.price) as total'),  DB::raw('SUM( B.harga_lesson)-Sum(distinct invoice.price) as disc')])
       ->groupby('invoice.code','invoice.type', 'invoice.created_at', 'invoice.status' )
       ->get();
-
-      
+       if(empty($get_tot)){
+        $get_tot  = 0;
+       }
+       if(empty($get_hist)){
+        $get_hist  = 0;
+       }
       return view('web.members.riwayat', [
         'get_hist' => $get_hist,
         'get_tot' => $get_tot,

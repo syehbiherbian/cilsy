@@ -99,7 +99,8 @@ class PackageController extends Controller
             $price += $cart->lesson->price;
           }
           if(Session::get('coupon')){
-            $price = session()->get('coupon')['discount'];
+            $disc = session()->get('coupon')['discount'];
+            $price = $price-$disc;
           }
 
           $code = $this->generateCode();

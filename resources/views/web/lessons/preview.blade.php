@@ -35,10 +35,16 @@
   <section class="header">
     <div class="container">
       <div class="row">
-        <div class="col-md-8 col-xs-12">
-          Kategori {{$categories->title}}
+        <div class="col-md-6 col-xs-12 video-preview">
+          <img src="{{ asset($lessons->image) }}" class="img-responsive" alt="">
+          <a href="#" data-toggle="modal" data-target="#ModalVideo" class="btn"><img src="{{ asset('/template/web/img/play-button.svg') }}" alt=""></a>
+        </div>
+        <div class="col-md-6 col-xs-12">
+          <a href="{{ url('lessons/category/'.$categories->title)}}" class="btn-tag">{{$categories->title}}</a>
+          
           <h1 class="price">Rp. {{ number_format($lessons->price, 0, ",", ".") }}</h1>
-          <h1>{{$lessons->title}}</h1>
+          <h2>{{$lessons->title}}</h2>
+          <p>{{$lessons->deskripsi_singkat}}</p>
           <h6 class="mb-4">Oleh {{$contributors->username}}, Created at {{ $tanggal }}</h6>
           <a id="guest-{{ $lessons->id }}" href="{{ url('cart') }}" class="btn" style="background-color:#fff; color:#5bc0de; border-color:#46b8da; display:none" >Lihat Keranjang</a>        
           <?php if(($cart != null)){ ?>
@@ -46,16 +52,6 @@
           <?php }else{ ?>          
           <button id="beli-{{ $lessons->id }}" class="btn btn-lg btn-primary mb-2" onclick="addToCart({{ $lessons->id }})"><i class="fa fa-shopping-cart"></i> Beli Tutorial</button> &nbsp;&nbsp;&nbsp;
           <?php } ?>
-          <button class="btn btn-lg btn-secondary mb-2" data-toggle="modal" data-target="#ModalVideo">Preview Tutorial</button>
-        </div>
-        <div class="col-md-4 col-xs-12 video-preview">
-          <img src="{{ asset($lessons->image) }}" class="img-responsive" alt="" height="195" width="290">
-        </div>
-        <div class="col-xs-12 mt-4">
-          <i class="fa fa-film"></i> {{ count($main_videos) }} Video Tutorial Eklusif &nbsp;
-          <i class="fa fa-book"></i> Modul dan Script Praktek &nbsp;
-          <i class="fa fa-jsfiddle"></i> Akses Selamanya &nbsp;
-          <i class="fa fa-commenting-o"></i> Support Selamanya
         </div>
       </div>
     </div>
@@ -63,15 +59,51 @@
 
   <section class="mt-5">
     <div class="container">
+      <div class="row text-center" style="padding-top:20px; padding-bottom:20px;">
+        <div class="col-md-4">
+          <div class="col-md-4">
+            <img src="{{asset('template/web/img/video-icon.png')}}" alt="" height="100" width="100">
+          </div>
+          <div class="col-md-8">
+            <h6>{{ count($main_videos) }} Video Tutorial Eksklusif</h6>
+            <p>Semua video di cilsy eksklusif dan tidak di upload di platform manapun
+            </p>
+          </div>
+        </div>
+        <div class="col-md-4">
+        <div class="col-md-4">
+            <img src="{{asset('template/web/img/script.png')}}" alt="" height="100" width="100">
+          </div>
+          <div class="col-md-8">
+            <h6>Modul dan Script Praktek</h6>
+            <p>Dapatkan modul dan script untuk menunjang praktek anda dalam belajar di Cilsy
+            </p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="col-md-4">
+              <img src="{{asset('template/web/img/diskusi.png')}}" alt="" height="100" width="100">
+            </div>
+            <div class="col-md-8">
+              <h6>Diskusi Dengan Kontributor</h6>
+              <p>Kesulitan atau mendapat error? silahkan manfaatkan fitur diskusi, maka kontributor kami akan merespon pertanyaan anda
+              </p>
+            </div>
+        </div>
+      </div>
 
       <!-- Row -->
       <div class="row box">
         <div class="col-xs-12">
+          
           <h5>Deskripsi Tutorial</h5>
-          {!! nl2br($lessons->description) !!}
-
+          {!! nl2br(substr($lessons->description, 0, 400)) !!}
+          <div class="collapse" id="collapseDeskripsi">
+          {!! nl2br(substr($lessons->description, 400)) !!}
           <h5>Objektif Tutorial</h5>
           {!! nl2br($lessons->goal_tutorial) !!}
+          </div><br>
+          <a id="collapse" data-toggle="collapse" href="#collapseDeskripsi" role="button" style="color:#2BA8E2; font-weight:bold;">+ Tampilkan Lebih Banyak</a>
         </div>
       </div>
 
@@ -113,7 +145,7 @@
 
           </div>
 
-          <a id="collapse" data-toggle="collapse" href="#collapseKurikulum" role="button">+ Tampilkan Lebih Banyak</a>
+          <a id="collapse" data-toggle="collapse" href="#collapseKurikulum" role="button" style="color:#2BA8E2; font-weight:bold;">+ Tampilkan Lebih Banyak</a>
         </div>
       </div>
 
@@ -135,7 +167,7 @@
       <!-- Row -->
       <div class="row box">
         <div class="col-xs-12 mb-3">
-          <b>Tentang Kontributor</b>
+          <b>Kontributor</b>
         </div>
         <div class="col-lg-3 col-md-4 mb-4 text-center">
             @if ($contributors->avatar)
@@ -143,20 +175,34 @@
           @else
             <img src="{{ asset('template/web/img/user.png') }}" alt="" class="img-responsive img-center mb-2">
           @endif
-          <div class="row py-2 m-0 user">
+          <div class="row">
             <div class="col-xs-12 ">
-                {{ count($contributors_total_lessons) }} Tutorial
+            <a href="{{ url('contributor/profile/'.$contributors->username) }}" class="btn" style="background-color:#fff; color:#5bc0de; border-color:#46b8da;">Lihat Profil</a>
             </div>
           </div>
         </div>
         <div class="col-lg-9 col-md-8">
-          <h5>{{ $contributors->username }}</h5>
-          <h6>{{ $contributors->pekerjaan }}</h6>
-          <a href="{{ url('contributor/profile/'.$contributors->username) }}" class="btn btn-primary btn-round my-2">Lihat Profile</a>
-          <p>
-              {{ $contributors->deskripsi }}
-          </p>
-          <a href="#">Lebih Banyak</a>
+          <div class="col-md-2">
+              <h5 style="color:#2BA8E2; font-weight:bold;">{{ $contributors->username }}</h5>
+          </div>
+          <div class="col-md-10">
+              <h5>Tutorial</h5>
+          </div>
+          <div class="col-md-2">
+              <h6>{{ $contributors->pekerjaan }}</h6>
+          </div>
+          <div class="col-md-10">
+              {{ count($contributors_total_lessons) }} 
+          </div><br><br>
+          <div class="col-md-12">
+              <p>
+                  {{ $contributors->deskripsi }}
+              </p>
+              <a href="#">Lebih Banyak</a>
+          </div>
+              
+         
+          
         </div>
       </div>
 
@@ -172,7 +218,6 @@
           <?php }else{ ?>          
           <button id="jual-{{ $lessons->id }}" class="btn btn-lg btn-primary mb-2" onclick="addToCart({{ $lessons->id }})"><i class="fa fa-shopping-cart"></i> Beli Tutorial</button> &nbsp;&nbsp;&nbsp;
           <?php } ?>
-          <button class="btn btn-lg btn-secondary mb-2" data-toggle="modal" data-target="#ModalVideo">Preview Tutorial</button>
         </div>
       </div>
     </div>

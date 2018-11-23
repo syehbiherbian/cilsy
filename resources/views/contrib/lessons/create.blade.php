@@ -3,11 +3,13 @@
 <link href="{{asset('template/kontributor/summernote/summernote.css')}}" rel="stylesheet">
 @section('breadcumbs')
 <div id="navigation">
+		<div class="container">
 		<ul class="breadcrumb">
 				<li><a href="{{ url('contributor/dashboard') }}">Dashboard</a></li>
         <li><a href="{{ url('contributor/lessons') }}">Kelola Tutorial</a></li>
         <li>Buat tutorial</li>
 		</ul>
+		</div>
 </div>
 @endsection
 @section('content')
@@ -55,7 +57,13 @@
 	        <div class="col-sm-10">
 	          <input type="text"  required class="form-control" placeholder="Contoh:Tutorial Administrasi Server dengan ubuntu 12.04" name="title" value="{{ old('title') }}">
 	        </div>
-	      </div>
+				</div>
+				<div class="form-group">
+						<label class="col-sm-2 control-label">Deskripsi Singkat</label>
+						<div class="col-sm-10">
+							<textarea type="text"  required class="form-control" placeholder="Contoh:Tutorial Administrasi Server dengan ubuntu 12.04" name="desk_singkat" value="{{ old('title') }}"></textarea>
+						</div>
+				</div>
 	      <div class="form-group">
 	        <label class="col-sm-2 control-label">Pilih Kategori</label>
 	        <div class="col-sm-10">

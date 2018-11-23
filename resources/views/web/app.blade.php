@@ -360,7 +360,7 @@ a #items .item {
 
 
 .shopping-cart {
-  margin: 75px 605px;
+  margin: 75px 710px;
   float: right;
   background: white;
   width: 320px;
@@ -446,7 +446,7 @@ a #items .item {
     display: none;
     position: absolute;
     top: 53px;
-    right: 15px;
+    right: -8px;
     width: 250px;
     padding: 10px 0;
     border: 1px solid #DBDEDE;
@@ -454,6 +454,7 @@ a #items .item {
     background-color: #FFF;
     z-index: 99;
 }
+
     </style>
 
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -576,7 +577,7 @@ a #items .item {
                       </a>
                     </li>
                     <li class="class">
-                        <a href="#" id="cart"><img src="{{asset('template/web/img/CART.png')}}" alt="cart">
+                        <a  href="#" id="cart"><img class="icon" src="{{asset('template/web/img/CART.png')}}" alt="cart">
                         <?php if(getTotalCart() != null){ ?>
                         <span class="badge-cart"><?php echo getTotalCart();?></span>
                         <?php } ?>
@@ -585,7 +586,7 @@ a #items .item {
                       
                     
                     <li class="has-dropdown">
-                        <img src="{{asset('template/kontributor/img/icon/Notifikasi.png')}}" alt="">
+                        <img class="icon" src="{{asset('template/kontributor/img/icon/Notifikasi.png')}}" alt="">
                         <?php if(totalnotifuser() != null){ ?>
                         <span class="badge-cart"><?php echo totalnotifuser();?></span>
                         <?php } ?>
@@ -597,16 +598,29 @@ a #items .item {
                             </ul>
                         </div>
                     </li>
-                    <li>
-                        <span class="hello-user">Halo, {{namemember()}}..</span>
-                    </li>
                     <li class="has-dropdown">
-                        <img src="{{asset('template/web/img/drop-down-round-button.png')}}" alt="">
+                        <img class="icon" src="{{asset('template/web/img/drop-down-round-button.png')}}" alt="">
                         <div class="dropdown-container" style="right: 0px;">
                             <ul>
                                 <li>
-                                    <a href="{{ url('member/profile')}}">
-                                        Profile
+                                  
+                                    <a href="{{ url('member/profile/'.Helper::member('username'))}}">
+                                      @if(Helper::member('avatar') != null)
+                                      <img src="<?=Helper::member('avatar');?>" class="poto img-circle" alt="" style="">
+                                      @else
+                                      <img src="{{asset(profil())}}" class="poto img-circle" alt="" style="">
+                                      @endif
+                                      @if(Helper::member('full_name') != null)
+                                      <?=Helper::member('full_name');?>
+                                      @else
+                                      <?=Helper::member('username');?>
+                                      @endif
+                                    </a>
+                                </li>
+                                <hr>
+                                <li>
+                                    <a href="{{ url('member/profile/edit')}}">
+                                        Pengaturan Akun
                                     </a>
                                 </li>
                                 <li>
@@ -614,8 +628,9 @@ a #items .item {
                                         Riwayat Pembelian
                                     </a>
                                 </li>
+                                <hr>
                                 <li>
-                                    <a id="logout" href="{{ url('member/signout')}}">
+                                    <a id="logout" href="{{ url('member/signout')}}" style="font-color:#2BA8E2;">
                                         Logout
                                     </a>
                                 </li>
@@ -638,7 +653,7 @@ a #items .item {
           <div class="header-menu">
             <ul class="navbar-nav navbar-right">
                 <li class="class">
-                  <a href="{{ url('/cart') }}" ><img src="{{asset('template/web/img/CART.png')}}" alt="cart">
+                  <a href="{{ url('/cart') }}" ><img class="icon" src="{{asset('template/web/img/CART.png')}}"  alt="cart">
                     <span class="badge-cart hide"></span>
                   </a>                   
                 </li>
