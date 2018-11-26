@@ -57,7 +57,11 @@
       <form class="form-horizontal" role="form">
       <div class="col-md-3">
         <div class="text-center">
+        @if(Helper::contrib('avatar') != null)
           <img src="{{$contrib->avatar}}" class="avatar img-circle" alt="avatar" style="height: 150px; width: 150px;">
+        @else
+          <img src="{{asset(profil())}}" class="avatar img-circle" alt="avatar" style="height: 150px; width: 150px;">
+        @endif
           <h6>Upload a different photo...</h6>
           
           <input type="file" class="form-control" name="avatar" disabled>

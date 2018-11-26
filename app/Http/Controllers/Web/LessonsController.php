@@ -204,8 +204,9 @@ class LessonsController extends Controller
             ->where('videos.lessons_id', '=', $lessons->id)->orderBy('viewers.updated_at', 'desc')->first();
             $files = File::where('enable', 1)->where('lesson_id', $lessons->id)->orderBy('id', 'asc')->get();
             // Contributor
-            $contributors = Contributor::find($lessons->contributor_id);
-            $contributors_total_lessons = Lesson::where('enable', 1)->where('status', 1)->where('contributor_id', $lessons->contributor_id)->with('videos.views')->get();
+            $contributors = DB::table('contributors')
+            ->leftJoin('profile', DB::raw('left(contributors.username, 1)'), '=', 'profile.huruf')
+            ->where('contributors.id',$lessons->contributor_id)->first();            $contributors_total_lessons = Lesson::where('enable', 1)->where('status', 1)->where('contributor_id', $lessons->contributor_id)->with('videos.views')->get();
             $contributors_total_view = 0;
             foreach ($contributors_total_lessons as $lessonss) {
                 foreach ($lessonss->videos as $videos) {
@@ -520,7 +521,8 @@ class LessonsController extends Controller
         ->leftJoin('members', 'members.id', '=', 'comments.member_id')
         ->leftJoin('contributors','contributors.id','=','comments.contributor_id')
         ->leftJoin('profile', DB::raw('left(members.username, 1)'), '=', 'profile.huruf')
-        ->select('comments.*', 'members.username as username', 'members.avatar as avatar', 'members.public', 'members.full_name', 'contributors.username as contriname', 'contributors.avatar as avatarc', 'profile.slug as slug')
+        ->leftJoin('profile as B', DB::raw('left(contributors.username, 1)'), '=', 'B.huruf')
+        ->select('comments.*', 'members.username as username', 'members.avatar as avatar', 'members.public', 'members.full_name', 'contributors.username as contriname', 'contributors.avatar as avatarc', 'profile.slug as slug', 'B.slug as slg')
         ->where('comments.parent_id', '=', 0)
         ->where('comments.lesson_id', '=', $lesson_id)
         ->orderBy('comments.id', 'DESC')
@@ -549,7 +551,11 @@ class LessonsController extends Controller
             if ($ava != null) {
                 $html .= '<img class="img-circle img-responsive" src="' . asset($comment->avatar) . '">';
             } else {
+                if($comment->desc == 0){
                 $html .= '<img class="img-circle img-responsive" src="'.asset($comment->slug).'">';
+                }else{
+                $html .= '<img class="img-circle img-responsive" src="'.asset($comment->slg).'">';  
+                }
             }
             
             $html .= '</div><!-- /thumbnail -->
@@ -601,7 +607,8 @@ class LessonsController extends Controller
                 ->leftJoin('members', 'members.id', '=', 'comments.member_id')
                 ->leftJoin('contributors','contributors.id','=','comments.contributor_id')
                 ->leftJoin('profile', DB::raw('left(members.username, 1)'), '=', 'profile.huruf')
-                ->select('comments.*', 'members.username as username', 'members.public', 'members.full_name', 'members.avatar as avatar', 'contributors.username as contriname', 'contributors.avatar as avatarc', 'profile.slug as slug')
+                ->leftJoin('profile as B', DB::raw('left(contributors.username, 1)'), '=', 'B.huruf')
+                ->select('comments.*', 'members.username as username', 'members.public', 'members.full_name', 'members.avatar as avatar', 'contributors.username as contriname', 'contributors.avatar as avatarc', 'profile.slug as slug', 'B.slug as slg')
                 ->where('comments.parent_id', '=', $comment->id)
                 ->where('comments.lesson_id', '=', $lesson_id)
                 ->orderBy('comments.id', 'asc')
@@ -622,7 +629,11 @@ class LessonsController extends Controller
                 if ($ava) {
                     $html .= '<img class="img-circle img-responsive" src="' . asset($ava) . '">';
                 } else {
+                    if($child->desc == 0){
                     $html .= '<img class="img-circle img-responsive" src="'.asset($child->slug).'">';
+                    }else{
+                    $html .= '<img class="img-circle img-responsive" src="'.asset($child->slg).'">'; 
+                    }
                 }
                 $html .= '</div><!-- /thumbnail -->
 				                   <!-- /col-sm-1 -->

@@ -200,7 +200,9 @@ class LessonsMemberController extends Controller
                 $main_videos = Video::where('enable', '=', 1)->where('lessons_id', '=', $lessons->id)->orderBy('position', 'asc')->get();
                 $files = File::where('enable', '=', 1)->where('lesson_id', '=', $lessons->id)->orderBy('id', 'asc')->get();
             // Contributor
-            $contributors = DB::table('contributors')->where('id',$lessons->contributor_id)->first();
+            $contributors = DB::table('contributors')
+            ->leftJoin('profile', DB::raw('left(contributors.username, 1)'), '=', 'profile.huruf')
+            ->where('contributors.id',$lessons->contributor_id)->first();
             $contributors_total_lessons = Lesson::where('enable', '=', 1)->where('contributor_id', '=', $lessons->contributor_id)->get();
             $contributors_total_view        = 2545;
       //

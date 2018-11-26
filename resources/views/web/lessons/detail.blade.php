@@ -897,7 +897,7 @@ td{
                       @if ($contributors->avatar)
                         <img src="{{ asset($contributors->avatar) }}" alt="" class="img-responsive img-center">
                       @else
-                        <img src="{{ asset('template/kontributor/img/user.png') }}" alt="" class="img-responsive img-center">
+                        <img src="{{ asset($contributors->slug) }}" alt="" class="img-responsive img-center">
                       @endif
                       <div class="text-center mt-15">
                         <div class="btn-group">

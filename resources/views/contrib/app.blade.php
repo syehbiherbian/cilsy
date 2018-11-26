@@ -65,14 +65,18 @@
                         <?php } ?>
                         <div class="dropdown-container">
                             <ul>
-                              <?php echo notif();?>
+                              <?php echo notif();?> 
                               <li role="separator" class="divider"></li>
                               <li><a href="{{ url('/contributor/notif')}}">Lihat Semua Pemberitahuan</a></li>
                             </ul>
                         </div>
                     </li>
                     <li class="has-dropdown">
-                        <img src="{{asset('template/kontributor/img/icon/Akun.png')}}" alt="">
+                    @if(Helper::contrib('avatar') != null)
+                    <img src="<?=Helper::contrib('avatar');?>" class="poto img-circle" alt="" style="">
+                    @else
+                    <img src="{{asset(profil())}}" class="poto img-circle" alt="" style="">
+                    @endif
                         <div class="dropdown-container">
                             <ul>
                                 <li>

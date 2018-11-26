@@ -608,7 +608,7 @@ a #items .item {
                                       @if(Helper::member('avatar') != null)
                                       <img src="<?=Helper::member('avatar');?>" class="poto img-circle" alt="" style="">
                                       @else
-                                      <img src="{{asset(profil())}}" class="poto img-circle" alt="" style="">
+                                      <img src="{{asset(profilcon())}}" class="poto img-circle" alt="" style="">
                                       @endif
                                       @if(Helper::member('full_name') != null)
                                       <?=Helper::member('full_name');?>
