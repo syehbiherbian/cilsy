@@ -133,8 +133,12 @@ function cart(){
 }
 function profilcon(){
   $contribID = Auth::guard('contributors')->user()->id;
+  if(!empty($contribID)){
   $profil = Contributor::Join('profile', DB::raw('left(Contributors.username, 1)'), '=', 'profile.huruf')
   ->where('Contributors.id',  $contribID)->select('profile.slug as slug')->first();
+  }else{
+    $profil =0;
+  }
 
   return $profil->slug;
 }
