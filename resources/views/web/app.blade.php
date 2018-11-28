@@ -56,7 +56,7 @@
     <script type="text/javascript" src="https://unpkg.com/sweetalert2@7.9.2/dist/sweetalert2.all.js"></script>
     <!-- Jquery UI   -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/plupload/3.1.2/plupload.full.min.js"></script>
-    <script type="text/javascript" src="{{ asset('template/web/plugins/jquery-ui-1.12.1.custom/jquery-ui.js') }}"></script>
+    {{--  <script type="text/javascript" src="{{ asset('template/web/plugins/jquery-ui-1.12.1.custom/jquery-ui.js') }}"></script>  --}}
     <script type="text/javascript" src="{{ asset('template/web/plugins/OwlCarousel2-2.2.1/dist/owl.carousel.js') }}"></script>
     <!-- Facebook Pixel Code -->
     <script>
@@ -453,6 +453,16 @@ a #items .item {
     border-radius: 6px;
     background-color: #FFF;
     z-index: 99;
+}
+.ui-autocomplete {
+  transition: opacity 1s;
+  -moz-transition: opacity 1s;
+  -webkit-transition: opacity 1s;
+  -o-transition: opacity 1s;
+}
+
+.ui-autocomplete.opened {
+  opacity: 1;
 }
 
     </style>
@@ -851,6 +861,7 @@ a #items .item {
     });
     </script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-show-password/1.0.3/bootstrap-show-password.min.js"></script>
+    <script type="text/javascript" src="https://twitter.github.io/typeahead.js/releases/latest/typeahead.bundle.js"></script>
 
     <script>
       $(document).ready(function() {
@@ -901,7 +912,7 @@ a #items .item {
       $(".keyword").autocomplete({
         source: function(request, response) {
           $.ajax({
-              url: "search/autocomplete",
+              url: "{{ url('search/autocomplete')}}",
               type: "GET",
               dataType: "json",
               data: {id: $('.searchcategory').val()},
@@ -927,15 +938,17 @@ a #items .item {
       }).bind('focus', function () {
         console.log($('.searchcategory').val());  
 
-        $('.ui-autocomplete').css('z-index','9999').css('overflow-y','scroll').css('max-height','300px').stop(true, true).delay(200).fadeIn(200);
-        // $('.ui-autocomplete').css('background','#09121a').css('color','#fff');
-        // $('.ui-menu .ui-menu-item-wrapper').css('padding','11px 1em 3px 1.4em !important');
+        $('.ui-autocomplete').css('z-index','9999').css('overflow-y','scroll').css('max-height','300px');
+       // $('.ui-autocomplete').css('background','#09121a').css('color','#fff');
+        //$('.ui-menu .ui-menu-item-wrapper').css('padding','11px 1em 3px 1.4em !important');
         // $(this).autocomplete("search");
         // var btncategory = $('.btn-category').width();
         // var left = '-'+btncategory+'px';
       });
     });
     </script>
+    
+    
     <!--Start of Tawk.to Script-->
     <script type="text/javascript">
     var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
