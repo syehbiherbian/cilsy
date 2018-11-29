@@ -19,9 +19,9 @@ use DateTime;
 use Session;
 class SearchController extends Controller
 {
-  public function index()
+  public function index(Request $request)
   {
-    $c  = Input::get('category');
+    $c  = $request->id;
     $q  = Input::get('q');
     $mem_id = isset(Auth::guard('members')->user()->id) ? Auth::guard('members')->user()->id : 0;
 
@@ -35,7 +35,7 @@ class SearchController extends Controller
           }else {
             $cateid = 0;
           }
-          if(!empty($mem_id)){
+          if(!empty($mem_id ) && $request->id != null){
 
                     $results = Lesson::Join('categories', 'lessons.category_id', 'categories.id')
                     ->leftjoin('tutorial_member', function($join){

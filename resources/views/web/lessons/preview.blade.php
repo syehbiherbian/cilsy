@@ -145,7 +145,7 @@
 
           </div>
 
-          <a id="collapse" data-toggle="collapse" href="#collapseKurikulum" role="button" style="color:#2BA8E2; font-weight:bold;">+ Tampilkan Lebih Banyak</a>
+          <a id="collapse1" data-toggle="collapse" href="#collapseKurikulum" role="button" style="color:#2BA8E2; font-weight:bold;">+ Tampilkan Lebih Banyak</a>
         </div>
       </div>
 
@@ -198,7 +198,6 @@
               <p>
                   {{ $contributors->deskripsi }}
               </p>
-              <a href="#">Lebih Banyak</a>
           </div>
               
          
@@ -285,6 +284,11 @@
             return old=='+ Tampilkan Lebih Banyak' ?  '- Tampilkan Lebih Sedikit' : '+ Tampilkan Lebih Banyak';
         });
     });
+    $('#collapse1').click(function(){ 
+      $(this).text(function(i,old){
+          return old=='+ Tampilkan Lebih Banyak' ?  '- Tampilkan Lebih Sedikit' : '+ Tampilkan Lebih Banyak';
+      });
+  });
     $(function(){
       $('#ModalVideo').modal({
           show: false
