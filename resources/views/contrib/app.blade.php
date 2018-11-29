@@ -75,7 +75,7 @@
                     @if(Helper::contrib('avatar') != null)
                     <img src="<?=Helper::contrib('avatar');?>" class="poto img-circle" alt="" style="">
                     @else
-                    <img src="{{asset(profil())}}" class="poto img-circle" alt="" style="">
+                    <img src="{{asset(profilcon())}}" class="poto img-circle" alt="" style="">
                     @endif
                         <div class="dropdown-container">
                             <ul>
