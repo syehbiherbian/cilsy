@@ -630,7 +630,7 @@ class LessonsController extends Controller
 				                      <div class="panel panel-default">
                                         <div class="panel-heading">';
                                         if($child->public == 1){
-                                        $html .='<a href="member/profile/'.$userna.'"><strong>' . $userna . '</strong></a> <span class="text-muted"> ' . $this->time_elapsed_string($child->created_at) . '</span>';
+                                        $html .='<a href="'.url('member/profile/'.$usernam).'"><strong>' . $userna . '</strong></a> <span class="text-muted"> ' . $this->time_elapsed_string($child->created_at) . '</span>';
                                         }else{
                                         $html .='<strong>' . $userna . '</strong> <span class="text-muted"> ' . $this->time_elapsed_string($child->created_at) . '</span>';
                                         }
