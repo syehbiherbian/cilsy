@@ -81,7 +81,7 @@
                     </h4>
                 </div>
             </div>
-            @endif
+            @endif 
         </div>
         <div id="cart-total" class="row  {{ !count($carts) ? 'hide' : '' }}">
             <div class="col-md-offset-8 col-md-4">
