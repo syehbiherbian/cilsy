@@ -25,9 +25,15 @@ class ContributorsController extends Controller
 
   public function getProfile($username='')
   {
+   
     $contributors = Contributor::where('username',$username)->first();
 
+   
     if ($contributors) {
+      $contri = DB::table('contributors')
+      ->Join('profile', DB::raw('left(contributors.username, 1)'), '=', 'profile.huruf')
+      ->where('contributors.id',$contributors->id)->first();
+  
       $contributors_total_lessons = Lesson::where('enable', '=', 1)->where('status', 1)->where('contributor_id', '=', $contributors->id)->get();
       $contributors_lessons = Lesson::where('enable', '=', 1)->where('status', 1)->where('contributor_id', '=', $contributors->id)->paginate(12);
       $contributors_total_view 		= 0;
@@ -44,6 +50,7 @@ class ContributorsController extends Controller
 			}
       return view('web.contributors.profile',[
           'contributors'              => $contributors,
+          'contri'              => $contri,
           'contributors_lessons'      => $contributors_lessons,
           'contributors_total_view'   => $contributors_total_view,
           'contributors_total_lessons' => $contributors_total_lessons,

@@ -133,7 +133,9 @@ class LessonsController extends Controller
             $files = File::where('enable', 1)->where('lesson_id', $lessons->id)->orderBy('id', 'asc')->get();
             
             // Contributor
-            $contributors = Contributor::find($lessons->contributor_id);
+            $contributors = DB::table('contributors')
+            ->leftJoin('profile', DB::raw('left(contributors.username, 1)'), '=', 'profile.huruf')
+            ->where('contributors.id',$lessons->contributor_id)->first();  
             $contributors_total_lessons = Lesson::where('enable', 1)->where('status', 1)->where('contributor_id', $lessons->contributor_id)->with('videos.views')->get();
             $contributors_total_view = 0;
             foreach ($contributors_total_lessons as $lessonss) {
@@ -206,7 +208,8 @@ class LessonsController extends Controller
             // Contributor
             $contributors = DB::table('contributors')
             ->leftJoin('profile', DB::raw('left(contributors.username, 1)'), '=', 'profile.huruf')
-            ->where('contributors.id',$lessons->contributor_id)->first();            $contributors_total_lessons = Lesson::where('enable', 1)->where('status', 1)->where('contributor_id', $lessons->contributor_id)->with('videos.views')->get();
+            ->where('contributors.id',$lessons->contributor_id)->first();           
+             $contributors_total_lessons = Lesson::where('enable', 1)->where('status', 1)->where('contributor_id', $lessons->contributor_id)->with('videos.views')->get();
             $contributors_total_view = 0;
             foreach ($contributors_total_lessons as $lessonss) {
                 foreach ($lessonss->videos as $videos) {

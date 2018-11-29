@@ -139,9 +139,6 @@
                     </div>
                     <div class="col-md-6 bawah">
                     </div>
-                    
-                    <div class="col-md-6 bawah">
-                    </div>
                     <div class="col-md-6 bawah">
                     Total Pembayaran
                     </div>
