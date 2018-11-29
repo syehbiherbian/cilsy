@@ -918,11 +918,14 @@ a #items .item {
               data: {id: $('.searchcategory').val()},
               success: function(data) {
                   response($.map(data, function(item) {
-                    return {
-                      label: item.value,
-                      value: item.value,
-                      slug: item.slug
-                  };
+                    if ( item.value.toUpperCase().indexOf(request.term.toUpperCase()) != -1 ) {
+                      return {
+                        label: item.value,
+                        value: item.value,
+                        slug: item.slug
+                    };
+                    }
+                    
                   }));
               }
           });
