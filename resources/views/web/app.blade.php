@@ -947,7 +947,42 @@ a #items .item {
       });
     });
     </script>
-    
+    {{--  <script>
+      jQuery(document).ready(function($) {
+          // Set the Options for "Bloodhound" suggestion engine
+          var engine = new Bloodhound({
+              remote: {
+                  url: "{{ url('search/autocomplete')}}",
+              },
+              datumTokenizer: Bloodhound.tokenizers.whitespace('q'),
+              queryTokenizer: Bloodhound.tokenizers.whitespace
+          });
+
+          $(".keyword").typeahead({
+              hint: true,
+              highlight: true,
+              minLength: 1
+          }, {
+              source: engine.ttAdapter(),
+
+              // This will be appended to "tt-dataset-" to form the class name of the suggestion menu.
+              name: 'usersList',
+
+              // the key from the array we want to display (name,id,email,etc...)
+              templates: {
+                  empty: [
+                      '<div class="list-group search-results-dropdown"><div class="list-group-item">Nothing found.</div></div>'
+                  ],
+                  header: [
+                      '<div class="list-group search-results-dropdown">'
+                  ],
+                  suggestion: function (data) {
+                      return '<a href="/lessons/' + data.slug + '" class="list-group-item">' + data.title + '</a>'
+            }
+              }
+          });
+      });
+  </script>  --}}
     
     <!--Start of Tawk.to Script-->
     <script type="text/javascript">
