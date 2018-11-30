@@ -131,17 +131,34 @@
 						<?php
 						$getchild = DB::table('comments')
 							->leftJoin('members','members.id','=','comments.member_id')
-							->leftJoin('contributors','contributors.id','=','comments.contributor_id')
+              ->leftJoin('contributors','contributors.id','=','comments.contributor_id')
+              ->leftJoin('profile', DB::raw('left(members.username, 1)'), '=', 'profile.huruf')
+              ->leftJoin('profile as B', DB::raw('left(contributors.username, 1)'), '=', 'B.huruf')
 							->where('comments.lesson_id',$datalesson->id)
 							->where('parent_id',$comment->id)
 							->orderBy('comments.created_at','ASC')
-							->select('comments.*','members.username as username','contributors.username as contriname')
+							->select('comments.*','members.username as username','contributors.username as contriname', 'contributors.avatar as avatar','members.avatar as ava', 'profile.slug as slug', 'B.slug as slg')
 							->get();
 						if (count($getchild) > 0) {
 							foreach ($getchild as $child) {
 						?>
 						<div class="col-md-12" style="margin-top:10px;padding-left:5%;">
-							<img class="user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png"height="40px" width="40px" style="object-fit:scale-down;border-radius: 100%;margin-bottom:10px;">
+            <?php if($child->desc == 0){ ?>
+              @if(!empty($child->ava))
+							<img class="user-photo" src="{{ $child->ava }}"height="40px" width="40px" style="object-fit:scale-down;border-radius: 100%;margin-bottom:10px;">
+              @else
+							<img class="user-photo" src="{{asset($child->slug) }}"height="40px" width="40px" style="object-fit:scale-down;border-radius: 100%;margin-bottom:10px;">
+              @endif
+            <?php }else{ ?>
+              @if(!empty($child->avatar))
+              <img class="user-photo" src="{{ $child->avatar }}"height="40px" width="40px" style="object-fit:scale-down;border-radius: 100%;margin-bottom:10px;">
+
+              @else
+              <img class="user-photo" src="{{asset($child->slg) }}"height="40px" width="40px" style="object-fit:scale-down;border-radius: 100%;margin-bottom:10px;">
+
+              @endif
+            <?php } ?>
+
 								<strong>
 									<?php if($child->desc == 0){ ?>
 										{{ $child->username }}

@@ -63,10 +63,10 @@
 <div class="container section-content">
     <div class="row">
       <div class="col-md-3 pt-25 ">
-        <?php if ($contributors->avatar): ?>
+        <?php if ($contri->avatar): ?>
           <img src="{{ asset($contributors->avatar) }}" alt="" class="img-responsive img-center">
         <?php else: ?>
-          <img src="{{ asset('template/kontributor/img/icon/avatar.png') }}" alt="" class="img-responsive img-center">
+          <img src="{{ asset($contri->slug) }}" alt="" class="img-responsive img-center">
         <?php endif; ?>
         <div class="text-center mt-15">
           <div class="btn-group">

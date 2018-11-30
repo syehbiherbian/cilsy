@@ -30,7 +30,15 @@ class Helper
         return $result;
       }
   }
-
+  static function contrib($field)
+  {
+    $contribID = Auth::guard('contributors')->user()->id;
+      if ($contribID) {
+        $contrib  = Contributor::where('id','=',$contribID)->first();
+        $result   = $contrib->$field; 
+        return $result;
+      }
+  }
   static function package($field)
   {
       $now = new DateTime();
@@ -122,6 +130,17 @@ function cart(){
                 </li>';
   }
   return $html;
+}
+function profilcon(){
+  $contribID = Auth::guard('contributors')->user()->id;
+  if(!empty($contribID)){
+  $profil = Contributor::Join('profile', DB::raw('left(contributors.username, 1)'), '=', 'profile.huruf')
+  ->where('contributors.id',  $contribID)->select('profile.slug as slug')->first();
+  }else{
+    $profil =0;
+  }
+
+  return $profil->slug;
 }
 function profil(){
   $member_id = Auth::guard('members')->user()->id ?? null;

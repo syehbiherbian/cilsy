@@ -108,7 +108,7 @@
                       <?php if ($contributors->avatar): ?>
                         <img src="{{ asset($contributors->avatar) }}" alt="" class="img-responsive img-center">
                       <?php else: ?>
-                        <img src="{{ asset('template/kontributor/img/icon/avatar.png') }}" alt="" class="img-responsive img-center">
+                        <img src="{{ asset($contributors->slug) }}" alt="" class="img-responsive img-center">
                       <?php endif; ?>
                       <div class="text-center mt-15">
                         <div class="btn-group">

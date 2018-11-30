@@ -81,7 +81,7 @@
                     </h4>
                 </div>
             </div>
-            @endif
+            @endif 
         </div>
         <div id="cart-total" class="row  {{ !count($carts) ? 'hide' : '' }}">
             <div class="col-md-offset-8 col-md-4">
@@ -117,8 +117,7 @@
                     </div>
                     <div class="col-md-6">
                     @if (session()->has('coupon'))
-                    Diskon <span style="font-size:12px;color:blue;">{{ session()->get('coupon')['name'] }}</span>
-                    <br>
+                    Diskon <span style="font-size:11px; color:blue;">{{ session()->get('coupon')['name'] }}</span>
                     <form action="{{ url('coupon/delete') }}" method="POST" style="display:inline">
                         {{ csrf_field() }}
                         {{ method_field('delete') }}
@@ -134,19 +133,13 @@
                     @endif
                     </div>
                     @if(session()->has('coupon'))
-                    <div class="col-md-6 ">
+                    <div class="col-md-6 bawah">
                     </div>
-                    <div class="col-md-6 ">
+                    <div class="col-md-6 bawah">
                     </div>
-                    <div class="col-md-6 ">
+                    <div class="col-md-6 bawah">
                     </div>
-                    <div class="col-md-7 ">
-                    </div>
-                    <div class="col-md-7 ">
-                    </div>
-                    <div class="col-md-7 ">
-                    </div>  
-                    <div class="col-md-7">
+                    <div class="col-md-6 bawah">
                     Total Pembayaran
                     </div>
                     @else
@@ -156,17 +149,13 @@
                         Total Pembayaran
                     </div>
                     @endif
-                    
+                    <div class="col-md-6" style="text-align:right">
                         @if(session()->has('coupon'))
-                        <div class="col-md-5" style="text-align:right">
                         <span id="total-price">Rp. {{ number_format(getNumbers()->get('newSubtotal'), 0, ",", ".") }}</span>
-                        </div>
                         @else
-                        <div class="col-md-6" style="text-align:right">
                         <span id="total-harga">Rp. {{ number_format($total, 0, ",", ".") }}</span>
-                        </div>
                         @endif
-                   
+                    </div>
                     <div class="col-md-12">
                         @if (session()->has('success_message'))
                             <div class="spacer"></div>
@@ -230,10 +219,8 @@ fbq('track', 'AddToCart');
                     html += '</div>';
                     html += '</div>';
                     html += '</div>';
-
                     total += parseInt(v.price);
                 });
-
                 $('#tutorial-total').html(carts.length);
                 $('#cart').html(html);
                 $('#cart-total, #cart-pay').removeClass('hide');

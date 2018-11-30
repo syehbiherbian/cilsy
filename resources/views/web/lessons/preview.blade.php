@@ -173,7 +173,7 @@
             @if ($contributors->avatar)
             <img src="{{ asset($contributors->avatar) }}" alt="" class="img-responsive img-center mb-2">
           @else
-            <img src="{{ asset('template/web/img/user.png') }}" alt="" class="img-responsive img-center mb-2">
+            <img src="{{ asset($contributors->slug) }}" alt="" class="img-responsive img-center mb-2">
           @endif
           <div class="row">
             <div class="col-xs-12 ">
