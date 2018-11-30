@@ -64,7 +64,7 @@
 				<div class="form-group">
 						<label class="col-sm-2 control-label">Deskripsi Singkat</label>
 						<div class="col-sm-10">
-							<textarea type="text"  required class="form-control" placeholder="deskripsi singkat mengenai tutorial" name="desk_singkat" value="{{$row->deskripsi_singkat}}"></textarea>
+							<textarea type="text"  required class="form-control" placeholder="deskripsi singkat mengenai tutorial" name="desk_singkat" value="{{$row->deskripsi_singkat}}">{{$row->deskripsi_singkat}}</textarea>
 						</div>
 				</div>
 	      <div class="form-group">
@@ -131,7 +131,7 @@
 <script>
 	$('#summernote').summernote('code', '{!! $row->description !!}');
 	$('#textedit').summernote('code', '{!! $row->requirement !!}');
-	$('#goal').summernote('code', '{!! $row->goal_tutorial !!}');
+	$('#summergoal').summernote('code', '{!! $row->goal_tutorial !!}');
 	$('#summernote').summernote({
 		height: 500,                 // set editor height
 		minHeight: null,             // set minimum height of editor

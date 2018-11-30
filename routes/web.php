@@ -14,9 +14,9 @@ use Spatie\Sitemap\SitemapGenerator;
  // SITEMAP
 
 Route::get('generate-sitemap/', 'SitemapController@index');
-Route::get('robot/{filename}', function ($filename)
+Route::get('sitemap.xml', function ()
 {
-    $path = storage_path($filename);
+    $path = storage_path('sitemap.xml');
 
     if (!File::exists($path)) {
         abort(404);

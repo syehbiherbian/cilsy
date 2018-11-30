@@ -40,6 +40,12 @@
     </div>
 </section>
 <div class="container">
+  @if(Auth::guard('members')->user()->id != $members->id)
+    @if($members->public == 0 )
+      <div class="row">
+        <h4>Profil member ini tidak publik</h4>
+      </div>
+    @endif
     <div class="row">
             <h4>Tutorial yang {{ $members->full_name}} ikuti</h4>
             <?php
@@ -75,5 +81,6 @@
 
               <?php } ?>
     </div>
+    @endif
 </div>
 @endsection

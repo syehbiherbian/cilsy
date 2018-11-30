@@ -48,12 +48,12 @@ class ProfileController extends Controller
     public function view($username)
     {
       // Authentication
-      $mem_id = Auth::guard('members')->user()->id;
-      if (!$mem_id) {
-        return redirect('/member/signin');
-        exit;
-      }
-      $get_lessons = Lesson::join('videos', 'lessons.id', '=', 'videos.lessons_id')
+      
+      if (empty(Auth::guard('members')->user())) {
+        return redirect('/member/signin')->with('error','Kamu Harus Login terlebih dahulu');
+      }else{
+        $mem_id = Auth::guard('members')->user()->id;
+        $get_lessons = Lesson::join('videos', 'lessons.id', '=', 'videos.lessons_id')
                      ->join('viewers', 'videos.id', '=', 'viewers.video_id')
                      ->where('viewers.member_id', '=', $mem_id)
                      ->orderBy('viewers.member_id', 'viewers.updated_at', 'asc')
@@ -72,6 +72,8 @@ class ProfileController extends Controller
         exit;
       }
     }
+      }
+      
 
     public function doSubmit()
     {
