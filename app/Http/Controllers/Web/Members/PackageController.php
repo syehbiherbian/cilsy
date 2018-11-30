@@ -99,10 +99,16 @@ class PackageController extends Controller
             $price += $cart->lesson->price;
           }
           if(Session::get('coupon')){
-            $disc = session()->get('coupon')['discount'];
+            $disc = 0;
+            
+            if(empty(session()->get('coupon')['discount'])){
+              $disc =  $price*session()->get('coupon')['percent_off']/100;
+            }else{
+              $disc = session()->get('coupon')['discount'];
+            }
             $price = $price-$disc;
           }
-
+          
           $code = $this->generateCode();
           // store
           $invoice = Invoice::updateOrCreate([

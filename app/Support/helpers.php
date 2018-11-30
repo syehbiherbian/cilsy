@@ -127,8 +127,12 @@ function profil(){
   $member_id = Auth::guard('members')->user()->id ?? null;
   $profil = Member::Join('profile', DB::raw('left(members.username, 1)'), '=', 'profile.huruf')
   ->where('members.id',  $member_id)->select('profile.slug as slug')->first();
-
-  return $profil->slug;
+  if($profil){
+    return $profil->slug;
+  }else{
+    return null;
+  }
+  
 }
 function getCategory(){
   $categories = Category::all();
