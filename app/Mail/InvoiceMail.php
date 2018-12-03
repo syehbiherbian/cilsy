@@ -29,7 +29,7 @@ class InvoiceMail extends Mailable
      */
     public function build()
     {
-        return $this->subject('Proses Pembayaran Anda belum Selesai')
+        return $this->subject('Bingung Cara Membayar ?')
                     ->view('mail.pesan_paket');
     }
 }

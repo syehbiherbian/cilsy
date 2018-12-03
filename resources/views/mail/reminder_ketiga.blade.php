@@ -72,15 +72,15 @@
 
                                     <p><span style="font-family:verdana,geneva,sans-serif;"><span style="font-size:16px; text-align: justify; text-justify: inter-word;"><span style="color: rgb(0, 0, 0);">
                                     Sayang sekali, batas waktu pembayaran Anda sisa 1 Jam lagi.
-                                    <span> </span>
+                                    <br>
                                     Lewat dari 1 Jam otomatis invoice pembelian Anda akan hangus. Anda terpaksa harus pesan ulang di
                                     www.cilsy.id dan ada kemungkinan harga akan naik.
-                                    <span> </span>
+                                    <br>
                                     Anda juga akan melewatkan kesempatan belajar di Cilsy.
-                                    <span> </span>
+                                    <br>
                                     Silahkan cek email Anda yang berisi invoice pembayaran. Di dalamnya tercantum lengkap nomor
                                     rekening virtual account dan juga panduan cara transfer.
-                                    <span> </span>
+                                    <br>
                                     Kurang dari 1 Jam lagi invoice Anda hangus.
                                                                                 </span></span></span></p>
 

@@ -44,8 +44,8 @@ class ReminderKeempat extends Command
     public function handle()
     {
         $invo = Invoice::with('members')
-        ->where('invoice.status', 2)
-        ->where(DB::raw('left(DATE_ADD( invoice.created_at, INTERVAL 23 HOUR), 16)'), '=', DB::raw(' left(now(), 16)') )
+        ->where('invoice.status', 5)
+        ->where(DB::raw('left(DATE_ADD( invoice.created_at, INTERVAL 48 HOUR), 16)'), '=', DB::raw(' left(now(), 16)') )
         ->get();
             foreach($invo as $inv){
                 if($inv != null){

@@ -46,7 +46,7 @@ class ReminderKetiga extends Command
     {
         $invo = Invoice::with('members')
         ->where('invoice.status', 2)
-        ->where(DB::raw('left(DATE_ADD( invoice.created_at, INTERVAL 22 HOUR), 16)'), '=', DB::raw(' left(now(), 16)') )
+        ->where(DB::raw('left(DATE_ADD( invoice.created_at, INTERVAL 23 HOUR), 16)'), '=', DB::raw(' left(now(), 16)') )
         ->get();
             foreach($invo as $inv){
                 if($inv != null){
