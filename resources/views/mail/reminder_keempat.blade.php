@@ -73,12 +73,18 @@
                                     <p><span style="font-family:verdana,geneva,sans-serif;"><span style="font-size:16px; text-align: justify; text-justify: inter-word;"><span style="color: rgb(0, 0, 0);">
                                     Sayang sekali, invoice pembayaran Anda sudah hangus.
                                     <br>
+                                    <br>
+
                                     Anda sudah pesan tutorial di www.cilsy.id tapi tidak menyelesaikan pembayaran dalam waktu 24 jam.
                                     <br>
+                                    <br>
+
                                     Boleh saya tau, ada kendala apa ? Yuk ngobrol dengan saya, barangkali saya bisa bantu.
                                     bisa melalui email ke customer service kami di support@cilsy.id atau klik tombol di bawah ini untuk menuju live chat.
                                     </p>
                                     <br>
+                                    <br>
+
                                     <p style="text-align: center;"><span style="font-family:verdana,geneva,sans-serif;"><a href="https://cilsy.id/"
                                                style="background-color:#ffffff;border-radius:4px;color:#2BA8E2;display:inline-block;font-family:Helvetica, Arial, sans-serif;font-size:16px;font-weight:bold;line-height:50px;text-align:center;text-decoration:none;width:200px;-webkit-text-size-adjust:none;">Bertanya ke CS</a>
                                            </span></p>

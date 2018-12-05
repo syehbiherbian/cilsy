@@ -74,19 +74,31 @@
                                     Saya lihat, sisa waktu pembayaran Anda sekitar 12 Jam lagi sebelum invoice hangus. Akan sangat
                                     disayangkan kalau Anda melewatkan kesempatan ini.
                                     <br>
+                                    <br>
+
                                     Tutorial online di Cilsy di desain agar bisa Anda pelajari dan LANGSUNG dipraktekkan. Ditambah dengan
                                     fasilitas kolom diskusi untuk memudahkan Anda bertanya.
                                     <br>
+                                    <br>
+
                                     Bagaimana cara bayarnya ? Cek email yang berisi invoice, ada panduannya.
                                     <br>
+                                    <br>
+
                                     Transfernya kemana ? Cek email yang berisi invoice, ada nomor virtual account nya.
                                     <br>
+                                    <br>
+
                                     Ada kendala saat transfer ? Silahkan balas email ini, atau hubungi customer care Cilsy melalui Whatsapp
                                     0896 3071 3487 ( simpan nomor ini dengan nama Cilsy ).
                                     <br>
+                                    <br>
+
                                     Setelah transfer Anda bisa langsung akses materinya, tidak perlu konfirmasi pembayaran. Anda hanya
                                     perlu login ke www.cilsy.id menggunakan email yang terdaftar.
                                     <br>
+                                    <br>
+
                                     Sampai jumpa di member area ya.
                                     </span></span></span></p>
 
