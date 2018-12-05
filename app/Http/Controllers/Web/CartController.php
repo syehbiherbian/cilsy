@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web;
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use App\Models\Lesson;
+use App\Models\Coupon;
 use Auth;
 use Illuminate\Http\Request;
 
@@ -59,10 +60,22 @@ class CartController extends Controller
         if (!Auth::guard('members')->user()) {
             return 0;
         }
+        $member_id = Auth::guard('members')->user()->id ?? null;
 
         /* delete */
+        $kupon = session()->get('coupon')['name'];
         $cart->delete();
 
-        return redirect('/cart');
+        $minimal = Coupon::where('code', $kupon)->sum('minimum_checkout');
+       
+        $code =  Cart::join('lessons', 'lessons.id', 'cart.lesson_id')->where('member_id', $member_id)->sum('lessons.price');
+        if($code <= $minimal){
+            session()->forget('coupon');
+            return redirect('/cart')->withErrors('Kode Promo tidak berlaku untuk paket yang anda pilih!');
+
+        }else{
+            return redirect('/cart');
+
+        }
     }
 }
