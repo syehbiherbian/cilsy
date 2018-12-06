@@ -45,42 +45,80 @@
       <div class="row">
         <h4>Profil member ini tidak publik</h4>
       </div>
+    @else
+          <div class="row">
+              <h4>Tutorial yang {{ $members->full_name}} ikuti</h4>
+              <?php
+        if(!count($lessons) == 0) {
+                  $i = 1;
+                  foreach ($lessons as $key => $lesson): ?>
+                      <?php if ($i <= 4) {?>
+                        <div class="col-md-3">
+                          <a href="{{ url('kelas/v3/'.$lesson->slug)}}" style="text-decoration: none;">
+                            <div class="card">
+                              <?php if (!empty($lesson->image)) {?>
+                                <img src="{{ asset($lesson->image) }}" alt="" class="img-responsive">
+                              <?php } else {?>
+                                <img src="{{ asset('template/web/img/no-image-available.png') }}" alt="" class="img-responsive">
+                              <?php }?>
+                              <div class="caption">
+                                <p>{{ $lesson->title }}</p>
+                              </div>
+                              <div class="footer">
+                                <p>Total <?php echo Helper::getTotalVideo($lesson->lesson_id);?> Video</p>
+                              </div>
+                            </div>
+                          </a>
+                        </div>
+                    <?php } ?>
+                    <?php $i++;?>
+
+                <?php endforeach; 
+                }else{ ?>
+                <div class="alert alert-danger" role="alert">
+                Belum ada tutorial yang anda ikuti 
+                </div>
+
+                <?php } ?>
+      </div>
     @endif
+    @else
     <div class="row">
-            <h4>Tutorial yang {{ $members->full_name}} ikuti</h4>
-            <?php
-       if(!count($lessons) == 0) {
-                $i = 1;
-                foreach ($lessons as $key => $lesson): ?>
-                    <?php if ($i <= 4) {?>
-                      <div class="col-md-3">
-                        <a href="{{ url('kelas/v3/'.$lesson->slug)}}" style="text-decoration: none;">
-                          <div class="card">
-                            <?php if (!empty($lesson->image)) {?>
-                              <img src="{{ asset($lesson->image) }}" alt="" class="img-responsive">
-                            <?php } else {?>
-                              <img src="{{ asset('template/web/img/no-image-available.png') }}" alt="" class="img-responsive">
-                            <?php }?>
-                            <div class="caption">
-                              <p>{{ $lesson->title }}</p>
-                            </div>
-                            <div class="footer">
-                              <p>Total <?php echo Helper::getTotalVideo($lesson->id);?> Video</p>
-                            </div>
-                          </div>
-                        </a>
+        <h4>Tutorial yang {{ $members->full_name}} ikuti</h4>
+        <?php
+   if(!count($lessons) == 0) {
+            $i = 1;
+            foreach ($lessons as $key => $lesson): ?>
+                <?php if ($i <= 4) {?>
+                  <div class="col-md-3">
+                    <a href="{{ url('kelas/v3/'.$lesson->slug)}}" style="text-decoration: none;">
+                      <div class="card">
+                        <?php if (!empty($lesson->image)) {?>
+                          <img src="{{ asset($lesson->image) }}" alt="" class="img-responsive">
+                        <?php } else {?>
+                          <img src="{{ asset('template/web/img/no-image-available.png') }}" alt="" class="img-responsive">
+                        <?php }?>
+                        <div class="caption">
+                          <p>{{ $lesson->title }}</p>
+                        </div>
+                        <div class="footer">
+                          <p>Total <?php echo Helper::getTotalVideo($lesson->id);?> Video</p>
+                        </div>
                       </div>
-                  <?php } ?>
-                  <?php $i++;?>
-
-              <?php endforeach; 
-              }else{ ?>
-               <div class="alert alert-danger" role="alert">
-               Belum ada tutorial yang anda ikuti 
-               </div>
-
+                    </a>
+                  </div>
               <?php } ?>
-    </div>
+              <?php $i++;?>
+
+          <?php endforeach; 
+          }else{ ?>
+           <div class="alert alert-danger" role="alert">
+           Belum ada tutorial yang anda ikuti 
+           </div>
+
+          <?php } ?>
+</div>
     @endif
+    
 </div>
 @endsection

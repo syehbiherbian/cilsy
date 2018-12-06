@@ -11,6 +11,7 @@ use Validator;
 use Redirect;
 use App\Models\Member;
 use App\Models\Invoice;
+use App\Models\TutorialMember;
 // use App\Models\Package;
 use Session;
 // use Hash;
@@ -53,19 +54,17 @@ class ProfileController extends Controller
         return redirect('/member/signin')->with('error','Kamu Harus Login terlebih dahulu');
       }else{
         $mem_id = Auth::guard('members')->user()->id;
-        $get_lessons = Lesson::join('videos', 'lessons.id', '=', 'videos.lessons_id')
-                     ->join('viewers', 'videos.id', '=', 'viewers.video_id')
-                     ->where('viewers.member_id', '=', $mem_id)
-                     ->orderBy('viewers.member_id', 'viewers.updated_at', 'asc')
-                     ->distinct()
-                     ->get(['viewers.member_id', 'lessons.*']);   
-      $members = Member::where('id',$mem_id)->first();
+        $belitut = TutorialMember::join('lessons','lessons.id', 'tutorial_member.lesson_id')
+                 ->join('members', 'members.id', 'tutorial_member.member_id')
+                 ->where('username', $username)->get();  
+        // dd($belitut);
+      $members = Member::where('username',$username)->first();
 
          
       if ($members) {
         return view('web.members.view_profile', [
           'members' => $members,
-          'lessons' => $get_lessons,
+          'lessons' => $belitut,
         ]);
       }else {
         return redirect('/member/signin');
