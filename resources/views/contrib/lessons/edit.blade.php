@@ -129,9 +129,9 @@
 <script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
 <script type="text/javascript" src="{{asset('template/kontributor/summernote/summernote.js')}}"></script>
 <script>
-	$('#summernote').summernote('{!! $row->description !!}');
-	$('#textedit').summernote('{!! $row->requirement !!}');
-	$('#summergoal').summernote('{!! $row->goal_tutorial !!}');
+	$('#summernote').summernote('code', '{!! $row->description !!}');
+	$('#textedit').summernote('code', '{!! $row->requirement !!}');
+	$('#summergoal').summernote('code', '{!! $row->goal_tutorial !!}');
 	$('#summernote').summernote({
 		height: 500,                 // set editor height
 		minHeight: null,             // set minimum height of editor
