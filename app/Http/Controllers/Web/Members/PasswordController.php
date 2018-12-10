@@ -47,15 +47,18 @@ class PasswordController extends Controller
     public function SaveAccount(Request $request)
     {
       $mem_id = Auth::guard('members')->user()->id;
+      $now = new DateTime;
 
       $validatedData = $request->validate([
-          'email' => 'email|unique:members',
+          'email' => 'email|unique:members|required',
+          'username' => 'required'
       ]);
 
       //Change Password
       $user = Auth::guard('members')->user();
       $user->email = $request->get('email');
       $user->username = $request->get('username');
+      $user->updated_at = $now;
       $user->save();
 
       return redirect()->back()->with("success","Akun Berhasil di Ubah");
@@ -79,10 +82,12 @@ class PasswordController extends Controller
           'current_password' => 'required',
           'password' => 'required|string|min:8|confirmed',
       ]);
+      $now = new DateTime;
 
       //Change Password
       $user = Auth::guard('members')->user();
       $user->password = bcrypt($request->get('password'));
+      $user->updated_at = $now;
       $user->save();
 
       return redirect()->back()->with("success","Password changed successfully !");

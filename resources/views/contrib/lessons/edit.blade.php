@@ -1,6 +1,7 @@
 @extends('contrib.app')
-@section('title','')
-<link href="{{asset('template/kontributor/summernote/summernote.css')}}" rel="stylesheet">
+@section('title','Edit Tutorial')
+<link href='https://cdn.jsdelivr.net/npm/froala-editor@2.9.1/css/froala_editor.min.css' rel='stylesheet' type='text/css' />
+<link href='https://cdn.jsdelivr.net/npm/froala-editor@2.9.1/css/froala_style.min.css' rel='stylesheet' type='text/css' />
 @section('breadcumbs')
 
 <div id="navigation">
@@ -101,19 +102,19 @@
 				<div class="form-group">
 						<label class="col-sm-2 control-label">Goal Tutorial</label>
 						<div class="col-sm-10">
-							<textarea id="summergoal" name="goal" value="{{ $row->goal_tutorial }}"></textarea>
+							<textarea id="summergoal" name="goal" value="{{$row->goal_tutorial}}">{{$row->goal_tutorial}}</textarea>
 						</div>
 				</div>
 	      <div class="form-group">
 	        <label class="col-sm-2 control-label">Description</label>
 	        <div class="col-sm-10">
-							<textarea id="summernote" name="description" value="{{ $row->description }}"></textarea>
+							<textarea id="summernote" name="description" value="{{$row->description}}">{{$row->description}}</textarea>
 	        </div>
 				</div>
 				<div class="form-group">
 						<label class="col-sm-2 control-label">Requirement</label>
 						<div class="col-sm-10">
-								<textarea id="textedit" name="requirement" value="{{ $row->requirement }}"></textarea>
+								<textarea id="textedit" name="requirement" value="{{$row->requirement}}">{{$row->requirement}}</textarea>
 						</div>
 					</div>
 	      <div class="form-group">
@@ -126,9 +127,9 @@
 		</div>
   </div>
 </div>
-<script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
-<script type="text/javascript" src="{{asset('template/kontributor/summernote/summernote.js')}}"></script>
-<script>
+<!-- Include JS file. -->
+<script src='https://cloud.tinymce.com/stable/tinymce.min.js?apiKey=i0jmzdrvxazq4u69bg81bp4ukmsok5rv2xb2dm13bfnb6u5d'></script>
+{{--  <script>
 	$('#summernote').summernote('code', '{!! $row->description !!}');
 	$('#textedit').summernote('code', '{!! $row->requirement !!}');
 	$('#summergoal').summernote('code', '{!! $row->goal_tutorial !!}');
@@ -150,5 +151,20 @@
 		maxHeight: null,             // set maximum height of editor
 		focus: true                  // set focus to editable area after initializing summernote
 	});
-</script>
+</script>  --}}
+<script>
+  tinymce.init({
+    selector: '#summernote'
+  });
+	</script>
+	<script>
+		tinymce.init({
+			selector: '#textedit'
+		});
+		</script>
+		<script>
+			tinymce.init({
+				selector: '#summergoal'
+			});
+			</script>
 @endsection()
