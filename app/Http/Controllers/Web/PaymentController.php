@@ -26,7 +26,7 @@ class PaymentController extends Controller
     // dd($send);
     if($invoice){
       if($invoice->status == 2){
-        Mail::to($members->email)->send(new InvoiceMail());
+        // Mail::to($members->email)->send(new InvoiceMail());
       }
       else if($invoice->status == 1){
         Mail::to($members->email)->send(new SuksesMail());

@@ -46,7 +46,7 @@ class ReminderPertama extends Command
     {
         $invo = Invoice::with('members')
         ->where('invoice.status', 2)
-        ->where(DB::raw('left(DATE_ADD( invoice.created_at, INTERVAL 42 HOUR), 16)'), '=', DB::raw(' left(now(), 16)') )
+        ->where(DB::raw('left(DATE_ADD( invoice.created_at, INTERVAL 5 MINUTE), 16)'), '=', DB::raw(' left(now(), 16)') )
         ->get();
         // Mail::to($invo->members['email'])->send(new EmailReminderPertama());
         foreach($invo as $inv){
