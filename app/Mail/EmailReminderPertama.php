@@ -30,6 +30,7 @@ class EmailReminderPertama extends Mailable
      */
     public function build()
     {
-        return $this->view('mail.reminder_pertama');
+        return $this->subject('Bingung Cara Membayar ?')
+                    ->view('mail.reminder_pertama');
     }
 }
