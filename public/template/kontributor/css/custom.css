@@ -67,7 +67,7 @@ html, body {
     color: #FFF;
 }
 
-.header-menu ul li img {
+.header-menu ul li img.icon {
     display: block;
     height: 35px;
     margin-top: -4px;
@@ -75,7 +75,11 @@ html, body {
     -webkit-filter: invert(100%);
     filter: invert(100%);
 }
-
+.header-menu ul li img.poto {
+    height: 35px;
+    margin-top: -4px;
+    cursor: pointer;
+  }
 .header-menu ul li img:hover {
     opacity: .7;
 }

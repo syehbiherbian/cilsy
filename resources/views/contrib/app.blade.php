@@ -59,7 +59,7 @@
                         <span class="hello-user">Halo, {{ Auth::guard('contributors')->user()->first_name }} </span>
                     </li>
                     <li class="has-dropdown">
-                        <img src="{{asset('template/kontributor/img/icon/Notifikasi.png')}}" alt="">
+                        <img src="{{asset('template/kontributor/img/icon/Notifikasi.png')}}" alt="" class="icon">
                         <?php if(totalnotif() != null){ ?>
                         <span class="badge-cart"><?php echo totalnotif();?></span>
                         <?php } ?>
