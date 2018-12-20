@@ -119,7 +119,6 @@
           </div><br>
           {{--  <a class="read-more b" data-toggle="collapse" href="#collapseDeskripsi" role="button" style="color:#2BA8E2; font-weight:bold;">+ Tampilkan Lebih Banyak</a>  --}}
         </div>
-      </div>
 
       <!-- Row -->
       <div class="row box">
@@ -234,6 +233,7 @@
         </div>
       </div>
     </div>
+  </div>
   </section>
 
 </main>
