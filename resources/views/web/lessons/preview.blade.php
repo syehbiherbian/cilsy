@@ -28,6 +28,22 @@
     vertical-align: middle;
     z-index :100;
   }
+  .sidebar-box {
+    max-height: 200px;
+    position: relative;
+    overflow: hidden;
+  }
+  .sidebar-box .read-more { 
+    position: absolute; 
+    bottom: 0; 
+    left: 0;
+    width: 100%; 
+    text-align: center; 
+    margin: 0; padding: 20px 0; 
+    
+    /* "transparent" only works here because == rgba(0,0,0,0) */
+    background-image: linear-gradient(to bottom, transparent, white);
+  }
 </style>
 <main>
 
@@ -93,17 +109,15 @@
       </div>
 
       <!-- Row -->
-      <div class="row box">
-        <div class="col-xs-12">
-          
+      <div class="row box ">
+          <div class="col-xs-12 sidebar-box">
           <h5>Deskripsi Tutorial</h5>
-          {!! nl2br(substr($lessons->description, 0, 400)) !!}
-          <div class="collapse" id="collapseDeskripsi">
-          {!! nl2br(substr($lessons->description, 400)) !!}
+          {!! nl2br($lessons->description) !!}
           <h5>Objektif Tutorial</h5>
           {!! nl2br($lessons->goal_tutorial) !!}
+          <p class="read-more"><a href="#" class="btn" style="color:#2BA8E2; font-weight:bold; text-decoration:none;">Tampilkan Lebih Banyak</a></p>
           </div><br>
-          <a id="collapse" data-toggle="collapse" href="#collapseDeskripsi" role="button" style="color:#2BA8E2; font-weight:bold;">+ Tampilkan Lebih Banyak</a>
+          {{--  <a class="read-more b" data-toggle="collapse" href="#collapseDeskripsi" role="button" style="color:#2BA8E2; font-weight:bold;">+ Tampilkan Lebih Banyak</a>  --}}
         </div>
       </div>
 
@@ -247,6 +261,47 @@
     </div>
   </div>
 </div>
+<script>
+  $(function() {
+		
+    var $el, $ps, $up, totalHeight;
+    
+    $(".sidebar-box .btn").click(function() {
+    
+      // IE 7 doesn't even get this far. I didn't feel like dicking with it.
+          
+      totalHeight = 0
+    
+      $el = $(this);
+      $p  = $el.parent();
+      $up = $p.parent();
+      $ps = $up.find("p:not('.read-more')");
+      
+      // measure how tall inside should be by adding together heights of all inside paragraphs (except read-more paragraph)
+      $ps.each(function() {
+        totalHeight += $(this).outerHeight();
+        // FAIL totalHeight += $(this).css("margin-bottom");
+      });
+            
+      $up
+        .css({
+          // Set height to prevent instant jumpdown when max height is removed
+         // "height": $up.height(),
+          "max-height": 9999
+        })
+        .animate({
+         // "height": totalHeight
+        });
+      
+      // fade out read-more
+      $p.fadeOut();
+      
+      // prevent jump-down
+      return false;
+        
+    });
+  });
+</script>
 <script>
   fbq('track', 'ViewContent');
 </script>
