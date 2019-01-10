@@ -9,7 +9,10 @@
     <title>Cilsy Fiolution | Contributor</title>
     <link rel="shortcut icon" type="image/png" href="{{asset('template/kontributor/img/logo-only.png')}}"/>
     <link href="{{ asset('template/web/css/venobox.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+
     <link href="{{asset('template/kontributor/css/custom.css')}}" rel="stylesheet">
+    <link href="{{asset('template/kontributor/css/spacing.css')}}" rel="stylesheet">
     <link href="{{asset('template/kontributor/css/bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{asset('template/kontributor/css/sweetalert.css')}}" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker.css" rel="stylesheet">
@@ -197,6 +200,7 @@
     </div>
     <script type="text/javascript" src="{{asset('template/kontributor/js/bootstrap.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('template/kontributor/js/custom.js')}}"></script>
+    <script type="text/javascript" src="{{asset('template/kontributor/js/step-modal.js')}}"></script>
     <script type="text/javascript" src="{{asset('template/kontributor/js/sweetalert.min.js')}}"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js"></script>
 
