@@ -351,6 +351,12 @@
                         </a>
                     </li>
                     <li>
+                        <a href="{{action('BootcampKategoriController@index')}}">
+                            <i class="material-icons">assignment</i>
+                            <span>Bootcamp Kategori</span>
+                        </a>
+                    </li>
+                    <li>
                         <a href="{{ url('system/income') }}">
                             <i class="material-icons">assignment</i>
                             <span>Income</span>

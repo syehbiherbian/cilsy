@@ -225,6 +225,8 @@ Auth::routes();
 	Route::post('system/members/editServices', 'MembersController@editServices');
 
 	Route::resource('system/cat', 'KategoriController');
+	Route::resource('system/bootcampcat', 'BootcampKategoriController');
+	Route::resource('system/bootcampsubcat', 'BootcampSubKategoriController');
 	Route::resource('system/reward', 'RewardController');
 	Route::resource('system/reward-category', 'RewardCategoryController');
 	Route::resource('system/pages', 'PagesController');
