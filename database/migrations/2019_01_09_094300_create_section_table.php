@@ -18,6 +18,7 @@ class CreateSectionTable extends Migration
             $table->integer('course_id');
             $table->string('title');
             $table->text('deskripsi');
+            $table->bigInteger('position');
             $table->timestamps();
         });
     }

@@ -16,6 +16,7 @@ use App\Models\Question;
 use App\Models\Answer;
 use App\Models\Revision;
 use App\Models\LessonDetail;
+use App\Models\BootcampCategory;
 use DateTime;
 use Auth;
 
@@ -78,13 +79,14 @@ class LessonsController extends Controller
     $views=LessonDetail::where('moth',$moth)->where('year',$year)->get();
     $students=LessonDetail::join('lessons_detail_view','lessons_detail.id','=','lessons_detail_view.detail_id')
                             ->where('lessons_detail.moth',$moth)->where('lessons_detail.year',$year)->get();
-
+    $cat = BootcampCategory::all();
 
     return view('contrib.lessons.index',[
       'filter'  => $filter,
       'data'    => $data,
       'views'   => $views,
       'students'=> $students,
+      'cat'     => $cat
     ]);
 
   }

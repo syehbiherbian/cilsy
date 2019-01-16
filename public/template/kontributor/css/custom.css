@@ -488,3 +488,77 @@ html, body {
     border-radius: 15px;
     border: none;
 }
+
+/*  =========================
+    Create  Course
+    ============================
+*/
+.c-orange{
+    color: #ffa500!important;
+}
+.c-yellow{
+    color: #ffd900!important;
+}
+.text-inline{
+    display: inline!important;
+}
+#rowBuatCourse,#rowLampiran{
+    display: none;
+}
+a.pull-right:after {
+    font-size: 25px;
+    padding: 0 20px;
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    content: "\f077";
+    float: right;
+    color: grey; 
+    margin-left: -.1em;
+    width: 1em;
+}
+a.pull-right.collapsed:after {
+    content: "\f078";
+}
+.bg-grey,
+.bg-grey .dropify-wrapper,
+.bg-grey .dropify-preview{
+    background: #eee!important;
+}
+.box{
+    background: #fff;
+    border: 1px solid #bebebe;
+    padding: 10px 20px;
+    border-radius: 10px;
+}
+.tabs-course .nav{
+    font-weight: bold;
+    font-size: 16px;
+    border-bottom: 1px solid #555555;
+}
+.tabs-course .nav-pills>li>a{
+    color: #555555;
+    padding-bottom: 20px;
+}
+.tabs-course .nav-pills>li.active>a,.tabs-course .nav-pills>li.active>a:focus,.tabs-course .nav-pills>li.active>a:hover {
+    color: #1ca123;
+    border-radius: 0;
+    background-color: unset;
+}
+.tabs-course .nav>li>a:focus,.tabs-course .nav>li>a:hover{
+    background-color: unset;
+}
+.img-profile-instruktur{
+    margin-right: 10px;
+    width: 50px;
+    height: 50px;
+}
+
+
+@media only screen and (max-width: 480px){
+    .pull-xs-left{
+        float: left!important;
+    }
+    .pull-xs-right{
+        float: right!important;
+    }
+}

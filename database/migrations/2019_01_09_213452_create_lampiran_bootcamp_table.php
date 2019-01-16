@@ -15,6 +15,7 @@ class CreateLampiranBootcampTable extends Migration
     {
         Schema::create('lampiran_bootcamp', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('bootcamp_id');
             $table->string('nama', 35);
             $table->text('deskripsi');
             $table->string('file');

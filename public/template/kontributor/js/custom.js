@@ -110,3 +110,19 @@ var generateDuration = function(seconds) {
 
     return d + h + m + s;
 }
+//Pake dropipy.js untuk file uploadnya
+$('.dropify').dropify({
+    messages: {
+        'default': 'Tambahkan Cover Standar 750x422 pixels; .jpg .jpeg .png<br>Drag & Drop Cover disini',
+        'replace': 'Drag & drop or click untuk mengganti Cover',
+        'remove':  'Hapus',
+        'error':   'Maaf, sepertinya sesuatu yang salah telah terjadi.'
+    }
+});
+
+$('#BuatCourse-show').click(function(){
+    $('#rowBuatCourse').slideDown(500);
+});
+$('#BuatCourse-hide').click(function(){
+    $('#rowBuatCourse').slideUp(500);
+})
