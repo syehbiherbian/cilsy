@@ -8,7 +8,10 @@ class Course extends Model
 {
     protected $table = 'course';
 
-    public function boot(){
+    protected $fillable = ['bootcamp_id', 'title', 'cover_course', 'deskripsi', 'estimasi'];
+
+
+    public function bootcamp(){
         return $this->belongsTo('App\Models\Bootcamp');
     }
 

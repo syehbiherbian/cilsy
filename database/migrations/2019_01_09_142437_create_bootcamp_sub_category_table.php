@@ -15,7 +15,7 @@ class CreateBootcampSubCategoryTable extends Migration
     {
         Schema::create('bootcamp_sub_category', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('bootcamp_id');
+            $table->integer('bootcamp_category_id');
             $table->string('title');
             $table->text('deskripsi');
             $table->timestamps();

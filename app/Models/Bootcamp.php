@@ -19,4 +19,16 @@ class Bootcamp extends Model
     public function boot_member(){
         return $this->belongsTo('App\Models\BootcampMember');
     }
+
+    public function contributor(){
+        return $this->belongsTo('App\Models\Contributor');
+    }
+
+    public function bootcamp_category(){
+        return $this->belongsTo('App\Models\BootcampCategory');
+    }
+
+    public function bootcamp_sub_category(){
+        return $this->belongsTo('App\Models\BootcampSubCategory');
+    }
 }

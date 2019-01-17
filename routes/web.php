@@ -375,3 +375,18 @@ Route::prefix('contributor/account')->group(function () {
 Route::post('system/rate','RateController@store');
 //skema
 Route::get('contributor/skema', 'Contributors\DashboardController@getSchema');
+
+//Bootsamp
+Route::post('contributor/bootcamp/save', 'Contributors\BootcampController@store');
+Route::get('contributor/bootcamp/', 'Contributors\BootcampController@index');
+Route::get('contributor/bootcamp/{slug}', 'Contributors\BootcampController@detail');
+Route::get('contributor/bootcamp/{slug}/lampiran', 'Contributors\BootcampController@lampiran');
+Route::get('contributor/bootcamp/{slug}/detail', 'Contributors\BootcampController@detailbootcamp');
+Route::get('contributor/bootcamp/{slug}/harga', 'Contributors\BootcampController@harga');
+Route::get('contributor/bootcamp/{slug}/publish', 'Contributors\BootcampController@publish');
+Route::post('contibutor/bootcamp/saveCourse','Contributors\BootcampController@saveCourse');
+Route::post('contibutor/bootcamp/saveLampiran','Contributors\BootcampController@saveLampiran');
+Route::post('contibutor/bootcamp/updateCourse','Contributors\BootcampController@updateCourse');
+Route::get('contibutor/get/sub/{bootcamp}','Contributors\BootcampController@getSub');
+
+

@@ -126,7 +126,8 @@
               <button type="button" class="close" data-dismiss="modal"><i class="far fa-times-circle"></i></button>
               <h4>Pilih Kelas yang akan dibuat</h4>
             </div>
-            <form role="form" action="">
+            <form action="{{url('contributor/bootcamp/save')}}" method="post" enctype="multipart/form-data">
+              {{ csrf_field() }}
               <div class="modal-body">
                 <!-- Step 1 -->
                 <div class="row setup-content" id="step-1">
@@ -168,6 +169,9 @@
                     <div class="form-group">
                       <select class="form-control" name="kategori" id="kategori">
                         <option value="-">Pilih kategori</option>
+                        @foreach ($cat as $cats => $jeni)
+                            <option value="{{ $jeni->id }}">{{ $jeni->title }}</option>
+                        @endforeach
                       </select>
                     </div>
                     Jangan khawatir Anda bisa mengubahnya nanti.
@@ -194,12 +198,19 @@
               <div class="modal-footer">
                   <button class="btn btn-green pull-left" type="button"  id="prevBtn">Sebelumnya</button>
                   <button class="btn btn-green pull-right" type="button" id="nextBtn">Selanjutnya</button>
-                  <input class="btn btn-green pull-right" type="submit" id="classBtn" value="Buat Kelas">
+                  <button type="submit" class="btn btn-green pull-right" >Buat Kelas</button>
               </div>
           </form>
         </div>
       </div>
     </div>
+    <script>
+        function changeSlug(){
+          var str =$('#title').val();
+          str =str.replace(/\s+/g,'-').toLowerCase();
+          $('#slug').val(str);
+        }
+      </script>
 <script>
  function checkpublish(id){
 
@@ -225,5 +236,60 @@
      }
      });
  }
+ 
+ {{--  function post(){
+  var token = '{{ csrf_token() }}';
+  var judul = $('#judul').val();
+  var kategori = $('#kategori').val();
+  var slug = $('#slug').val();
+
+
+  dataform = new FormData();
+  dataform.append( '_token', token);
+  dataform.append( 'judul', judul);
+  dataform.append( 'kategori', kategori);
+  dataform.append( 'slug', slug);
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        type    :"POST",
+        url     :'{{ url("contributor/bootcamp/save") }}',
+        data    : dataform,
+        dataType : 'json',
+        contentType: false,
+        processData: false,
+        beforeSend: function(){
+             swal({
+              title: "Sedang mengirim Komentar",
+              text: "Mohon Tunggu sebentar",
+              imageUrl: "{{ asset('template/web/img/loading.gif') }}",
+              showConfirmButton: false,
+              allowOutsideClick: false
+          });
+          // Show image container
+        },
+        success:function(data){
+          if (data == 1) {
+              swal({
+                  title: "Anda Berhasil Membuat Bootcamp",
+                  showConfirmButton: true,
+                  icon: "success",
+                  timer: 3000
+              });
+              window.location.href = '{{url("contributor/bootcamp/")}}' + slug;
+          }
+          else if(data==0){
+              window.location.href = '{{url("contributor/login")}}';
+          }else {
+                      alert('Koneksi Bermasalah, Silahkan Ulangi');
+                      location.reload();
+            }
+          }
+    });
+}  --}}
  </script>
 @endsection()

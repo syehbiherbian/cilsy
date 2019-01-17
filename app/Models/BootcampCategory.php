@@ -8,8 +8,12 @@ class BootcampCategory extends Model
 {
     protected $table = 'bootcamp_category';
 
-    public function sub(){
+    public function bootcamp_sub_category(){
         return $this->hasMany('App\Models\BootcampSubCategory');
+    }
+
+    public function bootcamp(){
+        return $this->belongsTo('App\Models\Bootcamp');
     }
 
 }

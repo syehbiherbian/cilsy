@@ -24,5 +24,9 @@ class Contributor extends User
     {
         return Auth::guard('contributors')->user()->unreadNotifications()->limit(5)->get()->toArray();
     }
+
+    public function bootcamp(){
+        return $this->hasmany('App\Models\Bootcamp');
+    }
    
 }

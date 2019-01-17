@@ -21,6 +21,7 @@ class CreateVideoSectionTable extends Migration
             $table->string('image_video');
             $table->integer('durasi');
             $table->string('type_video');
+            $table->bigInteger('position');
             $table->text('deskripsi_video');
             $table->timestamps();
         });

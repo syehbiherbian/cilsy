@@ -15,16 +15,19 @@ class CreateBootcampTable extends Migration
     {
         Schema::create('bootcamp', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('bootcamp_category_id');
-            $table->integer('bootcamp_sub_category_id');
-            $table->string('title', 50);
-            $table->string('sub_title', 50);
-            $table->string('cover');
-            $table->decimal('price', 10, 0);
+            $table->integer('bootcamp_category_id')->nullable();
+            $table->integer('bootcamp_sub_category_id')->nullable();
+            $table->integer('contributor_id')->nullable();
+            $table->integer('status')->nullable();
+            $table->string('title', 50)->nullable();
+            $table->string('slug')->nullable();
+            $table->string('sub_title', 50)->nullable();
+            $table->string('cover')->nullable();
+            $table->decimal('price', 10, 0)->nullable();
             $table->string('promote_video')->nullable();
-            $table->text('deskripsi');
-            $table->string('audience');
-            $table->text('pre_and_req');
+            $table->text('deskripsi')->nullable();
+            $table->string('audience')->nullable();
+            $table->text('pre_and_req')->nullable();
             $table->timestamps();
         });
     }
