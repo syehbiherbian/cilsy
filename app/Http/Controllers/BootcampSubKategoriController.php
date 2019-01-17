@@ -71,7 +71,7 @@ class BootcampSubKategoriController extends Controller{
         	$pre = preg_replace('/<p[^>]*>(.*)<\/p[^>]*>/i', '$1', Input::get('deskripsi'));
 			
 			$insert = DB::table('bootcamp_sub_category')->insert([
-				'bootcamp_id' => $bootcamp_id,
+				'bootcamp_category_id' => $bootcamp_id,
 				'title' => $nama_kat,
 				// 'cover' => $icon,
 				'deskripsi' => $desc,

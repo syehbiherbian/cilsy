@@ -21,7 +21,7 @@ class BootcampKategoriController extends Controller{
 		$this->middleware('auth');
 	}
 	public function index() {
-		$bootcampkategori = BootcampCategory::with('sub')->get();
+		$bootcampkategori = BootcampCategory::with('bootcamp_sub_category')->get();
 		$sub = BootcampSubCategory::with('bootcamp_category')->get();
 		// dd($sub);
 		return view('admin.bootcampkategori.index', [

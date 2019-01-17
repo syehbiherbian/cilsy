@@ -387,4 +387,6 @@ Route::get('contributor/bootcamp/{slug}/publish', 'Contributors\BootcampControll
 Route::post('contibutor/bootcamp/saveCourse','Contributors\BootcampController@saveCourse');
 Route::post('contibutor/bootcamp/saveLampiran','Contributors\BootcampController@saveLampiran');
 Route::post('contibutor/bootcamp/updateCourse','Contributors\BootcampController@updateCourse');
+Route::get('contibutor/get/sub/{bootcamp}','Contributors\BootcampController@getSub');
+
 

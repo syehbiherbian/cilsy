@@ -20,15 +20,15 @@ class Bootcamp extends Model
         return $this->belongsTo('App\Models\BootcampMember');
     }
 
-    public function contrib(){
+    public function contributor(){
         return $this->belongsTo('App\Models\Contributor');
     }
 
     public function bootcamp_category(){
-        return $this->hasOne('App\Models\BootcampCategory');
+        return $this->belongsTo('App\Models\BootcampCategory');
     }
 
     public function bootcamp_sub_category(){
-        return $this->hasOne('App\Models\BootcampSubCategory');
+        return $this->belongsTo('App\Models\BootcampSubCategory');
     }
 }

@@ -44,20 +44,29 @@
                     <h5 class="mb-4">Bootcamp Details</h5>
                     <div class="form-group">
                       Judul
-                      <input class="form-control" type="text" name="" id="" value="Modul Ebook Mikrotik Lengkap dan komprehensif - For Beginner.pdf 300.2kb" >
+                      <input class="form-control" type="text" name="" id="" value="{{ $bootcamp->title }}" >
                     </div>
                     <div class="form-group">
                       Sub Judul
-                      <input class="form-control" type="text" name="" id="" value="Modul yang isinya sama dengan video, dan dapat digunakan sebagai bahan baca-baca atau kopi paster script." >
+                      <input class="form-control" type="text" name="" id="" value="{{ $bootcamp->sub_title }}" >
                     </div>
                     <div class="form-group">
                       <div class="col-xs-6 pl-0">
                         Kategori
-                        <input class="form-control" type="text">
+                        <select class="form-control" name="kat_id" id="kat_id">
+                          {{--  <option value="{{$bootcamp->bootcamp_category->id}}" selected>{{$bootcamp->bootcamp_category->title}}</option>  --}}
+                          @foreach($cat as $cats)
+                          <option {{ old('bootcamp_category_id') == $cats->id ? "selected" : "" }}  value="{{$cats->id}}">{{$cats->title}}</option>
+                          @endforeach
+                        </select>
                       </div>
                       <div class="col-xs-6 pl-0">
                         Sub Kategori
-                        <input class="form-control" type="text">
+                        <select class="form-control" name="sub_kat_id" id="sub_kat_id">
+                            @foreach($sub as $subs)
+                            <option value="{{$subs->id}}">{{$subs->title}}</option>
+                            @endforeach
+                          </select>
                       </div>
                     </div>
                     <br><br><br>
@@ -84,11 +93,11 @@
                     <h5 class="mb-4">Target Student</h5>
                     <div class="form-group">
                       Target Audience
-                      <input class="form-control" type="text" name="" id="" value="Siapa yang harus mengikuti bootcamp anda" >
+                      <input class="form-control" type="text" name="" id="" value="" placeholder="Siapa yang harus mengikuti bootcamp anda">
                     </div>
                     <div class="form-group">
                       Preusite and Requirement
-                      <input class="form-control" type="text" name="" id="" value="Contoh: Harus memiliki Laptop dan Mikrotik" >
+                      <input class="form-control" type="text" name="" id="" value="" placeholder="Contoh: Harus memiliki Laptop dan Mikrotik" >
                     </div>
                     <button class="btn btn-green pull-right">+ Simpan</button>
                   </div>
@@ -103,7 +112,7 @@
                       <i class="fa fa-check-circle c-orange"></i>
                       Semua Profile Anda telah lengkap
                     </div>
-                    <img :src="getAvatar()" class="img-profile-instruktur" alt=""> Andriyana
+                    <img src="{{asset($contrib->avatar)}}" class="img-profile-instruktur" alt=""> {{$contrib->username}}
                   </div>
                 </div>
               </div>
@@ -117,4 +126,18 @@
   <script type="text/javascript" src="{{asset('template/kontributor/js/jquery.min.js')}}"></script>
   <script type="text/javascript" src="{{asset('template/kontributor/js/bootstrap.min.js')}}"></script>
   <script type="text/javascript" src="{{asset('template/kontributor/js/dropify.min.js')}}"></script>
+  <script>
+      $(document).ready(function() {
+        $('select[name=kat_id]').change(function() {
+                var url = '{{ url('contibutor/get/sub') }}' + '/' + $(this).val();
+                $.get(url, function(data) {
+                    var select = $('form select[name=sub_kat_id]');
+                    select.empty();
+                    $.each(data,function(key, value) {
+                        select.append('<option value=' + value.id + '>' + value.title + '</option>');
+                    });
+                });
+            });
+        });
+  </script>
 @endsection()

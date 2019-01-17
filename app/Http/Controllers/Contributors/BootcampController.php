@@ -70,17 +70,20 @@ class BootcampController extends Controller
         if (empty(Auth::guard('contributors')->user()->id)) {
             return redirect('contributor/login');
         }
-        $bootcamp = Bootcamp::where('slug', $slug)->first();
+        $bootcamp = Bootcamp::with('bootcamp_category')->where('slug', $slug)->first();
         $cat = BootcampCategory::all();
         $sub = BootcampSubCategory::all();
         $contrib = Contributor::where('id', $bootcamp->contributor_id)->first();
-
+        // dd($contrib);
         return view('contrib.bootcamp.detail',[
             'bootcamp' => $bootcamp,
             'contrib' => $contrib,
             'cat' => $cat,
             'sub' => $sub,
         ]);
+    }
+    public function getSub(BootcampCategory $bootcamp){
+        return $bootcamp->bootcamp_sub_category()->select('id', 'title')->get();
     }
     public function harga($slug)
     {
@@ -125,6 +128,7 @@ class BootcampController extends Controller
         $boot = new Bootcamp();
         $boot->title = $judul;
         $boot->bootcamp_category_id = $kat_id;
+        $boot->contributor_id = Auth::guard('contributors')->user()->id;
         $boot->created_at = $now;
         $boot->slug = $slug;
         $boot->status = 0;
