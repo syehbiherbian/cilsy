@@ -36,7 +36,7 @@
                                 <input type="hidden" name="icon" class="form-control" id="img">
                               </div>
                             </div>
-                            <!-- <div class="form-group form-float">
+                            <div class="form-group form-float">
                                 <h2 class="card-inside-title">Deskripsi</h2>
                                 <div class="row clearfix">
                                     <div class="col-sm-12">
@@ -47,7 +47,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div> -->
+                            </div>
                             <button type="submit" class="btn btn-primary m-t-15 waves-effect">SUBMIT</button>
                         </form>
                     </div>
