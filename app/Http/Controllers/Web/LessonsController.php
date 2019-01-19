@@ -396,7 +396,8 @@ class LessonsController extends Controller
             // dd($input);
 
             if ($request->hasFile('image')){
-                $input['images'] = 'assets/source/komentar/komentar-'.$request->image->getClientOriginalName().'.'.$request->image->getClientOriginalExtension();
+                $input['images'] = '/assets/source/komentar/'.$request->image->getClientOriginalName();
+                $input['file_name'] = $request->image->getClientOriginalName();
                 $request->image->move(public_path('/assets/source/komentar'), $input['images']);
             }
             // dd($input);
@@ -576,7 +577,7 @@ class LessonsController extends Controller
 				                      ' . $comment->body . '
                                     </div>';
                                     if($comment->images != null){
-                                    $html .= '<a id="firstlink" data-gall="myGallery" class="venobox vbox-item" data-vbtype="iframe" href="'. asset($comment->images) .'"><img src="'. asset($comment->images) .'" alt="image alt" style="height:50px; width:50px; margin-left: 15px; margin-bottom: 20px;"/></a>';
+                                    $html .= '<a id="firstlink" data-gall="myGallery" class="venobox vbox-item" data-vbtype="iframe" href="'. asset($comment->images) .'"><i class="fa fa-paperclip"></i> Attachment</a>';
                                     }
                                     if (!empty(Auth::guard('members')->user()->id)) {
                                         if(count($tutorial) >0 ){

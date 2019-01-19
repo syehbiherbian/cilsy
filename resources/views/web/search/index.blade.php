@@ -1,6 +1,6 @@
 @extends('web.app')
 @foreach($categories as $object)
-@section('title', 'Kategori | ')
+@section('title', 'Kategori')
 @section('description', $object->meta_desc)
 @endforeach
 @section('content')

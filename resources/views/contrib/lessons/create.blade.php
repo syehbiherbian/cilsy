@@ -1,6 +1,6 @@
 @extends('contrib.app')
 @section('title','')
-<link href="{{asset('template/kontributor/summernote/summernote.css')}}" rel="stylesheet">
+{{--  <link href="{{asset('template/kontributor/summernote/summernote.css')}}" rel="stylesheet">  --}}
 @section('breadcumbs')
 <div id="navigation">
 		<div class="container">
@@ -122,9 +122,9 @@
 		</div>
   </div>
 </div>
-<script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
-<script type="text/javascript" src="{{asset('template/kontributor/summernote/summernote.js')}}"></script>
-<script>
+<script src='https://cloud.tinymce.com/stable/tinymce.min.js?apiKey=i0jmzdrvxazq4u69bg81bp4ukmsok5rv2xb2dm13bfnb6u5d'></script>
+
+{{--  <script>
 	$('#summernote').summernote({
 		height: 200,                 // set editor height
 		minHeight: null,             // set minimum height of editor
@@ -143,5 +143,20 @@
 		maxHeight: null,             // set maximum height of editor
 		focus: true                  // set focus to editable area after initializing summernote
 	});
-</script>
+</script>  --}}
+<script>
+  tinymce.init({
+    selector: '#summernote'
+  });
+	</script>
+	<script>
+		tinymce.init({
+			selector: '#textedit'
+		});
+		</script>
+		<script>
+			tinymce.init({
+				selector: '#summergoal'
+			});
+			</script>
 @endsection()

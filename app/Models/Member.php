@@ -24,4 +24,8 @@ class Member extends User {
     {
         return $this->belongsTo('App\Models\Invoice');
     }
+
+    public function bootcamp(){
+        return $this->hasMany('App\Models\Bootcamp');
+    }
 }

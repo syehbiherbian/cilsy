@@ -3,7 +3,8 @@
 @section('breadcumbs')
 <div id="navigation">
     <div class="container">
-        <a href="{{ url('contributor/lessons/create')}}" class="btn btn-info pull-right">Buat Tutorial</a>
+        {{--  <a href="{{ url('contributor/lessons/create')}}" class="btn btn-info pull-right">Buat Tutorial</a>  --}}
+        <button class="btn btn-info pull-right pull-right" data-toggle="modal" data-target="#modalStep">Buat Tutorial</button>
         <ul class="breadcrumb">
         <li><a href="{{ url('contributor/dashboard') }}">Dashboard</a></li>
         <li>Kelola Tutorial</li>
@@ -117,6 +118,99 @@
     </div>
   </div>
 </div>
+<!-- Modal -->
+    <div class="modal fade multi-step" id="modalStep" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal"><i class="far fa-times-circle"></i></button>
+              <h4>Pilih Kelas yang akan dibuat</h4>
+            </div>
+            <form action="{{url('contributor/bootcamp/save')}}" method="post" enctype="multipart/form-data">
+              {{ csrf_field() }}
+              <div class="modal-body">
+                <!-- Step 1 -->
+                <div class="row setup-content" id="step-1">
+                  <div class="col-sm-6 col-xs-12">
+                    <div class="card mt-4">
+                      <i class="fa fa-tv"></i>
+                      <p class="mt-3">
+                        Kelas dengan biaya rendah tidak terlalu kompleks namun tetap bisa mendapatkan minat yang kuat.
+                      </p>
+                      <a href="{{ url('contributor/lessons/create')}}" class="btn btn-outline-modal nextBtn" type="button">Pilih</a>
+                    </div>
+                  </div>
+                  <div class="col-sm-6 col-xs-12">
+                      <div class="card mt-4">
+                        <i class="fa fa-tv"></i>
+                        <p class="mt-3">
+                          Buat kelas online lengkap menggunakan kurikulum yang terstruktur dan komprehensif.
+                          <br><br>
+                        </p>
+                        <button class="btn btn-outline-modal nextBtn" type="button">Pilih</button>                      
+                      </div>
+                  </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="row setup-content" id="step-2">
+                  <div class="col-xs-12">
+                      <div class="form-group">
+                          <input type="text" class="form-control" name="judul" id="judul" required placeholder="Judul Kelas">
+                      </div>
+                      Jangan khawatir jika anda belum bisa memikirkan judul yang bagus sekarang.
+                      Anda bisa mengubahnya nanti.
+                  </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="row setup-content" id="step-3">
+                  <div class="col-xs-12">
+                    <div class="form-group">
+                      <select class="form-control" name="kategori" id="kategori">
+                        <option value="-">Pilih kategori</option>
+                        @foreach ($cat as $cats => $jeni)
+                            <option value="{{ $jeni->id }}">{{ $jeni->title }}</option>
+                        @endforeach
+                      </select>
+                    </div>
+                    Jangan khawatir Anda bisa mengubahnya nanti.
+                  </div>
+                </div>
+
+                <div class="requestwizard mt-5">
+                  <div class="requestwizard-row setup-panel">
+                    <div class="requestwizard-step">
+                        <a href="#step-1" type="button" class="btn btn-primary btn-circle"><i class="fa fa-circle"></i></a>
+                        <p>Step 1</p>
+                    </div>
+                    <div class="requestwizard-step">
+                        <a href="#step-2" type="button" class="btn btn-default btn-circle" disabled="disabled"><i class="fa fa-circle"></i></a>
+                        <p>Step 2</p>
+                    </div>
+                    <div class="requestwizard-step">
+                        <a href="#step-3" type="button" class="btn btn-default btn-circle" disabled="disabled"><i class="fa fa-circle"></i></a>
+                        <p>Step 3</p>
+                    </div>
+                    </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                  <button class="btn btn-green pull-left" type="button"  id="prevBtn">Sebelumnya</button>
+                  <button class="btn btn-green pull-right" type="button" id="nextBtn">Selanjutnya</button>
+                  <button type="submit" class="btn btn-green pull-right" >Buat Kelas</button>
+              </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <script>
+        function changeSlug(){
+          var str =$('#title').val();
+          str =str.replace(/\s+/g,'-').toLowerCase();
+          $('#slug').val(str);
+        }
+      </script>
 <script>
  function checkpublish(id){
 
@@ -142,5 +236,60 @@
      }
      });
  }
+ 
+ {{--  function post(){
+  var token = '{{ csrf_token() }}';
+  var judul = $('#judul').val();
+  var kategori = $('#kategori').val();
+  var slug = $('#slug').val();
+
+
+  dataform = new FormData();
+  dataform.append( '_token', token);
+  dataform.append( 'judul', judul);
+  dataform.append( 'kategori', kategori);
+  dataform.append( 'slug', slug);
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        type    :"POST",
+        url     :'{{ url("contributor/bootcamp/save") }}',
+        data    : dataform,
+        dataType : 'json',
+        contentType: false,
+        processData: false,
+        beforeSend: function(){
+             swal({
+              title: "Sedang mengirim Komentar",
+              text: "Mohon Tunggu sebentar",
+              imageUrl: "{{ asset('template/web/img/loading.gif') }}",
+              showConfirmButton: false,
+              allowOutsideClick: false
+          });
+          // Show image container
+        },
+        success:function(data){
+          if (data == 1) {
+              swal({
+                  title: "Anda Berhasil Membuat Bootcamp",
+                  showConfirmButton: true,
+                  icon: "success",
+                  timer: 3000
+              });
+              window.location.href = '{{url("contributor/bootcamp/")}}' + slug;
+          }
+          else if(data==0){
+              window.location.href = '{{url("contributor/login")}}';
+          }else {
+                      alert('Koneksi Bermasalah, Silahkan Ulangi');
+                      location.reload();
+            }
+          }
+    });
+}  --}}
  </script>
 @endsection()
