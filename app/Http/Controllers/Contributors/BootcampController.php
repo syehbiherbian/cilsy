@@ -46,7 +46,7 @@ class BootcampController extends Controller
         }
         $bootcamp = Bootcamp::where('slug', $slug)->first();
         $course = Course::where('bootcamp_id', $bootcamp->id)->get();
-
+        
         return view('contrib.bootcamp.bootcamp',[
             'bootcamp' => $bootcamp,
             'courses' => $course,
@@ -80,6 +80,7 @@ class BootcampController extends Controller
             'contrib' => $contrib,
             'cat' => $cat,
             'sub' => $sub,
+
         ]);
     }
     public function getSub(BootcampCategory $bootcamp){
@@ -190,6 +191,8 @@ class BootcampController extends Controller
             $input['sub_title'] =  $request->input('subjud');
             $input['audience'] = $request->input('target');
             $input['pre_and_req'] =  $request->input('req');
+            $input['bootcamp_category_id'] = $request->input('kat');
+            $input['bootcamp_sub_category_id'] =  $request->input('subkat');
 
             if ($request->hasFile('image')){
                 $input['cover'] = '/assets/source/bootcamp/bootcamp-'.$request->input('boot_id').'/promo/'. $request->image->getClientOriginalName();
