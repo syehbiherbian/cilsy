@@ -36,18 +36,18 @@
                                 <input type="hidden" name="icon" class="form-control" id="img">
                               </div>
                             </div>
-                            <!-- <div class="form-group form-float">
+                            <div class="form-group form-float">
                                 <h2 class="card-inside-title">Deskripsi</h2>
                                 <div class="row clearfix">
                                     <div class="col-sm-12">
                                         <div class="form-group">
                                             <div class="form-line">
-                                                <textarea rows="4" name="desc" class="form-control no-resize" placeholder="Please type what you want..."></textarea>
+                                                <textarea rows="4" name="meta_desc" class="form-control no-resize" placeholder="Please type what you want..."></textarea>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div> -->
+                            </div>
                             <button type="submit" class="btn btn-primary m-t-15 waves-effect">SUBMIT</button>
                         </form>
                     </div>

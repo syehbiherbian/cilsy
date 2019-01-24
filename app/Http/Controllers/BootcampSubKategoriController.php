@@ -130,6 +130,7 @@ class BootcampSubKategoriController extends Controller{
 		$rules = array(
             'title'         => 'required|unique:bootcamp_sub_category,title,'.$id,
             'deskripsi'   => 'required',
+            'bcid' 	=> 'required',
             // 'cover'         => 'required',
         );
         $validator = Validator::make(Input::all(), $rules);
@@ -144,6 +145,7 @@ class BootcampSubKategoriController extends Controller{
             $check= BootcampSubCategory::where('id',$id)->first();
             $store = BootcampSubCategory::find($id);
             // $store->enable      = Input::get('enable');
+       		$store->bootcamp_category_id = Input::get('bcid');
             $store->title       = Input::get('title');
             // $store->cover       = Input::get('cover');
             $store->deskripsi = Input::get('deskripsi');

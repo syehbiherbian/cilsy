@@ -385,8 +385,14 @@ Route::get('contributor/bootcamp/{slug}/detail', 'Contributors\BootcampControlle
 Route::get('contributor/bootcamp/{slug}/harga', 'Contributors\BootcampController@harga');
 Route::get('contributor/bootcamp/{slug}/publish', 'Contributors\BootcampController@publish');
 Route::post('contibutor/bootcamp/saveCourse','Contributors\BootcampController@saveCourse');
+
 Route::post('contibutor/bootcamp/saveLampiran','Contributors\BootcampController@saveLampiran');
+Route::post('contibutor/bootcamp/updateLampiran','Contributors\BootcampController@updateLampiran');
+
 Route::post('contibutor/bootcamp/updateCourse','Contributors\BootcampController@updateCourse');
+Route::post('contibutor/bootcamp/saveHarga','Contributors\BootcampController@saveHarga');
+Route::post('contibutor/bootcamp/confirmPublish','Contributors\BootcampController@confirmPublish');
+
 Route::get('contibutor/get/sub/{bootcamp}','Contributors\BootcampController@getSub');
 Route::get('contibutor/bootcamp/course/{id}','Contributors\SectionController@index');
 Route::post('contibutor/bootcamp/course/section-create','Contributors\SectionController@store');

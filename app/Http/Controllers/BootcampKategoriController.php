@@ -21,7 +21,7 @@ class BootcampKategoriController extends Controller{
 		$this->middleware('auth');
 	}
 	public function index() {
-		$bootcampkategori = BootcampCategory::with('bootcamp_sub_category')->get();
+		$bootcampkategori = BootcampCategory::with('bootcamp')->get();
 		$sub = BootcampSubCategory::with('bootcamp_category')->get();
 		// dd($sub);
 		return view('admin.bootcampkategori.index', [
@@ -65,7 +65,7 @@ class BootcampKategoriController extends Controller{
 
 			$nama_kat = Input::get('nama_kat');
 			$icon = Input::get('icon');
-			//$desc = Input::get('desc');
+			$meta_desc = Input::get('meta_desc');
 			$now = new DateTime();
         ////$pre = preg_replace('/<p[^>]*>(.*)<\/p[^>]*>/i', '$1', Input::get('description'));
 			
@@ -73,7 +73,7 @@ class BootcampKategoriController extends Controller{
 				'title' => $nama_kat,
 				'cover' => $icon,
 				'enable' => 1,
-				//'description' => $desc,
+				'meta_desc' => $meta_desc,
 				'created_at' => $now,
 
 			]);
@@ -126,7 +126,7 @@ class BootcampKategoriController extends Controller{
 	public function update(Request $request, $id) {
 		$rules = array(
             'title'         => 'required|unique:bootcamp_category,title,'.$id,
-            //'description'   => 'required',
+            'meta_desc'   => 'required',
             'cover'         => 'required',
         );
         $validator = Validator::make(Input::all(), $rules);
@@ -136,14 +136,14 @@ class BootcampKategoriController extends Controller{
             return redirect()->back()->withErrors($validator)->withInput();
         } else {
             $title=Input::get('title');
-        //$pre = preg_replace('/<p[^>]*>(.*)<\/p[^>]*>/i', '$1', Input::get('description'));
+        	$pre = preg_replace('/<p[^>]*>(.*)<\/p[^>]*>/i', '$1', Input::get('meta_desc'));
             // store
             $check= BootcampCategory::where('id',$id)->first();
             $store = BootcampCategory::find($id);
             $store->enable      = Input::get('enable');
             $store->title       = Input::get('title');
             $store->cover       = Input::get('cover');
-            //$store->description = Input::get('description');
+            $store->meta_desc = Input::get('meta_desc');
             // $store->meta_desc   = str_limit($pre, 150);
             $store->updated_at  = new DateTime();
 			$store->save();
