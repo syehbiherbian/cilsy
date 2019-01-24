@@ -39,6 +39,7 @@ class BootcampController extends Controller
     {
         
     }
+    
     public function detail($slug)
     {
         if (empty(Auth::guard('contributors')->user()->id)) {

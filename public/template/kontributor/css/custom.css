@@ -562,3 +562,138 @@ a.pull-right.collapsed:after {
         float: right!important;
     }
 }
+/*  ============================================================================
+    Bulk Uploader + Kurikulum
+    ============================================================================
+*/
+.bg-white{
+    background: #fff!important;
+}
+
+.btn-transparent{
+    color: #000;
+    background: transparent;
+    border-color: transparent;   
+}
+.btn-outline-green{
+    color: #2eb934;
+    background: #fff;
+    border-color: #2eb934;
+}
+.btn-outline-green:active, .btn-outline-green:focus, .btn-outline-green:hover{
+    color: #2eb934;
+    background-color: #d0f0d2;
+    border-color: #1ca123;
+}
+.btn-outline-red{
+    color: #ff0000;
+    background: #fff;
+    border-color: #000000;
+}
+.btn-outline-red:active, .btn-outline-red:focus, .btn-outline-red:hover{
+    color: #ff0000;
+    background-color: #cccccc;
+    border-color: #000000;
+}
+
+
+a.linkcollapse{
+    color: #000; 
+    text-decoration: none;
+}
+a.linkcollapse:after {
+    font-size: 25px;
+    padding: 0 20px;
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    content: "\f077";
+    margin-top: -35px;
+    float: right;
+    margin-left: -.1em;
+    width: 1em;
+}
+a.linkcollapse.collapsed:after {
+    content: "\f078";
+}
+.kurikulum-item{
+    padding: 0;
+    list-style: none;
+}
+.kurikulum-item li{
+    background: #fff;
+    border: 1px solid #bebebe;
+    padding: 10px 20px;
+    border-radius: 10px;
+    margin: 1em 0;
+}
+
+.rowContentButton{
+    display: none;
+}
+.rowContentButton a{
+    font-size:20px;
+    text-decoration:none;
+    cursor:pointer
+}
+
+.itemChild{
+    padding: 0;
+    list-style: none;
+}
+.itemChild li{
+    background: #fff;
+    border: 1px solid #bebebe;
+    padding: 10px 20px;
+    border-radius: 10px;
+    margin: 1em 0;
+}
+
+
+.alert-success{
+    display: none;
+    position:absolute;
+    width: fit-content;
+    padding: 5px 100px;
+    text-align:center;
+    top: 10px;
+    z-index: 9999;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    color: #ffffff;
+    background: #00c853;
+    border-color: transparent;
+}
+
+.dm-uploader {
+    border: 0.25rem dashed #A5A5C7;
+}
+.dm-uploader.active {
+    border-color: red;
+
+    border-style: solid;
+}
+.dm-uploader .fa{
+    font-size: 50px;
+}
+.media .progress {
+    border-radius: 0;
+}
+
+
+#contentItem .fa-type{
+    color: #bbbbbb;
+}
+#contentItem .fa-trash{
+    color: #505050;
+}
+
+.dropup{
+    display: inline;
+}
+.dropdown-menu{
+    left: unset;
+    right: 0;
+    margin-bottom: 10px!important;
+}

@@ -388,5 +388,9 @@ Route::post('contibutor/bootcamp/saveCourse','Contributors\BootcampController@sa
 Route::post('contibutor/bootcamp/saveLampiran','Contributors\BootcampController@saveLampiran');
 Route::post('contibutor/bootcamp/updateCourse','Contributors\BootcampController@updateCourse');
 Route::get('contibutor/get/sub/{bootcamp}','Contributors\BootcampController@getSub');
+Route::get('contibutor/bootcamp/course/{id}','Contributors\SectionController@index');
+Route::post('contibutor/bootcamp/course/section-create','Contributors\SectionController@store');
+Route::post('contibutor/bootcamp/course/project-create','Contributors\SectionController@storeProject');
+Route::get('contibutor/bootcamp/course/get/{id}/','Contributors\SectionController@getJsonSection');
 
 

@@ -2,7 +2,6 @@
 @section('title','')
 @section('breadcumbs')
 @section('content')
-<link href="{{asset('template/kontributor/css/dropify.min.css')}}" rel="stylesheet">
 
 
 <!-- Main -->
@@ -83,7 +82,7 @@
                     12 jam Durasi Selesai
                   </div>
                   <div class="col-md-3 col-sm-4 col-xs-12 py-4 text-right">
-                    <button class="btn btn-green">+ Tambah Kurikulum</button>
+                    <a href="{{url('contibutor/bootcamp/course/'.$key->id)}}" class="btn btn-green">+ Tambah Kurikulum</a>
                     <a class="pull-right collapsed" id="collapse" data-toggle="collapse" href="#collapseCourse{{$key->id}}" role="button"></a>
                   </div>
                 </div>

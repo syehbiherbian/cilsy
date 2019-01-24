@@ -54,9 +54,12 @@
                       <div class="col-xs-6 pl-0">
                         Kategori
                         <select class="form-control" name="kat_id" id="kat_id">
-                          {{--  <option value="{{$bootcamp->bootcamp_category->id}}" selected>{{$bootcamp->bootcamp_category->title}}</option>  --}}
                           @foreach($cat as $cats)
-                          <option {{ old('bootcamp_category_id') == $cats->id ? "selected" : "" }}  value="{{$cats->id}}">{{$cats->title}}</option>
+                          @if (Input::old('bootcamp_category_id') == $cats->id)
+                                <option value="{{ $cats->id }}" selected>{{ $cats->title }}</option>
+                          @else
+                                <option value="{{ $cats->id }}">{{ $cats->title }}</option>
+                          @endif
                           @endforeach
                         </select>
                       </div>
