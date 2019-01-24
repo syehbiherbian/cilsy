@@ -56,7 +56,7 @@
                         <select class="form-control" name="kat_id" id="kat_id">
                           {{--  <option value="{{$bootcamp->bootcamp_category->id}}" selected>{{$bootcamp->bootcamp_category->title}}</option>  --}}
                           @foreach($cat as $cats)
-                          <option {{ old('bootcamp_category_id') == $cats->id ? "selected" : "" }}  value="{{$cats->id}}">{{$cats->title}}</option>
+                          <option <?php echo $bootcamp->bootcamp_category_id == $cats->id ? "selected" : "" ?>  value="{{$cats->id}}">{{$cats->title}}</option>
                           @endforeach
                         </select>
                       </div>
@@ -64,7 +64,7 @@
                         Sub Kategori
                         <select class="form-control" name="sub_kat_id" id="sub_kat_id">
                             @foreach($sub as $subs)
-                            <option value="{{$subs->id}}">{{$subs->title}}</option>
+                            <option <?php echo $bootcamp->bootcamp_sub_category_id == $subs->id ? "selected" : "" ?> value="{{$subs->id}}">{{$subs->title}}</option> 
                             @endforeach
                           </select>
                       </div>
