@@ -16,8 +16,15 @@
             <div class="col-sm-4 col-xs-12">
               <img :src="getCover()" class="img-rounded img-responsive" alt="">
             </div>
-            <div class="col-sm-8 col-xs-12">
-              <h4>Bootcamp <small class="c-yellow">Draft</small></h4>
+            <div class="col-sm-8 col-xs-12">              
+              <h4>Bootcamp 
+               <?php if ($bootcamp->status == 0): ?>
+                <small class="c-yellow">Draft</small>
+                <?php else: ?>
+                <small class="c-green">Published</small>
+                <?php endif;?>
+                
+              </h4>
               <h2>{{$bootcamp->title}}</h2>
             </div>
           </div>
@@ -40,9 +47,17 @@
           <div class="box my-4">
             <div class="row">
               <div class="col-xs-12">
+                <input type="hidden" name="boot_id" value="{{ $bootcamp->id }}">
                 <h5 class="mb-4">Publish</h5>
+                <?php if ($bootcamp->status == 0): ?>
                 <h6 class="text-inline">Bootcamp belum dipublish</h6>
-                <button class="btn btn-green">Publish</button>
+                <input type="hidden" name="status" id="status" value="1">
+                <button class="btn btn-green" onclick="confirmPublish({{ $bootcamp->id}})">Publish</button>
+                <?php else: ?>
+               <h6 class="text-inline">Bootcamp sudah dipublish</h6>
+                <button class="btn btn-green">Published</button>
+                <?php endif;?>
+                
               </div>
             </div>
           </div>
@@ -53,6 +68,76 @@
 </div>
 
 </main>
+  <script  >
+     function confirmPublish(bootcamp_id) {
+      var status = $('#status').val();
+      
+      dataform = new FormData();
+      dataform.append( 'status', status);
+      dataform.append( 'boot_id', bootcamp_id);
+  
+      if (status == '') {
+        alert('Harap Isi form !')
+      }else {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            type    :"POST",
+            url     :'{{ url("contibutor/bootcamp/confirmPublish") }}',
+            data    : dataform,
+            dataType : 'json',
+            contentType: false,
+            processData: false,
+            beforeSend: function(){
+                 swal({
+                  title: "Mempublish",
+                  text: "Mohon Tunggu sebentar, Bootcamp sedang dipublish ",
+                  imageUrl: "{{ asset('template/web/img/loading.gif') }}",
+                  showConfirmButton: false,
+                  allowOutsideClick: false
+              });
+              // Show image container
+            },
+            success:function(data){
+              if (data.success == false) {
+                 window.location.href = '{{ url("contributor/login") }}';
+              }else if (data.success == true) {
+                $('#status').val('');
+                swal({
+                  title: "Bootcamp Berhasil dipublish !",
+                  showConfirmButton: true,
+                  timer: 3000
+                },
+                function(){ 
+                  location.reload();
+                }
+                );
+              }
+            }
+        });
+      }
+    }
+    // swal({
+                //   title: "Are you sure?",
+                //   text: "Once deleted, you will not be able to recover this imaginary file!",
+                //   icon: "warning",
+                //   buttons: true,
+                //   dangerMode: true,
+                //   })
+                // .then((willDelete) => {
+                // if (willDelete) {
+                //     swal("Poof! Your imaginary file has been deleted!", {
+                //         icon: "success",
+                //     });
+                // } else {
+                //     swal("Your imaginary file is safe!");
+                // }
+                // });
+  </script>
+
 <script type="text/javascript" src="{{asset('template/kontributor/js/jquery.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('template/kontributor/js/bootstrap.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('template/kontributor/js/dropify.min.js')}}"></script>

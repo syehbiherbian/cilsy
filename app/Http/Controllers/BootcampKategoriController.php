@@ -21,7 +21,7 @@ class BootcampKategoriController extends Controller{
 		$this->middleware('auth');
 	}
 	public function index() {
-		$bootcampkategori = BootcampCategory::with('bootcamp_sub_category')->get();
+		$bootcampkategori = BootcampCategory::with('bootcamp')->get();
 		$sub = BootcampSubCategory::with('bootcamp_category')->get();
 		// dd($sub);
 		return view('admin.bootcampkategori.index', [
@@ -65,7 +65,7 @@ class BootcampKategoriController extends Controller{
 
 			$nama_kat = Input::get('nama_kat');
 			$icon = Input::get('icon');
-			$desc = Input::get('desc');
+			$meta_desc = Input::get('meta_desc');
 			$now = new DateTime();
         ////$pre = preg_replace('/<p[^>]*>(.*)<\/p[^>]*>/i', '$1', Input::get('description'));
 			
@@ -73,7 +73,7 @@ class BootcampKategoriController extends Controller{
 				'title' => $nama_kat,
 				'cover' => $icon,
 				'enable' => 1,
-				'meta_desc' => $desc,
+				'meta_desc' => $meta_desc,
 				'created_at' => $now,
 
 			]);

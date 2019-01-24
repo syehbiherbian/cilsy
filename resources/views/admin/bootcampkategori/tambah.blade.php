@@ -42,7 +42,7 @@
                                     <div class="col-sm-12">
                                         <div class="form-group">
                                             <div class="form-line">
-                                                <textarea rows="4" name="desc" class="form-control no-resize" placeholder="Please type what you want..."></textarea>
+                                                <textarea rows="4" name="meta_desc" class="form-control no-resize" placeholder="Please type what you want..."></textarea>
                                             </div>
                                         </div>
                                     </div>

@@ -17,7 +17,13 @@
               <img :src="getCover()" class="img-rounded img-responsive" alt="">
             </div>
             <div class="col-sm-8 col-xs-12">
-              <h4>Bootcamp <small class="c-yellow">Draft</small></h4>
+              <h4>Bootcamp 
+                <?php if ($bootcamp->status == 0): ?>
+                <small class="c-yellow">Draft</small>
+                <?php else: ?>
+                <small class="c-green">Published</small>
+                <?php endif;?>
+              </h4>
               <h2>{{$bootcamp->title}}</h2>
             </div>
           </div>
@@ -46,7 +52,7 @@
                     Judul Course
                     <input class="form-control" type="text" name="title" id="judul" placeholder="" >
                   </div>
-                  <div class="form-group">
+                  <div class="form-grou   p">
                     Deskripsi atau Tujuan Belajar
                     <input class="form-control" type="text" name="desk" id="desk" placeholder="" >
                   </div>

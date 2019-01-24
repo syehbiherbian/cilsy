@@ -17,7 +17,13 @@
               <img :src="getCover()" class="img-rounded img-responsive" alt="">
             </div>
             <div class="col-sm-8 col-xs-12">
-              <h4>Bootcamp <small class="c-yellow">Draft</small></h4>
+              <h4>Bootcamp 
+                <?php if ($bootcamp->status == 0): ?>
+                <small class="c-yellow">Draft</small>
+                <?php else: ?>
+                <small class="c-green">Published</small>
+                <?php endif;?>
+              </h4>
               <h2>{{$bootcamp->title}}</h2>
             </div>
           </div>
@@ -57,7 +63,7 @@
                 </div>
                 <div class="form-group">
                   File
-                  <input class="form-control dropify" type="file" name="lamp" id="lamp">
+                  <input class="form-control dropify" type="file" id="file">
                 </div>
                 <div class="row p-4">
                   <button class="btn btn-green pull-right" onclick="saveLampiran({{$bootcamp->id}})">+ Simpan</button> 
@@ -76,22 +82,24 @@
                 <div class="collapse" id="collapseLampiran{{$file->id}}">
                   <div class="box bg-grey mt-4">
                     <h5>Edit Lampiran</h5>
+                    <input type="hidden" name="lamp_id" value="{{ $file->id }}">
+                    <input type="hidden" name="boot_id" value="{{ $bootcamp->id }}">
                     <div class="form-group">
                       Judul
-                      <input class="form-control bg-grey" type="text" name="" id="" value="{{$file->nama}}" >
+                      <input class="form-control bg-grey" type="text" name="nama" id="namaold{{ $file->id }}" value="{{$file->nama}}" >
                     </div>
                     <div class="form-group">
                       Deskripsi
-                      <input class="form-control bg-grey" type="text" name="" id="" value="{{$file->deskripsi}}" >
+                      <input class="form-control bg-grey" type="text" name="deskr" id="deskrold{{ $file->id }}" value="{{$file->deskripsi}}" >
                     </div>
                     <div class="form-group">
                       File
-                      <input class="form-control bg-grey dropify" data-default-file="{{asset($file->file)}}" type="file" name="" id="" value="{{$file->file}}">
+                      <input class="form-control bg-grey dropify" data-default-file="{{asset($file->file)}}" type="file" name="file" id="fileold{{ $file->id }}" value="{{$file->file}}">
                     </div>
                   </div>
                   <div class="row p-4">
                     <button class="btn pull-right"><i class="fa fa-ellipsis-v"></i></button>
-                    <button class="btn btn-green pull-right  mx-2">+ Simpan</button> 
+                    <button class="btn btn-green pull-right  mx-2" onclick="updateLampiran({{ $file->id}}, {{$bootcamp->id}})">+ Simpan</button> 
                     <button class="btn btn-secondary pull-right mx-2">+ Batalkan</button>
                   </div>
                 </div>
@@ -118,7 +126,7 @@
       function saveLampiran(bootcamp_id) {
         var nama = $('#nama').val();
         var deskr = $('#deskr').val();
-        var file_data = $('#lamp').prop("files")[0];
+        var file_data = $('#file').prop("files")[0];
         dataform = new FormData();
         dataform.append( 'file', file_data);
         dataform.append( 'nama', nama);
@@ -142,7 +150,7 @@
               processData: false,
               beforeSend: function(){
                    swal({
-                    title: "Membuat Course",
+                    title: "Membuat Lampiran",
                     text: "Mohon Tunggu sebentar, Lampiran sedang dibuat ",
                     imageUrl: "{{ asset('template/web/img/loading.gif') }}",
                     showConfirmButton: false,
@@ -154,7 +162,7 @@
                 if (data.success == false) {
                    window.location.href = '{{ url("contributor/login") }}';
                 }else if (data.success == true) {
-                  $('#title').val('');
+                  $('#nama').val('');
                   swal({
                     title: "Lampiran Berhasil Dibuat !",
                     showConfirmButton: true,
@@ -169,5 +177,56 @@
           });
         }
       }
-  </script>
+
+function updateLampiran(lamp_id, bootcamp_id) {
+       var nama = $('#namaold'+lamp_id).val();
+        var deskr = $('#deskrold'+lamp_id).val();
+        var file_data = $('#fileold'+lamp_id).prop("files")[0];
+        dataform = new FormData();
+        dataform.append( 'image', file_data);
+        dataform.append( 'nama', nama);
+        dataform.append( 'deskr', deskr);
+        dataform.append( 'lamp_id', lamp_id);
+        dataform.append( 'boot_id', bootcamp_id);
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            type    :"POST",
+            url     :'{{ url("contibutor/bootcamp/updateLampiran") }}',
+            data    : dataform,
+            dataType : 'json',
+            contentType: false,
+            processData: false,
+            beforeSend: function(){
+                 swal({
+                  title: "Membuat Lampiran",
+                  text: "Mohon Tunggu sebentar, Lampiran sedang update ",
+                  imageUrl: "{{ asset('template/web/img/loading.gif') }}",
+                  showConfirmButton: false,
+                  allowOutsideClick: false
+              });
+              // Show image container
+            },
+            success:function(data){
+              if (data.success == false) {
+                 window.location.href = '{{ url("contributor/login") }}';
+              }else if (data.success == true) {
+                $('#nama').val('');
+                swal({
+                  title: "Lampiran Berhasil Diubah!",
+                  showConfirmButton: true,
+                  timer: 3000
+                },
+                function(){ 
+                  location.reload();
+                }
+                );
+              }
+            }
+        });
+      }
+      </script>
 @endsection()

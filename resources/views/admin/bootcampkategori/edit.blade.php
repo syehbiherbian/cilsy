@@ -38,6 +38,18 @@
                                 <input type="hidden" name="cover" class="form-control" id="img" value="{{ $bootcampkategori->cover }}">
                               </div>
                             </div>
+                            <div class="form-group form-float">
+                                <h2 class="card-inside-title">Deskripsi</h2>
+                                <div class="row clearfix">
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <textarea rows="4" name="meta_desc" class="form-control no-resize" value="" placeholder="Please type what you want...">{{$bootcampkategori->meta_desc}}</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <button type="submit" class="btn btn-primary m-t-15 waves-effect">SUBMIT</button>
                         </form>
                     </div>
