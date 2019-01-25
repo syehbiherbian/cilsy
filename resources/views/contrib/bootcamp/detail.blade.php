@@ -67,7 +67,7 @@
                         Sub Kategori
                         <select class="form-control" name="sub_kat_id" id="sub_kat_id">
                             @foreach($sub as $subs)
-                            <option value="{{$subs->id}}">{{$subs->title}}</option>
+                            <option <?php echo $bootcamp->bootcamp_sub_category_id == $subs->id ? "selected" : "" ?> value="{{$subs->id}}">{{$subs->title}}</option> 
                             @endforeach
                           </select>
                       </div>
