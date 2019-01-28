@@ -16,7 +16,7 @@
     <link href="{{asset('template/kontributor/css/ply.css')}}" rel="stylesheet">
     <link href="{{asset('template/kontributor/css/dropify.min.css')}}" rel="stylesheet">
     <link href="{{asset('template/kontributor/css/jquery.dm-uploader.min.css')}}" rel="stylesheet">
-    <link href="{{asset('template/kontributor/css/bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{asset('template/kontributor/css/bootstrap-3.3.7.min.css')}}" rel="stylesheet">
     <link href="{{asset('template/kontributor/css/sweetalert.css')}}" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker.css" rel="stylesheet">
 
@@ -25,7 +25,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.2.1/assets/owl.carousel.css" type="text/css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.2.1/assets/owl.theme.default.min.css" type="text/css" />
 
-    <script type="text/javascript" src="{{asset('template/kontributor/js/jquery.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('template/kontributor/js/jquery-3.3.1.min.js')}}"></script>
     <script type="text/javascript" src="{{ asset('template/web/js/venobox.min.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.2.1/owl.carousel.js"></script>
 
@@ -204,7 +204,7 @@
             </div>
         </div>
     </div>
-    <script type="text/javascript" src="{{asset('template/kontributor/js/bootstrap.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('template/kontributor/js/bootstrap-3.3.7.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('template/kontributor/js/custom.js')}}"></script>
     <script type="text/javascript" src="{{asset('template/kontributor/js/step-modal.js')}}"></script>
     <script type="text/javascript" src="{{asset('template/kontributor/js/sweetalert.min.js')}}"></script>

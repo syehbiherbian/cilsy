@@ -2,98 +2,94 @@
 @section('title','')
 @section('breadcumbs')
 @section('content')
-<!-- Main -->
-    <main>
-      
-      <div class="alert alert-success">
-        Sukses Membuat Projek
-      </div>
-      <!-- Container -->
-      <div class="container">
-
-        <!-- Nav -->
-        <div class="row bg-white py-4">
-          <div class="col-sm-4 col-xs-12">
-            <h4 class="m-2">Bootcamp</h4>
-          </div>
-          <div class="col-sm-4 col-xs-8 text-center text-xs-left">
-            <select  style="border:none;cursor: pointer;font-size: 16px;margin: 5px 0">
-              <option value="">Linux Administrator</option>
-              <option value="">1</option>
-              <option value="">2</option>
-              <option value="">3</option>
-            </select>
-          </div>
-          <div class="col-sm-4 col-xs-4 text-right">
-            <button class="btn btn-green">+ Simpan</button>
-          </div>
+  <!-- Main -->
+      <main>
+        
+        <div class="alert alert-success">
+          Sukses Membuat Projek
         </div>
+        <!-- Container -->
+        <div class="container">
 
-        <div class="tabs-course">
-          <!-- Nav Tabs -->
-          <ul class="nav nav-pills mt-5" id="pills-tab" role="tablist">
-            <li class="nav-item active">
-              <a class="nav-link" id="pills-kurikulum-tab" data-toggle="pill" href="#pills-kurikulum" role="tab" aria-controls="pills-kurikulum" aria-selected="false">Kurikulum</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" id="pills-bulkuploader-tab" data-toggle="pill" href="#pills-bulkuploader" role="tab" aria-controls="pills-bulkuploader" aria-selected="false">Bulk Uploader</a>
-            </li>
-          </ul>
+          <!-- Nav -->
+          <div class="row bg-white py-4">
+            <div class="col-sm-4 col-xs-12">
+              <h4 class="m-2">Bootcamp</h4>
+            </div>
+            <div class="col-sm-4 col-xs-8 text-center text-xs-left">
+              <select  style="border:none;cursor: pointer;font-size: 16px;margin: 5px 0">
+                <option value="">Linux Administrator</option>
+                <option value="">1</option>
+                <option value="">2</option>
+                <option value="">3</option>
+              </select>
+            </div>
+            <div class="col-sm-4 col-xs-4 text-right">
+              <button class="btn btn-green">+ Simpan</button>
+            </div>
+          </div>
 
-          <!-- Nav Content -->
-          <div class="tab-content mt-5" id="pills-tabContent">
-              <!-- Tab Kurikulum -->
-              <div class="tab-pane fade active in" id="pills-kurikulum" role="tabpanel" aria-labelledby="pills-kurikulum-tab">
-                
-                <div class="row">
-                  <div class="col-sm-4 col-xs-12 col-sm-push-8">
-                    <div class="row">
-                      <div class="col-xs-12">
-                        <ul class="kurikulum-item" id="items">
-                          <!-- Diisi Jquery -->
-                        </ul>
-                          <button class="btn btn-green w-100 mb-4" onClick="CreateLesson()">Tambah Lesson</button>
+          <div class="tabs-course">
+            <!-- Nav Tabs -->
+            <ul class="nav nav-pills mt-5" id="pills-tab" role="tablist">
+              <li class="nav-item active">
+                <a class="nav-link" id="pills-kurikulum-tab" data-toggle="pill" href="#pills-kurikulum" role="tab" aria-controls="pills-kurikulum" aria-selected="false">Kurikulum</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="pills-bulkuploader-tab" data-toggle="pill" href="#pills-bulkuploader" role="tab" aria-controls="pills-bulkuploader" aria-selected="false">Bulk Uploader</a>
+              </li>
+            </ul>
+
+            <!-- Nav Content -->
+            <div class="tab-content mt-5" id="pills-tabContent">
+                <!-- Tab Kurikulum -->
+                <div class="tab-pane fade active in" id="pills-kurikulum" role="tabpanel" aria-labelledby="pills-kurikulum-tab">
+                  
+                  <div class="row">
+                    <div class="col-sm-4 col-xs-12 col-sm-push-8">
+                      <div class="row">
+                        <div class="col-xs-12">
+                          <ul class="kurikulum-item" id="items">
+                            <!-- Diisi Jquery -->
+                          </ul>
+                            <button class="btn btn-green w-100 mb-4" onClick="CreateLesson()">Tambah Lesson</button>
+                          </div>
                         </div>
+                    </div>
+      
+                    <div class="col-sm-8 col-xs-12 col-sm-pull-4">
+                      <div id="contentItem">
                       </div>
-                  </div>
-    
-                  <div class="col-sm-8 col-xs-12 col-sm-pull-4">
-                    <div id="contentItem">
                     </div>
                   </div>
+
+
                 </div>
 
-
-              </div>
-
-              <!-- Tab Bulk Uploader -->
-              <div class="tab-pane fade" id="pills-bulkuploader" role="tabpanel" aria-labelledby="pills-bulkuploader-tab">
-                <!-- row Title  -->
-                <div class="box">
-                    <div class="row">
-                      <div class="col-xs-12 p-4">
-                        <h4 class="text-inline">File Sebelah <i class="far fa-question-circle"></i></h4>
+                <!-- Tab Bulk Uploader -->
+                <div class="tab-pane fade" id="pills-bulkuploader" role="tabpanel" aria-labelledby="pills-bulkuploader-tab">
+                  <!-- row Title  -->
+                  <div class="box">
+                      <div class="row">
+                        <div class="col-xs-12 p-4">
+                          <h4 class="text-inline">File Sebelah <i class="far fa-question-circle"></i></h4>
+                        </div>
                       </div>
                     </div>
-                  </div>
-              </div>
+                </div>
+
+            </div>
 
           </div>
 
         </div>
 
-      </div>
-
-    </main>
+      </main>
 
     <script>
+      var lastPositionSection = 0;
       
-      
-  
-      
-
-
-      $.getJSON("{{url('contibutor/bootcamp/course/get/'.$course->id)}}", function (data) {
+      $.getJSON("{{url('contributor/bootcamp/course/get/'.$course->id)}}", function (data) {
         var json = data;
         function sideBarRefresh(){
           var sideBarItem = "";
@@ -141,6 +137,7 @@
                               </div>
                             </li>`;
           }
+          lastPositionSection = json.length + 1;
           $('#items').html("");
           $('#items').append(sideBarItem);
         };
@@ -151,9 +148,7 @@
           animation: 200,
         });
       });
-
       
-
       function CreateLesson(){
         var contentItem = "";
           contentItem += `<h4>Tambah Lesson Baru</h4>
@@ -299,146 +294,142 @@
           'OK';
         }
       };
-  
-  
-  
+
       function addLesson(){
-      var judul = $('#judul').val();
-      var desk = $('#deskripsi').val();
-      dataform = new FormData();
-      dataform.append( 'title', judul);
-      dataform.append( 'desk', desk);
-      dataform.append( 'course_id', '{{ $course->id}}');
+        var judul = $('#judul').val();
+        var desk = $('#deskripsi').val();
+        var dataform = new FormData();
+        dataform.append( 'title', judul);
+        dataform.append( 'desk', desk);
+        dataform.append( 'course_id', '{{ $course->id}}');
+        dataform.append('position', lastPositionSection)
 
-
-  
-      if (judul == '' || desk == '') {
-        swal("Error", "Harap Isi data Form Yang dibutuhkan!", "error");
-      }else {
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        $.ajax({
-            type    :"POST",
-            url     :'{{ url("contibutor/bootcamp/course/section-create") }}',
-            data    : dataform,
-            dataType : 'json',
-            contentType: false,
-            processData: false,
-            beforeSend: function(){
-                 swal({
-                  title: "Membuat Course",
-                  text: "Mohon Tunggu sebentar, Section sedang dibuat ",
-                  imageUrl: "{{ asset('template/web/img/loading.gif') }}",
-                  showConfirmButton: false,
-                  allowOutsideClick: false
-              });
-              // Show image container
-            },
-            success:function(data){
-              if (data.success == false) {
-                 window.location.href = '{{ url("contributor/login") }}';
-              }else if (data.success == true) {
-                $('#judul').val('');
-                $('#desk').val('');
-
-                swal({
-                  title: "Section Berhasil Dibuat !",
-                  showConfirmButton: true,
-                  timer: 3000
-                },
-                function(){ 
-                  location.reload();
-                }
-                );
+        if (judul == '' || desk == '') {
+          swal("Error", "Harap Isi data Form Yang dibutuhkan!", "error");
+        }else {
+          $.ajaxSetup({
+              headers: {
+                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
               }
-            }
-        });
-      }
+          });
+          $.ajax({
+              type    :"POST",
+              url     :'{{ url("contributor/bootcamp/course/section-create") }}',
+              data    : dataform,
+              dataType : 'json',
+              contentType: false,
+              processData: false,
+              beforeSend: function(){
+                  swal({
+                    title: "Membuat Course",
+                    text: "Mohon Tunggu sebentar, Section sedang dibuat ",
+                    imageUrl: "{{ asset('template/web/img/loading.gif') }}",
+                    showConfirmButton: false,
+                    allowOutsideClick: false
+                });
+                // Show image container
+              },
+              success:function(data){
+                if (data.success == false) {
+                  window.location.href = '{{ url("contributor/login") }}';
+                }else if (data.success == true) {
+                  $('#judul').val('');
+                  $('#desk').val('');
+
+                  swal({
+                    title: "Section Berhasil Dibuat !",
+                    showConfirmButton: true,
+                    timer: 3000
+                  }, function(){ 
+                    location.reload();
+                  });
+                }
+              },
+              error: function (e) {
+                swal.close()
+              }
+          });
+        }
       }
   
       function addProject(id){
-      var judul = $('#judul').val();
-      var desk = $('#deskripsi').val();
-      var type = $('#type').val();
-      var value = $('#value').val();
-      dataform = new FormData();
-      dataform.append( 'title', judul);
-      dataform.append( 'desk', desk);
-      dataform.append( 'type', type);
-      dataform.append( 'value', desk);
-      dataform.append( 'section_id', id);
-
-
-  
-      if (judul == '' || desk == '' || type == '' || value == '') {
-        swal("Error", "Harap Isi data Form Yang dibutuhkan!", "error");
-      }else {
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        $.ajax({
-            type    :"POST",
-            url     :'{{ url("contibutor/bootcamp/course/project-create") }}',
-            data    : dataform,
-            dataType : 'json',
-            contentType: false,
-            processData: false,
-            beforeSend: function(){
-                 swal({
-                  title: "Membuat Course",
-                  text: "Mohon Tunggu sebentar, Project sedang dibuat ",
-                  imageUrl: "{{ asset('template/web/img/loading.gif') }}",
-                  showConfirmButton: false,
-                  allowOutsideClick: false
-              });
-              // Show image container
-            },
-            success:function(data){
-              if (data.success == false) {
-                 window.location.href = '{{ url("contributor/login") }}';
-              }else if (data.success == true) {
-
-                swal({
-                  title: "Project Berhasil Dibuat Berhasil Dibuat !",
-                  showConfirmButton: true,
-                  timer: 3000
-                },
-                function(){ 
-                  location.reload();
-                }
-                );
+        var judul = $('#judul').val();
+        var desk = $('#deskripsi').val();
+        var type = $('#type').val();
+        var value = $('#value').val();
+        dataform = new FormData();
+        dataform.append( 'title', judul);
+        dataform.append( 'desk', desk);
+        dataform.append( 'type', type);
+        dataform.append( 'value', desk);
+        dataform.append( 'section_id', id);
+        
+        if (judul == '' || desk == '' || type == '' || value == '') {
+          swal("Error", "Harap Isi data Form Yang dibutuhkan!", "error");
+        }else {
+          $.ajaxSetup({
+              headers: {
+                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
               }
-            }
-        });
-      }
-        var temp = new Object();
-            temp["judul"] = $('#judul').val();
-            temp["deskripsi"] = $('#deskripsi').val();
-            temp["type"] = $('#type').val();;
-            temp["value"] = $('#value').val();;
-  
-        if(json[id].item === ""){
-          json[id].item = array(temp);
-          $(".alert-success").fadeTo(2000, 500).slideUp(500, function(){
-              $(".alert-success").slideUp(500);
           });
-          console.log(temp);
-        }else if( json[id].item.push(temp) ){
-          $('#contentItem').slideUp(500);
-          $(".alert-success").fadeTo(2000, 500).slideUp(500, function(){
-              $(".alert-success").slideUp(500);
+          $.ajax({
+              type    :"POST",
+              url     :'{{ url("contributor/bootcamp/course/project-create") }}',
+              data    : dataform,
+              dataType : 'json',
+              contentType: false,
+              processData: false,
+              beforeSend: function(){
+                  swal({
+                    title: "Membuat Course",
+                    text: "Mohon Tunggu sebentar, Project sedang dibuat ",
+                    imageUrl: "{{ asset('template/web/img/loading.gif') }}",
+                    showConfirmButton: false,
+                    allowOutsideClick: false
+                });
+                // Show image container
+              },
+              success:function(data){
+                if (data.success == false) {
+                  window.location.href = '{{ url("contributor/login") }}';
+                }else if (data.success == true) {
+
+                  swal({
+                    title: "Project Berhasil Dibuat Berhasil Dibuat !",
+                    showConfirmButton: true,
+                    timer: 3000
+                  },
+                  function(){ 
+                    location.reload();
+                  }
+                  );
+                }
+              }
           });
-        }else{
-          alert('error');
         }
-  
-        sideBarRefresh();
-        console.log(json);
+          var temp = new Object();
+              temp["judul"] = $('#judul').val();
+              temp["deskripsi"] = $('#deskripsi').val();
+              temp["type"] = $('#type').val();;
+              temp["value"] = $('#value').val();;
+    
+          if(json[id].item === ""){
+            json[id].item = array(temp);
+            $(".alert-success").fadeTo(2000, 500).slideUp(500, function(){
+                $(".alert-success").slideUp(500);
+            });
+            console.log(temp);
+          }else if( json[id].item.push(temp) ){
+            $('#contentItem').slideUp(500);
+            $(".alert-success").fadeTo(2000, 500).slideUp(500, function(){
+                $(".alert-success").slideUp(500);
+            });
+          }else{
+            alert('error');
+          }
+    
+          sideBarRefresh();
+          console.log(json);
       }
   
       function hideContentItem(){
@@ -446,21 +437,17 @@
       };
   
       function hideCreateContent(id){
-        $('#rowContentButton'+id).slideUp();
+        $('#rowContentButton'+id).slideUp(500);
         $('#btnContentShow'+id).show();
         $('#btnContentHide'+id).hide();
       }
   
       function showCreateContent(id){
-        $('#rowContentButton'+id).slideDown();
+        $('#rowContentButton'+id).slideDown(500);
         $('#btnContentHide'+id).show();
         $('#btnContentShow'+id).hide();
       }
-
-
-      
-      
-      </script>
+    </script>
 
       <!-- dm-uploader.js : File item template -->
     <script type="text/html" id="files-template">
