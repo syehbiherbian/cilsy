@@ -58,11 +58,11 @@
                         </select>
                       </div>
                       <div class="col-sm-4 col-xs-7">
-                        <input class="form-control" type="text" name="harga" id="harga" placeholder="Minimal 50.000">
+                        <input class="form-control" type="text" name="harga" id="harga" placeholder="{{ $bootcamp->price}}">
                       </div>
                     </div>
 
-                    <button class="btn btn-green pull-right mt-4" onclick="saveHarga({{ $bootcamp->id}})">Upload File</button>
+                    <button class="btn btn-green pull-right mt-4" onclick="saveHarga({{ $bootcamp->id}})">Set Harga</button>
                   </div>
                 </div>
               </div>

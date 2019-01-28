@@ -55,7 +55,7 @@
                 <button class="btn btn-green" onclick="confirmPublish({{ $bootcamp->id}})">Publish</button>
                 <?php else: ?>
                <h6 class="text-inline">Bootcamp sudah dipublish</h6>
-                <button class="btn btn-green">Published</button>
+                <button class="btn btn-green" disabled>Published</button>
                 <?php endif;?>
                 
               </div>
@@ -76,14 +76,25 @@
       dataform.append( 'status', status);
       dataform.append( 'boot_id', bootcamp_id);
   
-      if (status == '') {
-        alert('Harap Isi form !')
-      }else {
-        $.ajaxSetup({
+      swal({
+          title: "Bootcamp akan di Publish",
+          text: "apakah anda yakin?",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#DD6B55",
+          confirmButtonText: "Ya, saya yakin",
+          cancelButtonText: "Tidak, tolong cancel",
+          closeOnConfirm: false,
+          closeOnCancel: false
+        },
+        function(isConfirm){
+          if (isConfirm) {
+            $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+
         $.ajax({
             type    :"POST",
             url     :'{{ url("contibutor/bootcamp/confirmPublish") }}',
@@ -117,25 +128,15 @@
                 );
               }
             }
+        });         // submitting the form when user press yes
+          } else {
+            swal("Cancelled", "Your imaginary file is safe :)", "error");
+          }
         });
-      }
+        
+      
     }
-    // swal({
-                //   title: "Are you sure?",
-                //   text: "Once deleted, you will not be able to recover this imaginary file!",
-                //   icon: "warning",
-                //   buttons: true,
-                //   dangerMode: true,
-                //   })
-                // .then((willDelete) => {
-                // if (willDelete) {
-                //     swal("Poof! Your imaginary file has been deleted!", {
-                //         icon: "success",
-                //     });
-                // } else {
-                //     swal("Your imaginary file is safe!");
-                // }
-                // });
+   
   </script>
 
 <script type="text/javascript" src="{{asset('template/kontributor/js/jquery.min.js')}}"></script>
