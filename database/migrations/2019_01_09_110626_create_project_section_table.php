@@ -19,6 +19,7 @@ class CreateProjectSectionTable extends Migration
             $table->string('title', 40);
             $table->text('deskripsi_project');
             $table->text('instruksi');
+            $table->string('type');
             $table->timestamps();
         });
     }

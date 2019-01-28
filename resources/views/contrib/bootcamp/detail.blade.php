@@ -44,19 +44,22 @@
                     <h5 class="mb-4">Bootcamp Details</h5>
                     <div class="form-group">
                       Judul
-                      <input class="form-control" type="text" name="" id="" value="{{ $bootcamp->title }}" >
+                      <input class="form-control" type="text" name="title" id="judul" value="{{ $bootcamp->title }}" >
                     </div>
                     <div class="form-group">
                       Sub Judul
-                      <input class="form-control" type="text" name="" id="" value="{{ $bootcamp->sub_title }}" >
+                      <input class="form-control" type="text" name="subjudul" id="subjudul" value="{{ $bootcamp->sub_title }}" >
                     </div>
                     <div class="form-group">
                       <div class="col-xs-6 pl-0">
                         Kategori
                         <select class="form-control" name="kat_id" id="kat_id">
-                          {{--  <option value="{{$bootcamp->bootcamp_category->id}}" selected>{{$bootcamp->bootcamp_category->title}}</option>  --}}
                           @foreach($cat as $cats)
-                          <option {{ old('bootcamp_category_id') == $cats->id ? "selected" : "" }}  value="{{$cats->id}}">{{$cats->title}}</option>
+                          @if (Input::old('bootcamp_category_id') == $cats->id)
+                                <option value="{{ $cats->id }}" selected>{{ $cats->title }}</option>
+                          @else
+                                <option value="{{ $cats->id }}">{{ $cats->title }}</option>
+                          @endif
                           @endforeach
                         </select>
                       </div>
@@ -71,18 +74,21 @@
                     </div>
                     <br><br><br>
                     <div class="form-group">
-                      Cover Bootcamp
-                      <input class="form-control dropify" type="file" name="" id="">
+                     
+                    <div class="form-group">
+                    Cover Bootcamp
+                      <input class="form-control dropify" type="file" data-default-file="{{asset($bootcamp->cover)}}" value="{{$bootcamp->cover}}" id="cover">
                     </div>
                     <div class="form-group">
                       Promotional Video
-                      <input class="form-control dropify" type="file" name="" id="">
+                      <input class="form-control dropify" type="file" data-default-file="{{asset($bootcamp->promote_video)}}" value="{{$bootcamp->promote_video}}"  id="video">
                     </div>
                     <div class="form-group">
                       Deskripsi Bootcamp
-                      <textarea class="form-control" name="" id="" cols="30" rows="10"></textarea>
+                      <textarea class="form-control" type="text" id="desc"  cols="30" rows="10">  {{$bootcamp->deskripsi}}</textarea>
+
                     </div>
-                    <button class="btn btn-green pull-right">+ Simpan</button>
+                    <button class="btn btn-green pull-right" onclick="saveDetail({{ $bootcamp->id}})">+ Simpan</button>
                   </div>
                 </div>
               </div>
@@ -93,13 +99,13 @@
                     <h5 class="mb-4">Target Student</h5>
                     <div class="form-group">
                       Target Audience
-                      <input class="form-control" type="text" name="" id="" value="" placeholder="Siapa yang harus mengikuti bootcamp anda">
+                      <input class="form-control" type="text" name="target" id="target" value="{{ $bootcamp->audience}}" placeholder="Siapa yang harus mengikuti bootcamp anda">
                     </div>
                     <div class="form-group">
                       Preusite and Requirement
-                      <input class="form-control" type="text" name="" id="" value="" placeholder="Contoh: Harus memiliki Laptop dan Mikrotik" >
+                      <input class="form-control" type="text" name="require" id="require" value="{{ $bootcamp->pre_and_req}}" placeholder="Contoh: Harus memiliki Laptop dan Mikrotik" >
                     </div>
-                    <button class="btn btn-green pull-right">+ Simpan</button>
+                    <button class="btn btn-green pull-right" onclick="saveDetail({{ $bootcamp->id}})">+ Simpan</button>
                   </div>
                 </div>
               </div>
@@ -139,5 +145,76 @@
                 });
             });
         });
+
+        
+
+      function saveDetail(bootcamp_id) {
+      var title = $('#judul').val();
+      var subjud = $('#subjudul').val();
+      var subkat = $('#sub_kat_id').val();
+      var kat = $('#kat_id').val();
+      var desc = $('#desc').val();
+      var file_data = $('#cover').prop("files")[0];
+      var file_video = $('#video').prop("files")[0];
+      var target = $('#target').val();
+      var req = $('#require').val();
+
+      dataform = new FormData();
+      dataform.append( 'image', file_data);
+      dataform.append( 'video', file_video);
+      dataform.append( 'title', title);
+      dataform.append( 'desc', desc);
+      dataform.append( 'subjud', subjud);
+      dataform.append( 'subkat', subkat);
+      dataform.append( 'kat', kat);
+      dataform.append( 'boot_id', bootcamp_id);
+      dataform.append( 'target', target);
+      dataform.append( 'req', req);
+  
+      if (title == '') {
+        alert('Harap Isi form !')
+      }else {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            type    :"POST",
+            url     :'{{ url("contibutor/bootcamp/saveDetail") }}',
+            data    : dataform,
+            dataType : 'json',
+            contentType: false,
+            processData: false,
+            beforeSend: function(){
+                 swal({
+                  title: "Create Detail",
+                  text: "Mohon Tunggu sebentar, Detail sedang dibuat ",
+                  imageUrl: "{{ asset('template/web/img/loading.gif') }}",
+                  showConfirmButton: false,
+                  allowOutsideClick: false
+              });
+            },
+            success:function(data){
+              if (data.success == false) {
+                 window.location.href = '{{ url("contributor/login") }}';
+              }else if (data.success == true) {
+                $('#title').val('');
+                swal({
+                  title: "Detail Bootcamp Berhasil Dibuat !",
+                  showConfirmButton: true,
+                  timer: 3000
+                },
+                function(){ 
+                  location.reload();
+                }
+                );
+              }
+            }
+        });
+      }
+    }
+
+  
   </script>
 @endsection()

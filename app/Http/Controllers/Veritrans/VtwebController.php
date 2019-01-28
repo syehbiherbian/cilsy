@@ -176,12 +176,12 @@ class VtwebController extends Controller {
         }
         error_log(print_r($r, TRUE));
     }
-    private function send_mail($order_id) {
-        $invoice = Invoice::where('code', $order_id)->first();
-        $members = Member::where('id', $invoice->members_id)->first();
-        $send = Member::findOrFail($members->id);
-        Mail::to($members->email)->send(new InvoiceMail($send));
-    }
+    // private function send_mail($order_id) {
+    //     $invoice = Invoice::where('code', $order_id)->first();
+    //     $members = Member::where('id', $invoice->members_id)->first();
+    //     $send = Member::findOrFail($members->id);
+    //     Mail::to($members->email)->send(new InvoiceMail($send));
+    // }
     private function sukses_mail($order_id) {
         $invoice = Invoice::where('code', $order_id)->first();
         $members = Member::where('id', $invoice->members_id)->first();

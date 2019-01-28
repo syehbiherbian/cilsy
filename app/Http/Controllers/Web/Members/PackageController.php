@@ -101,7 +101,7 @@ class PackageController extends Controller
           if(Session::get('coupon')){
             $disc = 0;
             
-            if(session()->get('coupon')['percent_off']){
+            if(session()->get('coupon')['type'] == 'percent'){
               $disc =  $price*session()->get('coupon')['percent_off']/100;
             }else{
               $disc = session()->get('coupon')['discount'];
