@@ -78,12 +78,12 @@
   
       swal({
           title: "Bootcamp akan di Publish",
-          text: "apakah anda yakin?",
+          text: "Apakah anda yakin?",
           type: "warning",
           showCancelButton: true,
           confirmButtonColor: "#DD6B55",
-          confirmButtonText: "Ya, saya yakin",
-          cancelButtonText: "Tidak, tolong cancel",
+          confirmButtonText: "Ya",
+          cancelButtonText: "Tidak",
           closeOnConfirm: false,
           closeOnCancel: false
         },

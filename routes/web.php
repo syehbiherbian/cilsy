@@ -100,24 +100,28 @@ Route::get('/tentang', function () {
 });
 
 //test
-Route::get('/Bootcamp/Course', function () {
+Route::get('/bootcamp/Course', function () {
 	return view('web.courses.CourseDashboard');
 });
-Route::get('/Bootcamp/CourseLesson', function () {
+Route::get('/bootcamp/CourseLesson', function () {
 	return view('web.courses.CourseLesson');
 });
-Route::get('/Bootcamp/CourseSylabus', function () {
+Route::get('/bootcamp/CourseSylabus', function () {
 	return view('web.courses.CourseSylabus');
 });
-Route::get('/Bootcamp/ProjectSubmit', function () {
+Route::get('/bootcamp/ProjectSubmit', function () {
 	return view('web.courses.ProjectSubmit');
 });
-Route::get('/Bootcamp/ProjectView', function () {
+Route::get('/bootcamp/ProjectView', function () {
 	return view('web.courses.ProjectView');
 });
-Route::get('/Bootcamp/VideoPage', function () {
+Route::get('/bootcamp/VideoPage', function () {
 	return view('web.courses.VideoPage');
 });
+
+Route::get('bootcamp/{bootcamp}', 'Web\BootcampController@bootcamp');
+// Route::resource('Bootcamp', 'Web\BootcampController');
+
 /*
 |--------------------------------------------------------------------------
 | Cronjob Routes
