@@ -99,6 +99,25 @@ Route::get('/tentang', function () {
 	return view('web.tentang');
 });
 
+//test
+Route::get('/Bootcamp/Course', function () {
+	return view('web.courses.CourseDashboard');
+});
+Route::get('/Bootcamp/CourseLesson', function () {
+	return view('web.courses.CourseLesson');
+});
+Route::get('/Bootcamp/CourseSylabus', function () {
+	return view('web.courses.CourseSylabus');
+});
+Route::get('/Bootcamp/ProjectSubmit', function () {
+	return view('web.courses.ProjectSubmit');
+});
+Route::get('/Bootcamp/ProjectView', function () {
+	return view('web.courses.ProjectView');
+});
+Route::get('/Bootcamp/VideoPage', function () {
+	return view('web.courses.VideoPage');
+});
 /*
 |--------------------------------------------------------------------------
 | Cronjob Routes
