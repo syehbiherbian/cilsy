@@ -85,12 +85,69 @@
       </div>
 
     </main>
-
+    <script type="text/javascript" src="{{asset('template/kontributor/js/jquery.dm-uploader.ui.js')}}"></script>
+    <script type="text/javascript" src="{{asset('template/kontributor/js/jquery.dm-uploader.min.js')}}"></script>
+    {{-- <script type="text/javascript" src="{{asset('template/kontributor/js/dropify.min.js')}}"></script> --}}
+    <script type="text/javascript" src="{{asset('template/kontributor/js/Ply.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('template/kontributor/js/Sortable.min.js')}}"></script>
     <script>
-      
-      
-  
-      
+      /*
+          $('#drop-area').dmUploader({ //
+            url: '{{ url("contibutor/bootcamp/course/upload") }}',
+            maxFileSize: 3000000, // 3 Megs 
+            onDragEnter: function(){
+              // Happens when dragging something over the DnD area
+              this.addClass('active');
+            },
+            onDragLeave: function(){
+              // Happens when dragging something OUT of the DnD area
+              this.removeClass('active');
+            },
+            onInit: function(){
+              console.log('initialized');
+              // Plugin is ready to use
+              ui_add_log('Penguin initialized :)', 'info');
+            },
+            onComplete: function(){
+              // All files in the queue are processed (success or error)
+              ui_add_log('All pending tranfers finished');
+            },
+            onNewFile: function(id, file){
+              // When a new file is added using the file selector or the DnD area
+              ui_add_log('New file added #' + id);
+              ui_multi_add_file(id, file);
+            },
+            onBeforeUpload: function(id){
+              // about tho start uploading a file
+              ui_add_log('Starting the upload of #' + id);
+              ui_multi_update_file_progress(id, 0, '', true);
+              ui_multi_update_file_status(id, 'uploading', 'Uploading...');
+            },
+            onUploadProgress: function(id, percent){
+              // Updating file progress
+              ui_multi_update_file_progress(id, percent);
+            },
+            onUploadSuccess: function(id, data){
+              // A file was successfully uploaded
+              ui_add_log('Server Response for file #' + id + ': ' + JSON.stringify(data));
+              ui_add_log('Upload of file #' + id + ' COMPLETED', 'success');
+              ui_multi_update_file_status(id, 'success', 'Upload Complete');
+              ui_multi_update_file_progress(id, 100, 'success', false);
+            },
+            onUploadError: function(id, xhr, status, message){
+              // Happens when an upload error happens
+              ui_multi_update_file_status(id, 'danger', message);
+              ui_multi_update_file_progress(id, 0, 'danger', false);  
+            },
+            onFallbackMode: function(){
+              // When the browser doesn't support this plugin :(
+              ui_add_log('Plugin cant be used here, running Fallback callback', 'danger');
+            },
+            onFileSizeError: function(file){
+              ui_add_log('File \'' + file.name + '\' cannot be added: size excess limit', 'danger');
+            }
+          });*/
+ 
 
 
       $.getJSON("{{url('contibutor/bootcamp/course/get/'.$course->id)}}", function (data) {
@@ -216,7 +273,7 @@
                                     <div id="drop-area" class="dm-uploader p-4">
                                       <div class="btn btn-green pull-right pull-xs-none my-2">
                                           <span>Pilih Video</span>
-                                          <input type="file" title="Click to add Files" multiple="">
+                                          <input name="video" type="file" title="Click to add Files" multiple="">
                                       </div>
                                       <i class="fa fa-image pull-left mr-4"></i>
                                       <h6 class="text-muted">All files should be at least 720p and less than 4.0 GB</h6>
@@ -247,6 +304,64 @@
                           </div>`;
         $('#contentItem').html("");
         $('#contentItem').append(contentItem).slideDown(500);
+        $('#drop-area').dmUploader({ //
+          url: '{{ url("contibutor/bootcamp/course/upload") }}',
+          headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
+          maxFileSize: 300000000, // 3 Megs 
+          onDragEnter: function(){
+            // Happens when dragging something over the DnD area
+            this.addClass('active');
+          },
+          onDragLeave: function(){
+            // Happens when dragging something OUT of the DnD area
+            this.removeClass('active');
+          },
+          onInit: function(){
+            console.log('initialized');
+            // Plugin is ready to use
+            ui_add_log('Penguin initialized :)', 'info');
+          },
+          onComplete: function(){
+            // All files in the queue are processed (success or error)
+            ui_add_log('All pending tranfers finished');
+          },
+          onNewFile: function(id, file){
+            // When a new file is added using the file selector or the DnD area
+            ui_add_log('New file added #' + id);
+            ui_multi_add_file(id, file);
+          },
+          onBeforeUpload: function(id){
+            // about tho start uploading a file
+            ui_add_log('Starting the upload of #' + id);
+            ui_multi_update_file_progress(id, 0, '', true);
+            ui_multi_update_file_status(id, 'uploading', 'Uploading...');
+          },
+          onUploadProgress: function(id, percent){
+            // Updating file progress
+            ui_multi_update_file_progress(id, percent);
+          },
+          onUploadSuccess: function(id, data){
+            // A file was successfully uploaded
+            ui_add_log('Server Response for file #' + id + ': ' + JSON.stringify(data));
+            ui_add_log('Upload of file #' + id + ' COMPLETED', 'success');
+            ui_multi_update_file_status(id, 'success', 'Upload Complete');
+            ui_multi_update_file_progress(id, 100, 'success', false);
+          },
+          onUploadError: function(id, xhr, status, message){
+            // Happens when an upload error happens
+            ui_multi_update_file_status(id, 'danger', message);
+            ui_multi_update_file_progress(id, 0, 'danger', false);  
+          },
+          onFallbackMode: function(){
+            // When the browser doesn't support this plugin :(
+            ui_add_log('Plugin cant be used here, running Fallback callback', 'danger');
+          },
+          onFileSizeError: function(file){
+            ui_add_log('File \'' + file.name + '\' cannot be added: size excess limit', 'danger');
+          }
+        });
       }
   
       function createProjek(id){

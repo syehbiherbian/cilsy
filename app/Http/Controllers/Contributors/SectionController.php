@@ -79,4 +79,71 @@ class SectionController extends Controller
         }
         echo json_encode($response);
     }
+
+    public function SaveVideo(){
+        set_time_limit(0);
+        
+        $statusCode = 500;
+        $response = [
+            'status' => false,
+            'message' => 'Upload video failed'
+        ];
+        $file = Input::file('video');
+        $lessonsid = Input::get('lesson_id');
+        $i = Input::get('position');
+
+        // if (!is_dir("assets/source/lessons/video")) {
+        //     $newforder = mkdir("assets/source/lessons/video");
+        // }
+
+        $type_video = $file->getMimeType();
+        $DestinationPath = "assets/source/lessons" ;
+        if (!is_dir($DestinationPath)) {
+            $newforder = mkdir($DestinationPath);
+        }
+
+        //insert video
+        $lessonsfilename = '';
+        if (!empty($file)) {
+            $fullname = $file->getClientOriginalName();
+            $filename = pathinfo($fullname, PATHINFO_FILENAME);
+            $extension = $file->getClientOriginalExtension();
+            $lessonsfilename = md5($filename.time()). '.' . strtolower($extension);
+            $file->move($DestinationPath, $lessonsfilename);
+        }
+
+        /* siapin video */
+        $media = FFMpeg::fromDisk('local_public')->open($DestinationPath . '/' . $lessonsfilename);
+        
+        /* ambil durasi */
+        $duration = $media->getDurationInSeconds();
+        
+        /* generate thumbnail */
+        $midsecs = round($duration/2);
+        $filename = pathinfo($lessonsfilename, PATHINFO_FILENAME);
+        $thumbnailname = 'thumbnail-' . $filename . '.jpg';
+        $thumbnail = $media->getFrameFromSeconds($midsecs)->export()->save($DestinationPath . '/' . $thumbnailname);
+
+        /* save as draft */
+        $store = new VideoSection;
+        $store->image_video = '/' . $DestinationPath . '/' . $thumbnailname;
+        $store->file_video = '/' . $DestinationPath . '/' . $lessonsfilename;
+        $store->description = '';
+        $store->type_video = $type_video;
+        $store->durasi = $duration;
+        // $store->created_at = $now;
+        $store->save();
+
+        if ($store) {
+            $statusCode = 200;
+            $response = [
+                'status' => true,
+                'message' => 'Upload video success',
+            ];
+        } else {
+
+        }
+
+        return response()->json($response, $statusCode);
+    }
 }

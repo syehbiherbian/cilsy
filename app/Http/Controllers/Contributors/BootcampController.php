@@ -108,6 +108,38 @@ class BootcampController extends Controller
             'bootcamp' => $bootcamp,
         ]);
     }
+    
+    public function saveDetail(Request $request){
+        $response = array();
+        if (empty(Auth::guard('contributors')->user()->id)) {
+            $response['success'] = false;
+        } else {
+            
+            $now = new DateTime();
+            $uid = Auth::guard('contributors')->user()->id;
+            // $member = DB::table('contributors')->where('id', $uid)->first();
+   
+            $input = Bootcamp::find($request->input('boot_id'));
+            $input['title'] = $request->input('title');
+            $input['deskripsi'] =  $request->input('desc');
+            $input['sub_title'] =  $request->input('subjud');
+            $input['audience'] = $request->input('target');
+            $input['pre_and_req'] =  $request->input('req');
+            $input['bootcamp_category_id'] = $request->input('kat');
+            $input['bootcamp_sub_category_id'] =  $request->input('subkat');
+            if ($request->hasFile('image')){
+                $input['cover'] = '/assets/source/bootcamp/bootcamp-'.$request->input('boot_id').'/promo/'. $request->image->getClientOriginalName();
+                $request->image->move(public_path('/assets/source/bootcamp/bootcamp-'.$request->input('boot_id').'/promo/'), $input['cover']);
+            }
+            if ($request->hasFile('video')){
+                $input['promote_video'] = '/assets/source/bootcamp/bootcamp-'.$request->input('boot_id').'/cover/'. $request->video->getClientOriginalName();
+                $request->video->move(public_path('/assets/source/bootcamp/bootcamp-'.$request->input('boot_id').'/cover/'), $input['promote_video']);
+            }
+            $input->save();
+            $response['success'] = true;
+        }
+        echo json_encode($response);
+    }
 
     /**
      * Store a newly created resource in storage.

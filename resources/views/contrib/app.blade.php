@@ -209,12 +209,6 @@
     <script type="text/javascript" src="{{asset('template/kontributor/js/step-modal.js')}}"></script>
     <script type="text/javascript" src="{{asset('template/kontributor/js/sweetalert.min.js')}}"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js"></script>
-    <script type="text/javascript" src="{{asset('template/kontributor/js/dropify.min.js')}}"></script>
-    <script type="text/javascript" src="{{asset('template/kontributor/js/jquery.dm-uploader.min.js')}}"></script>
-    <script type="text/javascript" src="{{asset('template/kontributor/js/jquery.dm-uploader.ui.js')}}"></script>
-    <script type="text/javascript" src="{{asset('template/kontributor/js/Ply.min.js')}}"></script>
-    <script type="text/javascript" src="{{asset('template/kontributor/js/Sortable.min.js')}}"></script>
-    <script src="/js/app.js"></script>
 
     <script type="text/javascript">
       function contribnotif(id){

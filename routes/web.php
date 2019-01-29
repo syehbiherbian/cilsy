@@ -400,6 +400,7 @@ Route::post('contibutor/bootcamp/course/project-create','Contributors\SectionCon
 Route::get('contibutor/bootcamp/course/get/{id}/','Contributors\SectionController@getJsonSection');
 Route::post('contibutor/bootcamp/saveDetail','Contributors\BootcampController@saveDetail');
 Route::post('contibutor/bootcamp/saveAudience','Contributors\BootcampController@saveAudience');
+Route::post('contibutor/bootcamp/course/upload','Contributors\SectionController@SaveVideo');
 
 
 

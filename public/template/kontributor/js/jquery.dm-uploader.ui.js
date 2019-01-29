@@ -17,7 +17,7 @@ function ui_add_log(title, message, color)
 }
 
 // Creates a new file and add it to our list
-function ui_multi_add_file(no, id, file)
+function ui_multi_add_file(id, file)
 {
   var template = $('#files-template').text();
   template = template.replace('%%filename%%', file.name);
@@ -26,8 +26,8 @@ function ui_multi_add_file(no, id, file)
   template.prop('id', 'uploaderFile' + id);
   template.data('file-id', id);
 
-  $('#file'+no).find('li.empty').fadeOut(); // remove the 'no files yet'
-  $('#file'+no).prepend(template);
+  $('#file').find('li.empty').fadeOut(); // remove the 'no files yet'
+  $('#file').prepend(template);
 }
 
 // Changes the status messages on our list

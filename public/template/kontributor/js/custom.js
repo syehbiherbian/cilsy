@@ -110,6 +110,7 @@ var generateDuration = function(seconds) {
 
     return d + h + m + s;
 }
+/*
 //Pake dropipy.js untuk file uploadnya
 $('.dropify').dropify({
     messages: {
@@ -190,3 +191,5 @@ $('#drop-area').dmUploader({ //
       ui_add_log('File \'' + file.name + '\' cannot be added: size excess limit', 'danger');
     }
   });
+*/
+  
