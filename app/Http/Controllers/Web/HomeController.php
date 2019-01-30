@@ -25,6 +25,7 @@ class HomeController extends Controller {
           }else{
             $mem_id      = 0;
         }
+        
 		$categories = Category::where('enable', '=', 1)->get();
 		if(!empty($mem_id)){
             $lessons = Lesson::leftjoin('tutorial_member', function($join){
@@ -117,7 +118,8 @@ class HomeController extends Controller {
 			// 'tutor' => $tutorial,
             // 'cart' => $cart,
 			'ratenow' => $ratenow,
-			'cekdulu' => $cekdulu
+			'cekdulu' => $cekdulu,
+			
 		]);
 	}
 }
