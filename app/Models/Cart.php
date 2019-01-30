@@ -23,4 +23,9 @@ class Cart extends Model
     {
         return $this->belongsTo('App\Models\Lesson');
     }
+
+    public function bootcamp()
+    {
+        return $this->belongsTo('App\Models\Bootcamp');
+    }
 }
