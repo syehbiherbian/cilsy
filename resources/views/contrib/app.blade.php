@@ -213,8 +213,8 @@
     <script type="text/javascript" src="{{asset('template/kontributor/js/jquery.dm-uploader.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('template/kontributor/js/jquery.dm-uploader.ui.js')}}"></script>
     <script type="text/javascript" src="{{asset('template/kontributor/js/Ply.min.js')}}"></script>
-    <script type="text/javascript" src="{{asset('template/kontributor/js/Sortable.min.js')}}"></script>
-    <script src="/js/app.js"></script>
+    {{-- <script type="text/javascript" src="{{asset('template/kontributor/js/Sortable.min.js')}}"></script> --}}
+    {{-- <script src="/js/app.js"></script> --}}
 
     <script type="text/javascript">
       function contribnotif(id){

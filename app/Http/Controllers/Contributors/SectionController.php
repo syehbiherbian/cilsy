@@ -58,6 +58,7 @@ class SectionController extends Controller
 
         return response()->json($response);
     }
+
     public function storeProject(Request $request)
     {
         $response = array();
@@ -83,5 +84,10 @@ class SectionController extends Controller
             $response['success'] = true;
         }
         echo json_encode($response);
+    }
+
+    public function storeVideo(Request $r)
+    {
+        dd($r->input(), $r->file());
     }
 }

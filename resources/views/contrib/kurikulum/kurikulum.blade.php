@@ -86,6 +86,8 @@
 
       </main>
 
+      <script type="text/javascript" src="{{asset('template/kontributor/js/jquery.min.js')}}"></script>
+      <script type="text/javascript" src="{{asset('template/kontributor/js/jquery-ui.min.js')}}"></script>
     <script>
       var lastPositionSection = 0;
       
@@ -140,13 +142,13 @@
           lastPositionSection = json.length + 1;
           $('#items').html("");
           $('#items').append(sideBarItem);
+          $("#items").sortable({
+            handle: ".fa-bars",
+            cancel: ''
+          });
         };
     
         sideBarRefresh();
-        var sideBarSortable = Sortable.create(items,{
-          handle: '.fa-bars',
-          animation: 200,
-        });
       });
       
       function CreateLesson(){
@@ -211,7 +213,7 @@
                                     <div id="drop-area" class="dm-uploader p-4">
                                       <div class="btn btn-green pull-right pull-xs-none my-2">
                                           <span>Pilih Video</span>
-                                          <input type="file" title="Click to add Files" multiple="">
+                                          <input type="file" title="Click to add Files" name="file">
                                       </div>
                                       <i class="fa fa-image pull-left mr-4"></i>
                                       <h6 class="text-muted">All files should be at least 720p and less than 4.0 GB</h6>
@@ -225,11 +227,11 @@
                                 </div>
                                 <div class="text-right">
                                   <button type="button" class="btn btn-outline-green px-5 mr-2" onClick="hideContentItem()">Batalkan</button>
-                                  <button type="button" class="btn btn-green px-5 mr-2" onClick="addItem(`+id+`)">Simpan</button>
+                                  <button type="button" class="btn btn-green px-5 mr-2" onClick="addVideo(`+id+`)">Simpan</button>
                                   <div class="dropup">
                                     <button class="btn btn-transparent dropdown-toggle" type="button" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i></button>
                                     <ul class="dropdown-menu">
-                                      <li><a href="#">Dropdown</a></li>
+                                      <li><a href="#">Dropdowns</a></li>
                                       <li><a href="#">Dropdown</a></li>
                                       <li><a href="#">Dropdown</a></li>
                                     </ul>
@@ -358,11 +360,11 @@
         var type = $('#type').val();
         var value = $('#value').val();
         dataform = new FormData();
-        dataform.append( 'title', judul);
-        dataform.append( 'desk', desk);
-        dataform.append( 'type', type);
-        dataform.append( 'value', desk);
-        dataform.append( 'section_id', id);
+        dataform.append('title', judul);
+        dataform.append('desk', desk);
+        dataform.append('type', type);
+        dataform.append('value', desk);
+        dataform.append('section_id', id);
         
         if (judul == '' || desk == '' || type == '' || value == '') {
           swal("Error", "Harap Isi data Form Yang dibutuhkan!", "error");
@@ -404,14 +406,17 @@
                   }
                   );
                 }
+              },
+              error: function (e) {
+                swal.close()
               }
           });
         }
           var temp = new Object();
               temp["judul"] = $('#judul').val();
               temp["deskripsi"] = $('#deskripsi').val();
-              temp["type"] = $('#type').val();;
-              temp["value"] = $('#value').val();;
+              temp["type"] = $('#type').val();
+              temp["value"] = $('#value').val();
     
           if(json[id].item === ""){
             json[id].item = array(temp);
