@@ -154,7 +154,7 @@ class BootcampController extends Controller
           }
         $judul = Input::get('judul');
         $kat_id = Input::get('kategori');
-        $slug = str_replace("/","-",preg_replace('/\s+/', '-', $judul));
+        $slug = str_slug($judul);
         $now = new DateTime();
 
         $boot = new Bootcamp();

@@ -120,16 +120,30 @@ class Helper
 }
 function cart(){
   $member_id = Auth::guard('members')->user()->id ?? null;
-  $data = Cart::where('member_id', $member_id)->with('member', 'contributor', 'lesson')->take(3)->get();
+  $data = Cart::where('member_id', $member_id)->with('member', 'contributor', 'lesson', 'bootcamp')->take(3)->get();
   $html='';
   foreach ($data as $cart) {
-        $html .='<li class="clearfix">
-                <img style="max-width:70px;max-height:70px;" src="'.$cart->lesson->image.'" alt="item1">
-                <span class="item-name">'.$cart->lesson->title.'</span>
-                <span class="item-price">Rp'.number_format($cart->lesson->price, 0, ",", ".") .'</span>
-                </li>';
+    if ($cart->bootcamp_id != null){
+      $html .='<li class="clearfix">
+                <img style="max-width:70px;max-height:70px;" src="'.$cart->bootcamp->cover.'" alt="item1">
+                <span class="item-name">'.$cart->bootcamp->title.'</span>
+                <span class="item-price">Rp'.number_format($cart->bootcamp->price, 0, ",", ".") .'</span>
+                </li>
+                ';
+    }
+    else {
+      # code...
+      $html .='<li class="clearfix">
+              <img style="max-width:70px;max-height:70px;" src="'.$cart->lesson->image.'" alt="item1">
+              <span class="item-name">'.$cart->lesson->title.'</span>
+              <span class="item-price">Rp'.number_format($cart->lesson->price, 0, ",", ".") .'</span>
+              </li>
+              ';
+    }
   }
   return $html;
+//  dd($data);
+
 }
 function profilcon(){
   $contribID = Auth::guard('contributors')->user()->id;

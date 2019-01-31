@@ -49,7 +49,8 @@ class CartController extends Controller
             'lesson_id' => $lesson->id
         ]);
         // Session::put('cart', $cart);
-
+        // dd($cart);
+        
         return response()->json([
             'id' => $lesson->id,
             'title' => $lesson->title
@@ -60,6 +61,7 @@ class CartController extends Controller
     {
         /* cek lesson */
         $bootcamp = Bootcamp::find($r->input('id'));
+        // dd($bootcamp);
         if (!$bootcamp) {
             throw new \Exception('Bootcamp tidak ditemukan');
         }
@@ -76,11 +78,11 @@ class CartController extends Controller
         /* simpan ke cart */
         $cart = Cart::firstOrCreate([
             'member_id' => Auth::guard('members')->user()->id,
-            'contributor_id' => $lesson->contributor_id,
+            'contributor_id' => $bootcamp->contributor_id,
             'bootcamp_id' => $bootcamp->id
         ]);
         // Session::put('cart', $cart);
-
+        dd($cart);
         return response()->json([
             'id' => $bootcamp->id,
             'title' => $bootcamp->title

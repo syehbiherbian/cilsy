@@ -10,9 +10,9 @@ use DB;
 class BootcampController extends Controller
 {
 
-	  public function bootcamp($slug)
+	public function bootcamp($slug)
     {
-    	$bc = Bootcamp::where('bootcamp_category_id', 2)->where('status', 1)->where('slug', $slug)->first();
+    	$bc = Bootcamp::where('status', 1)->where('slug', $slug)->first();
     	$now = new DateTime();
     	$time = strtotime($bc->created_at);
         $myFormatForView = date("d F y", $time);

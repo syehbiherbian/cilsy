@@ -1,5 +1,5 @@
 @extends('web.app')
-@section('title','Order Summary | ')
+@section('title','Order Summary ')
 @section('content')
 <style>
     /* CSS used here will be applied after bootstrap.css */
@@ -45,6 +45,29 @@
             @endphp
             @if (count($carts) > 0)
                 @foreach ($carts as $cart)
+                @if($cart->bootcamp_id != null)
+                <div class="col-sm-12 well shadow">
+                    <div class="row cart-list">
+                        <div class="col-md-2">
+                            <center><img src="{{ asset($cart->bootcamp->cover) }}" style="max-width:100%;max-height:100px;"></center>
+                        </div>
+                        <div class="col-md-7 cart-title">
+                            {{ $cart->bootcamp->title }}
+                        </div>
+                        <div class="col-md-2 cart-price">
+                            Rp{{ number_format($cart->bootcamp->price, 0, ",", ".") }}
+                        </div>
+                        <div class="col-md-1">
+                            <form action="{{ url('cart/delete/'.$cart->id)}}" method="post">
+                                {{ csrf_field() }} 
+                                {{ method_field('delete') }} 
+                                <button class="btn btn-default btn-lg"><i class="fa fa-trash"></i></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                @endif
+                @if($cart->lesson_id != null)
                 <div class="col-sm-12 well shadow">
                     <div class="row cart-list">
                         <div class="col-md-2">
@@ -65,7 +88,16 @@
                         </div>
                     </div>
                 </div>
-                @php $total += $cart->lesson->price; 
+                @endif
+                @php 
+                if($cart->lesson_id != null){
+                    $total += $cart->lesson->price; 
+                }
+                 if($cart->bootcammp_id != null){
+                    $total += $cart->bootcamp->price; 
+                } if ($cart->bootcammp_id != null && $cart->lesson_id != null){
+                    $total = $cart->bootcamp->price + $cart->lesson->price; 
+                }
                 Session::put('total', $total);
                 @endphp
                 @endforeach
