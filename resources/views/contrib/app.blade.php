@@ -217,6 +217,11 @@
     {{-- <script src="/js/app.js"></script> --}}
 
     <script type="text/javascript">
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
       function contribnotif(id){
         var token   = "{{csrf_token()}}";
         var dataString= '_token='+ token + '&id=' + id ;

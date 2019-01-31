@@ -6,8 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Models\Course;
 use App\Models\ProjectSection;
 use App\Models\Section;
+use App\Models\VideoSection;
 use Auth;
 use DateTime;
+use FFMpeg;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 
@@ -19,18 +21,39 @@ class SectionController extends Controller
             return redirect('contributor/login');
         }
         $course = Course::where('id', $id)->first();
+        $courses = Course::where('bootcamp_id', $course->bootcamp_id)->get();
         $sec = Section::where('course_id', $id)->get();
-        // dd($course);
         return view('contrib.kurikulum.kurikulum', [
             'sec' => $sec,
             'course' => $course,
+            'courses' => $courses,
+            'bootcamp_id' => $course->bootcamp_id,
         ]);
     }
 
     public function getJsonSection($id)
     {
         $sec = Section::where('course_id', $id)->with('video_section', 'project_section')->get();
-        // var_dump($sec);
+
+        foreach ($sec as $s) {
+            /* remove drafts */
+            $drafts = VideoSection::where([
+                'title' => 'draft',
+                'section_id' => $s->id,
+            ])->get();
+            foreach ($drafts as $draft) {
+                if (file_exists(public_path($draft->image_video))) {
+                    unlink(public_path($draft->image_video));
+                }
+                if (file_exists(public_path($draft->file_video))) {
+                    unlink(public_path($draft->file_video));
+                }
+                $draft->delete();
+            }
+        }
+
+        $sec = Section::where('course_id', $id)->with('video_section', 'project_section')->get();
+
         return response()->json($sec);
     }
 
@@ -89,5 +112,105 @@ class SectionController extends Controller
     public function storeVideo(Request $r)
     {
         dd($r->input(), $r->file());
+    }
+
+    public function storeVideoTemp(Request $r)
+    {
+        $statusCode = 500;
+        $response = [
+            'status' => false,
+            'message' => 'Upload video failed',
+        ];
+        $file = Input::file('file');
+        $type_video = $file->getMimeType();
+        $bootcampid = Input::get('bootcamp_id');
+        $courseid = Input::get('course_id');
+        $sectionid = Input::get('section_id');
+        $position = Input::get('position');
+
+        /* folder bootcamp id */
+        if (!is_dir("assets/source/bootcamp/bootcamp-" . $bootcampid)) {
+            $newfolder = mkdir("assets/source/bootcamp/bootcamp-" . $bootcampid);
+        }
+
+        /* folder course id */
+        if (!is_dir("assets/source/bootcamp/bootcamp-" . $bootcampid . "/course-" . $courseid)) {
+            $newfolder = mkdir("assets/source/bootcamp/bootcamp-" . $bootcampid . "/course-" . $courseid);
+        }
+
+        /* folder section id */
+        $DestinationPath = "assets/source/bootcamp/bootcamp-" . $bootcampid . "/course-" . $courseid . "/section-" . $sectionid;
+        if (!is_dir($DestinationPath)) {
+            $newfolder = mkdir($DestinationPath);
+        }
+
+        //insert video
+        $videofilename = '';
+        if (!empty($file)) {
+            $fullname = $file->getClientOriginalName();
+            $filename = pathinfo($fullname, PATHINFO_FILENAME);
+            $extension = $file->getClientOriginalExtension();
+            $videofilename = md5($filename . time()) . '.' . strtolower($extension);
+            $file->move($DestinationPath, $videofilename);
+        }
+
+        /* siapin video */
+        $media = FFMpeg::fromDisk('local_public')->open($DestinationPath . '/' . $videofilename);
+
+        /* ambil durasi */
+        $duration = $media->getDurationInSeconds();
+
+        /* generate thumbnail */
+        $midsecs = round($duration / 2);
+        $filename = pathinfo($videofilename, PATHINFO_FILENAME);
+        $thumbnailname = 'thumbnail-' . $filename . '.jpg';
+        $thumbnail = $media->getFrameFromSeconds($midsecs)->export()->save($DestinationPath . '/' . $thumbnailname);
+
+        /* remove drafts */
+        $drafts = VideoSection::where([
+            'title' => 'draft',
+            'section_id' => $sectionid,
+        ])->get();
+        foreach ($drafts as $draft) {
+            if (file_exists(public_path($draft->image_video))) {
+                unlink(public_path($draft->image_video));
+            }
+            if (file_exists(public_path($draft->file_video))) {
+                unlink(public_path($draft->file_video));
+            }
+            $draft->delete();
+        }
+
+        /* save as draft */
+        $store = new VideoSection;
+        $store->section_id = $sectionid;
+        $store->title = 'draft';
+        $store->image_video = '/' . $DestinationPath . '/' . $thumbnailname;
+        $store->file_video = '/' . $DestinationPath . '/' . $videofilename;
+        $store->deskripsi_video = '';
+        $store->type_video = $type_video;
+        $store->durasi = $duration;
+        // $store->created_at = $now;
+        // $store->enable = 0;
+        $store->position = $position;
+        $store->save();
+
+        if ($store) {
+            $statusCode = 200;
+            $response = [
+                'status' => true,
+                'message' => 'Upload video success',
+                'data' => [
+                    'id' => $store->id,
+                    'title' => $store->title,
+                    'description' => $store->deskripsi_video,
+                    'duration' => $store->durasi,
+                    'image' => $store->image_video,
+                    'video' => $store->file_video,
+                ],
+            ];
+        }
+
+        return response()->json($response, $statusCode);
     }
 }
