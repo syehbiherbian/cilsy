@@ -197,6 +197,7 @@
                                   <div class="form-group">
                                     <label>Judul Video</label>
                                     <input type="hidden" id="type" value="video">
+                                    <input type="hidden" id="video_id">
                                     <input class="form-control" type="text" name="judul" id="judul" placeholder="Contoh: Pengenalan">
                                   </div>
                                   <div class="form-group">
@@ -343,6 +344,7 @@
             // if (judul == '') {
             //   $('#judul').val(response.data.title)
             // }
+            $('#video_id').val(res.data.id)
             $('#thumbnail-preview').html('<img src="'+res.data.image+'" class="img-thumbnail"><small><center>'+generateDuration(res.data.duration)+'</center></small>')
             $('#d-thumbnail').removeClass('col-md-1').addClass('col-md-3')
             $('#d-text').removeClass('col-md-9').addClass('col-md-7 p-0')
@@ -479,7 +481,7 @@
         }
       }
   
-      function addProject(id){
+      function addProject(id) {
         var judul = $('#judul').val();
         var desk = $('#deskripsi').val();
         var type = $('#type').val();
@@ -492,7 +494,7 @@
         dataform.append('section_id', id);
         
         if (judul == '' || desk == '' || type == '' || value == '') {
-          swal("Error", "Harap Isi data Form Yang dibutuhkan!", "error");
+          swal("Error", "Harap isi data form yang dibutuhkan!", "error");
         } else {
           $.ajax({
               type    :"POST",
@@ -503,8 +505,8 @@
               processData: false,
               beforeSend: function(){
                   swal({
-                    title: "Membuat Course",
-                    text: "Mohon Tunggu sebentar, Project sedang dibuat ",
+                    title: "Menyimpan projek",
+                    text: "Mohon tunggu sebentar, projek sedang dibuat ",
                     imageUrl: "{{ asset('template/web/img/loading.gif') }}",
                     showConfirmButton: false,
                     allowOutsideClick: false
@@ -516,7 +518,7 @@
                   window.location.href = '{{ url("contributor/login") }}';
                 } else if (data.success == true) {
                   swal({
-                    title: "Project Berhasil Dibuat Berhasil Dibuat !",
+                    title: "Projek berhasil disimpan!",
                     showConfirmButton: true,
                     timer: 3000
                   }, function(){ 
@@ -529,29 +531,84 @@
               }
           });
         }
+
           var temp = new Object();
               temp["judul"] = $('#judul').val();
               temp["deskripsi"] = $('#deskripsi').val();
               temp["type"] = $('#type').val();
               temp["value"] = $('#value').val();
     
-          if(json[id].item === ""){
+          if (json[id].item === "") {
             json[id].item = array(temp);
             $(".alert-success").fadeTo(2000, 500).slideUp(500, function(){
                 $(".alert-success").slideUp(500);
             });
             console.log(temp);
-          }else if( json[id].item.push(temp) ){
+          } else if ( json[id].item.push(temp) ){
             $('#contentItem').slideUp(500);
             $(".alert-success").fadeTo(2000, 500).slideUp(500, function(){
                 $(".alert-success").slideUp(500);
             });
-          }else{
+          } else {
             alert('error');
           }
     
           sideBarRefresh();
           console.log(json);
+      }
+
+      function addVideo(id) {
+        var judul = $('#judul').val();
+        var desk = $('#deskripsi').val();
+        var type = $('#type').val();
+        var video_id = $('#video_id').val();
+        dataform = new FormData();
+        dataform.append('title', judul);
+        dataform.append('desk', desk);
+        dataform.append('type', type);
+        dataform.append('video_id', video_id);
+        dataform.append('section_id', id);
+        
+        if (judul == '' || desk == '' || type == '') {
+          swal("Error", "Harap isi data form yang dibutuhkan!", "error");
+        } else if (video_id == '') {
+          swal("Error", "Video belum diunggah!", "error");
+        } else {
+          $.ajax({
+              type    :"POST",
+              url     :'{{ url("contributor/bootcamp/course/video-create") }}',
+              data    : dataform,
+              dataType : 'json',
+              contentType: false,
+              processData: false,
+              beforeSend: function(){
+                  swal({
+                    title: "Menyimpan video",
+                    text: "Mohon tunggu sebentar, video sedang disimpan",
+                    imageUrl: "{{ asset('template/web/img/loading.gif') }}",
+                    showConfirmButton: false,
+                    allowOutsideClick: false
+                });
+                // Show image container
+              },
+              success:function(data){
+                if (data.success == false) {
+                  window.location.href = '{{ url("contributor/login") }}';
+                } else if (data.success == true) {
+                  swal({
+                    title: "Video berhasil disimpan!",
+                    showConfirmButton: true,
+                    timer: 3000
+                  }, function(){ 
+                    location.reload();
+                  });
+                }
+              },
+              error: function (e) {
+                swal.close()
+              }
+          });
+        }
       }
   
       function hideContentItem(){

@@ -35,25 +35,6 @@ class SectionController extends Controller
     {
         $sec = Section::where('course_id', $id)->with('video_section', 'project_section')->get();
 
-        foreach ($sec as $s) {
-            /* remove drafts */
-            $drafts = VideoSection::where([
-                'title' => 'draft',
-                'section_id' => $s->id,
-            ])->get();
-            foreach ($drafts as $draft) {
-                if (file_exists(public_path($draft->image_video))) {
-                    unlink(public_path($draft->image_video));
-                }
-                if (file_exists(public_path($draft->file_video))) {
-                    unlink(public_path($draft->file_video));
-                }
-                $draft->delete();
-            }
-        }
-
-        $sec = Section::where('course_id', $id)->with('video_section', 'project_section')->get();
-
         return response()->json($sec);
     }
 
@@ -84,7 +65,7 @@ class SectionController extends Controller
 
     public function storeProject(Request $request)
     {
-        $response = array();
+        $response = [];
         if (empty(Auth::guard('contributors')->user()->id)) {
             $response['success'] = false;
         } else {
@@ -94,7 +75,7 @@ class SectionController extends Controller
             $value = Input::get('value');
             $section_id = Input::get('section_id');
 
-            $now = new DateTime();
+            // $now = new DateTime();
 
             $section = new ProjectSection();
             $section->title = $title;
@@ -102,16 +83,36 @@ class SectionController extends Controller
             $section->deskripsi_project = $desk;
             $section->instruksi = $value;
             $section->type = $type;
-            $section->created_at = $now;
+            // $section->created_at = $now;
             $section->save();
             $response['success'] = true;
         }
-        echo json_encode($response);
+
+        return response()->json($response);
     }
 
     public function storeVideo(Request $r)
     {
-        dd($r->input(), $r->file());
+        $response = [];
+        if (empty(Auth::guard('contributors')->user()->id)) {
+            $response['success'] = false;
+        } else {
+            $title = Input::get('title');
+            $desk = Input::get('desk');
+            $type = Input::get('type');
+            $video_id = Input::get('video_id');
+            $section_id = Input::get('section_id');
+            $position = Input::get('position');
+
+            $section = VideoSection::find($video_id);
+            $section->title = $title;
+            $section->deskripsi_video = $desk;
+            // $section->position = $position;
+            $section->save();
+            $response['success'] = true;
+        }
+
+        return response()->json($response);
     }
 
     public function storeVideoTemp(Request $r)
