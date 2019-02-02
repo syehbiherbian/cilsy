@@ -214,4 +214,20 @@ class SectionController extends Controller
 
         return response()->json($response, $statusCode);
     }
+
+    public function savePosition(Request $r)
+    {
+        $positions = $r->input('positions');
+        foreach ($positions as $position => $id) {
+            Section::where([
+                'id' => $id,
+            ])->update([
+                'position' => $position + 1,
+            ]);
+        }
+
+        return response()->json([
+            'success' => true,
+        ]);
+    }
 }

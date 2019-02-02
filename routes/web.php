@@ -405,6 +405,7 @@ Route::post('contributor/bootcamp/confirmPublish', 'Contributors\BootcampControl
 Route::get('contributor/get/sub/{bootcamp}', 'Contributors\BootcampController@getSub');
 Route::get('contributor/bootcamp/course/{id}', 'Contributors\SectionController@index');
 Route::post('contributor/bootcamp/course/section-create', 'Contributors\SectionController@store');
+Route::post('contributor/bootcamp/course/section-save-position', 'Contributors\SectionController@savePosition');
 Route::post('contributor/bootcamp/course/project-create', 'Contributors\SectionController@storeProject');
 Route::post('contributor/bootcamp/course/video-create', 'Contributors\SectionController@storeVideo');
 Route::post('contributor/bootcamp/course/video-create-temp', 'Contributors\SectionController@storeVideoTemp');
