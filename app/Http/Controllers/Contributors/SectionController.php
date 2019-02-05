@@ -33,7 +33,7 @@ class SectionController extends Controller
 
     public function getJsonSection($id)
     {
-        $sec = Section::where('course_id', $id)->with('video_section', 'project_section')->get();
+        $sec = Section::where('course_id', $id)->with('video_section', 'project_section')->orderBy('position', 'asc')->get();
 
         return response()->json($sec);
     }
