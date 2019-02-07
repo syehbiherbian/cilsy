@@ -16,7 +16,7 @@
     <link href="{{asset('template/kontributor/css/ply.css')}}" rel="stylesheet">
     <link href="{{asset('template/kontributor/css/dropify.min.css')}}" rel="stylesheet">
     <link href="{{asset('template/kontributor/css/jquery.dm-uploader.min.css')}}" rel="stylesheet">
-    <link href="{{asset('template/kontributor/css/bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{asset('template/kontributor/css/bootstrap-3.3.7.min.css')}}" rel="stylesheet">
     <link href="{{asset('template/kontributor/css/sweetalert.css')}}" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker.css" rel="stylesheet">
 
@@ -25,7 +25,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.2.1/assets/owl.carousel.css" type="text/css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.2.1/assets/owl.theme.default.min.css" type="text/css" />
 
-    <script type="text/javascript" src="{{asset('template/kontributor/js/jquery.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('template/kontributor/js/jquery-3.3.1.min.js')}}"></script>
     <script type="text/javascript" src="{{ asset('template/web/js/venobox.min.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.2.1/owl.carousel.js"></script>
 
@@ -204,13 +204,24 @@
             </div>
         </div>
     </div>
-    <script type="text/javascript" src="{{asset('template/kontributor/js/bootstrap.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('template/kontributor/js/bootstrap-3.3.7.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('template/kontributor/js/custom.js')}}"></script>
     <script type="text/javascript" src="{{asset('template/kontributor/js/step-modal.js')}}"></script>
     <script type="text/javascript" src="{{asset('template/kontributor/js/sweetalert.min.js')}}"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js"></script>
+    <script type="text/javascript" src="{{asset('template/kontributor/js/dropify.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('template/kontributor/js/jquery.dm-uploader.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('template/kontributor/js/jquery.dm-uploader.ui.js')}}"></script>
+    <script type="text/javascript" src="{{asset('template/kontributor/js/Ply.min.js')}}"></script>
+    {{-- <script type="text/javascript" src="{{asset('template/kontributor/js/Sortable.min.js')}}"></script> --}}
+    {{-- <script src="/js/app.js"></script> --}}
 
     <script type="text/javascript">
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
       function contribnotif(id){
         var token   = "{{csrf_token()}}";
         var dataString= '_token='+ token + '&id=' + id ;

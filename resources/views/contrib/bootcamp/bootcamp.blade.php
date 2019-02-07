@@ -88,7 +88,7 @@
                     12 jam Durasi Selesai
                   </div>
                   <div class="col-md-3 col-sm-4 col-xs-12 py-4 text-right">
-                    <a href="{{url('contibutor/bootcamp/course/'.$key->id)}}" class="btn btn-green">+ Tambah Kurikulum</a>
+                    <a href="{{url('contributor/bootcamp/course/'.$key->id)}}" class="btn btn-green">+ Tambah Kurikulum</a>
                     <a class="pull-right collapsed" id="collapse" data-toggle="collapse" href="#collapseCourse{{$key->id}}" role="button"></a>
                   </div>
                 </div>
@@ -167,7 +167,7 @@
         });
         $.ajax({
             type    :"POST",
-            url     :'{{ url("contibutor/bootcamp/saveCourse") }}',
+            url     :'{{ url("contributor/bootcamp/saveCourse") }}',
             data    : dataform,
             dataType : 'json',
             contentType: false,
@@ -220,7 +220,7 @@
         });
         $.ajax({
             type    :"POST",
-            url     :'{{ url("contibutor/bootcamp/updateCourse") }}',
+            url     :'{{ url("contributor/bootcamp/updateCourse") }}',
             data    : dataform,
             dataType : 'json',
             contentType: false,

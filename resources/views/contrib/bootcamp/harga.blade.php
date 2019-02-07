@@ -92,7 +92,7 @@
         });
         $.ajax({
             type    :"POST",
-            url     :'{{ url("contibutor/bootcamp/saveHarga") }}',
+            url     :'{{ url("contributor/bootcamp/saveHarga") }}',
             data    : dataform,
             dataType : 'json',
             contentType: false,
