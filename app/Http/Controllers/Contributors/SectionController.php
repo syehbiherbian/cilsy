@@ -33,7 +33,7 @@ class SectionController extends Controller
 
     public function getJsonSection($id)
     {
-        $sec = Section::where('course_id', $id)->with('video_section', 'project_section')->get();
+        $sec = Section::where('course_id', $id)->with('video_section', 'project_section')->orderBy('position', 'asc')->get();
 
         return response()->json($sec);
     }
@@ -280,5 +280,20 @@ class SectionController extends Controller
         }
 
         return response()->json($response, $statusCode);
+    }
+    public function savePosition(Request $r)
+    {
+        $positions = $r->input('positions');
+        foreach ($positions as $position => $id) {
+            Section::where([
+                'id' => $id,
+            ])->update([
+                'position' => $position + 1,
+            ]);
+        }
+
+        return response()->json([
+            'success' => true,
+        ]);
     }
 }

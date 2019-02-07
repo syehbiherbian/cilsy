@@ -48,9 +48,11 @@
                     <div class="col-sm-4 col-xs-12 col-sm-push-8">
                       <div class="row">
                         <div class="col-xs-12">
-                          <ul class="kurikulum-item" id="items">
-                            <!-- Diisi Jquery -->
-                          </ul>
+                          <form id="kurikulum-form">
+                            <ul class="kurikulum-item" id="items">
+                              <!-- Diisi Jquery -->
+                            </ul>
+                          </form>
                             <button class="btn btn-green w-100 mb-4" onClick="CreateLesson()">Tambah Lesson</button>
                           </div>
                         </div>
@@ -89,6 +91,15 @@
       <script type="text/javascript" src="{{asset('template/kontributor/js/jquery-ui.min.js')}}"></script>
     <script>
       var lastPositionSection = 0;
+      var isUploading = false;
+
+      window.onbeforeunload = function () {
+          if (isUploading) {
+              return "Anda sedang mengunggah video.";
+          }
+
+          return undefined;
+      }
       
       $.getJSON("{{url('contributor/bootcamp/course/get/'.$course->id)}}", function (data) {
         var json = data;
@@ -97,16 +108,17 @@
           for (var i=0;i<json.length;++i)
           {
             sideBarItem += `<li id="sideBarItem`+json[i].id+`">
+                            <input type="hidden" name="positions[]" value="`+json[i].id+`">
                             <a class="linkcollapse collapsed" data-toggle="collapse" href="#collapse`+json[i].id+`" role="button">
                               <h4>
-                                <i class="fa fa-bars"></i>
+                                <i class="fa fa-bars handle"></i>
                                 `+json[i].title+`
                               </h4>
                             </a>
                             <div class="collapse" id="collapse`+json[i].id+`">`;
     
             for (var o=0;o<=json[i].video_section.length;++o){
-              if(json[i].video_section[o]!=null){
+              if (json[i].video_section[o] != null){
                 sideBarItem += `<div class="box mb-2">
                                     <h5>
                                       <i class="fa fa-bars"></i> &nbsp;
@@ -118,7 +130,7 @@
               }
             }
             for (var o=0;o<=json[i].project_section.length;++o){
-              if(json[i].project_section[o]!=null){
+              if (json[i].project_section[o] != null){
                 sideBarItem += `<div class="box mb-2">
                                     <h5>
                                       <i class="fa fa-bars"></i> &nbsp;
@@ -142,8 +154,18 @@
           $('#items').html("");
           $('#items').append(sideBarItem);
           $("#items").sortable({
-            handle: ".fa-bars",
+            handle: ".handle",
             cancel: ''
+          });
+          $("#items").on( "sortupdate", function(e, ui) {
+            $.ajax({
+              type    : 'POST',
+              url     : '{{ url("contributor/bootcamp/course/section-save-position") }}',
+              data    : $('#kurikulum-form').serialize(),
+              success: function(data){
+                console.log(data)
+              }
+          })
           });
         };
     
@@ -305,6 +327,8 @@
               $('#judul').val(title)
             }
 
+            isUploading = true
+
             /* if (typeof FileReader !== "undefined"){
               var reader = new FileReader();
               var img = this.find('img');
@@ -350,6 +374,8 @@
             $('#d-text').removeClass('col-md-9').addClass('col-md-7 p-0')
 
             ui_single_update_status(this, 'Upload completed.', 'success');
+
+            isUploading = false
           },
           onUploadError: function(id, xhr, status, message){
             // Happens when an upload error happens
@@ -440,7 +466,7 @@
 
         if (judul == '' || desk == '') {
           swal("Error", "Harap Isi data Form Yang dibutuhkan!", "error");
-        }else {
+        } else {
           $.ajax({
               type    :"POST",
               url     :'{{ url("contributor/bootcamp/course/section-create") }}',
@@ -461,7 +487,7 @@
               success:function(data){
                 if (data.success == false) {
                   window.location.href = '{{ url("contributor/login") }}';
-                }else if (data.success == true) {
+                } else if (data.success == true) {
                   $('#judul').val('');
                   $('#desk').val('');
 

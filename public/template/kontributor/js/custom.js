@@ -189,10 +189,7 @@ $('#BuatCourse-hide').click(function() {
     onFileSizeError: function(file) {
         ui_add_log('File \'' + file.name + '\' cannot be added: size excess limit', 'danger');
     }
-<<<<<<< HEAD
   });
 */
   
-=======
-}); */
->>>>>>> f811718c8edb3cf3c2eb1ffe7b8f7270cca4f179
+
