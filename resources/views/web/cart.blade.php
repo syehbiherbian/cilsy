@@ -93,12 +93,14 @@
                 if($cart->lesson_id != null){
                     $total += $cart->lesson->price; 
                 }
-                 if($cart->bootcammp_id != null){
+                else if($cart->bootcammp_id != null){
                     $total += $cart->bootcamp->price; 
-                } if ($cart->bootcammp_id != null && $cart->lesson_id != null){
+                } else if ($cart->bootcammp_id != null && $cart->lesson_id != null){
                     $total = $cart->bootcamp->price + $cart->lesson->price; 
                 }
                 Session::put('total', $total);
+
+                dd($total);
                 @endphp
                 @endforeach
             @else
