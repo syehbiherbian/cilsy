@@ -100,7 +100,6 @@
                 }
                 Session::put('total', $total);
 
-                dd($total);
                 @endphp
                 @endforeach
             @else
