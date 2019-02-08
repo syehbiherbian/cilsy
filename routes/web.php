@@ -98,28 +98,28 @@ Route::get('/tentang', function () {
     return view('web.tentang');
 });
 
-//test
-Route::get('/Bootcamp/Course', function () {
-    return view('web.courses.CourseDashboard');
+//bootcamp
+Route::get('/bootcamp/course', function () {
+	return view('web.courses.CourseDashboard');
 });
-Route::get('/Bootcamp/CourseLesson', function () {
-    return view('web.courses.CourseLesson');
+Route::get('/bootcamp/courseLesson', function () {
+	return view('web.courses.CourseLesson');
 });
-Route::get('/Bootcamp/CourseSylabus', function () {
-    return view('web.courses.CourseSylabus');
+// Route::get('/bootcamp/courseSylabus', function () {
+// 	return view('web.courses.CourseSylabus');
+// });
+Route::get('/bootcamp/projectSubmit', function () {
+	return view('web.courses.ProjectSubmit');
 });
-Route::get('/Bootcamp/ProjectSubmit', function () {
-    return view('web.courses.ProjectSubmit');
+Route::get('/bootcamp/projectView', function () {
+	return view('web.courses.ProjectView');
 });
-Route::get('/Bootcamp/ProjectView', function () {
-    return view('web.courses.ProjectView');
-});
-Route::get('/Bootcamp/VideoPage', function () {
-    return view('web.courses.VideoPage');
+Route::get('/bootcamp/videoPage', function () {
+	return view('web.courses.VideoPage');
 });
 
 Route::get('bootcamp/{bootcamp}', 'Web\BootcampController@bootcamp');
-// Route::resource('Bootcamp', 'Web\BootcampController');
+Route::get('bootcamp/{bootcamp}/courseSylabus/', 'Web\CourseController@courseSylabus');
 
 /*
 |--------------------------------------------------------------------------

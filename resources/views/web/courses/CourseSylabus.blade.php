@@ -31,8 +31,8 @@
           <div class="row">
             <div class="col-xs-12">
               <h6 class="mb-5">Dashboard/Track</h6>
-              <h2 class="mb-4">Training to Become a Sysadmin Professional</h2>
-              <h6>Are you a Sysadmin Professional, or do you want to become one? In order to be successful in your role you will need to develop a few essentials soft
+              <h2 class="mb-4">Training to Become a {{$bc->slug}}</h2>
+              <h6>Are you a {{$bc->slug}}, or do you want to become one? In order to be successful in your role you will need to develop a few essentials soft
                 skills in addition to your technical skills. In this path you will learn crucial technology management skill, how to effectively lead technology teams,
                 and how to best manage technology projects. This content is not meant to be watched in order, so you can pickl your own adventure.
               </h6>
@@ -70,90 +70,58 @@
             <div class="tab-pane fade active in" id="pills-kurikulum" role="tabpanel" aria-labelledby="pills-kurikulum-tab">
               <ul class="timelines">
                   <li>
-                    <div class="timelines-number">1</div>
-                    <div class="timelines-content">
-                      <div class="row row-eq-height box p-0">
-                        <div class="col-sm-4 col-xs-12 p-0" style="background: url({{asset('img/head.png')}});background-size:cover;min-height: 250px">
-                          <!-- for image content use style background for full size of column -->
-                        </div>
-                        <div class="col-sm-8 col-xs-12">
+  <?php
+   $i = 1;
+   foreach ($cs as $key => $courses): ?>
+    <?php if ($i <= 2) {?>
+    <div class="timelines-number"><?php echo $i; ?></div>
+    <div class="timelines-content">
+      <div class="row row-eq-height box p-0">
+        
+        <?php if (!empty($courses->cover_course)) {?>
+        <div class="col-sm-4 col-xs-12 p-0" style="background: url({{ asset($courses->cover_course) }});background-size:cover;min-height: 250px"></div>
+          <!-- for image content use style background for full size of column -->
+        <?php } else {?>
+        <div class="col-sm-4 col-xs-12 p-0" style="background: url({{ asset('template/web/img/no-image-available.png') }});background-size:cover;min-height: 250px"></div>
+        <?php }?> 
+        
+        <div class="col-sm-8 col-xs-12">
+
+          <div class="row mt-3">
+            <div class="col-xs-6">
+              <h5>Course Part <?php echo $i; ?></h5> 
+            </div>
+            <div class="col-xs-5 mt-4">
+                <div class="progress">
+                  <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+            </div>
+            <div class="col-xs-1 p-0 pt-2">
+              0%
+            </div>
+          </div>
             
-                          <div class="row mt-3">
-                            <div class="col-xs-6">
-                              <h5>Course Part 1</h5> 
-                            </div>
-                            <div class="col-xs-5 mt-4">
-                                <div class="progress">
-                                  <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </div>
-                            <div class="col-xs-1 p-0 pt-2">
-                              0%
-                            </div>
-                          </div>
-                            
-                          <br>
-            
-                          <h4>Linux Fundamental</h4>
-                          <h6>
-                            Setelah menyelesaikan Linux Fundamental ini, diharapkan mampu memahami dasar-dasar pengoperasian
-                            sistem operasi Linux dan dapat menggunakannya  dalam lingkungan pekerjaan  di bidang teknologi dan sistem
-                          </h6>
-            
-                          <br>
+          <br>
 
-                          <small class="text-muted">08 Jam 31 Menit</small> &nbsp;&nbsp;&nbsp; <small class="text-muted">Deadline 2 Hari</small>
-                              
-                          <br><br>
-            
-                          <a href="{{ url('Bootcamp/CourseLesson') }}" class="btn btn-primary mb-4">Mulai Belajar</a>
-                        </div>
-                      </div>
-                    </div>
-                  </li>
-                  <li>
-                      <div class="timelines-number">2</div>
-                      <div class="timelines-content">
-                        <div class="row row-eq-height box p-0">
-                          <div class="col-sm-4 col-xs-12 p-0" style="background: url({{asset('img/head.png')}});background-size:cover;min-height: 250px">
-                            <!-- for image content use style background for full size of column -->
-                          </div>
-                          <div class="col-sm-8 col-xs-12">
+          <h4>{{$courses->title}}</h4>
+          <h6>
+            {{$courses->deskripsi}}
+          </h6>
 
-                            <div class="row mt-3">
-                              <div class="col-xs-6">
-                                <h5>Course Part 2</h5> 
-                              </div>
-                              <div class="col-xs-5 mt-4">
-                                  <div class="progress">
-                                    <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-                                  </div>
-                              </div>
-                              <div class="col-xs-1 p-0 pt-2">
-                                0%
-                              </div>
-                            </div>
-                              
-                            <br>
+          <br>
+          
+          <small class="text-muted">{{$course->estimasi}} Jam </small> &nbsp;&nbsp;&nbsp; <small class="text-muted">Deadline 2 Hari</small>
+              
+          <br><br>
 
-                            <h4>Linux System Administrator</h4>
-                            <h6>
-                              Setelah menyelesaikan Linux Fundamental ini, diharapkan mampu memahami dasar-dasar pengoperasian
-                              sistem operasi Linux dan dapat menggunakannya  dalam lingkungan pekerjaan  di bidang teknologi dan sistem
-                            </h6>
-
-                            <br>
-                            
-                            <small class="text-muted">08 Jam 31 Menit</small> &nbsp;&nbsp;&nbsp; <small class="text-muted">Deadline 2 Hari</small>
-                                
-                            <br><br>
-
-                            <button class="btn btn-primary mb-4">Mulai Belajar</button>
-                          </div>
-                        </div>
-                      </div>
-                  </li>
-                </ul>
+          <a href="{{ url('Bootcamp/CourseLesson') }}" class="btn btn-primary mb-4">Mulai Belajar</a>
+        </div>
+      </div>
+    </div>
+    <?php } ?>
+        <?php $i++;?>
+    <?php endforeach; ?>
+</li>
             </div>
   
             <!-- Tab Course Overview -->

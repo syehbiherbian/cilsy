@@ -48,6 +48,7 @@
       <div class="row">
         
         <div class="col-md-6 col-xs-12">
+          <a href="{{ url('bootcamp/'.$bca->slug.'/courseSylabus/') }}" class="btn-tag">{{$bca->title}}</a>
           
           <h1 class="price">Rp. {{$bca->price}} </h1>
           <h2>{{$bca->title}}</h2>

@@ -269,6 +269,70 @@ class BootcampController extends Controller
         }
         echo json_encode($response);
     }
+    public function updateLampiran(Request $request){
+        $response = array();
+        if (empty(Auth::guard('contributors')->user()->id)) {
+            $response['success'] = false;
+        } else {
+            
+            $now = new DateTime();
+            $uid = Auth::guard('contributors')->user()->id;
+            // $member = DB::table('contributors')->where('id', $uid)->first();
+            $input = LampiranBootcamp::find($request->input('lamp_id'));
+            // $input = $request->all();  
+            $input['nama'] = $request->input('nama');
+            $input['bootcamp_id'] = $request->input('boot_id');
+            $input['deskripsi'] =  $request->input('deskr');
+            // $input['estimasi'] =  $request->input('estimasi');
+            // dd($input);
+            if ($request->hasFile('image')){
+                // if (!is_dir("assets/source/bootcamp/bootcamp-$bootcamp->id")) {
+                //     $newforder = mkdir("assets/source/bootcamp/bootcamp-$bootcamp->id");
+                // }
+                $input['file'] = '/assets/source/bootcamp/bootcamp-'.$input['bootcamp_id'].'/'. $request->image->getClientOriginalName();
+                // $input['cover_course'] = $request->image->getClientOriginalName();
+                $request->image->move(public_path('/assets/source/bootcamp/bootcamp-'.$input['bootcamp_id']), $input['file']);
+            }
+           
+            $input->save();
+            $response['success'] = true;
+        }
+        echo json_encode($response);
+    }
+     public function saveHarga(Request $request){
+        $response = array();
+        if (empty(Auth::guard('contributors')->user()->id)) {
+            $response['success'] = false;
+        } else {
+            
+            $now = new DateTime();
+            $uid = Auth::guard('contributors')->user()->id;
+            // $member = DB::table('contributors')->where('id', $uid)->first();
+            $input = Bootcamp::find($request->input('boot_id'));
+            // $input = $request->all();  
+            $input['price'] = $request->input('harga');
+            $input->save();
+            $response['success'] = true;
+        }
+        echo json_encode($response);
+    }
+    public function confirmPublish(Request $request){
+        $response = array();
+        if (empty(Auth::guard('contributors')->user()->id)) {
+            $response['success'] = false;
+        } else {
+            
+            $now = new DateTime();
+            $uid = Auth::guard('contributors')->user()->id;
+            // $member = DB::table('contributors')->where('id', $uid)->first();
+            $input = Bootcamp::find($request->input('boot_id'));
+            // $input = $request->all();  
+            $input['status'] = $request->input('status');
+            $input->save();
+            $response['success'] = true;
+        }
+        echo json_encode($response);
+    }
 
     /**
      * Display the specified resource.
