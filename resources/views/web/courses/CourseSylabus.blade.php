@@ -69,59 +69,60 @@
             <!-- Tab Kurikulum -->
             <div class="tab-pane fade active in" id="pills-kurikulum" role="tabpanel" aria-labelledby="pills-kurikulum-tab">
               <ul class="timelines">
-                  <li>
-  <?php
-   $i = 1;
-   foreach ($cs as $key => $courses): ?>
-    <?php if ($i <= 2) {?>
-    <div class="timelines-number"><?php echo $i; ?></div>
-    <div class="timelines-content">
-      <div class="row row-eq-height box p-0">
-        
-        <?php if (!empty($courses->cover_course)) {?>
-        <div class="col-sm-4 col-xs-12 p-0" style="background: url({{ asset($courses->cover_course) }});background-size:cover;min-height: 250px"></div>
-          <!-- for image content use style background for full size of column -->
-        <?php } else {?>
-        <div class="col-sm-4 col-xs-12 p-0" style="background: url({{ asset('template/web/img/no-image-available.png') }});background-size:cover;min-height: 250px"></div>
-        <?php }?> 
-        
-        <div class="col-sm-8 col-xs-12">
+                <?php
+                     $i = 1;
+                     foreach ($cs as $key => $courses): ?>
+                      <?php if ($i <= 2) {?>
+                  <li>           
+                      <div class="timelines-number"><?php echo $i; ?></div>
+                      <div class="timelines-content">
+                        <div class="row row-eq-height box p-0">
+                          
+                          <?php if (!empty($courses->cover_course)) {?>
+                          <div class="col-sm-4 col-xs-12 p-0" style="background: url({{ asset($courses->cover_course) }});background-size:cover;min-height: 250px"></div>
+                            <!-- for image content use style background for full size of column -->
+                          <?php } else {?>
+                          <div class="col-sm-4 col-xs-12 p-0" style="background: url({{ asset('template/web/img/no-image-available.png') }});background-size:cover;min-height: 250px"></div>
+                          <?php }?> 
+                          
+                          <div class="col-sm-8 col-xs-12">
 
-          <div class="row mt-3">
-            <div class="col-xs-6">
-              <h5>Course Part <?php echo $i; ?></h5> 
-            </div>
-            <div class="col-xs-5 mt-4">
-                <div class="progress">
-                  <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-            </div>
-            <div class="col-xs-1 p-0 pt-2">
-              0%
-            </div>
-          </div>
-            
-          <br>
+                            <div class="row mt-3">
+                              <div class="col-xs-6">
+                                <h5>Course Part <?php echo $i; ?></h5> 
+                              </div>
+                              <div class="col-xs-5 mt-4">
+                                  <div class="progress">
+                                    <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                  </div>
+                              </div>
+                              <div class="col-xs-1 p-0 pt-2">
+                                0%
+                              </div>
+                            </div>
+                              
+                            <br>
 
-          <h4>{{$courses->title}}</h4>
-          <h6>
-            {{$courses->deskripsi}}
-          </h6>
+                            <h4>{{$courses->title}}</h4>
+                            <h6>
+                              {{$courses->deskripsi}}
+                            </h6>
 
-          <br>
-          
-          <small class="text-muted">{{$course->estimasi}} Jam </small> &nbsp;&nbsp;&nbsp; <small class="text-muted">Deadline 2 Hari</small>
-              
-          <br><br>
+                            <br>
+                            
+                            <small class="text-muted">{{$course->estimasi}} Jam </small> &nbsp;&nbsp;&nbsp; <small class="text-muted">Deadline 2 Hari</small>
+                                
+                            <br><br>
 
-          <a href="{{ url('Bootcamp/CourseLesson') }}" class="btn btn-primary mb-4">Mulai Belajar</a>
-        </div>
-      </div>
-    </div>
-    <?php } ?>
-        <?php $i++;?>
-    <?php endforeach; ?>
-</li>
+                            <a href="{{ url('bootcamp/'.$bc->slug.'/courseLesson/'.$courses->id) }}" class="btn btn-primary mb-4">Mulai Belajar</a>
+                          </div>
+                        </div>
+                      </div>
+                      <?php } ?>
+                          <?php $i++;?>
+                          <?php endforeach; ?>
+                  </li>
+                  </ul>
             </div>
   
             <!-- Tab Course Overview -->

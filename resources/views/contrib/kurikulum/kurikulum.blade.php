@@ -154,13 +154,14 @@
 
       
 
-      function CreateLesson(){
+      function CreateLesson(id){
         var contentItem = "";
           contentItem += `<h4>Tambah Lesson Baru</h4>
                           <div class="row">
                             <div class="col-xs-12 p-4">
                               <form>
                                 <div class="box mb-4">
+                                <input type="hidden" name="course_id" value="{{ $course->id }}">
                                   <div class="form-group">
                                     <label>Judul Lesson</label>
                                     <input class="form-control" type="text" name="judul" id="judul" placeholder="Contoh: Pengelanan">
@@ -172,7 +173,7 @@
                                 </div>
                                 <div class="text-right">
                                   <button type="button" class="btn btn-outline-green px-5 mr-2" onClick="hideContentItem()">Batalkan</button>
-                                  <button type="button" class="btn btn-green px-5 mr-2" onClick="addLesson()">Simpan</button>
+                                  <button type="button" class="btn btn-green px-5 mr-2" onClick="addLesson({{ $course->id}})">Simpan</button>
                                   <div class="dropup">
                                     <button class="btn btn-transparent dropdown-toggle" type="button" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i></button>
                                     <ul class="dropdown-menu">
@@ -302,7 +303,7 @@
   
   
   
-      function addLesson(){
+      function addLesson(course_id){
       var judul = $('#judul').val();
       var desk = $('#deskripsi').val();
       dataform = new FormData();
@@ -310,7 +311,7 @@
       dataform.append( 'desk', desk);
       dataform.append( 'course_id', '{{ $course->id}}');
 
-
+  
   
       if (judul == '' || desk == '') {
         swal("Error", "Harap Isi data Form Yang dibutuhkan!", "error");

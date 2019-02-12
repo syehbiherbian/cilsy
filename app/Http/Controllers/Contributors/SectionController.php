@@ -79,4 +79,21 @@ class SectionController extends Controller
         }
         echo json_encode($response);
     }
+    public function addLesson(Request $request){
+        $response = array();
+        if (empty(Auth::guard('contributors')->user()->id)) {
+            $response['success'] = false;
+        } else {
+            
+            $now = new DateTime();
+            $uid = Auth::guard('contributors')->user()->id;
+            // $member = DB::table('contributors')->where('id', $uid)->first();
+            $input = Bootcamp::find($request->input('boot_id'));
+            // $input = $request->all();  
+            $input['status'] = $request->input('status');
+            $input->save();
+            $response['success'] = true;
+        }
+        echo json_encode($response);
+    }
 }

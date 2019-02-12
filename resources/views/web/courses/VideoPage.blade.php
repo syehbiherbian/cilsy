@@ -46,134 +46,43 @@
         <div class="tab-content" id="pills-tabContent">
           <!-- Tab Materi -->
           <div class="tab-pane fade active in" id="pills-materi" role="tabpanel" aria-labelledby="pills-materi-tab">
+          <?php
+             $a = 1;
+             foreach ($stn as $key => $section): ?>
               <div class="video-materi">
-                <div class="number-circle">1</div>
-                <a class="collap" id="materi-1" data-toggle="collapse" href="#materi1" role="button">
-                  <div class="number-circle">1</div>
+                <a class="collap" id="<?php echo "materi-".$a ?>" data-toggle="collapse" href="#{{$section->id}}" role="button">
+                 <div class="number-circle"><?php echo $a ;?></div>
                   <div class="title">
-                    Introducion
+                     {{$section->title}}
                     <h6><span class="fa fa-clock"></span> 40:48</h6>
                   </div>
                   <i class="icon-collap fa fa-chevron-down"></i>
                 </a>    
               </div>
-
-              <div class="collapse submateri" id="materi1">
+              <div class="collapse submateri" id="{{$section->id}}">
                 <ul>
+                <?php
+                 $i = 1;
+                 foreach ($section->video_section as $key => $materi): ?>
                   <li>
-                    <a href="#">
+                    <a data-url="{{$materi->file_video}}" data-title="{{$materi->title}}" onclick="changeVideo(this)">
                       <div class="sub-materi row">
                         <div class="col-xs-10 px-0">
-                          <i class="fas fa-play-circle"></i> 1. Why Linux? Why Sysadmin? Why now?
+                          <i class="fas fa-play-circle"></i><?php echo " $i."; ?> {{$materi->title}}
                         </div>
                         <div class="col-xs-2 px-0 text-right">
-                          05:10
-                          <i class="fa fa-check-circle ml-2 c-blue"></i>
-                        </div>
-                      </div>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#" class="active">
-                      <div class="sub-materi row">
-                        <div class="col-xs-10 px-0">
-                          <i class="fas fa-play-circle"></i> 2. Why you should trust me as your instructur ?
-                        </div>
-                        <div class="col-xs-2 px-0 text-right">
-                          05:10
+                          {{$materi->durasi}}
                           <i class="fa fa-circle ml-2"></i>
                         </div>
                       </div>
                     </a>
                   </li>
-                  <li>
-                    <a href="#">
-                      <div class="sub-materi row">
-                        <div class="col-xs-10 px-0">
-                          <i class="fas fa-play-circle"></i> 3. Why you should take this course?
-                        </div>
-                        <div class="col-xs-2 px-0 text-right">
-                          05:10
-                          <i class="fa fa-circle ml-2"></i>
-                        </div>
-                      </div>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <div class="sub-materi row">
-                        <div class="col-xs-10 px-0">
-                            <i class="fas fa-play-circle"></i> 4. Apa saja perangkat dan software yang digunakan?
-                        </div>
-                        <div class="col-xs-2 px-0 text-right">
-                          05:10
-                          <i class="fa fa-circle ml-2"></i>
-                        </div>
-                      </div>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <div class="sub-materi row">
-                        <div class="col-xs-10 px-0">
-                            <i class="fas fa-play-circle"></i> 5.  Getting all files for the rest of course
-                        </div>
-                        <div class="col-xs-2 px-0 text-right">
-                          05:10
-                          <i class="fa fa-circle ml-2"></i>
-                        </div>
-                      </div>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <div class="sub-materi row">
-                        <div class="col-xs-10 px-0">
-                          <i class="fas fa-play-circle"></i> 6. FAQ
-                        </div>
-                        <div class="col-xs-2 px-0 text-right">
-                          05:10
-                          <i class="fa fa-circle ml-2"></i>
-                        </div>
-                      </div>
-                    </a>
-                  </li>
+                  <?php $i++;?>
+                  <?php endforeach; ?>
                 </ul>
               </div>
-
-
-              <div class="video-materi">
-                <a class="collap" id="collapse" data-toggle="collapse" href="#collapseLesson" role="button">
-                  <div class="number-circle">2</div>
-                  <div class="title">
-                    Linux dan Open Source
-                    <h6><span class="fa fa-clock"></span> 30:48</h6>
-                  </div>
-                  <i class="icon-collap fa fa-chevron-down"></i>
-                </a>    
-              </div>
-
-              <div class="video-materi">
-                <a class="collap" id="collapse" data-toggle="collapse" href="#collapseLesson" role="button">
-                  <div class="number-circle">3</div>
-                  <div class="title">
-                      Linux Ubuntu Installation
-                    <h6><span class="fa fa-clock"></span> 45:28</h6>
-                  </div>
-                  <i class="icon-collap fa fa-chevron-down"></i>
-                </a>    
-              </div>
-              
-              <div class="video-materi">
-                <a class="collap" id="collapse" data-toggle="collapse" href="#collapseLesson" role="button">
-                  <div class="number-circle">4</div>
-                  <div class="title">
-                    Basic Linux Administration
-                    <h6><span class="fa fa-clock"></span> 41:05</h6>
-                  </div>
-                  <i class="icon-collap fa fa-chevron-down"></i>
-                </a>                      
-              </div>
+              <?php $a++;?>
+                  <?php endforeach; ?>
           </div>
 
           <!-- Tab Diskusi-->
@@ -207,7 +116,7 @@
 
             <!-- THE VIDEO PLAYER -->
               <video id="player" playsinline controls>
-                <source class="vid-player" src="" type="video/mp4">
+                <source  src="" type="video/mp4">
               </video>
 
               <div class="player-end">
@@ -229,7 +138,7 @@
 
 
     <!-- JavaScript -->
-    <script type="text/javascript" src="{{asset('js/jquery-3.3.1.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('assets/js/jquery-2.2.1.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('js/bootstrap.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('js/plyr.min.js')}}"></script>
     <script>
@@ -244,12 +153,11 @@
 
       const controls = `<div class="video-header">
         <div class="col-xs-8">
-          Become a Sysadmin Professional <br>
-          <small>Introduction: Why Linux? Why Sysadmin? Why now?</small>
+          Become a {{$bc->slug}} <br>
         </div>
         <div class="col-xs-3 p-0">
           <a href="CourseSylabus.html">
-            <i class="fa fa-chevron-left"></i> Course Part 1 Linux Fundamental
+            <i class="fa fa-chevron-left"></i> Course Part 1 {{$course->title}}
           </a>
         </div>
         <div class="col-xs-1 p-0">
@@ -311,7 +219,7 @@
       type: 'video',
       title: 'Elephant Dream',
       sources: [{
-        src: 'file/example.mp4',
+        src: '{{asset($vsection->file_video)}}',
         type: 'video/mp4',
       }]
     };
@@ -328,13 +236,16 @@
 
 
     //function for button `Lanjutkan` when video has ended
-    function changeVideo(){
+    function changeVideo(attr){
+      const defaultUrl = 'http://localhost:8000/';
+      const url = $(attr).data('url');
+      const title = $(attr).data('title');
       $('.player-end').css('display', 'none'); 
       player.source = {
         type: 'video',
-        title: 'Video 2',
+        title: title,
         sources: [{
-          src: 'file/example2.mp4',
+          src: defaultUrl+url,
           type: 'video/mp4',
         }]
       };
