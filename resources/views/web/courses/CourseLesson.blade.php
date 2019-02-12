@@ -1,27 +1,6 @@
 @extends('web.app')
 @section('title','')
 @section('content')
-<!doctype html>
-<html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}">
-    <!-- FontAwesome CSS -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/solid.css" integrity="sha384-+0VIRx+yz1WBcCTXBkVQYIBVNEFH1eP6Zknm16roZCyeNg2maWEpk/l/KsyFKs7G" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/fontawesome.css" integrity="sha384-jLuaxTTBR42U2qJ/pm4JRouHkEDHkVqH0T1nyQXn1mZ7Snycpf6Rl25VBNthU4z0" crossorigin="anonymous">
-    <!-- Font OpenSans Reguler -->
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400" rel="stylesheet">
-    <link rel="stylesheet" href="{{asset('css/spacing.css')}}">
-    <link rel="stylesheet" href="{{asset('css/timelines-vertical.css')}}">
-    <link rel="stylesheet" href="{{asset('css/style.css')}}">
-
-    <title>Cilsy</title>
-  </head>
-  <body>
 
     <!-- Main -->
     <main>
@@ -313,54 +292,6 @@
 
     </main>
 
-    <!-- Footer -->
-    <!-- <section id="footer">
-      <div class="container">
-        <div class="row">
-            <div class="col-md-3">
-                <img class="footer-logo" src="{{asset('img/logo-only.png')}}" alt="">
-                <span class="footer-logo-text">Cilsy</span>
-                <p>
-                    Satu-satunya kursus online jaringan dan server yang dipandu sampai bisa. Terdapat ratusan video tutorial eksklusif serta trainer profesional yang siap membantu proses belajar anda.
-                </p>
-                <p class="copyrigth-text">
-                    Copyright Cilsy Fiolution 2016-2018
-                </p>
-            </div>
-            <div class="col-md-2">
-                <ul class="nav-footer">
-                    <li>Cilsy</li>
-                    <li><a href="#">Tentang</a></li>
-                    <li><a href="#">Blog</a></li>
-                    <li><a href="#">Karir</a></li>
-                    <li><a href="#">FAQ</a></li>
-                </ul>
-            </div>
-            <div class="col-md-2">
-                <ul class="nav-footer">
-                    <li>Ikuti Kami</li>
-                    <li><a href="#">Facebook</a></li>
-                    <li><a href="#">Instagram</a></li>
-                    <li><a href="#">Line</a></li>
-                    <li><a href="#">Google+</a></li>
-                </ul>
-            </div>
-            <div class="col-md-2">
-                <ul class="nav-footer">
-                    <li>Bantuan</li>
-                    <li><a href="#">Kontak</a></li>
-                    <li><a href="#">Kebijakan Layanan</a></li>
-                </ul>
-            </div>
-            <div class="col-md-3">
-                <p class="copyrigth-text">
-                    Sarijadi Blok 23, No. 80, Kota Bandung
-                </p>
-            </div>
-        </div>
-      </div>
-    </section> -->
-
 
     <!-- Javascript -->
     <script type="text/javascript" src="{{asset('js/jquery-3.3.1.min.js')}}"></script>
@@ -378,5 +309,4 @@
       });
     });
     </script>
-  </body>
-</html>
+@endsection()

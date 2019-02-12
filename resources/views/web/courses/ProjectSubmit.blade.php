@@ -1,25 +1,6 @@
-
-<!doctype html>
-<html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}">
-    <!-- FontAwesome CSS -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
-    <!-- Font OpenSans Reguler -->
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400" rel="stylesheet">
-    <link rel="stylesheet" href="{{asset('css/video-sidebar.css')}}">
-    <link rel="stylesheet" href="{{asset('css/plyr.css')}}">
-    <link rel="stylesheet" href="{{asset('css/spacing.css')}}">
-    <link rel="stylesheet" href="{{asset('css/style.css')}}">
-
-    <title>Cilsy</title>
-  </head>
-  <body>
+@extends('web.app')
+@section('title','')
+@section('content')
 
     <!-- Section Content -->
     <section id="wrapper">
@@ -307,14 +288,7 @@
       </div>
 
     </section>
-
-
-
-
-    <!-- JavaScript -->
-    <script type="text/javascript" src="{{asset('js/jquery-3.3.1.min.js')}}"></script>
-    <script type="text/javascript" src="{{asset('js/bootstrap.min.js')}}"></script>
-    <script type="text/javascript" src="{{asset('js/plyr.min.js')}}"></script>
+    
     <script>
     //function Menu sidebar    
     function sidebarShow(){
@@ -337,5 +311,4 @@
       });
     });
     </script>
-  </body>
-</html>
+@endsection()

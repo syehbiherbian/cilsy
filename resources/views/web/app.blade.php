@@ -45,6 +45,15 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- FontAwesome CSS -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">    
+    <!-- Font OpenSans Reguler -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400" rel="stylesheet">
+    <link rel="stylesheet" href="{{asset('css/spacing.css')}}">
+    <link rel="stylesheet" href="{{asset('css/timelines-vertical.css')}}">
+    <link rel="stylesheet" href="{{asset('css/style.css')}}">
+    <link rel="stylesheet" href="{{asset('css/video-sidebar.css')}}">
+    <link rel="stylesheet" href="{{asset('css/plyr.css')}}">
     <!-- Jquery UI   -->
 
 
@@ -1077,6 +1086,9 @@ a #items .item {
     </script>
     <script type="text/javascript" src="{{asset('template/web/js/bootstrap.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('template/web/js/pace.js') }}"></script>
+    <script type="text/javascript" src="{{asset('js/timeline.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('js/isotope.pkgd.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('js/plyr.min.js')}}"></script>
 
     <!-- rating -->
     <script src="{{ asset('template/web/js/star-rating.min.js') }}"></script>
