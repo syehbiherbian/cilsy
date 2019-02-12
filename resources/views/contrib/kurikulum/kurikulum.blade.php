@@ -53,7 +53,7 @@
                               <!-- Diisi Jquery -->
                             </ul>
                           </form>
-                            <button class="btn btn-green w-100 mb-4" onClick="CreateLesson()">Tambah Lesson</button>
+                            <button type="button" class="btn btn-green w-100 mb-4" onClick="CreateLesson()">Tambah Lesson</button>
                           </div>
                         </div>
                     </div>
@@ -145,8 +145,8 @@
                                 <a class="c-green px-4" onClick="createVideo(`+json[i].id+`)"><i class="fa fa-video"></i> Video</a>
                                 <a class="c-green px-4" onClick="createProjek(`+json[i].id+`)"><i class="fa fa-file-alt"></i> Projek</a>
                               </div>
-                              <button class="btn btn-outline-green" id="btnContentHide`+json[i].id+`" onClick="hideCreateContent(`+json[i].id+`)" style="display:none">Batalkan</button>
-                              <button class="btn btn-green" id="btnContentShow`+json[i].id+`" onClick="showCreateContent(`+json[i].id+`)">+Tambahkan Kontent</button>
+                              <button type="button" class="btn btn-outline-green" id="btnContentHide`+json[i].id+`" onClick="hideCreateContent(`+json[i].id+`)" style="display:none">Batalkan</button>
+                              <button type="button" class="btn btn-green" id="btnContentShow`+json[i].id+`" onClick="showCreateContent(`+json[i].id+`)">+Tambahkan Kontent</button>
                               </div>
                             </li>`;
           }
