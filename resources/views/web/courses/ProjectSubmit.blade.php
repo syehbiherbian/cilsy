@@ -27,141 +27,58 @@
         <div class="tab-content" id="pills-tabContent">
           <!-- Tab Materi -->
           <div class="tab-pane fade active in" id="pills-materi" role="tabpanel" aria-labelledby="pills-materi-tab">
-            <div class="video-materi">
-              <div class="number-circle">1</div>
-              <a class="collap" id="materi-1" data-toggle="collapse" href="#materi1" role="button">
-                <div class="number-circle">1</div>
-                <div class="title">
-                  Introducion
-                  <h6><span class="fa fa-clock"></span> 40:48</h6>
-                </div>
-                <i class="icon-collap fa fa-chevron-down"></i>
-              </a>    
-            </div>
-
-            <div class="collapse submateri" id="materi1">
-              <ul>
-                <li>
-                  <a href="#">
+          <?php
+             $a = 1;
+             foreach ($stn as $key => $section): ?>
+              <div class="video-materi">
+                <a class="collap" id="<?php echo "materi-".$a ?>" data-toggle="collapse" href="#{{$section->id}}" role="button">
+                 <div class="number-circle"><?php echo $a ;?></div>
+                  <div class="title">
+                     {{$section->title}}
+                    <h6><span class="fa fa-clock"></span> 40:48</h6>
+                  </div>
+                  <i class="icon-collap fa fa-chevron-down"></i>
+                </a>    
+              </div>
+              <div class="collapse submateri" id="{{$section->id}}">
+                <ul>
+                <?php
+                 $i = 1;
+                 foreach ($section->video_section as $key => $materi): ?>
+                  <li>
+                    <a href="{{ url('bootcamp/'.$bc->slug.'/videoPage/'.$vsection->id) }}">
+                      <div class="sub-materi row">
+                        <div class="col-xs-10 px-0">
+                          <i class="fas fa-play-circle"></i><?php echo " $i."; ?> {{$materi->title}}
+                        </div>
+                        <div class="col-xs-2 px-0 text-right">
+                          {{$materi->durasi}}
+                          <i class="fa fa-circle ml-2"></i>
+                        </div>
+                      </div>
+                    </a>
+                  </li>
+                  <?php $i++;?>
+                  <?php endforeach; ?>
+                  <?php
+                  foreach ($section->project_section as $key => $project): ?>
+                  <li>
+                  <a href="{{ url('bootcamp/'.$bc->slug.'/projectSubmit/'.$section->id) }}">
                     <div class="sub-materi row">
                       <div class="col-xs-10 px-0">
-                        <i class="fas fa-play-circle"></i> 1. Why Linux? Why Sysadmin? Why now?
-                      </div>
-                      <div class="col-xs-2 px-0 text-right">
-                        05:10
-                        <i class="fa fa-check-circle ml-2 c-blue"></i>
-                      </div>
-                    </div>
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    <div class="sub-materi row">
-                      <div class="col-xs-10 px-0">
-                        <i class="fas fa-play-circle"></i> 2. Why you should trust me as your instructur ?
-                      </div>
-                      <div class="col-xs-2 px-0 text-right">
-                        05:10
-                        <i class="fa fa-circle ml-2"></i>
-                      </div>
-                    </div>
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    <div class="sub-materi row">
-                      <div class="col-xs-10 px-0">
-                        <i class="fas fa-play-circle"></i> 3. Why you should take this course?
-                      </div>
-                      <div class="col-xs-2 px-0 text-right">
-                        05:10
-                        <i class="fa fa-circle ml-2"></i>
-                      </div>
-                    </div>
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    <div class="sub-materi row">
-                      <div class="col-xs-10 px-0">
-                          <i class="fas fa-play-circle"></i> 4. Apa saja perangkat dan software yang digunakan?
-                      </div>
-                      <div class="col-xs-2 px-0 text-right">
-                        05:10
-                        <i class="fa fa-circle ml-2"></i>
-                      </div>
-                    </div>
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    <div class="sub-materi row">
-                      <div class="col-xs-10 px-0">
-                          <i class="fas fa-play-circle"></i> 5.  Getting all files for the rest of course
-                      </div>
-                      <div class="col-xs-2 px-0 text-right">
-                        05:10
-                        <i class="fa fa-circle ml-2"></i>
-                      </div>
-                    </div>
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    <div class="sub-materi row">
-                      <div class="col-xs-10 px-0">
-                        <i class="fas fa-play-circle"></i> 6. FAQ
-                      </div>
-                      <div class="col-xs-2 px-0 text-right">
-                        05:10
-                        <i class="fa fa-circle ml-2"></i>
-                      </div>
-                    </div>
-                  </a>
-                </li>
-              </ul>
-            </div>
-          
-            <div class="video-materi">
-              <a class="collap" id="materi-8" data-toggle="collapse" href="#materi8" role="button">
-                <div class="number-circle">8</div>
-                <div class="title">
-                  Final Projek
-                  <h6><span class="fa fa-clock"></span> 41:05</h6>
-                </div>
-                <i class="icon-collap fa fa-chevron-down"></i>
-              </a>                      
-            </div>
-
-            <div class="collapse submateri" id="materi8">                  
-              <ul>
-                <li>
-                  <a href="#">
-                    <div class="sub-materi row">
-                      <div class="col-xs-10 px-0">
-                        <i class="fas fa-clipboard-list"></i> 1. Final Projek                            
+                        <i class="fas fa-clipboard-list"></i>  {{$project->title}}           
                       </div>
                       <div class="col-xs-2 px-0 text-right">
                         <i class="fa fa-check-circle ml-2 c-blue"></i>
                       </div>
                     </div>
-                  </a>
+                  </a >
                 </li>
-                <li>
-                  <a href="#" class="active">
-                    <div class="sub-materi row">
-                      <div class="col-xs-10 px-0">
-                        <i class="fas fa-clipboard-list"></i> 2. Projek Preview                              
-                      </div>
-                      <div class="col-xs-2 px-0 text-right">
-                        <i class="fa fa-check-circle ml-2 c-blue"></i>
-                      </div>
-                    </div>
-                  </a>
-                </li>
-              </ul>
-            </div>
-              
+                <?php endforeach; ?>
+                </ul>
+              </div>
+              <?php $a++;?>
+                  <?php endforeach; ?>
           </div>
 
           <!-- Tab Diskusi-->
@@ -195,8 +112,8 @@
           <div class="project-content col-xs-12 p-0">
             <div class="header">
               <div class="col-xs-11 pl-5">
-                Become a Sysadmin Professional <br>
-                <small>Introduction: Why Linux? Why Sysadmin? Why now?</small>
+                Become a {{$bc->slug}} <br>
+                <small>{{$vsection->title}}</small>
               </div>
               <div class="col-xs-1 px-4">
                 <button type="button" class="plyr__control btn btn-outline-primary px-4" onClick="sidebarShow()"><i class="fa fa-bars"></i></button>
@@ -274,12 +191,14 @@
                   <br><br>
 
                   <h4>Couse Linux Fundamental: Final Projek</h4>
-                  <button class="btn btn-primary">+ Pilih File</button> <b>Tidak Ada file yang dipilih</b>
+                  
+                  <input type="file" id="file">
                   
                   <h5>Komentar</h5>
-                  <textarea class="form-control" name="komentar" id="" cols="100" rows="2"></textarea>
+                  <textarea class="form-control" name="komentar" id="komentar" cols="100" rows="2"></textarea>
                   
-                  <button class="btn btn-primary my-4">Submit Projek</button>
+                  <button class="btn btn-primary my-4" onclick="">Submit Projek</button>
+                  
               </div>
             </div> 
           </div>
@@ -290,6 +209,7 @@
     </section>
     
     <script>
+      
     //function Menu sidebar    
     function sidebarShow(){
       if($("#wrapper").hasClass("toggled")){
@@ -298,6 +218,7 @@
         $("#wrapper").addClass('toggled');
       }
     }
+
 
     $('.collap').click(function(e){
       var datatarget =  $(this).attr("href");

@@ -10,11 +10,10 @@
         <div class="container">
           <div class="row">
             <div class="col-xs-12">
-              <h6 class="mb-5">Training to Become a Sysadmin Professional / Couse Part 1</h6>
-              <h2 class="mb-4">Linux Fundamental</h2>
+              <h6 class="mb-5">Training to Become a {{$bc->slug}} / Couse Part 1</h6>
+              <h2 class="mb-4">{{$course->title}}</h2>
               <h6>
-                Setelah menyelesaikan Linux Fundamental ini, diharapkan mampu memahami dasar-dasar pengoperasian
-                sistem operasi Linux dan dapat menggunakannya  dalam lingkungan pekerjaan  di bidang teknologi dan sistem informasi.
+                {{$course->deskripsi}}
               </h6>
               <br>
               <button class="btn btn-secondary btn-lg mb-2">Mulai belajar</button>
@@ -52,16 +51,20 @@
           
           <!-- Content Timeline -->
           <ul class="timelines">
+            <?php
+             $i = 1;
+             foreach ($cs as $key => $section): ?>
+              <?php if ($i <= 2) {?>
             <li>
-              <div class="timelines-number">1</div>
+              <div class="timelines-number"><?php echo $i; ?></div>
               <div class="timelines-content">
                 <div class="row box p-0">
                   <div class="col-xs-12">
-                    <h6>Lesson 1</h6>
+                    <h6>Lesson <?php echo $i; ?></h6>
       
                     <div class="row">
                         <div class="col-md-6 col-sm-12 col-xs-12">
-                          <h4>Introducion</h4>
+                          <h4>{{$section->title}}</h4>
                         </div>
                         <div class="col-md-3 col-sm-6 col-xs-6">
                           1 Jam 20 Menit
@@ -77,215 +80,46 @@
                     </div>
       
                     <p>
-                      Pada chapter pertama di couse ini, Anda akan belajar tentang pengenalan dan gambaran umum tentang skillset menjadi
-                      System Administrator Instruktur akan membawakan juga beberapa tools yang harus dikuasai oleh seorang System Administrator
+                     {{$section->deskripsi}}
                     </p>
       
                     <br>
 
-                    <div class="collapse" id="collapseLesson">
+                    <div class="collapse" id="{{$section->id}}">
 
                       <ul class="lesson-detail">
+                        <?php
+                           foreach ($vsection as $key => $vs): ?>
                         <li>
-                            <h4><i class="fas fa-play-circle"></i> Why Linux? Why Sysadmin? Why now?</h4>
+                            <h4><i class="fas fa-play-circle"></i>{{$vs->title}}</h4>
                             <div class="row">
                               <div class="col-xs-10">
-                                Dengarkan Fakhri Abdillah memberikan gambaran secara umum dari materi yang dipelajari di kekeseluruhan Tutorial ini   
+                                {{$vs->deskripsi_video}}  
                               </div>
                               <div class="col-sm-1 col-xs-2 p-0">
-                                14:53 
+                                {{$vs->durasi}}
                               </div>
                               <div class="col-xs-1 p-0">
                                 <i class="fa fa-check-circle"></i>
                               </div>
                             </div>
-                        </li>
-                        <li>
-                            <h4><i class="fas fa-play-circle"></i> Why you should trust me as your instructor</h4>
-                            <div class="row">
-                              <div class="col-xs-10">
-                                Dengarkan Fakhri Abdillah memberikan gambaran secara umum dari materi yang dipelajari di kekeseluruhan Tutorial ini   
-                              </div>
-                              <div class="col-sm-1 col-xs-2 p-0">
-                                14:53 
-                              </div>
-                              <div class="col-xs-1 p-0">
-                                <i class="fa fa-circle"></i>
-                              </div>
-                            </div>
-                        </li>
-                        <li>
-                            <h4><i class="fas fa-play-circle"></i> Why you should take this course?</h4>
-                            <div class="row">
-                              <div class="col-xs-10">
-                                Dengarkan Fakhri Abdillah memberikan gambaran secara umum dari materi yang dipelajari di kekeseluruhan Tutorial ini   
-                              </div>
-                              <div class="col-sm-1 col-xs-2 p-0">
-                                14:53 
-                              </div>
-                              <div class="col-xs-1 p-0">
-                                <i class="fa fa-circle"></i>
-                              </div>
-                            </div>
-                        </li>
-                        <li>
-                            <h4><i class="fas fa-play-circle"></i> Getting all files for the rest of course</h4>                            
-                            <div class="row">
-                              <div class="col-xs-10">
-                                Dengarkan Fakhri Abdillah memberikan gambaran secara umum dari materi yang dipelajari di kekeseluruhan Tutorial ini   
-                              </div>
-                              <div class="col-sm-1 col-xs-2 p-0">
-                                14:53 
-                              </div>
-                              <div class="col-xs-1 p-0">
-                                <i class="fa fa-circle"></i>
-                              </div>
-                            </div>
-                        </li>
-                        <li>
-                            <h4><i class="fas fa-play-circle"></i> FAQ</h4>                            
-                            <div class="row">
-                              <div class="col-xs-10">
-                                Dengarkan Fakhri Abdillah memberikan gambaran secara umum dari materi yang dipelajari di kekeseluruhan Tutorial ini   
-                              </div>
-                              <div class="col-sm-1 col-xs-2 p-0">
-                                14:53 
-                              </div>
-                              <div class="col-xs-1 p-0">
-                                <i class="fa fa-circle"></i>
-                              </div>
-                            </div>
+                          <?php endforeach; ?>
                         </li>
                       </ul>
 
                     </div>
-                        
                   </div>
                   <div class="col-xs-12 px-5 py-3 bg-grey">
-                      <a class="collap" id="collapse" data-toggle="collapse" href="#collapseLesson" role="button"><span>Lihat Detail Lesson <i class="fa fa-chevron-down"></i></span></a>
-                      <button class="btn btn-primary float-right">Mulai Belajar</button>
+                      <a class="collap" id="collapse" data-toggle="collapse" href="#{{$section->id}}" role="button"><span>Lihat Detail Lesson <i class="fa fa-chevron-down"></i></span></a>
+                      <a href="{{ url('bootcamp/'.$bc->slug.'/videoPage/'.$section->id) }}" class="btn btn-primary float-right">Mulai Belajar</a>
                   </div>
                 </div>
               </div>
-            </li>
-            <li>
-              <div class="timelines-number">2</div>
-              <div class="timelines-content">
-                <div class="row box p-0">
-                  <div class="col-xs-12">
-                    <h6>Lesson 2</h6>
-      
-                    <div class="row">
-                      <div class="col-md-6 col-sm-12 col-xs-12">
-                        <h4>Introducion</h4>
-                      </div>
-                      <div class="col-md-3 col-sm-6 col-xs-6">
-                        1 Jam 20 Menit
-                      </div>
-                      <div class="col-md-2 col-sm-5 col-xs-5 mt-3">
-                          <div class="progress">
-                            <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-                          </div>
-                      </div>
-                      <div class="col-sm-1 col-xs-1 p-0 pt-1">
-                        0%
-                      </div>
-                    </div>
-      
-                    <p>
-                      Pada chapter pertama di couse ini, Anda akan belajar tentang pengenalan dan gambaran umum tentang skillset menjadi
-                      System Administrator Instruktur akan membawakan juga beberapa tools yang harus dikuasai oleh seorang System Administrator
-                    </p>
-      
-                    <br>
-
-                    <div class="collapse" id="collapseLesson2">
-
-                        <ul class="lesson-detail">
-                          <li>
-                              <h4><i class="fas fa-play-circle"></i> Why Linux? Why Sysadmin? Why now?</h4>
-                              <div class="row">
-                                <div class="col-xs-10">
-                                  Dengarkan Fakhri Abdillah memberikan gambaran secara umum dari materi yang dipelajari di kekeseluruhan Tutorial ini   
-                                </div>
-                                <div class="col-sm-1 col-xs-2 p-0">
-                                  14:53 
-                                </div>
-                                <div class="col-xs-1 p-0">
-                                  <i class="fa fa-check-circle"></i>
-                                </div>
-                              </div>
-                          </li>
-                          <li>
-                              <h4><i class="fas fa-play-circle"></i> Why you should trust me as your instructor</h4>
-                              <div class="row">
-                                <div class="col-xs-10">
-                                  Dengarkan Fakhri Abdillah memberikan gambaran secara umum dari materi yang dipelajari di kekeseluruhan Tutorial ini   
-                                </div>
-                                <div class="col-sm-1 col-xs-2 p-0">
-                                  14:53 
-                                </div>
-                                <div class="col-xs-1 p-0">
-                                  <i class="fa fa-circle"></i>
-                                </div>
-                              </div>
-                          </li>
-                          <li>
-                              <h4><i class="fas fa-play-circle"></i> Why you should take this course?</h4>
-                              <div class="row">
-                                <div class="col-xs-10">
-                                  Dengarkan Fakhri Abdillah memberikan gambaran secara umum dari materi yang dipelajari di kekeseluruhan Tutorial ini   
-                                </div>
-                                <div class="col-sm-1 col-xs-2 p-0">
-                                  14:53 
-                                </div>
-                                <div class="col-xs-1 p-0">
-                                  <i class="fa fa-circle"></i>
-                                </div>
-                              </div>
-                          </li>
-                          <li>
-                              <h4><i class="fas fa-play-circle"></i> Getting all files for the rest of course</h4>                            
-                              <div class="row">
-                                <div class="col-xs-10">
-                                  Dengarkan Fakhri Abdillah memberikan gambaran secara umum dari materi yang dipelajari di kekeseluruhan Tutorial ini   
-                                </div>
-                                <div class="col-sm-1 col-xs-2 p-0">
-                                  14:53 
-                                </div>
-                                <div class="col-xs-1 p-0">
-                                  <i class="fa fa-circle"></i>
-                                </div>
-                              </div>
-                          </li>
-                          <li>
-                              <h4><i class="fas fa-play-circle"></i> FAQ</h4>                            
-                              <div class="row">
-                                <div class="col-xs-10">
-                                  Dengarkan Fakhri Abdillah memberikan gambaran secara umum dari materi yang dipelajari di kekeseluruhan Tutorial ini   
-                                </div>
-                                <div class="col-sm-1 col-xs-2 p-0">
-                                  14:53 
-                                </div>
-                                <div class="col-xs-1 p-0">
-                                  <i class="fa fa-circle"></i>
-                                </div>
-                              </div>
-                          </li>
-                        </ul>
-
-                    </div>
-                        
-                  </div>
-                  <div class="col-xs-12 px-5 py-3 bg-grey">
-                    <a class="collap" id="collapse2" data-toggle="collapse" href="#collapseLesson2" role="button">Lihat Detail Lesson <i class="fa fa-chevron-down"></i></a>
-                    <button class="btn btn-primary float-right">Mulai Belajar</button>
-                  </div>
-                </div>
-              </div>
+               <?php } ?>
+                <?php $i++;?>
+                <?php endforeach; ?>
             </li>
           </ul>
-
         </div>
 
       </section>
