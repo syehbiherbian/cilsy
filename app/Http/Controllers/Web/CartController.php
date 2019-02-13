@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web;
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use App\Models\Lesson;
+use App\Models\Bootcamp;
 use App\Models\Coupon;
 use Auth;
 use Illuminate\Http\Request;
@@ -18,7 +19,7 @@ class CartController extends Controller
         $code = session()->get('total');
         // dd($code);
         $data = [
-            'carts' => Cart::where('member_id', $member_id)->with('member', 'contributor', 'lesson')->get(),
+            'carts' => Cart::where('member_id', $member_id)->with('member', 'contributor', 'lesson', 'bootcamp')->get(),
         ];
         // dd($data);
         return view('web.cart', $data);
@@ -48,10 +49,43 @@ class CartController extends Controller
             'lesson_id' => $lesson->id
         ]);
         // Session::put('cart', $cart);
-
+        // dd($cart);
+        
         return response()->json([
             'id' => $lesson->id,
             'title' => $lesson->title
+        ]);
+    }
+
+    public function storeBootcamp(Request $r)
+    {
+        /* cek lesson */
+        $bootcamp = Bootcamp::find($r->input('id'));
+        // dd($bootcamp);
+        if (!$bootcamp) {
+            throw new \Exception('Bootcamp tidak ditemukan');
+        }
+
+        if (!Auth::guard('members')->user()) {
+            return response()->json([
+                'id' => $bootcamp->id,
+                'image' => url($bootcamp->cover),
+                'title' => $bootcamp->title,
+                'price' => $bootcamp->price
+            ]);
+        }
+
+        /* simpan ke cart */
+        $cart = Cart::firstOrCreate([
+            'member_id' => Auth::guard('members')->user()->id,
+            'contributor_id' => $bootcamp->contributor_id,
+            'bootcamp_id' => $bootcamp->id
+        ]);
+        // Session::put('cart', $cart);
+        dd($cart);
+        return response()->json([
+            'id' => $bootcamp->id,
+            'title' => $bootcamp->title
         ]);
     }
 

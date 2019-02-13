@@ -1,4 +1,7 @@
-
+@extends('web.app')
+@section('title',$bca->title)
+@section('description', $bca->deskripsi)
+@section('content')
 {{--  <link href="{{ asset('node_modules/video.js/dist/video-js.css') }}" rel="stylesheet">  --}}
 <link href="{{ asset('template/web/css/landing.css') }}" rel="stylesheet">
 <script src="https://vjs.zencdn.net/5.16.0/video.min.js"></script>
@@ -52,8 +55,9 @@
          
           <h6 class="mb-4">Oleh {{$contributors->username}}, Created at {{ $tanggal }} </h6>
           <a id="#" href="# " class="btn" style="background-color:#fff; color:#5bc0de; border-color:#46b8da; display:none" >Lihat Keranjang</a>        
-          
+          <button id="beli-{{ $bca->id }}" class="btn btn-lg btn-primary mb-2" onclick="addToCartBootcamp({{ $bca->id }})">Tambah ke Keranjang</button>
         </div>
       </div>
     </div>
   </section>
+  @endsection

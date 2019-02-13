@@ -8,6 +8,7 @@ use App\Models\Course;
 use App\Models\Bootcamp;
 use App\Models\Section;
 use App\Models\VideoSection;
+use App\Models\ProjectSection;
 use DB;
 
 
@@ -53,14 +54,32 @@ class CourseController extends Controller
         $courses = Course::where('id', $id)->first();
         $section = Section::with('video_section')->where('course_id', $courses->id)->get();
         $vsection = $section->first()->video_section->first();
-        // $stn = DB::table('section')->where('course_id', $courses->id)->get();
+        $psection = Section::with('project_section')->where('course_id', $courses->id)->get();
         // $vmateri = DB::table('video_section')->where('section_id', $vsection->id)->get();
         return view('web.courses.VideoPage',[
             'course' => $courses,
             'bc' => $bcs,
             'stn' => $section,
+            'psection' => $psection,
             'vsection' => $vsection,
             
         ]);
     }
+     public function projectSubmit($slug, $id)
+    {
+        $bcs = Bootcamp::where('slug', $slug)->first();
+        $section = Section::with('video_section')->where('id', $id)->get();
+        $vsection = $section->first()->video_section->first();
+        $psection = Section::with('project_section')->where('id', $id)->get();
+        // $ps = ProjectSection::
+         return view('web.courses.ProjectSubmit',[
+            
+            'bc' => $bcs,
+            'stn' => $section,
+            'psection' => $psection,
+            'vsection' => $vsection,
+            
+        ]);
+    }
+    
 }

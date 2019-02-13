@@ -10,7 +10,7 @@ use DB;
 class BootcampController extends Controller
 {
 
-	  public function bootcamp($slug)
+	public function bootcamp($slug)
     {
     	$bc = Bootcamp::where('status', 1)->where('slug', $slug)->first();
     	$now = new DateTime();

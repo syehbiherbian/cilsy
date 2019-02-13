@@ -97,7 +97,7 @@
 
         $.ajax({
             type    :"POST",
-            url     :'{{ url("contibutor/bootcamp/confirmPublish") }}',
+            url     :'{{ url("contributor/bootcamp/confirmPublish") }}',
             data    : dataform,
             dataType : 'json',
             contentType: false,

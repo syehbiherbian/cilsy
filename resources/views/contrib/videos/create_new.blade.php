@@ -259,7 +259,7 @@
 			if (v.size > maxSize) {
 				$('#form-starter').show();
 				$('#btn-submit-group').hide();
-				swal("Ups", "Maksimal ukuran video yang dapat diupload adalah 100MB", "error");
+				swal("Ups", "Maksimal ukuran video yang dapat diunggah adalah 100MB", "error");
 				return false
 			}
 			

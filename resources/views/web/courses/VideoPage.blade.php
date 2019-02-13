@@ -1,27 +1,6 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}">
-    <!-- FontAwesome CSS -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
-    <!-- Font OpenSans Reguler -->
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400" rel="stylesheet">
-    <link rel="stylesheet" href="{{asset('css/video-sidebar.css')}}">
-    <link rel="stylesheet" href="{{asset('css/plyr.css')}}">
-    <link rel="stylesheet" href="{{asset('css/spacing.css')}}">
-    <link rel="stylesheet" href="{{asset('css/style.css')}}">
-
-    <title>Cilsy</title>
-
-  </head>
-  <body>
-
-
+@extends('web.app')
+@section('title','')
+@section('content')
     <section id="wrapper">
       
       <!-- THE PLAYLIST -->
@@ -79,6 +58,21 @@
                   </li>
                   <?php $i++;?>
                   <?php endforeach; ?>
+                  <?php
+                  foreach ($section->project_section as $key => $project): ?>
+                  <li>
+                  <a href="{{ url('bootcamp/'.$bc->slug.'/projectSubmit/'.$section->id) }}">
+                    <div class="sub-materi row">
+                      <div class="col-xs-10 px-0">
+                        <i class="fas fa-clipboard-list"></i>  {{$project->title}}           
+                      </div>
+                      <div class="col-xs-2 px-0 text-right">
+                        <i class="fa fa-check-circle ml-2 c-blue"></i>
+                      </div>
+                    </div>
+                  </a >
+                </li>
+                <?php endforeach; ?>
                 </ul>
               </div>
               <?php $a++;?>
@@ -264,5 +258,4 @@
       });
     });
     </script>
-  </body>
-</html>
+@endsection()

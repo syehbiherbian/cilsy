@@ -67,7 +67,7 @@
                         Sub Kategori
                         <select class="form-control" name="sub_kat_id" id="sub_kat_id">
                             @foreach($sub as $subs)
-                            <option value="{{$subs->id}}">{{$subs->title}}</option>
+                            <option <?php echo $bootcamp->bootcamp_sub_category_id == $subs->id ? "selected" : "" ?> value="{{$subs->id}}">{{$subs->title}}</option> 
                             @endforeach
                           </select>
                       </div>
@@ -135,7 +135,7 @@
   <script>
       $(document).ready(function() {
         $('select[name=kat_id]').change(function() {
-                var url = '{{ url('contibutor/get/sub') }}' + '/' + $(this).val();
+                var url = '{{ url('contributor/get/sub') }}' + '/' + $(this).val();
                 $.get(url, function(data) {
                     var select = $('form select[name=sub_kat_id]');
                     select.empty();
@@ -181,7 +181,7 @@
         });
         $.ajax({
             type    :"POST",
-            url     :'{{ url("contibutor/bootcamp/saveDetail") }}',
+            url     :'{{ url("contributor/bootcamp/saveDetail") }}',
             data    : dataform,
             dataType : 'json',
             contentType: false,

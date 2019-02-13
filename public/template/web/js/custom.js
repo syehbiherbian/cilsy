@@ -125,6 +125,76 @@ function addToCart(id) {
     })
 }
 
+function addToCartBootcamp(id) {
+    var datapost = {
+        '_token': TOKEN,
+        'id': id
+    };
+    $.ajax({
+        type: 'POST',
+        url: SITE_URL + '/cart/add/bootcamp',
+        data: datapost,
+        success: function(data) {
+            if (typeof data !== 'null') {
+                if (!MEMBER) {
+                    var cek = localStorage.getItem('cart');
+                    if (cek == null) {
+                        var cart = [];
+                        cart.push({
+                            'id': data.id,
+                            'image': data.image,
+                            'title': data.title,
+                            'price': data.price,
+                        });
+                    } else {
+                        var exist = false;
+                        var cart = JSON.parse(cek);
+                        
+                        $.each(cart, function(k, v) {
+                            if (v.id == data.id) {
+                                exist = true;
+                            }
+                        })
+                        if (!exist) {
+                            cart.push({
+                                'id': data.id,
+                                'image': data.image,
+                                'title': data.title,
+                                'price': data.price,
+                            });
+                        }
+                    }
+
+                    localStorage.setItem('cart', JSON.stringify(cart));
+                }
+
+                swal({
+                    title: "Menambahkan ke keranjang",
+                    text: data.title,
+                    type: "success",
+                    showCloseButton: true,
+                    showCancelButton: true,
+                    cancelButtonText: 'Tutorial lainnya',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: "Lihat keranjang"
+                }).then(function(isConfirm) {
+                    if (isConfirm.value) {
+                        window.location.href = SITE_URL + '/cart';
+                    } else if (swal.cancelButton) {
+                        window.location.href = SITE_URL + '/lessons/browse/all';
+                    } else {
+                        window.location.href = SITE_URL + '/lessons/browse/all';
+
+                    }
+                });
+            } else {
+                alert('Koneksi Bermasalah, Silahkan Ulangi');
+                location.reload();
+            }
+        }
+    })
+}
+
 function deleteCart(id) {
     var carts = JSON.parse(localStorage.getItem('cart'));
     if (carts) {
