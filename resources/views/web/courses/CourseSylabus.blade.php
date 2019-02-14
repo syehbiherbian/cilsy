@@ -2,7 +2,7 @@
 @section('title','Silabus')
 @section('content')
   <body>
-
+    
     <!-- Main -->
     <main>
 
@@ -136,7 +136,7 @@
 
                 <div class="col-xs-12">
                   <hr>
-                  <img src="img/users.png" class="img-author mr-1 float-left" alt="">
+                  <img src="{{ asset('img/users.png') }}" class="img-author mr-1 float-left" alt="">
                   <div class="float-left">
                    <b>Anda</b> <small class="text-muted">Pengguna - Berapa Detik yang lalu</small>
                     <h6 class="text-muted">Apakah saya bisa mengupload projek melalui Link Google drive.</h6>
@@ -153,7 +153,6 @@
       </section>
 
     </main>
-
 
     <!-- JavaScript -->
     <script>

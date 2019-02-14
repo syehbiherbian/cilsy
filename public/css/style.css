@@ -371,6 +371,16 @@ a.collap{
     top:-7px
 }
 
+/*  ==============================
+    CSS - Course Sylabus
+    ============================== 
+*/
+html{
+	box-sizing:border-box
+	}
+*,*:before,*:after{
+	box-sizing:border-box
+	}
 
 /*  ==============================
     CSS - Course Lesson

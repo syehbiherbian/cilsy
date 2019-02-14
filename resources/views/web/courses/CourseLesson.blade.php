@@ -53,7 +53,8 @@
           <ul class="timelines">
             <?php
              $i = 1;
-             foreach ($cs as $key => $section): ?>
+             $a =1;
+             foreach ($stn as $key => $section): ?>
               <?php if ($i <= 2) {?>
             <li>
               <div class="timelines-number"><?php echo $i; ?></div>
@@ -89,7 +90,7 @@
 
                       <ul class="lesson-detail">
                         <?php
-                           foreach ($vsection as $key => $vs): ?>
+                           foreach ($section->video_section as $key => $vs): ?>
                         <li>
                             <h4><i class="fas fa-play-circle"></i>{{$vs->title}}</h4>
                             <div class="row">
@@ -110,13 +111,14 @@
                     </div>
                   </div>
                   <div class="col-xs-12 px-5 py-3 bg-grey">
-                      <a class="collap" id="collapse" data-toggle="collapse" href="#{{$section->id}}" role="button"><span>Lihat Detail Lesson <i class="fa fa-chevron-down"></i></span></a>
+                      <a class="collap" id="<?php echo "collapse-".$a ?>" data-toggle="collapse" href="#{{$section->id}}" role="button"><span>Lihat Detail Lesson <i class="fa fa-chevron-down"></i></span></a>
                       <a href="{{ url('bootcamp/'.$bc->slug.'/videoPage/'.$section->id) }}" class="btn btn-primary float-right">Mulai Belajar</a>
                   </div>
                 </div>
               </div>
                <?php } ?>
                 <?php $i++;?>
+                <?php $a++;?>
                 <?php endforeach; ?>
             </li>
           </ul>
@@ -128,7 +130,7 @@
 
 
     <!-- Javascript -->
-    <script type="text/javascript" src="{{asset('js/jquery-3.3.1.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('js/jquery-2.2.1.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('js/bootstrap.min.js')}}"></script>
     <script>
     $('.collap').click(function(e){
