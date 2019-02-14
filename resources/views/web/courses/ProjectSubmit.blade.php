@@ -1,5 +1,5 @@
 @extends('web.app')
-@section('title','')
+@section('title',$project->title)
 @section('content')
 
     <!-- Section Content -->
@@ -121,83 +121,20 @@
             </div>
             
             <div class="row px-5 pt-4">
-              <div class="w-100 px-5 py-4">
+              {{--  <div class="w-100 px-5 py-4">
                   <i class="fa fa-check-circle c-blue"></i> Selamat Anda telah lolos dalam Final Projek Course Linux Fundamental <a href="{{ url('Bootcamp/ProjectView') }}" class="btn btn-outline-primary">Lihat Hasil Preview</a>
-              </div>
+              </div>  --}}
               <div class="col-xs-12">
-                  <h4>Final Projek</h4>
+                  <h4>{{$project->title}}</h4>
 
-                  1.Buatkan langkah-langkah, screenshot, dan script-scriptnya untuk kasus berikut :
+                  <h4>Couse {{$vsection->title}}: Final Projek</h4>
                   
-                  SMA Tidak Patah Semangat meng-hire Anda untuk migrasikan lab komputernya yang berjumlah 20 untuk ke Ubuntu
-                  dari yang sebelumnya Windows7. Requirementnya adalah sebagai berikut:
-
-                  <ul>
-                    <li>
-                        OS dan Instalasi : Ubuntu 16.04
-                        <ul>
-                          <li>Link downloadnya dimana dan langkah-langkah untuk membuat USB booting</li>
-                          <li>Partisi/100gb/home,swap 2GB</li>
-                          <li>Dual boot dengan windows7</li>
-                        </ul>
-                    </li>
-
-                    <li>
-                        Topologi jaringan
-                        <ul>
-                          <li>Desain topologi dan alokasi ip nya serta bagaimana agar koneksi ke internet</li>
-                          <li>Bagaimana langkah mengkoneksikannya ke jaringan kabel agar seluruhnya terhubung.</li>
-                        </ul>
-                    </li>
-
-                    <li>
-                      Apps
-                      <ul>  
-                        <li>Instalasi pengganti Photoshop, Microsoft office dan Corel Draw semuanya melalui CLI</li>
-                      </ul>
-                    </li>
-
-                    <li>
-                      CLI
-                      <ul>
-                        <li>Buatkan 1 folder berisi text welcome.txt di folder /home yang berisi : Selamat datang di Ubuntu kami!. Semuanya harus pake CLI</li>
-                      </ul>
-                    </li>
-
-                  </ul>
-                  
-                  Project yang anda submit akan langsung di Review oleh Instruktur dan Team Project Viewer yang sudah kompeten dan memiliki skill yang baik.
-                  Pastikan anda mengerjakan project dengan sesuai permintaan karena jika tidak Anda tidak akan bisa melanjutkan ke Course selanjutnya.
-                  
-                  Ketentuan
-                  <ul>
-                    <li>
-                        Kirimkan tugas ini dalam bentuk dokumen apapun (Word, Excel, PDF, Gambar, dll)
-                    </li>
-                    <li>
-                        Archive dokumen tersebut ke dalam zip/rar. Tim penilai akan mengulas tugas Anda dalam tempo maksimal 2(dua) hari
-                        kerja (terkecuali Sabtu, Minggu, dan haru libur nasional).
-                    </li>
-                    <li>
-                        Cukup satu kali saja mengumpulkan tugas, tidak perlu berkali kali. Tindakan demikian hanya akan memperlama proses penilaian.
-                    </li>
-                  </ul>
-
-                  Siap untuk mengirim?
-                  <br>
-                  Jika anda memiliki kesulitan atau masalah tentang projek atau status projek anda yang disubmit anda bisa menghubungi kami
-                  melalui supportprojek@cilsy.id
-                  
-                  <br><br>
-
-                  <h4>Couse Linux Fundamental: Final Projek</h4>
-                  
-                  <input type="file" id="file">
+                  <input type="file" id="file" name="file">
                   
                   <h5>Komentar</h5>
                   <textarea class="form-control" name="komentar" id="komentar" cols="100" rows="2"></textarea>
                   
-                  <button class="btn btn-primary my-4" onclick="">Submit Projek</button>
+                  <button class="btn btn-primary my-4" onclick="saveProject({{ $vsection->id}})">Submit Projek</button>
                   
               </div>
             </div> 
@@ -231,5 +168,58 @@
         $('#'+idtarget+' i').removeClass('fa-chevron-up').addClass('fa-chevron-down');
       });
     });
+
+    //fungsi untuk save project
+    function saveProject(project_id) {
+      var body = $('#komentar').val();
+      var file_data = $('#file').prop("files")[0];
+      dataform = new FormData();
+      dataform.append( 'file', file_data);
+      dataform.append( 'body', body);
+      dataform.append( 'project_id', project_id);
+  
+      if (body == '') {
+        alert('Harap Isi form !')
+      }else {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            type    :"POST",
+            url     :'{{ url("/bootcamp/upload/saveProject") }}',
+            data    : dataform,
+            dataType : 'json',
+            contentType: false,
+            processData: false,
+            beforeSend: function(){
+                 swal({
+                  title: "Memuat Project",
+                  text: "Mohon Tunggu sebentar file anda sedang dikirim",
+                  imageUrl: "{{ asset('template/web/img/loading.gif') }}",
+                  showConfirmButton: false,
+                  allowOutsideClick: false
+              });
+              // Show image container
+            },
+            success:function(data){
+              if (data.success == false) {
+                 window.location.href = '{{ url("member/signin") }}';
+              }else if (data.success == true) {
+                $('#komentar').val('');
+                $('#file').val('');
+                swal({
+                  title: "Tugas berhasil terkirim!, Silahkan tunggu hasil dari kami",
+                  showConfirmButton: true,
+                  timer: 3000
+                });
+                
+                getComments();
+              }
+            }
+        });
+      }
+    }
     </script>
 @endsection()

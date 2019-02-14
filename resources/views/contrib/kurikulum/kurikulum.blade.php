@@ -172,7 +172,6 @@
         sideBarRefresh();
       });
       
- HEAD
 
       function CreateLesson(id){
 
@@ -460,60 +459,7 @@
           'OK';
         }
       };
-<<<<<<< HEAD
-  
-  
-  
-      function addLesson(course_id){
-      var judul = $('#judul').val();
-      var desk = $('#deskripsi').val();
-      dataform = new FormData();
-      dataform.append( 'title', judul);
-      dataform.append( 'desk', desk);
-      dataform.append( 'course_id', '{{ $course->id}}');
 
-  
-  
-      if (judul == '' || desk == '') {
-        swal("Error", "Harap Isi data Form Yang dibutuhkan!", "error");
-      }else {
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        $.ajax({
-            type    :"POST",
-            url     :'{{ url("contibutor/bootcamp/course/section-create") }}',
-            data    : dataform,
-            dataType : 'json',
-            contentType: false,
-            processData: false,
-            beforeSend: function(){
-                 swal({
-                  title: "Membuat Course",
-                  text: "Mohon Tunggu sebentar, Section sedang dibuat ",
-                  imageUrl: "{{ asset('template/web/img/loading.gif') }}",
-                  showConfirmButton: false,
-                  allowOutsideClick: false
-              });
-              // Show image container
-            },
-            success:function(data){
-              if (data.success == false) {
-                 window.location.href = '{{ url("contributor/login") }}';
-              }else if (data.success == true) {
-                $('#judul').val('');
-                $('#desk').val('');
-
-                swal({
-                  title: "Section Berhasil Dibuat !",
-                  showConfirmButton: true,
-                  timer: 3000
-                },
-                function(){ 
-                  location.reload();
-=======
 
       function addLesson(){
         var judul = $('#judul').val();
@@ -558,7 +504,6 @@
                   }, function(){ 
                     location.reload();
                   });
->>>>>>> 6c9287927c585fe101ad0da9af65d125da270059
                 }
               },
               error: function (e) {

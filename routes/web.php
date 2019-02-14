@@ -114,6 +114,7 @@ Route::get('bootcamp/{bootcamp}/courseLesson/{course}', 'Web\CourseController@co
 Route::get('bootcamp/{bootcamp}/videoPage/{section}', 'Web\CourseController@videoPage');
 Route::get('bootcamp/{bootcamp}/projectSubmit/{section}', 'Web\CourseController@projectSubmit');
 Route::post('bootcamp/submit', 'Web\CourseController@submit');
+Route::post('bootcamp/upload/saveProject', 'Web\CourseController@saveProject');
 
 /*
 |--------------------------------------------------------------------------
