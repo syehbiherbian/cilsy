@@ -214,8 +214,6 @@
                   showConfirmButton: true,
                   timer: 3000
                 });
-                
-                getComments();
               }
             }
         });

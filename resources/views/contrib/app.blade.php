@@ -143,6 +143,24 @@
                     <span>Kelola Tutorial</span>
                 </a>
             </li>
+            <li class="#" data-toggle="tooltip" data-placement="right" title="Kelola Tutorial">
+                <a href="">
+                    <img src="{{asset('template/kontributor/img/icon/Kelola_Tutorial.png')}}" alt="" />
+                    <span>Kelola Siswa</span>
+                </a>
+            </li>
+            <li class="#" data-toggle="tooltip" data-placement="right" title="Kelola Tutorial">
+                <a href="{{ url('contributor/prohress') }}">
+                    <img src="{{asset('template/kontributor/img/icon/Kelola_Tutorial.png')}}" alt="" />
+                    <span>Progress Siswa</span>
+                </a>
+            </li>
+            <li class="#" data-toggle="tooltip" data-placement="right" title="Kelola Tutorial">
+                <a href="{{ url('contributor/project') }}">
+                    <img src="{{asset('template/kontributor/img/icon/Kelola_Tutorial.png')}}" alt="" />
+                    <span>Project</span>
+                </a>
+            </li>
             <li class="{{ request()->is('contributor/comments') ? 'icon-active' : '' || request()->is('contributor/comments/*') ? 'icon-active' : '' }}" data-toggle="tooltip" data-placement="right" title="Kelola Pertanyaan">
                 <a href="{{ url('contributor/comments') }}">
                     <img src="{{asset('template/kontributor/img/icon/KelolaPertanyaan.png')}}" alt="" />

@@ -11,6 +11,8 @@ use App\Models\VideoSection;
 use App\Models\ProjectSection;
 use App\Models\ProjectUser;
 use DB;
+use Auth;
+use Datetime;
 
 
 class CourseController extends Controller
@@ -86,7 +88,7 @@ class CourseController extends Controller
         ]);
     }
 
-    public function saveProject(){
+    public function saveProject(Request $request){
         $response = array();
         if (empty(Auth::guard('members')->user()->id)) {
             $response['success'] = false;
@@ -97,11 +99,13 @@ class CourseController extends Controller
             // $member = DB::table('contributors')->where('id', $uid)->first();
    
             $input = new ProjectUser();
-            $input['komentar)user'] = $request->input('body');
+            $input['komentar_user'] = $request->input('body');
+            $input['member_id'] = $uid;
+            $input['status'] = 0;
             $input['project_section_id'] =  $request->input('project_id');
             if ($request->hasFile('file')){
-                $input['file'] = '/assets/source/bootcamp/project-'.$request->input('project_id'). $request->image->getClientOriginalName();
-                $request->image->move(public_path('/assets/source/bootcamp/project-'.$request->input('project_id')), $input['file']);
+                $input['file'] = '/assets/source/bootcamp/project-'.$request->input('project_id'.'/'). $request->file('file')->getClientOriginalName();
+                $request->file('file')->move(public_path('/assets/source/bootcamp/project-'.$request->input('project_id').'/'), $input['file']);
             }
             $input->save();
             $response['success'] = true;
