@@ -99,6 +99,9 @@ a.collap{
     background: #eee;
     border: none;
 }
+.tab-content{
+    margin-top: 0px;
+}
 .video-materi{
     width: 100%;
     padding: 15px 10px;
@@ -376,11 +379,11 @@ a.collap{
     ============================== 
 */
 html{
-	box-sizing:border-box
-	}
+    box-sizing:border-box
+    }
 *,*:before,*:after{
-	box-sizing:border-box
-	}
+    box-sizing:border-box
+    }
 
 /*  ==============================
     CSS - Course Lesson
