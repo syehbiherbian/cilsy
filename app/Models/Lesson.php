@@ -22,7 +22,7 @@ class Lesson extends Model
 		return $this->belongTo('App\Models\Category');
 	}
 
-	public function contributor(){
+	public function contributors(){
 		return $this->belongTo('App\Models\Contributor');
 	}
 }
