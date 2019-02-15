@@ -27,16 +27,16 @@ h1,h2,h3,h4,h5{
     box-shadow: 0 2px 4px 1px #cccccc;
 }
 
-.btn-secondary{
+.btn-second{
     background: #fff;
     border-color: transparent;
     color: #1fb6ff;
     border-radius: 2px;
     padding: 6px 30px;
 }
-.btn-secondary:hover,
-.btn-secondary:focus,
-.btn-secondary:active{
+.btn-second:hover,
+.btn-second:focus,
+.btn-second:active{
     background: #fff;
     border-color: transparent;
     color: #1fb6ff;
@@ -101,6 +101,7 @@ a.collap{
 }
 .tab-content{
     margin-top: 0px;
+    padding: 0px;
 }
 .video-materi{
     width: 100%;

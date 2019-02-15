@@ -114,6 +114,7 @@ Route::get('bootcamp/{bootcamp}/courseLesson/{course}', 'Web\CourseController@co
 Route::get('bootcamp/{bootcamp}/videoPage/{section}', 'Web\CourseController@videoPage');
 Route::get('bootcamp/{bootcamp}/projectSubmit/{section}', 'Web\CourseController@projectSubmit');
 Route::post('bootcamp/submit', 'Web\CourseController@submit');
+Route::post('bootcamp/upload/saveProject', 'Web\CourseController@saveProject');
 
 /*
 |--------------------------------------------------------------------------
@@ -411,3 +412,8 @@ Route::post('contributor/bootcamp/course/video-create-temp', 'Contributors\Secti
 Route::get('contributor/bootcamp/course/get/{id}/', 'Contributors\SectionController@getJsonSection');
 Route::post('contributor/bootcamp/saveDetail', 'Contributors\BootcampController@saveDetail');
 Route::post('contributor/bootcamp/saveAudience', 'Contributors\BootcampController@saveAudience');
+
+//Kelola Siswa
+Route::get('contributor/project', 'Contributors\ProjectController@index');
+Route::get('contributor/project/submit/{id}', 'Contributors\ProjectController@show');
+Route::get('contributor/project/submit/{sectionid}/detail/{id}', 'Contributors\ProjectController@detail');

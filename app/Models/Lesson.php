@@ -21,5 +21,10 @@ class Lesson extends Model
 	public function category(){
 		return $this->belongTo('App\Models\Category');
 	}
+
+	public function contributor(){
+		return $this->belongTo('App\Models\Contributor');
+	}
 }
+
 

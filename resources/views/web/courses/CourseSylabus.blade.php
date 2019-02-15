@@ -18,7 +18,7 @@
                 and how to best manage technology projects. This content is not meant to be watched in order, so you can pickl your own adventure.
               </h6>
               <br>
-              <button class="btn btn-secondary btn-lg mb-5">Mulai belajar</button>
+              <button class="btn btn-second btn-lg mb-5">Mulai belajar</button>
             </div>
           </div>
         </div>

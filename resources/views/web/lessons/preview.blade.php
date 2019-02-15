@@ -115,7 +115,6 @@
           {!! nl2br($lessons->goal_tutorial) !!}
           <p class="read-more" style=""><a href="#" class="btn" style="color:#2BA8E2; font-weight:bold; text-decoration:none;">+ Tampilkan Lebih Banyak</a></p>
           </div><br>
-          {{--  <a class="read-more b" data-toggle="collapse" href="#collapseDeskripsi" role="button" style="color:#2BA8E2; font-weight:bold;">+ Tampilkan Lebih Banyak</a>  --}}
         </div>
 
       <!-- Row -->

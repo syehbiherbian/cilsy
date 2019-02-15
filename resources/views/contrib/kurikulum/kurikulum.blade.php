@@ -53,7 +53,7 @@
                               <!-- Diisi Jquery -->
                             </ul>
                           </form>
-                            <button class="btn btn-green w-100 mb-4" onClick="CreateLesson()">Tambah Lesson</button>
+                            <button type="button" class="btn btn-green w-100 mb-4" onClick="CreateLesson()">Tambah Lesson</button>
                           </div>
                         </div>
                     </div>
@@ -145,8 +145,8 @@
                                 <a class="c-green px-4" onClick="createVideo(`+json[i].id+`)"><i class="fa fa-video"></i> Video</a>
                                 <a class="c-green px-4" onClick="createProjek(`+json[i].id+`)"><i class="fa fa-file-alt"></i> Projek</a>
                               </div>
-                              <button class="btn btn-outline-green" id="btnContentHide`+json[i].id+`" onClick="hideCreateContent(`+json[i].id+`)" style="display:none">Batalkan</button>
-                              <button class="btn btn-green" id="btnContentShow`+json[i].id+`" onClick="showCreateContent(`+json[i].id+`)">+Tambahkan Kontent</button>
+                              <button type="button" class="btn btn-outline-green" id="btnContentHide`+json[i].id+`" onClick="hideCreateContent(`+json[i].id+`)" style="display:none">Batalkan</button>
+                              <button type="button" class="btn btn-green" id="btnContentShow`+json[i].id+`" onClick="showCreateContent(`+json[i].id+`)">+Tambahkan Kontent</button>
                               </div>
                             </li>`;
           }
@@ -172,7 +172,6 @@
         sideBarRefresh();
       });
       
- HEAD
 
       function CreateLesson(id){
 
@@ -460,60 +459,7 @@
           'OK';
         }
       };
-<<<<<<< HEAD
-  
-  
-  
-      function addLesson(course_id){
-      var judul = $('#judul').val();
-      var desk = $('#deskripsi').val();
-      dataform = new FormData();
-      dataform.append( 'title', judul);
-      dataform.append( 'desk', desk);
-      dataform.append( 'course_id', '{{ $course->id}}');
 
-  
-  
-      if (judul == '' || desk == '') {
-        swal("Error", "Harap Isi data Form Yang dibutuhkan!", "error");
-      }else {
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        $.ajax({
-            type    :"POST",
-            url     :'{{ url("contibutor/bootcamp/course/section-create") }}',
-            data    : dataform,
-            dataType : 'json',
-            contentType: false,
-            processData: false,
-            beforeSend: function(){
-                 swal({
-                  title: "Membuat Course",
-                  text: "Mohon Tunggu sebentar, Section sedang dibuat ",
-                  imageUrl: "{{ asset('template/web/img/loading.gif') }}",
-                  showConfirmButton: false,
-                  allowOutsideClick: false
-              });
-              // Show image container
-            },
-            success:function(data){
-              if (data.success == false) {
-                 window.location.href = '{{ url("contributor/login") }}';
-              }else if (data.success == true) {
-                $('#judul').val('');
-                $('#desk').val('');
-
-                swal({
-                  title: "Section Berhasil Dibuat !",
-                  showConfirmButton: true,
-                  timer: 3000
-                },
-                function(){ 
-                  location.reload();
-=======
 
       function addLesson(){
         var judul = $('#judul').val();
@@ -558,7 +504,6 @@
                   }, function(){ 
                     location.reload();
                   });
->>>>>>> 6c9287927c585fe101ad0da9af65d125da270059
                 }
               },
               error: function (e) {
