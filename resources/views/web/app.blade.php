@@ -506,6 +506,8 @@ a #items .item {
     <link rel="stylesheet" href="{{ asset('template/web/css/helper.css') }}">
     <link rel="stylesheet" href="{{ asset('template/web/css/common.css') }}">
     <link rel="stylesheet" href="{{ asset('template/web/css/blocks.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/timeline.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/timelines-vertical.css') }}">
 
     @stack('css')
 </head>
