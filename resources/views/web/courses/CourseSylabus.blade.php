@@ -1,27 +1,8 @@
 @extends('web.app')
-@section('title','')
+@section('title','Silabus')
 @section('content')
-<!doctype html>
-<html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}">
-    <!-- FontAwesome CSS -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">    
-    <!-- Font OpenSans Reguler -->
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400" rel="stylesheet">
-    <link rel="stylesheet" href="{{asset('css/spacing.css')}}">
-    <link rel="stylesheet" href="{{asset('css/timelines-vertical.css')}}">
-    <link rel="stylesheet" href="{{asset('css/style.css')}}">
-
-    <title>Cilsy</title>
-  </head>
   <body>
-
+    
     <!-- Main -->
     <main>
 
@@ -31,8 +12,8 @@
           <div class="row">
             <div class="col-xs-12">
               <h6 class="mb-5">Dashboard/Track</h6>
-              <h2 class="mb-4">Training to Become a Sysadmin Professional</h2>
-              <h6>Are you a Sysadmin Professional, or do you want to become one? In order to be successful in your role you will need to develop a few essentials soft
+              <h2 class="mb-4">Training to Become a {{$bc->slug}}</h2>
+              <h6>Are you a {{$bc->slug}}, or do you want to become one? In order to be successful in your role you will need to develop a few essentials soft
                 skills in addition to your technical skills. In this path you will learn crucial technology management skill, how to effectively lead technology teams,
                 and how to best manage technology projects. This content is not meant to be watched in order, so you can pickl your own adventure.
               </h6>
@@ -69,60 +50,27 @@
             <!-- Tab Kurikulum -->
             <div class="tab-pane fade active in" id="pills-kurikulum" role="tabpanel" aria-labelledby="pills-kurikulum-tab">
               <ul class="timelines">
-                  <li>
-                    <div class="timelines-number">1</div>
-                    <div class="timelines-content">
-                      <div class="row row-eq-height box p-0">
-                        <div class="col-sm-4 col-xs-12 p-0" style="background: url({{asset('img/head.png')}});background-size:cover;min-height: 250px">
-                          <!-- for image content use style background for full size of column -->
-                        </div>
-                        <div class="col-sm-8 col-xs-12">
-            
-                          <div class="row mt-3">
-                            <div class="col-xs-6">
-                              <h5>Course Part 1</h5> 
-                            </div>
-                            <div class="col-xs-5 mt-4">
-                                <div class="progress">
-                                  <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </div>
-                            <div class="col-xs-1 p-0 pt-2">
-                              0%
-                            </div>
-                          </div>
-                            
-                          <br>
-            
-                          <h4>Linux Fundamental</h4>
-                          <h6>
-                            Setelah menyelesaikan Linux Fundamental ini, diharapkan mampu memahami dasar-dasar pengoperasian
-                            sistem operasi Linux dan dapat menggunakannya  dalam lingkungan pekerjaan  di bidang teknologi dan sistem
-                          </h6>
-            
-                          <br>
-
-                          <small class="text-muted">08 Jam 31 Menit</small> &nbsp;&nbsp;&nbsp; <small class="text-muted">Deadline 2 Hari</small>
-                              
-                          <br><br>
-            
-                          <a href="{{ url('Bootcamp/CourseLesson') }}" class="btn btn-primary mb-4">Mulai Belajar</a>
-                        </div>
-                      </div>
-                    </div>
-                  </li>
-                  <li>
-                      <div class="timelines-number">2</div>
+                <?php
+                     $i = 1;
+                     foreach ($cs as $key => $courses): ?>
+                      <?php if ($i <= 2) {?>
+                  <li>           
+                      <div class="timelines-number"><?php echo $i; ?></div>
                       <div class="timelines-content">
                         <div class="row row-eq-height box p-0">
-                          <div class="col-sm-4 col-xs-12 p-0" style="background: url({{asset('img/head.png')}});background-size:cover;min-height: 250px">
+                          
+                          <?php if (!empty($courses->cover_course)) {?>
+                          <div class="col-sm-4 col-xs-12 p-0" style="background: url({{ asset($courses->cover_course) }});background-size:cover;min-height: 250px"></div>
                             <!-- for image content use style background for full size of column -->
-                          </div>
+                          <?php } else {?>
+                          <div class="col-sm-4 col-xs-12 p-0" style="background: url({{ asset('template/web/img/no-image-available.png') }});background-size:cover;min-height: 250px"></div>
+                          <?php }?> 
+                          
                           <div class="col-sm-8 col-xs-12">
 
                             <div class="row mt-3">
                               <div class="col-xs-6">
-                                <h5>Course Part 2</h5> 
+                                <h5>Course Part <?php echo $i; ?></h5> 
                               </div>
                               <div class="col-xs-5 mt-4">
                                   <div class="progress">
@@ -136,24 +84,26 @@
                               
                             <br>
 
-                            <h4>Linux System Administrator</h4>
+                            <h4>{{$courses->title}}</h4>
                             <h6>
-                              Setelah menyelesaikan Linux Fundamental ini, diharapkan mampu memahami dasar-dasar pengoperasian
-                              sistem operasi Linux dan dapat menggunakannya  dalam lingkungan pekerjaan  di bidang teknologi dan sistem
+                              {{$courses->deskripsi}}
                             </h6>
 
                             <br>
                             
-                            <small class="text-muted">08 Jam 31 Menit</small> &nbsp;&nbsp;&nbsp; <small class="text-muted">Deadline 2 Hari</small>
+                            <small class="text-muted">{{$course->estimasi}} Jam </small> &nbsp;&nbsp;&nbsp; <small class="text-muted">Deadline 2 Hari</small>
                                 
                             <br><br>
 
-                            <button class="btn btn-primary mb-4">Mulai Belajar</button>
+                            <a href="{{ url('bootcamp/'.$bc->slug.'/courseLesson/'.$courses->id) }}" class="btn btn-primary mb-4">Mulai Belajar</a>
                           </div>
                         </div>
                       </div>
+                      <?php } ?>
+                          <?php $i++;?>
+                          <?php endforeach; ?>
                   </li>
-                </ul>
+                  </ul>
             </div>
   
             <!-- Tab Course Overview -->
@@ -186,7 +136,7 @@
 
                 <div class="col-xs-12">
                   <hr>
-                  <img src="img/users.png" class="img-author mr-1 float-left" alt="">
+                  <img src="{{ asset('img/users.png') }}" class="img-author mr-1 float-left" alt="">
                   <div class="float-left">
                    <b>Anda</b> <small class="text-muted">Pengguna - Berapa Detik yang lalu</small>
                     <h6 class="text-muted">Apakah saya bisa mengupload projek melalui Link Google drive.</h6>
@@ -204,57 +154,7 @@
 
     </main>
 
-    <!-- Footer -->
-    <!-- <section id="footer">
-      <div class="container">
-        <div class="row">
-            <div class="col-md-3">
-                <img class="footer-logo" src="{{asset('img/logo-only.png')}}" alt="">
-                <span class="footer-logo-text">Cilsy</span>
-                <p>
-                    Satu-satunya kursus online jaringan dan server yang dipandu sampai bisa. Terdapat ratusan video tutorial eksklusif serta trainer profesional yang siap membantu proses belajar anda.
-                </p>
-                <p class="copyrigth-text">
-                    Copyright Cilsy Fiolution 2016-2018
-                </p>
-            </div>
-            <div class="col-md-2">
-                <ul class="nav-footer">
-                    <li>Cilsy</li>
-                    <li><a href="#">Tentang</a></li>
-                    <li><a href="#">Blog</a></li>
-                    <li><a href="#">Karir</a></li>
-                    <li><a href="#">FAQ</a></li>
-                </ul>
-            </div>
-            <div class="col-md-2">
-                <ul class="nav-footer">
-                    <li>Ikuti Kami</li>
-                    <li><a href="#">Facebook</a></li>
-                    <li><a href="#">Instagram</a></li>
-                    <li><a href="#">Line</a></li>
-                    <li><a href="#">Google+</a></li>
-                </ul>
-            </div>
-            <div class="col-md-2">
-                <ul class="nav-footer">
-                    <li>Bantuan</li>
-                    <li><a href="#">Kontak</a></li>
-                    <li><a href="#">Kebijakan Layanan</a></li>
-                </ul>
-            </div>
-            <div class="col-md-3">
-                <p class="copyrigth-text">
-                    Sarijadi Blok 23, No. 80, Kota Bandung
-                </p>
-            </div>
-        </div>
-      </div>
-    </section>
- -->
     <!-- JavaScript -->
-    <script type="text/javascript" src="{{asset('js/jquery-3.3.1.min.js')}}"></script>
-    <script type="text/javascript" src="{{asset('js/bootstrap.min.js')}}"></script>
     <script>
     $('#collapse').click(function(){ 
         $(this).text(function(i,old){
@@ -268,5 +168,4 @@
       var img = $('.header').css("background-image", "url(img/bg-head2.jpg)");
     });
     </script>
-  </body>
-</html>
+@endsection()

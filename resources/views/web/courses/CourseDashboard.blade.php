@@ -1,25 +1,6 @@
-
-<!doctype html>
-<html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}">
-    <!-- FontAwesome CSS -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
-    <!-- Font OpenSans Reguler -->
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400" rel="stylesheet">
-    <link rel="stylesheet" href="{{asset('css/spacing.css')}}">
-    <link rel="stylesheet" href="{{asset('css/timeline.min.css')}}">
-    <link rel="stylesheet" href="{{asset('css/style.css')}}">
-
-    <title>Cilsy</title>
-  </head>
-  <body>
-
+@extends('web.app')
+@section('title','Dashboard')
+@section('content')
     <!-- Main -->
     <main>
 
@@ -357,60 +338,12 @@
 
     </main>
 
-    <!-- Footer -->
-    <section id="footer">
-      <div class="container">
-        <div class="row">
-            <div class="col-md-3 col-sm-12">
-                <img class="footer-logo" src="img/logo-only.png" alt="">
-                <span class="footer-logo-text">Cilsy</span>
-                <p>
-                    Satu-satunya kursus online jaringan dan server yang dipandu sampai bisa. Terdapat ratusan video tutorial eksklusif serta trainer profesional yang siap membantu proses belajar anda.
-                </p>
-                <p class="copyrigth-text">
-                    Copyright Cilsy Fiolution 2016-2018
-                </p>
-            </div>
-            <div class="col-md-2 col-sm-6">
-                <ul class="nav-footer">
-                    <li>Cilsy</li>
-                    <li><a href="#">Tentang</a></li>
-                    <li><a href="#">Blog</a></li>
-                    <li><a href="#">Karir</a></li>
-                    <li><a href="#">FAQ</a></li>
-                </ul>
-            </div>
-            <div class="col-md-2 col-sm-6">
-                <ul class="nav-footer">
-                    <li>Ikuti Kami</li>
-                    <li><a href="#">Facebook</a></li>
-                    <li><a href="#">Instagram</a></li>
-                    <li><a href="#">Line</a></li>
-                    <li><a href="#">Google+</a></li>
-                </ul>
-            </div>
-            <div class="col-md-2 col-sm-6">
-                <ul class="nav-footer">
-                    <li>Bantuan</li>
-                    <li><a href="#">Kontak</a></li>
-                    <li><a href="#">Kebijakan Layanan</a></li>
-                </ul>
-            </div>
-            <div class="col-md-3 col-sm-6">
-                <p class="copyrigth-text">
-                    Sarijadi Blok 23, No. 80, Kota Bandung
-                </p>
-            </div>
-        </div>
-      </div>
-    </section>
+    
 
 
     <!-- JavaScript -->
     <script type="text/javascript" src="{{asset('js/jquery-3.3.1.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('js/bootstrap.min.js')}}"></script>
-    <script type="text/javascript" src="{{asset('js/timeline.min.js')}}"></script>
-    <script type="text/javascript" src="{{asset('js/isotope.pkgd.min.js')}}"></script>
     <script>
     /* Timeline */
 		$(function(){
@@ -469,5 +402,4 @@
       }
     });
     </script>
-  </body>
-</html>
+@endsection()

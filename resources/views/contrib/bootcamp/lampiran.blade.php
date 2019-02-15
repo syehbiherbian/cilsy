@@ -143,7 +143,7 @@
           });
           $.ajax({
               type    :"POST",
-              url     :'{{ url("contibutor/bootcamp/saveLampiran") }}',
+              url     :'{{ url("contributor/bootcamp/saveLampiran") }}',
               data    : dataform,
               dataType : 'json',
               contentType: false,
@@ -195,7 +195,7 @@ function updateLampiran(lamp_id, bootcamp_id) {
         });
         $.ajax({
             type    :"POST",
-            url     :'{{ url("contibutor/bootcamp/updateLampiran") }}',
+            url     :'{{ url("contributor/bootcamp/updateLampiran") }}',
             data    : dataform,
             dataType : 'json',
             contentType: false,
