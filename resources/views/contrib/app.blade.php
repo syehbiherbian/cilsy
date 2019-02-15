@@ -147,6 +147,12 @@
                     <span>Kelola Pertanyaan</span>
                 </a>
             </li>
+            <li class="{{ request()->is('contributor/comments') ? 'icon-active' : '' || request()->is('contributor/comments/*') ? 'icon-active' : '' }}" data-toggle="tooltip" data-placement="right" title="Pertanyaan Bootcamp">
+                <a href="{{ url('contributor/bootcamp/comments') }}">
+                    <img src="{{asset('template/kontributor/img/icon/KelolaPertanyaan.png')}}" alt="" />
+                    <span>Pertanyaan Bootcamp</span>
+                </a>
+            </li>
             <li class="{{ request()->is('contributor/account') ? 'icon-active' : '' || request()->is('contributor/account/*') ? 'icon-active' : '' }}" data-toggle="tooltip" data-placement="right" title="Kelola Akun Dan Halaman">
                 <a href="{{ url('contributor/account/informasi') }}">
                     <img src="{{asset('template/kontributor/img/icon/Kelola_Akun_dan_Halaman.png')}}" alt="" />

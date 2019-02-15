@@ -120,6 +120,10 @@ Route::get('/bootcamp/videoPage', function () {
 
 Route::get('bootcamp/{bootcamp}', 'Web\BootcampController@bootcamp');
 Route::get('bootcamp/{bootcamp}/courseSylabus/', 'Web\CourseController@courseSylabus');
+Route::post('bootcamp/coments/doComment', 'Web\BootcampController@doComment');
+Route::get('bootcamp/coments/getComments/{bootcamp_id}', 'Web\BootcampController@getComments');
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -374,6 +378,13 @@ Route::get('contributor/comments/read', 'Contributors\ComentsController@read');
 Route::get('contributor/comments/detail/{coment_id}', 'Contributors\ComentsController@detail');
 Route::post('contributor/comments/postcomment', 'Contributors\ComentsController@postcomment');
 Route::post('contributor/comments/deletecomment/{coment_id}', 'Contributors\ComentsController@deletecomment');
+//bootcamp comments
+Route::get('contributor/bootcamp/comments', 'Contributors\ComentsController@bootcamp');
+Route::get('contributor/bootcamp/comments/all', 'Contributors\ComentsController@bootall');
+Route::get('contributor/bootcamp/comments/read', 'Contributors\ComentsController@bootread');
+Route::get('contributor/bootcamp/comments/detail/{coment_id}', 'Contributors\ComentsController@bootdetail');
+Route::post('contributor/bootcamp/comments/postcomment', 'Contributors\ComentsController@bootpostcomment');
+Route::post('contributor/bootcamp/comments/deletecomment/{coment_id}', 'Contributors\ComentsController@bootdeletecomment');
 
 Route::prefix('contributor/account')->group(function () {
     Route::get('informasi', 'Contributors\AccountController@informasi');
