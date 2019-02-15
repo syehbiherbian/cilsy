@@ -36,8 +36,8 @@ class CourseController extends Controller
 
         $bcs = Bootcamp::where('slug', $slug)->first();
         $courses = Course::where('id', $id)->first();
-        $section = Section::where('course_id', $courses->id)->first();
-        $vsection = VideoSection::where('section_id', $section->id)->orderBy('position', 'asc')->get();
+        $section = Section::with('video_section')->where('course_id', $courses->id)->get();
+        $vsection = $section->first()->video_section->first();
         $cs = DB::table('section')->where('course_id', $courses->id)->get();
         return view('web.courses.CourseLesson',[
             'course' => $courses,

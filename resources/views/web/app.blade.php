@@ -502,8 +502,7 @@ a #items .item {
 }
 
     </style>
-
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <!-- <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> -->
     <link rel="stylesheet" href="{{ asset('template/web/css/helper.css') }}">
     <link rel="stylesheet" href="{{ asset('template/web/css/common.css') }}">
     <link rel="stylesheet" href="{{ asset('template/web/css/blocks.css') }}">
