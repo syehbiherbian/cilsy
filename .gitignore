@@ -3,14 +3,16 @@ public/node_modules
 assets/thumbs/videos
 assets/source/videos
 assets/source/lessons
+assets/source/bootcamp
 vendor/
 .env
 .phpintel/
 .phpintel/index
 assets/filemanager/.htaccess
 error_log
-public/assets/source/lessons/*
 laravel/
+public/assets/source/lessons/*
 public/assets/source/avatar/*
 public/assets/source/komentar/*
+public/assets/source/bootcamp/*
 
