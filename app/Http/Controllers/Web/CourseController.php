@@ -7,6 +7,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Course;
 use App\Models\Bootcamp;
 use App\Models\BootcampMember;
+use App\Models\Section;
+use App\Models\VideoSection;
+use App\Models\ProjectSection;
 use DB;
 use Auth;   
 
@@ -32,4 +35,55 @@ class CourseController extends Controller
             
         ]);
     }
+    public function courseLesson($slug, $id)
+    {   
+
+        $bcs = Bootcamp::where('slug', $slug)->first();
+        $courses = Course::where('id', $id)->first();
+        $section = Section::with('video_section')->where('course_id', $courses->id)->get();
+        $vsection = $section->first()->video_section->first();
+        $cs = DB::table('section')->where('course_id', $courses->id)->get();
+        return view('web.courses.CourseLesson',[
+            'course' => $courses,
+            'bc' => $bcs,
+            'cs' => $cs,
+            'stn' => $section,
+            'vsection' => $vsection,
+            
+        ]);
+    }
+     public function videoPage($slug, $id)
+    {   
+
+        $bcs = Bootcamp::where('slug', $slug)->first();
+        $courses = Course::where('id', $id)->first();
+        $section = Section::with('video_section')->where('course_id', $courses->id)->get();
+        $vsection = $section->first()->video_section->first();
+        $psection = Section::with('project_section')->where('course_id', $courses->id)->get();
+        // $vmateri = DB::table('video_section')->where('section_id', $vsection->id)->get();
+        return view('web.courses.VideoPage',[
+            'course' => $courses,
+            'bc' => $bcs,
+            'stn' => $section,
+            'psection' => $psection,
+            'vsection' => $vsection,
+            
+        ]);
+    }
+     public function projectSubmit($slug, $id)
+    {
+        $bcs = Bootcamp::where('slug', $slug)->first();
+        $section = Section::with('video_section')->where('id', $id)->get();
+        $vsection = $section->first()->video_section->first();
+        $psection = Section::with('project_section')->where('id', $id)->get();
+         return view('web.courses.ProjectSubmit',[
+            
+            'bc' => $bcs,
+            'stn' => $section,
+            'psection' => $psection,
+            'vsection' => $vsection,
+            
+        ]);
+    }
+    
 }
