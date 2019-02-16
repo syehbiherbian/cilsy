@@ -23,8 +23,8 @@ class Lesson extends Model
 	}
 
 	public function contributor(){
-		return $this->belongTo('App\Models\Contributor');
-	}
+        return $this->belongsTo('App\Models\Contributor');
+    }
 }
 
 

@@ -54,7 +54,7 @@ class LessonsController extends Controller
     $students=LessonDetail::join('lessons_detail_view','lessons_detail.id','=','lessons_detail_view.detail_id')
                             ->where('lessons_detail.moth',$moth)->where('lessons_detail.year',$year)->get();
     $cat = BootcampCategory::all();
-
+    // dd($data);
     return view('contrib.lessons.index',[
       'filter'  => $filter,
       'data'    => $data,
