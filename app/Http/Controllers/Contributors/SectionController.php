@@ -79,6 +79,7 @@ class SectionController extends Controller
 
             $section = new ProjectSection();
             $section->title = $title;
+            $section->contributor_id = Auth::guard('contributors')->user()->id;
             $section->section_id = $section_id;
             $section->deskripsi_project = $desk;
             $section->instruksi = $value;
