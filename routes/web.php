@@ -417,3 +417,4 @@ Route::post('contributor/bootcamp/saveAudience', 'Contributors\BootcampControlle
 Route::get('contributor/project', 'Contributors\ProjectController@index');
 Route::get('contributor/project/submit/{id}', 'Contributors\ProjectController@show');
 Route::get('contributor/project/submit/{sectionid}/detail/{id}', 'Contributors\ProjectController@detail');
+Route::post('contributor/project/accproject/', 'Contributors\ProjectController@acc');

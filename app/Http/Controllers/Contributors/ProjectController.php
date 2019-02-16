@@ -62,13 +62,27 @@ class ProjectController extends Controller
     public function detail($sectionid, $id)
     {
         $list_project = ProjectUser::where('project_section_id', $sectionid)->with('member')->get();
-        $user_roject = ProjectUser::where('member_id', $id)->with('member')->first();
+        $user_roject = ProjectUser::where('id', $sectionid)->with('member')->first();
         $section_project = ProjectSection::where('id', $sectionid)->first();
         return view('contrib.siswa.project_detail', [
             'user' => $user_roject,
             'section' => $section_project,
             'list' => $list_project
         ]);
+    }
+
+    public function acc(Request $request){
+        $response = array();
+        if (empty(Auth::guard('contributors')->user()->id)) {
+            $response['status'] = 0;
+        } else {
+   
+            $input = ProjectUser::find($request->input('id'));
+            $input['status'] = $request->input('status');
+            $input->save();
+            $response['status'] = $request->input('status');
+        }
+        echo json_encode($response);
     }
 
     /**
