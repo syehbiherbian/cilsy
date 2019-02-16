@@ -44,36 +44,7 @@ class LessonsController extends Controller
     }
 
     $contribID = Auth::guard('contributors')->user()->id;
-    if ($filter == 'pending') {
-      $data = Lesson::where('contributor_id',$contribID)->with('contributor')
-      ->leftJoin('categories', 'lessons.category_id', '=', 'categories.id')
-      ->select('lessons.*','categories.title as category_title')
-      ->orderby('created_at', 'desc')
-      ->get();
-    }elseif ($filter == 'processing') {
-      $data = Lesson::where('contributor_id',$contribID)->with('contributor')
-      ->leftJoin('categories', 'lessons.category_id', '=', 'categories.id')
-      ->select('lessons.*','categories.title as category_title')
-      ->where('lessons.status',2)
-      ->get();
-    }elseif ($filter == 'publish') {
-      $data = Lesson::where('contributor_id',$contribID)->with('contributor')
-      ->leftJoin('categories', 'lessons.category_id', '=', 'categories.id')
-      ->select('lessons.*','categories.title as category_title')
-      ->where('lessons.status',1)
-      ->get();
-    }elseif($filter == 'revision'){
-        $data = Lesson::where('contributor_id',$contribID)->with('contributor')
-        ->leftJoin('categories', 'lessons.category_id', '=', 'categories.id')
-        ->select('lessons.*','categories.title as category_title')
-        ->where('lessons.status',3)
-        ->get();
-    }else {
-      $data = Lesson::where('contributor_id',$contribID)->with('contributor')
-      ->leftJoin('categories', 'lessons.category_id', '=', 'categories.id')
-      ->select('lessons.*','categories.title as category_title')
-      ->get();
-    }
+    $data = Lesson::where('contributor_id', $contribID)->with('contributor')->get();
     $bootcamp = Bootcamp::where('contributor_id', $contribID)->with('contributor')->get();
     $now = new DateTime();
     $date= $now->format('Y-m-d');
