@@ -94,10 +94,26 @@ class PackageController extends Controller
 
           /* ambil data cart */
           $price = 0;
+          $carts = 0;
+          $boot = 0;
+          $total = 0;
+          $harga = 0;
           $carts = Cart::where('member_id', $member_id)->with('lesson')->get();
+          $boot = Cart::where('member_id', $member_id)->with('bootcamp')->get();
+
           foreach ($carts as $cart) {
-            $price += $cart->lesson->price;
+            if($cart->lesson_id){
+            $total += $cart->lesson->price;
+            }
           }
+          foreach ($boot as $boots) {
+            if($boots->bootcamp_id){
+            $harga += $boots->bootcamp->price;
+            }
+          }
+
+          $price += $total + $harga;
+
           if(Session::get('coupon')){
             $disc = 0;
             
@@ -121,12 +137,25 @@ class PackageController extends Controller
           // store invoice detail
           if ($invoice) {
             foreach ($carts as $cart) {
+              if($cart->lesson_id){
               InvoiceDetail::updateOrCreate([
                 'invoice_id' => $invoice->id,
                 'lesson_id' => $cart->lesson->id,
                 'harga_lesson' => $cart->lesson->price,
                 'contributor_id' => $cart->lesson->contributor_id,
               ]);
+              }
+              }
+
+              foreach ($boot as $boots) {
+                if($boots->bootcamp_id){
+                InvoiceDetail::updateOrCreate([
+                  'invoice_id' => $invoice->id,
+                  'bootcamp_id' => $cart->bootcamp->id,
+                  'harga_lesson' => $cart->bootcamp->price,
+                  'contributor_id' => $cart->bootcamp->contributor_id,
+                ]);
+                }
             }
 
             session()->forget('coupon');
