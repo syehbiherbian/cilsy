@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Validator;
 use App\Models\Member;
+use App\Models\Contributor;
 use App\Models\Lesson;
 use App\Models\Bootcamp;
 use App\Models\Category;
