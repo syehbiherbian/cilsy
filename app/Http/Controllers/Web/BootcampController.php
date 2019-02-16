@@ -36,6 +36,9 @@ class BootcampController extends Controller
 
 	public function bootcamp($slug)
     {
+        if (empty(Auth::guard('members')->user()->id)) {
+            return redirect('member/signin')->with('error', 'Anda Harus Login terlebih dahulu!');
+          }
     	$bc = Bootcamp::where('status', 1)->where('slug', $slug)->first();
     	$now = new DateTime();
     	$time = strtotime($bc->created_at);
@@ -46,7 +49,71 @@ class BootcampController extends Controller
             'bca' => $bc,
             'contributors' => $contributors,
             'tanggal' => $myFormatForView,
-            'tutor' => $tutor,
+        ]);
+    }
+    public function member()
+    {
+       
+        if (empty(Auth::guard('members')->user()->id)) {
+            return redirect('member/signin')->with('error', 'Anda Harus Login terlebih dahulu!');
+          }
+          
+          $mem_id = Auth::guard('members')->user()->id;
+         
+          $bootcamp = BootcampMember::join('bootcamp','bootcamp.id', '=', 'bootcamp_member.bootcamp_id')
+                    ->join('contributors', 'contributors.id', '=', 'bootcamp.contributor_id')
+                    ->where('member_id', $mem_id )
+                    ->get(); 
+          $belitut = TutorialMember::join('lessons','lessons.id', '=', 'tutorial_member.lesson_id')
+                          ->join('contributors', 'contributors.id', '=', 'lessons.contributor_id')
+                          ->where('member_id', '=',  $mem_id)->get();
+  
+          $get_lessons = Lesson::join('videos', 'lessons.id', '=', 'videos.lessons_id')
+                       ->join('viewers', 'videos.id', '=', 'viewers.video_id')
+                       ->where('viewers.member_id', '=', $mem_id)
+                       ->orderBy('viewers.member_id', 'viewers.updated_at', 'asc')
+                       ->distinct()
+                       ->get(['viewers.member_id', 'lessons.*']);           
+                     
+          $last_videos = Viewer::leftJoin('videos', 'videos.id', '=', 'viewers.video_id')
+                       ->select('videos.*', 'viewers.*')
+                       ->where('viewers.member_id', '=', $mem_id)->orderBy('viewers.updated_at', 'desc')->first();
+      
+                  
+          $get_full = Lesson::join('videos', 'lessons.id', '=', 'videos.lessons_id')
+                       ->leftjoin('viewers', function($join){
+                          $join->on('videos.id', '=', 'viewers.video_id')
+                          ->where('viewers.member_id', '=', Auth::guard('members')->user()->id);})
+                       ->select(DB::raw('count(distinct viewers.video_id) as id_count, count(distinct videos.id) as vid_id, lessons.title, lessons.image, lessons.id, lessons.slug'))
+                       ->groupby('lessons.title', 'lessons.image', 'lessons.id', 'lessons.slug')
+                       ->having(DB::raw('count(distinct viewers.video_id)'), '=', DB::raw('count(distinct videos.id)'))                   
+                       ->get();
+  
+         if(!empty($last_videos)){
+         $last_lessons = Lesson::where('lessons.id', '=', $last_videos->lessons_id)->first();
+         
+         $get_hist = Viewer::join('videos', 'viewers.video_id', '=', 'videos.id')
+         ->where('viewers.member_id', '=', $mem_id)
+         ->where('videos.lessons_id', '=', $last_videos->lessons_id)->get();
+         $get_videos = Video::where('videos.lessons_id', '=', $last_videos->lessons_id)->orderBy('position', 'asc')->get();
+         $progress = count($get_hist)*100/count($get_videos);
+  
+         
+         }else{
+          $last_lessons = 0;
+          $get_hist = 0; 
+          $get_videos = 0; 
+          $progress = 0;
+          $get_full = 0;
+         }
+         
+        return view('web.courses.CourseDashboard',[
+            'bootcamp' => $bootcamp,
+            'progress' => $progress,
+            'last' => $last_lessons,
+            'belitut' => $belitut,
+            'lessons' => $get_lessons,
+            'full' => $get_full,
         ]);
     }
     public function doComment(Request $request)

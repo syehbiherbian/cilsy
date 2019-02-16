@@ -18,7 +18,9 @@ class CourseController extends Controller
 {
     public function courseSylabus($slug)
     {	
-
+        if (empty(Auth::guard('members')->user()->id)) {
+            return redirect('member/signin')->with('error', 'Anda Harus Login terlebih dahulu!');
+          }
     	
     	// $courses = DB::table('course')->first();
     	// $bcs = Bootcamp::where('bootcamp.id',$courses->bootcamp_id)->first();
@@ -27,6 +29,9 @@ class CourseController extends Controller
         $cs = DB::table('course')->where('bootcamp_id', $bcs->id)->get();
         $tutor = BootcampMember::where('bootcamp_id', $bcs->id)->where('member_id', Auth::guard('members')->user()->id)->first();
 
+        if(!$tutor){
+            return redirect('bootcamp/'.$bcs->slug);
+        }
         return view('web.courses.CourseSylabus',[
             'course' => $courses,
             'bc' => $bcs,
@@ -43,6 +48,12 @@ class CourseController extends Controller
         $section = Section::with('video_section')->where('course_id', $courses->id)->get();
         $vsection = $section->first()->video_section->first();
         $cs = DB::table('section')->where('course_id', $courses->id)->get();
+
+        $tutor = BootcampMember::where('bootcamp_id', $bcs->id)->where('member_id', Auth::guard('members')->user()->id)->first();
+
+        if(!$tutor){
+            return redirect('bootcamp/'.$bcs->slug);
+        }
         return view('web.courses.CourseLesson',[
             'course' => $courses,
             'bc' => $bcs,
@@ -61,6 +72,12 @@ class CourseController extends Controller
         $vsection = $section->first()->video_section->first();
         $psection = Section::with('project_section')->where('course_id', $courses->id)->get();
         // $vmateri = DB::table('video_section')->where('section_id', $vsection->id)->get();
+
+        $tutor = BootcampMember::where('bootcamp_id', $bcs->id)->where('member_id', Auth::guard('members')->user()->id)->first();
+
+        if(!$tutor){
+            return redirect('bootcamp/'.$bcs->slug);
+        }
         return view('web.courses.VideoPage',[
             'course' => $courses,
             'bc' => $bcs,
@@ -76,6 +93,11 @@ class CourseController extends Controller
         $section = Section::with('video_section')->where('id', $id)->get();
         $vsection = $section->first()->video_section->first();
         $psection = Section::with('project_section')->where('id', $id)->get();
+        $tutor = BootcampMember::where('bootcamp_id', $bcs->id)->where('member_id', Auth::guard('members')->user()->id)->first();
+
+        if(!$tutor){
+            return redirect('bootcamp/'.$bcs->slug);
+        }
          return view('web.courses.ProjectSubmit',[
             
             'bc' => $bcs,
