@@ -56,11 +56,11 @@
               @if($user->status == 0)
               <td><span class="c-yellow">Menunggu</span></td>
               @elseif($user->status == 1)
-              <td><span class="c-red">Lulus</span></td>
+              <td><span class="c-red">Tidak Lulus</span></td>
               @elseif($user->status == 2)
-              <td><span class="c-green">Tidak Lulus</span></td>
+              <td><span class="c-green">Lulus</span></td>
               @endif
-              <td><a href="{{url('contributor/project/submit/'.$user->id.'/detail/'.$user->member_id)}}" class="btn btn-green"><i class="fa fa-eye"></i> Lihat</a></td>
+              <td><a href="{{url('contributor/project/submit/'.$user->project_section_id.'/detail/'.$user->id)}}" class="btn btn-green"><i class="fa fa-eye"></i> Lihat</a></td>
             </tr>
             @endforeach
 

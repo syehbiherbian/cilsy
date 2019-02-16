@@ -43,7 +43,7 @@
         <h5>Nama Siswa</h5>
         <div class="list-group">
             @foreach($list as $lists)
-            <a href="{{url('contributor/project/submit/'.$lists->project_section_id.'/detail/'.$lists->member_id)}}" class="list-group-item {{ request()->is('contributor/project/submit/'.$lists->project_section_id.'/detail/'.$lists->member_id) ? 'active' : '' }}">
+            <a href="{{url('contributor/project/submit/'.$lists->project_section_id.'/detail/'.$lists->id)}}" class="list-group-item {{ request()->is('contributor/project/submit/'.$lists->project_section_id.'/detail/'.$lists->id) ? 'active' : '' }}">
                 <img src="img/user.png" class="img-table" alt=""> {{$lists->member->username}}</a>
             @endforeach
         </div>
@@ -101,14 +101,52 @@
 
         <div class="row mt-4">
           <div class="col-xs-6 px-4">
-            <button class="btn btn-white w-100 py-4">Tidak Lulus</button>
+            <button class="btn btn-white w-100 py-4" onclick="accProject({{$user->id}}, 1)">Tidak Lulus</button>
           </div>
           <div class="col-xs-6 px-4">
-            <button class="btn btn-green w-100 py-4">Lulus</button>
+            <button class="btn btn-green w-100 py-4" onclick="accProject({{$user->id}}, 2)">Lulus</button>
           </div>
         </div>
       </div>
     </div>
 
   </div>
+<script>
+    function accProject(pid, id){
+        dataform = new FormData();
+        dataform.append('id', pid);
+        dataform.append('status', id);
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            type    :"POST",
+            url     :'{{ url("/contributor/project/accproject") }}',
+            data    : dataform,
+            dataType : 'json',
+            contentType: false,
+            processData: false,
+            success:function(data){
+                if(data.status == 1){
+                    swal({
+                        title: "Project Tidak di acc",
+                        showConfirmButton: true,
+                        timer: 3000
+                      });
+                } else if(data.status == 2)
+                {
+                    swal({
+                        title: "Project Telah di ACC",
+                        showConfirmButton: true,
+                        timer: 3000
+                      });
+                }
+                
+            }
+        });
+    }
+</script>
 @endsection()
