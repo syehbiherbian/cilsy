@@ -22,8 +22,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no" />
     <title>@yield('title')</title>
     <meta name="description" content="@yield('description')">
-    <link href="{{asset('template/web/css/bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{asset('template/web/css/app.css')}}" rel="stylesheet">
+    <link href="{{asset('template/web/css/bootstrap.min.css')}}" rel="stylesheet">
+    <link rel="stylesheet" href="{{asset('css/spacing.css')}}">
+    <link rel="stylesheet" href="{{asset('css/timelines-vertical.css')}}">
+    <link rel="stylesheet" href="{{asset('css/style.css')}}">
+    <link rel="stylesheet" href="{{asset('css/video-sidebar.css')}}">
+    <link rel="stylesheet" href="{{asset('css/plyr.css')}}">
     <link href="{{asset('template/web/css/video-js.css')}}" rel="stylesheet">
     <link href="{{asset('template/web/css/navbar.css')}}" rel="stylesheet">
     <link href="{{asset('template/web/css/pace.css')}}" rel="stylesheet">
@@ -49,11 +54,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">    
     <!-- Font OpenSans Reguler -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400" rel="stylesheet">
-    <link rel="stylesheet" href="{{asset('css/spacing.css')}}">
-    <link rel="stylesheet" href="{{asset('css/timelines-vertical.css')}}">
-    <link rel="stylesheet" href="{{asset('css/style.css')}}">
-    <link rel="stylesheet" href="{{asset('css/video-sidebar.css')}}">
-    <link rel="stylesheet" href="{{asset('css/plyr.css')}}">
+    
     <!-- Jquery UI   -->
 
 

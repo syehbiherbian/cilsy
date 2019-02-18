@@ -29,4 +29,7 @@ class Contributor extends User
         return $this->hasmany('App\Models\Bootcamp');
     }
    
+    public function lessons(){
+        return $this->hasmany('App\Models\Lesson');
+    }
 }

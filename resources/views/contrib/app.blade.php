@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,6 +8,8 @@
     <title>Cilsy Fiolution | Contributor</title>
     <link rel="shortcut icon" type="image/png" href="{{asset('template/kontributor/img/logo-only.png')}}"/>
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link href="{{asset('template/kontributor/css/bootstrap-3.3.7.min.css')}}" rel="stylesheet">
+    <link href="{{asset('template/kontributor/css/style.css')}}" rel="stylesheet">
     <link href="{{ asset('template/web/css/venobox.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
     <link href="{{asset('template/kontributor/css/custom.css')}}" rel="stylesheet">
@@ -16,11 +17,12 @@
     <link href="{{asset('template/kontributor/css/ply.css')}}" rel="stylesheet">
     <link href="{{asset('template/kontributor/css/dropify.min.css')}}" rel="stylesheet">
     <link href="{{asset('template/kontributor/css/jquery.dm-uploader.min.css')}}" rel="stylesheet">
-    <link href="{{asset('template/kontributor/css/bootstrap-3.3.7.min.css')}}" rel="stylesheet">
     <link href="{{asset('template/kontributor/css/sweetalert.css')}}" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker.css" rel="stylesheet">
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Font OpenSans Reguler -->
+    <link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.2.1/assets/owl.carousel.css" type="text/css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.2.1/assets/owl.theme.default.min.css" type="text/css" />
@@ -139,6 +141,24 @@
                 <a href="{{ url('contributor/lessons') }}">
                     <img src="{{asset('template/kontributor/img/icon/Kelola_Tutorial.png')}}" alt="" />
                     <span>Kelola Tutorial</span>
+                </a>
+            </li>
+            <li class="#" data-toggle="tooltip" data-placement="right" title="Kelola Tutorial">
+                <a href="">
+                    <img src="{{asset('template/kontributor/img/icon/Kelola_Tutorial.png')}}" alt="" />
+                    <span>Kelola Siswa</span>
+                </a>
+            </li>
+            <li class="#" data-toggle="tooltip" data-placement="right" title="Kelola Tutorial">
+                <a href="{{ url('contributor/prohress') }}">
+                    <img src="{{asset('template/kontributor/img/icon/Kelola_Tutorial.png')}}" alt="" />
+                    <span>Progress Siswa</span>
+                </a>
+            </li>
+            <li class="#" data-toggle="tooltip" data-placement="right" title="Kelola Tutorial">
+                <a href="{{ url('contributor/project') }}">
+                    <img src="{{asset('template/kontributor/img/icon/Kelola_Tutorial.png')}}" alt="" />
+                    <span>Project</span>
                 </a>
             </li>
             <li class="{{ request()->is('contributor/comments') ? 'icon-active' : '' || request()->is('contributor/comments/*') ? 'icon-active' : '' }}" data-toggle="tooltip" data-placement="right" title="Kelola Pertanyaan">
