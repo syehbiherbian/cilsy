@@ -22,7 +22,7 @@
         </div>
 
         
-        <div class="tab-content" id="pills-tabContent">
+        <div class="tab-content tab-content-video-page" id="pills-tabContent">
           <!-- Tab Materi -->
           <div class="tab-pane fade active in" id="pills-materi" role="tabpanel" aria-labelledby="pills-materi-tab">
           <?php

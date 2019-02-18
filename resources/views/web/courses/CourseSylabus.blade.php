@@ -18,7 +18,7 @@
                 and how to best manage technology projects. This content is not meant to be watched in order, so you can pickl your own adventure.
               </h6>
               <br>
-              <button class="btn btn-secondary btn-lg mb-5">Mulai belajar</button>
+              <button class="btn btn-secondarys btn-lg mb-5">Mulai belajar</button>
             </div>
           </div>
         </div>
@@ -45,7 +45,7 @@
       <section class="mt-5">
         <div class="container">
 
-          <div class="tab-content" id="pills-tabContent">
+          <div class="tab-content tab-content-video-page" id="pills-tabContent">
 
             <!-- Tab Kurikulum -->
             <div class="tab-pane fade active in" id="pills-kurikulum" role="tabpanel" aria-labelledby="pills-kurikulum-tab">
@@ -121,8 +121,8 @@
                   <h6>Buat Pertanyaan</h6>
                   <textarea class="form-control" name="pertanyaan" id="pertanyaan" cols="30" rows="10">Apakah saya bisa mengupload projek melalui Link Google drive.</textarea>
                   <br>
-                  <button class="btn btn-primary">Upload Gambar</button>
-                  <button class="btn btn-primary">Tambah Pertanyaan</button>
+                  <button class="btn btn-primary-diskusi">Upload Gambar</button>  <button class="btn btn-primary-diskusi">Tambah Pertanyaan</button>
+                 
                 </div>
 
                 <hr class="mt-5">
@@ -154,7 +154,7 @@
 
     </main>
 
-    <!-- JavaScript -->
+    <!-- JavaScript -->;
     <script>
     $('#collapse').click(function(){ 
         $(this).text(function(i,old){
@@ -162,7 +162,7 @@
         });
     });
     $('#pills-kurikulum-tab').on('click', function(e){
-      $('.header').css("background-image", "url(img/bg-head.jpg)")
+      $('.header').css("background-image", "url(img/bg-head.jpg)");
     });
     $('#pills-diskusi-tab').on('click', function(e){
       var img = $('.header').css("background-image", "url(img/bg-head2.jpg)");
