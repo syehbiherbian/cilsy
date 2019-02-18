@@ -18,8 +18,12 @@
                 and how to best manage technology projects. This content is not meant to be watched in order, so you can pickl your own adventure.
               </h6>
               <br>
+<<<<<<< HEAD
 
               <button class="btn btn-secondarys btn-lg mb-5">Mulai belajar</button>
+=======
+              <button class="btn btn-second btn-lg mb-5">Mulai belajar</button>
+>>>>>>> a44a368e8baa3ac40d830c60a2a735db140bd692
             </div>
           </div>
         </div>
