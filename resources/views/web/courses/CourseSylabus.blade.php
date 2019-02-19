@@ -86,7 +86,6 @@
               </h6>
               <br>
               <a href="{{ url('bootcamp/'.$bc->slug.'/courseLesson/'.$mulai->id) }}" class="btn btn-primary mb-4">Mulai Belajar</a>
-              <button class="btn btn-second btn-lg mb-5">Mulai belajar</button>
 
             </div>
           </div>
