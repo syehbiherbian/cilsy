@@ -86,6 +86,8 @@
               </h6>
               <br>
               <a href="{{ url('bootcamp/'.$bc->slug.'/courseLesson/'.$mulai->id) }}" class="btn btn-primary mb-4">Mulai Belajar</a>
+              <button class="btn btn-second btn-lg mb-5">Mulai belajar</button>
+
             </div>
           </div>
         </div>
@@ -112,7 +114,7 @@
       <section class="mt-5">
         <div class="container">
 
-          <div class="tab-content" id="pills-tabContent">
+          <div class="tab-content tab-content-video-page" id="pills-tabContent">
 
             <!-- Tab Kurikulum -->
             <div class="tab-pane fade active in" id="pills-kurikulum" role="tabpanel" aria-labelledby="pills-kurikulum-tab">
@@ -201,6 +203,7 @@
                       <button type="button" class="btn btn-primary upload-image" onclick="doComment({{ $bc->id}}, 0)">Tambah Pertanyaan</button> 
                       
                       </form><!--./ Comment Form -->
+               
                 </div>
                 <!-- Comments Lists -->
                 <div id="comments-lists">
@@ -220,7 +223,6 @@
     </main>
 
    
-    <!-- JavaScript -->
     <script>
     $('#collapse').click(function(){ 
         $(this).text(function(i,old){
@@ -228,7 +230,7 @@
         });
     });
     $('#pills-kurikulum-tab').on('click', function(e){
-      $('.header').css("background-image", "url(img/bg-head.jpg)")
+      $('.header').css("background-image", "url(img/bg-head.jpg)");
     });
     $('#pills-diskusi-tab').on('click', function(e){
       var img = $('.header').css("background-image", "url(img/bg-head2.jpg)");
