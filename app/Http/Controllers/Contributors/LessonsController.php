@@ -6,7 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Validator;
 use App\Models\Member;
+use App\Models\Contributor;
 use App\Models\Lesson;
+use App\Models\Bootcamp;
 use App\Models\Category;
 use App\Models\Video;
 use App\Models\Quiz;
@@ -42,36 +44,8 @@ class LessonsController extends Controller
     }
 
     $contribID = Auth::guard('contributors')->user()->id;
-    if ($filter == 'pending') {
-      $data = Lesson::where('contributor_id',$contribID)
-      ->leftJoin('categories', 'lessons.category_id', '=', 'categories.id')
-      ->select('lessons.*','categories.title as category_title')
-      ->orderby('created_at', 'desc')
-      ->get();
-    }elseif ($filter == 'processing') {
-      $data = Lesson::where('contributor_id',$contribID)
-      ->leftJoin('categories', 'lessons.category_id', '=', 'categories.id')
-      ->select('lessons.*','categories.title as category_title')
-      ->where('lessons.status',2)
-      ->get();
-    }elseif ($filter == 'publish') {
-      $data = Lesson::where('contributor_id',$contribID)
-      ->leftJoin('categories', 'lessons.category_id', '=', 'categories.id')
-      ->select('lessons.*','categories.title as category_title')
-      ->where('lessons.status',1)
-      ->get();
-    }elseif($filter == 'revision'){
-        $data = Lesson::where('contributor_id',$contribID)
-        ->leftJoin('categories', 'lessons.category_id', '=', 'categories.id')
-        ->select('lessons.*','categories.title as category_title')
-        ->where('lessons.status',3)
-        ->get();
-    }else {
-      $data = Lesson::where('contributor_id',$contribID)
-      ->leftJoin('categories', 'lessons.category_id', '=', 'categories.id')
-      ->select('lessons.*','categories.title as category_title')
-      ->get();
-    }
+    $data = Lesson::where('contributor_id', $contribID)->with('contributor')->get();
+    $bootcamp = Bootcamp::where('contributor_id', $contribID)->with('contributor')->get();
     $now = new DateTime();
     $date= $now->format('Y-m-d');
     $moth=$now->format('m');
@@ -80,13 +54,14 @@ class LessonsController extends Controller
     $students=LessonDetail::join('lessons_detail_view','lessons_detail.id','=','lessons_detail_view.detail_id')
                             ->where('lessons_detail.moth',$moth)->where('lessons_detail.year',$year)->get();
     $cat = BootcampCategory::all();
-
+    // dd($data);
     return view('contrib.lessons.index',[
       'filter'  => $filter,
       'data'    => $data,
       'views'   => $views,
       'students'=> $students,
-      'cat'     => $cat
+      'cat'     => $cat,
+      'boot'    => $bootcamp
     ]);
 
   }

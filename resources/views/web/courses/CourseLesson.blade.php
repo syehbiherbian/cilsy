@@ -16,7 +16,12 @@
                 {{$course->deskripsi}}
               </h6>
               <br>
-              <button class="btn btn-secondary btn-lg mb-2">Mulai belajar</button>
+<<<<<<< HEAD
+
+              <button class="btn btn-secondarys btn-lg mb-2">Mulai belajar</button>
+=======
+              <button class="btn btn-second btn-lg mb-2">Mulai belajar</button>
+>>>>>>> a44a368e8baa3ac40d830c60a2a735db140bd692
             </div>
           </div>
         </div>

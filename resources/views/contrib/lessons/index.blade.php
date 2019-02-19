@@ -4,120 +4,149 @@
 <div id="navigation">
     <div class="container">
         {{--  <a href="{{ url('contributor/lessons/create')}}" class="btn btn-info pull-right">Buat Tutorial</a>  --}}
-        <button class="btn btn-info pull-right pull-right" data-toggle="modal" data-target="#modalStep">Buat Tutorial</button>
+        <button class="btn btn-info pull-right pull-right" data-toggle="modal" data-target="#modalStep"><i class="fa fa-plus" aria-hidden="true"></i>
+           Buat Tutorial</button>
         <ul class="breadcrumb">
         <li><a href="{{ url('contributor/dashboard') }}">Dashboard</a></li>
-        <li>Kelola Tutorial</li>
+        <li>Kelola Kelas</li>
         </ul>
     </div>
 </div>
 @endsection
 @section('content')
-<div class="row">
-  <div class="col-md-12">
-    <div class="box-white">
-        @if($errors->all())
-         <div class="alert\ alert-danger">
-             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-             <h4><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></h4>
-             @foreach($errors->all() as $error)
-             <?php echo $error."</br>";?>
-             @endforeach
-         </div>
-         @endif
-         @if(Session::has('success'))
-             <div class="alert alert-success alert-dismissable">
-                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                 <h4>	<i class="icon fa fa-check"></i> Alert!</h4>
-                 {{ Session::get('success') }}
-             </div>
-         @endif
-
-        @if(Session::has('success-delete'))
-          <div class="alert alert-info alert-dismissable">
-              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-              <h4>	<i class="icon fa fa-check"></i> Alert!</h4>
-              {{ Session::get('success-delete') }}
+<!-- Main -->
+    <main>
+      
+      <!-- Container -->
+      <div class="container">
+  
+  
+        <div class="row mt-5">
+          <div class="col-xs-12 mb-4">
+            <h5>Kelas</h5>
           </div>
-        @endif
-        @if(Session::has('no-delete'))
-          <div class="alert alert-danger alert-dismissable">
-              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-              <h4><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></h4>
-              {{ Session::get('no-delete') }}
+
+          <hr style="border-top: 1px solid #000;width:98%">
+
+          <div class="col-sm-4 col-xs-12 mb-2">
+            Cari Nama Kelas <br>
+            <div class="input-group">
+              <span class="input-group-addon" id="basic-addon1"><i class="fa fa-search"></i></span>
+              <input type="text" class="form-control" name="name" id="name" style="border-left:none;" placeholder="Cari Kelas">
+            </div>
           </div>
-        @endif
 
-
-        <div class="tab-content">
-          <div class="table-responsive">
-            <table class="table table-striped table-hover">
-              <thead>
-                <tr>
-                  <th>No</th>
-                  <th>Judul Tutorial</th>
-                  <th>Kategori</th>
-                  <th>price</th>
-                  <th>Jumlah murid bulan ini</th>
-                  <th>status</th>
-                  <th>Lebih lanjut</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                <?php if (count($data) == 0): ?>
-                  <tr>
-                    <td colspan="8">Tidak Ada data</td>
-                  </tr>
-                <?php else: ?>
-                <?php $i = 1; ?>
-                <?php foreach ($data as $key => $row): ?>
-                <tr>
-                  <td>{{ $i }}</td>
-                  <td>{{ $row->title }}</td>
-                  <td>{{ $row->category_title }}</td>
-                  <td>{{ $row->price }}</td>
-                  <td>
-                      <?php $student=0; ?>
-                      @foreach ($students as $details)
-                        @if($details->lesson_id==$row->id)
-                         <?php $student=$student +1 ; ?>
-                        @elseif($details->lesson_id !==$row->id)
-                        @endif
-                      @endforeach
-
-                     {{$student}}
-                  </td>
-                  <td>
-                   <?php if ($row->status == 0): ?>
-                    <div class="label label-warning">Draft</div>
-                  <?php elseif($row->status == 1): ?>
-                      <div class="label label-success">Publish</div>
-                  <?php elseif($row->status == 2): ?>
-                      <div class="label label-info">Proses</div>
-                  <?php elseif($row->status == 3): ?>
-                      <div class="label label-warning">Revisi</div>
-                  <?php endif; ?>
-                  </td>
-                  <td><a href="{{ url('contributor/lessons/'.$row->id.'/view')}}" class="btn btn-warning">View</a>
-                  </td>
-                  <td>
-                  <form id="{{ $row->id }}" action="{{ url('contributor/lessons/'.$row->id.'/submit')}}" method="post">
-                  				{{ csrf_field() }}
-                  <button type="button"  title="Publish" data-toggle="tooltip" class="btn btn-success pull-right" data-toggle="tooltip" onclick="checkpublish({{$row->id}})">publish</button>
-                  </form>
-                  </td>
-                </tr>
-                <?php $i++; ?>
-                <?php endforeach; ?>
-                <?php endif; ?>
-              </tbody>
-            </table>
+          <div class="col-sm-4 col-xs-12 kelola-tabs">
+            Tipe Kelas <br>
+            <ul class="nav nav-pills" id="pills-tab" role="tablist">
+              <li class="nav-item active">
+                <a class="nav-link" id="pills-bootcamp-tab" data-toggle="pill" href="#pills-bootcamp" role="tab" aria-controls="pills-bootcamp" aria-selected="true">Bootcamp</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="pills-tutorial-tab" data-toggle="pill" href="#pills-tutorial" role="tab" aria-controls="pills-tutorial" aria-selected="false">Tutorial</a>
+              </li>
+            </ul>
           </div>
+
+          <div class="col-xs-12">
+
+              <div class="tab-content mt-4" id="pills-tabContent">
+                
+                  <div class="tab-pane fade active in" id="pills-bootcamp" role="tabpanel" aria-labelledby="pills-bootcamp-tab">
+                      @if($boot != null)
+                      @foreach($boot as $boots)
+                      <div class="box">
+                        <div class="row">
+                          <div class="col-md-8 col-sm-10 col-xs-12 border-right">
+                            @if($boots->cover != null)
+                            <img src="{{asset($boots->cover)}}" class="kelolaskelas-img-thumb img-rounded img-responsive"  alt="">
+                            @else
+                            <img src="{{asset('template/kontributor/img/no-image.png')}}" class="kelolaskelas-img-thumb img-rounded img-responsive"  alt="">
+                            @endif                                        
+                            <h5>Bootcamp</h5>
+                            <h3 class="kelolakelas-title">{{ $boots->title}}</h3>
+                            <br>
+                            <span class="text-muted">{{ $boots->contributor->username }}</span>
+                            <span class="pull-right">Harga - {{ $boots->price }}</span>
+                            </div>
+                          <div class="col-md-4 col-sm-2 col-xs-12">
+                            @if($boots->status == 1)
+                            <h5 class="c-green" style="letter-spacing: 2px;">Published</h5>
+                            @elseif ($boots->status == 0)
+                            <h5 class="c-orange" style="letter-spacing: 2px;">Draft</h5>
+                            @endif
+                            <a href="{{url('contributor/bootcamp/'.$boots->slug)}}" class="btn btn-green"><i class="fa fa-edit"></i> Edit</a>
+                            <h6>Terakhir di Ubah: {{date("jS F Y", strtotime($boots->updated_at))}}</h6>
+                          </div>
+                        </div>
+                      </div>
+                    @endforeach
+                    @else
+                    <div class="box">
+                        <div class="row">
+                          <h3>Anda belum memiliki kelas</h3>
+                        </div>
+                      </div>
+                    @endif
+                  </div>
+
+                  <div class="tab-pane fade" id="pills-tutorial" role="tabpanel" aria-labelledby="pills-tutorial-tab">
+                    @if($data != null)
+                      @foreach($data as $keys)
+                      <div class="box">
+                        <div class="row">
+                          <div class="col-md-8 col-sm-10 col-xs-12 border-right">
+                            @if($keys->image != null)
+                            <img src="{{asset($keys->image)}}" class="kelolaskelas-img-thumb img-rounded img-responsive"  alt="">
+                            @else
+                            <img src="{{asset('template/kontributor/img/no-image.png')}}" class="kelolaskelas-img-thumb img-rounded img-responsive"  alt="">
+                            @endif                       
+                            <h5>Tutorial</h5>
+                            <h3 class="kelolakelas-title">{{$keys->title}}</h3>
+                            <br>
+                            <span class="text-muted">{{$keys->contributor->username}}</span>
+                            <span class="pull-right">Harga - Rp. {{ $keys->price}}</span>
+                            </div>
+                            <div class="col-md-4 col-sm-2 col-xs-12">
+                              @if($keys->status == 1)
+                              <h5 class="c-green" style="letter-spacing: 2px;">Published</h5>
+                              @elseif ($keys->status == 0)
+                              <h5 class="c-orange" style="letter-spacing: 2px;">Draft</h5>
+                              @endif
+                            <a href="{{ url('contributor/lessons/'.$keys->id.'/view')}}" class="btn btn-green"><i class="fa fa-edit"></i> Edit</a>
+                            <h6>Terakhir di Ubah: {{date("jS F Y", strtotime($keys->updated_at))}}</h6>
+                          </div>
+                        </div>
+                      </div>
+                      @endforeach()
+                      @else
+                      <div class="box">
+                        <div class="row">
+                          <h3>Anda belum memiliki Tutorial</h3>
+                        </div>
+                      </div>
+                    @endif
+                  </div>
+              </div>
+
+          </div>
+
         </div>
-    </div>
-  </div>
-</div>
+
+        <div class="row">
+
+
+          
+        </div>
+  
+          
+
+
+      </div>
+
+      <div class="m-5"></div>
+
+    </main>
 <!-- Modal -->
     <div class="modal fade multi-step" id="modalStep" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
