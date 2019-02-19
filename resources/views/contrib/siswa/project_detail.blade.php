@@ -96,7 +96,7 @@
         </div>
         
         <div class="text-right mt-2">
-          <button class="btn btn-green"><i class="fa fa-paper-plane"></i> Kirim</button>
+          <button class="btn btn-green" onclick="saveProject({{ $user->id}})"><i class="fa fa-paper-plane"></i> Kirim</button>
         </div>
 
         <div class="row mt-4">
@@ -112,6 +112,54 @@
 
   </div>
 <script>
+
+function saveProject(project_id) {
+      var body = $('#komentar').val();
+      dataform = new FormData();
+      dataform.append( 'body', body);
+      dataform.append( 'project_id', project_id);
+  
+      if (body == '') {
+        alert('Harap Isi form !')
+      }else {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            type    :"POST",
+            url     :'{{ url("/bootcamp/contrib/saveProject") }}',
+            data    : dataform,
+            dataType : 'json',
+            contentType: false,
+            processData: false,
+            beforeSend: function(){
+                 swal({
+                  title: "Memuat Project",
+                  text: "Mohon Tunggu sebentar file anda sedang dikirim",
+                  imageUrl: "{{ asset('template/web/img/loading.gif') }}",
+                  showConfirmButton: false,
+                  allowOutsideClick: false
+              });
+              // Show image container
+            },
+            success:function(data){
+              if (data.success == false) {
+                 window.location.href = '{{ url("member/signin") }}';
+              }else if (data.success == true) {
+                $('#komentar').val('');
+                $('#file').val('');
+                swal({
+                  title: "Komentar berhasil terkirim!",
+                  showConfirmButton: true,
+                  timer: 3000
+                });
+              }
+            }
+        });
+      }
+    }
     function accProject(pid, id){
         dataform = new FormData();
         dataform.append('id', pid);

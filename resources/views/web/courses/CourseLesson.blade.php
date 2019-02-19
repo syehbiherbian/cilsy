@@ -60,13 +60,13 @@
              $i = 1;
              $a =1;
              foreach ($stn as $key => $section): ?>
-              <?php if ($i <= 2) {?>
+             
             <li>
               <div class="timelines-number"><?php echo $i; ?></div>
               <div class="timelines-content">
                 <div class="row box p-0">
                   <div class="col-xs-12">
-                    <h6>Lesson <?php echo $i; ?></h6>
+                    <h6>Lesson <?php echo $i; ?></h6> <?php $i++;?> 
       
                     <div class="row">
                         <div class="col-md-6 col-sm-12 col-xs-12">
@@ -121,8 +121,8 @@
                   </div>
                 </div>
               </div>
-               <?php } ?>
-                <?php $i++;?>
+              
+                
                 <?php $a++;?>
                 <?php endforeach; ?>
             </li>

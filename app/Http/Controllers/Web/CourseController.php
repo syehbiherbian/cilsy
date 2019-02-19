@@ -30,6 +30,7 @@ class CourseController extends Controller
         $courses = Course::where('bootcamp_id', $bcs->id)->first();
         $cs = DB::table('course')->where('bootcamp_id', $bcs->id)->get();
         $tutor = BootcampMember::where('bootcamp_id', $bcs->id)->where('member_id', Auth::guard('members')->user()->id)->first();
+        $mulai = DB::table('course')->where('bootcamp_id', $bcs->id)->first();
 
         if(!$tutor){
             return redirect('bootcamp/'.$bcs->slug);
@@ -39,6 +40,7 @@ class CourseController extends Controller
             'bc' => $bcs,
             'cs' => $cs,
             'tutor' => $tutor,
+            'mulai' => $mulai,
             
         ]);
     }
@@ -69,7 +71,8 @@ class CourseController extends Controller
     {   
 
         $bcs = Bootcamp::where('slug', $slug)->first();
-        $courses = Course::where('id', $id)->first();
+        $sect = Section::where('id', $id)->first();
+        $courses = Course::where('id', $sect->course_id)->first();
         $section = Section::with('video_section')->where('course_id', $courses->id)->orderBy('position', 'asc')->get();
         $vsection = $section->first()->video_section->first();
         $psection = Section::with('project_section')->where('course_id', $courses->id)->get();
@@ -95,14 +98,14 @@ class CourseController extends Controller
         $section = Section::with('video_section')->where('id', $id)->get();
         $vsection = $section->first()->video_section->first();
         $psection = Section::with('project_section')->where('id', $id)->get();
+        // $ps = ProjectSection::
+        $project = ProjectSection::where('section_id', $id)->first();
+        // dd($psection);
         $tutor = BootcampMember::where('bootcamp_id', $bcs->id)->where('member_id', Auth::guard('members')->user()->id)->first();
 
         if(!$tutor){
             return redirect('bootcamp/'.$bcs->slug);
         }
-        // $ps = ProjectSection::
-        $project = ProjectSection::where('section_id', $id)->first();
-        // dd($psection);
          return view('web.courses.ProjectSubmit',[
             
             'bc' => $bcs,

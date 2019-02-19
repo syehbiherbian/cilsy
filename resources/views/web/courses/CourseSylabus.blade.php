@@ -81,13 +81,13 @@
           <div class="row">
             <div class="col-xs-12">
               <h6 class="mb-5">Dashboard/Track</h6>
-              <h2 class="mb-4">Training to Become a {{$bc->slug}}</h2>
-              <h6>Are you a {{$bc->slug}}, or do you want to become one? In order to be successful in your role you will need to develop a few essentials soft
-                skills in addition to your technical skills. In this path you will learn crucial technology management skill, how to effectively lead technology teams,
-                and how to best manage technology projects. This content is not meant to be watched in order, so you can pickl your own adventure.
+              <h2 class="mb-4">{{$bc->title}}</h2>
+              <h6>{{$bc->deskripsi}}
               </h6>
               <br>
               <button class="btn btn-second btn-lg mb-5">Mulai belajar</button>
+              <a href="{{ url('bootcamp/'.$bc->slug.'/courseLesson/'.$mulai->id) }}" class="btn btn-primary mb-4">Mulai Belajar</a>
+
             </div>
           </div>
         </div>
@@ -121,8 +121,9 @@
               <ul class="timelines">
                 <?php
                      $i = 1;
-                     foreach ($cs as $key => $courses): ?>
-                      <?php if ($i <= 2) {?>
+                     foreach ($cs as $key => $courses): 
+                      ?>
+
                   <li>           
                       <div class="timelines-number"><?php echo $i; ?></div>
                       <div class="timelines-content">
@@ -139,7 +140,7 @@
 
                             <div class="row mt-3">
                               <div class="col-xs-6">
-                                <h5>Course Part <?php echo $i; ?></h5> 
+                                <h5>Course Part <?php echo $i; ?></h5> <?php $i++;?>
                               </div>
                               <div class="col-xs-5 mt-4">
                                   <div class="progress">
@@ -168,8 +169,7 @@
                           </div>
                         </div>
                       </div>
-                      <?php } ?>
-                          <?php $i++;?>
+                          
                           <?php endforeach; ?>
                   </li>
                   </ul>
@@ -203,6 +203,7 @@
                       <button type="button" class="btn btn-primary upload-image" onclick="doComment({{ $bc->id}}, 0)">Tambah Pertanyaan</button> 
                       
                       </form><!--./ Comment Form -->
+               
                 </div>
                 <!-- Comments Lists -->
                 <div id="comments-lists">
@@ -221,6 +222,7 @@
 
     </main>
 
+   
     <script>
     $('#collapse').click(function(){ 
         $(this).text(function(i,old){
@@ -373,6 +375,6 @@
 
     setInterval(function(){
       getComments();
-    }, 500);
+    }, 20000);
     </script>
 @endsection()

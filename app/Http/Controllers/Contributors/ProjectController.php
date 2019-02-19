@@ -8,6 +8,7 @@ use App\Models\ProjectUser;
 use App\Models\ProjectSection;
 use Auth;
 
+
 class ProjectController extends Controller
 {
     /**
@@ -62,15 +63,32 @@ class ProjectController extends Controller
     public function detail($sectionid, $id)
     {
         $list_project = ProjectUser::where('project_section_id', $sectionid)->with('member')->get();
-        $user_roject = ProjectUser::where('id', $sectionid)->with('member')->first();
-        $section_project = ProjectSection::where('id', $sectionid)->first();
+        $user_roject = ProjectUser::where('id',$id)->where('project_section_id', $sectionid)->with('member')->first();
+        $section_project = ProjectSection::where('section_id', $sectionid)->first();
         return view('contrib.siswa.project_detail', [
             'user' => $user_roject,
             'section' => $section_project,
             'list' => $list_project
         ]);
     }
-
+    public function saveProject(Request $request){
+        $response = array();
+        if (empty(Auth::guard('members')->user()->id)) {
+            $response['success'] = false;
+        } else {
+            
+           
+            $uid = Auth::guard('contributors')->user()->id;
+            // $member = DB::table('contributors')->where('id', $uid)->first();
+            
+            $input = ProjectUser::find($request->input('project_id'));
+            $input['komentar_contributor'] = $request->input('body');
+            $input['contributor_id'] = $uid;
+                   $input->save();
+            $response['success'] = true;
+        }
+        echo json_encode($response);
+    }
     public function acc(Request $request){
         $response = array();
         if (empty(Auth::guard('contributors')->user()->id)) {

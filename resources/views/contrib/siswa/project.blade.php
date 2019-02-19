@@ -43,7 +43,7 @@
               <td>{{$key->title}}</td>
               <td>Bootcamp</td>
               <td>- Siswa</td>
-              <td><a href="{{url('contributor/project/submit/'.$key->id)}}" class="btn btn-green">Selengkapnya</a></td>
+              <td><a href="{{url('contributor/project/submit/'.$key->section_id)}}" class="btn btn-green">Selengkapnya</a></td>
             </tr>
             @endforeach
 
