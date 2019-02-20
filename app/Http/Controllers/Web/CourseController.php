@@ -58,13 +58,25 @@ class CourseController extends Controller
         if(!$tutor){
             return redirect('bootcamp/'.$bcs->slug);
         }
+        $target = Course::where('bootcamp_id', $bcs->id)->select(DB::raw('sum(estimasi) as target'))->first();
+
+        if(!$tutor->start_at){
+        $now = new Datetime;
+        $update = BootcampMember::find($tutor->id);
+        $update['start_at'] = $now;
+        $update['target'] = $target->target;
+        $update->save();
+        $response['success'] = true;
+
+        
+        }
+   
         return view('web.courses.CourseLesson',[
             'course' => $courses,
             'bc' => $bcs,
             'cs' => $cs,
             'stn' => $section,
             'vsection' => $vsection,
-            
         ]);
     }
      public function videoPage($slug, $id)
@@ -82,6 +94,14 @@ class CourseController extends Controller
 
         if(!$tutor){
             return redirect('bootcamp/'.$bcs->slug);
+        }
+        $expired = BootcampMember::where('bootcamp_id', $bcs->id)->select(DB::raw('DATE_ADD( start_at, INTERVAL target day) as exp'))->first();
+        
+        if(!$tutor->expired_at){
+        $exp = BootcampMember::find($tutor->id);
+        $exp['expired_at'] = $expired->exp;
+        $exp->save();
+        $response['success'] = true;
         }
         return view('web.courses.VideoPage',[
             'course' => $courses,
