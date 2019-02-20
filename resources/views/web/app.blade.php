@@ -36,7 +36,7 @@
     <link rel="stylesheet" type="text/css" href="https://unpkg.com/flickity@2.1.2/dist/flickity.css"/>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- rating -->
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    <link rel="stylesheet" type="text/css" href="{{asset('css/slick.css')}}"/>
     <!-- <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.9.0/slick/slick-theme.css"/> -->
     <link rel="stylesheet" href="{{ asset('template/web/css/star-rating.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('template/web/css/imageviewer.css') }}" />

@@ -116,6 +116,11 @@ Route::get('bootcamp/{bootcamp}/projectSubmit/{section}', 'Web\CourseController@
 Route::post('bootcamp/submit', 'Web\CourseController@submit');
 Route::post('bootcamp/upload/saveProject', 'Web\CourseController@saveProject');
 
+
+//Browse Bootcamp
+Route::get('browse/bootcamp', 'Web\BrowseController@index');
+Route::get('browse/bootcamp/{slug}', 'Web\BrowseController@detail');
+
 /*
 |--------------------------------------------------------------------------
 | Cronjob Routes
