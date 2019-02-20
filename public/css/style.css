@@ -19,13 +19,13 @@ h1,h2,h3,h4,h5{
 .btn-primary:hover,
 .btn-primary:focus,
 .btn-primary:active,
-.btn-primary:not(:disabled):not(.disabled).active,
-.btn-primary:not(:disabled):not(.disabled):active{
+.btn-primary:not(:disabled):not(.disabled).active{
     background: #2ba8e2;
     border-color: transparent;
     color: #fff;
     box-shadow: 0 2px 4px 1px #cccccc;
 }
+
 
 .btn-second{
     background: #fff;
@@ -99,7 +99,7 @@ a.collap{
     background: #eee;
     border: none;
 }
-.tab-content{
+.tab-content-video-page{
     margin-top: 0px;
     padding: 0px;
 }
@@ -385,7 +385,15 @@ html{
 *,*:before,*:after{
     box-sizing:border-box
     }
-
+.btn-primary-diskusi{
+    background: #2ba8e2;
+    border-color: transparent;
+    color: #fff;
+    border-radius: 2px;
+    padding: 6px 30px;
+    margin-left: 10px;
+    float: left
+}
 /*  ==============================
     CSS - Course Lesson
     ============================== 
