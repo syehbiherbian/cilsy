@@ -13,7 +13,7 @@ class BootcampCategory extends Model
     }
 
     public function bootcamp(){
-        return $this->belongsTo('App\Models\Bootcamp');
+        return $this->hasMany('App\Models\Bootcamp');
     }
 
 }

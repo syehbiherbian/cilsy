@@ -9,15 +9,15 @@ class Bootcamp extends Model
     protected $table = "bootcamp";
     
     public function course(){
-        $this->hasMany('App\Models\Course');
+       return $this->hasMany('App\Models\Course');
     }
 
     public function lampiran(){
         return $this->hasMany('App\Models\BootcampLampiran');
     }
 
-    public function boot_member(){
-        return $this->belongsTo('App\Models\BootcampMember');
+    public function bootcamp_member(){
+        return $this->hasMany('App\Models\BootcampMember');
     }
 
     public function contributor(){

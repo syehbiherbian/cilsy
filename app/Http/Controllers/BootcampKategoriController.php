@@ -72,6 +72,7 @@ class BootcampKategoriController extends Controller{
 			$insert = DB::table('bootcamp_category')->insert([
 				'title' => $nama_kat,
 				'cover' => $icon,
+				'slug'  => str_slug($nama_kat),
 				'enable' => 1,
 				'meta_desc' => $meta_desc,
 				'created_at' => $now,

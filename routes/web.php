@@ -99,22 +99,30 @@ Route::get('/tentang', function () {
 });
 
 //bootcamp
-Route::get('/bootcamp/course', function () {
-	return view('web.courses.CourseDashboard');
-});
+
 
 Route::get('/bootcamp/projectView', function () {
 	return view('web.courses.ProjectView');
 });
 
-
+Route::get('/bootcamp/course', 'Web\BootcampController@member');
 Route::get('bootcamp/{bootcamp}', 'Web\BootcampController@bootcamp');
 Route::get('bootcamp/{bootcamp}/courseSylabus/', 'Web\CourseController@courseSylabus');
+Route::post('bootcamp/coments/doComment', 'Web\BootcampController@doComment');
+Route::get('bootcamp/coments/getComments/{bootcamp_id}', 'Web\BootcampController@getComments');
+
 Route::get('bootcamp/{bootcamp}/courseLesson/{course}', 'Web\CourseController@courseLesson');
 Route::get('bootcamp/{bootcamp}/videoPage/{section}', 'Web\CourseController@videoPage');
 Route::get('bootcamp/{bootcamp}/projectSubmit/{section}', 'Web\CourseController@projectSubmit');
 Route::post('bootcamp/submit', 'Web\CourseController@submit');
 Route::post('bootcamp/upload/saveProject', 'Web\CourseController@saveProject');
+Route::post('bootcamp/contrib/saveProject', 'Contributors\ProjectController@saveProject');
+
+
+
+//Browse Bootcamp
+Route::get('browse/bootcamp', 'Web\BrowseController@index');
+Route::get('browse/bootcamp/{slug}', 'Web\BrowseController@detail');
 
 /*
 |--------------------------------------------------------------------------
@@ -369,6 +377,13 @@ Route::get('contributor/comments/read', 'Contributors\ComentsController@read');
 Route::get('contributor/comments/detail/{coment_id}', 'Contributors\ComentsController@detail');
 Route::post('contributor/comments/postcomment', 'Contributors\ComentsController@postcomment');
 Route::post('contributor/comments/deletecomment/{coment_id}', 'Contributors\ComentsController@deletecomment');
+//bootcamp comments
+Route::get('contributor/bootcamp/comments', 'Contributors\ComentsController@bootcamp');
+Route::get('contributor/bootcamp/comments/all', 'Contributors\ComentsController@bootall');
+Route::get('contributor/bootcamp/comments/read', 'Contributors\ComentsController@bootread');
+Route::get('contributor/bootcamp/comments/detail/{coment_id}', 'Contributors\ComentsController@bootdetail');
+Route::post('contributor/bootcamp/comments/postcomment', 'Contributors\ComentsController@bootpostcomment');
+Route::post('contributor/bootcamp/comments/deletecomment/{coment_id}', 'Contributors\ComentsController@bootdeletecomment');
 
 Route::prefix('contributor/account')->group(function () {
     Route::get('informasi', 'Contributors\AccountController@informasi');
