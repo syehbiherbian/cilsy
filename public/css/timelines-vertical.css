@@ -20,6 +20,37 @@
 	left: 10%;
 	margin-left: -10px;
 }
+.timelines li:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 10px;
+    background: #afdcf8;
+    left: 10%;
+	margin-left: -10px;
+	height: 50%;
+}
+
+.timelines li:after {
+	height: 50%;
+    content: '';
+    position: absolute;
+    top: 50%;
+    bottom: 0;
+    width: 10px;
+    background: #afdcf8;
+    left: 10%;
+	margin-left: -10px;
+	z-index: -1;
+}
+
+.timelines li:first-child:before,
+.timelines li:last-child:after,
+ul.lesson-detail li:before,
+ul.lesson-detail li:after{
+	display: none;
+}
 .timelines > li {
 	position: relative;
 }
@@ -34,6 +65,7 @@
 	position: relative;
 	border-radius: 5px;
 }
+
 
 .timelines > li .timelines-content h2 { 
 	margin-top: 0px;
@@ -105,7 +137,7 @@
 		font-weight: 400;
 		font-size: 95%;
 	}
-
+	
 	.timelines > li .timelines-content:after {
 		right: auto;
 		left: 20px;
@@ -124,5 +156,5 @@
         z-index: 999;
         left: 50%;
         top: -50px;
-    }
+    	}
 }
